@@ -36,9 +36,11 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.application.LodgementBean;
@@ -62,6 +64,7 @@ import org.sola.common.help.HelpUtility;
 import org.sola.common.logging.LogUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  * Main form of the application.
@@ -85,6 +88,8 @@ public class MainForm extends javax.swing.JFrame {
                 postInit();
             }
         });
+        JOptionPane.showMessageDialog(this,"Nepali Date For 4/5/2012 = "+ WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
+        JOptionPane.showMessageDialog(this,"English Date For 2068-12-23 = "+ WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
     }
 
     /**
