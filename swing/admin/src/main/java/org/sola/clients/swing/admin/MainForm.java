@@ -804,7 +804,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
         // TODO add your handling code here:
         NepaliCalendar nepCal=new NepaliCalendar();
-        nepCal.setVisible(true);
+        mainContentPanel.addPanel(nepCal,MainContentPanel.CARD_ADMIN_CALENDAR, true);
     }//GEN-LAST:event_btnCalendarActionPerformed
 
     /** Opens roles management panel. */

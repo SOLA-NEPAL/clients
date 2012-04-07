@@ -15,6 +15,7 @@
  */
 package org.sola.clients.beans.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingBean;
@@ -22,6 +23,7 @@ import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.admin.NepaliMonthTO;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  *
@@ -60,9 +62,18 @@ public class NepaliMonthListBean extends AbstractBindingBean{
     }
     
     public void saveNepaliMonth(){
-        List<NepaliMonthTO> nepaliTO = null;
+        List<NepaliMonthTO> nepaliTO = new ArrayList<NepaliMonthTO>();
         TypeConverters.BeanListToTransferObjectList((List)months, nepaliTO, NepaliMonthTO.class);
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().saveNepaliMonth(nepaliTO), NepaliMonthBean.class, (List)months);
     }
     
+    public void addNepaliMonth(NepaliMonthBean nepMonth){
+        getMonths().addAsNew(nepMonth);
+    }
+    
+    public void deleteSelectedMonth(){
+        if(selectedMonth!=null){
+            getMonths().safeRemove(selectedMonth, EntityAction.DELETE);
+        }
+    }
 }
