@@ -272,7 +272,7 @@ public class MainContentPanel extends javax.swing.JPanel {
             cardsIndex.set(cardsIndex.size() - 1, cardName);
             cardsIndex.set(cardIndx, lastCardName);
         }
-
+        
         // close autoclosable panels
         closeAutoCollapsiblePanels();
 

@@ -36,6 +36,8 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -43,9 +45,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.application.LodgementBean;
 import org.sola.clients.beans.security.SecurityBean;
-import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.DefaultExceptionHandler;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.LocalizationManager;
@@ -74,7 +74,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Default constructor.
      */
-    public MainForm() {
+    public MainForm(){
         URL imgURL = this.getClass().getResource("/images/sola/logo_icon.jpg");
         this.setIconImage(new ImageIcon(imgURL).getImage());
 
@@ -88,8 +88,19 @@ public class MainForm extends javax.swing.JFrame {
                 postInit();
             }
         });
+        //Calendar.getInstance().getTime()
+        
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");          
+        //Date userGivenengDate=dateFormat.parse(englishDate);  
+        //try{
+       // Date defaultEngDate=dateFormat.parse("2006-01-01");
         JOptionPane.showMessageDialog(this,"Nepali Date For 4/5/2012 = "+ WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
         JOptionPane.showMessageDialog(this,"English Date For 2068-12-23 = "+ WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
+       // }
+       // catch(ParseException px){
+            //JOptionPane.showMessageDialog(this, "Invalid Date", "Date Check", JOptionPane.ERROR_MESSAGE);
+                    
+       // }
     }
 
     /**
