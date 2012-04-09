@@ -18,5 +18,6 @@
         <module>desktop</module>
         <module>ui</module>
     <module>admin</module>
+    <module>Nepal_Custom</module>
   </modules>
 </project>

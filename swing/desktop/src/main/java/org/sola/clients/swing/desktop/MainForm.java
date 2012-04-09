@@ -90,12 +90,12 @@ public class MainForm extends javax.swing.JFrame {
         });
         //Calendar.getInstance().getTime()
         
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");          
+        //DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");          
         //Date userGivenengDate=dateFormat.parse(englishDate);  
         //try{
        // Date defaultEngDate=dateFormat.parse("2006-01-01");
-        JOptionPane.showMessageDialog(this,"Nepali Date For 4/5/2012 = "+ WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
-        JOptionPane.showMessageDialog(this,"English Date For 2068-12-23 = "+ WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
+        //JOptionPane.showMessageDialog(this,"Nepali Date For 4/5/2012 = "+ WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
+        //JOptionPane.showMessageDialog(this,"English Date For 2068-12-23 = "+ WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
        // }
        // catch(ParseException px){
             //JOptionPane.showMessageDialog(this, "Invalid Date", "Date Check", JOptionPane.ERROR_MESSAGE);
