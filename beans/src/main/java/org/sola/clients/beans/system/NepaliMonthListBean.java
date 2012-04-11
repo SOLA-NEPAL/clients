@@ -30,22 +30,26 @@ import org.sola.webservices.transferobjects.EntityAction;
  * @author KumarKhadka
  */
 public class NepaliMonthListBean extends AbstractBindingBean{
-     public static final String SELECTED_MONTH = "selectedMonth";
+    public static final String SELECTED_MONTH = "selectedMonth";
     SolaList<NepaliMonthBean> months;
     NepaliMonthBean selectedMonth;
+       
     public NepaliMonthListBean(){
         super();
     }
-
+    
+   
     public SolaList<NepaliMonthBean> getMonths() {
         if(months==null){
             months=new SolaList<NepaliMonthBean>();
         }
         return months;
     }
+    
     public ObservableList<NepaliMonthBean> getFilteredMonth(){
         return getMonths().getFilteredList();
     }
+    
     public NepaliMonthBean getSelectedMonth() {
         return selectedMonth;
     }
@@ -55,6 +59,7 @@ public class NepaliMonthListBean extends AbstractBindingBean{
         this.selectedMonth = selectedMonth;
         propertySupport.firePropertyChange(SELECTED_MONTH, oldValue, this.selectedMonth);
     }
+    
     
     
     public void loadMonthList(int nepYear){
@@ -75,5 +80,9 @@ public class NepaliMonthListBean extends AbstractBindingBean{
         if(selectedMonth!=null){
             getMonths().safeRemove(selectedMonth, EntityAction.DELETE);
         }
+    }
+    
+    public void getNepaliYear(){
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliYear(), NepaliMonthBean.class,null) ;
     }
 }
