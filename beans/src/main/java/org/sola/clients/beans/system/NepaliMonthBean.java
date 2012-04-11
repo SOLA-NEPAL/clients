@@ -26,26 +26,26 @@ public class NepaliMonthBean extends AbstractBindingBean {
 
     public static final String NEP_YEAR_PROPERTY = "nepYear";
     public static final String NEP_MONTH_PROPERTY = "nepMonth";
-    public static final String DAYS_PROPERTY = "days";    
+    public static final String DAYS_PROPERTY = "dayss";    
     @Range(min=2000,max=3050,message="Year can't be less than 2000 and more than 3050")    
     private int nepYear;
     @Range(min=1,max=12,message="Month can't be less than 1 and more than 12")
     private int nepMonth;
     @Range(min=1,max=32,message="Days can't be less than 1 and more than 32")
-    private int days;
+    private int dayss;
 
     public NepaliMonthBean() {
         super();
     }
 
-    public int getDays() {
-        return days;
+    public int getDayss() {
+        return dayss;
     }
 
-    public void setDays(int days) {
-        int oldValue=this.days;
-        this.days = days;
-        propertySupport.firePropertyChange(DAYS_PROPERTY, oldValue, this.days);
+    public void setDayss(int dayss) {
+        int oldValue=this.dayss;        
+        this.dayss = dayss;
+         propertySupport.firePropertyChange(DAYS_PROPERTY, oldValue, this.dayss);
     }
 
     public int getNepMonth() {

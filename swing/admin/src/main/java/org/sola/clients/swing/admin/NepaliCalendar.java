@@ -42,6 +42,7 @@ public class NepaliCalendar extends ContentPanel {
         this.newMonth = newMonth;
         firePropertyChange("newMonth", null, this.newMonth);
     }
+    
     /**
      * Creates new form NepaliCalendar
      */

@@ -61,7 +61,6 @@ public class NepaliMonthListBean extends AbstractBindingBean{
     }
     
     
-    
     public void loadMonthList(int nepYear){
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliMonths(nepYear), NepaliMonthBean.class, (List)months) ;
     }
@@ -84,5 +83,9 @@ public class NepaliMonthListBean extends AbstractBindingBean{
     
     public void getNepaliYear(){
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliYear(), NepaliMonthBean.class,null) ;
+    }    
+   
+    public void createNepaliYear(int nepYr){
+        loadMonthList(nepYr);
     }
 }
