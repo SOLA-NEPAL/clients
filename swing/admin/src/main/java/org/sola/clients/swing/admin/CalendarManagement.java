@@ -17,7 +17,6 @@ package org.sola.clients.swing.admin;
 
 import org.sola.clients.beans.system.NepaliMonthBean;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.renderers.FormattersFactory;
 
 /**
  *
@@ -49,7 +48,6 @@ public class CalendarManagement extends ContentPanel {
         initComponents();
         nepaliYearList.loadYearList();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +70,6 @@ public class CalendarManagement extends ContentPanel {
         btnSave = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        txtYear = new javax.swing.JFormattedTextField();
         btnYear = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -165,12 +162,6 @@ public class CalendarManagement extends ContentPanel {
         jToolBar1.add(btnRefresh);
         jToolBar1.add(jSeparator1);
 
-        txtYear.setFormatterFactory(FormattersFactory.getInstance().getIntegerFormatterFactory());
-        txtYear.setMaximumSize(new java.awt.Dimension(80, 2147483647));
-        txtYear.setMinimumSize(new java.awt.Dimension(80, 20));
-        txtYear.setPreferredSize(new java.awt.Dimension(80, 20));
-        jToolBar1.add(txtYear);
-
         btnYear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
         btnYear.setText("Add Year");
         btnYear.setFocusable(false);
@@ -218,30 +209,27 @@ public class CalendarManagement extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLoad)
-                        .addGap(13, 13, 13))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addComponent(btnLoad)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLoad, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -251,7 +239,8 @@ public class CalendarManagement extends ContentPanel {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-        nepaliMonthList.loadMonthList(Integer.parseInt(cmbYear.getSelectedItem().toString()));
+        //nepaliMonthList.loadMonthList(Integer.parseInt(cmbYear.getSelectedItem().toString()));
+        nepaliYearList.loadYearList();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
@@ -266,9 +255,14 @@ public class CalendarManagement extends ContentPanel {
 
     private void btnYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYearActionPerformed
         // TODO add your handling code here:
+        int lastYear=Integer.parseInt(cmbYear.getItemAt(cmbYear.getItemCount()-1).toString());
         if (getNewYear().validate(true).size() < 1) {
-            nepaliMonthList.addNepaliMonth(getNewYear());
+            nepaliMonthList.addNepaliMonth(getNewYear(),lastYear);        
+                //nepaliMonthList.addNepaliMonth(getNewYear());   
+               
+            
             setNewYear(null);
+              
         }
 
     }//GEN-LAST:event_btnYearActionPerformed
@@ -290,7 +284,6 @@ public class CalendarManagement extends ContentPanel {
     private org.sola.clients.beans.system.NepaliMonthListBean nepaliMonthList;
     private org.sola.clients.beans.system.NepaliYearListBean nepaliYearList;
     private javax.swing.JTable tblCalendar;
-    private javax.swing.JFormattedTextField txtYear;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

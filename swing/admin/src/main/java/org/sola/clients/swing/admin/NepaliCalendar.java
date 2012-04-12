@@ -275,9 +275,9 @@ public class NepaliCalendar extends ContentPanel {
         // TODO add your handling code here:
         
         if(getNewMonth().validate(true).size()<1){
-            nepaliMonthList.addNepaliMonth(getNewMonth());
-            setNewMonth(null);
-        }
+           // nepaliMonthList.addNepaliMonth(getNewMonth(),1);
+          // setNewMonth(null);
+       }        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

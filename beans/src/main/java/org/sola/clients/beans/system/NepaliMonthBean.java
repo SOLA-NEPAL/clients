@@ -27,11 +27,11 @@ public class NepaliMonthBean extends AbstractBindingBean {
     public static final String NEP_YEAR_PROPERTY = "nepYear";
     public static final String NEP_MONTH_PROPERTY = "nepMonth";
     public static final String DAYS_PROPERTY = "dayss";    
-    @Range(min=2000,max=3050,message="Year can't be less than 2000 and more than 3050")    
+   // @Range(min=2000,max=3050,message="Year can't be less than 2000 and more than 3050")    
     private int nepYear;
-    @Range(min=1,max=12,message="Month can't be less than 1 and more than 12")
+   // @Range(min=1,max=12,message="Month can't be less than 1 and more than 12")
     private int nepMonth;
-    @Range(min=1,max=32,message="Days can't be less than 1 and more than 32")
+   // @Range(min=1,max=32,message="Days can't be less than 1 and more than 32")
     private int dayss;
 
     public NepaliMonthBean() {
