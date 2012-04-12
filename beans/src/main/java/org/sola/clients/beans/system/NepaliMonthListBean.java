@@ -86,6 +86,6 @@ public class NepaliMonthListBean extends AbstractBindingBean{
     }    
    
     public void createNepaliYear(int nepYr){
-        loadMonthList(nepYr);
+               
     }
 }
