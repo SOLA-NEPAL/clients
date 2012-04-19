@@ -39,10 +39,7 @@ import org.sola.clients.swing.gis.layer.CadastreChangeNewSurveyPointLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.mapaction.CadastreChangeNewCadastreObjectListFormShow;
 import org.sola.clients.swing.gis.mapaction.CadastreChangePointSurveyListFormShow;
-import org.sola.clients.swing.gis.tool.CadastreBoundarySelectTool;
-import org.sola.clients.swing.gis.tool.CadastreChangeNewParcelTool;
-import org.sola.clients.swing.gis.tool.CadastreChangeNodeTool;
-import org.sola.clients.swing.gis.tool.CadastreChangeSelectParcelTool;
+import org.sola.clients.swing.gis.tool.*;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -188,7 +185,10 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         super.addToolsAndCommands();
         this.cadastreBoundaryEditTool.setTargetLayer(this.newCadastreObjectLayer);
         this.cadastreBoundaryEditTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
-
+        //new tool for parcel selection.
+        listSelectedCadastreObjects listParcel= new listSelectedCadastreObjects((this.getPojoDataAccess()));
+        listParcel.setTargetParcelsLayer(targetParcelsLayer);
+        this.getMap().addTool(listParcel, this.getToolbar(), true);
     }
 
     /**
