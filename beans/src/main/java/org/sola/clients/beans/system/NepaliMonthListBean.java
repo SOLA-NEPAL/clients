@@ -16,9 +16,7 @@
 package org.sola.clients.beans.system;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.controls.SolaList;
@@ -73,6 +71,7 @@ public class NepaliMonthListBean extends AbstractBindingBean {
     }
 
     public void addNepaliMonth(NepaliMonthBean nepMonth,int lastYear) {
+        getMonths().clear();
         int k = 1;    
         for (int i = 0; i < 12; i++) {
             nepMonth.setDayss(0);
@@ -94,7 +93,5 @@ public class NepaliMonthListBean extends AbstractBindingBean {
     public void getNepaliYear() {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliYear(), NepaliMonthBean.class, null);
     }
-
-    public void createNepaliYear(int nepYr) {
-    }
+    
 }

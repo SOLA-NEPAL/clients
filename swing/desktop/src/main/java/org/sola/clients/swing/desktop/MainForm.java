@@ -74,7 +74,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Default constructor.
      */
-    public MainForm(){
+    public MainForm() {
         URL imgURL = this.getClass().getResource("/images/sola/logo_icon.jpg");
         this.setIconImage(new ImageIcon(imgURL).getImage());
 
@@ -89,18 +89,18 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         //Calendar.getInstance().getTime()
-        
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");          
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //Date userGivenengDate=dateFormat.parse(englishDate);  
         //try{
-       // Date defaultEngDate=dateFormat.parse("2006-01-01");
-        JOptionPane.showMessageDialog(this,"Nepali Date For 4/5/2012 = "+ WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
-        JOptionPane.showMessageDialog(this,"English Date For 2068-12-23 = "+ WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
-       // }
-       // catch(ParseException px){
-            //JOptionPane.showMessageDialog(this, "Invalid Date", "Date Check", JOptionPane.ERROR_MESSAGE);
-                    
-       // }
+        // Date defaultEngDate=dateFormat.parse("2006-01-01");
+        JOptionPane.showMessageDialog(this, "Nepali Date For 4/5/2012 = " + WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
+        JOptionPane.showMessageDialog(this, "English Date For 2068-12-23 = " + WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
+        // }
+        // catch(ParseException px){
+        //JOptionPane.showMessageDialog(this, "Invalid Date", "Date Check", JOptionPane.ERROR_MESSAGE);
+
+        // }
     }
 
     /**
@@ -348,6 +348,8 @@ public class MainForm extends javax.swing.JFrame {
         menuOffLogLevel = new javax.swing.JMenuItem();
         menuApplications = new javax.swing.JMenu();
         menuNewApplication = new javax.swing.JMenuItem();
+        menuDLIS = new javax.swing.JMenu();
+        menuSearchLandOwner = new javax.swing.JMenuItem();
         menuSearch = new javax.swing.JMenu();
         menuSearchApplication = new javax.swing.JMenuItem();
         menuBaUnitSearch = new javax.swing.JMenuItem();
@@ -571,6 +573,24 @@ public class MainForm extends javax.swing.JFrame {
 
         menuBar.add(menuApplications);
 
+        menuDLIS.setText(bundle.getString("MainForm.menuDLIS.text")); // NOI18N
+        menuDLIS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDLISActionPerformed(evt);
+            }
+        });
+
+        menuSearchLandOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        menuSearchLandOwner.setText(bundle.getString("MainForm.menuSearchLandOwner.text")); // NOI18N
+        menuSearchLandOwner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSearchLandOwnerActionPerformed(evt);
+            }
+        });
+        menuDLIS.add(menuSearchLandOwner);
+
+        menuBar.add(menuDLIS);
+
         menuSearch.setText(bundle.getString("MainForm.menuSearch.text")); // NOI18N
 
         menuSearchApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
@@ -742,13 +762,15 @@ public class MainForm extends javax.swing.JFrame {
     private void btnOpenBaUnitSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenBaUnitSearchActionPerformed
         searchBaUnit();
     }//GEN-LAST:event_btnOpenBaUnitSearchActionPerformed
-    
+
     private void openLodgementReportParamsForm() {
-           LodgementReportParamsForm reportDateChooser = new LodgementReportParamsForm(this, true);
-            reportDateChooser.setVisible(true);
+        LodgementReportParamsForm reportDateChooser = new LodgementReportParamsForm(this, true);
+        reportDateChooser.setVisible(true);
     }
-    
-    /** Opens {@link ReportViewerForm} to display report.*/
+
+    /**
+     * Opens {@link ReportViewerForm} to display report.
+     */
     private void showReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
@@ -758,6 +780,28 @@ public class MainForm extends javax.swing.JFrame {
         openLodgementReportParamsForm();
 //        showReport(ReportManager.getLodgementReport(lodgementBean1, ));  
     }//GEN-LAST:event_menuLodgementReportActionPerformed
+
+    private void menuSearchLandOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchLandOwnerActionPerformed
+        // TODO add your handling code here:
+        showSearchByLandOwner();
+    }//GEN-LAST:event_menuSearchLandOwnerActionPerformed
+   
+     private void showSearchByLandOwner() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
+            SrchLandOwner srchLndOwner = new SrchLandOwner();
+            pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
+    }
+    
+    
+//    private void showSearchByLandOwner() {
+//        SrchLandOwner_org srchLndOwnr=new SrchLandOwner_org();
+//        srchLndOwnr.setVisible(true);
+//    }
+    private void menuDLISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDLISActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuDLISActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar applicationsMain;
     private javax.swing.JButton btnDocumentSearch;
@@ -778,6 +822,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuApplications;
     private javax.swing.JMenuItem menuBaUnitSearch;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuDLIS;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
     private javax.swing.JMenuItem menuLangEN;
@@ -791,6 +836,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuReportsDesktop;
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
+    private javax.swing.JMenuItem menuSearchLandOwner;
     private javax.swing.JMenuItem menuShowMap;
     private javax.swing.JMenu menuView;
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;

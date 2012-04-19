@@ -49,6 +49,7 @@ import javax.swing.JPanel;
 public class MainContentPanel extends javax.swing.JPanel {
 
     public final static String CARD_DASHBOARD = "dashboard";
+    public final static String CARD_SEARCH_BY_LAND_OWNER="srchLandOwner";
     public final static String CARD_SEARCH_PERSONS = "searchPersons";
     public final static String CARD_PERSON = "person";
     public final static String CARD_APPSEARCH = "appsearch";
