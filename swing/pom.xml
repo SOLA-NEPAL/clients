@@ -18,5 +18,6 @@
         <module>desktop</module>
         <module>ui</module>
     <module>admin</module>
+    <module>dlisdesktop</module>
   </modules>
 </project>
