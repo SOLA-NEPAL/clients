@@ -30,12 +30,14 @@
 package org.sola.clients.swing.desktop;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.LocalizationManager;
 import org.sola.clients.swing.ui.DesktopClientExceptionHandler;
@@ -96,6 +98,8 @@ public class DesktopApplication {
                             if (((Boolean) evt.getNewValue())) {
                                 loginForm.dispose();
                                 MainForm mainForm = new MainForm();
+                                mainForm.setLocation(0, 0);
+                                mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
                                 mainForm.setVisible(true);
                             }
                         }

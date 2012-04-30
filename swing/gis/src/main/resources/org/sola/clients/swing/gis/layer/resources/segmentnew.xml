@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
+                       xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xsi:schemaLocation="http://www.opengis.net/sld http://schemas.opengis.net/sld/1.0.0/StyledLayerDescriptor.xsd">
+    <NamedLayer>
+        <Name>Target Segments</Name>
+        <UserStyle>
+            <Title>Target Segment style</Title>
+            <Abstract>Symbology defintion for target segments</Abstract>
+            <FeatureTypeStyle>
+                <Rule>
+                    <Name>Continuous</Name>
+                    <ogc:Filter>
+                        <ogc:PropertyIsEqualTo>
+                            <ogc:PropertyName>is_selected</ogc:PropertyName>
+                            <ogc:Literal>0</ogc:Literal>
+                        </ogc:PropertyIsEqualTo> 
+                    </ogc:Filter>
+                    <LineSymbolizer>
+                        <Stroke>
+                            <CssParameter name="stroke">#00FF00</CssParameter>
+                            <CssParameter name="stroke-width">2</CssParameter>
+                        </Stroke>
+                    </LineSymbolizer>
+                    <TextSymbolizer>
+                        <Label>
+                            <ogc:PropertyName>sid</ogc:PropertyName>
+                            )<ogc:PropertyName>shape_length</ogc:PropertyName>m
+                        </Label>
+                        <Font>
+                            <CssParameter name="font-family">Arial</CssParameter>
+                            <CssParameter name="font-size">12</CssParameter>
+                            <CssParameter name="font-style">normal</CssParameter>
+                            <CssParameter name="font-weight">italic</CssParameter>
+                        </Font>
+                        <LabelPlacement>
+                            <LinePlacement/>
+                            <PointPlacement>
+                                <AnchorPoint>
+                                    <AnchorPointX>0.5</AnchorPointX>
+                                    <AnchorPointY>0.5</AnchorPointY>
+                                </AnchorPoint>
+                                <Displacement>
+                                    <DisplacementX> 0 </DisplacementX>
+                                    <DisplacementY> 12 </DisplacementY>
+                                </Displacement>
+                            </PointPlacement>
+                        </LabelPlacement>
+                        <VendorOption name="followLine">true</VendorOption>
+                        <Fill>
+                            <CssParameter name="fill">#000000</CssParameter>
+                        </Fill>
+                    </TextSymbolizer>
+                </Rule>
+                <Rule>
+                    <Name>Dash</Name>
+                    <ogc:Filter>
+                        <ogc:PropertyIsEqualTo>
+                            <ogc:PropertyName>is_selected</ogc:PropertyName>
+                            <ogc:Literal>1</ogc:Literal>
+                        </ogc:PropertyIsEqualTo> 
+                    </ogc:Filter>
+                    <LineSymbolizer>
+                        <!--Stroke>
+                            <GraphicStroke>
+                                <Graphic>
+                                    <Mark>
+                                        <WellKnownName>circle</WellKnownName>
+                                        <Stroke>
+                                            <CssParameter name="stroke">#333333</CssParameter>
+                                            <CssParameter name="stroke-width">1</CssParameter>
+                                        </Stroke>
+                                        <Fill>
+                                            <CssParameter name="stroke">#666666</CssParameter>
+                                        </Fill>
+                                    </Mark>
+                                    <Size>4</Size>
+                                    <CssParameter name="stroke-dasharray">4 6</CssParameter>
+                                </Graphic>
+                            </GraphicStroke>
+                        </Stroke-->
+                        <Stroke>
+                            <CssParameter name="stroke">#0000FF</CssParameter>
+                            <CssParameter name="stroke-width">3</CssParameter>
+                            <CssParameter name="stroke-dasharray">8 3</CssParameter>
+                        </Stroke>
+                    </LineSymbolizer>
+                    <TextSymbolizer>
+                        <Label>
+                            <ogc:PropertyName>shape_length</ogc:PropertyName>
+                        </Label>
+                        <Font>
+                            <CssParameter name="font-family">Arial</CssParameter>
+                            <CssParameter name="font-size">15</CssParameter>
+                            <CssParameter name="font-style">normal</CssParameter>
+                            <CssParameter name="font-weight">normal</CssParameter>
+                        </Font>
+                        <LabelPlacement>
+                            <LinePlacement/>
+                            <PointPlacement>
+                                <AnchorPoint>
+                                    <AnchorPointX>0.5</AnchorPointX>
+                                    <AnchorPointY>0.5</AnchorPointY>
+                                </AnchorPoint>
+                                <Displacement>
+                                    <DisplacementX> 0 </DisplacementX>
+                                    <DisplacementY> -10 </DisplacementY>
+                                </Displacement>
+                            </PointPlacement>
+                        </LabelPlacement>
+                        <VendorOption name="followLine">true</VendorOption>
+                        <Fill>
+                            <CssParameter name="fill">#000000</CssParameter>
+                        </Fill>
+                    </TextSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+</StyledLayerDescriptor>

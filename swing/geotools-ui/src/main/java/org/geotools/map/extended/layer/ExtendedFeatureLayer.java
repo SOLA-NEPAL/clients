@@ -199,6 +199,13 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
             xy[2] = 20;
             xy[3] = 5;
             feature = legendDrawer.feature(legendDrawer.line(xy));
+        } else if (geomType.getBinding().toString().contains("LineString")) {
+            int[] xy = new int[4];
+            xy[0] = 0;
+            xy[1] = 5;
+            xy[2] = 20;
+            xy[3] = 5;
+            feature = legendDrawer.feature(legendDrawer.line(xy));
         } else if (geomType.getBinding().toString().contains("Point")) {
             int x = 10, y = 5;
             feature = legendDrawer.feature(legendDrawer.point(x, y));
@@ -234,6 +241,7 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
         if (styles != null && styles.length > 0) {
             styleTmp = styles[0];
         }
+        
         return styleTmp;
     }
 

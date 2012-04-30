@@ -79,6 +79,10 @@ public class Toc extends JPanel {
         this.addListners();
     }
 
+    public DefaultTreeModel getTreeModel() {
+        return treeModel;
+    }
+
     /**
      * It adds different listeners to the objects in the TOC.
      */

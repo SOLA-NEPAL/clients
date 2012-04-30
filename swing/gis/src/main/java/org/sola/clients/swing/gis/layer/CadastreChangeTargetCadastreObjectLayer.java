@@ -54,7 +54,11 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * @author Elton Manoku
  */
 public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphics {
-
+    public static final String LAYER_FIELD_FID="fid";
+    public static final String LAYER_FIELD_AREA="shape_area";
+    private static final String LAYER_ATTRIBUTE_DEFINITION =
+            String.format("%s:\"\",%s:\"\"", LAYER_FIELD_FID,LAYER_FIELD_AREA);
+    
     private static final String LAYER_NAME = "Target Parcels";
     private static final String LAYER_STYLE_RESOURCE = "parcel_target.xml";
     private List<CadastreObjectTargetBean> cadastreObjectTargetList =
@@ -66,7 +70,7 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
      * @throws InitializeLayerException 
      */
     public CadastreChangeTargetCadastreObjectLayer() throws InitializeLayerException {
-        super(LAYER_NAME, Geometries.POLYGON, LAYER_STYLE_RESOURCE);
+        super(LAYER_NAME, Geometries.POLYGON, LAYER_STYLE_RESOURCE,LAYER_ATTRIBUTE_DEFINITION);
 
         this.getFeatureCollection().addListener(new CollectionListener() {
 

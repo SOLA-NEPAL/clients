@@ -107,7 +107,7 @@ public class ExtendedLayerGraphics extends ExtendedFeatureLayer {
      */
     public SimpleFeature addFeature(String fid,
             com.vividsolutions.jts.geom.Geometry geom,
-            java.util.HashMap<String, Object> fieldsWithValues) {
+            java.util.HashMap<String, Object> fieldsWithValues)  {
         return this.getFeatureCollection().addFeature(fid, geom, fieldsWithValues);
     }
 
