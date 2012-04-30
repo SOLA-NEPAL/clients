@@ -138,6 +138,7 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
     protected void addLayers() throws InitializeLayerException {
         this.imageLayer = new ExtendedImageLayer(IMAGE_LAYER_NAME, IMAGE_LAYER_TITLE);
         this.getMap().addLayer(this.imageLayer);
+        
         this.cadastreBoundaryPointLayer = new CadastreBoundaryPointLayer();
         this.getMap().addLayer(this.cadastreBoundaryPointLayer);
     }

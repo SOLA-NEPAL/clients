@@ -103,6 +103,7 @@ public class MainForm extends javax.swing.JFrame {
         btnGISSettings = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         btnBr = new javax.swing.JButton();
+        btnCalendar = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -256,6 +257,18 @@ public class MainForm extends javax.swing.JFrame {
         });
         mainToolbar.add(btnBr);
 
+        btnCalendar.setText(bundle.getString("MainForm.btnCalendar.text")); // NOI18N
+        btnCalendar.setFocusable(false);
+        btnCalendar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCalendar.setName(bundle.getString("MainForm.btnCalendar.name")); // NOI18N
+        btnCalendar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCalendar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarActionPerformed(evt);
+            }
+        });
+        mainToolbar.add(btnCalendar);
+
         statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -277,7 +290,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(taskPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         statusPanelLayout.setVerticalGroup(
@@ -616,16 +629,16 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+            .addComponent(mainToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(mainToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -769,6 +782,12 @@ public class MainForm extends javax.swing.JFrame {
         manageRegistrationStatusTypes();
     }//GEN-LAST:event_menuRegistrationStatusTypeActionPerformed
 
+    private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
+        // TODO add your handling code here:
+        NepaliCalendar nepCal=new NepaliCalendar();
+        mainContentPanel.addPanel(nepCal,MainContentPanel.CARD_ADMIN_CALENDAR, true);
+    }//GEN-LAST:event_btnCalendarActionPerformed
+
     /** Opens roles management panel. */
     private void manageRoles() {
         if(mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_ROLES_MANAGE)){
@@ -899,6 +918,7 @@ public class MainForm extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
+    private javax.swing.JButton btnCalendar;
     private javax.swing.JButton btnGISSettings;
     private javax.swing.JButton btnGroups;
     private javax.swing.JButton btnLanguage;

@@ -109,6 +109,10 @@ public class Map extends JMapPane {
     private ButtonGroup toolsGroup = new ButtonGroup();
     private double pixelResolution = 0;
     private Toc toc;
+
+    public Toc getToc() {
+        return toc;
+    }
     private CursorTool activeTool = null;
 
     /**
