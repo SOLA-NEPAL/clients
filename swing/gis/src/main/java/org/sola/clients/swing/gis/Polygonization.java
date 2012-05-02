@@ -39,7 +39,9 @@ public class Polygonization {
         }
         
         DecimalFormat df=new DecimalFormat("0.00");
-        
+        //Before adding new parcels, let clean the collection first.
+        targetParcelsLayer.getFeatureCollection().clear();
+        //add fresh parcel data.
         polygons.add(segments);//Add segment collection to the polygonizer.
         Collection polys= polygons.getPolygons();
         int feacount=1;

@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 /*
@@ -44,6 +46,8 @@ import org.geotools.swing.tool.CursorTool;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
@@ -78,20 +82,19 @@ import org.geotools.swing.tool.extended.ExtendedTool;
 import org.opengis.referencing.operation.TransformException;
 
 /**
- * This is an extension of the swing control {@see org.geotools.swing.JMapPane}. 
- * Added functionality includes: <ul>
- * <li> Initialization of the control only by a SRID. 
- * It uses the StreamingRenderer for rendering and DefaultMapContext for the map context </li>
- * <li> Helper methods to add different kind of layers</li>
- * <li> Adding OnMouseWheel Zoom in/out handling</li>
- * <li> Adding panning with by holding the middle button of the mouse pressed</li>
- * <li> Get current pixel resolution for the map control</li>
- * <li> Helper methods for transforming points map from/to screen</li>
- * <li> Defining a custom full extent that is not dependent
- * in the full extent of all layers found in the map</li>
- * </ul>
+ * This is an extension of the swing control {
+ *
+ * @see org.geotools.swing.JMapPane}. Added functionality includes: <ul> <li>
+ * Initialization of the control only by a SRID. It uses the StreamingRenderer
+ * for rendering and DefaultMapContext for the map context </li> <li> Helper
+ * methods to add different kind of layers</li> <li> Adding OnMouseWheel Zoom
+ * in/out handling</li> <li> Adding panning with by holding the middle button of
+ * the mouse pressed</li> <li> Get current pixel resolution for the map
+ * control</li> <li> Helper methods for transforming points map from/to
+ * screen</li> <li> Defining a custom full extent that is not dependent in the
+ * full extent of all layers found in the map</li> </ul>
  * @author Elton Manoku
- * 
+ *
  */
 public class Map extends JMapPane {
 
@@ -110,16 +113,12 @@ public class Map extends JMapPane {
     private double pixelResolution = 0;
     private Toc toc;
 
-    public Toc getToc() {
-        return toc;
-    }
     private CursorTool activeTool = null;
-
     /**
-     * This constructor is used only for the graphical designer.
-     * Use the other constructor for initializing the map control
+     * This constructor is used only for the graphical designer. Use the other
+     * constructor for initializing the map control
      */
-    public Map() throws InitializeMapException{
+    public Map() throws InitializeMapException {
         super();
         this.initializeReferenceSystemResource();
         this.setBackground(Color.WHITE);
@@ -128,8 +127,9 @@ public class Map extends JMapPane {
 
     /**
      * It initializes the map control given an SRID.
+     *
      * @param srid The SRID
-     * @throws InitializeMapException 
+     * @throws InitializeMapException
      */
     public Map(int srid) throws InitializeMapException {
         this();
@@ -137,13 +137,15 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It initializes the map control given an SRID and WKT Presentation of the reference system.
-     * This constructor is used if for the given srid the WKT 
+     * It initializes the map control given an SRID and WKT Presentation of the
+     * reference system. This constructor is used if for the given srid the WKT
      * is not in the resource srid.properties.
+     *
      * @param srid The SRID
-     * @param wktOfReferenceSystem the WKT definition of Reference system if not found in the
-     * srid.properties resource file. If found there there is not need to specify.
-     * @throws InitializeMapException 
+     * @param wktOfReferenceSystem the WKT definition of Reference system if not
+     * found in the srid.properties resource file. If found there there is not
+     * need to specify.
+     * @throws InitializeMapException
      */
     public Map(int srid, String wktOfReferenceSystem) throws InitializeMapException {
         this();
@@ -153,7 +155,7 @@ public class Map extends JMapPane {
         this.initialize(srid);
     }
 
-    private void initializeReferenceSystemResource() throws InitializeMapException{
+    private void initializeReferenceSystemResource() throws InitializeMapException {
         try {
             System.setProperty("org.geotools.referencing.forceXY", "true");
             //Hints hints = new Hints(Hints.FORCE_LONGITUDE_FIRST_AXIS_ORDER, Boolean.TRUE);
@@ -170,10 +172,11 @@ public class Map extends JMapPane {
     }
 
     /**
-     * Internal initializer of the control. It starts up the map context, renderer and sets the 
-     * Reference System based in the SRID.
+     * Internal initializer of the control. It starts up the map context,
+     * renderer and sets the Reference System based in the SRID.
+     *
      * @param srid
-     * @throws InitializeMapException 
+     * @throws InitializeMapException
      */
     private void initialize(int srid) throws InitializeMapException {
         MapContent content = new MapContent();
@@ -194,6 +197,7 @@ public class Map extends JMapPane {
 
     /**
      * Overrides the method to call the event of onSelectionChanged of tools.
+     *
      * @param tool The tool to set active for the map
      */
     @Override
@@ -211,9 +215,10 @@ public class Map extends JMapPane {
 
     /**
      * It generates a CoordinateReferenceSystem based in srid.
+     *
      * @param srid
      * @return The coordinative system corresponding to the srid
-     * @throws FactoryException 
+     * @throws FactoryException
      */
     private CoordinateReferenceSystem generateCoordinateReferenceSystem(int srid)
             throws FactoryException {
@@ -222,8 +227,9 @@ public class Map extends JMapPane {
     }
 
     /**
-     * Initialize the mouse and map bounds listeners. The map wheel listener are initialized 
-     * separately because the ones provided by mapMouseAdapter gives a null location
+     * Initialize the mouse and map bounds listeners. The map wheel listener are
+     * initialized separately because the ones provided by mapMouseAdapter gives
+     * a null location
      */
     private void createListeners() {
 
@@ -275,9 +281,10 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It zooms in and out as the user uses the mousewheel. The mouse stays pointing in the 
-     * same map coordinates
-     * @param ev 
+     * It zooms in and out as the user uses the mousewheel. The mouse stays
+     * pointing in the same map coordinates
+     *
+     * @param ev
      */
     private void handleMouseWheelEvent(MouseWheelEvent ev) {
         if (this.IsRendering()) {
@@ -320,7 +327,8 @@ public class Map extends JMapPane {
 
     /**
      * It catches the start of the pan process
-     * @param ev 
+     *
+     * @param ev
      */
     public void handleMousePressed(MapMouseEvent ev) {
         if (ev.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -331,6 +339,7 @@ public class Map extends JMapPane {
 
     /**
      * Respond to a mouse dragged event. Calls {@link org.geotools.swing.JMapPane#moveImage()}
+     *
      * @param ev the mouse event
      */
     public void handleMouseDragged(MapMouseEvent ev) {
@@ -346,6 +355,7 @@ public class Map extends JMapPane {
     /**
      * If this button release is the end of a mouse dragged event, requests the
      * map to repaint the display
+     *
      * @param ev the mouse event
      */
     public void handleMouseReleased(MapMouseEvent ev) {
@@ -356,8 +366,10 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It updates the pixel resolution of the map for each change of the DisplayArea.
-     * @param ev 
+     * It updates the pixel resolution of the map for each change of the
+     * DisplayArea.
+     *
+     * @param ev
      */
     public void handleOnDisplayAreaChanged(MapPaneEvent ev) {
         ReferencedEnvelope newDisplayArea = this.getDisplayArea();
@@ -368,7 +380,8 @@ public class Map extends JMapPane {
 
     /**
      * Gets the current pixel resolution of the map
-     * @return 
+     *
+     * @return
      */
     public double getPixelResolution() {
         return this.pixelResolution;
@@ -376,8 +389,9 @@ public class Map extends JMapPane {
 
     /**
      * Get the point in screen coordinates
+     *
      * @param mapPoint The point in map coordinates
-     * @return 
+     * @return
      */
     public Point2D getPointInScreen(Point2D mapPoint) {
         Point2D screenPoint = new Point2D.Double(mapPoint.getX(), mapPoint.getY());
@@ -387,8 +401,9 @@ public class Map extends JMapPane {
 
     /**
      * Get the point in map coordinates
+     *
      * @param screenPoint The point in screen coordinates
-     * @return 
+     * @return
      */
     public Point2D getPointInMap(Point2D screenPoint) {
         Point2D mapPoint = new Point2D.Double(screenPoint.getX(), screenPoint.getY());
@@ -398,6 +413,7 @@ public class Map extends JMapPane {
 
     /**
      * Gets the fact that the map is busy rendering
+     *
      * @return the isRendering
      */
     public boolean IsRendering() {
@@ -405,7 +421,7 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It zooms to the full extent. 
+     * It zooms to the full extent.
      */
     public void zoomToFullExtent() {
         this.setDisplayArea(this.getFullExtent());
@@ -413,10 +429,11 @@ public class Map extends JMapPane {
 
     /**
      * It sets the full extent of the map control.
+     *
      * @param east
      * @param west
      * @param north
-     * @param south 
+     * @param south
      */
     public void setFullExtent(double east, double west, double north, double south) {
         this.fullExtentEnvelope = new ReferencedEnvelope(
@@ -424,9 +441,11 @@ public class Map extends JMapPane {
     }
 
     /**
-     * Gets the full extent.
-     * If the full extent is not yet set then the full extent of all layers in the map is used.     * 
-     * @return 
+     * Gets the full extent. If the full extent is not yet set then the full
+     * extent of all layers in the map is used.
+     *
+     *
+     * @return
      */
     public ReferencedEnvelope getFullExtent() {
         if (this.fullExtentEnvelope == null) {
@@ -438,7 +457,8 @@ public class Map extends JMapPane {
 
     /**
      * Gets the srid of the map
-     * @return 
+     *
+     * @return
      */
     public Integer getSrid() {
         if (srid == null) {
@@ -452,7 +472,8 @@ public class Map extends JMapPane {
 
     /**
      * Gets the list of SolaLayers loaded in the map
-     * @return 
+     *
+     * @return
      */
     public LinkedHashMap<String, ExtendedLayer> getSolaLayers() {
         return this.extendedLayers;
@@ -460,8 +481,9 @@ public class Map extends JMapPane {
 
     /**
      * It adds a ExtendedLayer
+     *
      * @param solaLayer the ExtendedLayer
-     * @return 
+     * @return
      */
     public ExtendedLayer addLayer(ExtendedLayer solaLayer) {
         this.getSolaLayers().put(solaLayer.getLayerName(), solaLayer);
@@ -476,12 +498,14 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It adds a layer of type WMS which is actually a WMS Server with a list of layers in it.
+     * It adds a layer of type WMS which is actually a WMS Server with a list of
+     * layers in it.
+     *
      * @param layerName The name
      * @param layerTitle layer title
      * @param URL The WMS Capabilities Location
      * @param layerNames The list of layer names
-     * @return 
+     * @return
      */
     public ExtendedLayerWMS addLayerWMS(
             String layerName, String layerTitle, String URL, List<String> layerNames) {
@@ -497,13 +521,16 @@ public class Map extends JMapPane {
 
     /**
      * It adds a shapefile layer
+     *
      * @param layerName the layer name
      * @param layerTitle layer title
      * @param pathOfShapefile the path of the .shp file
-     * @param styleResource the resource name .xml in the location of resources for layer styles.
-     * This resource location is added in the path decided in SLD_RESOURCES
-     * {@see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}. 
-     * @return 
+     * @param styleResource the resource name .xml in the location of resources
+     * for layer styles. This resource location is added in the path decided in
+     * SLD_RESOURCES
+     * {
+     * @see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}.
+     * @return
      */
     public ExtendedLayerShapefile addLayerShapefile(
             String layerName, String layerTitle, String pathOfShapefile, String styleResource) {
@@ -520,13 +547,16 @@ public class Map extends JMapPane {
 
     /**
      * It adds a graphics layer in the map
+     *
      * @param layerName layer name
      * @param layerTitle layer title
      * @param geometryType geometry type for this layer
-     * @param styleResource the resource name .xml in the location of resources for layer styles.
-     * This resource location is added in the path decided in SLD_RESOURCES
-     * {@see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}. 
-     * @return 
+     * @param styleResource the resource name .xml in the location of resources
+     * for layer styles. This resource location is added in the path decided in
+     * SLD_RESOURCES
+     * {
+     * @see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}.
+     * @return
      */
     public ExtendedLayerGraphics addLayerGraphics(
             String layerName, String layerTitle, Geometries geometryType, String styleResource) {
@@ -543,14 +573,17 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It adds a editor layer in the map. 
+     * It adds a editor layer in the map.
+     *
      * @param layerName layer name
      * @param layerTitle layer title
      * @param geometryType geometry type for this layer
-     * @param styleResource the resource name .xml in the location of resources for layer styles.
-     * This resource location is added in the path decided in SLD_RESOURCES
-     * {@see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}. 
-     * @return 
+     * @param styleResource the resource name .xml in the location of resources
+     * for layer styles. This resource location is added in the path decided in
+     * SLD_RESOURCES
+     * {
+     * @see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}.
+     * @return
      */
     public ExtendedLayerEditor addLayerEditor(
             String layerName, String layerTitle, Geometries geometryType,
@@ -569,6 +602,7 @@ public class Map extends JMapPane {
 
     /**
      * It adds an action of a control (usually a button) in the toolbar.
+     *
      * @param action the action to be added
      * @param hasTool if the action activates a map tool
      * @param inToolbar the toolbar where the action will be added
@@ -587,7 +621,9 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It adds a tool in the map. The tool adds also an action in the toolbar which can activate the tool
+     * It adds a tool in the map. The tool adds also an action in the toolbar
+     * which can activate the tool
+     *
      * @param tool the tool
      * @param inToolbar the toolbar
      */
@@ -597,7 +633,8 @@ public class Map extends JMapPane {
 
     /**
      * Add an action of type ExtendedAction in a toolbar.
-     * @param action the action 
+     *
+     * @param action the action
      * @param inToolbar the toolbar
      */
     public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled) {
@@ -606,6 +643,7 @@ public class Map extends JMapPane {
 
     /**
      * Gets the button in the toolbar associated with the map control.
+     *
      * @param actionName The action name associated with the button
      * @return The button if found otherwise null
      */
@@ -622,8 +660,9 @@ public class Map extends JMapPane {
     }
 
     /**
-     * Gets the map action which is used in one of the buttons added in the toolbar associated 
-     * with the map.
+     * Gets the map action which is used in one of the buttons added in the
+     * toolbar associated with the map.
+     *
      * @param actionName The action name
      * @return The action if found or null
      */
@@ -637,6 +676,7 @@ public class Map extends JMapPane {
 
     /**
      * Gets a toolitem that is found in the toolbar associated with the map.
+     *
      * @param name Name of tool
      * @return The toolitem or null
      */
@@ -654,6 +694,7 @@ public class Map extends JMapPane {
 
     /**
      * Sets a tool as active in the map.
+     *
      * @param toolName The name of the tool.
      */
     public void setActiveTool(String toolName) {
@@ -663,7 +704,8 @@ public class Map extends JMapPane {
 
     /**
      * Sets the Table of Contents.
-     * @param toc 
+     *
+     * @param toc
      */
     public void setToc(Toc toc) {
         this.toc = toc;
@@ -671,13 +713,13 @@ public class Map extends JMapPane {
 
     /**
      * Gets the Table of Contents.
-     * @return 
+     *
+     * @return
      */
     public Toc getToc() {
         return toc;
     }
 
-    
     /**
      * It refreshes the map.
      */
@@ -687,9 +729,10 @@ public class Map extends JMapPane {
 
     /**
      * Gets the current scale of the map.
-     * @return 
+     *
+     * @return
      */
-    public Double getScale() throws MapScaleException{
+    public Double getScale() throws MapScaleException {
         try {
             return RendererUtilities.calculateScale(
                     this.getDisplayArea(), this.getWidth(),
@@ -702,9 +745,10 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It overrides the default behavior of drawLayers by resetting always the labelcache.
-     * 
-     * @param createNewImage 
+     * It overrides the default behavior of drawLayers by resetting always the
+     * labelcache.
+     *
+     * @param createNewImage
      */
     @Override
     protected void drawLayers(boolean createNewImage) {
@@ -713,8 +757,8 @@ public class Map extends JMapPane {
     }
 
     /**
-     * It overrides the default behavior of the JMapPane of geotools by trying to maintain the 
-     * extent of the map while resizing.
+     * It overrides the default behavior of the JMapPane of geotools by trying
+     * to maintain the extent of the map while resizing.
      */
     @Override
     protected void setForNewSize() {
@@ -725,8 +769,9 @@ public class Map extends JMapPane {
     }
 
     /**
-     * Overrides the default behavior of layerChanged. The repaint() is commented so when
-     * the layer is changed and the map is refreshed the image is not reseted completely.
+     * Overrides the default behavior of layerChanged. The repaint() is
+     * commented so when the layer is changed and the map is refreshed the image
+     * is not reseted completely.
      */
     @Override
     public void layerChanged(MapLayerListEvent event) {
@@ -751,8 +796,8 @@ public class Map extends JMapPane {
     }
 
     /**
-     * Overrides the default behavior of onImageMoved. The repaint() is commented so while panning
-     * the image is not reseted completely.
+     * Overrides the default behavior of onImageMoved. The repaint() is
+     * commented so while panning the image is not reseted completely.
      */
     @Override
     protected void onImageMoved() {

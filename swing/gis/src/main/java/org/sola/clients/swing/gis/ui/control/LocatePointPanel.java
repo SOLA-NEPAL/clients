@@ -5,39 +5,53 @@
 package org.sola.clients.swing.gis.ui.control;
 
 import com.vividsolutions.jts.geom.*;
-import org.sola.clients.swing.gis.segmentDetails;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import org.sola.clients.swing.gis.segmentDetails;
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.jts.Geometries;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
+import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.geotools.swing.extended.Map;
-import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.PointDetails;
-import org.sola.clients.swing.gis.Polygonization;
-import org.sola.clients.swing.gis.PublicMethod;
-import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 
 /**
  *
  * @author Shrestha_Kabin
  */
 public class LocatePointPanel extends javax.swing.JPanel {
-
+    //Variable for storing old data for undo action.
+    private CadastreTargetSegmentLayer prevSegmentLayer = null;
+    private ExtendedLayerGraphics prevTargetSegmentLayer = null;
+    
     private CadastreTargetSegmentLayer segmentLayer = null;
     private ExtendedLayerGraphics targetSegmentLayer = null;
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
+    private String parcelID="";
+    private String lineID="";
     private LineString lineSeg = null;
+    private Point pointFixed=null;
+    //handle proprer click event.
+    private Method clickEvnt=null;
+    private Object method_holder_class=null;
+
+    public void setClickEvnt(Method clickEvnt,Object method_holder) {
+        this.clickEvnt = clickEvnt;
+        this.method_holder_class=method_holder;
+    }
+
+    public Point getPointFixed() {
+        return pointFixed;
+    }
 
     public LineString getLineSeg() {
         return lineSeg;
@@ -50,25 +64,18 @@ public class LocatePointPanel extends javax.swing.JPanel {
         initComponents();
         //this.table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.setSize(550, 510);
-        this.setLocation(100, 100);
-        this.table.getSelectionModel().addListSelectionListener(
-                new ListSelectionListener() {
-
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        btnRemove.setEnabled(true);
-                    }
-                });
     }
 
     public LocatePointPanel(
-            CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+            CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException{
         this();
+        initializeFormVariable(segmentLayer);
+    }
+
+    public final void initializeFormVariable(CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException  {
         this.segmentLayer = segmentLayer;
         this.targetSegmentLayer = segmentLayer.getSegmentLayer();
-        this.targetParcelsLayer=targetParcelsLayer;
-        
+
         showSegmentListInTable();
         //Hide unneccessary Columns.
         TableColumnModel columnModel = table.getColumnModel();
@@ -76,7 +83,29 @@ public class LocatePointPanel extends javax.swing.JPanel {
         columnModel.removeColumn(columnModel.getColumn(3));//geom id field.
         table.repaint();
     }
+    
+    public final void resetVariable(CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException  {
+          //collect old data for undo action.
+        prevTargetSegmentLayer=new ExtendedLayerGraphics(CadastreTargetSegmentLayer.LAYER_SEGMENT_NAME,
+                Geometries.LINESTRING, CadastreTargetSegmentLayer.LAYER_SEGMENT_STYLE_RESOURCE,
+                CadastreTargetSegmentLayer.LAYER_ATTRIBUTE_DEFINITION);
+        
+        prevSegmentLayer=new CadastreTargetSegmentLayer();
+        collectPreviousData();
+    }
 
+    private void collectPreviousData(){
+        //Clear all data in old collection
+        prevTargetSegmentLayer.getFeatureCollection().clear();
+        prevSegmentLayer.getFeatureCollection().clear();
+        //Obtain segment list.
+        List<segmentDetails> segs= buildSegmentCollection(targetSegmentLayer);
+        build_new_FeatureCollection(segs, prevTargetSegmentLayer);
+        //Obtain point list.
+        List<PointDetails> pts=buildPointCollection(segmentLayer);
+        build_new_PointsCollection(pts, prevSegmentLayer);
+    }
+    
     public final void showSegmentListInTable() {
         //Obtain segment list.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
@@ -123,6 +152,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
     public JTable getTable() {
         return this.table;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,11 +163,11 @@ public class LocatePointPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnClearSelection = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         optFirst = new javax.swing.JRadioButton();
         optSecond = new javax.swing.JRadioButton();
@@ -145,22 +175,16 @@ public class LocatePointPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtTotalLength = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtMaxArea = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        optClockwise = new javax.swing.JRadioButton();
-        optCounterClockWise = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        txtRequiredArea = new javax.swing.JTextField();
-        btnNewPacel = new javax.swing.JToggleButton();
-        btnSave = new javax.swing.JButton();
         btnAddPoint = new javax.swing.JButton();
         btnShowInMap = new javax.swing.JButton();
-        btnRemove = new javax.swing.JButton();
+        btnReload = new javax.swing.JButton();
+        btnClearSelection = new javax.swing.JButton();
+        btnMakeEnable = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
+
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,16 +212,11 @@ public class LocatePointPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Segment Details:");
 
-        btnClearSelection.setText("Clear Selection");
-        btnClearSelection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearSelectionActionPerformed(evt);
-            }
-        });
-
+        buttonGroup1.add(optFirst);
         optFirst.setSelected(true);
         optFirst.setText("Distance From First Vertex");
 
+        buttonGroup1.add(optSecond);
         optSecond.setText("Distance From Second Vertex");
 
         jLabel3.setText("Distance:");
@@ -206,74 +225,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
 
         txtTotalLength.setEnabled(false);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Area Details:");
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Point Location:");
-
-        jLabel6.setText("Maximum Area(m2):");
-
-        txtMaxArea.setEnabled(false);
-
-        optClockwise.setSelected(true);
-        optClockwise.setText("Clockwise Direction");
-
-        optCounterClockWise.setText("Counter-Clockwise Direction");
-
-        jLabel7.setText("Required Area(m2):");
-
-        btnNewPacel.setText("Create Parcel");
-        btnNewPacel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewPacelActionPerformed(evt);
-            }
-        });
-
-        btnSave.setText("Save");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(optClockwise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(optCounterClockWise))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 33, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btnSave)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnNewPacel, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                            .addComponent(txtRequiredArea))))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(optClockwise)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(optCounterClockWise)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtRequiredArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNewPacel)
-                    .addComponent(btnSave))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         btnAddPoint.setText("Add Point in Map");
         btnAddPoint.addActionListener(new java.awt.event.ActionListener() {
@@ -289,57 +242,55 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
         });
 
+        btnReload.setText("Reload Data");
+        btnReload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReloadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(167, 167, 167))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(txtTotalLength, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(btnAddPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                    .addComponent(jLabel3)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(optSecond, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(optFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMaxArea))
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnShowInMap)))
-                        .addContainerGap())))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtTotalLength, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(optSecond, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(optFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnShowInMap, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnReload)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAddPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTotalLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -356,22 +307,22 @@ public class LocatePointPanel extends javax.swing.JPanel {
                     .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAddPoint)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtMaxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAddPoint)
+                    .addComponent(btnReload)))
         );
 
-        btnRemove.setText("Remove");
-        btnRemove.setEnabled(false);
-        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+        btnClearSelection.setText("Clear Selection");
+        btnClearSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveActionPerformed(evt);
+                btnClearSelectionActionPerformed(evt);
+            }
+        });
+
+        btnMakeEnable.setText("Enable Table");
+        btnMakeEnable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMakeEnableActionPerformed(evt);
             }
         });
 
@@ -380,73 +331,79 @@ public class LocatePointPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnClearSelection))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMakeEnable, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnClearSelection)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClearSelection)
                     .addComponent(jLabel1)
-                    .addComponent(btnRemove))
+                    .addComponent(btnClearSelection)
+                    .addComponent(btnMakeEnable))
                 .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        int[] indx = this.table.getSelectedRows();
-        if (indx != null || indx.length > 0) {
-            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-            //String fid = this.table.getModel().getValueAt(
-            //selectedRowIndex, this.layer.getFieldIndex(
-            //CadastreTargetSegmentLayer.LAYER_FIELD_FID)).toString();
-            for (int seli : indx) {
-                String fid = this.table.getModel().getValueAt(seli, 3).toString();//hash code at fourth column.
-                if (targetSegmentLayer.removeFeature(fid) != null) {
-                    tableModel.removeRow(seli);
-                    table.setModel(tableModel);
-                }
-            }
-            table.repaint();
-            btnRemove.setEnabled(false);
-        }
-    }//GEN-LAST:event_btnRemoveActionPerformed
+    private List<segmentDetails> buildSegmentCollection(ExtendedLayerGraphics ref_targetSegmentLayer){
+        List<segmentDetails> t_segs = new ArrayList<segmentDetails>();
+        //get features.
+        SimpleFeatureCollection feacol = ref_targetSegmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //Record the features.
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            String objId = fea.getID();
+            byte selected = 0;
+            double shapelen = Double.parseDouble(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN).toString());
+            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            String fid = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString();
+      
+            Geometry geom = (Geometry) fea.getAttribute(0);//First attribute element for geometry value.
+            segmentDetails seg = new segmentDetails(objId, shapelen, geom, parID, selected, fid);
 
-    private void build_new_FeatureCollection(List<segmentDetails> segs) {
+            t_segs.add(seg);
+        }
+        
+        return t_segs;
+    }
+    
+    private void build_new_FeatureCollection(List<segmentDetails> segs, ExtendedLayerGraphics ref_targetSegmentLayer) {
         //Add feature as new features.
         for (segmentDetails seg : segs) {
             String objId = seg.getFeacode();
             //Copy attributes from old feature collection.
-            if (targetSegmentLayer.removeFeature(objId) != null) {
+            ref_targetSegmentLayer.removeFeature(objId);
+            //if (ref_targetSegmentLayer.removeFeature(objId) != null) {
                 HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
                 fieldsWithValues.put(
                         CadastreTargetSegmentLayer.LAYER_FIELD_FID, seg.getFid());
@@ -457,8 +414,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 fieldsWithValues.put(
                         CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, seg.getSelected());
 
-                targetSegmentLayer.addFeature(objId, seg.getGeom(), fieldsWithValues);
-            }
+                ref_targetSegmentLayer.addFeature(objId, seg.getGeom(), fieldsWithValues);
+            //}
         }
     }
 
@@ -479,7 +436,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             String objId = fea.getID();
             byte selected = 0;
             double shapelen = Double.parseDouble(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN).toString());
-            int parcelID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
             String fid = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString();
             for (int i = 0; i < indx.length; i++) {
                 String segid = this.table.getModel().getValueAt(indx[i], 3).toString();//hash code.
@@ -489,14 +446,14 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 }
             }
             Geometry geom = (Geometry) fea.getAttribute(0);//First attribute element for geometry value.
-            segmentDetails seg = new segmentDetails(objId, shapelen, geom, parcelID, selected, fid);
+            segmentDetails seg = new segmentDetails(objId, shapelen, geom, parID, selected, fid);
             if (selected == 1) {
                 selsegs.add(seg);
             }
             segs.add(seg);
         }
 
-        build_new_FeatureCollection(segs);
+        build_new_FeatureCollection(segs,targetSegmentLayer);
         processPointCollection(selsegs);
         targetSegmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnShowInMapActionPerformed
@@ -527,38 +484,111 @@ public class LocatePointPanel extends javax.swing.JPanel {
             pts.add(tmpPoint);
         }
 
-        build_new_PointsCollection(pts);
+        build_new_PointsCollection(pts,segmentLayer);
     }
 
-    private void build_new_PointsCollection(List<PointDetails> pts) {
+    private void build_new_PointsCollection(List<PointDetails> pts,CadastreTargetSegmentLayer ref_segmentLayer) {
         //Add feature as new features.
         for (PointDetails pt : pts) {
             String objId = pt.getFeacode();
             //Copy attributes from old feature collection.
-            if (segmentLayer.removeFeature(objId) != null) {
+            ref_segmentLayer.removeFeature(objId);
+            //if (ref_segmentLayer.removeFeature(objId) != null) {
                 HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
                 fieldsWithValues.put(
                         CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL, pt.getFid());
                 fieldsWithValues.put(
                         CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, pt.getSelected());
 
-                segmentLayer.addFeature(objId, pt.getGeom(), fieldsWithValues);
-            }
+                ref_segmentLayer.addFeature(objId, pt.getGeom(), fieldsWithValues);
+            //}
         }
     }
 
+    private List<PointDetails> buildPointCollection(CadastreTargetSegmentLayer ref_segmentLayer) {
+        List<PointDetails> t_pts = new ArrayList<PointDetails>();
+        //find the point collection
+        SimpleFeatureCollection feapoints = ref_segmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
+        while (ptIterator.hasNext()) {
+            SimpleFeature fea = ptIterator.next();
+            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
+            //Check point exit in the selected segment list or not.
+            byte selected = 0;
+            String feacode = fea.getID();
+            String sn = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString();
+            PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn);
+
+            t_pts.add(tmpPoint);
+        }
+
+        return t_pts;
+    }
+    
     //reset the layer display.
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        //Make all layers off except the target layers.
-        //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
-        PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnClearSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSelectionActionPerformed
         table.clearSelection();
     }//GEN-LAST:event_btnClearSelectionActionPerformed
 
+    //<<<<<<<<<<<<<<<<<<<<<Break Segment at the given intermediate point.
+     public void breakSegmentAtPoint(LineString geom, Point pt, String objId) {
+        GeometryFactory geomFactory=new GeometryFactory();
+        //add first segment.
+        Coordinate [] co1=new Coordinate[]{geom.getStartPoint().getCoordinate(),pt.getCoordinate()};
+        LineString l1=geomFactory.createLineString(co1);
+        appendNewSegment(l1);
+        //add second segment.
+        Coordinate [] co2=new Coordinate[]{pt.getCoordinate(),geom.getEndPoint().getCoordinate()};
+        LineString l2=geomFactory.createLineString(co2);
+        appendNewSegment(l2);
+        //finally remove the orignal segment.
+        targetSegmentLayer.removeFeature(objId);
+    }
+    
+    private String newSegmentName() {
+        int segnumber = 0;
+        //find the point collection
+        SimpleFeatureCollection feapoints = targetSegmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> segIterator = feapoints.features();
+        while (segIterator.hasNext()) {
+            SimpleFeature fea = segIterator.next();
+            int n_number = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString());
+            if (segnumber < n_number) {
+                segnumber = n_number;
+            }
+        }
+
+        segnumber++;
+        return Integer.toString(segnumber);
+    }
+     
+    public void appendNewSegment(LineString newSegment) {
+        String sn = Integer.toString(newSegment.hashCode());
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        String feaCount = newSegmentName();
+        if (targetSegmentLayer.removeFeature(sn) == null) {
+            HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_FID, feaCount);
+            //format the shape length.
+            Double shapelen = newSegment.getLength();
+            String sLen = df.format(shapelen);
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, sLen);
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, parcelID);
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, 0);
+
+            targetSegmentLayer.addFeature(sn, newSegment, fieldsWithValues);
+        }
+    }
+    //Break segment ends>>>>>>>>>>>>>>>>>>>
+    
     //Can be extended this method for multiple selection, but constraint given by form
     //Check first selected segment only.
     private void determineSelectedNodes() {
@@ -578,6 +608,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 String objId = fea.getID();
                 if (objId.equals(segid)) {
                     LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
+                    parcelID=fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
+                    lineID=fea.getID();
                     lineSeg = geom;
                     //Identify first node name
                     String firstnode = getNodeName(geom.getStartPoint());
@@ -590,7 +622,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private String getNodeName(Point pt1) {
         String nodename = "";
         //find the point collection
@@ -609,20 +641,13 @@ public class LocatePointPanel extends javax.swing.JPanel {
     }
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        if (!table.isEnabled()) return;
         java.awt.Point pt = evt.getPoint();
         int r = table.rowAtPoint(pt);
 
         //reflect the selected segment length into the total length textbox.
         txtTotalLength.setText(table.getValueAt(r, 1).toString());
 
-        String parcel_id = table.getValueAt(r, 2).toString();
-        DecimalFormat df = new DecimalFormat("0.00");
-        for (AreaObject aa : segmentLayer.getPolyAreaList()) {
-            if (parcel_id.equals(aa.getId())) {
-                txtMaxArea.setText(df.format(aa.getArea()));
-                break;
-            }
-        }
         //reflect the node title for selected segment.
         determineSelectedNodes();
     }//GEN-LAST:event_tableMouseClicked
@@ -662,25 +687,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
         nodenumber++;
         return Integer.toString(nodenumber);
     }
-    
-    private String newSegmentName() {
-        int segnumber = 0;
-        //find the point collection
-        SimpleFeatureCollection feapoints = targetSegmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> segIterator = feapoints.features();
-        while (segIterator.hasNext()) {
-            SimpleFeature fea = segIterator.next();
-            int n_number = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString());
-            if (segnumber < n_number) {
-                segnumber = n_number;
-            }
-        }
 
-        segnumber++;
-        return Integer.toString(segnumber);
-    }
-
-    private void addPointInPointCollection(Point point_to_add) {
+    public void addPointInPointCollection(Point point_to_add) {
         //Find last serial number for new point.
         String objId = Integer.toString(point_to_add.hashCode());
         String nodecount = newNodeName();
@@ -692,6 +700,14 @@ public class LocatePointPanel extends javax.swing.JPanel {
         segmentLayer.addFeature(objId, (Geometry) point_to_add, fieldsWithValues);
     }
 
+    private void refreshData() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        breakSegmentAtPoint(lineSeg,pointFixed,lineID);
+        showSegmentListInTable();
+        
+        table.setEnabled(false);
+        clickEvnt.invoke(method_holder_class,new Object[]{lineSeg,pointFixed,parcelID});
+    }
+    
     private void btnAddPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPointActionPerformed
         //Check necessary parameters.
         if (lineSeg == null || lineSeg.getLength() <= 0) {
@@ -699,14 +715,14 @@ public class LocatePointPanel extends javax.swing.JPanel {
             return;
         }
         double dist = Double.parseDouble(txtDistance.getText());
-        if (dist <= 0) {
-            JOptionPane.showMessageDialog(this, "Please check distance, it cannot be less than or equal to zero.");
+        if (dist <= 0 || dist>=lineSeg.getLength()) {
+            JOptionPane.showMessageDialog(this, "Please check distance, it cannot be zero or less or greater than the segment legnth.");
             return;
         }
 
         //Identify the point sequence.
-        Point startPoint = null;
-        Point endPoint = null;
+        Point startPoint;
+        Point endPoint;
         if (optFirst.isSelected()) {
             startPoint = lineSeg.getStartPoint();
             endPoint = lineSeg.getEndPoint();
@@ -720,306 +736,59 @@ public class LocatePointPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Could not locate point.");
             return;
         }
-
+        pointFixed=interPoint;
         //Insert point into point feature collection.
         addPointInPointCollection(interPoint);
+        try {
+            refreshData();
+        } catch (Exception e) {
+        }
         targetSegmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnAddPointActionPerformed
 
-    private int totalNodeCount() {
-        int nodenumber = 0;
-        //find the point collection
-        SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
-        while (ptIterator.hasNext()) {
-            SimpleFeature fea = ptIterator.next();
-            byte insertednode = Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED).toString());
-            if (insertednode != 2) {
-                nodenumber++;
-            }
-        }
+    private void btnMakeEnableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMakeEnableActionPerformed
+        table.setEnabled(true);
+    }//GEN-LAST:event_btnMakeEnableActionPerformed
 
-        return nodenumber;
-    }
-
-    private Coordinate locate_Point_Clockwise(Point[] pts, Point keyPoint, int i1, int i2) {
-        List<Coordinate> pList = new ArrayList<Coordinate>();
-        double areaReq = Double.parseDouble(txtRequiredArea.getText());
-        //collect points for checking area.
-        pList.add(keyPoint.getCoordinate());
-        //Loop until the polygon formed does not have area greater than required area.
-        for (int i = i2; i < pts.length; i++) {
-            pList.add(pts[i].getCoordinate());
-            if (checkAreaFormed(pList, areaReq)) {
-                break;
-            }
-        }
-        for (int i = 0; i <= i1; i++) {
-            pList.add(pts[i].getCoordinate());
-            if (checkAreaFormed(pList, areaReq)) {
-                break;
-            }
-        }
-
-        return point_to_form_RequiredArea(pList, areaReq);
-    }
-
-    private Coordinate midPoint_of_Given_TwoPoints(Coordinate co1, Coordinate co2) {
-        Coordinate co = new Coordinate();
-        co.x = (co1.x + co2.x) / 2;
-        co.y = (co1.y + co2.y) / 2;
-
-        return co;
-    }
-
-    private Coordinate point_to_form_RequiredArea(List<Coordinate> pts, double areaReq) {
-        Coordinate midpoint = null;
-        int n = pts.size() - 1;//find 0 based upperbound.
-        //last two point.
-        Coordinate lastPt = pts.get(n);
-        Coordinate secondlastPt = pts.get(n - 1);
-        //Bisection iterative method.
-        midpoint = midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
-        pts.remove(n);
-        pts.add(midpoint);
-        double areaFound = AreaObject.getAreaFromCoordinateList(pts);
-        DecimalFormat df = new DecimalFormat("0.000");
-
-        while (!df.format(areaFound).equals(df.format(areaReq))) {
-            if (midpoint.equals(secondlastPt) || midpoint.equals(lastPt)) {
-                break;
-            }
-            if (areaFound < areaReq) {
-                secondlastPt = midpoint;
-            } else {
-                lastPt = midpoint;
-            }
-
-            midpoint = midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
-            pts.remove(n);
-            pts.add(midpoint);
-            areaFound = AreaObject.getAreaFromCoordinateList(pts);
-        }
-        return midpoint;
-    }
-
-    private boolean checkAreaFormed(List<Coordinate> pList, double areaReq) {
-        if (pList.size() > 2) {
-            double areaFound = AreaObject.getAreaFromCoordinateList(pList);
-            if (areaFound > areaReq) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Coordinate locate_Point_counterClockwise(Point[] pts, Point keyPoint, int i1, int i2) {
-        List<Coordinate> pList = new ArrayList<Coordinate>();
-        double areaReq = Double.parseDouble(txtRequiredArea.getText());
-        //collect points for checking area.
-        pList.add(keyPoint.getCoordinate());
-        for (int i = i1; i >= 0; i--) {
-            pList.add(pts[i].getCoordinate());
-            if (checkAreaFormed(pList, areaReq)) {
-                break;
-            }
-        }
-        for (int i = pts.length - 1; i >= i2; i--) {
-            pList.add(pts[i].getCoordinate());
-            if (checkAreaFormed(pList, areaReq)) {
-                break;
-            }
-        }
-
-        return point_to_form_RequiredArea(pList, areaReq);
-    }
-
-    private void createNewSegment(Point[] pts, Point keyPoint, int i1, int i2) {
-        Coordinate newCo = null;
-        //Traverse based on the direction given.
-        if (optClockwise.isSelected()) {
-            newCo = locate_Point_Clockwise(pts, keyPoint, i1, i2);
-        } else {
-            newCo = locate_Point_counterClockwise(pts, keyPoint, i1, i2);
-        }
-        if (newCo == null) {
-            return;
-        }
-        //Form new segment with the coordinate founds.
-        GeometryFactory geomFactory = new GeometryFactory();
-        Coordinate[] co = new Coordinate[]{keyPoint.getCoordinate(), newCo};
-        LineString newSegment = geomFactory.createLineString(co);
-        Point newPoint = geomFactory.createPoint(newCo);
-
-        addPointInPointCollection(newPoint);
-        appendNewSegment(newSegment);
-        //break segment containing the new points.
-        breakSegment(newPoint);
-        //breakSegmentAtPoint(lineSeg,keyPoint);
-        breakSegment(keyPoint);
-    }
-
-    private void breakSegmentAtPoint(LineString geom, Point pt) {
-        GeometryFactory geomFactory=new GeometryFactory();
-        //add first segment.
-        Coordinate [] co1=new Coordinate[]{geom.getStartPoint().getCoordinate(),pt.getCoordinate()};
-        LineString l1=geomFactory.createLineString(co1);
-        appendNewSegment(l1);
-        //add second segment.
-        Coordinate [] co2=new Coordinate[]{pt.getCoordinate(),geom.getEndPoint().getCoordinate()};
-        LineString l2=geomFactory.createLineString(co2);
-        appendNewSegment(l2);
-    }
-       
-    private void breakSegment(Point pt){
-        //get features.
-        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
-        //check the features.
-        while (feaIterator.hasNext()) {
-            SimpleFeature fea = feaIterator.next();
-            String objId = fea.getID();
-            LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
-            if (IsPointOnLine(geom,pt)){
-                breakSegmentAtPoint(geom, pt);
-                 //finally remove the orignal segment.
-                targetSegmentLayer.removeFeature(objId);
-                break;
-            }
-        }
-    }
-    
-    //Sum of partial distances are equal to the total segment length, then 
-    //the point lies on the given line.
-    private boolean IsPointOnLine(LineString seg,Point pt){
-        double segLength=seg.getLength();
-        double dist1=Distance(seg.getStartPoint().getCoordinate(),pt.getCoordinate());
-        double dist2=Distance(pt.getCoordinate(),seg.getEndPoint().getCoordinate());
+    public void getPreviousData(){
+        //Clear all data in old collection
+        targetSegmentLayer.getFeatureCollection().clear();
+        segmentLayer.getFeatureCollection().clear();
+        //Obtain segment list.
+        List<segmentDetails> segs= buildSegmentCollection(prevTargetSegmentLayer);
+        build_new_FeatureCollection(segs, targetSegmentLayer);
+        //Obtain point list.
+        List<PointDetails> pts=buildPointCollection(prevSegmentLayer);
+        build_new_PointsCollection(pts, segmentLayer);
         
-        DecimalFormat df=new DecimalFormat("0.000");
-        //Avoid the point coincidence at end of the line.
-        if (df.format(segLength).equals(df.format(dist1))) return false;
-        if (df.format(segLength).equals(df.format(dist2))) return false;
-        //check if the point lies within line segment.
-        double totaldist=dist1+dist2;
-        if (df.format(segLength).equals(df.format(totaldist))){
-            return true;
-        }
-        else{
-            return false;
-        }  
-    }
-    
-    private double Distance(Coordinate co1,Coordinate co2){
-        double distSquare=Math.pow((co1.x-co2.x),2);
-        distSquare+= Math.pow((co1.y-co2.y), 2);
-        return Math.pow(distSquare,0.5);
-    }
-    
-    private String getParcelID(){
-        List<AreaObject> polyArea= segmentLayer.getPolyAreaList();
-    
-        for (AreaObject aa:polyArea){
-            return aa.getId();
-        }
-        
-        return "000";
-    }
-    
-    private void appendNewSegment(LineString newSegment) {
-        String sn = Integer.toString(newSegment.hashCode());
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        String feaCount = newSegmentName();
-        if (targetSegmentLayer.removeFeature(sn) == null) {
-            HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_FID, feaCount);
-            //format the shape length.
-            Double shapelen = newSegment.getLength();
-            String sLen = df.format(shapelen);
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, sLen);
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, getParcelID());
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, 0);
-
-            targetSegmentLayer.addFeature(sn, newSegment, fieldsWithValues);
-        }
-    }
-            
-    private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
-        //Validate the area entered.
-        double areaReq = Double.parseDouble(txtRequiredArea.getText());
-        if (areaReq <= 0) {
-            JOptionPane.showMessageDialog(this, "Area cannot be less than or equal to zero. Check it.");
-            return;
-        }
-        double maxArea = Double.parseDouble(txtMaxArea.getText());
-        if (areaReq >= maxArea) {
-            JOptionPane.showMessageDialog(this, "Area cannot be more than or equal to given maximum area. Check it.");
-            return;
-        }
-        //process points.
-        Point[] pts = new Point[totalNodeCount()];
-        Point keyPoint = null;
-        //find the point collection
-        SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
-        int i = 0;
-        int i1 = 0;
-        int i2 = 0;
-        //Storing points and key indices for area iteration.
-        while (ptIterator.hasNext()) {
-            SimpleFeature fea = ptIterator.next();
-            byte insertednode = Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED).toString());
-            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
-            //store point.
-            if (insertednode != 2) {
-                if (pt.equals(lineSeg.getStartPoint())) {
-                    i1 = i;//initial index.
-                }
-                if (pt.equals(lineSeg.getEndPoint())) {
-                    i2 = i;//end index.
-                }
-                pts[i++] = pt;
-            } else {
-                keyPoint = pt;//First attribute as geometry attribute.
-            }
-        }
-        createNewSegment(pts, keyPoint, i1, i2);
         showSegmentListInTable();
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+    }
+     
+    private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
+        getPreviousData();
+        table.setEnabled(true);
         segmentLayer.getMapControl().refresh();
-    }//GEN-LAST:event_btnNewPacelActionPerformed
+    }//GEN-LAST:event_btnReloadActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPoint;
     private javax.swing.JButton btnClearSelection;
-    private javax.swing.JToggleButton btnNewPacel;
-    private javax.swing.JButton btnRemove;
-    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnMakeEnable;
+    private javax.swing.JButton btnReload;
     private javax.swing.JButton btnShowInMap;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JRadioButton optClockwise;
-    private javax.swing.JRadioButton optCounterClockWise;
     private javax.swing.JRadioButton optFirst;
     private javax.swing.JRadioButton optSecond;
     private javax.swing.JTable table;
     private javax.swing.JTextField txtDistance;
-    private javax.swing.JTextField txtMaxArea;
-    private javax.swing.JTextField txtRequiredArea;
     private javax.swing.JTextField txtTotalLength;
     // End of variables declaration//GEN-END:variables
 }

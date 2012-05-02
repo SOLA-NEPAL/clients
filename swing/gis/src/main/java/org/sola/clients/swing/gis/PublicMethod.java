@@ -16,8 +16,33 @@ import org.geotools.swing.extended.Map;
  * @author ShresthaKabin
  */
 public class PublicMethod {
-    public static void maplayerOnOff(Map mapObj,boolean showOtherLayers){
-            LinkedHashMap<String, ExtendedLayer> lays = mapObj.getSolaLayers();
+
+    //Make all layer off excepts target layers.
+    public static void maplayerOnOff(Map mapObj, boolean showOtherLayers) {
+        //Set layer tick status in TOC.
+        DefaultTreeModel treeModel = (DefaultTreeModel) mapObj.getToc().getTreeModel();
+        Object parent = treeModel.getRoot();
+        //Assuming the layer name is "target" (not the title)
+        for (int i = 0; i < treeModel.getChildCount(parent); i++) {
+            TocLayerNode tocNode = (TocLayerNode) treeModel.getChild(parent, i);
+            
+            ExtendedLayer layer=tocNode.getLayer();
+            String layerName= layer.getLayerName();
+            if (layerName.contains("Target")) continue;
+            
+            //Based on the situation trigger the tree node click events.
+            boolean isLayerVisible=layer.isVisible();
+            if (showOtherLayers){
+                if (!isLayerVisible) mapObj.getToc().changeNodeSwitch(tocNode);
+            }
+            else{
+                if (isLayerVisible) mapObj.getToc().changeNodeSwitch(tocNode);
+            }
+        }
+    }
+
+    public static void Tmp_maplayerOnOff(Map mapObj, boolean showOtherLayers) {
+        LinkedHashMap<String, ExtendedLayer> lays = mapObj.getSolaLayers();
         //Set visibility status of map layers.
         for (ExtendedLayer lay : lays.values()) {
             //System.out.println(lay.getTitle());

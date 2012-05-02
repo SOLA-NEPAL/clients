@@ -34,6 +34,8 @@
 package org.sola.clients.swing.gis.ui.controlsbundle;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
@@ -42,10 +44,10 @@ import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewSurveyPointLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.mapaction.CadastreChangeNewCadastreObjectListFormShow;
-import org.sola.clients.swing.gis.mapaction.CadastreSegmentListFormShow;
-import org.sola.clients.swing.gis.mapaction.CadastreChangePointSurveyListFormShow;
+import org.sola.clients.swing.gis.mapaction.BlankTool;
+import org.sola.clients.swing.gis.mapaction.CadastreTwoPointFormShow;
 import org.sola.clients.swing.gis.mapaction.CadastreJoinPointsShow;
+import org.sola.clients.swing.gis.mapaction.CadastreOnePointAreaFormShow;
 import org.sola.clients.swing.gis.tool.*;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -180,6 +182,40 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 
     @Override
     protected void addToolsAndCommands() {
+        putBlankSeparator();
+        //new tool for parcel selection.
+        listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects((this.getPojoDataAccess()));
+        listParcel.setTargetParcelsLayer(targetParcelsLayer);
+        //Target segment layer in listselectedCadastreObject class 
+        //get reference for segment layer in CadastreTargetSegment Layer, so they are same.
+        listParcel.setTargetSegmentLayer(targetSegmentLayer.getSegmentLayer());
+        listParcel.setTargetPointLayer(targetSegmentLayer);
+        listParcel.setPolyAreaList(targetSegmentLayer.getPolyAreaList());
+        this.getMap().addTool(listParcel, this.getToolbar(), true);
+        try {
+//            //add toolbar for the join point form show.
+//            this.getMap().addMapAction(new CadastreJoinPointsShow(
+//                    this.getMap(), this.targetSegmentLayer.getPointForm(targetParcelsLayer)),
+//                    this.getToolbar(),
+//                    true);
+            
+            //add toolbar for the one point and Area method show forms.
+            this.getMap().addMapAction(new CadastreOnePointAreaFormShow(
+                    this.getMap(), this.targetSegmentLayer.getOnePointAreaForm(targetParcelsLayer)),
+                    this.getToolbar(),
+                    true);
+            
+            //add toolbar for the segment show forms.
+    //        this.getMap().addMapAction(new CadastreTwoPointFormShow(
+    //                this.getMap(), this.targetSegmentLayer.getHostForm(targetParcelsLayer)),
+    //                this.getToolbar(),
+    //                true);
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(ControlsBundleForCadastreChange.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void putBlankSeparator() {
         //---------Uncomment all lines to restore generic sola tools.
 //        CadastreChangeSelectParcelTool selectParcelTool =
 //                new CadastreChangeSelectParcelTool(this.getPojoDataAccess());
@@ -216,28 +252,11 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 //        this.cadastreBoundaryEditTool.setTargetLayer(this.newCadastreObjectLayer);
 //        this.cadastreBoundaryEditTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
         //------------------------
-        
-        //new tool for parcel selection.
-        listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects((this.getPojoDataAccess()));
-        listParcel.setTargetParcelsLayer(targetParcelsLayer);
-        //Target segment layer in listselectedCadastreObject class 
-        //get reference for segment layer in CadastreTargetSegment Layer, so they are same.
-        listParcel.setTargetSegmentLayer(targetSegmentLayer.getSegmentLayer());
-        listParcel.setTargetPointLayer(targetSegmentLayer);
-        listParcel.setPolyAreaList(targetSegmentLayer.getPolyAreaList());
-        this.getMap().addTool(listParcel, this.getToolbar(), true);
-        
-          //add toolbar for the join point form show.
-        this.getMap().addMapAction(new CadastreJoinPointsShow(
-                this.getMap(), this.targetSegmentLayer.getPointForm(targetParcelsLayer)),
-                this.getToolbar(),
-                true);
-        
-        //add toolbar for the segment show forms.
-        this.getMap().addMapAction(new CadastreSegmentListFormShow(
-                this.getMap(), this.targetSegmentLayer.getHostForm(targetParcelsLayer)),
-                this.getToolbar(),
-                true);
+        //add long tool separator.
+        //add vertical bar.
+        this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
+//        for (int i=0;i<12;i++)
+//            this.getMap().addMapAction(new BlankTool(),this.getToolbar(), true);
     }
 
     /**

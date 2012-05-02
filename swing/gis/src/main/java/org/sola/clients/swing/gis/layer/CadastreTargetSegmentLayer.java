@@ -6,6 +6,8 @@ package org.sola.clients.swing.gis.layer;
 
 //import com.vividsolutions.jts.geom.Geometry;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import org.geotools.geometry.jts.Geometries;
@@ -13,8 +15,9 @@ import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
-import org.sola.clients.swing.gis.ui.control.JoinPointMethodForm;
 import org.sola.clients.swing.gis.ui.control.OnePointAreaMethodForm;
+import org.sola.clients.swing.gis.ui.control.JoinPointMethodForm;
+import org.sola.clients.swing.gis.ui.control.TwoPointMethodForm;
 
 /**
  *
@@ -24,6 +27,7 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     //For point data.
     public static final String POINT_LAYER_FIELD_LABEL = "label";
     public static final String LAYER_FIELD_IS_POINT_SELECTED="point_selected";
+    
     private static final String LAYER_NAME = "Target points";
     private static final String LAYER_STYLE_RESOURCE = "segmentPoints.xml";
     private static final String LAYER_ATTRIBUTE_DEFINITION_POINT =
@@ -35,14 +39,15 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     public static final String LAYER_FIELD_PARCEL_ID="parcel_id";
     public static final String LAYER_FIELD_SELECTED = "is_selected";
     
-    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0",
+    public static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0",
             LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED);     
-    private static final String LAYER_SEGMENT_NAME = "Target Segments";
-    private static final String LAYER_SEGMENT_STYLE_RESOURCE = "segmentnew.xml";
+    public static final String LAYER_SEGMENT_NAME = "Target Segments";
+    public static final String LAYER_SEGMENT_STYLE_RESOURCE = "segmentnew.xml";
     
     private ExtendedLayerGraphics segmentLayer;
     private Component hostForm = null;
     private Component pointForm=null;
+    private Component pointAreaForm=null;
     //Store list of area to display in the parcel splitting form.
     private List<AreaObject> polyAreaList=new ArrayList<AreaObject>();
 
@@ -58,15 +63,24 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
      * Gets the form that is responsible with handling other attributes of features
      * @return 
      */
-    public OnePointAreaMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         if (this.hostForm == null){
-            this.hostForm = new OnePointAreaMethodForm(this,targetParcelsLayer);
+            this.hostForm = new TwoPointMethodForm(this,targetParcelsLayer);
         }
         
-        return (OnePointAreaMethodForm)this.hostForm;
+        return (TwoPointMethodForm)this.hostForm;
+    }
+    
+    public OnePointAreaMethodForm getOnePointAreaForm
+            (CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
+        if (this.pointAreaForm == null){
+            this.pointAreaForm = new OnePointAreaMethodForm(this,targetParcelsLayer);
+        }
+        
+        return (OnePointAreaMethodForm)this.pointAreaForm;
     }
 
-    public Component getPointForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public Component getPointForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
         if (this.pointForm == null){
             this.pointForm = new JoinPointMethodForm(this,targetParcelsLayer);
         }

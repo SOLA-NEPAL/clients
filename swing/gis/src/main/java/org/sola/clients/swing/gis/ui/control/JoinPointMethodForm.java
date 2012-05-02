@@ -5,13 +5,17 @@
 package org.sola.clients.swing.gis.ui.control;
 
 import com.vividsolutions.jts.geom.*;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
+import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
@@ -25,13 +29,25 @@ import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 public class JoinPointMethodForm extends javax.swing.JDialog {
     private CadastreTargetSegmentLayer targetPointlayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
+    //Store selected line and points.
+    private LineString lineSeg = null;
+    private Point pointFixed=null;
     /**
      * Creates new form JoinPointMethodForm
      */
-    public JoinPointMethodForm(CadastreTargetSegmentLayer targetPointlayer,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public JoinPointMethodForm(CadastreTargetSegmentLayer targetPointlayer,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) 
+                            throws NoSuchMethodException, InitializeLayerException {
         initComponents();
+        this.setAlwaysOnTop(true);
+        //this.setModalityType(ModalityType.APPLICATION_MODAL);
+        locatePointPanel.initializeFormVariable(targetPointlayer);
+        
         this.targetPointlayer = targetPointlayer;
         this.targetParcelsLayer=targetParcelsLayer;
+    }
+
+    public LocatePointPanel getLocatePointPanel() {
+        return locatePointPanel;
     }
 
     public void showPointListInTable() {
@@ -39,8 +55,11 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         SimpleFeatureCollection pointFeatures = targetPointlayer.getFeatureCollection();
         SimpleFeatureIterator feaIterator = pointFeatures.features();
         //get list model copy.
+        
         DefaultListModel listFrom = new DefaultListModel();
+        listFrom.clear();
         DefaultListModel listTO = new DefaultListModel();
+        listTO.clear();
         //add item to list model.
         while (feaIterator.hasNext()) {
             SimpleFeature fea = feaIterator.next();
@@ -55,7 +74,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         lstTo.setModel(listTO);
         lstTo.repaint();
     }
-
+            
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,9 +92,13 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         btnJoinPoint = new javax.swing.JButton();
         btnPolygonize = new javax.swing.JButton();
+        locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -109,23 +132,30 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(btnJoinPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPolygonize))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnJoinPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPolygonize))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnJoinPoint)
@@ -136,8 +166,8 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)))
         );
 
         pack();
@@ -223,11 +253,34 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
         Polygonization.formPolygon(targetPointlayer, targetParcelsLayer);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
-
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Map mapObj=targetPointlayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
+
+    //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
+    public void refreshTable(Object lineSeg,Object pointFixed, String parID ){
+        this.lineSeg=(LineString)lineSeg;
+        this.pointFixed=(Point)pointFixed;
+        
+        showPointListInTable();
+    }
+    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //Event delegate passing to the child JPanel.
+        Class[] cls=new Class[]{Object.class,Object.class,String.class};
+        Class joinPointForm=this.getClass();
+        Method refresh_this=null;
+        try {
+            refresh_this = joinPointForm.getMethod("refreshTable", cls);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(JoinPointMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(JoinPointMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        locatePointPanel.setClickEvnt(refresh_this,this);
+    }//GEN-LAST:event_formWindowOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnJoinPoint;
@@ -236,6 +289,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private org.sola.clients.swing.gis.ui.control.LocatePointPanel locatePointPanel;
     private javax.swing.JList lstFrom;
     private javax.swing.JList lstTo;
     // End of variables declaration//GEN-END:variables

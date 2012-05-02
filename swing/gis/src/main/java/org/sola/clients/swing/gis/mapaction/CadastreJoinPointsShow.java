@@ -24,7 +24,7 @@ public class CadastreJoinPointsShow extends ComponentShow{
         super(mapObj, pointListForm, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_JOIN_POINT_SHOW).getMessage(),
-                "resources/join-points.png");
+                "resources/JoinPoints.png");
         
         this.mapObj=mapObj;
         this.pointListForm= (JoinPointMethodForm) pointListForm;
@@ -34,8 +34,10 @@ public class CadastreJoinPointsShow extends ComponentShow{
     public void onClick() {
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
-        //Display segment list.
+        
         pointListForm.showPointListInTable();
         pointListForm.setVisible(!pointListForm.isVisible());
+        //Display segment list.
+        pointListForm.getLocatePointPanel().showSegmentListInTable();
     }
 }

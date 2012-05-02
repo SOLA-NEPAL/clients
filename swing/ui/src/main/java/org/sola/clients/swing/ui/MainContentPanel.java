@@ -79,12 +79,12 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_ADMIN_USER_PASSWORD = "userPasswordPanel";
     public final static String CARD_ADMIN_BR_MANAGE = "brManagementPanel";
     public final static String CARD_ADMIN_BR = "brPanel";
-<<<<<<< HEAD
+//<<<<<<< HEAD
     public final static String CARD_SOURCE = "sourcePanel";
     
-=======
+//=======
     public final static String CARD_ADMIN_CALENDAR = "calendarPanel";
->>>>>>> nepal_custom
+//>>>>>>> nepal_custom
     private HashMap<String, Component> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;
