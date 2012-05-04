@@ -193,23 +193,23 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         listParcel.setPolyAreaList(targetSegmentLayer.getPolyAreaList());
         this.getMap().addTool(listParcel, this.getToolbar(), true);
         try {
-//            //add toolbar for the join point form show.
-//            this.getMap().addMapAction(new CadastreJoinPointsShow(
-//                    this.getMap(), this.targetSegmentLayer.getPointForm(targetParcelsLayer)),
-//                    this.getToolbar(),
-//                    true);
-            
+            //add toolbar for the join point form show.
+            this.getMap().addMapAction(new CadastreJoinPointsShow(
+                    this.getMap(), this.targetSegmentLayer.getPointForm(targetParcelsLayer)),
+                    this.getToolbar(),
+                    true);
             //add toolbar for the one point and Area method show forms.
             this.getMap().addMapAction(new CadastreOnePointAreaFormShow(
                     this.getMap(), this.targetSegmentLayer.getOnePointAreaForm(targetParcelsLayer)),
                     this.getToolbar(),
                     true);
-            
-            //add toolbar for the segment show forms.
-    //        this.getMap().addMapAction(new CadastreTwoPointFormShow(
-    //                this.getMap(), this.targetSegmentLayer.getHostForm(targetParcelsLayer)),
-    //                this.getToolbar(),
-    //                true);
+             //add toolbar for the segment show forms.
+            this.getMap().addMapAction(new CadastreTwoPointFormShow(
+                    this.getMap(), this.targetSegmentLayer.getHostForm(targetParcelsLayer)),
+                    this.getToolbar(),
+                    true);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(ControlsBundleForCadastreChange.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(ControlsBundleForCadastreChange.class.getName()).log(Level.SEVERE, null, ex);
         }

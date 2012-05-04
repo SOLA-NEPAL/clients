@@ -14,9 +14,18 @@ public class PointDetails {
     private String fid="";
     private Geometry geom=null;
     private byte selected=0;
+    private int parcel_id=0;
 
     public String getFeacode() {
         return feacode;
+    }
+
+    public int getParcel_id() {
+        return parcel_id;
+    }
+
+    public void setParcel_id(int parcel_id) {
+        this.parcel_id = parcel_id;
     }
 
     public void setFeacode(String feacode) {
@@ -47,10 +56,11 @@ public class PointDetails {
         this.selected = selected;
     }
 
-    public PointDetails(String feacode,Geometry geom,byte selected,String fid) {
+    public PointDetails(String feacode,Geometry geom,byte selected,String fid,int parcel_id) {
         this.feacode=feacode;
         this.geom=geom;
         this.selected=selected;
         this.fid=fid;
+        this.parcel_id=parcel_id;
     }
 }

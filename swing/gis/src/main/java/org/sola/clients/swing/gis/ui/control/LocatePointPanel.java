@@ -10,6 +10,8 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import org.sola.clients.swing.gis.segmentDetails;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -23,6 +25,7 @@ import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.clients.swing.gis.PointDetails;
+import org.sola.clients.swing.gis.PublicMethod;
 
 /**
  *
@@ -374,7 +377,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private List<segmentDetails> buildSegmentCollection(ExtendedLayerGraphics ref_targetSegmentLayer){
+    public List<segmentDetails> buildSegmentCollection(ExtendedLayerGraphics ref_targetSegmentLayer){
         List<segmentDetails> t_segs = new ArrayList<segmentDetails>();
         //get features.
         SimpleFeatureCollection feacol = ref_targetSegmentLayer.getFeatureCollection();
@@ -397,25 +400,24 @@ public class LocatePointPanel extends javax.swing.JPanel {
         return t_segs;
     }
     
-    private void build_new_FeatureCollection(List<segmentDetails> segs, ExtendedLayerGraphics ref_targetSegmentLayer) {
+    public void build_new_FeatureCollection(List<segmentDetails> segs, ExtendedLayerGraphics ref_targetSegmentLayer) {
         //Add feature as new features.
         for (segmentDetails seg : segs) {
             String objId = seg.getFeacode();
             //Copy attributes from old feature collection.
-            ref_targetSegmentLayer.removeFeature(objId);
-            //if (ref_targetSegmentLayer.removeFeature(objId) != null) {
-                HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_FID, seg.getFid());
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, seg.getShapelen());
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, seg.getParcel_id());
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, seg.getSelected());
+            ref_targetSegmentLayer.removeFeature(objId);//Try to delete item first.
+            //append item.
+            HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_FID, seg.getFid());
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, seg.getShapelen());
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, seg.getParcel_id());
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, seg.getSelected());
 
-                ref_targetSegmentLayer.addFeature(objId, seg.getGeom(), fieldsWithValues);
-            //}
+            ref_targetSegmentLayer.addFeature(objId, seg.getGeom(), fieldsWithValues);
         }
     }
 
@@ -479,7 +481,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
             String feacode = fea.getID();
             String sn = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString();
-            PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn);
+            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn,parID);
 
             pts.add(tmpPoint);
         }
@@ -492,16 +495,17 @@ public class LocatePointPanel extends javax.swing.JPanel {
         for (PointDetails pt : pts) {
             String objId = pt.getFeacode();
             //Copy attributes from old feature collection.
-            ref_segmentLayer.removeFeature(objId);
-            //if (ref_segmentLayer.removeFeature(objId) != null) {
-                HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL, pt.getFid());
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, pt.getSelected());
+            ref_segmentLayer.removeFeature(objId);//First try to remove item.
+            //append item.
+            HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL, pt.getFid());
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, pt.getSelected());
+            fieldsWithValues.put(
+                    CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, pt.getParcel_id());
 
-                ref_segmentLayer.addFeature(objId, pt.getGeom(), fieldsWithValues);
-            //}
+            ref_segmentLayer.addFeature(objId, pt.getGeom(), fieldsWithValues);  
         }
     }
 
@@ -517,7 +521,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             byte selected = 0;
             String feacode = fea.getID();
             String sn = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString();
-            PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn);
+            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn,parID);
 
             t_pts.add(tmpPoint);
         }
@@ -547,29 +552,12 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //finally remove the orignal segment.
         targetSegmentLayer.removeFeature(objId);
     }
-    
-    private String newSegmentName() {
-        int segnumber = 0;
-        //find the point collection
-        SimpleFeatureCollection feapoints = targetSegmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> segIterator = feapoints.features();
-        while (segIterator.hasNext()) {
-            SimpleFeature fea = segIterator.next();
-            int n_number = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString());
-            if (segnumber < n_number) {
-                segnumber = n_number;
-            }
-        }
-
-        segnumber++;
-        return Integer.toString(segnumber);
-    }
      
     public void appendNewSegment(LineString newSegment) {
         String sn = Integer.toString(newSegment.hashCode());
         DecimalFormat df = new DecimalFormat("0.00");
 
-        String feaCount = newSegmentName();
+        String feaCount = PublicMethod.newSegmentName(targetSegmentLayer);
         if (targetSegmentLayer.removeFeature(sn) == null) {
             HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
             fieldsWithValues.put(
@@ -671,32 +659,25 @@ public class LocatePointPanel extends javax.swing.JPanel {
         return interPoint;
     }
 
-    private String newNodeName() {
-        int nodenumber = 0;
-        //find the point collection
-        SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
-        while (ptIterator.hasNext()) {
-            SimpleFeature fea = ptIterator.next();
-            int n_number = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString());
-            if (nodenumber < n_number) {
-                nodenumber = n_number;
-            }
-        }
-
-        nodenumber++;
-        return Integer.toString(nodenumber);
-    }
-
     public void addPointInPointCollection(Point point_to_add) {
         //Find last serial number for new point.
+        byte selected=2; //default value for point appended.
+        addPointInPointCollection(point_to_add,selected);
+    }
+    
+    //Receives selected attribute as 3 for point inserted after finding intersection between segments.
+    public void addPointInPointCollection(Point point_to_add, byte selected) {
+        //Find last serial number for new point.
         String objId = Integer.toString(point_to_add.hashCode());
-        String nodecount = newNodeName();
+        String nodecount = PublicMethod.newNodeName(segmentLayer);
         HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
         fieldsWithValues.put(
                 CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL, nodecount);
         fieldsWithValues.put(
-                CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, 2);
+                CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, selected);
+        fieldsWithValues.put(
+                        CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, parcelID);
+        
         segmentLayer.addFeature(objId, (Geometry) point_to_add, fieldsWithValues);
     }
 
@@ -767,6 +748,17 @@ public class LocatePointPanel extends javax.swing.JPanel {
     private void btnReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReloadActionPerformed
         getPreviousData();
         table.setEnabled(true);
+        try {
+            //refresh list in point list.
+            clickEvnt.invoke(method_holder_class,new Object[]{lineSeg,pointFixed,parcelID});
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(LocatePointPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(LocatePointPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(LocatePointPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         segmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnReloadActionPerformed
 

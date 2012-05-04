@@ -390,43 +390,11 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = feaIterator.next();
             String objId = fea.getID();
             LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
-            if (IsPointOnLine(geom, pt)) {
+            if (PublicMethod.IsPointOnLine(geom, pt)) {
                 locatePointPanel.breakSegmentAtPoint(geom, pt,objId);
-                //finally remove the orignal segment.
-                targetSegmentLayer.removeFeature(objId);
                 break;
             }
         }
-    }
-
-    //Sum of partial distances are equal to the total segment length, then 
-    //the point lies on the given line.
-    private boolean IsPointOnLine(LineString seg, Point pt) {
-        double segLength = seg.getLength();
-        double dist1 = Distance(seg.getStartPoint().getCoordinate(), pt.getCoordinate());
-        double dist2 = Distance(pt.getCoordinate(), seg.getEndPoint().getCoordinate());
-
-        DecimalFormat df = new DecimalFormat("0.000");
-        //Avoid the point coincidence at end of the line.
-        if (df.format(segLength).equals(df.format(dist1))) {
-            return false;
-        }
-        if (df.format(segLength).equals(df.format(dist2))) {
-            return false;
-        }
-        //check if the point lies within line segment.
-        double totaldist = dist1 + dist2;
-        if (df.format(segLength).equals(df.format(totaldist))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private double Distance(Coordinate co1, Coordinate co2) {
-        double distSquare = Math.pow((co1.x - co2.x), 2);
-        distSquare += Math.pow((co1.y - co2.y), 2);
-        return Math.pow(distSquare, 0.5);
     }
     //End of the section for finding the specified area>>>>>>>>>>>>>>>>>>>>
 

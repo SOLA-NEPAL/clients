@@ -17,7 +17,7 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class CadastreTwoPointFormShow extends ComponentShow{
     public final static String MAPACTION_NAME = "Two Point Method";
-    public TwoPointMethodForm segmentListForm=null;
+    public TwoPointMethodForm twoPointForm=null;
     Map mapObj=null;
 
     public CadastreTwoPointFormShow(Map mapObj, Component segmentListForm) {
@@ -27,7 +27,7 @@ public class CadastreTwoPointFormShow extends ComponentShow{
                 "resources/TwoPoint.png");
         
         this.mapObj=mapObj;
-        this.segmentListForm= (TwoPointMethodForm) segmentListForm;
+        this.twoPointForm= (TwoPointMethodForm) segmentListForm;
     }
     
     @Override
@@ -35,7 +35,9 @@ public class CadastreTwoPointFormShow extends ComponentShow{
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
         //Display segment list.
-        segmentListForm.showSegmentListInTable();
-        segmentListForm.setVisible(!segmentListForm.isVisible());
+        twoPointForm.setVisible(!twoPointForm.isVisible());
+        twoPointForm.showPointListInTable();
+        //Display segment list.
+        twoPointForm.getLocatePointPanel().showSegmentListInTable();
     }
 }

@@ -6,14 +6,12 @@ package org.sola.clients.swing.gis.ui.control;
 
 import com.vividsolutions.jts.geom.*;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
@@ -27,11 +25,15 @@ import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
  * @author ShresthaKabin
  */
 public class JoinPointMethodForm extends javax.swing.JDialog {
+    //Store for old data collection.
+    private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
+    
     private CadastreTargetSegmentLayer targetPointlayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
     //Store selected line and points.
     private LineString lineSeg = null;
     private Point pointFixed=null;
+    
     /**
      * Creates new form JoinPointMethodForm
      */
@@ -39,11 +41,11 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
                             throws NoSuchMethodException, InitializeLayerException {
         initComponents();
         this.setAlwaysOnTop(true);
-        //this.setModalityType(ModalityType.APPLICATION_MODAL);
-        locatePointPanel.initializeFormVariable(targetPointlayer);
-        
+
         this.targetPointlayer = targetPointlayer;
         this.targetParcelsLayer=targetParcelsLayer;
+        //this.setModalityType(ModalityType.APPLICATION_MODAL);
+        locatePointPanel.initializeFormVariable(targetPointlayer);
     }
 
     public LocatePointPanel getLocatePointPanel() {
@@ -93,6 +95,8 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         btnJoinPoint = new javax.swing.JButton();
         btnPolygonize = new javax.swing.JButton();
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
+        btnUndoSplit = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -121,99 +125,90 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnPolygonize.setText("Create Polygon");
+        btnPolygonize.setText("Create Polygons");
         btnPolygonize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPolygonizeActionPerformed(evt);
             }
         });
 
+        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoSplitActionPerformed(evt);
+            }
+        });
+
+        btnSave.setText("Save");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+            .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnJoinPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPolygonize))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnPolygonize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel2)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnJoinPoint)
-                    .addComponent(btnPolygonize))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnJoinPoint)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUndoSplit)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPolygonize)
+                        .addContainerGap())
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addSegment(Coordinate[] co, ExtendedLayerGraphics targetSegmentLayer) {
-        if (co==null)return;
-        //Find Features.
-        int feacount=1;//already incremented.
-        SimpleFeatureCollection segs = targetPointlayer.getSegmentLayer().getFeatureCollection();
-        SimpleFeatureIterator segIterator = segs.features();
-        while (segIterator.hasNext()){
-            feacount++;
-            segIterator.next();
+    private void addSegment(Coordinate pt1,Coordinate pt2) {
+        if (pt1 == null || pt2 == null) {
+            return;
         }
-        
+        Coordinate[] co = new Coordinate[]{pt1, pt2};
+
+        //Form new line segment.
         GeometryFactory geomFactory= new GeometryFactory();
         LineString seg = geomFactory.createLineString(co);
-        
-        DecimalFormat df = new DecimalFormat("0.00");
-        String sn = Integer.toString(seg.hashCode());
-        if (targetSegmentLayer.removeFeature(sn) == null) {
-            HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_FID, feacount);
-            //format the shape length.
-            Double shapelen = seg.getLength();
-            String sLen = df.format(shapelen);
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, sLen);
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, seg.hashCode());
-            fieldsWithValues.put(
-                    CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, 0);
 
-            targetSegmentLayer.addFeature(sn, seg, fieldsWithValues);
-        }
+        locatePointPanel.appendNewSegment(seg);
     }
 
     private void btnJoinPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinPointActionPerformed
         Object selectedFromPoint = lstFrom.getSelectedValue();
         Object selectedToPoint = lstTo.getSelectedValue();
-        if (selectedFromPoint == null || selectedToPoint == null) {
-            return;
-        }
-
+        if (selectedFromPoint == null || selectedToPoint == null)  return;
+        //for recording parcel id of each selected point.
+        int parID1=1;
+        int parID2=2;
         //Find Features.
         SimpleFeatureCollection points = targetPointlayer.getFeatureCollection();
         SimpleFeatureIterator ptIterator = points.features();
@@ -224,6 +219,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = ptIterator.next();
             Object fealable = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL);
             if (selectedFromPoint.equals(fealable)) {
+                parID1= Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
                 Point pt = (Point) fea.getAttribute(0);//point geometry.
                 pt1 = pt.getCoordinate();
                 break;
@@ -235,16 +231,19 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = ptIterator.next();
             Object fealable = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL);
             if (selectedToPoint.equals(fealable)) {
+                parID2= Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
                 Point pt = (Point) fea.getAttribute(0);//point geometry.
                 pt2 = pt.getCoordinate();
                 break;
             }
         }
-        if (pt1 == null || pt2 == null) {
+        if (parID1 != parID2)
+        {
+            JOptionPane.showMessageDialog(this, "Cannot join the two points from different parcels.");
             return;
         }
-        Coordinate[] co = new Coordinate[]{pt1, pt2};
-        addSegment(co,targetPointlayer.getSegmentLayer());
+        
+        addSegment(pt1,pt2);
         //repaint the map.
         targetPointlayer.getMapControl().refresh();
     }//GEN-LAST:event_btnJoinPointActionPerformed
@@ -267,7 +266,33 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         showPointListInTable();
     }
     
+    //interchange polygon collection.
+    public final void exchangeParcelCollection(CadastreChangeTargetCadastreObjectLayer src_targetParcelsLayer
+                            ,CadastreChangeTargetCadastreObjectLayer dest_targetParcelsLayer){
+        dest_targetParcelsLayer.getFeatureCollection().clear();
+        //get feature collection.
+        SimpleFeatureCollection polys=src_targetParcelsLayer.getFeatureCollection();
+        SimpleFeatureIterator polyIterator=polys.features();
+        while (polyIterator.hasNext()){
+            SimpleFeature fea=polyIterator.next();
+            Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
+            String objId= fea.getID().toString();
+            
+            dest_targetParcelsLayer.addFeature(objId, geom, null);
+        }
+    }
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            //Store data for undo action.
+            locatePointPanel.resetVariable(targetPointlayer);
+            //store data to old collection.
+            prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
+            exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         //Event delegate passing to the child JPanel.
         Class[] cls=new Class[]{Object.class,Object.class,String.class};
         Class joinPointForm=this.getClass();
@@ -282,9 +307,19 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         locatePointPanel.setClickEvnt(refresh_this,this);
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
+        locatePointPanel.getPreviousData();
+        //copy data from old collection to current collection.
+        exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        
+        targetParcelsLayer.getMapControl().refresh();
+    }//GEN-LAST:event_btnUndoSplitActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnJoinPoint;
     private javax.swing.JButton btnPolygonize;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

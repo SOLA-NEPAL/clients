@@ -6,8 +6,6 @@ package org.sola.clients.swing.gis.layer;
 
 //import com.vividsolutions.jts.geom.Geometry;
 import java.awt.Component;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import org.geotools.geometry.jts.Geometries;
@@ -30,8 +28,6 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     
     private static final String LAYER_NAME = "Target points";
     private static final String LAYER_STYLE_RESOURCE = "segmentPoints.xml";
-    private static final String LAYER_ATTRIBUTE_DEFINITION_POINT =
-            String.format("%s:\"\",%s:0", POINT_LAYER_FIELD_LABEL,LAYER_FIELD_IS_POINT_SELECTED);
     
     //For segment data.
     public static final String LAYER_FIELD_FID = "sid";
@@ -39,8 +35,12 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     public static final String LAYER_FIELD_PARCEL_ID="parcel_id";
     public static final String LAYER_FIELD_SELECTED = "is_selected";
     
+    private static final String LAYER_ATTRIBUTE_DEFINITION_POINT = String.format("%s:\"\",%s:0,%s:0",
+            POINT_LAYER_FIELD_LABEL,LAYER_FIELD_IS_POINT_SELECTED, LAYER_FIELD_PARCEL_ID);
+    
     public static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0",
-            LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED);     
+            LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED);   
+    
     public static final String LAYER_SEGMENT_NAME = "Target Segments";
     public static final String LAYER_SEGMENT_STYLE_RESOURCE = "segmentnew.xml";
     
@@ -63,7 +63,7 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
      * Gets the form that is responsible with handling other attributes of features
      * @return 
      */
-    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
         if (this.hostForm == null){
             this.hostForm = new TwoPointMethodForm(this,targetParcelsLayer);
         }
