@@ -103,6 +103,7 @@ public class MainForm extends javax.swing.JFrame {
         btnGISSettings = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         btnBr = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
         btnCalendar = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
@@ -257,9 +258,12 @@ public class MainForm extends javax.swing.JFrame {
         });
         mainToolbar.add(btnBr);
 
+        jSeparator4.setName(bundle.getString("MainForm.jSeparator4.name")); // NOI18N
+        mainToolbar.add(jSeparator4);
+
+        btnCalendar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
         btnCalendar.setText(bundle.getString("MainForm.btnCalendar.text")); // NOI18N
         btnCalendar.setFocusable(false);
-        btnCalendar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCalendar.setName(bundle.getString("MainForm.btnCalendar.name")); // NOI18N
         btnCalendar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnCalendar.addActionListener(new java.awt.event.ActionListener() {
@@ -629,7 +633,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
@@ -784,7 +788,8 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
         // TODO add your handling code here:
-        NepaliCalendar nepCal=new NepaliCalendar();
+        //NepaliCalendar nepCal=new NepaliCalendar();
+        CalendarManagement nepCal=new CalendarManagement();
         mainContentPanel.addPanel(nepCal,MainContentPanel.CARD_ADMIN_CALENDAR, true);
     }//GEN-LAST:event_btnCalendarActionPerformed
 
@@ -930,6 +935,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JLabel lblUserName;
     private org.sola.clients.swing.ui.MainContentPanel mainContentPanel;
     private javax.swing.JMenuBar mainMenu;

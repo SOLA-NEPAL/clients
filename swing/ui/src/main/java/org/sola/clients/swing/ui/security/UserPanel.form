@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
@@ -26,8 +26,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="455" max="32767" attributes="1"/>
-          <Component id="jPanel9" alignment="0" pref="455" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
+          <Component id="jPanel9" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -36,7 +36,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="jPanel9" pref="182" max="32767" attributes="0"/>
+              <Component id="jPanel9" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -64,9 +64,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtFirstName" alignment="0" pref="207" max="32767" attributes="2"/>
+                          <Component id="txtFirstName" alignment="0" pref="329" max="32767" attributes="2"/>
                           <Component id="cbxActive" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
-                          <Component id="txtUserName" alignment="0" pref="207" max="32767" attributes="2"/>
+                          <Component id="txtUserName" alignment="0" pref="329" max="32767" attributes="2"/>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -168,8 +168,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtLastName" alignment="1" pref="207" max="32767" attributes="2"/>
-                          <Component id="jScrollPane1" alignment="0" pref="207" max="32767" attributes="2"/>
+                          <Component id="txtLastName" alignment="1" pref="329" max="32767" attributes="2"/>
+                          <Component id="jScrollPane1" alignment="0" pref="329" max="32767" attributes="2"/>
                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -278,12 +278,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                      <Component id="jScrollPane2" pref="435" max="32767" attributes="2"/>
+                      <Component id="jScrollPane2" pref="679" max="32767" attributes="2"/>
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="groupPanel1" pref="435" max="32767" attributes="1"/>
+                      <Component id="groupPanel1" max="32767" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -293,8 +293,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="groupPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="90" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="85" max="-2" attributes="0"/>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -385,9 +385,9 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="455" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="699" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="jPanel2" alignment="0" pref="455" max="32767" attributes="1"/>
+                      <Component id="jPanel2" alignment="0" pref="699" max="32767" attributes="1"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -425,7 +425,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtPassword" alignment="0" pref="207" max="32767" attributes="2"/>
+                                  <Component id="txtPassword" alignment="0" pref="329" max="32767" attributes="2"/>
                                   <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -484,7 +484,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtPasswordConfirmation" alignment="0" pref="207" max="32767" attributes="2"/>
+                                  <Component id="txtPasswordConfirmation" alignment="0" pref="329" max="32767" attributes="2"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>

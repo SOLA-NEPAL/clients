@@ -43,6 +43,8 @@ public class UserPanel extends javax.swing.JPanel {
     /** Default constructor. */
     public UserPanel() {
         this(null);
+        
+        
     }
 
     /** 
@@ -51,8 +53,9 @@ public class UserPanel extends javax.swing.JPanel {
      */
     public UserPanel(UserBean user) {
         setupUserBean(user);
-        initComponents();
+        initComponents();        
         postInit();
+        
     }
 
     /** Setup {@link UserBean} object, used to bind data on the form. */
@@ -202,9 +205,9 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addComponent(cbxActive, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addComponent(jLabel5))
                 .addContainerGap())
         );
@@ -261,8 +264,8 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addComponent(jLabel4))
                 .addContainerGap())
         );
@@ -323,11 +326,11 @@ public class UserPanel extends javax.swing.JPanel {
             pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGroupsLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(pnlGroupsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlGroupsLayout.setVerticalGroup(
@@ -335,8 +338,8 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(pnlGroupsLayout.createSequentialGroup()
                 .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel9.add(pnlGroups, java.awt.BorderLayout.CENTER);
@@ -366,7 +369,7 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addComponent(jLabel7))
                 .addContainerGap())
         );
@@ -401,7 +404,7 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(51, 51, 51)))
@@ -422,9 +425,9 @@ public class UserPanel extends javax.swing.JPanel {
         pnlPassword.setLayout(pnlPasswordLayout);
         pnlPasswordLayout.setHorizontalGroup(
             pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 699, Short.MAX_VALUE)
             .addGroup(pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE))
         );
         pnlPasswordLayout.setVerticalGroup(
             pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,8 +444,8 @@ public class UserPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +453,7 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();

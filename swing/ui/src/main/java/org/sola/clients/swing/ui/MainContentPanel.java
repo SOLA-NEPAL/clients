@@ -48,7 +48,13 @@ import javax.swing.JPanel;
  */
 public class MainContentPanel extends javax.swing.JPanel {
 
+    public final static String CARD_TEST = "testForm";
     public final static String CARD_DASHBOARD = "dashboard";
+    public final static String CARD_SEARCH_BY_LAND_OWNER = "srchLandOwner";
+    public final static String CARD_MothShresta_Entry = "mothShrestaEntry";
+    public final static String CARD_LandOwner_Entry = "landOwnerEntry";
+    public final static String CARD_Parcel_Entry = "parcelsEntry";
+    public final static String CARD_ADMIN_VDC = "vdcAssignmnet";
     public final static String CARD_SEARCH_PERSONS = "searchPersons";
     public final static String CARD_PERSON = "person";
     public final static String CARD_APPSEARCH = "appsearch";
@@ -118,8 +124,8 @@ public class MainContentPanel extends javax.swing.JPanel {
         // Catch F1 key press
         if (e.getID() == KeyEvent.KEY_RELEASED && e.getKeyCode() == KeyEvent.VK_F1) {
             Component panel = getTopCard();
-            if(panel!=null && ContentPanel.class.isAssignableFrom(panel.getClass())){
-                ((ContentPanel)panel).showHelp();
+            if (panel != null && ContentPanel.class.isAssignableFrom(panel.getClass())) {
+                ((ContentPanel) panel).showHelp();
             }
         }
         getTopCard();
@@ -278,7 +284,7 @@ public class MainContentPanel extends javax.swing.JPanel {
             cardsIndex.set(cardsIndex.size() - 1, cardName);
             cardsIndex.set(cardIndx, lastCardName);
         }
-        
+
         // close autoclosable panels
         closeAutoCollapsiblePanels();
 

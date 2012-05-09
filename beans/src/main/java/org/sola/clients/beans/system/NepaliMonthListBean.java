@@ -29,51 +29,69 @@ import org.sola.webservices.transferobjects.EntityAction;
  *
  * @author KumarKhadka
  */
-public class NepaliMonthListBean extends AbstractBindingBean{
-     public static final String SELECTED_MONTH = "selectedMonth";
+public class NepaliMonthListBean extends AbstractBindingBean {
+
+    public static final String SELECTED_MONTH = "selectedMonth";
     SolaList<NepaliMonthBean> months;
     NepaliMonthBean selectedMonth;
-    public NepaliMonthListBean(){
+
+    public NepaliMonthListBean() {
         super();
     }
 
     public SolaList<NepaliMonthBean> getMonths() {
-        if(months==null){
-            months=new SolaList<NepaliMonthBean>();
+        if (months == null) {
+            months = new SolaList<NepaliMonthBean>();
         }
         return months;
     }
-    public ObservableList<NepaliMonthBean> getFilteredMonth(){
+
+    public ObservableList<NepaliMonthBean> getFilteredMonth() {
         return getMonths().getFilteredList();
     }
+
     public NepaliMonthBean getSelectedMonth() {
         return selectedMonth;
     }
 
     public void setSelectedMonth(NepaliMonthBean selectedMonth) {
-        NepaliMonthBean oldValue=this.selectedMonth;
+        NepaliMonthBean oldValue = this.selectedMonth;
         this.selectedMonth = selectedMonth;
         propertySupport.firePropertyChange(SELECTED_MONTH, oldValue, this.selectedMonth);
     }
-    
-    
-    public void loadMonthList(int nepYear){
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliMonths(nepYear), NepaliMonthBean.class, (List)months) ;
+
+    public void loadMonthList(int nepYear) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliMonths(nepYear), NepaliMonthBean.class, (List) months);
     }
-    
-    public void saveNepaliMonth(){
+
+    public void saveNepaliMonth() {
         List<NepaliMonthTO> nepaliTO = new ArrayList<NepaliMonthTO>();
-        TypeConverters.BeanListToTransferObjectList((List)months, nepaliTO, NepaliMonthTO.class);
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().saveNepaliMonth(nepaliTO), NepaliMonthBean.class, (List)months);
+        TypeConverters.BeanListToTransferObjectList((List) months, nepaliTO, NepaliMonthTO.class);
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().saveNepaliMonth(nepaliTO), NepaliMonthBean.class, (List) months);
     }
-    
-    public void addNepaliMonth(NepaliMonthBean nepMonth){
-        getMonths().addAsNew(nepMonth);
+
+    public void addNepaliMonth(NepaliMonthBean nepMonth,int lastYear) {
+        getMonths().clear();
+        int k = 1;    
+        for (int i = 0; i < 12; i++) {
+            nepMonth.setDayss(0);
+            nepMonth.setNepYear(lastYear+1);
+            nepMonth.setNepMonth(k);
+            getMonths().add(nepMonth);  
+            nepMonth=new NepaliMonthBean();
+            k++;
+        }
+       
     }
-    
-    public void deleteSelectedMonth(){
-        if(selectedMonth!=null){
+
+    public void deleteSelectedMonth() {
+        if (selectedMonth != null) {
             getMonths().safeRemove(selectedMonth, EntityAction.DELETE);
         }
     }
+
+    public void getNepaliYear() {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliYear(), NepaliMonthBean.class, null);
+    }
+    
 }
