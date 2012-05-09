@@ -6,8 +6,7 @@
     <groupId>org.sola.clients</groupId>
     <artifactId>sola-clients-swing</artifactId>
     <version>1.1-SNAPSHOT</version>
-  </parent>
-  
+  </parent>  
   <groupId>org.sola.clients.swing</groupId>
   <artifactId>sola-dlisdesktop</artifactId>
   <version>1.1-SNAPSHOT</version>

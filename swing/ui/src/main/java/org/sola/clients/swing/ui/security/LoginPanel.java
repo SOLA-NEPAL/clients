@@ -90,12 +90,10 @@ public class LoginPanel extends javax.swing.JPanel {
         SolaTask t = new SolaTask<Boolean, Object>() {
 
             private boolean result = false;
-
             @Override
             protected Boolean doTask() {
                 setMessage(MessageUtility.getLocalizedMessage(
                         ClientMessage.GENERAL_LOADING_APPLICATION).getMessage());
-
                 enablePanel(false);
                 result = securityBean.authenticate(ConfigurationManager.getWSConfig());
                 return result;

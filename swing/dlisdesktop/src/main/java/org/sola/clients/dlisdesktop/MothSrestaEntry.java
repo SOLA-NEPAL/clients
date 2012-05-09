@@ -15,6 +15,14 @@
  */
 package org.sola.clients.dlisdesktop;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.sola.clients.connectionclass.QueryManage;
+import org.sola.clients.dlisdesktopclasses.ClsNewMothLuj;
+import org.sola.clients.dlisdesktopclasses.ClsStaticFields;
+import org.sola.clients.dlisdesktopclasses.ComboItem;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 
@@ -27,6 +35,55 @@ public class MothSrestaEntry extends ContentPanel {
     /**
      * Creates new form MothSrestaEntry
      */
+    public String _selectedZoneName;
+    public int _selectedZoneCode;
+    public String _selectedDistrictName;
+    public int _selectedDistrictCode;
+    public String _selectedLMOName;
+    public int _selectedLMOCode;
+    ClsNewMothLuj moth = new ClsNewMothLuj();
+
+    private void refreshObject() {
+        if (cmbMothLuj.getSelectedItem().equals("Moth")) {
+            moth.setMothOrLuj("M");
+        } else {
+            moth.setMothOrLuj("L");
+        }
+
+        moth.setMothLujNo(Integer.parseInt(txtMothLujNo.getText()));
+        moth.setSelectedVdcName(cmbVDC.getSelectedItem().toString());
+    }
+
+    public void formRefresh() {
+        cmbVDC.removeAllItems();
+        cmbVDC1.removeAllItems();
+        List<ComboItem> seletedVdc = ClsStaticFields.getSeletedVdc();
+        for (ComboItem s : seletedVdc) {
+            cmbVDC.addItem(s);
+            cmbVDC1.addItem(s);
+        }
+
+    }
+
+    private List<Integer> getMothNoList() {
+        List<Integer> MothList = new ArrayList<Integer>();
+        QueryManage qm = new QueryManage(Main.conn);
+        int vdcID = ((ComboItem) cmbVDC1.getSelectedItem()).getValue();
+        String LujMoth = cmbMothLuj2.getSelectedItem().toString().substring(0, 1);
+        String FiscalYear = "69"; //should be extracted from todays nepali date.
+        String query = "Select mothluj_no from " + qm.tblName("nep_system", "moth") + " where   (vdc_sid = " + vdcID + ") AND (lmocd = " + ClsStaticFields.selectedLMOCode + ") AND (moth_luj='" + LujMoth + "') AND (financialyear = " + FiscalYear + ") ORDER BY MothLuj_No";
+        ResultSet rs = qm.qryTable(query);
+        try {
+            rs.next();
+            while (!rs.isAfterLast()) {
+                MothList.add(Integer.parseInt(rs.getString(1)));
+                rs.next();
+            }
+        } catch (SQLException ex) {
+        }
+        return MothList;
+    }
+
     public MothSrestaEntry() {
         initComponents();
     }
@@ -39,8 +96,6 @@ public class MothSrestaEntry extends ContentPanel {
         this.pnlContent = pnlContent;
     }
 
-   
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,31 +107,34 @@ public class MothSrestaEntry extends ContentPanel {
 
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        toolMnuParcelEntry = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         toolLandOwnerDetail = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        tt = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jComboBox5 = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        cmbVDC1 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        cmbMothLuj2 = new javax.swing.JComboBox();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        cmbMothLujNo = new javax.swing.JComboBox();
+        jToolBar2 = new javax.swing.JToolBar();
+        toolMenuSave = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        cmbVDC = new javax.swing.JComboBox();
+        jPanel5 = new javax.swing.JPanel();
+        cmbMothLuj = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtMothLujNo = new javax.swing.JTextField();
 
         setHeaderPanel(headerPanel1);
 
@@ -85,22 +143,16 @@ public class MothSrestaEntry extends ContentPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        jButton2.setText("Save");
-        jButton2.setFocusable(false);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
-        jButton3.setText("Pracel Entry");
-        jButton3.setFocusable(false);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        toolMnuParcelEntry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
+        toolMnuParcelEntry.setText("Pracel Entry");
+        toolMnuParcelEntry.setFocusable(false);
+        toolMnuParcelEntry.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolMnuParcelEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                toolMnuParcelEntryActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton3);
+        jToolBar1.add(toolMnuParcelEntry);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document-view.png"))); // NOI18N
         jButton4.setText("Parcel description");
@@ -131,15 +183,141 @@ public class MothSrestaEntry extends ContentPanel {
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton7);
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 102, 0)));
-        jPanel9.setLayout(new java.awt.GridLayout(1, 2, 30, 0));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose Moth acc to VDC/MP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create new Luj or Moth", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18))); // NOI18N
-        jPanel8.setLayout(new java.awt.GridLayout(1, 2, 15, 0));
+        jLabel6.setText("VDC/MP");
 
-        tt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbVDC1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbVDC1ItemStateChanged(evt);
+            }
+        });
 
-        jLabel4.setText("MothLuj");
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addGap(37, 161, Short.MAX_VALUE))
+            .addComponent(cmbVDC1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbVDC1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 41, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel8);
+
+        jLabel2.setText("Moth/Luj Type");
+
+        cmbMothLuj2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Moth", "Luj" }));
+        cmbMothLuj2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMothLuj2ItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addContainerGap(130, Short.MAX_VALUE))
+            .addComponent(cmbMothLuj2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbMothLuj2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 41, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel2);
+
+        jLabel3.setText("Moth/Luj No");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addContainerGap(141, Short.MAX_VALUE))
+            .addComponent(cmbMothLujNo, 0, 199, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbMothLujNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 41, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel3);
+
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
+
+        toolMenuSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
+        toolMenuSave.setText("Save");
+        toolMenuSave.setFocusable(false);
+        toolMenuSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolMenuSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toolMenuSaveActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(toolMenuSave);
+
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/refresh.png"))); // NOI18N
+        btnRefresh.setText("Refresh");
+        btnRefresh.setFocusable(false);
+        btnRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnRefresh);
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Moth or Luj", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel7.setLayout(new java.awt.GridLayout(1, 2, 40, 0));
+
+        jLabel1.setText("VDC/MP");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(37, 145, Short.MAX_VALUE))
+            .addComponent(cmbVDC, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbVDC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 41, Short.MAX_VALUE))
+        );
+
+        jPanel7.add(jPanel1);
+
+        cmbMothLuj.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Moth", "Luj" }));
+
+        jLabel4.setText("Moth/Luj");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -148,22 +326,20 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addContainerGap())
-            .addComponent(tt, 0, 172, Short.MAX_VALUE)
+            .addComponent(cmbMothLuj, 0, 183, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbMothLuj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel8.add(jPanel5);
+        jPanel7.add(jPanel5);
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel5.setText("MothLuj No");
+        jLabel5.setText("Moth/Luj No");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -171,114 +347,32 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addContainerGap(118, Short.MAX_VALUE))
-            .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(125, Short.MAX_VALUE))
+            .addComponent(txtMothLujNo)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMothLujNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel8.add(jPanel6);
-
-        jPanel9.add(jPanel8);
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose Moth acc to VDC/MP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18))); // NOI18N
-        jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
-
-        jLabel3.setText("Moth No");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addContainerGap())
-            .addComponent(jComboBox3, 0, 109, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 41, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(jPanel3);
-
-        jLabel2.setText("Moth Type");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addContainerGap(58, Short.MAX_VALUE))
-            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 41, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(jPanel2);
-
-        jLabel1.setText("VDC/MP");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(37, 71, Short.MAX_VALUE))
-            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 41, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(jPanel1);
-
-        jPanel9.add(jPanel4);
-
-        jButton1.setText("Close");
+        jPanel7.add(jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -286,23 +380,75 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(19, 19, 19)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void toolMnuParcelEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolMnuParcelEntryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        parcelsEntry();
+    }//GEN-LAST:event_toolMnuParcelEntryActionPerformed
 
     private void toolLandOwnerDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolLandOwnerDetailActionPerformed
         // TODO add your handling code here:
-        landOwnerDetails();        
+        landOwnerDetails();
     }//GEN-LAST:event_toolLandOwnerDetailActionPerformed
+
+    private void toolMenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolMenuSaveActionPerformed
+        // TODO add your handling code here:  
+        refreshObject();
+        try {
+            moth.saveMothLuj();
+            cmbMothLujNo.addItem(txtMothLujNo.getText());
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_toolMenuSaveActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        formRefresh();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void cmbVDC1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbVDC1ItemStateChanged
+        if (cmbVDC1.getItemCount() == 0) {
+            return;
+        }
+        List<Integer> mothList = getMothNoList();
+        cmbMothLujNo.removeAllItems();
+        for (int i : mothList) {
+            cmbMothLujNo.addItem(i);
+        }
+    }//GEN-LAST:event_cmbVDC1ItemStateChanged
+
+    private void cmbMothLuj2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMothLuj2ItemStateChanged
+        if (cmbVDC1.getItemCount() == 0) {
+            return;
+        }
+        List<Integer> mothList = getMothNoList();
+        cmbMothLujNo.removeAllItems();
+        for (int i : mothList) {
+            cmbMothLujNo.addItem(i);
+        }
+    }//GEN-LAST:event_cmbMothLuj2ItemStateChanged
+
+    private void parcelsEntry() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_Parcel_Entry)) {
+            int vdcid = ((ComboItem) cmbVDC1.getSelectedItem()).getValue();
+            int mothNo = Integer.parseInt(cmbMothLujNo.getSelectedItem().toString());
+            String mothLuj = cmbMothLuj2.getSelectedItem().toString();
+            ParcelMothEntry pclMoth = new ParcelMothEntry(vdcid, mothNo,mothLuj);
+            pnlContent.addPanel(pclMoth, MainContentPanel.CARD_Parcel_Entry);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_Parcel_Entry);
+    }
 
     private void landOwnerDetails() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_LandOwner_Entry)) {
@@ -313,32 +459,35 @@ public class MothSrestaEntry extends ContentPanel {
     }
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JComboBox cmbMothLuj;
+    private javax.swing.JComboBox cmbMothLuj2;
+    private javax.swing.JComboBox cmbMothLujNo;
+    private javax.swing.JComboBox cmbVDC;
+    private javax.swing.JComboBox cmbVDC1;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JButton toolLandOwnerDetail;
-    private javax.swing.JComboBox tt;
+    private javax.swing.JButton toolMenuSave;
+    private javax.swing.JButton toolMnuParcelEntry;
+    private javax.swing.JTextField txtMothLujNo;
     // End of variables declaration//GEN-END:variables
 }

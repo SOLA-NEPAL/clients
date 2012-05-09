@@ -826,8 +826,7 @@ public class MainForm extends javax.swing.JFrame {
     }
      private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MothShresta_Entry)) {
-            MothSrestaEntry srchLndOwner = new MothSrestaEntry();
-            srchLndOwner.setPnlContent(pnlContent);
+            MothSrestaEntry srchLndOwner = new MothSrestaEntry();           
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MothShresta_Entry);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MothShresta_Entry);

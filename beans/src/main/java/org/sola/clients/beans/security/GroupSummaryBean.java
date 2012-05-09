@@ -40,8 +40,8 @@ import org.sola.webservices.transferobjects.security.GroupSummaryTO;
  * see data dictionary <b>System</b> schema.
  */
 public class GroupSummaryBean extends AbstractIdBean {
-    public final static String NAME_PROPERTY = "name";
-    public static final String DESCRIPTION_PROPERTY = "description";
+    public final static String NAME_PROPERTY = "namesfdf";
+    public static final String DESCRIPTION_PROPERTY = "descriptionsfdf";
     
     @NotEmpty(message= ClientMessage.CHECK_NOTNULL_GROUPNAME, payload=Localized.class)
     private String name;

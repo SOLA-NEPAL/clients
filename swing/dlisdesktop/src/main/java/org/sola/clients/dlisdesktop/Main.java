@@ -61,6 +61,11 @@ public class Main extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         jMenuItem3.setText("Exit");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -129,7 +134,6 @@ public class Main extends javax.swing.JFrame {
     private void menuMothShrestaEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMothShrestaEntryActionPerformed
         // TODO add your handling code here:       
         mothShrestaEntry();
-
     }//GEN-LAST:event_menuMothShrestaEntryActionPerformed
 
     private void menuSearchByLandOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchByLandOwnerActionPerformed
@@ -140,8 +144,13 @@ public class Main extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         ConnectionClass cn = new ConnectionClass();
-        conn = cn.connectJDBC("sola", "postgres", "FLOSS2011");
+        conn = cn.connectJDBC("sola", "postgres", "programmer");
     }//GEN-LAST:event_formWindowOpened
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void test() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_TEST)) {
@@ -161,9 +170,10 @@ public class Main extends javax.swing.JFrame {
 
     private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MothShresta_Entry)) {
-            MothSrestaEntry srchLndOwner = new MothSrestaEntry();
-            srchLndOwner.setPnlContent(pnlContent);
-            pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MothShresta_Entry);
+            MothSrestaEntry mothMangement = new MothSrestaEntry();
+            mothMangement.setPnlContent(pnlContent);
+            mothMangement.formRefresh();
+            pnlContent.addPanel(mothMangement, MainContentPanel.CARD_MothShresta_Entry);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MothShresta_Entry);
     }
