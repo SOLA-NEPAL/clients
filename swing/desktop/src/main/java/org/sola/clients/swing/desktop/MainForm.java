@@ -822,11 +822,11 @@ public class MainForm extends javax.swing.JFrame {
 //        showReport(ReportManager.getLodgementReport(lodgementBean1, ));  
     }//GEN-LAST:event_menuLodgementReportActionPerformed
 
-<<<<<<< HEAD
+
     private void menuPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPersonsActionPerformed
         openSearchParties();
     }//GEN-LAST:event_menuPersonsActionPerformed
-=======
+
     private void menuSearchLandOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchLandOwnerActionPerformed
         // TODO add your handling code here:
         showSearchByLandOwner();
@@ -860,7 +860,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         mothShrestaEntry();
     }//GEN-LAST:event_menuMothShrestaEntryActionPerformed
->>>>>>> dateTestBranch
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar applicationsMain;
