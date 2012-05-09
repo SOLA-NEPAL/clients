@@ -33,6 +33,7 @@
  */
 package org.geotools.swing.extended;
 
+import com.vividsolutions.jts.geom.Geometry;
 import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 import org.geotools.map.event.MapLayerEvent;
@@ -99,6 +100,8 @@ import org.opengis.referencing.operation.TransformException;
 public class Map extends JMapPane {
 
     private static String SRID_RESOURCE_LOCATION = "resources/srid.properties";
+    private static String SELECTION_SLD_FILE = "selection.xml";
+    private static String SELECTION_LAYER_NAME = "selection";
     private static Properties sridResource = null;
     private java.awt.Point panePos = null;
     private boolean panning = false;
@@ -527,8 +530,7 @@ public class Map extends JMapPane {
      * @param pathOfShapefile the path of the .shp file
      * @param styleResource the resource name .xml in the location of resources
      * for layer styles. This resource location is added in the path decided in
-     * SLD_RESOURCES
-     * {
+     * SLD_RESOURCES {
      * @see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}.
      * @return
      */
@@ -553,8 +555,7 @@ public class Map extends JMapPane {
      * @param geometryType geometry type for this layer
      * @param styleResource the resource name .xml in the location of resources
      * for layer styles. This resource location is added in the path decided in
-     * SLD_RESOURCES
-     * {
+     * SLD_RESOURCES {
      * @see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}.
      * @return
      */
@@ -580,8 +581,7 @@ public class Map extends JMapPane {
      * @param geometryType geometry type for this layer
      * @param styleResource the resource name .xml in the location of resources
      * for layer styles. This resource location is added in the path decided in
-     * SLD_RESOURCES
-     * {
+     * SLD_RESOURCES {
      * @see org.sola.clients.geotools.ui.layers.SolaFeatureLayer}.
      * @return
      */
@@ -815,5 +815,51 @@ public class Map extends JMapPane {
                 //repaint();
             }
         }, paintDelay, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Initializes the selection layer on the map control. This method should be
+     * called after all map layers have been added to ensure the selection layer
+     * appears on top of the other SOLA layers.
+     */
+    public void initializeSelectionLayer() {
+        try {
+            ExtendedLayerGraphics selectionLayer =
+                    (ExtendedLayerGraphics) getSolaLayers().get(SELECTION_LAYER_NAME);
+            if (selectionLayer == null) {
+                selectionLayer = new ExtendedLayerGraphics(SELECTION_LAYER_NAME,
+                        Geometries.GEOMETRY, SELECTION_SLD_FILE);
+                selectionLayer.setShowInToc(false);
+                this.addLayer(selectionLayer);
+            }
+        } catch (InitializeLayerException ex) {
+            Messaging.getInstance().show(ex.getMessage());
+        }
+    }
+
+    /**
+     * Adds the specified feature to the selection layer.
+     *
+     * @param id The identifier for the feature
+     * @param geom The geometry of the feature.
+     */
+    public void selectFeature(String id, Geometry geom) {
+        ExtendedLayerGraphics selectionLayer =
+                (ExtendedLayerGraphics) getSolaLayers().get(SELECTION_LAYER_NAME);
+        if (selectionLayer != null) {
+            selectionLayer.addFeature(id, geom, null);
+        }
+    }
+
+    /**
+     * Clears all features from the selection layer.
+     */
+    public void clearSelectedFeatures() {
+        ExtendedLayerGraphics selectionLayer =
+                (ExtendedLayerGraphics) getSolaLayers().get(SELECTION_LAYER_NAME);
+        if (selectionLayer != null
+                && selectionLayer.getFeatureCollection().size() > 0) {
+            selectionLayer.removeFeatures();
+        }
     }
 }
