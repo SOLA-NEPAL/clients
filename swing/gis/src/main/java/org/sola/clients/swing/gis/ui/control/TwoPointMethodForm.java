@@ -6,8 +6,6 @@ package org.sola.clients.swing.gis.ui.control;
 
 import com.vividsolutions.jts.geom.*;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -16,11 +14,11 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.swing.gis.NodedLineStringGenerator;
 import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.segmentDetails;
 
 /**
  *
@@ -33,8 +31,9 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     private CadastreTargetSegmentLayer targetPointlayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
     //Store selected line and points.
-    private LineString lineSeg = null;
-    private Point pointFixed=null;
+    //private LineString lineSeg = null;
+    //private Point pointFixed=null;
+    //private String parcel_ID="";
     
     /**
      * Creates new form JoinPointMethodForm
@@ -43,6 +42,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
                             throws NoSuchMethodException, InitializeLayerException {
         initComponents();
         this.setAlwaysOnTop(true);
+        this.setTitle("Multiple Point and Parcel Method for Splitting.");
         //this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.targetPointlayer = targetPointlayer;
         this.targetParcelsLayer=targetParcelsLayer;
@@ -129,6 +129,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         });
 
         btnPolygonize.setText("Create Polygons");
+        btnPolygonize.setEnabled(false);
         btnPolygonize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPolygonizeActionPerformed(evt);
@@ -212,7 +213,8 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         GeometryFactory geomFactory= new GeometryFactory();
         LineString seg = geomFactory.createLineString(co);
 
-        locatePointPanel.appendNewSegment(seg);
+        byte is_newLine=1;
+        locatePointPanel.appendNewSegment(seg,is_newLine);
     }
 
     private void btnJoinPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinPointActionPerformed
@@ -251,12 +253,14 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         
         addSegment(pt1,pt2);
         //repaint the map.
+        btnCheckSegments.setEnabled(true);
         targetPointlayer.getMapControl().refresh();
     }//GEN-LAST:event_btnJoinPointActionPerformed
 
     // create new polygon from the segment formed.
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
         Polygonization.formPolygon(targetPointlayer, targetParcelsLayer);
+        btnPolygonize.setEnabled(false);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -265,26 +269,14 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshTable(Object lineSeg,Object pointFixed, String parID ){
-        this.lineSeg=(LineString)lineSeg;
-        this.pointFixed=(Point)pointFixed;
+    public void refreshTable(Object lineSeg,Object pointFixed, String parID, boolean updateTable ){
+        //this.lineSeg=(LineString)lineSeg;
+        //parcel_ID=parID;
         
-        showPointListInTable();
-    }
-    
-    //interchange polygon collection.
-    public final void exchangeParcelCollection(CadastreChangeTargetCadastreObjectLayer src_targetParcelsLayer
-                            ,CadastreChangeTargetCadastreObjectLayer dest_targetParcelsLayer){
-        dest_targetParcelsLayer.getFeatureCollection().clear();
-        //get feature collection.
-        SimpleFeatureCollection polys=src_targetParcelsLayer.getFeatureCollection();
-        SimpleFeatureIterator polyIterator=polys.features();
-        while (polyIterator.hasNext()){
-            SimpleFeature fea=polyIterator.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
-            String objId= fea.getID().toString();
-            
-            dest_targetParcelsLayer.addFeature(objId, geom, null);
+        if (updateTable){
+            //this.pointFixed=(Point)pointFixed;
+            showPointListInTable(); 
+            //btnPolygonize.setEnabled(true);
         }
     }
     
@@ -294,13 +286,13 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             locatePointPanel.resetVariable(targetPointlayer);
             //store data to old collection.
             prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
-            exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+            PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{Object.class,Object.class,String.class};
+        Class[] cls=new Class[]{Object.class,Object.class,String.class,boolean.class};
         Class joinPointForm=this.getClass();
         Method refresh_this=null;
         try {
@@ -316,57 +308,18 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
-        exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        btnCheckSegments.setEnabled(false);
+        btnPolygonize.setEnabled(false);
         //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
-
-    //for time being and for small number of selected parcels, using brute force method.
-    //for big collection of parcels, need to write sweep line method to find out the intersections.
-    private Geometry getSegments_Union(){
-        //get segment collection.
-        List<segmentDetails> segs=locatePointPanel.buildSegmentCollection(targetPointlayer.getSegmentLayer());
-        //first segment.
-        segmentDetails firstSeg=segs.get(0);
-        //form noded line string.
-        Geometry nodedLineStrings=(LineString)firstSeg.getGeom();
-        for (int i=1;i<segs.size();i++){
-            segmentDetails seg=segs.get(i);
-            LineString nextLine=(LineString)seg.getGeom();
-            nodedLineStrings=nodedLineStrings.union(nextLine);
-        }
-        
-        return nodedLineStrings;
-    }
-    
-    private void append_as_New_Point(Point pt){
-        byte selected=0;
-        String geom_id=Integer.toString(pt.hashCode());
-        //Check existence of old feature.
-        SimpleFeature oldpt=targetPointlayer.getFeatureCollection().getFeature(geom_id);
-        if (oldpt==null){
-            locatePointPanel.addPointInPointCollection(pt,selected);
-        } 
-    }
     
     private void btnCheckSegmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckSegmentsActionPerformed
-        // find intersection points.
-        Geometry segsSet= getSegments_Union();
-        
-        //first clear all the segment and point collection.
-        targetPointlayer.getSegmentLayer().getFeatureCollection().clear();
-        targetPointlayer.getFeatureCollection().clear();
-        //Append all segment as new
-        for (int i=0;i<segsSet.getNumGeometries();i++){
-            LineString seg=(LineString)segsSet.getGeometryN(i);
-            locatePointPanel.appendNewSegment(seg);
-            //append point to the point collection.
-            append_as_New_Point(seg.getStartPoint());
-            append_as_New_Point(seg.getEndPoint());
-        }
-        System.out.println(targetPointlayer.getFeatureCollection().size());
-        //refresh everything including map.
-        locatePointPanel.showSegmentListInTable();
+        NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(targetPointlayer, locatePointPanel);
+        lineGenerator.generateNodedSegments();
+        //refresh all including map
+        btnPolygonize.setEnabled(true);
         showPointListInTable();
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnCheckSegmentsActionPerformed

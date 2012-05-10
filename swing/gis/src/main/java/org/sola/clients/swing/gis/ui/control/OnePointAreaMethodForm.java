@@ -38,6 +38,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     //Store selected line and points.
     private LineString lineSeg = null;
     private Point pointFixed = null;
+    private String parcel_ID="";
 
     public LocatePointPanel getLocatePointPanel() {
         return locatePointPanel;
@@ -49,6 +50,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         
         initComponents();
         this.setAlwaysOnTop(true);
+        this.setTitle("One Point and Area Method for Parcel Splitting.");
         //this.setModalityType(ModalityType.APPLICATION_MODAL);
         //this.table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.setSize(550, 500);
@@ -59,21 +61,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.initializeFormVariable(segmentLayer);
-    }
-
-    public final void exchangeParcelCollection(CadastreChangeTargetCadastreObjectLayer src_targetParcelsLayer
-                            ,CadastreChangeTargetCadastreObjectLayer dest_targetParcelsLayer){
-        dest_targetParcelsLayer.getFeatureCollection().clear();
-        //get feature collection.
-        SimpleFeatureCollection polys=src_targetParcelsLayer.getFeatureCollection();
-        SimpleFeatureIterator polyIterator=polys.features();
-        while (polyIterator.hasNext()){
-            SimpleFeature fea=polyIterator.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
-            String objId= fea.getID().toString();
-            
-            dest_targetParcelsLayer.addFeature(objId, geom, null);
-        }
     }
     
     private void displayArea(String parcel_id){
@@ -113,11 +100,11 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         jTextField1.setText("jTextField1");
 
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -131,6 +118,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         jLabel7.setText("Required Area(m2):");
 
         btnNewPacel.setText("Create Parcel");
+        btnNewPacel.setEnabled(false);
         btnNewPacel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewPacelActionPerformed(evt);
@@ -291,13 +279,12 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
 
     //Bisection method to find the given area.
     private Coordinate point_to_form_RequiredArea(List<Coordinate> pts, double areaReq) {
-        Coordinate midpoint = null;
         int n = pts.size() - 1;//find 0 based upperbound.
         //last two point.
         Coordinate lastPt = pts.get(n);
         Coordinate secondlastPt = pts.get(n - 1);
         //Bisection iterative method.
-        midpoint = midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
+        Coordinate midpoint = midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
         pts.remove(n);
         pts.add(midpoint);
         double areaFound = AreaObject.getAreaFromCoordinateList(pts);
@@ -375,7 +362,8 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         Point newPoint = geomFactory.createPoint(newCo);
         //append new geometry formed in their respective collection.
         locatePointPanel.addPointInPointCollection(newPoint);
-        locatePointPanel.appendNewSegment(newSegment);
+        byte is_newLine=1;
+        locatePointPanel.appendNewSegment(newSegment,is_newLine);
         //Key points has been already handled by locate Point Panel.
         //break segment containing the new points.
         breakSegment(newPoint);
@@ -413,7 +401,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         }
         //process points.
         Point[] pts = new Point[totalNodeCount()];
-        Point keyPoint = null;
         //find the point collection
         SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
         FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
@@ -436,20 +423,26 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
                 pts[i++] = pt;
             }
         }
-        keyPoint=pointFixed;
         
+        Point keyPoint=pointFixed;
         createNewSegment(pts, keyPoint, i1, i2);
-        locatePointPanel.showSegmentListInTable();
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        //refresh all including map.
+        locatePointPanel.showSegmentListInTable();
         segmentLayer.getMapControl().refresh();
+        btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshTable(Object lineSeg,Object pointFixed,String parID ){
+    public void refreshTable(Object lineSeg,Object pointFixed,String parID, boolean updateTable ){
         this.lineSeg=(LineString)lineSeg;
-        this.pointFixed=(Point)pointFixed;
+        parcel_ID=parID;
         
-        displayArea(parID);
+        if (updateTable){
+            this.pointFixed=(Point)pointFixed;
+            displayArea(parID);
+            btnNewPacel.setEnabled(true);
+        }
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -458,13 +451,13 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
             locatePointPanel.resetVariable(segmentLayer);
             //store data to old collection.
             prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
-            exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+            PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{Object.class,Object.class,String.class};
+        Class[] cls=new Class[]{Object.class,Object.class,String.class,boolean.class};
         Class workingForm=this.getClass();
         Method refresh_this=null;
         try {
@@ -480,8 +473,9 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
-        exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
-        
+        PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        btnNewPacel.setEnabled(false);
+        //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
 

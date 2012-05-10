@@ -13,9 +13,7 @@ import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
-import org.sola.clients.swing.gis.ui.control.OnePointAreaMethodForm;
-import org.sola.clients.swing.gis.ui.control.JoinPointMethodForm;
-import org.sola.clients.swing.gis.ui.control.TwoPointMethodForm;
+import org.sola.clients.swing.gis.ui.control.*;
 
 /**
  *
@@ -34,12 +32,13 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     public static final String LAYER_FIELD_SHAPE_LEN = "shape_length";
     public static final String LAYER_FIELD_PARCEL_ID="parcel_id";
     public static final String LAYER_FIELD_SELECTED = "is_selected";
+    public static final String LAYER_FIELD_NEW_SEGMENT="is_newLine";
     
     private static final String LAYER_ATTRIBUTE_DEFINITION_POINT = String.format("%s:\"\",%s:0,%s:0",
             POINT_LAYER_FIELD_LABEL,LAYER_FIELD_IS_POINT_SELECTED, LAYER_FIELD_PARCEL_ID);
     
-    public static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0",
-            LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED);   
+    public static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0,%s:0",
+            LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED,LAYER_FIELD_NEW_SEGMENT);   
     
     public static final String LAYER_SEGMENT_NAME = "Target Segments";
     public static final String LAYER_SEGMENT_STYLE_RESOURCE = "segmentnew.xml";
@@ -48,6 +47,9 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     private Component hostForm = null;
     private Component pointForm=null;
     private Component pointAreaForm=null;
+    private Component offsetForm=null;
+    private Component multiOffsetForm=null;
+    
     //Store list of area to display in the parcel splitting form.
     private List<AreaObject> polyAreaList=new ArrayList<AreaObject>();
 
@@ -87,7 +89,31 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
         
         return (JoinPointMethodForm)this.pointForm;
     }
-  
+
+//    public Component getOffsetForm(Object parentPanel,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
+//        if (this.offsetForm == null){
+//            this.offsetForm = new OffsetMethodForm((java.awt.Frame) parentPanel,false,this,targetParcelsLayer);
+//        }
+//        
+//        return (OffsetMethodForm)this.offsetForm;
+//    }
+    
+    public Component getOffsetForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
+        if (this.offsetForm == null){
+            this.offsetForm = new OffsetMethodForm(this,targetParcelsLayer);
+        }
+        
+        return (OffsetMethodForm)this.offsetForm;
+    }
+    
+    public Component getMultiOffsetForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
+        if (this.multiOffsetForm == null){
+            this.multiOffsetForm = new MultiSegmentOffsetMethodForm(this,targetParcelsLayer);
+        }
+        
+        return (MultiSegmentOffsetMethodForm)this.multiOffsetForm;
+    }
+    
     public ExtendedLayerGraphics getSegmentLayer() {
         return segmentLayer;
     }

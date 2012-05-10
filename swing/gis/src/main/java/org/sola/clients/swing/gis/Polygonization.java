@@ -6,6 +6,7 @@ package org.sola.clients.swing.gis;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -54,6 +55,39 @@ public class Polygonization {
             //append new parcels in target parcels.
             targetParcelsLayer.addFeature(Integer.toString(geom.hashCode()), geom, fldvalues);
         }
+        //clean leaf segments.
+        remove_Leaf_Segment(targetPointlayer,polygons);
         targetParcelsLayer.getMapControl().refresh();
+    }
+    
+    public static void remove_Leaf_Segment(CadastreTargetSegmentLayer targetPointlayer,Polygonizer polygons){
+        //get collection of hanged or loosely connected lines.
+        Collection<LineString> segs=polygons.getDangles();
+        for (LineString seg:segs){
+            String objID=Integer.toString(seg.hashCode());
+            targetPointlayer.getSegmentLayer().removeFeature(objID);
+            
+            //Also try to remove points from point layer.
+            if (!isPointInPolygon(polygons, seg.getStartPoint())){
+                String ptID=Integer.toString(seg.getStartPoint().hashCode());
+                targetPointlayer.removeFeature(ptID);
+            }
+            if (!isPointInPolygon(polygons, seg.getEndPoint())){
+                String ptID=Integer.toString(seg.getEndPoint().hashCode());
+                targetPointlayer.removeFeature(ptID);
+            }
+        }
+    }
+    
+    public static boolean isPointInPolygon(Polygonizer polygons,Point pt){
+        Collection polys= polygons.getPolygons();
+        for (Object poly:polys){
+            Geometry geom=(Geometry)poly;
+            if (geom.touches(pt)){
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

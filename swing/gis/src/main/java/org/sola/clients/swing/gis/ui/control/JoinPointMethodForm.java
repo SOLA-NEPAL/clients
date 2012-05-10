@@ -31,8 +31,9 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
     private CadastreTargetSegmentLayer targetPointlayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
     //Store selected line and points.
-    private LineString lineSeg = null;
-    private Point pointFixed=null;
+    //private LineString lineSeg = null;
+    //private Point pointFixed=null;
+    //private String parcel_ID="";
     
     /**
      * Creates new form JoinPointMethodForm
@@ -41,6 +42,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
                             throws NoSuchMethodException, InitializeLayerException {
         initComponents();
         this.setAlwaysOnTop(true);
+        this.setTitle("Single Join Two Point Method for Parcel Splitting.");
 
         this.targetPointlayer = targetPointlayer;
         this.targetParcelsLayer=targetParcelsLayer;
@@ -126,6 +128,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         });
 
         btnPolygonize.setText("Create Polygons");
+        btnPolygonize.setEnabled(false);
         btnPolygonize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPolygonizeActionPerformed(evt);
@@ -199,7 +202,8 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         GeometryFactory geomFactory= new GeometryFactory();
         LineString seg = geomFactory.createLineString(co);
 
-        locatePointPanel.appendNewSegment(seg);
+        byte is_newLine=1;
+        locatePointPanel.appendNewSegment(seg,is_newLine);
     }
 
     private void btnJoinPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinPointActionPerformed
@@ -245,12 +249,14 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         
         addSegment(pt1,pt2);
         //repaint the map.
+        btnPolygonize.setEnabled(true);
         targetPointlayer.getMapControl().refresh();
     }//GEN-LAST:event_btnJoinPointActionPerformed
 
     // create new polygon from the segment formed.
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
         Polygonization.formPolygon(targetPointlayer, targetParcelsLayer);
+        btnPolygonize.setEnabled(false);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -259,26 +265,14 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshTable(Object lineSeg,Object pointFixed, String parID ){
-        this.lineSeg=(LineString)lineSeg;
-        this.pointFixed=(Point)pointFixed;
+    public void refreshTable(Object lineSeg,Object pointFixed, String parID, boolean updateTable ){
+        //this.lineSeg=(LineString)lineSeg;
+        //parcel_ID=parID;
         
-        showPointListInTable();
-    }
-    
-    //interchange polygon collection.
-    public final void exchangeParcelCollection(CadastreChangeTargetCadastreObjectLayer src_targetParcelsLayer
-                            ,CadastreChangeTargetCadastreObjectLayer dest_targetParcelsLayer){
-        dest_targetParcelsLayer.getFeatureCollection().clear();
-        //get feature collection.
-        SimpleFeatureCollection polys=src_targetParcelsLayer.getFeatureCollection();
-        SimpleFeatureIterator polyIterator=polys.features();
-        while (polyIterator.hasNext()){
-            SimpleFeature fea=polyIterator.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
-            String objId= fea.getID().toString();
-            
-            dest_targetParcelsLayer.addFeature(objId, geom, null);
+        if (updateTable){
+            //this.pointFixed=(Point)pointFixed;
+            showPointListInTable();
+            //btnPolygonize.setEnabled(true);
         }
     }
     
@@ -288,13 +282,13 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
             locatePointPanel.resetVariable(targetPointlayer);
             //store data to old collection.
             prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
-            exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+            PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{Object.class,Object.class,String.class};
+        Class[] cls=new Class[]{Object.class,Object.class,String.class,boolean.class};
         Class joinPointForm=this.getClass();
         Method refresh_this=null;
         try {
@@ -310,8 +304,9 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
-        exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
-        
+        PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        btnPolygonize.setEnabled(false);
+        //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
 
