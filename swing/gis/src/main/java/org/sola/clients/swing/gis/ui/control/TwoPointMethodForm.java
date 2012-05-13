@@ -100,6 +100,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
+        btnRefreshMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -152,6 +153,13 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             }
         });
 
+        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,7 +180,8 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
                             .addComponent(btnJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel2)))
         );
         layout.setVerticalGroup(
@@ -190,6 +199,8 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCheckSegments)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefreshMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUndoSplit)
                         .addGap(18, 18, 18)
                         .addComponent(btnSave)
@@ -324,10 +335,15 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnCheckSegmentsActionPerformed
 
+    private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
+        targetParcelsLayer.getMapControl().refresh();
+    }//GEN-LAST:event_btnRefreshMapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnJoinPoint;
     private javax.swing.JButton btnPolygonize;
+    private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;

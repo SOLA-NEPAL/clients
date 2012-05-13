@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
@@ -44,6 +44,7 @@
                   <Component id="btnUndoSplit" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnSaveTextFile" max="32767" attributes="0"/>
                   <Component id="btnAddRow" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnRefreshMap" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -58,7 +59,9 @@
               <Component id="btnImport" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnSaveTextFile" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="73" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <Component id="btnRefreshMap" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnUndoSplit" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnCheckSegments" min="-2" max="-2" attributes="0"/>
@@ -183,6 +186,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUndoSplitActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRefreshMap">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Refresh Map"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshMapActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

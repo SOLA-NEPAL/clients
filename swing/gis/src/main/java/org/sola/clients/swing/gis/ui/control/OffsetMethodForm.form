@@ -44,7 +44,9 @@
                       <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnRefreshMap" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnCreateParcel" max="32767" attributes="0"/>
                   <Component id="btnCheckOffsetLine" max="32767" attributes="0"/>
@@ -68,6 +70,7 @@
                   <Component id="btnCreateParcel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnUndoSplit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRefreshMap" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -113,6 +116,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckOffsetLineActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRefreshMap">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Refresh Map"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshMapActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

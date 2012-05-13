@@ -28,17 +28,16 @@ public class MergeParcelFormShow extends ComponentShow{
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
     
-    public MergeParcelFormShow(Map mapObj,
-                    CadastreTargetSegmentLayer segmentLayer,
-                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public MergeParcelFormShow(Map mapObj,CadastreTargetSegmentLayer segmentLayer
+                ,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_CHANGE_MERGE_PARCEL).getMessage(),
                 "resources/MergeParcel.png");
         
         this.mapObj=mapObj;
-        this.segmentLayer= segmentLayer;
         this.targetParcelsLayer=targetParcelsLayer;
+        this.segmentLayer=segmentLayer;
     }
     
     @Override
@@ -53,8 +52,10 @@ public class MergeParcelFormShow extends ComponentShow{
         try {
             //Display segment list.
             if (mergePacelForm==null)
-                mergePacelForm=new ParcelMergeForm(segmentLayer, targetParcelsLayer);
+                mergePacelForm=new ParcelMergeForm(segmentLayer,targetParcelsLayer);
             mergePacelForm.setVisible(true);
+            //refresh table.
+            mergePacelForm.showParcelsInTable();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(ParcelMergeForm.class.getName()).log(Level.SEVERE, null, ex);
         }

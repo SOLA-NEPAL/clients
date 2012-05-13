@@ -99,6 +99,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
         btnUndoSplit = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        btnRefreshMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -144,6 +145,13 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
 
         btnSave.setText("Save");
 
+        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,7 +171,8 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
                             .addComponent(btnPolygonize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel2)))
         );
         layout.setVerticalGroup(
@@ -179,6 +188,8 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnJoinPoint)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefreshMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUndoSplit)
                         .addGap(18, 18, 18)
                         .addComponent(btnSave)
@@ -310,9 +321,14 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
 
+    private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
+        targetParcelsLayer.getMapControl().refresh();
+    }//GEN-LAST:event_btnRefreshMapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnJoinPoint;
     private javax.swing.JButton btnPolygonize;
+    private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;

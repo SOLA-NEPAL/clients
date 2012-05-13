@@ -85,6 +85,7 @@ public class OffsetMethodForm extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtOffsetDistance = new javax.swing.JTextField();
         btnCheckOffsetLine = new javax.swing.JButton();
+        btnRefreshMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -123,6 +124,13 @@ public class OffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
+        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,7 +149,9 @@ public class OffsetMethodForm extends javax.swing.JDialog {
                         .addComponent(btnUndoSplit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCreateParcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCheckOffsetLine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -160,7 +170,8 @@ public class OffsetMethodForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateParcel)
                     .addComponent(btnUndoSplit)
-                    .addComponent(btnSave))
+                    .addComponent(btnSave)
+                    .addComponent(btnRefreshMap))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -261,6 +272,10 @@ public class OffsetMethodForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
         btnCreateParcel.setEnabled(true);
     }//GEN-LAST:event_btnCheckOffsetLineActionPerformed
+
+    private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
+        targetParcelsLayer.getMapControl().refresh();
+    }//GEN-LAST:event_btnRefreshMapActionPerformed
 
     //For offset line in both side of the given segment
     //Filter the segment that lies inside the given parcel.
@@ -371,6 +386,7 @@ public class OffsetMethodForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckOffsetLine;
     private javax.swing.JButton btnCreateParcel;
+    private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;

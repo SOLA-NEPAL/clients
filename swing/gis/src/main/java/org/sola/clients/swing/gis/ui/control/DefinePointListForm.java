@@ -38,7 +38,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
     private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     
-     private LocatePointPanel locatePointPanel;
+    private LocatePointPanel locatePointPanel;
     /**
      * Creates new form DefinePointListForm
      */
@@ -92,6 +92,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
         btnAddRow = new javax.swing.JButton();
         btnUndoSplit = new javax.swing.JButton();
+        btnRefreshMap = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -173,6 +174,13 @@ public class DefinePointListForm extends javax.swing.JDialog {
             }
         });
 
+        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,7 +195,8 @@ public class DefinePointListForm extends javax.swing.JDialog {
                     .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSaveTextFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAddRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -199,7 +208,9 @@ public class DefinePointListForm extends javax.swing.JDialog {
                 .addComponent(btnImport)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSaveTextFile)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(btnRefreshMap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUndoSplit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCheckSegments)
@@ -441,11 +452,16 @@ public class DefinePointListForm extends javax.swing.JDialog {
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
+        targetParcelsLayer.getMapControl().refresh();
+    }//GEN-LAST:event_btnRefreshMapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRow;
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnCreatePolygon;
     private javax.swing.JButton btnImport;
+    private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveTextFile;
     private javax.swing.JButton btnUndoSplit;

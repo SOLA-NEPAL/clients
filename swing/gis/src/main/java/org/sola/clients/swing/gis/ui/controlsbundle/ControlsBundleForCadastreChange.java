@@ -207,7 +207,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
         //add toolbar for parcel merging.
-        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
     }
 
