@@ -6,6 +6,10 @@
     </Component>
     <Component class="org.sola.clients.beans.system.MothBean" name="mothBean">
     </Component>
+    <Component class="org.sola.clients.beans.system.VdcListBean" name="vdcListBean1">
+    </Component>
+    <Component class="org.sola.clients.beans.system.MothListBean" name="mothListBean">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="headerPanel" type="org.sola.clients.swing.ui.HeaderPanel" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -177,6 +181,15 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbVDC1">
+              <Properties>
+                <Property name="editable" type="boolean" value="true"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="elements" source="vdcListBean1" sourcePath="${vdc}" target="cmbVDC1" targetPath="elements" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbVDC1ItemStateChanged"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -218,6 +231,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbMothLuj2ItemStateChanged"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -251,11 +267,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbMothLujNo">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-              </Properties>
+              <BindingProperties>
+                <BindingProperty name="elements" source="mothListBean" sourcePath="${moths}" target="cmbMothLujNo" targetPath="elements" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>

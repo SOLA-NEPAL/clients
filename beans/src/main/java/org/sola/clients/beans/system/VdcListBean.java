@@ -29,6 +29,18 @@ import org.sola.services.boundary.wsclients.WSManager;
  */
 public class VdcListBean extends AbstractBindingBean{
    ObservableList<VdcBean> vdc;
+    public static final String SELECTED_VDC = "selectedVdc";
+    private VdcBean selectedVdc;
+
+    public VdcBean getSelectedVdc() {
+        return selectedVdc;
+    }
+
+    public void setSelectedVdc(VdcBean selectedVdc) {
+        VdcBean oldValue=this.selectedVdc;
+        this.selectedVdc = selectedVdc;
+        propertySupport.firePropertyChange(SELECTED_VDC, oldValue, this.selectedVdc);
+    }
 
     public ObservableList<VdcBean> getVdc() {
          if (vdc == null) {
@@ -39,6 +51,7 @@ public class VdcListBean extends AbstractBindingBean{
        
    public void loadVdcList() {
        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCaseManagementService().getVdcList(), VdcBean.class, (List) vdc);
-    }  
+    }   
+   
   
 }

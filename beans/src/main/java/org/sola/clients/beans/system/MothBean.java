@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 package org.sola.clients.beans.system;
-
-import org.dozer.cache.CacheManager;
-import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -93,7 +90,9 @@ public class MothBean extends AbstractIdBean {
     }
 
     public void setMothlujNumber(String mothlujNumber) {
+        String oldValue = this.mothlujNumber;
         this.mothlujNumber = mothlujNumber;
+        propertySupport.firePropertyChange(MOTH_LUJ_NUMBER_PROPERTY, oldValue, this.mothlujNumber);
     }
 
     public int getVdcSid() {        
@@ -127,5 +126,10 @@ public class MothBean extends AbstractIdBean {
         MothTO mtTO = TypeConverters.BeanToTrasferObject(this, MothTO.class);
         mtTO = WSManager.getInstance().getCaseManagementService().saveMoth(mtTO);
         TypeConverters.TransferObjectToBean(mtTO, MothBean.class, this);
+    }
+    
+    @Override
+    public String toString(){
+        return mothlujNumber;
     }
 }

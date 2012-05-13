@@ -352,11 +352,11 @@ public class MainForm extends javax.swing.JFrame {
         menuOffLogLevel = new javax.swing.JMenuItem();
         menuApplications = new javax.swing.JMenu();
         menuNewApplication = new javax.swing.JMenuItem();
-        menuDLIS = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        menuMothShrestaEntry = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        menuSearchLandOwner = new javax.swing.JMenuItem();
+        menuDataEntry = new javax.swing.JMenu();
+        menuMothStrestaEnry = new javax.swing.JMenuItem();
+        menuSrch = new javax.swing.JMenu();
+        menuSearchByLandOwner = new javax.swing.JMenuItem();
         menuSearch = new javax.swing.JMenu();
         menuSearchApplication = new javax.swing.JMenuItem();
         menuBaUnitSearch = new javax.swing.JMenuItem();
@@ -589,39 +589,33 @@ public class MainForm extends javax.swing.JFrame {
 
         menuBar.add(menuApplications);
 
-        menuDLIS.setText(bundle.getString("MainForm.menuDLIS.text")); // NOI18N
-        menuDLIS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDLISActionPerformed(evt);
-            }
-        });
-
         jMenu4.setText(bundle.getString("MainForm.jMenu4.text")); // NOI18N
 
-        menuMothShrestaEntry.setText(bundle.getString("MainForm.menuMothShrestaEntry.text")); // NOI18N
-        menuMothShrestaEntry.addActionListener(new java.awt.event.ActionListener() {
+        menuDataEntry.setText(bundle.getString("MainForm.menuDataEntry.text")); // NOI18N
+
+        menuMothStrestaEnry.setText(bundle.getString("MainForm.menuMothStrestaEnry.text")); // NOI18N
+        menuMothStrestaEnry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuMothShrestaEntryActionPerformed(evt);
+                menuMothStrestaEnryActionPerformed(evt);
             }
         });
-        jMenu4.add(menuMothShrestaEntry);
+        menuDataEntry.add(menuMothStrestaEnry);
 
-        menuDLIS.add(jMenu4);
+        jMenu4.add(menuDataEntry);
 
-        jMenu5.setText(bundle.getString("MainForm.jMenu5.text")); // NOI18N
+        menuSrch.setText(bundle.getString("MainForm.menuSrch.text")); // NOI18N
 
-        menuSearchLandOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        menuSearchLandOwner.setText(bundle.getString("MainForm.menuSearchLandOwner.text")); // NOI18N
-        menuSearchLandOwner.addActionListener(new java.awt.event.ActionListener() {
+        menuSearchByLandOwner.setText(bundle.getString("MainForm.menuSearchByLandOwner.text")); // NOI18N
+        menuSearchByLandOwner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSearchLandOwnerActionPerformed(evt);
+                menuSearchByLandOwnerActionPerformed(evt);
             }
         });
-        jMenu5.add(menuSearchLandOwner);
+        menuSrch.add(menuSearchByLandOwner);
 
-        menuDLIS.add(jMenu5);
+        jMenu4.add(menuSrch);
 
-        menuBar.add(menuDLIS);
+        menuBar.add(jMenu4);
 
         menuSearch.setText(bundle.getString("MainForm.menuSearch.text")); // NOI18N
 
@@ -827,10 +821,15 @@ public class MainForm extends javax.swing.JFrame {
         openSearchParties();
     }//GEN-LAST:event_menuPersonsActionPerformed
 
-    private void menuSearchLandOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchLandOwnerActionPerformed
+    private void menuMothStrestaEnryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMothStrestaEnryActionPerformed
+        // TODO add your handling code here:
+        mothShrestaEntry();
+    }//GEN-LAST:event_menuMothStrestaEnryActionPerformed
+
+    private void menuSearchByLandOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchByLandOwnerActionPerformed
         // TODO add your handling code here:
         showSearchByLandOwner();
-    }//GEN-LAST:event_menuSearchLandOwnerActionPerformed
+    }//GEN-LAST:event_menuSearchByLandOwnerActionPerformed
    
      private void showSearchByLandOwner() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
@@ -848,19 +847,6 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     
-//    private void showSearchByLandOwner() {
-//        SrchLandOwner_org srchLndOwnr=new SrchLandOwner_org();
-//        srchLndOwnr.setVisible(true);
-//    }
-    private void menuDLISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDLISActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuDLISActionPerformed
-
-    private void menuMothShrestaEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMothShrestaEntryActionPerformed
-        // TODO add your handling code here:
-        mothShrestaEntry();
-    }//GEN-LAST:event_menuMothShrestaEntryActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar applicationsMain;
@@ -876,7 +862,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -888,7 +873,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuApplications;
     private javax.swing.JMenuItem menuBaUnitSearch;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenu menuDLIS;
+    private javax.swing.JMenu menuDataEntry;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
     private javax.swing.JMenuItem menuLangEN;
@@ -897,15 +882,16 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuLodgementReport;
     private javax.swing.JMenu menuLogLevel;
     private javax.swing.JMenu menuMap;
-    private javax.swing.JMenuItem menuMothShrestaEntry;
+    private javax.swing.JMenuItem menuMothStrestaEnry;
     private javax.swing.JMenuItem menuNewApplication;
     private javax.swing.JMenuItem menuOffLogLevel;
     private javax.swing.JMenuItem menuPersons;
     private javax.swing.JMenu menuReportsDesktop;
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
-    private javax.swing.JMenuItem menuSearchLandOwner;
+    private javax.swing.JMenuItem menuSearchByLandOwner;
     private javax.swing.JMenuItem menuShowMap;
+    private javax.swing.JMenu menuSrch;
     private javax.swing.JMenu menuView;
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;
     private javax.swing.JPanel statusPanel;
