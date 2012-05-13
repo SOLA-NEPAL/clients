@@ -12,28 +12,29 @@ import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.ui.control.TwoPointMethodForm;
+import org.sola.clients.swing.gis.ui.control.ParcelMergeForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
  *
- * @author Shrestha_Kabin
+ * @author ShresthaKabin
  */
-public class CadastreTwoPointFormShow extends ComponentShow{
-    public final static String MAPACTION_NAME = "Two Point Method";
-    public TwoPointMethodForm twoPointForm=null;
+public class MergeParcelFormShow extends ComponentShow{
+    public final static String MAPACTION_NAME = "Merge Pacels";
+    public ParcelMergeForm mergePacelForm=null;
     
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
-
-    public CadastreTwoPointFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
+    
+    public MergeParcelFormShow(Map mapObj,
+                    CadastreTargetSegmentLayer segmentLayer,
                             CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
-                GisMessage.CADASTRE_TWO_POINT_SHOW).getMessage(),
-                "resources/TwoPoint.png");
+                GisMessage.CADASTRE_CHANGE_MERGE_PARCEL).getMessage(),
+                "resources/MergeParcel.png");
         
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
@@ -43,29 +44,19 @@ public class CadastreTwoPointFormShow extends ComponentShow{
     @Override
     public void onClick() {
         int parcel_count=PublicMethod.count_Parcels_Selected(targetParcelsLayer);
-        if (parcel_count<1){
-            JOptionPane.showMessageDialog(null, "Select the concerned parcel and proceed again.");
-            return;
-        }
-        if (parcel_count>1){
-            JOptionPane.showMessageDialog(null, "Only one parcel is allowed to select for split action.");
+        if (parcel_count<2){
+            JOptionPane.showMessageDialog(null, "Select the concerned parcels (at least two) and proceed again.");
             return;
         }
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
-
         try {
             //Display segment list.
-            if (twoPointForm==null)
-                twoPointForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
-
-            twoPointForm.setVisible(true);
-            twoPointForm.showPointListInTable();
-            twoPointForm.getLocatePointPanel().reload_Data();
+            if (mergePacelForm==null)
+                mergePacelForm=new ParcelMergeForm(segmentLayer, targetParcelsLayer);
+            mergePacelForm.setVisible(true);
         } catch (InitializeLayerException ex) {
-            Logger.getLogger(CadastreTwoPointFormShow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(CadastreTwoPointFormShow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ParcelMergeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

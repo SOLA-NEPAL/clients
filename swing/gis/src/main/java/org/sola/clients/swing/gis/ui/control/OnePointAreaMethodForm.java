@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.opengis.feature.simple.SimpleFeature;
@@ -448,7 +447,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             //Store data for undo action.
-            locatePointPanel.resetVariable(segmentLayer);
+            locatePointPanel.reset_OldCollectionVariable(segmentLayer);
             //store data to old collection.
             prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
             PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);

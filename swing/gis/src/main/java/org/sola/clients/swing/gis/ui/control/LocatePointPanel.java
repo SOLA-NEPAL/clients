@@ -52,6 +52,10 @@ public class LocatePointPanel extends javax.swing.JPanel {
     //For multiple segment offset method.
     private List<LineString> selectedLines=new ArrayList<LineString>();
 
+    public void setParcelID(String parcelID) {
+        this.parcelID = parcelID;
+    }
+
     public List<LineString> getSelectedLines() {
         return selectedLines;
     }
@@ -100,7 +104,12 @@ public class LocatePointPanel extends javax.swing.JPanel {
         table.repaint();
     }
     
-    public final void resetVariable(CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException  {
+    public final void reload_Data() throws InitializeLayerException{
+        showSegmentListInTable();
+        reset_OldCollectionVariable(this.segmentLayer);
+    }
+    
+    public final void reset_OldCollectionVariable(CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException  {
           //collect old data for undo action.
         prevTargetSegmentLayer=new ExtendedLayerGraphics(CadastreTargetSegmentLayer.LAYER_SEGMENT_NAME,
                 Geometries.LINESTRING, CadastreTargetSegmentLayer.LAYER_SEGMENT_STYLE_RESOURCE,

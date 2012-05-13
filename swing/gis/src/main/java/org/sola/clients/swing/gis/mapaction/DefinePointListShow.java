@@ -12,28 +12,29 @@ import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.ui.control.TwoPointMethodForm;
+import org.sola.clients.swing.gis.ui.control.DefinePointListForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
  *
- * @author Shrestha_Kabin
+ * @author ShresthaKabin
  */
-public class CadastreTwoPointFormShow extends ComponentShow{
-    public final static String MAPACTION_NAME = "Two Point Method";
-    public TwoPointMethodForm twoPointForm=null;
+public class DefinePointListShow  extends ComponentShow{
+    public final static String MAPACTION_NAME = "Define Point List to split parcel";
+    public DefinePointListForm pointsForm=null;
     
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
 
-    public CadastreTwoPointFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
+    public DefinePointListShow(Map mapObj,
+                    CadastreTargetSegmentLayer segmentLayer,
                             CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
-                GisMessage.CADASTRE_TWO_POINT_SHOW).getMessage(),
-                "resources/TwoPoint.png");
+                GisMessage.CADASTRE_CHANGE_DEFINE_POINTS).getMessage(),
+                "resources/DefinePoints.png");
         
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
@@ -53,19 +54,13 @@ public class CadastreTwoPointFormShow extends ComponentShow{
         }
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
-
         try {
             //Display segment list.
-            if (twoPointForm==null)
-                twoPointForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
-
-            twoPointForm.setVisible(true);
-            twoPointForm.showPointListInTable();
-            twoPointForm.getLocatePointPanel().reload_Data();
+            if (pointsForm==null)
+                pointsForm=new DefinePointListForm(segmentLayer, targetParcelsLayer);
+            pointsForm.setVisible(true);
         } catch (InitializeLayerException ex) {
-            Logger.getLogger(CadastreTwoPointFormShow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(CadastreTwoPointFormShow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefinePointListShow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

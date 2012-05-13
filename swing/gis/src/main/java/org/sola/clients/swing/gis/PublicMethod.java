@@ -418,4 +418,14 @@ public class PublicMethod {
             dest_targetParcelsLayer.addFeature(objId, geom, null);
         }
     }
+    
+    //Check the count of the selected parcels and segments.
+    //----------------------------------------------------
+    public static int count_Parcels_Selected(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer){
+        //get feature collection.
+        SimpleFeatureCollection polys=targetParcelsLayer.getFeatureCollection();
+        
+        return polys.size();
+    }
+    //------------------------------------------------------
 }

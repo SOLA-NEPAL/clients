@@ -47,6 +47,11 @@ public abstract class ComponentShow extends ExtendedAction {
         super(mapCtrl, name, tooltip, iconResource);
         this.componentToShow = componentToShow;
     }
+    
+    //Addition by Kabindra
+    public ComponentShow(Map mapCtrl,String name, String tooltip, String iconResource) {
+        super(mapCtrl, name, tooltip, iconResource);
+    }
 
     /**
      * It shows / hides the component

@@ -279,7 +279,7 @@ public class JoinPointMethodForm extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             //Store data for undo action.
-            locatePointPanel.resetVariable(targetPointlayer);
+            locatePointPanel.reset_OldCollectionVariable(targetPointlayer);
             //store data to old collection.
             prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
             PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);

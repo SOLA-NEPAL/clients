@@ -44,11 +44,13 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     public static final String LAYER_SEGMENT_STYLE_RESOURCE = "segmentnew.xml";
     
     private ExtendedLayerGraphics segmentLayer;
+    //Declare form component to interact with this layer.
     private Component hostForm = null;
     private Component pointForm=null;
     private Component pointAreaForm=null;
     private Component offsetForm=null;
     private Component multiOffsetForm=null;
+    private Component definePointList=null;
     
     //Store list of area to display in the parcel splitting form.
     private List<AreaObject> polyAreaList=new ArrayList<AreaObject>();
@@ -112,6 +114,14 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
         }
         
         return (MultiSegmentOffsetMethodForm)this.multiOffsetForm;
+    }
+    
+    public Component getDefinePointList(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
+        if (this.definePointList == null){
+            this.definePointList = new DefinePointListForm(this,targetParcelsLayer);
+        }
+        
+        return (DefinePointListForm)this.definePointList;
     }
     
     public ExtendedLayerGraphics getSegmentLayer() {

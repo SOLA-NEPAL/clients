@@ -45,7 +45,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     }
 
     private void otherInitializations(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
-        this.setTitle("Offset Method for Parcel Splitting form.");
+        this.setTitle("Offset Method for Parcel Splitting Form.");
         this.setAlwaysOnTop(true);
         //Initialize other variables.
         this.segmentLayer = segmentLayer;
@@ -191,7 +191,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
          try {
             //Store data for undo action.
-            locatePointPanel.resetVariable(segmentLayer);
+            locatePointPanel.reset_OldCollectionVariable(segmentLayer);
             //store data to old collection.
             prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
             PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
