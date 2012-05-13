@@ -15,7 +15,6 @@
  */
 package org.sola.clients.swing.desktop;
 
-import org.sola.clients.beans.system.MothBean;
 import org.sola.clients.beans.system.VdcBean;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -29,12 +28,13 @@ public class MothSrestaEntry extends ContentPanel {
     /**
      * Creates new form MothSrestaEntry
      */
-
     public MothSrestaEntry() {
         initComponents();
-       vdcListBean.loadVdcList();
-       vdcListBean1.loadVdcList();       
+        vdcListBean.loadVdcList();
+        vdcListBean1.loadVdcList();
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -373,28 +373,27 @@ public class MothSrestaEntry extends ContentPanel {
     }//GEN-LAST:event_toolLandOwnerDetailActionPerformed
 
     private void toolMenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolMenuSaveActionPerformed
-       mothBean.saveMoth();
+        mothBean.saveMoth();
     }//GEN-LAST:event_toolMenuSaveActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-       
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void cmbVDC1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbVDC1ItemStateChanged
         // TODO add your handling code here:        
-        VdcBean vdc =(VdcBean) cmbVDC1.getSelectedItem();
-        mothListBean.loadMothList(vdc.getVdcCode(), cmbMothLuj2.getSelectedItem().toString());              
+        VdcBean vdc = (VdcBean) cmbVDC1.getSelectedItem();
+        mothListBean.loadMothList(vdc.getVdcCode(), cmbMothLuj2.getSelectedItem().toString());
     }//GEN-LAST:event_cmbVDC1ItemStateChanged
 
     private void cmbMothLuj2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMothLuj2ItemStateChanged
         // TODO add your handling code here:
-        VdcBean vdc =(VdcBean) cmbVDC1.getSelectedItem();
-        mothListBean.loadMothList(vdc.getVdcCode(), cmbMothLuj2.getSelectedItem().toString());  
+        VdcBean vdc = (VdcBean) cmbVDC1.getSelectedItem();
+        mothListBean.loadMothList(vdc.getVdcCode(), cmbMothLuj2.getSelectedItem().toString());
     }//GEN-LAST:event_cmbMothLuj2ItemStateChanged
 
     private void parcelsEntry() {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_Parcel_Entry)) {
-            ParcelMothEntry pclMoth = new ParcelMothEntry();
+            ParcelMothEntry pclMoth = new ParcelMothEntry(cmbVDC1.getSelectedItem().toString(),cmbMothLuj2.getSelectedItem().toString(),cmbMothLujNo.getSelectedItem().toString());
             getMainContentPanel().addPanel(pclMoth, MainContentPanel.CARD_Parcel_Entry);
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_Parcel_Entry);
@@ -407,7 +406,6 @@ public class MothSrestaEntry extends ContentPanel {
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_LandOwner_Entry);
     }
-   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefresh;
     private javax.swing.JComboBox cmbMothLuj;
