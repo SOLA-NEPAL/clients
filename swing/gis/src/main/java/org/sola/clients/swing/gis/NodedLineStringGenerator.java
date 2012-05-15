@@ -78,7 +78,7 @@ public class NodedLineStringGenerator {
     public static boolean isConnected_Segments(List<LineString> segs){
         //form noded line string.
         Geometry combined_geom=(LineString)segs.get(0);
-        //Alternatively we can use MultiLineString.Union method also to create nodedLineString.
+         
         for (int i=1;i<segs.size();i++){
             combined_geom=combined_geom.union(segs.get(i));
         }
@@ -95,7 +95,7 @@ public class NodedLineStringGenerator {
     public static List<LineString> Connected_Segments(List<LineString> segs){
         //form noded line string.
         Geometry combined_geom=(LineString)segs.get(0);
-        //Alternatively we can use MultiLineString.Union method also to create nodedLineString.
+         
         for (int i=1;i<segs.size();i++){
             combined_geom=combined_geom.union(segs.get(i));
         }
