@@ -17,6 +17,11 @@ public class segmentDetails {
     private Geometry geom=null;
     private int parcel_id=0;
     private byte selected=0;
+    private byte is_newLine=0;
+
+    public byte getIs_newLine() {
+        return is_newLine;
+    }
 
     public String getFid() {
         return fid;
@@ -42,12 +47,14 @@ public class segmentDetails {
         return parcel_id;
     }
     
-    public segmentDetails(String feacode,double shapelen,Geometry geom,int parcel_id,byte selected,String fid){
+    public segmentDetails(String feacode,double shapelen,Geometry geom,
+            int parcel_id,byte selected,String fid,byte isnewline){
         this.feacode=feacode;
         this.shapelen=shapelen;
         this.geom=geom;
         this.parcel_id=parcel_id;
         this.selected=selected;
         this.fid=fid;
+        this.is_newLine=isnewline;
     }
 }

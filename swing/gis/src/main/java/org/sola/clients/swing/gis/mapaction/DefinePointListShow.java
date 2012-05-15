@@ -12,7 +12,7 @@ import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.ui.control.OnePointAreaMethodForm;
+import org.sola.clients.swing.gis.ui.control.DefinePointListForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -20,20 +20,21 @@ import org.sola.common.messaging.MessageUtility;
  *
  * @author ShresthaKabin
  */
-public class CadastreOnePointAreaFormShow extends ComponentShow{
-    public final static String MAPACTION_NAME = "One Point and Area Method Form Show";
-    public OnePointAreaMethodForm onePointAreaForm=null;
+public class DefinePointListShow  extends ComponentShow{
+    public final static String MAPACTION_NAME = "Define Point List to split parcel";
+    public DefinePointListForm pointsForm=null;
     
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
 
-    public CadastreOnePointAreaFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
+    public DefinePointListShow(Map mapObj,
+                    CadastreTargetSegmentLayer segmentLayer,
                             CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
-                GisMessage.CADASTRE_SEGMENT_SHOW).getMessage(),
-                "resources/OnePointArea.png");
+                GisMessage.CADASTRE_CHANGE_DEFINE_POINTS).getMessage(),
+                "resources/DefinePoints.png");
         
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
@@ -53,15 +54,13 @@ public class CadastreOnePointAreaFormShow extends ComponentShow{
 //        }
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
-        
         try {
             //Display segment list.
-            if (onePointAreaForm==null)
-                onePointAreaForm=new OnePointAreaMethodForm(segmentLayer, targetParcelsLayer);
-            onePointAreaForm.setVisible(true);
-            onePointAreaForm.getLocatePointPanel().reload_Data();
+            if (pointsForm==null)
+                pointsForm=new DefinePointListForm(segmentLayer, targetParcelsLayer);
+            pointsForm.setVisible(true);
         } catch (InitializeLayerException ex) {
-            Logger.getLogger(CadastreOnePointAreaFormShow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefinePointListShow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

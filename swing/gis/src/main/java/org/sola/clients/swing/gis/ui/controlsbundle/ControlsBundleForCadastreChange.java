@@ -34,8 +34,6 @@
 package org.sola.clients.swing.gis.ui.controlsbundle;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
@@ -44,10 +42,7 @@ import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewSurveyPointLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.mapaction.BlankTool;
-import org.sola.clients.swing.gis.mapaction.CadastreTwoPointFormShow;
-import org.sola.clients.swing.gis.mapaction.CadastreJoinPointsShow;
-import org.sola.clients.swing.gis.mapaction.CadastreOnePointAreaFormShow;
+import org.sola.clients.swing.gis.mapaction.*;
 import org.sola.clients.swing.gis.tool.*;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -65,7 +60,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
     private CadastreChangeNewCadastreObjectLayer newCadastreObjectLayer = null;
     private CadastreChangeNewSurveyPointLayer newPointsLayer = null;
     private String applicationNumber = "";
-
+   
     /**
      * Constructor. It sets up the bundle by adding layers and tools that are
      * relevant. Finally, it zooms in the interested zone. The interested zone
@@ -192,27 +187,22 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         listParcel.setTargetPointLayer(targetSegmentLayer);
         listParcel.setPolyAreaList(targetSegmentLayer.getPolyAreaList());
         this.getMap().addTool(listParcel, this.getToolbar(), true);
-        try {
-//            //add toolbar for the join point form show.
-//            this.getMap().addMapAction(new CadastreJoinPointsShow(
-//                    this.getMap(), this.targetSegmentLayer.getPointForm(targetParcelsLayer)),
-//                    this.getToolbar(),
-//                    true);
-            
-            //add toolbar for the one point and Area method show forms.
-            this.getMap().addMapAction(new CadastreOnePointAreaFormShow(
-                    this.getMap(), this.targetSegmentLayer.getOnePointAreaForm(targetParcelsLayer)),
-                    this.getToolbar(),
-                    true);
-            
-            //add toolbar for the segment show forms.
-    //        this.getMap().addMapAction(new CadastreTwoPointFormShow(
-    //                this.getMap(), this.targetSegmentLayer.getHostForm(targetParcelsLayer)),
-    //                this.getToolbar(),
-    //                true);
-        } catch (InitializeLayerException ex) {
-            Logger.getLogger(ControlsBundleForCadastreChange.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
+        //add toolbar for the one point and Area method show forms.
+        this.getMap().addMapAction(new CadastreOnePointAreaFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+        //add toolbar for the multiple join show forms.
+        this.getMap().addMapAction(new CadastreTwoPointFormShow(this.getMap(),  targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+        //add toolbar for offset method.
+        this.getMap().addMapAction(new MultiOffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+//        //add toolbar for Define Point List form.
+//        this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+//                                        this.getToolbar(), true);
+//        //add toolbar for parcel merging.
+//        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+//                                        this.getToolbar(), true);
     }
 
     private void putBlankSeparator() {

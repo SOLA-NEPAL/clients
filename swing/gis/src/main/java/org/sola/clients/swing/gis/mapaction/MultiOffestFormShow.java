@@ -12,7 +12,7 @@ import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.ui.control.OnePointAreaMethodForm;
+import org.sola.clients.swing.gis.ui.control.MultiSegmentOffsetMethodForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -20,20 +20,20 @@ import org.sola.common.messaging.MessageUtility;
  *
  * @author ShresthaKabin
  */
-public class CadastreOnePointAreaFormShow extends ComponentShow{
-    public final static String MAPACTION_NAME = "One Point and Area Method Form Show";
-    public OnePointAreaMethodForm onePointAreaForm=null;
+public class MultiOffestFormShow extends ComponentShow{
+    public final static String MAPACTION_NAME = "MultiLineString Offset Method";
+    public MultiSegmentOffsetMethodForm offsetForm=null;
     
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
 
-    public CadastreOnePointAreaFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
+    public MultiOffestFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
                             CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
-                GisMessage.CADASTRE_SEGMENT_SHOW).getMessage(),
-                "resources/OnePointArea.png");
+                GisMessage.CADASTRE_MULTI_OFFSET_METHOD).getMessage(),
+                "resources/MultiOffsetLine.png");
         
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
@@ -44,7 +44,7 @@ public class CadastreOnePointAreaFormShow extends ComponentShow{
     public void onClick() {
         int parcel_count=PublicMethod.count_Parcels_Selected(targetParcelsLayer);
         if (parcel_count<1){
-            JOptionPane.showMessageDialog(null, "Select the concerned parcel and proceed again.");
+            JOptionPane.showMessageDialog(null, "No Parcel selected.");
             return;
         }
 //        if (parcel_count>1){
@@ -56,12 +56,12 @@ public class CadastreOnePointAreaFormShow extends ComponentShow{
         
         try {
             //Display segment list.
-            if (onePointAreaForm==null)
-                onePointAreaForm=new OnePointAreaMethodForm(segmentLayer, targetParcelsLayer);
-            onePointAreaForm.setVisible(true);
-            onePointAreaForm.getLocatePointPanel().reload_Data();
+            if (offsetForm==null)
+                offsetForm=new MultiSegmentOffsetMethodForm(segmentLayer, targetParcelsLayer);
+            offsetForm.setVisible(true);
+            offsetForm.getLocatePointPanel().reload_Data();
         } catch (InitializeLayerException ex) {
-            Logger.getLogger(CadastreOnePointAreaFormShow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MultiOffestFormShow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

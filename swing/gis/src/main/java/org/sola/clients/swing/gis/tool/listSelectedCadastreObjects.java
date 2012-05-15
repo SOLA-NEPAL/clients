@@ -49,6 +49,7 @@ import org.geotools.swing.tool.extended.ExtendedTool;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.Messaging;
+import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.common.messaging.GisMessage;
@@ -128,20 +129,18 @@ public class listSelectedCadastreObjects extends ExtendedTool {
         
         try {
             //Prepare for fresh selection.
-            removeAllFeatures();
-            //if (!ev.isControlDown()) removeAllFeatures();
-
-            //SimpleFeature fea=this.targetParcelsLayer.getFeatureCollection().getFeature(cadastreObject.getId());
+            if (!ev.isControlDown()) removeAllFeatures();
+            SimpleFeature fea=this.targetParcelsLayer.getFeatureCollection().getFeature(cadastreObject.getId());
             //just remove the item or remove first and add again.
             this.targetParcelsLayer.removeFeature(cadastreObject.getId());
-            //if (!ev.isControlDown() || fea==null){
-                this.targetParcelsLayer.removeFeature(cadastreObject.getId());
+            boolean arearemove=this.removeAreaObject(cadastreObject.getId());
+            if (!ev.isControlDown() || fea==null){
                 this.targetParcelsLayer.addFeature(
                         cadastreObject.getId(),
                         cadastreObject.getGeomPolygon(), null);
-            //} 
-            processPolygonSelected(cadastreObject);//,remove);
-            getPointsFromPolygonSelected(cadastreObject);
+            } 
+            processPolygonSelected(cadastreObject,ev.isControlDown(),arearemove);//,remove);
+            getPointsFromPolygonSelected(cadastreObject,ev.isControlDown());
 
             this.getMapControl().refresh();
         } catch (IOException ex) {
@@ -151,7 +150,7 @@ public class listSelectedCadastreObjects extends ExtendedTool {
             org.sola.common.logging.LogUtility.log(GisMessage.PARCEL_ERROR_ADDING_PARCEL, ex);
         }
     }
-
+    
     private void removeAllFeatures(){
         //Access polygon features.
         SimpleFeatureCollection polys=targetParcelsLayer.getFeatureCollection();
@@ -180,7 +179,29 @@ public class listSelectedCadastreObjects extends ExtendedTool {
 //            String feaID=fea.getID();
 //            targetPointLayer.removeFeature(feaID);
 //        }
+        //Clear area polygon.
+        polyAreaList.clear();
     }
+    
+    private void appendSegmentInCollection(int feacount, LineString seg, DecimalFormat df, int objParcelID, String sn) {
+        HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_FID, feacount);
+        //format the shape length.
+        Double shapelen = seg.getLength();
+        String sLen = df.format(shapelen);
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, sLen);
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, objParcelID);
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, 0);
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_NEW_SEGMENT, 0);
+
+        targetSegmentLayer.addFeature(sn, seg, fieldsWithValues);
+    }
+    
     /*
      * private void processPolygonSelected(CadastreObjectTO cadastreObject)
      * throws ParseException, IOException{ //check routines. WKBReader
@@ -206,60 +227,115 @@ public class listSelectedCadastreObjects extends ExtendedTool {
      * //System.out.println(feature.getAttribute("wardno"));
      * //System.out.println(feature.getAttribute("vdc")); } }
      */
-    private void processPolygonSelected(CadastreObjectTO cadastreObject) throws ParseException, IOException {//,boolean remove
+    private void processPolygonSelected(CadastreObjectTO cadastreObject,boolean isCtrlDown,boolean areaRemove)
+                    throws ParseException, IOException {//,boolean remove
+        int objParcelID= Integer.parseInt(cadastreObject.getId());
+        int feaParcelID=0;
         //check routines.
         WKBReader wkb_reader = new WKBReader();
         Polygon geom_poly = (Polygon) wkb_reader.read(cadastreObject.getGeomPolygon());
-        //store area of polygon in list.
-        AreaObject aa=new AreaObject();
-        aa.setId(cadastreObject.getId().toString());
-        aa.setArea(geom_poly.getArea());
-        polyAreaList.add(aa);
+        if (!isCtrlDown || !areaRemove) appendAreaObject(Integer.toString(objParcelID), (Geometry)geom_poly);
         //Form segment array.
         int legCount = geom_poly.getNumPoints() - 1;
         LineString[] segments = new LineString[legCount];
             
-        //Geometry Factory.
+        //Using Geometry Factory construct lineStrings.
         GeometryFactory geomFactory = new GeometryFactory();
-
         Coordinate[] co = geom_poly.getCoordinates();
         for (int i = 1; i <= legCount; i++) {
             Coordinate[] coords = new Coordinate[]{co[i - 1], co[i]};
             segments[i - 1] = geomFactory.createLineString(coords);
         }
 
-        int feacount = 1;
+        int feacount =Integer.parseInt(PublicMethod.newSegmentName(targetSegmentLayer));// default= 1;
         DecimalFormat df = new DecimalFormat("0.00");
         for (LineString seg : segments) {
             String sn = Integer.toString(seg.hashCode());
-            SimpleFeature fea=targetSegmentLayer.removeFeature(sn);
-            //if (targetSegmentLayer.removeFeature(sn) == null) {
-                HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_FID, feacount++);
-                //format the shape length.
-                Double shapelen = seg.getLength();
-                String sLen = df.format(shapelen);
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN, sLen);
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, cadastreObject.getId());
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_SELECTED, 0);
-
-                targetSegmentLayer.addFeature(sn, seg, fieldsWithValues);
-            //}
+            SimpleFeature fea=targetSegmentLayer.getFeatureCollection().getFeature(sn);
+            if (fea!=null){
+                feaParcelID=Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+                if (IsPointInSelectedPolygons(seg,Integer.toString(objParcelID))) continue;
+            }
+            //Remove segment from old parcel.
+            targetSegmentLayer.removeFeature(sn);
+            if (fea == null || !isCtrlDown) {
+                appendSegmentInCollection(feacount, seg, df, objParcelID, sn);
+            }//append segment from new parcel.
+            else if (feaParcelID!=objParcelID){
+                appendSegmentInCollection(feacount, seg, df, objParcelID, sn);
+            }
+            feacount++;
         }
     }
 
-    private void getPointsFromPolygonSelected(CadastreObjectTO cadastreObject) throws ParseException, IOException {//,boolean remove
+    private void appendAreaObject(String parcelID, Geometry geom_poly) {
+        //store area of polygon in list.
+        AreaObject aa=new AreaObject();
+        
+        aa.setId(parcelID);
+        aa.setArea(geom_poly.getArea());
+        aa.setThe_Geom(geom_poly);
+        
+        polyAreaList.add(aa);
+    }
+    
+     private boolean removeAreaObject(String parcelID) {
+        for (AreaObject aa:polyAreaList){
+            if (parcelID.equals(aa.getId())) {
+                polyAreaList.remove(aa);
+                return true;
+            }
+        }
+        
+        return false;
+    }
+       
+    private void appendPointInCollection(int feacount, CadastreObjectTO cadastreObject, String sn, Point geom) {
+        HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL, feacount);
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, 0);
+        fieldsWithValues.put(
+                CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID, cadastreObject.getId());
+
+        targetPointLayer.addFeature(sn, geom, fieldsWithValues);
+    }
+    
+    private boolean IsPointInSelectedPolygons(LineString seg,String parID){
+        for (AreaObject aa:polyAreaList){
+            Geometry geom=aa.getThe_Geom();
+            if (parID.equals(aa.getId())) continue;
+            if (geom.touches(seg.getStartPoint()) && geom.touches(seg.getEndPoint()) ){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean IsPointInSelectedPolygons(Point pt,String parID){
+        for (AreaObject aa:polyAreaList){
+            Geometry geom=aa.getThe_Geom();
+            if (parID.equals(aa.getId())) continue;
+            if (geom.touches(pt)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private void getPointsFromPolygonSelected(CadastreObjectTO cadastreObject,boolean isCtrlDown) throws ParseException, IOException {//,boolean remove
+        int objParcelID= Integer.parseInt(cadastreObject.getId());
+        int feaParcelID=0;
         //check routines.
         WKBReader wkb_reader = new WKBReader();
         Polygon geom_poly = (Polygon) wkb_reader.read(cadastreObject.getGeomPolygon());
         //Geometry Factory.
         GeometryFactory geomFactory = new GeometryFactory();
 
-        int feacount = 1;
+        int feacount = Integer.parseInt(PublicMethod.newNodeName(targetPointLayer)); //Default=1;
         Coordinate[] co = geom_poly.getCoordinates();
         //for (Coordinate pt : co) {
         for (int i=0;i<co.length-1;i++) { //use one point less to remove the duplicate point assuming polygon is closed polygon.
@@ -267,16 +343,20 @@ public class listSelectedCadastreObjects extends ExtendedTool {
             Point geom = geomFactory.createPoint(pt);
 
             String sn = Integer.toString(geom.hashCode());
-            SimpleFeature fea=targetPointLayer.removeFeature(sn);
-            //if (targetPointLayer.removeFeature(sn) == null) {
-                HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL, feacount++);
-                fieldsWithValues.put(
-                        CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED, 0);
-
-                targetPointLayer.addFeature(sn, geom, fieldsWithValues);
-            //}
+            SimpleFeature fea=targetPointLayer.getFeatureCollection().getFeature(sn);
+            if (fea!=null){
+                feaParcelID=Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+                if (IsPointInSelectedPolygons(geom,Integer.toString(objParcelID))) continue;
+            }
+            //Remove point from old parcel.
+            targetPointLayer.removeFeature(sn);
+            if (fea == null || !isCtrlDown) {
+                appendPointInCollection(feacount, cadastreObject, sn, geom);
+            }//append new point from new selected parcel.
+            else if (feaParcelID!=objParcelID){
+                appendPointInCollection(feacount, cadastreObject, sn, geom);
+            }
+            feacount++;
         }
     }
 }

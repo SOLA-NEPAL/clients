@@ -6,8 +6,6 @@ package org.sola.clients.swing.gis.layer;
 
 //import com.vividsolutions.jts.geom.Geometry;
 import java.awt.Component;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import org.geotools.geometry.jts.Geometries;
@@ -15,9 +13,7 @@ import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
-import org.sola.clients.swing.gis.ui.control.OnePointAreaMethodForm;
-import org.sola.clients.swing.gis.ui.control.JoinPointMethodForm;
-import org.sola.clients.swing.gis.ui.control.TwoPointMethodForm;
+import org.sola.clients.swing.gis.ui.control.*;
 
 /**
  *
@@ -30,24 +26,27 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     
     private static final String LAYER_NAME = "Target points";
     private static final String LAYER_STYLE_RESOURCE = "segmentPoints.xml";
-    private static final String LAYER_ATTRIBUTE_DEFINITION_POINT =
-            String.format("%s:\"\",%s:0", POINT_LAYER_FIELD_LABEL,LAYER_FIELD_IS_POINT_SELECTED);
     
     //For segment data.
     public static final String LAYER_FIELD_FID = "sid";
     public static final String LAYER_FIELD_SHAPE_LEN = "shape_length";
     public static final String LAYER_FIELD_PARCEL_ID="parcel_id";
     public static final String LAYER_FIELD_SELECTED = "is_selected";
+    public static final String LAYER_FIELD_NEW_SEGMENT="is_newLine";
     
-    public static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0",
-            LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED);     
+    private static final String LAYER_ATTRIBUTE_DEFINITION_POINT = String.format("%s:\"\",%s:0,%s:0",
+            POINT_LAYER_FIELD_LABEL,LAYER_FIELD_IS_POINT_SELECTED, LAYER_FIELD_PARCEL_ID);
+    
+    public static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0,%s:0,%s:0",
+            LAYER_FIELD_FID, LAYER_FIELD_SHAPE_LEN, LAYER_FIELD_PARCEL_ID,LAYER_FIELD_SELECTED,LAYER_FIELD_NEW_SEGMENT);   
+    
     public static final String LAYER_SEGMENT_NAME = "Target Segments";
     public static final String LAYER_SEGMENT_STYLE_RESOURCE = "segmentnew.xml";
     
     private ExtendedLayerGraphics segmentLayer;
+    //Declare form component to interact with this layer.
     private Component hostForm = null;
-    private Component pointForm=null;
-    private Component pointAreaForm=null;
+    
     //Store list of area to display in the parcel splitting form.
     private List<AreaObject> polyAreaList=new ArrayList<AreaObject>();
 
@@ -63,7 +62,7 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
      * Gets the form that is responsible with handling other attributes of features
      * @return 
      */
-    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
         if (this.hostForm == null){
             this.hostForm = new TwoPointMethodForm(this,targetParcelsLayer);
         }
@@ -71,23 +70,6 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
         return (TwoPointMethodForm)this.hostForm;
     }
     
-    public OnePointAreaMethodForm getOnePointAreaForm
-            (CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
-        if (this.pointAreaForm == null){
-            this.pointAreaForm = new OnePointAreaMethodForm(this,targetParcelsLayer);
-        }
-        
-        return (OnePointAreaMethodForm)this.pointAreaForm;
-    }
-
-    public Component getPointForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
-        if (this.pointForm == null){
-            this.pointForm = new JoinPointMethodForm(this,targetParcelsLayer);
-        }
-        
-        return (JoinPointMethodForm)this.pointForm;
-    }
-  
     public ExtendedLayerGraphics getSegmentLayer() {
         return segmentLayer;
     }

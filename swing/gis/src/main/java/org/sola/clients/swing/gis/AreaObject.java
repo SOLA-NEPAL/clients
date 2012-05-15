@@ -5,6 +5,7 @@
 package org.sola.clients.swing.gis;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 import java.util.List;
 
@@ -15,9 +16,18 @@ import java.util.List;
 public class AreaObject {
     private String id=null;
     private double area=0;
+    private Geometry the_geom=null;
 
     public double getArea() {
         return area;
+    }
+
+    public Geometry getThe_Geom() {
+        return the_geom;
+    }
+
+    public void setThe_Geom(Geometry the_geom) {
+        this.the_geom = the_geom;
     }
 
     public void setArea(double area) {
