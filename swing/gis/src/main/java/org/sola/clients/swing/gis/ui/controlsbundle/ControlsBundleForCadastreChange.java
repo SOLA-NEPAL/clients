@@ -188,9 +188,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         listParcel.setPolyAreaList(targetSegmentLayer.getPolyAreaList());
         this.getMap().addTool(listParcel, this.getToolbar(), true);
       
-        //add toolbar for the single join point form show.
-        this.getMap().addMapAction(new CadastreJoinPointsShow( this.getMap(),targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
         //add toolbar for the one point and Area method show forms.
         this.getMap().addMapAction(new CadastreOnePointAreaFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
@@ -198,17 +195,14 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addMapAction(new CadastreTwoPointFormShow(this.getMap(),  targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
         //add toolbar for offset method.
-        this.getMap().addMapAction(new OffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
-        //add toolbar for offset method.
         this.getMap().addMapAction(new MultiOffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
-        //add toolbar for Define Point List form.
-        this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
-        //add toolbar for parcel merging.
-        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
+//        //add toolbar for Define Point List form.
+//        this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+//                                        this.getToolbar(), true);
+//        //add toolbar for parcel merging.
+//        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+//                                        this.getToolbar(), true);
     }
 
     private void putBlankSeparator() {

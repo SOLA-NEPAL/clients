@@ -47,10 +47,10 @@ public class CadastreTwoPointFormShow extends ComponentShow{
             JOptionPane.showMessageDialog(null, "Select the concerned parcel and proceed again.");
             return;
         }
-        if (parcel_count>1){
-            JOptionPane.showMessageDialog(null, "Only one parcel is allowed to select for split action.");
-            return;
-        }
+//        if (parcel_count>1){
+//            JOptionPane.showMessageDialog(null, "Only one parcel is allowed to select for split action.");
+//            return;
+//        }
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
 

@@ -46,11 +46,6 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     private ExtendedLayerGraphics segmentLayer;
     //Declare form component to interact with this layer.
     private Component hostForm = null;
-    private Component pointForm=null;
-    private Component pointAreaForm=null;
-    private Component offsetForm=null;
-    private Component multiOffsetForm=null;
-    private Component definePointList=null;
     
     //Store list of area to display in the parcel splitting form.
     private List<AreaObject> polyAreaList=new ArrayList<AreaObject>();
@@ -73,55 +68,6 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
         }
         
         return (TwoPointMethodForm)this.hostForm;
-    }
-    
-    public OnePointAreaMethodForm getOnePointAreaForm
-            (CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
-        if (this.pointAreaForm == null){
-            this.pointAreaForm = new OnePointAreaMethodForm(this,targetParcelsLayer);
-        }
-        
-        return (OnePointAreaMethodForm)this.pointAreaForm;
-    }
-
-    public Component getPointForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
-        if (this.pointForm == null){
-            this.pointForm = new JoinPointMethodForm(this,targetParcelsLayer);
-        }
-        
-        return (JoinPointMethodForm)this.pointForm;
-    }
-
-//    public Component getOffsetForm(Object parentPanel,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
-//        if (this.offsetForm == null){
-//            this.offsetForm = new OffsetMethodForm((java.awt.Frame) parentPanel,false,this,targetParcelsLayer);
-//        }
-//        
-//        return (OffsetMethodForm)this.offsetForm;
-//    }
-    
-    public Component getOffsetForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
-        if (this.offsetForm == null){
-            this.offsetForm = new OffsetMethodForm(this,targetParcelsLayer);
-        }
-        
-        return (OffsetMethodForm)this.offsetForm;
-    }
-    
-    public Component getMultiOffsetForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
-        if (this.multiOffsetForm == null){
-            this.multiOffsetForm = new MultiSegmentOffsetMethodForm(this,targetParcelsLayer);
-        }
-        
-        return (MultiSegmentOffsetMethodForm)this.multiOffsetForm;
-    }
-    
-    public Component getDefinePointList(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
-        if (this.definePointList == null){
-            this.definePointList = new DefinePointListForm(this,targetParcelsLayer);
-        }
-        
-        return (DefinePointListForm)this.definePointList;
     }
     
     public ExtendedLayerGraphics getSegmentLayer() {

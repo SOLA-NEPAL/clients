@@ -396,19 +396,32 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     }
     //End of the section for finding the specified area>>>>>>>>>>>>>>>>>>>>
 
-    private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
-        //Validate the area entered.
-        if (pointFixed==null || lineSeg==null) return;
+    private boolean isValid_data(){
+        if (pointFixed==null || lineSeg==null) {
+            JOptionPane.showMessageDialog(this, "No line selected, please check it.");
+            return false;
+        }
+        if (txtRequiredArea.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Required Area textbox cannot be empty, please check it.");
+            return false;
+        }
         double areaReq = Double.parseDouble(txtRequiredArea.getText());
         if (areaReq <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "Area cannot be less than or equal to zero. Check it.");
-            return;
+            JOptionPane.showMessageDialog(this, "Area cannot be less than or equal to zero. Check it.");
+            return false;
         }
         double maxArea = Double.parseDouble(txtMaxArea.getText());
         if (areaReq >= maxArea) {
-            JOptionPane.showMessageDialog(rootPane, "Area cannot be more than or equal to given maximum area. Check it.");
-            return;
+            JOptionPane.showMessageDialog(this, "Area cannot be more than or equal to given maximum area. Check it.");
+            return false;
         }
+        
+        return true;
+    }
+    
+    private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
+        //Validate the area entered.
+        if (!isValid_data()) return;
         //process points.
         Point[] pts = new Point[totalNodeCount()];
         //find the point collection
@@ -473,9 +486,9 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         try {
             refresh_this = workingForm.getMethod("refreshTable", cls);
         } catch (NoSuchMethodException ex) {
-            Logger.getLogger(JoinPointMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(JoinPointMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         locatePointPanel.setClickEvnt(refresh_this,this);
     }//GEN-LAST:event_formWindowOpened

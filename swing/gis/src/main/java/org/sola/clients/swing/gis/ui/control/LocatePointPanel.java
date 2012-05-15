@@ -158,7 +158,9 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 selrow[rowno] = 1;
             }
         }
-
+        if (table.getRowCount()<1) return;
+        //set temporary parcel id.
+        parcelID=table.getValueAt(0, 2).toString();
         table.setModel(tableModel);
         //show selected rows.
         for (int i = 0; i < selrow.length; i++) {
@@ -728,18 +730,31 @@ public class LocatePointPanel extends javax.swing.JPanel {
         clickEvnt.invoke(method_holder_class,new Object[]{lineSeg,pointFixed,parcelID,updateTable});
     }
     
-    private void btnAddPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPointActionPerformed
-        //Check necessary parameters.
+    private boolean isValid_data(){
         if (lineSeg == null || lineSeg.getLength() <= 0) {
-            JOptionPane.showMessageDialog(this, "Nothing selected. Please check it.");
-            return;
+            JOptionPane.showMessageDialog(this, "No line selected. Please check it.");
+            return false;
         }
+        
+        if (txtDistance.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please check distance text box, it cannot be empty.");
+            return false;
+        }
+        
         double dist = Double.parseDouble(txtDistance.getText());
         if (dist <= 0 || dist>=lineSeg.getLength()) {
-            JOptionPane.showMessageDialog(this, "Please check distance, it cannot be zero or less or greater than the segment legnth.");
-            return;
+            JOptionPane.showMessageDialog(this, "Please check distance, it cannot be zero or less than zero or greater than the segment length.");
+            return false;
         }
-
+        
+        return true;
+    }
+    
+    private void btnAddPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPointActionPerformed
+        //Check necessary parameters.
+        if (!isValid_data()) return;
+        
+        double dist = Double.parseDouble(txtDistance.getText());
         //Identify the point sequence.
         Point startPoint;
         Point endPoint;
@@ -791,13 +806,9 @@ public class LocatePointPanel extends javax.swing.JPanel {
         table.setEnabled(true);
         try {
             //refresh list in point list.
-            clickEvnt.invoke(method_holder_class,new Object[]{lineSeg,pointFixed,parcelID});
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(LocatePointPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(LocatePointPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(LocatePointPanel.class.getName()).log(Level.SEVERE, null, ex);
+            //clickEvnt.invoke(method_holder_class,new Object[]{lineSeg,pointFixed,parcelID,true});
+            refreshData(true);
+        } catch (Exception e) {
         }
         
         segmentLayer.getMapControl().refresh();

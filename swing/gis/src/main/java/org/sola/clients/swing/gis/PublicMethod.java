@@ -245,13 +245,13 @@ public class PublicMethod {
         return (geomFactory.createPoint(co));
     }
     
-    //Find offset using OffsetCurveBuilder
+    //use OffsetCurveBuilder
     //--------------------------------------------------------------------------
-    public static Coordinate[] getOffsetBufferPoints(LineString[] lines,double offsetDist){
+    public static Coordinate[] getOffsetBufferPoints(LineString[] lines,double offsetDist,boolean singleSided){
         List<LineString> inputLines=new ArrayList<LineString>();
         inputLines.addAll(Arrays.asList(lines));
         
-        Coordinate[] offsetCors = getOffsetBufferPoints(inputLines, offsetDist);
+        Coordinate[] offsetCors = getOffsetBufferPoints(inputLines, offsetDist,singleSided);
         return offsetCors;
     }
     
@@ -266,23 +266,23 @@ public class PublicMethod {
         return inputPts;
     }
      
-    public static Coordinate[] getOffsetBufferPoints(List<LineString> lines,double offsetDist){
+    public static Coordinate[] getOffsetBufferPoints(List<LineString> lines,double offsetDist,boolean singleSided){
         if (lines.size()<1) return null;
         
         Coordinate[] inputPts = getInputCoordinates(lines);
         
-        Coordinate[] buffer_Cors = getOffsetBufferPoints(inputPts, offsetDist);
+        Coordinate[] buffer_Cors = getOffsetBufferPoints(inputPts, offsetDist,singleSided);
         return buffer_Cors;
     }
     
-    public static Coordinate[] getOffsetBufferPoints(Coordinate[] inputPts,double offsetDist){
+    public static Coordinate[] getOffsetBufferPoints(Coordinate[] inputPts,double offsetDist,boolean singleSided){
         if (inputPts.length<1) return null;
         
         PrecisionModel precisions=new PrecisionModel(3);//consider upto mm precision.
         BufferParameters buff_model=new BufferParameters();
         buff_model.setJoinStyle(2);//join-mitre style.
         buff_model.setEndCapStyle(2);//Flat cap style.
-        //buff_model.setSingleSided(true);//one sided buffer.
+        buff_model.setSingleSided(singleSided);//one sided buffer.
         
         OffsetCurveBuilder offsetBuilder=new OffsetCurveBuilder(precisions,buff_model);
         
@@ -297,48 +297,48 @@ public class PublicMethod {
         return true;
     }
     
-    public static Coordinate[] refineBuffered_Offset_LinePoints(Geometry parcel,Coordinate[] buffer_Cors, double offsetDist){
-        List<Coordinate> cors=new ArrayList<Coordinate>();
-        //remove redundant buffer point.
-
-        for (int i=0;i<buffer_Cors.length-1;i++){
-            if (!isValid_Coordinate(buffer_Cors[i]) || !isValid_Coordinate(buffer_Cors[i+1])) continue;
-            Coordinate[] co=new Coordinate[]{buffer_Cors[i],buffer_Cors[i+1]};
-            
-            boolean isInside=IsAnyPoint_InsidePolygon(parcel, co);
-            if (!isInside && !IsLine_Fully_IntersectPolygon(parcel, co)) continue;
-            //try to append in collection.
-            if (!cors.contains(co[0])) cors.add(co[0]);
-            if (!cors.contains(co[1])) cors.add(co[1]);
-        }
-        if (cors.size()<1) return null;
-        //return the filtered points.
-        Coordinate[] filtered_Cors=new Coordinate[cors.size()];
-        filtered_Cors=cors.toArray(filtered_Cors);
-        return filtered_Cors;
-    }
+//    public static Coordinate[] refineBuffered_Offset_LinePoints(Geometry parcel,Coordinate[] buffer_Cors, double offsetDist){
+//        List<Coordinate> cors=new ArrayList<Coordinate>();
+//        //remove redundant buffer point.
+//
+//        for (int i=0;i<buffer_Cors.length-1;i++){
+//            if (!isValid_Coordinate(buffer_Cors[i]) || !isValid_Coordinate(buffer_Cors[i+1])) continue;
+//            Coordinate[] co=new Coordinate[]{buffer_Cors[i],buffer_Cors[i+1]};
+//            
+//            boolean isInside=IsAnyPoint_InsidePolygon(parcel, co);
+//            if (!isInside && !IsLine_Fully_IntersectPolygon(parcel, co)) continue;
+//            //try to append in collection.
+//            if (!cors.contains(co[0])) cors.add(co[0]);
+//            if (!cors.contains(co[1])) cors.add(co[1]);
+//        }
+//        if (cors.size()<1) return null;
+//        //return the filtered points.
+//        Coordinate[] filtered_Cors=new Coordinate[cors.size()];
+//        filtered_Cors=cors.toArray(filtered_Cors);
+//        return filtered_Cors;
+//    }
     
-    public static Coordinate[] refineBuffered_Offset_Points(Coordinate[] inputPts,Coordinate[] buffer_Cors, double offsetDist){
-        List<Coordinate> cors=new ArrayList<Coordinate>();
-        //remove redundant buffer point.
-        double checkDist=Math.abs(offsetDist)/2;
-        for (Coordinate co:buffer_Cors){
-            boolean skipPoint=false;
-            for (Coordinate inputpt:inputPts){
-                if (PublicMethod.Distance(inputpt, co)< checkDist){
-                    skipPoint=true;
-                    break;
-                }
-            }
-            if (skipPoint) continue;
-            cors.add(co);
-        }
-        if (cors.size()<1) return null;
-        //return the filtered points.
-        Coordinate[] filtered_Cors=new Coordinate[cors.size()];
-        filtered_Cors=cors.toArray(filtered_Cors);
-        return filtered_Cors;
-    }
+//    public static Coordinate[] refineBuffered_Offset_Points(Coordinate[] inputPts,Coordinate[] buffer_Cors, double offsetDist){
+//        List<Coordinate> cors=new ArrayList<Coordinate>();
+//        //remove redundant buffer point.
+//        double checkDist=Math.abs(offsetDist)/2;
+//        for (Coordinate co:buffer_Cors){
+//            boolean skipPoint=false;
+//            for (Coordinate inputpt:inputPts){
+//                if (PublicMethod.Distance(inputpt, co)< checkDist){
+//                    skipPoint=true;
+//                    break;
+//                }
+//            }
+//            if (skipPoint) continue;
+//            cors.add(co);
+//        }
+//        if (cors.size()<1) return null;
+//        //return the filtered points.
+//        Coordinate[] filtered_Cors=new Coordinate[cors.size()];
+//        filtered_Cors=cors.toArray(filtered_Cors);
+//        return filtered_Cors;
+//    }
     //--------------------------------------------------------------------------
     
     //check given point set is inside the polygon or not.

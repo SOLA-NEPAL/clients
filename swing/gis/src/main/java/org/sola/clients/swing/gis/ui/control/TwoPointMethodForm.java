@@ -42,7 +42,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
                             throws NoSuchMethodException, InitializeLayerException {
         initComponents();
         this.setAlwaysOnTop(true);
-        this.setTitle("Multiple Point and Parcel Method for Splitting.");
+        this.setTitle("Join Multiple Point and Parcel Method for Splitting.");
         //this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.targetPointlayer = targetPointlayer;
         this.targetParcelsLayer=targetParcelsLayer;
@@ -265,6 +265,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         addSegment(pt1,pt2);
         //repaint the map.
         btnCheckSegments.setEnabled(true);
+        locatePointPanel.showSegmentListInTable();
         targetPointlayer.getMapControl().refresh();
     }//GEN-LAST:event_btnJoinPointActionPerformed
 
