@@ -47,8 +47,6 @@ import org.geotools.swing.tool.CursorTool;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
@@ -98,7 +96,6 @@ import org.opengis.referencing.operation.TransformException;
  *
  */
 public class Map extends JMapPane {
-
     private static String SRID_RESOURCE_LOCATION = "resources/srid.properties";
     private static String SELECTION_SLD_FILE = "selection.xml";
     private static String SELECTION_LAYER_NAME = "selection";
@@ -346,13 +343,14 @@ public class Map extends JMapPane {
      * @param ev the mouse event
      */
     public void handleMouseDragged(MapMouseEvent ev) {
-        if (this.panning) {
-            java.awt.Point pos = ev.getPoint();
-            if (!pos.equals(this.panePos)) {
-                this.moveImage(pos.x - this.panePos.x, pos.y - this.panePos.y);
-                this.panePos = pos;
-            }
-        }
+        //remove return statement to use code below originally in generic sola. 
+        //and uncomment code below.
+//            java.awt.Point pos = ev.getPoint();
+//            if (!pos.equals(this.panePos)) {
+//                this.moveImage(pos.x - this.panePos.x, pos.y - this.panePos.y);
+//                this.panePos = pos;
+//            }
+//        }
     }
 
     /**
