@@ -7,6 +7,8 @@ package org.sola.clients.swing.gis;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,46 +44,22 @@ public class AreaObject {
         this.id = id;
     }
     
+    //Area Calculation routines.
+    //---------------------------------------------------------
     public static double getAreaFromPointList(List<Point> pts){
-        int i=0;
         int n=pts.size();
         Point[] tmpPt=new Point[n];
-        for (Point pt:pts){
-            tmpPt[i++]=pt;
-        }
+        tmpPt=pts.toArray(tmpPt);
         
         double area=getAreaFromArray(tmpPt);
         
         return area;
     }
     
-    public static double getAreaFromArray(Point[] pts){
-        //process area.
-        double g=0;
-        double h=0;
-        int n=pts.length-1;
-        
-        for (int i=0;i<=n;i++){
-            if (i!=n){
-                h=(pts[i+1].getX()-pts[i].getX()) * (pts[i].getY()+pts[i+1].getY());
-            }
-            else {
-                h=(pts[0].getX()-pts[n].getX()) * (pts[0].getY()+pts[n].getY());
-            }
-            g+=h;
-        }
-        
-        double area=Math.abs(g)/2;
-        return area;
-    }
-    
-    public static double getAreaFromCoordinateList(List<Coordinate> pts){
-        int i=0;
+     public static double getAreaFromCoordinateList(List<Coordinate> pts){
         int n=pts.size();
-        Coordinate[] tmpPt=new Coordinate[n];
-        for (Coordinate pt:pts){
-            tmpPt[i++]=pt;
-        }
+        Coordinate[] tmpPt=new Coordinate[n];       
+        tmpPt=pts.toArray(tmpPt);
         
         double area=getAreaFromArray(tmpPt);
         
@@ -106,5 +84,57 @@ public class AreaObject {
         
         double area=Math.abs(g)/2;
         return area;
+    }
+    
+    public static double getAreaFromArray(Point[] pts){
+        List<Coordinate> cors=new ArrayList<Coordinate>();
+        
+        for (Point pt:pts){
+            cors.add(pt.getCoordinate());
+        }
+        
+        return getAreaFromCoordinateList(cors);
+    }
+    //--------------------------------------------------------------------------
+    
+    public static boolean checkAreaFormed(List<Coordinate> pList, double areaReq) {
+        if (pList.size() > 2) {
+            double areaFound = getAreaFromCoordinateList(pList);
+            if (areaFound > areaReq) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+     //Bisection method to find the given area.
+    public static Coordinate point_to_form_RequiredArea(List<Coordinate> pts, double areaReq) {
+        int n = pts.size() - 1;//find 0 based upperbound.
+        //last two point.
+        Coordinate lastPt = pts.get(n);
+        Coordinate secondlastPt = pts.get(n - 1);
+        //Bisection iterative method.
+        Coordinate midpoint = ClsGeneral.midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
+        pts.remove(n);
+        pts.add(midpoint);
+        double areaFound = getAreaFromCoordinateList(pts);
+        DecimalFormat df = new DecimalFormat("0.000");
+
+        while (!df.format(areaFound).equals(df.format(areaReq))) {
+            if (midpoint.equals(secondlastPt) || midpoint.equals(lastPt)) {
+                break;
+            }
+            if (areaFound < areaReq) {
+                secondlastPt = midpoint;
+            } else {
+                lastPt = midpoint;
+            }
+
+            midpoint = ClsGeneral.midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
+            pts.remove(n);
+            pts.add(midpoint);
+            areaFound = getAreaFromCoordinateList(pts);
+        }
+        return midpoint;
     }
 }

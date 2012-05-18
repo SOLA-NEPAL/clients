@@ -97,7 +97,7 @@ public class listSelectedCadastreObjects extends ExtendedTool {
 
     public listSelectedCadastreObjects(PojoDataAccess dataAccess) {
         this.setToolName(NAME);
-        this.setIconImage("resources/select-parcel.png");
+        this.setIconImage("resources/chooseParcel.png");
         this.setToolTip(toolTip);
         this.dataAccess = dataAccess;
     }

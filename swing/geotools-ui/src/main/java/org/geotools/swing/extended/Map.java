@@ -50,9 +50,7 @@ import java.awt.Color;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -96,6 +94,7 @@ import org.opengis.referencing.operation.TransformException;
  *
  */
 public class Map extends JMapPane {
+
     private static String SRID_RESOURCE_LOCATION = "resources/srid.properties";
     private static String SELECTION_SLD_FILE = "selection.xml";
     private static String SELECTION_LAYER_NAME = "selection";
@@ -112,8 +111,10 @@ public class Map extends JMapPane {
     private ButtonGroup toolsGroup = new ButtonGroup();
     private double pixelResolution = 0;
     private Toc toc;
-
     private CursorTool activeTool = null;
+    //for zoom previous action storing draw extents.
+    private List<ReferencedEnvelope> draw_Envelops=new ArrayList<ReferencedEnvelope>();
+
     /**
      * This constructor is used only for the graphical designer. Use the other
      * constructor for initializing the map control
@@ -343,14 +344,13 @@ public class Map extends JMapPane {
      * @param ev the mouse event
      */
     public void handleMouseDragged(MapMouseEvent ev) {
-        //remove return statement to use code below originally in generic sola. 
-        //and uncomment code below.
-//            java.awt.Point pos = ev.getPoint();
-//            if (!pos.equals(this.panePos)) {
-//                this.moveImage(pos.x - this.panePos.x, pos.y - this.panePos.y);
-//                this.panePos = pos;
-//            }
-//        }
+        if (this.panning) {
+            java.awt.Point pos = ev.getPoint();
+            if (!pos.equals(this.panePos)) {
+                this.moveImage(pos.x - this.panePos.x, pos.y - this.panePos.y);
+                this.panePos = pos;
+            }
+        }
     }
 
     /**
@@ -722,9 +722,42 @@ public class Map extends JMapPane {
      * It refreshes the map.
      */
     public void refresh() {
+        record_ZoomEnvelope();
+        //redraw map.
         this.drawLayers(false);
     }
 
+     /**
+     * It refreshes the map, by Kabindra for checking purpose.
+     */
+    public void refresh(boolean bln_redraw) {
+        record_ZoomEnvelope();
+        //redraw map.
+        this.drawLayers(bln_redraw);
+    }
+    
+    // <needed for zoom previous--addition by Kabindra>
+    //------------------------------------------------
+    public void record_ZoomEnvelope() {
+        if (draw_Envelops.size()>25){
+            draw_Envelops.remove(0);
+        }
+        draw_Envelops.add(this.getDisplayArea());
+    }
+
+    //zoom previous action.
+    public void zoomPrevious(){
+        int n=draw_Envelops.size();
+        if (n>0){
+            //last window used to draw.
+            ReferencedEnvelope zoomwindow=draw_Envelops.get(n-1);
+            this.setDisplayArea(zoomwindow);
+            this.drawLayers(false);
+            //remove used window.
+            draw_Envelops.remove(zoomwindow);
+        }
+    }
+    //---------------------------------------------------
     /**
      * Gets the current scale of the map.
      *

@@ -304,7 +304,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private Coordinate[] filtered_OffsetPoints(Coordinate[] offsetCors){
         if (offsetCors==null) return null;
         
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         GeometryFactory geomFactory=new GeometryFactory();
         List<Coordinate> cors=new ArrayList<Coordinate>();
     
@@ -326,7 +326,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     
     //find valid side offset points.
     private Coordinate[] get_Offset_Points(double offsetDist){
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         //left side offset points.
         MultiLineString poly_lines=getMidPointIncludedPolyline();
         Coordinate[] cors= getOffset_Coordinates(poly_lines,offsetDist,true,false);
@@ -370,7 +370,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         int j=0;
         pts[j++]=offsetCors[0];
         for (int i=2;i<offsetCors.length-1;i+=2){
-            pts[j++]=PublicMethod.getIntersectionCoordinate(offsetCors[i-2], offsetCors[i-1],offsetCors[i], offsetCors[i+1]);
+            pts[j++]=ClsGeneral.getIntersectionCoordinate(offsetCors[i-2], offsetCors[i-1],offsetCors[i], offsetCors[i+1]);
         }
         pts[j++]=offsetCors[offsetCors.length-1];
         //find only points inside polygons.
@@ -417,10 +417,10 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             return false;
         }
         //check the validity of selected legs.
-        selectedLines=NodedLineStringGenerator.Connected_Segments(tmp_lines);
+        selectedLines=PublicMethod.placeLinesInOrder(tmp_lines);
         //if (!NodedLineStringGenerator.isConnected_Segments(selectedLines)) return;
         if (selectedLines.size()<tmp_lines.size()){
-            JOptionPane.showMessageDialog(null, "Some not linked segments exist. please check it.");
+            JOptionPane.showMessageDialog(null, "Some independent links exist. please check the selected items in tables.");
             return false;
         }
         
@@ -479,15 +479,15 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         if (offsetLine==null || offsetLine.length<1) return null;
         
         GeometryFactory geomFactory=new GeometryFactory();
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         double semi_Perimeter=parcel.getLength()/2;
         //Handle first segment.
         LineString seg1=offsetLine[0];
-        Point startpt= PublicMethod.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -semi_Perimeter);
+        Point startpt= ClsGeneral.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -semi_Perimeter);
         //Handle last segment.
         int n=offsetLine.length-1;
         LineString seg2=offsetLine[n];
-        Point endpt= PublicMethod.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), semi_Perimeter);
+        Point endpt= ClsGeneral.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), semi_Perimeter);
         
         if (offsetLine.length>1){
             Coordinate[] co=new Coordinate[]{startpt.getCoordinate(),seg1.getEndPoint().getCoordinate()};
@@ -508,22 +508,11 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         return offsetLine;
     }
    
-    //Determine the selected parcel.
-    private Geometry getSelected_Parcel(String parcel_id){
-        for (AreaObject aa : segmentLayer.getPolyAreaList()) {
-            if (parcel_id.equals(aa.getId())) {
-                return aa.getThe_Geom();
-            }
-        }
-        
-        return null;
-    }
-   
     //check given point set is inside the polygon or not.
     private boolean IsLines_IntersectPolygon(Coordinate[] pts){
         boolean isIntersect=false;
         GeometryFactory geomFactory=new GeometryFactory();
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         if (parcel==null) return false;
         
         for (int i=0;i<pts.length-1;i++){

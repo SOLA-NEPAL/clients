@@ -23,6 +23,7 @@ import org.geotools.geometry.jts.Geometries;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.swing.gis.ClsGeneral;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.clients.swing.gis.PointDetails;
 import org.sola.clients.swing.gis.PublicMethod;
@@ -606,6 +607,22 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //finally remove the orignal segment.
         targetSegmentLayer.removeFeature(objId);
     }
+    
+    public void breakSegment(Point pt) {
+        //get features.
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //check the features.
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            String objId = fea.getID();
+            LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
+            if (PublicMethod.IsPointOnLine(geom, pt)) {
+                breakSegmentAtPoint(geom, pt,objId);
+                break;
+            }
+        }
+    }
      
     public void appendNewSegment(LineString newSegment,byte is_newLine) {
         String sn = Integer.toString(newSegment.hashCode());
@@ -766,7 +783,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             endPoint = lineSeg.getStartPoint();
         }
         //find new point based on the given distance.
-        Point interPoint = PublicMethod.getIntermediatePoint(startPoint, endPoint, lineSeg.getLength(), dist);
+        Point interPoint = ClsGeneral.getIntermediatePoint(startPoint, endPoint, lineSeg.getLength(), dist);
         if (interPoint == null) {
             JOptionPane.showMessageDialog(this, "Could not locate point.");
             return;

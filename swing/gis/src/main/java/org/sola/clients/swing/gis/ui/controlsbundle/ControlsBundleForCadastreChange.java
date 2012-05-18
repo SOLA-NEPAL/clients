@@ -130,10 +130,8 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 
     @Override
     public TransactionCadastreChangeBean getTransactionBean() {
-        //----Uncomment lines to restore default sola transaction function.
        transactionBean.setCadastreObjectList(
                 this.newCadastreObjectLayer.getCadastreObjectList());
-        //-------------------------
         
         transactionBean.setSurveyPointList(this.newPointsLayer.getSurveyPointList());
         
@@ -157,19 +155,17 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addLayer(this.targetSegmentLayer);
         this.getMap().addLayer(this.targetSegmentLayer.getSegmentLayer());
 
-        //----Uncomment lines to restore generic sola layer.
         this.newCadastreObjectLayer = new CadastreChangeNewCadastreObjectLayer(
                 this.applicationNumber);
-//        this.getMap().addLayer(newCadastreObjectLayer);
+        this.getMap().addLayer(newCadastreObjectLayer);
 
         this.newPointsLayer = new CadastreChangeNewSurveyPointLayer(this.newCadastreObjectLayer);
-//        this.getMap().addLayer(newPointsLayer);
+        this.getMap().addLayer(newPointsLayer);
         
         this.newPointsLayer.setSurveyPointList(this.transactionBean.getSurveyPointList());
         
-//        this.newCadastreObjectLayer.setCadastreObjectList(
-//        this.transactionBean.getCadastreObjectList());
-        //---------------------
+        this.newCadastreObjectLayer.setCadastreObjectList(
+        this.transactionBean.getCadastreObjectList());
         
         this.targetParcelsLayer.setCadastreObjectTargetList(
                 transactionBean.getCadastreObjectTargetList());
@@ -177,7 +173,14 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 
     @Override
     protected void addToolsAndCommands() {
-        putBlankSeparator();
+        genericSOLA_Tools();
+        //------------------------
+        //add vertical bar.
+        this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
+        this.getMap().addMapAction(new ZoomPreviousTool(this.getMap()), this.getToolbar(), true);
+//        for (int i=0;i<12;i++) //if needed blank tool of long distance.
+//            this.getMap().addMapAction(new BlankTool(),this.getToolbar(), true);
+        
         //new tool for parcel selection.
         listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects((this.getPojoDataAccess()));
         listParcel.setTargetParcelsLayer(targetParcelsLayer);
@@ -197,56 +200,56 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add toolbar for offset method.
         this.getMap().addMapAction(new MultiOffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
-//        //add toolbar for Define Point List form.
-//        this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-//                                        this.getToolbar(), true);
-//        //add toolbar for parcel merging.
-//        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
-//                                        this.getToolbar(), true);
+        //add toolbar for Define Point List form.
+        this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+        //add toolbar for parcel merging.
+        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);  
+        //add toolbar for equal area splitting method.
+        this.getMap().addMapAction(new EqualAreaMethodFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+        //add toolbar for one side, direction and area method splitting.
+        this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
     }
 
-    private void putBlankSeparator() {
+    private void genericSOLA_Tools() {
         //---------Uncomment all lines to restore generic sola tools.
-//        CadastreChangeSelectParcelTool selectParcelTool =
-//                new CadastreChangeSelectParcelTool(this.getPojoDataAccess());
-//        selectParcelTool.setTargetParcelsLayer(targetParcelsLayer);
-//        this.getMap().addTool(selectParcelTool, this.getToolbar(), true);
+        CadastreChangeSelectParcelTool selectParcelTool =
+                new CadastreChangeSelectParcelTool(this.getPojoDataAccess());
+        selectParcelTool.setTargetParcelsLayer(targetParcelsLayer);
+        this.getMap().addTool(selectParcelTool, this.getToolbar(), true);
         
-//        this.getMap().addMapAction(
-//                new CadastreChangePointSurveyListFormShow(
-//                this.getMap(), this.newPointsLayer.getHostForm()),
-//                this.getToolbar(),
-//                true);
+        this.getMap().addMapAction(
+                new CadastreChangePointSurveyListFormShow(
+                this.getMap(), this.newPointsLayer.getHostForm()),
+                this.getToolbar(),
+                true);
         
-//        CadastreChangeNodeTool nodelinkingTool = new CadastreChangeNodeTool(newPointsLayer);
-//        nodelinkingTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
-//        this.getMap().addTool(nodelinkingTool, this.getToolbar(), true);
+        CadastreChangeNodeTool nodelinkingTool = new CadastreChangeNodeTool(newPointsLayer);
+        nodelinkingTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
+        this.getMap().addTool(nodelinkingTool, this.getToolbar(), true);
 
-//        CadastreChangeNewParcelTool newParcelTool =
-//                new CadastreChangeNewParcelTool(this.newCadastreObjectLayer);
-//        newParcelTool.getTargetSnappingLayers().add(newPointsLayer);
-//        this.getMap().addTool(newParcelTool, this.getToolbar(), true);
+        CadastreChangeNewParcelTool newParcelTool =
+                new CadastreChangeNewParcelTool(this.newCadastreObjectLayer);
+        newParcelTool.getTargetSnappingLayers().add(newPointsLayer);
+        this.getMap().addTool(newParcelTool, this.getToolbar(), true);
 
-//        this.getMap().addMapAction(new CadastreChangeNewCadastreObjectListFormShow(
-//                this.getMap(), this.newCadastreObjectLayer.getHostForm()),
-//                this.getToolbar(),
-//                true);
+        this.getMap().addMapAction(new CadastreChangeNewCadastreObjectListFormShow(
+                this.getMap(), this.newCadastreObjectLayer.getHostForm()),
+                this.getToolbar(),
+                true);
 
-//        CadastreBoundarySelectTool cadastreBoundarySelectTool =
-//                new CadastreBoundarySelectTool(
-//                this.cadastreBoundaryPointLayer,
-//                this.newCadastreObjectLayer,
-//                this.newCadastreObjectLayer.getVerticesLayer());
-//        this.getMap().addTool(cadastreBoundarySelectTool, this.getToolbar(), true);
-//        super.addToolsAndCommands();
-//        this.cadastreBoundaryEditTool.setTargetLayer(this.newCadastreObjectLayer);
-//        this.cadastreBoundaryEditTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
-        //------------------------
-        //add long tool separator.
-        //add vertical bar.
-        this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
-//        for (int i=0;i<12;i++)
-//            this.getMap().addMapAction(new BlankTool(),this.getToolbar(), true);
+        CadastreBoundarySelectTool cadastreBoundarySelectTool =
+                new CadastreBoundarySelectTool(
+                this.cadastreBoundaryPointLayer,
+                this.newCadastreObjectLayer,
+                this.newCadastreObjectLayer.getVerticesLayer());
+        this.getMap().addTool(cadastreBoundarySelectTool, this.getToolbar(), true);
+        super.addToolsAndCommands();
+        this.cadastreBoundaryEditTool.setTargetLayer(this.newCadastreObjectLayer);
+        this.cadastreBoundaryEditTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
     }
 
     /**
@@ -263,13 +266,13 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
     //uncomment all lines to restore default tools of generic sola.
     @Override
     public void setReadOnly(boolean readOnly) {
-        //super.setReadOnly(readOnly);
-        //this.getMap().getMapActionByName(CadastreChangeSelectParcelTool.NAME).setEnabled(!readOnly);
-//        this.getMap().getMapActionByName(
-//                CadastreChangePointSurveyListFormShow.MAPACTION_NAME).setEnabled(!readOnly);
-        //this.getMap().getMapActionByName(CadastreChangeNodeTool.NAME).setEnabled(!readOnly);
-        //this.getMap().getMapActionByName(CadastreChangeNewParcelTool.NAME).setEnabled(!readOnly);
-//        this.getMap().getMapActionByName(
-//                CadastreChangeNewCadastreObjectListFormShow.MAPACTION_NAME).setEnabled(!readOnly);
+        super.setReadOnly(readOnly);
+        this.getMap().getMapActionByName(CadastreChangeSelectParcelTool.NAME).setEnabled(!readOnly);
+        this.getMap().getMapActionByName(
+                CadastreChangePointSurveyListFormShow.MAPACTION_NAME).setEnabled(!readOnly);
+        this.getMap().getMapActionByName(CadastreChangeNodeTool.NAME).setEnabled(!readOnly);
+        this.getMap().getMapActionByName(CadastreChangeNewParcelTool.NAME).setEnabled(!readOnly);
+        this.getMap().getMapActionByName(
+                CadastreChangeNewCadastreObjectListFormShow.MAPACTION_NAME).setEnabled(!readOnly);
     }
 }
