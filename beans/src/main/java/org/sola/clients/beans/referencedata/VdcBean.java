@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.beans.system;
+package org.sola.clients.beans.referencedata;
 
-import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.AbstractCodeBean;
 
-/**
- *
- * @author KumarKhadka
- */
-public class VdcBean extends AbstractBindingBean {
+public class VdcBean extends AbstractCodeBean {
 
-    public static final String VDC_CODE_PROPERTY = "vdcCode";
-    public static final String VDC_NAME_PROPERTY = "vdcName";
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
-    private int vdcCode;
-    private String vdcName;
     private int districtCode;
 
+    public VdcBean(){
+        super();
+    }
+    
     public int getDistrictCode() {
         return districtCode;
     }
@@ -39,30 +35,4 @@ public class VdcBean extends AbstractBindingBean {
         this.districtCode = districtCode;
         propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, this.districtCode);
     }
-
-    public int getVdcCode() {
-        return vdcCode;
-    }
-
-    public void setVdcCode(int vdcCode) {
-        int oldValue = this.vdcCode;
-        this.vdcCode = vdcCode;
-        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcCode);
-    }
-
-    public String getVdcName() {
-        return vdcName;
-    }
-
-    public void setVdcName(String vdcName) {
-        String oldValue = this.vdcName;
-        this.vdcName = vdcName;
-        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcName);
-    }
-    
-    @Override
-    public String toString(){
-        return vdcName;
-    }
-    
 }

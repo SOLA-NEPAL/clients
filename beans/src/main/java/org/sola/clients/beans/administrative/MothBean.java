@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.beans.system;
+package org.sola.clients.beans.administrative;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.casemanagement.MothTO;
+import org.sola.webservices.transferobjects.administrative.MothTO;
 
 /**
  *
@@ -95,18 +96,18 @@ public class MothBean extends AbstractIdBean {
         propertySupport.firePropertyChange(MOTH_LUJ_NUMBER_PROPERTY, oldValue, this.mothlujNumber);
     }
 
-    public int getVdcSid() {        
+    public String getVdcSid() {        
         if (vdc != null) {
-            return vdc.getVdcCode();
+            return vdc.getCode();
         } else {
-            return 0;
+            return "0";
         }
     }
 
-    public void setVdcSid(int vdcSid) {
-        int oldValue = 0;
+    public void setVdcSid(String vdcSid) {
+        String oldValue = "0";
         if (vdc != null) {
-            oldValue = vdc.getVdcCode();
+            oldValue = vdc.getCode();
         }
         propertySupport.firePropertyChange(VDC_SID_PROPERTY, oldValue, this.vdcSid);
 
@@ -124,7 +125,7 @@ public class MothBean extends AbstractIdBean {
 
     public void saveMoth() {
         MothTO mtTO = TypeConverters.BeanToTrasferObject(this, MothTO.class);
-        mtTO = WSManager.getInstance().getCaseManagementService().saveMoth(mtTO);
+        mtTO = WSManager.getInstance().getAdministrative().saveMoth(mtTO);
         TypeConverters.TransferObjectToBean(mtTO, MothBean.class, this);
     }
     

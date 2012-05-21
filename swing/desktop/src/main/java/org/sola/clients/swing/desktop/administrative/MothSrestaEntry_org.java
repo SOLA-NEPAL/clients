@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.swing.desktop;
+package org.sola.clients.swing.desktop.administrative;
 
+import org.sola.clients.swing.desktop.LandownerDecription_org;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 

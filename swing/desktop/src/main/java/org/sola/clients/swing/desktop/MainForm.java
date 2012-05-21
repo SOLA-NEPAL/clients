@@ -29,6 +29,7 @@
  */
 package org.sola.clients.swing.desktop;
 
+import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Toolkit;

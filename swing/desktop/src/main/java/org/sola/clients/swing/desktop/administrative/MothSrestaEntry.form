@@ -2,13 +2,13 @@
 
 <Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="org.sola.clients.beans.system.VdcListBean" name="vdcListBean">
+    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
     </Component>
-    <Component class="org.sola.clients.beans.system.MothBean" name="mothBean">
+    <Component class="org.sola.clients.beans.administrative.MothListBean" name="mothListBean">
     </Component>
-    <Component class="org.sola.clients.beans.system.VdcListBean" name="vdcListBean1">
+    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean">
     </Component>
-    <Component class="org.sola.clients.beans.system.MothListBean" name="mothListBean">
+    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean1">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -184,9 +184,6 @@
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="elements" source="vdcListBean1" sourcePath="${vdc}" target="cmbVDC1" targetPath="elements" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbVDC1ItemStateChanged"/>
               </Events>
@@ -363,7 +360,6 @@
                 <Property name="editable" type="boolean" value="true"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdc}" target="cmbVDC" targetPath="elements" updateStrategy="0" immediately="false"/>
                 <BindingProperty name="selectedItem" source="mothBean" sourcePath="${vdc}" target="cmbVDC" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>

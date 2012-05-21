@@ -13,46 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.beans.system;
+package org.sola.clients.beans.referencedata;
 
-import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.AbstractCodeBean;
 
 /**
  *
  * @author KumarKhadka
  */
-public class DistrictBean extends AbstractBindingBean{
-    public static final String DISTRICT_CODE_PROPERTY = "districtCode";
-    public static final String DISTRICT_Name_PROPERTY = "districtName";
+public class DistrictBean extends AbstractCodeBean{
     public static final String ZONE_CODE_PROPERTY = "zoneCode";
-    private int districtCode;
-    private String districtName;
     private int zoneCode;
 
     
     public DistrictBean(){
         super();
     }
-    public int getDistrictCode() {
-        return districtCode;
-    }
-
-    public void setDistrictCode(int districtCode) {
-        int oldValue=this.districtCode;
-        this.districtCode=districtCode;
-         propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, this.districtCode);
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        String oldValue=this.districtName;
-        this.districtName=districtName;
-        propertySupport.firePropertyChange(DISTRICT_Name_PROPERTY, oldValue, this.districtName);        
-    }
-
+    
     public int getZoneCode() {
         return zoneCode;
     }

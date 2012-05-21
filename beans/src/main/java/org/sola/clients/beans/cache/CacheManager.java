@@ -37,7 +37,11 @@ import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.RoleBean;
+import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.system.LanguageBean;
+import org.sola.clients.beans.referencedata.OfficeBean;
+import org.sola.clients.beans.referencedata.DepartmentBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.AbstractWSClient;
@@ -115,6 +119,14 @@ public final class CacheManager {
     public static final String BR_VALIDATION_TARGET_TYPE_KEY = BrValidationTargetTypeBean.class.getName() + LIST_POSTFIX;
     /** Cache key of the {@link BaUnitRelTypeBean} collection.*/
     public static final String BA_UNIT_REL_TYPE_KEY = BaUnitRelTypeBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link DistrictBean} collection.*/
+    public static final String DISTRICT_KEY = DistrictBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link OfficeBean} collection.*/
+    public static final String OFFICE_KEY = OfficeBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link VdcBean} collection.*/
+    public static final String VDC_KEY = VdcBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link DepartmentBean} collection.*/
+    public static final String DEPARTMENT_KEY = DepartmentBean.class.getName() + LIST_POSTFIX;
     
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
@@ -143,6 +155,50 @@ public final class CacheManager {
     private static final String GET_BR_TECHNICAL_TYPES = "getBrTechnicalTypes";
     private static final String GET_BR_VALIDATION_TARGET_TYPES = "getBrValidationTargetTypes";
     private static final String GET_BA_UNIT_REL_TYPES = "getBaUnitRelTypes";
+    private static final String GET_DISTRICTS = "getDistricts";
+    private static final String GET_OFFICES = "getOffices";
+    
+    public static List<DepartmentBean> getDepartments(String officeCode) {
+        List<DepartmentBean> result=new ArrayList<DepartmentBean>();
+        String key = DEPARTMENT_KEY + officeCode;
+        
+        if (cache.contains(key)) {
+            result = (List<DepartmentBean>) cache.get(key);
+        } else{
+            TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getReferenceDataService().getDepartments(officeCode), 
+                    DepartmentBean.class, (List) result);
+                    cache.put(key, result);
+        }
+        return result;
+    }
+    
+    public static List<VdcBean> getVdcs(String districtCode) {
+        List<VdcBean> result=new ArrayList<VdcBean>();
+        String key = VDC_KEY + districtCode;
+        
+        if (cache.contains(key)) {
+            result = (List<VdcBean>) cache.get(key);
+        } else{
+            TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getReferenceDataService().getVdcs(districtCode), 
+                    VdcBean.class, (List) result);
+                    cache.put(key, result);
+        }
+        return result;
+    }
+    
+    public static List<OfficeBean> getOffices() {
+        return getCachedBeanList(OfficeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_OFFICES, OFFICE_KEY);
+    }
+    
+    public static List<DistrictBean> getDistricts() {
+        return getCachedBeanList(DistrictBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_DISTRICTS, DISTRICT_KEY);
+    }
     
     public static List<BrValidationTargetTypeBean> getBrValidationTargetTypes() {
         return getCachedBeanList(BrValidationTargetTypeBean.class,

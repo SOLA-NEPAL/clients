@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.beans.system;
+package org.sola.clients.beans.administrative;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
-import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
@@ -27,31 +26,19 @@ import org.sola.services.boundary.wsclients.WSManager;
  *
  * @author KumarKhadka
  */
-public class VdcListBean extends AbstractBindingBean{
-   ObservableList<VdcBean> vdc;
-    public static final String SELECTED_VDC = "selectedVdc";
-    private VdcBean selectedVdc;
+public class MothListBean {
 
-    public VdcBean getSelectedVdc() {
-        return selectedVdc;
-    }
+    ObservableList<MothBean> moths;
 
-    public void setSelectedVdc(VdcBean selectedVdc) {
-        VdcBean oldValue=this.selectedVdc;
-        this.selectedVdc = selectedVdc;
-        propertySupport.firePropertyChange(SELECTED_VDC, oldValue, this.selectedVdc);
-    }
-
-    public ObservableList<VdcBean> getVdc() {
-         if (vdc == null) {
-            vdc = ObservableCollections.observableList(new ArrayList<VdcBean>());
+    public ObservableList<MothBean> getMoths() {
+        if (moths == null) {
+            moths = ObservableCollections.observableList(new ArrayList<MothBean>());
         }
-        return vdc;    
-    }  
-       
-   public void loadVdcList() {
-       TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCaseManagementService().getVdcList(), VdcBean.class, (List) vdc);
-    }   
-   
-  
+        return moths;
+    }
+
+    public void loadMothList(String vdcSid, String mothLuj) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance()
+                .getAdministrative().getMoths(vdcSid, mothLuj), MothBean.class, (List) moths);
+    }
 }

@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.referencedata.DepartmentBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -56,7 +57,8 @@ public class UserBean extends UserSummaryBean {
     @Size(min=1, message=ClientMessage.CHECK_MIN_USERGROUP, payload=Localized.class)
     private SolaList<UserGroupBean> userGroups;
     private SolaList<RoleBean> roles;
-    
+    private DepartmentBean department;
+            
     public UserBean() {
         super();
         active = true;
@@ -98,6 +100,17 @@ public class UserBean extends UserSummaryBean {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public DepartmentBean getDepartment() {
+        if(department == null){
+            department = new DepartmentBean();
+        }
+        return department;
+    }
+
+    public void setDepartment(DepartmentBean department) {
+        this.department = department;
     }
 
     // Methods
