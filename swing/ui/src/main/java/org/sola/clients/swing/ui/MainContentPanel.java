@@ -61,6 +61,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_BAUNIT_SEARCH = "baunitsearch";
     public final static String CARD_DOCUMENT_SEARCH = "documentsearch";
     public final static String CARD_APPASSIGNMENT = "appassignment";
+    public final static String CARD_APPDETAILS = "appdetails";
     public final static String CARD_MAP = "map";
     public final static String CARD_APPLICATION = "application";
     public final static String CARD_NEW_PROPERTY_WIZARD = "newPropertyWizard";

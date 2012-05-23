@@ -30,6 +30,7 @@
 package org.sola.clients.beans.application;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -56,6 +57,7 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
+import org.sola.webservices.transferobjects.casemanagement.ActionedApplicationTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 import org.sola.webservices.transferobjects.search.PropertyVerifierTO;
 
@@ -83,7 +85,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String ASSIGNEE_ID_PROPERTY = "assigneeId";
     public static final String STATUS_TYPE_PROPERTY = "statusType";
     public static final String APPLICATION_PROPERTY = "application";
-    
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
     private SolaList<ApplicationPropertyBean> propertyList;
@@ -93,7 +94,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private BigDecimal tax;
     private BigDecimal totalAmountPaid;
     private BigDecimal totalFee;
-    @Size(min=1, message = ClientMessage.CHECK_APP_SERVICES_NOT_EMPTY, payload=Localized.class)
+    @Size(min = 1, message = ClientMessage.CHECK_APP_SERVICES_NOT_EMPTY, payload = Localized.class)
     private SolaObservableList<ApplicationServiceBean> serviceList;
     private SolaList<SourceBean> sourceList;
     private SolaObservableList<ApplicationLogBean> appLogList;
@@ -107,10 +108,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
     /**
      * Default constructor to create application bean. Initializes the following
      * list of beans which are the parts of the application bean: <br /> {@link ApplicationActionTypeBean}
-     * <br /> {@link PartySummaryBean}
-     * <br /> {@link ApplicationPropertyBean}
-     * <br /> {@link ApplicationServiceBean}
-     * <br /> {@link SourceBean}
+     * <br /> {@link PartySummaryBean} <br /> {@link ApplicationPropertyBean}
+     * <br /> {@link ApplicationServiceBean} <br /> {@link SourceBean}
      */
     public ApplicationBean() {
         super();
@@ -750,18 +749,69 @@ public class ApplicationBean extends ApplicationSummaryBean {
      * @param userId ID of the user.
      */
     public boolean assignUser(String userId) {
-        if (userId == null) {
-            WSManager.getInstance().getCaseManagementService().applicationActionUnassign(
-                    this.getId(), this.getRowVersion());
-        } else {
-            WSManager.getInstance().getCaseManagementService().applicationActionAssign(
-                    this.getId(), userId, this.getRowVersion());
-
-        }
+        WSManager.getInstance().getCaseManagementService().applicationActionAssign(
+                this.getId(), userId, this.getRowVersion());
         this.reload();
         return true;
     }
 
+    /**
+     * Bulk assignment of applications to the user.
+     *
+     * @param applicationSearchResults Application search results list
+     * @param userId ID of the user.
+     */
+    public static void assignUserBulkFromSearchResults(
+            List<ApplicationSearchResultBean> applicationSearchResults, String userId) {
+        assignUserBulk(convertSaerchResultsToActioned(applicationSearchResults), userId);
+    }
+
+    private static List<ActionedApplicationTO> convertSaerchResultsToActioned(List<ApplicationSearchResultBean> applicationSearchResults) {
+        List<ActionedApplicationTO> actionedApplications = new ArrayList<ActionedApplicationTO>();
+        if (applicationSearchResults != null) {
+            for (ApplicationSearchResultBean appSearchResult : applicationSearchResults) {
+                ActionedApplicationTO actionedApplication = new ActionedApplicationTO();
+                actionedApplication.setApplicationId(appSearchResult.getId());
+                actionedApplication.setRowVerion(appSearchResult.getRowVersion());
+                actionedApplications.add(actionedApplication);
+            }
+        }
+        return actionedApplications;
+    }
+
+    /**
+     * Bulk assignment of applications to the user.
+     *
+     * @param actionedApplications Actioned application list
+     * @param userId ID of the user.
+     */
+    public static void assignUserBulk(List<ActionedApplicationTO> actionedApplications, String userId) {
+        WSManager.getInstance().getCaseManagementService().applicationActionAssignBulk(
+                actionedApplications, userId);
+    }
+
+    /**
+     * Bulk transfer of applications to the user.
+     *
+     * @param applicationSearchResults Application search results list
+     * @param userId ID of the user.
+     */
+    public static void transferApplicationBulkFromSearchResults(
+            List<ApplicationSearchResultBean> applicationSearchResults, String userId) {
+        transferApplicationBulk(convertSaerchResultsToActioned(applicationSearchResults), userId);
+    }
+    
+     /**
+     * Bulk transfer of applications to the user.
+     *
+     * @param actionedApplications Actioned application list
+     * @param userId ID of the user.
+     */
+    public static void transferApplicationBulk(List<ActionedApplicationTO> actionedApplications, String userId) {
+        WSManager.getInstance().getCaseManagementService().applicationActionTransferBulk(
+                actionedApplications, userId);
+    }
+    
     /**
      * Creates new application in the database.
      *

@@ -50,17 +50,25 @@ public class UserSearchResultListBean extends AbstractBindingBean {
     public UserSearchResultListBean() {
         super();
         usersList = new SolaObservableList<UserSearchResultBean>();
-        loadActiveUsers();
     }
 
+    
     /** Populates the list of users with active users. */
-    private void loadActiveUsers() {
+    public void loadActiveUsers() {
         if (WSManager.getInstance().getSearchService() != null) {
             List<UserSearchResultTO> userListTO = WSManager.getInstance().getSearchService().getActiveUsers();
             TypeConverters.TransferObjectListToBeanList(userListTO, UserSearchResultBean.class, (List) usersList);
         }
     }
 
+    /** Populates the list of users from current user department. */
+    public void loadMyDepartmentUsers() {
+        if (WSManager.getInstance().getSearchService() != null) {
+            List<UserSearchResultTO> userListTO = WSManager.getInstance().getSearchService().getMyDepartmentUsers();
+            TypeConverters.TransferObjectListToBeanList(userListTO, UserSearchResultBean.class, (List) usersList);
+        }
+    }
+    
     public ObservableList<UserSearchResultBean> getUsers() {
         return usersList;
     }
