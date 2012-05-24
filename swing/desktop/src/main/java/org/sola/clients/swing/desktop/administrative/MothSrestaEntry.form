@@ -4,11 +4,13 @@
   <NonVisualComponents>
     <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
     </Component>
+    <Component class="org.sola.clients.beans.system.VdcListBean" name="vdcListBean1">
+    </Component>
+    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
+    </Component>
     <Component class="org.sola.clients.beans.administrative.MothListBean" name="mothListBean">
     </Component>
-    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean">
-    </Component>
-    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean1">
+    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean1">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -223,8 +225,8 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
-                    <StringItem index="0" value="Moth"/>
-                    <StringItem index="1" value="Luj"/>
+                    <StringItem index="0" value="M"/>
+                    <StringItem index="1" value="L"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -266,6 +268,7 @@
             <Component class="javax.swing.JComboBox" name="cmbMothLujNo">
               <BindingProperties>
                 <BindingProperty name="elements" source="mothListBean" sourcePath="${moths}" target="cmbMothLujNo" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="mothListBean" sourcePath="${selectedMoth}" target="cmbMothLujNo" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
           </SubComponents>
@@ -393,8 +396,8 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
-                    <StringItem index="0" value="Moth"/>
-                    <StringItem index="1" value="Luj"/>
+                    <StringItem index="0" value="M"/>
+                    <StringItem index="1" value="L"/>
                   </StringArray>
                 </Property>
               </Properties>

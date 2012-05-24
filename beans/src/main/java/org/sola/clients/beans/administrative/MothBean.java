@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 package org.sola.clients.beans.administrative;
+
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.beans.system.VdcBean;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.MothTO;
 
@@ -27,35 +28,51 @@ import org.sola.webservices.transferobjects.administrative.MothTO;
 public class MothBean extends AbstractIdBean {
 
     public static final String FINANCIAL_YEAR_PROPERTY = "financialYear";
-    public static final String MOTHSID_PROPERTY = "mothSid";
     public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
-    public static final String VDC_SID_PROPERTY = "vdcSid";
+    public static final String VDC_SID_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String MOTHLUJ_PROPERTY = "mothLuj";
     public static final String LMOCD_PROPERTY = "lmocd";
     public static final String VDC_PROPERTY = "vdc";
-    public static final String SELECTED_VDC="selectedVdc";
-    
+    public static final String SELECTED_VDC = "selectedVdc";
     private String mothlujNumber;
-    private int vdcSid;
+    private String vdcCode;
     private int wardNo;
     private String mothLuj;
     private int financialYear;
     private int lmocd;
     private VdcBean vdc;
 
+    public String getVdcCode() {
+        if (vdc != null) {
+            return vdc.getVdcCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setVdcCode(String vdcCode) {
+        String oldValue = null;
+        if (vdc != null) {
+            oldValue = vdc.getVdcCode();
+        }
+        this.vdcCode = vdcCode;
+        //vdc = new getvdcBySid(vdcsid);
+        propertySupport.firePropertyChange(VDC_SID_PROPERTY, oldValue, this.vdcCode);
+    }
+
+    public MothBean() {
+        super();
+    }
+
     public VdcBean getVdc() {
         return vdc;
     }
 
     public void setVdc(VdcBean vdc) {
-       VdcBean oldValue = this.vdc;
+        VdcBean oldValue = this.vdc;
         this.vdc = vdc;
         propertySupport.firePropertyChange(LMOCD_PROPERTY, oldValue, this.vdc);
-    }
-
-    public MothBean() {
-        super();
     }
 
     public int getFinancialYear() {
@@ -80,10 +97,13 @@ public class MothBean extends AbstractIdBean {
 
     public String getMothLuj() {
         return mothLuj;
+
     }
 
     public void setMothLuj(String mothLuj) {
+        String oldValue = this.mothLuj;
         this.mothLuj = mothLuj;
+        propertySupport.firePropertyChange(MOTH_LUJ_NUMBER_PROPERTY, oldValue, this.mothLuj);
     }
 
     public String getMothlujNumber() {
@@ -94,23 +114,6 @@ public class MothBean extends AbstractIdBean {
         String oldValue = this.mothlujNumber;
         this.mothlujNumber = mothlujNumber;
         propertySupport.firePropertyChange(MOTH_LUJ_NUMBER_PROPERTY, oldValue, this.mothlujNumber);
-    }
-
-    public String getVdcSid() {        
-        if (vdc != null) {
-            return vdc.getCode();
-        } else {
-            return "0";
-        }
-    }
-
-    public void setVdcSid(String vdcSid) {
-        String oldValue = "0";
-        if (vdc != null) {
-            oldValue = vdc.getCode();
-        }
-        propertySupport.firePropertyChange(VDC_SID_PROPERTY, oldValue, this.vdcSid);
-
     }
 
     public int getWardNo() {
@@ -128,9 +131,9 @@ public class MothBean extends AbstractIdBean {
         mtTO = WSManager.getInstance().getAdministrative().saveMoth(mtTO);
         TypeConverters.TransferObjectToBean(mtTO, MothBean.class, this);
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return mothlujNumber;
     }
 }

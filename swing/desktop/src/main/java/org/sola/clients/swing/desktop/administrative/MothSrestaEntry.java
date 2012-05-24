@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 package org.sola.clients.swing.desktop.administrative;
-
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.swing.desktop.LandownerDecription;
+import org.sola.clients.beans.system.VdcBean;
+import org.sola.clients.swing.desktop.party.LandownerDecription;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 
@@ -46,10 +47,11 @@ public class MothSrestaEntry extends ContentPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        vdcListBean = new org.sola.clients.beans.system.VdcListBean();
+        vdcListBean1 = new org.sola.clients.beans.system.VdcListBean();
         mothBean = new org.sola.clients.beans.administrative.MothBean();
         mothListBean = new org.sola.clients.beans.administrative.MothListBean();
-        vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
-        vdcListBean1 = new org.sola.clients.beans.referencedata.VdcListBean();
+        mothBean1 = new org.sola.clients.beans.administrative.MothBean();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         toolMnuParcelEntry = new javax.swing.JButton();
@@ -162,7 +164,7 @@ public class MothSrestaEntry extends ContentPanel {
 
         jLabel2.setText("Moth/Luj Type");
 
-        cmbMothLuj2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Moth", "Luj" }));
+        cmbMothLuj2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "L" }));
         cmbMothLuj2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbMothLuj2ItemStateChanged(evt);
@@ -194,6 +196,8 @@ public class MothSrestaEntry extends ContentPanel {
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, eLProperty, cmbMothLujNo);
         bindingGroup.addBinding(jComboBoxBinding);
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedMoth}"), cmbMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -247,7 +251,10 @@ public class MothSrestaEntry extends ContentPanel {
 
         cmbVDC.setEditable(true);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cmbVDC, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdc}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cmbVDC);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cmbVDC, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -270,7 +277,7 @@ public class MothSrestaEntry extends ContentPanel {
 
         jPanel7.add(jPanel1);
 
-        cmbMothLuj.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Moth", "Luj" }));
+        cmbMothLuj.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "L" }));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${mothLuj}"), cmbMothLuj, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
@@ -372,7 +379,6 @@ public class MothSrestaEntry extends ContentPanel {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void cmbVDC1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbVDC1ItemStateChanged
-        // TODO add your handling code here:        
         VdcBean vdc = (VdcBean) cmbVDC1.getSelectedItem();
         mothListBean.loadMothList(vdc.getCode(), cmbMothLuj2.getSelectedItem().toString());
     }//GEN-LAST:event_cmbVDC1ItemStateChanged
@@ -385,7 +391,7 @@ public class MothSrestaEntry extends ContentPanel {
 
     private void parcelsEntry() {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_Parcel_Entry)) {
-            ParcelMothEntry pclMoth = new ParcelMothEntry(cmbVDC1.getSelectedItem().toString(),cmbMothLuj2.getSelectedItem().toString(),cmbMothLujNo.getSelectedItem().toString());
+            ParcelMothEntry pclMoth = new ParcelMothEntry(mothListBean.getSelectedMoth());
             getMainContentPanel().addPanel(pclMoth, MainContentPanel.CARD_Parcel_Entry);
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_Parcel_Entry);
@@ -426,6 +432,7 @@ public class MothSrestaEntry extends ContentPanel {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private org.sola.clients.beans.administrative.MothBean mothBean;
+    private org.sola.clients.beans.administrative.MothBean mothBean1;
     private org.sola.clients.beans.administrative.MothListBean mothListBean;
     private javax.swing.JButton toolLandOwnerDetail;
     private javax.swing.JButton toolMenuSave;

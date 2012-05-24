@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
+import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
@@ -26,8 +27,10 @@ import org.sola.services.boundary.wsclients.WSManager;
  *
  * @author KumarKhadka
  */
-public class MothListBean {
+public class MothListBean extends AbstractBindingBean {
 
+    public static final String SELECTED_MOTH = "selectedMoth";
+    private MothBean selectedMoth;
     ObservableList<MothBean> moths;
 
     public ObservableList<MothBean> getMoths() {
@@ -37,8 +40,17 @@ public class MothListBean {
         return moths;
     }
 
-    public void loadMothList(String vdcSid, String mothLuj) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance()
-                .getAdministrative().getMoths(vdcSid, mothLuj), MothBean.class, (List) moths);
+    public void loadMothList(String vdcCode, String mothLuj) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getMoths(vdcCode, mothLuj), MothBean.class, (List) moths);
+    }
+
+    public MothBean getSelectedMoth() {
+        return selectedMoth;
+    }
+
+    public void setSelectedMoth(MothBean selectedMoth) {
+        MothBean oldValue = this.selectedMoth;
+        this.selectedMoth = selectedMoth;
+        propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
     }
 }
