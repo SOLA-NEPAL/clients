@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.sola.clients.swing.desktop;
+package org.sola.clients.swing.desktop.administrative;
 
+import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 
@@ -31,12 +32,21 @@ public class ParcelMothEntry extends ContentPanel {
         initComponents();
     }
 
-    public ParcelMothEntry(String vdcName, String mothLuj, String mothLujNo) {
+    public ParcelMothEntry(MothBean mothBean) {
+        this.mothBean = mothBean;
         initComponents();
-        txtVDC.setText(vdcName);
-        txtMothLuj.setText(mothLuj);
-        txtMothLujNo.setText(mothLujNo);
+//        txtVDC.setText(vdcName);
+//        txtMothLuj.setText(mothLuj);
+//        txtMothLujNo.setText(mothLujNo);
 
+
+    }
+
+    private MothBean createMothBean() {
+        if (this.mothBean == null) {
+            mothBean = new MothBean();
+        }
+        return mothBean;
     }
 //    public void setValues(){
 //        txtVDC.setText(vdcName);
@@ -53,7 +63,9 @@ public class ParcelMothEntry extends ContentPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        mothBean = createMothBean();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -127,6 +139,9 @@ public class ParcelMothEntry extends ContentPanel {
 
         txtVDC.setEnabled(false);
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${vdcSid}"), txtVDC, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -151,6 +166,9 @@ public class ParcelMothEntry extends ContentPanel {
 
         txtMothLuj.setEnabled(false);
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${mothLuj}"), txtMothLuj, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -174,6 +192,9 @@ public class ParcelMothEntry extends ContentPanel {
         jLabel3.setText("Moth/Luj No.");
 
         txtMothLujNo.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${mothlujNumber}"), txtMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -601,6 +622,8 @@ public class ParcelMothEntry extends ContentPanel {
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
@@ -662,8 +685,10 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private org.sola.clients.beans.administrative.MothBean mothBean;
     private javax.swing.JTextField txtMothLuj;
     private javax.swing.JTextField txtMothLujNo;
     private javax.swing.JTextField txtVDC;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

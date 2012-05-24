@@ -50,7 +50,7 @@ public class VdcListBean extends AbstractBindingBean{
     }  
        
    public void loadVdcList() {
-       TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCaseManagementService().getVdcList(), VdcBean.class, (List) vdc);
+       TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getVdcList(), VdcBean.class, (List) vdc);
     }   
    
   

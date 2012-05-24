@@ -71,9 +71,7 @@ public class UserPanelForm extends ContentPanel {
         resourceBundle = ResourceBundle.getBundle("org/sola/clients/swing/admin/security/Bundle"); 
         
         initComponents();
-        setUserBean(this.userBean);
-        districtListBean.loadDistrictNames();
-        lMOListBean.loadLMONames();
+        setUserBean(this.userBean);       
     }
 
     public boolean isReadOnly() {
@@ -136,10 +134,7 @@ public class UserPanelForm extends ContentPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        districtListBean = new org.sola.clients.beans.system.DistrictListBean();
-        lMOListBean = new org.sola.clients.beans.system.LMOListBean();
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnAsignVDC = new javax.swing.JButton();
@@ -201,12 +196,6 @@ public class UserPanelForm extends ContentPanel {
 
         cmbDistrict.setName(bundle.getString("UserPanelForm.cmbDistrict.name")); // NOI18N
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${district}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cmbDistrict);
-        bindingGroup.addBinding(jComboBoxBinding);
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedDistrict}"), cmbDistrict, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
         jLabel1.setText(bundle.getString("UserPanelForm.jLabel1.text")); // NOI18N
         jLabel1.setName(bundle.getString("UserPanelForm.jLabel1.name")); // NOI18N
 
@@ -233,12 +222,6 @@ public class UserPanelForm extends ContentPanel {
         jPanel2.setName(bundle.getString("UserPanelForm.jPanel2.name")); // NOI18N
 
         cmbLMO.setName(bundle.getString("UserPanelForm.cmbLMO.name")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${LMO}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lMOListBean, eLProperty, cmbLMO);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lMOListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedLMO}"), cmbLMO, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
 
         jLabel2.setText(bundle.getString("UserPanelForm.jLabel2.text")); // NOI18N
         jLabel2.setName(bundle.getString("UserPanelForm.jLabel2.name")); // NOI18N
@@ -284,7 +267,7 @@ public class UserPanelForm extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,10 +288,8 @@ public class UserPanelForm extends ContentPanel {
                 .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -347,7 +328,6 @@ public class UserPanelForm extends ContentPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbDistrict;
     private javax.swing.JComboBox cmbLMO;
-    private org.sola.clients.beans.system.DistrictListBean districtListBean;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -356,8 +336,6 @@ public class UserPanelForm extends ContentPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JToolBar jToolBar1;
-    private org.sola.clients.beans.system.LMOListBean lMOListBean;
     private org.sola.clients.swing.ui.security.UserPanel userPanel;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

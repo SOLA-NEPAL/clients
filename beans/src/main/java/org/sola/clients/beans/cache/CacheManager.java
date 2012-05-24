@@ -90,9 +90,7 @@ public final class CacheManager {
     /** Cache key of the {@link RRRTypeBean} collection.*/
     public static final String RRR_TYPE_CODES_KEY = RrrTypeBean.class.getName() + LIST_POSTFIX;
     /** Cache key of the {@link RegistrationStatusTypeBean} collection.*/
-    public static final String REGISTRATION_STATUS_TYPE_CODES_KEY = RegistrationStatusTypeBean.class.getName() + LIST_POSTFIX;
-    /** Cache key of the {@link SourceBaUnitRelationTypeBean} collection.*/
-    public static final String SOURCE_BA_UNIT_RELATION_TYPE_CODES_KEY = SourceBaUnitRelationTypeBean.class.getName() + LIST_POSTFIX;
+    public static final String REGISTRATION_STATUS_TYPE_CODES_KEY = RegistrationStatusTypeBean.class.getName() + LIST_POSTFIX;    
     /** Cache key of the {@link CadastreObjectTypeBean} collection.*/
     public static final String CADASTRE_OBJECT_TYPE_CODES_KEY = CadastreObjectTypeBean.class.getName() + LIST_POSTFIX;
     /** Cache key of the {@link ChangeStatusTypeBean} collection.*/
@@ -204,11 +202,7 @@ public final class CacheManager {
                 GET_CADASTRE_OBJECT_TYPES, CADASTRE_OBJECT_TYPE_CODES_KEY);
     }
     
-    public static List<SourceBaUnitRelationTypeBean> getSourceBaUnitRelationTypes() {
-        return getCachedBeanList(SourceBaUnitRelationTypeBean.class,
-                WSManager.getInstance().getReferenceDataService(),
-                GET_SOURCE_BA_UNIT_RELATION_TYPES, SOURCE_BA_UNIT_RELATION_TYPE_CODES_KEY);
-    }
+   
     
     public static List<RegistrationStatusTypeBean> getRegistrationStatusTypes() {
         return getCachedBeanList(RegistrationStatusTypeBean.class,

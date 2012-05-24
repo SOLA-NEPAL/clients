@@ -15,17 +15,15 @@
  */
 package org.sola.clients.beans.system;
 
-import org.sola.clients.beans.AbstractCodeBean;
+import org.sola.clients.beans.AbstractBindingBean;
 
 /**
  *
  * @author KumarKhadka
  */
-public class VdcBean extends AbstractCodeBean {
+public class OfficeBean extends AbstractBindingBean {
 
-    public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
-    private String vdcCode;
     private String districtCode;
 
     public String getDistrictCode() {
@@ -37,14 +35,4 @@ public class VdcBean extends AbstractCodeBean {
         this.districtCode = districtCode;
         propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, this.districtCode);
     }
-
-    public String getVdcCode() {
-        return vdcCode;
-    }
-
-    public void setVdcCode(String vdcCode) {
-        String oldValue = this.vdcCode;
-        this.vdcCode = vdcCode;
-        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcCode);
-    }  
 }
