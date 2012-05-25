@@ -106,6 +106,7 @@ public class PublicMethod {
         segnumber++;
         return Integer.toString(segnumber);
     }
+    
 //<editor-fold defaultstate="collapsed" desc="routine to check the coincidence of line">
     //Sum of partial distances are equal to the total segment length, then 
     //the point lies on the given line.
@@ -236,7 +237,9 @@ public class PublicMethod {
         Coordinate[] buffer_Cors = offsetBuilder.getLineCurve(inputPts, offsetDist);
         return buffer_Cors;
     }
-    
+
+//<editor-fold defaultstate="collapsed" desc="Checking for offset through buffer">
+//
 //    public static Coordinate[] refineBuffered_Offset_LinePoints(Geometry parcel,Coordinate[] buffer_Cors, double offsetDist){
 //        List<Coordinate> cors=new ArrayList<Coordinate>();
 //        //remove redundant buffer point.
@@ -280,6 +283,7 @@ public class PublicMethod {
 //        return filtered_Cors;
 //    }
     //--------------------------------------------------------------------------
+//</editor-fold>
     
     //check given point set is inside the polygon or not.
     public static boolean IsLine_Fully_IntersectPolygon(Geometry parcel,LineString seg){

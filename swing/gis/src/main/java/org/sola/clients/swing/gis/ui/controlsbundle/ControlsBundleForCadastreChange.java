@@ -144,6 +144,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         return transactionBean;
     }
 
+    //partially by Kabindra.
     @Override
     protected void addLayers() throws InitializeLayerException {
         super.addLayers();
@@ -176,6 +177,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
                 transactionBean.getCadastreObjectTargetList());
     }
 
+    //<editor-fold defaultstate="collapsed" desc="By Kabindra">
     @Override
     protected void addToolsAndCommands() {
         genericSOLA_Tools();
@@ -215,6 +217,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
     }
+    //</editor-fold>
 
     private void genericSOLA_Tools() {
         CadastreChangeSelectParcelTool selectParcelTool =
