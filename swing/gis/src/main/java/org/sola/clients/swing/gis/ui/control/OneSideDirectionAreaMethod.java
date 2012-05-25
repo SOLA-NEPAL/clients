@@ -54,7 +54,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         this.setTitle("One Side, Direction and Area Method for Parcel Splitting.");
         //this.setModalityType(ModalityType.APPLICATION_MODAL);
         //this.table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        this.setSize(550, 450);
+        this.setSize(550, 500);
         this.setLocation(100, 100);
         
         this.segmentLayer = segmentLayer;
@@ -84,6 +84,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtRequiredArea = new javax.swing.JTextField();
@@ -95,6 +96,8 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
+        optClockwise = new javax.swing.JRadioButton();
+        optCounterClockWise = new javax.swing.JRadioButton();
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
 
         jTextField1.setText("jTextField1");
@@ -149,6 +152,13 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
             }
         });
 
+        buttonGroup1.add(optClockwise);
+        optClockwise.setSelected(true);
+        optClockwise.setText("Clockwise Direction");
+
+        buttonGroup1.add(optCounterClockWise);
+        optCounterClockWise.setText("Counter-Clockwise Direction");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -157,65 +167,77 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUndoSplit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnNewPacel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(optClockwise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(optCounterClockWise))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnUndoSplit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(txtRequiredArea, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMaxArea, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel7)))
-                        .addGap(12, 12, 12)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNewPacel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRequiredArea, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtMaxArea, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtMaxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtRequiredArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtMaxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtRequiredArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(optClockwise)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(optCounterClockWise)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnRefreshMap)
                     .addComponent(btnUndoSplit)
                     .addComponent(btnNewPacel)
-                    .addComponent(btnCheckSegments))
-                .addGap(42, 42, 42))
+                    .addComponent(btnCheckSegments)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -249,7 +271,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     }
     
     //list of coordinate for newly formed polgyon.
-    private List<Coordinate> newPolygonFormed(Point[] pts, Point keyPoint, Point pt, int i1, int i2) {
+    private List<Coordinate> newPolygonFormed_CounterClockwise(Point[] pts, Point keyPoint, Point pt, int i1, int i2) {
         List<Coordinate> pList = new ArrayList<Coordinate>();
         boolean nextLoopAlso=true;
         //identify the line with pt located.
@@ -268,6 +290,36 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
             for (int i = pts.length - 1; i >= i2; i--) {
                 pList.add(pts[i].getCoordinate());
                 if (pts[i].equals(seg.getEndPoint())) {
+                    break;
+                }
+            }
+        }
+        pList.add(pt.getCoordinate());
+        //close the polyon.
+        pList.add(keyPoint.getCoordinate());
+        
+        return pList;
+    }
+    
+    private List<Coordinate> newPolygonFormed_Clockwise(Point[] pts, Point keyPoint, Point pt, int i1, int i2) {
+        List<Coordinate> pList = new ArrayList<Coordinate>();
+        boolean nextLoopAlso=true;
+        //identify the line with pt located.
+        LineString seg=PublicMethod.lineWithPoint(pts, pt);
+        //collect points for checking area.
+        pList.add(keyPoint.getCoordinate());
+        for (int i = i2; i < pts.length; i++) {
+            pList.add(pts[i].getCoordinate());
+            if (pts[i].equals(seg.getStartPoint())) {
+                nextLoopAlso=false;
+                break;
+            }
+        }
+        
+        if (nextLoopAlso){
+            for (int i = 0; i <= i1; i++) {
+                pList.add(pts[i].getCoordinate());
+                if (pts[i].equals(seg.getStartPoint())) {
                     break;
                 }
             }
@@ -318,8 +370,16 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         if (cur_pt==null) return;
          
         double reqArea=Double.parseDouble(txtRequiredArea.getText());
-        //form polygon in anticlockwise direction.
-        List<Coordinate> poly= newPolygonFormed(pts,keyPoint,cur_pt,i1,i2);
+        //form polygon based on the direction choosen.
+        List<Coordinate> poly=null;
+        if (optCounterClockWise.isSelected()){
+            poly= newPolygonFormed_Clockwise(pts,keyPoint,cur_pt,i1,i2);
+        }
+        else {
+            poly= newPolygonFormed_CounterClockwise(pts,keyPoint,cur_pt,i1,i2);
+        }
+        if (poly==null || poly.size()<3) return;
+        
         double polyArea=AreaObject.getAreaFromCoordinateList(poly);
         if (reqArea>polyArea){ //do same like one point and area method.
             createNewSegment(pts,keyPoint,i1,i2);
@@ -444,6 +504,35 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         locatePointPanel.appendNewSegment(newSegment2, is_newLine);
     }
 
+    //Traveling the parcel based on direction.
+    //--------------------------------------------------------------------------
+    private Coordinate locate_Point_Clockwise(Point[] pts, Point keyPoint, int i1, int i2) {
+        List<Coordinate> pList = new ArrayList<Coordinate>();
+        double areaReq = Double.parseDouble(txtRequiredArea.getText());
+        boolean nextLoopAlso=true;
+        //collect points for checking area.
+        pList.add(keyPoint.getCoordinate());
+        //Loop until the polygon formed does not have area greater than required area.
+        for (int i = i2; i < pts.length; i++) {
+            pList.add(pts[i].getCoordinate());
+            if (AreaObject.checkAreaFormed(pList, areaReq)) {
+                nextLoopAlso=false;
+                break;
+            }
+        }
+        
+        if (nextLoopAlso){
+            for (int i = 0; i <= i1; i++) {
+                pList.add(pts[i].getCoordinate());
+                if (AreaObject.checkAreaFormed(pList, areaReq)) {
+                    break;
+                }
+            }
+        }
+
+        return AreaObject.point_to_form_RequiredArea(pList, areaReq);
+    }
+
     private Coordinate locate_Point_counterClockwise(Point[] pts, Point keyPoint, int i1, int i2) {
         List<Coordinate> pList = new ArrayList<Coordinate>();
         double areaReq = Double.parseDouble(txtRequiredArea.getText());
@@ -469,9 +558,16 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
 
         return AreaObject.point_to_form_RequiredArea(pList, areaReq);
     }
-
+    //--------------------------------------------------------------------------
+    
     private void createNewSegment(Point[] pts, Point keyPoint, int i1, int i2) {
-        Coordinate newCo = locate_Point_counterClockwise(pts, keyPoint, i1, i2);
+        Coordinate newCo = null;
+        //Traverse based on the direction given.
+        if (optClockwise.isSelected()) {
+            newCo = locate_Point_Clockwise(pts, keyPoint, i1, i2);
+        } else {
+            newCo = locate_Point_counterClockwise(pts, keyPoint, i1, i2);
+        }
         if (newCo == null) {
             return;
         }
@@ -605,12 +701,15 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
     private org.sola.clients.swing.gis.ui.control.LocatePointPanel locatePointPanel;
+    private javax.swing.JRadioButton optClockwise;
+    private javax.swing.JRadioButton optCounterClockWise;
     private javax.swing.JTextField txtMaxArea;
     private javax.swing.JTextField txtRequiredArea;
     // End of variables declaration//GEN-END:variables

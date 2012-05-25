@@ -55,12 +55,13 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public final class ControlsBundleForCadastreChange extends ControlsBundleForTransaction {
 
     private TransactionCadastreChangeBean transactionBean;
+    private String applicationNumber = "";
+    
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     private CadastreTargetSegmentLayer targetSegmentLayer = null;
     private CadastreChangeNewCadastreObjectLayer newCadastreObjectLayer = null;
     private CadastreChangeNewSurveyPointLayer newPointsLayer = null;
-    private String applicationNumber = "";
-   
+
     /**
      * Constructor. It sets up the bundle by adding layers and tools that are
      * relevant. Finally, it zooms in the interested zone. The interested zone
@@ -150,6 +151,10 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.targetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
         this.getMap().addLayer(targetParcelsLayer);
         
+        //selection affected parcels.
+        this.targetParcelsLayer.getAffected_parcels().setVisible(true);
+        this.getMap().addLayer(this.targetParcelsLayer.getAffected_parcels());
+        
         //segment new layer.
         this.targetSegmentLayer = new CadastreTargetSegmentLayer();
         this.getMap().addLayer(this.targetSegmentLayer);
@@ -184,13 +189,10 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //new tool for parcel selection.
         listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects((this.getPojoDataAccess()));
         listParcel.setTargetParcelsLayer(targetParcelsLayer);
-        //Target segment layer in listselectedCadastreObject class 
-        //get reference for segment layer in CadastreTargetSegment Layer, so they are same.
-        listParcel.setTargetSegmentLayer(targetSegmentLayer.getSegmentLayer());
         listParcel.setTargetPointLayer(targetSegmentLayer);
-        listParcel.setPolyAreaList(targetSegmentLayer.getPolyAreaList());
         this.getMap().addTool(listParcel, this.getToolbar(), true);
-      
+        //add deselect tool.
+        this.getMap().addMapAction(new DeselectALL(this.getMap(),targetSegmentLayer,targetParcelsLayer), this.getToolbar(), true);
         //add toolbar for the one point and Area method show forms.
         this.getMap().addMapAction(new CadastreOnePointAreaFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
@@ -215,7 +217,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
     }
 
     private void genericSOLA_Tools() {
-        //---------Uncomment all lines to restore generic sola tools.
         CadastreChangeSelectParcelTool selectParcelTool =
                 new CadastreChangeSelectParcelTool(this.getPojoDataAccess());
         selectParcelTool.setTargetParcelsLayer(targetParcelsLayer);

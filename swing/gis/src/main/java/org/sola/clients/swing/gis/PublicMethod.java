@@ -7,11 +7,11 @@ package org.sola.clients.swing.gis;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import com.vividsolutions.jts.operation.buffer.OffsetCurveBuilder;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JCheckBox;
 import javax.swing.tree.DefaultTreeModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
@@ -44,48 +44,14 @@ public class PublicMethod {
                 continue;
             }
 
-            //Based on the situation trigger the tree node click events.
-            boolean isLayerVisible = layer.isVisible();
-            if (showOtherLayers) {
-                if (!isLayerVisible) {
-                    mapObj.getToc().changeNodeSwitch(tocNode);
-                    layer.setVisible(true);
-                }
-            } else {
-                if (isLayerVisible) {
-                    mapObj.getToc().changeNodeSwitch(tocNode);
-                    layer.setVisible(false);
-                }
-            }
+            //mapObj.getToc().changeNodeSwitch(tocNode);
+            JCheckBox checkbox = tocNode.getVisualisationComponent();
+            checkbox.setSelected(showOtherLayers);
+            layer.setVisible(showOtherLayers);
         }
+        mapObj.getToc().repaint();
+        mapObj.refresh();
     }
-
-//    public static void Tmp_maplayerOnOff(Map mapObj, boolean showOtherLayers) {
-//        LinkedHashMap<String, ExtendedLayer> lays = mapObj.getSolaLayers();
-//        //Set visibility status of map layers.
-//        for (ExtendedLayer lay : lays.values()) {
-//            //System.out.println(lay.getTitle());
-//            if (lay.getTitle().contains("Target")) {
-//                continue;
-//            }
-//            lay.setVisible(showOtherLayers);
-//            //lay.setShowInToc(showTargetOnly);
-//        }
-//        //Set layer tick status in TOC.
-//        DefaultTreeModel treeModel = (DefaultTreeModel) mapObj.getToc().getTreeModel();
-//        Object parent = treeModel.getRoot();
-//        for (int i = 0; i < treeModel.getChildCount(parent); i++) {
-//            TocLayerNode node = (TocLayerNode) treeModel.getChild(parent, i);
-//            //System.out.println(node.toString()); //Print title for the node.
-//            if (node.toString().contains("Target")) {
-//                continue;
-//            }
-//            JCheckBox checkbox = node.getVisualisationComponent();
-//            checkbox.setSelected(showOtherLayers);
-//        }
-//        mapObj.getToc().repaint();
-//        mapObj.refresh();
-//    }
     
     //return incremented node number.
     public static String newNodeName(CadastreTargetSegmentLayer segmentLayer) {
@@ -140,7 +106,7 @@ public class PublicMethod {
         segnumber++;
         return Integer.toString(segnumber);
     }
-
+//<editor-fold defaultstate="collapsed" desc="routine to check the coincidence of line">
     //Sum of partial distances are equal to the total segment length, then 
     //the point lies on the given line.
 //    public static boolean IsPointOnLine(LineString seg, Point pt) {
@@ -165,6 +131,7 @@ public class PublicMethod {
 //            return false;
 //        }
 //    }
+//</editor-fold>
     
     public static boolean IsPointOnLine(LineString seg, Point pt) {
         double dist=0.0005;//mm precision.
@@ -446,6 +413,8 @@ public class PublicMethod {
         //store other points.
         while (!isTravelling_complete(travelled)){
             for (int i=1;i<lines.length;i++){
+                //check if the line has been travelled already.
+                if (travelled[i]>=lines.length) continue;
                 Point start_pt=lines[i].getStartPoint();
                 Point end_pt=lines[i].getEndPoint();
                 if (ordered_pts.contains(start_pt)){
@@ -543,5 +512,26 @@ public class PublicMethod {
         }
         
         return null;
+    }
+    
+    //Determine if the given segment is on the selected parcel.
+    public static boolean isSegmentOn_Selected_Parcel(List<AreaObject> parcels,LineString seg){
+        double dist=0.0005;//mm precision.
+        GeometryFactory geomFactory=new GeometryFactory();
+        for (AreaObject aa : parcels) {
+             Geometry geom= aa.getThe_Geom();
+             Coordinate[] cors=geom.getCoordinates();
+             for (int i=0;i<cors.length-1;i++){
+                 Coordinate[] co=new Coordinate[]{cors[i],cors[i+1]};
+                 LineString tmpLine=geomFactory.createLineString(co);
+                 //check the colinear condition of the two lines.
+                 if (tmpLine.isWithinDistance(seg.getStartPoint(), dist) &&
+                         tmpLine.isWithinDistance(seg.getEndPoint(), dist)) {
+                    return true;
+                }
+             }
+        }
+        
+        return false;
     }
 }

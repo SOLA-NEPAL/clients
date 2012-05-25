@@ -10,8 +10,6 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import org.sola.clients.swing.gis.segmentDetails;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -90,6 +88,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
     public LocatePointPanel(
             CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException{
         this();
+        
         initializeFormVariable(segmentLayer);
     }
 
@@ -709,7 +708,6 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //reflect the selected segment length into the total length textbox.
         txtTotalLength.setText(table.getValueAt(r, 1).toString());
         selected_rowIndex=r;
-        selected_Segid=getSelectedSegmentID();
     }//GEN-LAST:event_tableMouseClicked
 
     public void addPointInPointCollection(Point point_to_add) {
@@ -831,9 +829,10 @@ public class LocatePointPanel extends javax.swing.JPanel {
         segmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnReloadActionPerformed
 
-    private String getSelectedSegmentID(){
-        btnDelete.setEnabled(false);
-        if (selected_rowIndex<0) return "";
+    private boolean isRemovableSegment(){
+        //btnDelete.setEnabled(false);
+        selected_Segid="";
+        if (selected_rowIndex<0) return false;
         //get features.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
@@ -846,17 +845,27 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 //validate segment before delete.
                 byte newLine=Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_NEW_SEGMENT).toString());
                 if (newLine==1){
-                   btnDelete.setEnabled(true);
+                   break;
                 }
-                break;
+                //check if the selectected line lies on the parcel boundary.
+                LineString seg=(LineString)fea.getAttribute(0);//get the shape.
+                if (PublicMethod.isSegmentOn_Selected_Parcel(
+                                        segmentLayer.getPolyAreaList(), seg)){
+                    return false;
+                }
             }
         }
-        return segid;
+        selected_Segid=segid;
+        return true;
     }
     
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (selected_rowIndex<0) return;
-
+        //check the removable status and get id of segment to be removed.
+        if (!isRemovableSegment()){
+            JOptionPane.showMessageDialog(this, "The segment on parcel boundary is not allowed to remove.");
+            return;
+        }
         targetSegmentLayer.removeFeature(selected_Segid);
         DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
         tblmodel.removeRow(selected_rowIndex);
@@ -870,7 +879,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //refresh map.
         targetSegmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnDeleteActionPerformed
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPoint;
     private javax.swing.JButton btnClearSelection;
