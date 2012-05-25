@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 package org.sola.clients.swing.desktop.administrative;
-import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
-import org.sola.clients.swing.desktop.LandownerDecription;
-import org.sola.clients.beans.system.VdcBean;
 import org.sola.clients.swing.desktop.party.LandownerDecription;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -33,8 +30,10 @@ public class MothSrestaEntry extends ContentPanel {
      */
     public MothSrestaEntry() {
         initComponents();
-        vdcListBean.loadList(false, OfficeBean.getCurrentOffice().getDistrictCode());
-        vdcListBean.loadList(false, OfficeBean.getCurrentOffice().getDistrictCode());
+        //vdcListBean.loadList(false, OfficeBean.getCurrentOffice().getDistrictCode());
+        //vdcListBean.loadList(false, OfficeBean.getCurrentOffice().getDistrictCode());
+         vdcListBean.loadVdcList();
+         vdcListBean1.loadVdcList();
     }
 
     /**
@@ -47,11 +46,10 @@ public class MothSrestaEntry extends ContentPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        vdcListBean = new org.sola.clients.beans.system.VdcListBean();
-        vdcListBean1 = new org.sola.clients.beans.system.VdcListBean();
         mothBean = new org.sola.clients.beans.administrative.MothBean();
         mothListBean = new org.sola.clients.beans.administrative.MothListBean();
-        mothBean1 = new org.sola.clients.beans.administrative.MothBean();
+        vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
+        vdcListBean1 = new org.sola.clients.beans.referencedata.VdcListBean();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         toolMnuParcelEntry = new javax.swing.JButton();
@@ -130,12 +128,17 @@ public class MothSrestaEntry extends ContentPanel {
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton7);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose Moth acc to VDC/MP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose Moth according to VDC/MP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
         jLabel6.setText("VDC/MP");
 
         cmbVDC1.setEditable(true);
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdc}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean1, eLProperty, cmbVDC1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         cmbVDC1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbVDC1ItemStateChanged(evt);
@@ -193,8 +196,8 @@ public class MothSrestaEntry extends ContentPanel {
 
         jLabel3.setText("Moth/Luj No");
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, eLProperty, cmbMothLujNo);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, eLProperty, cmbMothLujNo);
         bindingGroup.addBinding(jComboBoxBinding);
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedMoth}"), cmbMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
@@ -432,7 +435,6 @@ public class MothSrestaEntry extends ContentPanel {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private org.sola.clients.beans.administrative.MothBean mothBean;
-    private org.sola.clients.beans.administrative.MothBean mothBean1;
     private org.sola.clients.beans.administrative.MothListBean mothListBean;
     private javax.swing.JButton toolLandOwnerDetail;
     private javax.swing.JButton toolMenuSave;

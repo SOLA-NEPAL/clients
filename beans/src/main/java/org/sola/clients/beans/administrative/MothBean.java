@@ -17,7 +17,7 @@ package org.sola.clients.beans.administrative;
 
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.system.VdcBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.MothTO;
 
@@ -45,7 +45,7 @@ public class MothBean extends AbstractIdBean {
 
     public String getVdcCode() {
         if (vdc != null) {
-            return vdc.getVdcCode();
+            return vdc.getCode();
         } else {
             return null;
         }
@@ -54,10 +54,9 @@ public class MothBean extends AbstractIdBean {
     public void setVdcCode(String vdcCode) {
         String oldValue = null;
         if (vdc != null) {
-            oldValue = vdc.getVdcCode();
+            oldValue = vdc.getCode();
         }
-        this.vdcCode = vdcCode;
-        //vdc = new getvdcBySid(vdcsid);
+        this.vdcCode = vdcCode;       
         propertySupport.firePropertyChange(VDC_SID_PROPERTY, oldValue, this.vdcCode);
     }
 

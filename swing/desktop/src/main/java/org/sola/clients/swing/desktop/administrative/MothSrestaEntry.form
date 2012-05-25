@@ -4,13 +4,11 @@
   <NonVisualComponents>
     <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
     </Component>
-    <Component class="org.sola.clients.beans.system.VdcListBean" name="vdcListBean1">
-    </Component>
-    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
-    </Component>
     <Component class="org.sola.clients.beans.administrative.MothListBean" name="mothListBean">
     </Component>
-    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean1">
+    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean">
+    </Component>
+    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean1">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -139,7 +137,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Choose Moth acc to VDC/MP">
+            <TitledBorder title="Choose Moth according to VDC/MP">
               <Font PropertyName="font" name="Aharoni" size="18" style="0"/>
               <Color PropertyName="color" blue="33" green="66" red="0" type="rgb"/>
             </TitledBorder>
@@ -186,6 +184,9 @@
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="elements" source="vdcListBean1" sourcePath="${vdc}" target="cmbVDC1" targetPath="elements" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbVDC1ItemStateChanged"/>
               </Events>
@@ -363,6 +364,7 @@
                 <Property name="editable" type="boolean" value="true"/>
               </Properties>
               <BindingProperties>
+                <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdc}" target="cmbVDC" targetPath="elements" updateStrategy="0" immediately="false"/>
                 <BindingProperty name="selectedItem" source="mothBean" sourcePath="${vdc}" target="cmbVDC" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
