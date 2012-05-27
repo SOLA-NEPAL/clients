@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.tree.DefaultTreeModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
@@ -20,9 +22,11 @@ import org.geotools.map.extended.layer.ExtendedLayer;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.control.extended.TocLayerNode;
 import org.geotools.swing.extended.Map;
+import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.layer.TargetAffectedParcelLayer;
 
 /**
  *
@@ -134,6 +138,7 @@ public class PublicMethod {
 //    }
 //</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="check coincidence of geometry">
     public static boolean IsPointOnLine(LineString seg, Point pt) {
         double dist=0.0005;//mm precision.
         if (seg.isWithinDistance(pt, dist)){
@@ -142,6 +147,23 @@ public class PublicMethod {
         else{
             return false;
         }
+    }
+    
+    public static boolean IsPointOnGeometry(Geometry geom, Point pt) {
+        double dist=0.0005;//mm precision.
+        if (geom.isWithinDistance(pt, dist)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public static boolean IsPointOnGeometry(Geometry geom, Coordinate co) {
+        GeometryFactory geomFactory=new GeometryFactory();
+        Point pt=geomFactory.createPoint(co);
+        
+        return IsPointOnGeometry(geom, pt);
     }
     
     //return the segment having the point inbetween its two points.
@@ -175,6 +197,7 @@ public class PublicMethod {
         
         return lineWithPoint(tmp_segs,pt);
     }
+    //</editor-fold>
     
     //Find the cummulative distance of given polyline.
     public static double getPolyLineLength(LineString[] segs){
@@ -193,7 +216,7 @@ public class PublicMethod {
         return getPolyLineLength(tmp_segs);
     }
     
-    //use OffsetCurveBuilder
+    //<editor-fold defaultstate="collapsed" desc="use OffsetCurveBuilder">
     //--------------------------------------------------------------------------
     public static Coordinate[] getOffsetBufferPoints(LineString[] lines,double offsetDist,boolean singleSided){
         List<LineString> inputLines=new ArrayList<LineString>();
@@ -237,7 +260,8 @@ public class PublicMethod {
         Coordinate[] buffer_Cors = offsetBuilder.getLineCurve(inputPts, offsetDist);
         return buffer_Cors;
     }
-
+    //</editor-fold>
+    
 //<editor-fold defaultstate="collapsed" desc="Checking for offset through buffer">
 //
 //    public static Coordinate[] refineBuffered_Offset_LinePoints(Geometry parcel,Coordinate[] buffer_Cors, double offsetDist){
@@ -350,6 +374,7 @@ public class PublicMethod {
      
      public static void exchangeParcelCollection(CadastreChangeTargetCadastreObjectLayer src_targetParcelsLayer
                             ,CadastreChangeTargetCadastreObjectLayer dest_targetParcelsLayer){
+         
         dest_targetParcelsLayer.getFeatureCollection().clear();
         //get feature collection.
         SimpleFeatureCollection polys=src_targetParcelsLayer.getFeatureCollection();
@@ -360,6 +385,22 @@ public class PublicMethod {
             String objId= fea.getID().toString();
             
             dest_targetParcelsLayer.addFeature(objId, geom, null);
+        }
+        //topology checking features.
+        try {
+            dest_targetParcelsLayer.getAffected_parcels().getFeatureCollection().clear();
+            //get target affected feature collection.
+            polys=src_targetParcelsLayer.getAffected_parcels().getFeatureCollection();
+            polyIterator=polys.features();
+            while (polyIterator.hasNext()){
+                SimpleFeature fea=polyIterator.next();
+                Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
+                String objId= fea.getID().toString();
+
+                dest_targetParcelsLayer.getAffected_parcels().addFeature(objId, geom, null);
+            }
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(PublicMethod.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -373,7 +414,7 @@ public class PublicMethod {
     }
     //------------------------------------------------------
     
-    //build segment list in their connection order.
+    //<editor-fold defaultstate="collapsed" desc="build segment list in their connection order.">
     //-------------------------------------------------------------------------
     public static List<LineString> placeLinesInOrder(List<LineString> lines){
         LineString[] tmp_lines=new LineString[lines.size()];
@@ -451,6 +492,7 @@ public class PublicMethod {
         return true;
     }
     //--------------------------------------------------------------------------
+    //</editor-fold>
     
     //Find the list of point in original parcel.
     //--------------------------------------------------------------------------
@@ -538,4 +580,75 @@ public class PublicMethod {
         
         return false;
     }
+    
+    //<editor-fold defaultstate="collapsed" desc="rectification of touching parcel">
+    //rectify the topology of the affected parcel by selected parcels.
+    public static void rectify_TouchingParcels(
+            TargetAffectedParcelLayer target_affected_layer,
+                CadastreChangeTargetCadastreObjectLayer the_parcels){
+        SimpleFeatureCollection fea_col=the_parcels.getFeatureCollection();
+        SimpleFeatureIterator fea_iter=fea_col.features();
+        while (fea_iter.hasNext()){
+            SimpleFeature fea=fea_iter.next();
+            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Coordinate[] cors=geom.getCoordinates();
+            for (Coordinate co:cors){
+                rectify_TouchingParcel(target_affected_layer,co);
+            }
+        }
+    }
+    
+    public static int Index_to_place_point(Coordinate[] cors, Coordinate cur_co) {
+        GeometryFactory geomFactory=new GeometryFactory();
+        Point cur_pt=geomFactory.createPoint(cur_co);
+        
+        return Index_to_place_point(cors, cur_pt);
+    }
+    
+    public static int Index_to_place_point(Coordinate[] cors, Point cur_pt) {
+        GeometryFactory geomFactory=new GeometryFactory();
+        double dist=0.0005;//mm precision.
+        
+        for (int i=1;i<cors.length;i++){
+            Coordinate[] co=new Coordinate[]{cors[i-1],cors[i]};
+            LineString seg=geomFactory.createLineString(co);
+            //check for coincidence of points.
+            if (seg.getStartPoint().isWithinDistance(cur_pt, dist)){
+                return -1;//concides with startpoint so no needed to insert.
+            }
+            if (seg.getEndPoint().isWithinDistance(cur_pt, dist)){
+                return -1;//concides with endpoint so no needed to insert.
+            }
+            //checks whether line touches point or not.
+            if (seg.isWithinDistance(cur_pt, dist)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public static void rectify_TouchingParcel(
+            TargetAffectedParcelLayer layer, Coordinate co){
+        GeometryFactory geomFactory=new GeometryFactory();
+        //iterate through the touching parcels.
+        SimpleFeatureCollection fea_col=layer.getFeatureCollection();
+        SimpleFeatureIterator fea_iter=fea_col.features();
+        Point pt=geomFactory.createPoint(co);
+        while (fea_iter.hasNext()){
+            SimpleFeature fea=fea_iter.next();
+            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            if (PublicMethod.IsPointOnGeometry(geom, pt)){
+                int indx=Index_to_place_point(geom.getCoordinates(), pt);
+                if (indx<0) continue;
+                CoordinateList tmpcors=new CoordinateList(geom.getCoordinates());
+                tmpcors.add(indx, co,false);
+                tmpcors.closeRing();
+                //for new geometry.
+                LinearRing outer_ring= geomFactory.createLinearRing(tmpcors.toCoordinateArray());
+                Polygon new_parcel=geomFactory.createPolygon(outer_ring, null);
+                layer.replaceFeatureGeometry(fea, (Geometry)new_parcel);
+            }
+        }
+    }
+    //</editor-fold>
 }

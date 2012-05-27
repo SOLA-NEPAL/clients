@@ -11,14 +11,18 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
+import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
+import org.sola.clients.swing.gis.layer.TargetAffectedParcelLayer;
 
 /**
  *
@@ -355,12 +359,36 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         
         createNewSegment(pts, pointFixed, i1, i2);
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+//<editor-fold defaultstate="collapsed" desc="uncomment to check nodes in affected parcel">
+//        try {
+//            displayPointsOnMap(targetParcelsLayer.getAffected_parcels());
+//        } catch (InitializeLayerException ex) {
+//            Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//</editor-fold>
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
         segmentLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
+    //<editor-fold defaultstate="collapse" desc="check for nodes in affected parcels">
+    public void displayPointsOnMap( TargetAffectedParcelLayer layer){
+        GeometryFactory geomFactory=new GeometryFactory();
+        //iterate through the touching parcels.
+        SimpleFeatureCollection fea_col=layer.getFeatureCollection();
+        SimpleFeatureIterator fea_iter=fea_col.features();
+        while (fea_iter.hasNext()){
+            SimpleFeature fea=fea_iter.next();
+            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Coordinate[] cors=geom.getCoordinates();
+            for (Coordinate co:cors){
+                locatePointPanel.addPointInPointCollection(geomFactory.createPoint(co),(byte)0);
+            }
+        }
+    }
+    //</editor-fold>
+    
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshTable(Object lineSeg,Object pointFixed,String parID, boolean updateTable ){
         this.lineSeg=(LineString)lineSeg;

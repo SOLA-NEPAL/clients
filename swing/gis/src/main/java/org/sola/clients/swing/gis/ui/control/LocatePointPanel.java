@@ -859,6 +859,35 @@ public class LocatePointPanel extends javax.swing.JPanel {
         return true;
     }
     
+    private void removeIsolatednode(LineString removed_seg){
+        //get features.
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //check the isolation status of the end points.
+        Point startpt=removed_seg.getStartPoint();
+        Point endpt=removed_seg.getEndPoint();
+        boolean remove_firstnode=true;
+        boolean remove_secondnode=true;
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            LineString seg=(LineString)fea.getAttribute(0);//Feature as segment.
+            if (PublicMethod.IsPointOnLine(seg, startpt)){
+                remove_firstnode=false;
+            }
+            if (PublicMethod.IsPointOnLine(seg, endpt)){
+                remove_secondnode=false;
+            }
+            if (!remove_firstnode && !remove_secondnode) return;
+        }
+        //try to remove the nodes.
+        if (remove_firstnode) {
+            segmentLayer.removeFeature(Integer.toString(startpt.hashCode()));
+        }
+        if (remove_secondnode) {
+            segmentLayer.removeFeature(Integer.toString(endpt.hashCode()));
+        }
+    }
+    
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (selected_rowIndex<0) return;
         //check the removable status and get id of segment to be removed.
@@ -866,18 +895,21 @@ public class LocatePointPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "The segment on parcel boundary is not allowed to remove.");
             return;
         }
-        targetSegmentLayer.removeFeature(selected_Segid);
-        DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
-        tblmodel.removeRow(selected_rowIndex);
-        table.setModel(tblmodel);
-        table.repaint();
-        
-        //Clean the status selected segment.
-        optFirst.setText("Distance From Start Vertex");
-        optSecond.setText("Distance From End Vertex");
-        
-        //refresh map.
-        targetSegmentLayer.getMapControl().refresh();
+        SimpleFeature fea=targetSegmentLayer.removeFeature(selected_Segid);
+        if (fea!=null){
+            LineString seg=(LineString)fea.getAttribute(0);//Feature as segment.
+            removeIsolatednode(seg);
+            //refresh table.
+            DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
+            tblmodel.removeRow(selected_rowIndex);
+            table.setModel(tblmodel);
+            table.repaint();
+            //Clean the status selected segment.
+            optFirst.setText("Distance From Start Vertex");
+            optSecond.setText("Distance From End Vertex");
+            //refresh map.
+            targetSegmentLayer.getMapControl().refresh();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
