@@ -155,6 +155,7 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
         this.cadastreBoundaryEditTool =
                 new CadastreBoundaryEditTool(this.cadastreBoundaryPointLayer);
         this.getMap().addTool(this.cadastreBoundaryEditTool, this.getToolbar(), false);
+        
         this.getMap().addTool(new AddDirectImageTool(this.imageLayer), this.getToolbar(), true);
         this.getMap().addMapAction(new RemoveDirectImage(this.getMap()), this.getToolbar(), true);
     }

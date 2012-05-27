@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
@@ -29,10 +30,7 @@ public class Polygonization {
         //Find Features.
         SimpleFeatureCollection segs = targetPointlayer.getSegmentLayer().getFeatureCollection();
         SimpleFeatureIterator segIterator = segs.features();
-        
         Collection segments= new ArrayList();
-        Polygonizer polygons= new Polygonizer();
-        
         while (segIterator.hasNext()){
             SimpleFeature fea=segIterator.next();
             LineString geom= (LineString)fea.getAttribute(0);
@@ -43,6 +41,7 @@ public class Polygonization {
         //Before adding new parcels, let clean the collection first.
         targetParcelsLayer.getFeatureCollection().clear();
         //add fresh parcel data.
+        Polygonizer polygons= new Polygonizer();
         polygons.add(segments);//Add segment collection to the polygonizer.
         Collection polys= polygons.getPolygons();
         int feacount=1;
@@ -57,6 +56,10 @@ public class Polygonization {
         }
         //clean leaf segments.
         remove_Leaf_Segment(targetPointlayer,polygons);
+        //rectify the topology other touching parcels.
+        try {
+            PublicMethod.rectify_TouchingParcels(targetParcelsLayer.getAffected_parcels(), targetParcelsLayer);
+        } catch (InitializeLayerException e) { }
         targetParcelsLayer.getMapControl().refresh();
     }
     
