@@ -19,10 +19,7 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
-import org.sola.clients.beans.controls.SolaList;
-import org.sola.clients.beans.referencedata.VdcBean;
-import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.EntityAction;
+import org.sola.clients.beans.security.SecurityBean;
 
 /**
  * Holds list of {@link DepartmentBean} objects.
@@ -57,13 +54,23 @@ public class DepartmentListBean  extends AbstractBindingListBean {
     }
 
     /**
-     * Loads list of {@link DistrictBean}.
+     * Loads list of {@link DepartmentBean}, related to the current office.
      *
      * @param createDummy Indicates whether to add empty object on the list.
-     * @param districtCode Code of district to which VDCs belong to
+     */
+    public final void loadList(boolean createDummy) {
+        loadList(createDummy, SecurityBean.getCurrentUser().getDepartment().getOfficeCode());
+    }
+    
+    /**
+     * Loads list of {@link DepartmentBean}.
+     *
+     * @param createDummy Indicates whether to add empty object on the list.
+     * @param officeCode Office code which departments to load
      */
     public final void loadList(boolean createDummy, String officeCode) {
-        loadCodeList(DepartmentBean.class, departments, CacheManager.getDepartments(officeCode), createDummy);
+        loadCodeList(DepartmentBean.class, departments, 
+                CacheManager.getDepartments(officeCode), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {

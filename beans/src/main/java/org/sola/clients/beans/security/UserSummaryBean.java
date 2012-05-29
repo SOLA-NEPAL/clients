@@ -43,12 +43,14 @@ public class UserSummaryBean extends AbstractIdBean {
     public final static String DESCRIPTION_PROPERTY = "description";
     public final static String LASTNAME_PROPERTY = "lastName";
     public final static String FIRSTNAME_PROPERTY = "firstName";
+    public final static String DEPARTMENT_CODE_PROPERTY = "departmentCode";
     
     private String description;
     @NotEmpty(message= ClientMessage.CHECK_NOTNULL_FIRSTNAME, payload=Localized.class)
     private String firstName;
     @NotEmpty(message= ClientMessage.CHECK_NOTNULL_LASTNAME, payload=Localized.class)
     private String lastName;
+    private String departmentCode;
 
     public UserSummaryBean() {
         super();
@@ -103,6 +105,16 @@ public class UserSummaryBean extends AbstractIdBean {
         String oldValue = description;
         description = value;
         propertySupport.firePropertyChange(DESCRIPTION_PROPERTY, oldValue, value);
+    }
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        String oldValue = departmentCode;
+        this.departmentCode = departmentCode;
+        propertySupport.firePropertyChange(DEPARTMENT_CODE_PROPERTY, oldValue, this.departmentCode);
     }
     
     @Override
