@@ -243,4 +243,36 @@ public class ClsGeneral {
             return false;
         }   
     }
+    
+    public static boolean isIntegerNumeric(String s) {   
+        return java.util.regex.Pattern.matches("\\d+", s);   
+    }  
+    
+    public static boolean isFloatingNumeric(String s) {   
+        return s.matches("[-+]?\\d*\\.?\\d+");    
+    }  
+    
+    public static int getIntegerValue(String s){
+        s=s.trim();
+        if (isFloatingNumeric(s)){
+            try {
+                return Integer.parseInt(s);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+        else {
+            return 0;
+        }
+    }
+    
+    public static double getDoubleValue(String s){
+        s=s.trim();
+        if (isFloatingNumeric(s)){
+            return Double.parseDouble(s);
+        }
+        else {
+            return 0;
+        }
+    }
 }

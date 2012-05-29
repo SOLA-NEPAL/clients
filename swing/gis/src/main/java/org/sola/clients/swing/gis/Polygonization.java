@@ -29,11 +29,15 @@ public class Polygonization {
                     CadastreChangeTargetCadastreObjectLayer targetParcelsLayer){
         //Find Features.
         SimpleFeatureCollection segs = targetPointlayer.getSegmentLayer().getFeatureCollection();
-        SimpleFeatureIterator segIterator = segs.features();
+        String geomfld=PublicMethod.theGeomFieldName(segs);
+        if (geomfld.isEmpty()) return;
+
         Collection segments= new ArrayList();
+        //reset the iterator.
+        SimpleFeatureIterator segIterator = segs.features();
         while (segIterator.hasNext()){
             SimpleFeature fea=segIterator.next();
-            LineString geom= (LineString)fea.getAttribute(0);
+            LineString geom= (LineString)fea.getAttribute(geomfld);//instead of using 0 index for geometry object.
             segments.add(geom);
         }
         
@@ -60,7 +64,6 @@ public class Polygonization {
         try {
             PublicMethod.rectify_TouchingParcels(targetParcelsLayer.getAffected_parcels(), targetParcelsLayer);
         } catch (InitializeLayerException e) { }
-        targetParcelsLayer.getMapControl().refresh();
     }
     
     public static void remove_Leaf_Segment(CadastreTargetSegmentLayer targetPointlayer,Polygonizer polygons){

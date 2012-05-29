@@ -237,6 +237,9 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
 
         //Find Features.
         SimpleFeatureCollection points = targetPointlayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(points);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator ptIterator = points.features();
         ///find first point.
         Coordinate pt1 = null;
@@ -245,7 +248,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = ptIterator.next();
             Object fealable = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL);
             if (selectedFromPoint.equals(fealable)) {
-                Point pt = (Point) fea.getAttribute(0);//point geometry.
+                Point pt = (Point) fea.getAttribute(geomfld);//point geometry.
                 pt1 = pt.getCoordinate();
                 break;
             }
@@ -256,7 +259,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = ptIterator.next();
             Object fealable = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL);
             if (selectedToPoint.equals(fealable)) {
-                Point pt = (Point) fea.getAttribute(0);//point geometry.
+                Point pt = (Point) fea.getAttribute(geomfld);//point geometry.
                 pt2 = pt.getCoordinate();
                 break;
             }
@@ -266,12 +269,13 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         //repaint the map.
         btnCheckSegments.setEnabled(true);
         locatePointPanel.showSegmentListInTable();
-        targetPointlayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnJoinPointActionPerformed
 
     // create new polygon from the segment formed.
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
         Polygonization.formPolygon(targetPointlayer, targetParcelsLayer);
+        targetParcelsLayer.getMapControl().refresh();
         btnPolygonize.setEnabled(false);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
     

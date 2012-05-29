@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.*;
@@ -29,7 +28,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     //private LineString lineSeg=null;
@@ -49,7 +47,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         this.setAlwaysOnTop(true);
         //Initialize other variables.
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.initializeFormVariable(segmentLayer);
@@ -195,7 +192,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Make all layers off except the target layers.
         //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
+        Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -236,6 +233,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     
     private void btnCreateParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateParcelActionPerformed
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        targetParcelsLayer.getMapControl().refresh();
         btnCreateParcel.setEnabled(false);
         btnCheckSegments.setEnabled(false);
     }//GEN-LAST:event_btnCreateParcelActionPerformed
@@ -250,8 +248,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         }
         
         //refresh everything including map.
-        locatePointPanel.showSegmentListInTable();
-        targetParcelsLayer.getMapControl().refresh();        
+        locatePointPanel.showSegmentListInTable();     
     }
     
     //Find polyline including the mid point of the selected lines.
@@ -391,6 +388,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         //append newly formed lines and refresh details on map.
         btnCheckSegments.setEnabled(true);
         append_OffsetLines(offsetLine);
+        targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnCheckOffsetLineActionPerformed
 
     private boolean isValid_Data(){
@@ -425,7 +423,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             //Generate new line collection.
             NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
             lineGenerator.generateNodedSegments();
-            segmentLayer.getMapControl().refresh();
+            targetParcelsLayer.getMapControl().refresh();
         
             TwoPointMethodForm pointListForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
             pointListForm.showPointListInTable();

@@ -154,7 +154,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         
         //selection affected parcels.
         this.targetParcelsLayer.getAffected_parcels().setVisible(true);
-        //this.getMap().addLayer(this.targetParcelsLayer.getAffected_parcels());
+        this.getMap().addLayer(this.targetParcelsLayer.getAffected_parcels());
         
         //segment new layer.
         this.targetSegmentLayer = new CadastreTargetSegmentLayer();
@@ -210,12 +210,15 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add toolbar for parcel merging.
         this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);  
-//        //add toolbar for equal area splitting method.
-//        this.getMap().addMapAction(new EqualAreaMethodFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
-//                                        this.getToolbar(), true);
-//        //add toolbar for one side, direction and area method splitting.
-//        this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
-//                                        this.getToolbar(), true);
+        //add toolbar for equal area splitting method.
+        this.getMap().addMapAction(new EqualAreaMethodFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+        //add toolbar for one side, direction and area method splitting.
+        this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
+        //add toolbar for import Point from shape file.
+        this.getMap().addMapAction(new ImportShapeFileShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
     }
     //</editor-fold>
 

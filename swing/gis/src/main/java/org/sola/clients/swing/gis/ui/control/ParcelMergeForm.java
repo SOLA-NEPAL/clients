@@ -54,6 +54,9 @@ public class ParcelMergeForm extends javax.swing.JDialog {
 
     public void showParcelsInTable(){
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator feaIter=feacol.features();
         //point to the table model.
         DefaultTableModel tblmodel=(DefaultTableModel)tblParcels.getModel();
@@ -65,7 +68,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             SimpleFeature fea=feaIter.next();
             
             String feaID=fea.getID();
-            Geometry geom=(Geometry)fea.getAttribute(0);//first item always geometry.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//first item always geometry.
             String poly_area=df.format(geom.getArea());
             Object Itms[]=new Object[]{i++,feaID,poly_area};
             
@@ -191,6 +194,9 @@ public class ParcelMergeForm extends javax.swing.JDialog {
 
     private void btnMergePolygonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMergePolygonActionPerformed
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator feaIter=feacol.features();
 
         Geometry[] geom=new Geometry[feacol.size()];
@@ -199,7 +205,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         while (feaIter.hasNext()){
             SimpleFeature fea=feaIter.next();
             parcel_id=fea.getID();
-            geom[i++]=(Geometry)fea.getAttribute(0);//first item always geometry.
+            geom[i++]=(Geometry)fea.getAttribute(geomfld);//first item always geometry.
         }
         if (geom.length<1) return;
         
@@ -210,6 +216,8 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         Geometry merged_geom=geoms.buffer(0);
         //refresh map and data in the collections.
         updateFeatureCollections(parcel_id, merged_geom,geomFactory);
+        //refresh map.
+        targetParcelsLayer.getMapControl().refresh();
     }
 
     private void updateFeatureCollections(String parcel_id, Geometry merged_geom,GeometryFactory geomFactory) {
@@ -229,7 +237,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             locatePointPanel.addPointInPointCollection(pt);
         }
         //reload data into table and map.
-        targetParcelsLayer.getMapControl().refresh();
         showParcelsInTable();//refresh information in table also.
     }//GEN-LAST:event_btnMergePolygonActionPerformed
 

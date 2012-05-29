@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
@@ -33,7 +32,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     private LineString lineSeg = null;
@@ -57,7 +55,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         this.setLocation(100, 100);
         
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.initializeFormVariable(segmentLayer);
@@ -232,7 +229,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Make all layers off except the target layers.
         //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
+        Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -368,7 +365,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
 //</editor-fold>
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
-        segmentLayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
@@ -377,10 +374,13 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         GeometryFactory geomFactory=new GeometryFactory();
         //iterate through the touching parcels.
         SimpleFeatureCollection fea_col=layer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(fea_col);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator fea_iter=fea_col.features();
         while (fea_iter.hasNext()){
             SimpleFeature fea=fea_iter.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//polygon.
             Coordinate[] cors=geom.getCoordinates();
             for (Coordinate co:cors){
                 locatePointPanel.addPointInPointCollection(geomFactory.createPoint(co),(byte)0);

@@ -7,6 +7,7 @@ package org.sola.clients.swing.gis.ui.control;
 import com.vividsolutions.jts.geom.*;
 import java.io.*;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -14,23 +15,22 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import org.geotools.data.FeatureReader;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
-import org.sola.clients.swing.gis.ClsGeneral;
-import org.sola.clients.swing.gis.NodedLineStringGenerator;
-import org.sola.clients.swing.gis.Polygonization;
-import org.sola.clients.swing.gis.PublicMethod;
+import org.sola.clients.swing.gis.*;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-
 /**
  *
  * @author ShresthaKabin
  */
-public class DefinePointListForm extends javax.swing.JDialog {
+public class ImportFromShapeFile extends javax.swing.JDialog {
     //Store for old data collection.
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
@@ -41,7 +41,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
     /**
      * Creates new form DefinePointListForm
      */
-    public DefinePointListForm(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
+    public ImportFromShapeFile(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
                     throws InitializeLayerException {
         initComponents();
         //set table dimesion.
@@ -85,12 +85,14 @@ public class DefinePointListForm extends javax.swing.JDialog {
         tblPoints = new javax.swing.JTable();
         btnImport = new javax.swing.JButton();
         btnSaveTextFile = new javax.swing.JButton();
-        btnCheckSegments = new javax.swing.JButton();
         btnCreatePolygon = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnAddRow = new javax.swing.JButton();
         btnUndoSplit = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
+        btnOpenShapeFile = new javax.swing.JButton();
+        btnDxfImport = new javax.swing.JButton();
+        btnShowInMap = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -109,7 +111,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
 
             },
             new String [] {
-                "S.N.", "X-Cordinate", "Y-Cordinate"
+                "S.N.", "X1-Cor", "Y1-Cor", "X2-Cor", "Y2-Cor"
             }
         ));
         tblPoints.getTableHeader().setReorderingAllowed(false);
@@ -120,14 +122,16 @@ public class DefinePointListForm extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        btnImport.setText("Import Text File");
+        btnImport.setText("Import Line File");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImportActionPerformed(evt);
@@ -138,13 +142,6 @@ public class DefinePointListForm extends javax.swing.JDialog {
         btnSaveTextFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveTextFileActionPerformed(evt);
-            }
-        });
-
-        btnCheckSegments.setText("Check Segments");
-        btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckSegmentsActionPerformed(evt);
             }
         });
 
@@ -179,50 +176,79 @@ public class DefinePointListForm extends javax.swing.JDialog {
             }
         });
 
+        btnOpenShapeFile.setText("Import Shape File");
+        btnOpenShapeFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenShapeFileActionPerformed(evt);
+            }
+        });
+
+        btnDxfImport.setText("Import DXF file");
+        btnDxfImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDxfImportActionPerformed(evt);
+            }
+        });
+
+        btnShowInMap.setText("Show Lines in Map");
+        btnShowInMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCreatePolygon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSaveTextFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddRow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUndoSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnShowInMap))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnSaveTextFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCreatePolygon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnImport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddRow, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnOpenShapeFile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDxfImport, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnAddRow)
-                .addGap(30, 30, 30)
+                .addGap(41, 41, 41)
                 .addComponent(btnImport)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDxfImport)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOpenShapeFile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSaveTextFile)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
                 .addComponent(btnRefreshMap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUndoSplit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCheckSegments)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnShowInMap)
+                .addGap(46, 46, 46)
                 .addComponent(btnCreatePolygon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSave)
-                .addGap(7, 7, 7))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private FileFilter getTextFileFilter() {
+    private FileFilter getTextFileFilter(final String ext, final String desc) {
         //prepare file filter.
         FileFilter filter=new FileFilter() {
             @Override
@@ -234,7 +260,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
                 else
                 {
                     String filepathname = f.getAbsolutePath().toLowerCase();
-                    if (filepathname.endsWith(".spo"))
+                    if (filepathname.endsWith(ext)) //".sli"
                         return true;
 //                    else if (filepathname.endsWith(".txt"))
 //                        return true;
@@ -244,7 +270,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
             @Override
             public String getDescription() {
                //return "Text Files (*.txt|*.csv)";
-                return "Text Files (*.spo)";
+                return desc;//"Text Files (*.sli)";
             }
         };
 
@@ -253,9 +279,9 @@ public class DefinePointListForm extends javax.swing.JDialog {
     
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         JFileChooser fileOpen=new JFileChooser();
-        fileOpen.setDialogTitle("Choose text file to load in table.");
+        fileOpen.setDialogTitle("Choose text file to load into table.");
         fileOpen.setVisible(true);
-        FileFilter filter=getTextFileFilter();
+        FileFilter filter=getTextFileFilter(".sli","Text Files (*.sli)");
         fileOpen.setFileFilter(filter);
         //FileNameExtensionFilter extFilter=new FileNameExtensionFilter("Text Files", "*.txt|*.csv");
         fileOpen.showOpenDialog(this);
@@ -268,7 +294,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
         tblPoints.repaint();
         //fill table from text file.
         if (!readTextFileData(iFile)){
-            JOptionPane.showConfirmDialog(this, "File format is not ok, please check it.");
+            JOptionPane.showMessageDialog(this, "Wrong file format, please check it.");
         }
     }
 
@@ -276,6 +302,8 @@ public class DefinePointListForm extends javax.swing.JDialog {
         //fill data into table from text file.
         try {
             DefaultTableModel table=(DefaultTableModel)tblPoints.getModel();
+            table.setRowCount(0);//remove all rows.
+            
             FileReader iReader=new FileReader(iFile);
             BufferedReader buff_reader=new BufferedReader((Reader)iReader);
             
@@ -284,13 +312,15 @@ public class DefinePointListForm extends javax.swing.JDialog {
             DecimalFormat df=new DecimalFormat("0.000");//mm precision.
             while (txtline!=null && !txtline.isEmpty()){
                 String[] pt=txtline.split(",");
-                if (pt.length<2){
+                if (pt.length<4){
                     return false;
                 }
                 if (pt!=null && pt.length>1){
                     Object[] row=new Object[]{i++,
                         df.format(Double.parseDouble(pt[0])),
-                             df.format(Double.parseDouble(pt[1]))};
+                             df.format(Double.parseDouble(pt[1])),
+                                df.format(Double.parseDouble(pt[2])),
+                                    df.format(Double.parseDouble(pt[3]))};
                     table.addRow(row);
                 }
                 txtline = buff_reader.readLine();
@@ -299,10 +329,11 @@ public class DefinePointListForm extends javax.swing.JDialog {
             tblPoints.setModel(table);
             tblPoints.repaint();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return true;
     }//GEN-LAST:event_btnImportActionPerformed
 
@@ -325,9 +356,11 @@ public class DefinePointListForm extends javax.swing.JDialog {
         BufferedWriter buff_writer=new BufferedWriter((Writer)oWriter);
          
         for (int i=0;i<tblPoints.getRowCount();i++){
-            String[] itms=new String[2];
+            String[] itms=new String[4];
             itms[0]=tblPoints.getValueAt(i, 1).toString();//x-cordinate.
             itms[1]=tblPoints.getValueAt(i, 2).toString();//y-cordinate.
+            itms[2]=tblPoints.getValueAt(i, 3).toString();//x-cordinate.
+            itms[3]=tblPoints.getValueAt(i, 4).toString();//y-cordinate.
             if (itms[0].trim().isEmpty()) continue;
             
             String txtline=itms[0] + "," + itms[1];
@@ -341,7 +374,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
         JFileChooser fileSave=new JFileChooser();
         fileSave.setDialogTitle("Give text file name to save table data.");
         fileSave.setVisible(true);
-        FileFilter filter=getTextFileFilter();
+        FileFilter filter=getTextFileFilter(".sli","Text Files (*.sli)");
         fileSave.setFileFilter(filter);
         //FileNameExtensionFilter extFilter=new FileNameExtensionFilter("Text Files", "*.txt|*.csv");
         fileSave.showSaveDialog(this);
@@ -351,46 +384,20 @@ public class DefinePointListForm extends javax.swing.JDialog {
             //fill table from text file.
             saveTextFileData(oFile);
         } catch (IOException ex) {
-            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSaveTextFileActionPerformed
 
-    private void btnCheckSegmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckSegmentsActionPerformed
-        GeometryFactory geomFactory=new GeometryFactory();
-        //append points into collection.
-        for (int i=0;i<tblPoints.getRowCount();i++){
-            if (tblPoints.getValueAt(i, 1)==null) continue;
-            double x= Double.parseDouble(tblPoints.getValueAt(i, 1).toString());//x-cordinate.
-            double y= Double.parseDouble(tblPoints.getValueAt(i, 2).toString());//y-cordinate.
-            Coordinate co=new Coordinate(x, y);
-            Point pt=geomFactory.createPoint(co);
-            locatePointPanel.addPointInPointCollection(pt);
-        }
-        //append segments into collection.
-        double halfLen=0;
-        LineString[] segs=new LineString[tblPoints.getRowCount()-1];
-        for (int i=0;i<tblPoints.getRowCount()-1;i++){
-            if (tblPoints.getValueAt(i, 1)==null || tblPoints.getValueAt(i+1, 1)==null) continue;
-            double x= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 1).toString());//x-cordinate.
-            double y= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 2).toString());//y-cordinate.
-            double x1= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i+1, 1).toString());//x-cordinate.
-            double y1= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i+1, 2).toString());//y-cordinate.
-            if (x==x1 &&  y==y1) continue;
-            Coordinate[] co=new Coordinate[]{new Coordinate(x, y),new Coordinate(x1,y1)};
-            segs[i]=geomFactory.createLineString(co);
-            halfLen+= segs[i].getLength();
-        }
-        //find extended segment.
-        LineString[] surveyLines=getEndExtended(segs,halfLen);
-        byte is_newLine=1;
-        for (LineString seg:surveyLines){
-            locatePointPanel.appendNewSegment(seg, is_newLine);
-        }
-        //refresh map.
-        targetParcelsLayer.getMapControl().refresh();
-        btnCreatePolygon.setEnabled(true);
-    }//GEN-LAST:event_btnCheckSegmentsActionPerformed
-
+    private void append_Points_to_Layer(int i, GeometryFactory geomFactory,int j) throws NumberFormatException {
+        if (tblPoints.getValueAt(i, 1)==null) return;
+        
+        double x= Double.parseDouble(tblPoints.getValueAt(i, j + 1).toString());//x-cordinate.
+        double y= Double.parseDouble(tblPoints.getValueAt(i, j + 2).toString());//y-cordinate.
+        Coordinate co=new Coordinate(x, y);
+        Point pt=geomFactory.createPoint(co);
+        locatePointPanel.addPointInPointCollection(pt);
+    }
+    
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
@@ -399,36 +406,6 @@ public class DefinePointListForm extends javax.swing.JDialog {
         //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
-
-      //make extended start and end segment to form close figure.
-    //it assures the intersection of polygon by offset line.
-    private LineString[] getEndExtended(LineString[] surveyLines, double halfLen){
-        if (surveyLines==null || surveyLines.length<1) return null;
-        GeometryFactory geomFactory=new GeometryFactory();
-        //Handle first segment.
-        LineString seg1=surveyLines[0];
-        Point startpt= ClsGeneral.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -halfLen);
-        //Handle last segment.
-        int n=surveyLines.length-1;
-        LineString seg2=surveyLines[n];
-        Point endpt= ClsGeneral.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), halfLen);
-        
-        if (surveyLines.length>1){
-            Coordinate[] co=new Coordinate[]{startpt.getCoordinate(),seg1.getEndPoint().getCoordinate()};
-            LineString start_line=geomFactory.createLineString(co);
-            surveyLines[0]=start_line;
-
-            co=new Coordinate[]{seg2.getStartPoint().getCoordinate(),endpt.getCoordinate()};
-            LineString end_line=geomFactory.createLineString(co);
-            surveyLines[n]=end_line;
-        }
-        else{
-            Coordinate[] co=new Coordinate[]{startpt.getCoordinate(),endpt.getCoordinate()};
-            surveyLines[0]=geomFactory.createLineString(co);
-        }
-            
-        return surveyLines;
-    }
     
     private void btnCreatePolygonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePolygonActionPerformed
         //Generate new line collection.
@@ -460,15 +437,139 @@ public class DefinePointListForm extends javax.swing.JDialog {
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
+    
+    private boolean read_ShapeFile(File iFile){
+        try {
+            DecimalFormat df= new DecimalFormat("0.000");
+            int j=1;
+            DefaultTableModel table=(DefaultTableModel)tblPoints.getModel();
+            table.setRowCount(0);//remove all rows.
+            //iterate through feature collection.
+            FileDataStore store = FileDataStoreFinder.getDataStore(iFile);
+            FeatureReader fea_reader=store.getFeatureReader();
+            String featureTypeName=fea_reader.getFeatureType().getGeometryDescriptor().getType().getName().toString().toUpperCase();
+            if (!featureTypeName.equals("MULTILINESTRING") || featureTypeName.equals("LINESTRING")){
+                return false;
+            }
+            String geomfield=fea_reader.getFeatureType().getGeometryDescriptor().getLocalName();
+            while (fea_reader.hasNext()){
+                SimpleFeature fea=(SimpleFeature)fea_reader.next();
+                //find geometry
+                Geometry seg=(Geometry)fea.getAttribute(geomfield);//first attribute or the_geom column as geometry.
+                Coordinate[] cors=seg.getCoordinates();
+                for (int i=1;i<cors.length;i++){
+                    Object[] row=new Object[]{j++, 
+                            df.format(cors[i-1].x), df.format(cors[i-1].y), 
+                                  df.format(cors[i].x), df.format(cors[i].y)};
+                    table.addRow(row);
+                }
+            }
+            tblPoints.setModel(table);
+            tblPoints.repaint();
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    private void btnOpenShapeFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenShapeFileActionPerformed
+        JFileChooser fileOpen=new JFileChooser();
+        fileOpen.setDialogTitle("Choose shape file to load into table.");
+        fileOpen.setVisible(true);
+        FileFilter filter=getTextFileFilter(".shp","Shape Files (*.shp)");
+        fileOpen.setFileFilter(filter); 
+        fileOpen.showOpenDialog(this);
+        File iFile=fileOpen.getSelectedFile();
+        if (iFile==null) return;
+         
+        if (!read_ShapeFile(iFile)){
+            JOptionPane.showMessageDialog(this, "Selected shape file not with correct line geometry. please check it.");
+        }
+    }//GEN-LAST:event_btnOpenShapeFileActionPerformed
+
+    private void btnDxfImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDxfImportActionPerformed
+        JFileChooser fileOpen=new JFileChooser();
+        fileOpen.setDialogTitle("Choose dxf file to load into table.");
+        fileOpen.setVisible(true);
+        FileFilter filter=getTextFileFilter(".dxf","DXF Files (*.dxf)");
+        fileOpen.setFileFilter(filter);
+        fileOpen.showOpenDialog(this);
+        File iFile=fileOpen.getSelectedFile();
+        if (iFile==null) return;
+        try {
+            List<LineString> segs= Dxf_Line_Reader.read_lines(iFile);
+            if (segs.size()<1){
+                JOptionPane.showMessageDialog(this, "Selected dxf file does not have line geometry. please check it.");
+                return;
+            }
+            DecimalFormat df= new DecimalFormat("0.000");
+            int j=1;
+            //load data into table.
+            DefaultTableModel table=(DefaultTableModel)tblPoints.getModel();
+            table.setRowCount(0);//remove all rows.
+            
+            for (LineString seg:segs){
+                double x1=seg.getStartPoint().getX();
+                double y1=seg.getStartPoint().getY();
+                double x2=seg.getEndPoint().getX();
+                double y2=seg.getEndPoint().getY();
+                Object[] row=new Object[]{j++, 
+                            df.format(x1), df.format(y1), 
+                                  df.format(x2), df.format(y2)};
+                table.addRow(row);
+            }
+            tblPoints.setModel(table);
+            tblPoints.repaint();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDxfImportActionPerformed
+
+    private void btnShowInMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInMapActionPerformed
+        GeometryFactory geomFactory=new GeometryFactory();
+        //append points into collection.
+        for (int i=0;i<tblPoints.getRowCount();i++){
+            append_Points_to_Layer(i, geomFactory,0);
+        }
+        //last point.
+        int n=tblPoints.getRowCount()-1;
+        append_Points_to_Layer(n, geomFactory,2);
+        
+        //append segments into collection.
+        LineString[] segs=new LineString[tblPoints.getRowCount()];
+        for (int i=0;i<tblPoints.getRowCount();i++){
+            if (tblPoints.getValueAt(i, 1)==null ) continue;
+
+            double x= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 1).toString());//x-cordinate.
+            double y= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 2).toString());//y-cordinate.
+            double x1= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 3).toString());//x-cordinate.
+            double y1= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 4).toString());//y-cordinate.
+            if (x==x1 &&  y==y1) continue;
+            Coordinate[] co=new Coordinate[]{new Coordinate(x, y),new Coordinate(x1,y1)};
+            segs[i]=geomFactory.createLineString(co);
+        }
+        
+        byte is_newLine=1;
+        for (LineString seg:segs){
+            locatePointPanel.appendNewSegment(seg, is_newLine);
+        }
+        //refresh map.
+        targetParcelsLayer.getMapControl().refresh();
+        btnCreatePolygon.setEnabled(true);
+    }//GEN-LAST:event_btnShowInMapActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRow;
-    private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnCreatePolygon;
+    private javax.swing.JButton btnDxfImport;
     private javax.swing.JButton btnImport;
+    private javax.swing.JButton btnOpenShapeFile;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveTextFile;
+    private javax.swing.JButton btnShowInMap;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
