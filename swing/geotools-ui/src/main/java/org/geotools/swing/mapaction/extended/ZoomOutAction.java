@@ -58,7 +58,8 @@ public class ZoomOutAction extends ExtendedAction{
     public void onClick(){
         ReferencedEnvelope env = this.getMapControl().getDisplayArea();
         env.expandBy(env.getSpan(0) * zoomFactor);
+        //for zoom previous action. //addition by Kabindra
+        this.getMapControl().record_ZoomEnvelope();
         this.getMapControl().setDisplayArea(env);
     }
-
 }

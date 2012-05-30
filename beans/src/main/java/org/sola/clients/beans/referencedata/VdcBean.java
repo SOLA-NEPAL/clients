@@ -17,21 +17,21 @@ package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
 
+/**
+ *
+ * @author KumarKhadka
+ */
 public class VdcBean extends AbstractCodeBean {
 
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
-    private int districtCode;
+    private String districtCode;
 
-    public VdcBean(){
-        super();
-    }
-    
-    public int getDistrictCode() {
+    public String getDistrictCode() {
         return districtCode;
     }
 
-    public void setDistrictCode(int districtCode) {
-        int oldValue = this.districtCode;
+    public void setDistrictCode(String districtCode) {
+        String oldValue = this.districtCode;
         this.districtCode = districtCode;
         propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, this.districtCode);
     }

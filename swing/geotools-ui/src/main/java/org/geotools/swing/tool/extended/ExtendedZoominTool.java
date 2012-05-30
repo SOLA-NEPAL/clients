@@ -54,6 +54,8 @@ public class ExtendedZoominTool extends ExtendedDrawRectangle{
 
     @Override
     protected void onRectangleFinished(Envelope2D env) {
+        //recording zoom window for zoom previous action.
+        this.getMapControl().record_ZoomEnvelope();
         getMapControl().setDisplayArea(env);
     }    
 }

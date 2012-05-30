@@ -26,7 +26,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="locatePointPanel" max="32767" attributes="0"/>
@@ -46,17 +46,14 @@
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="btnCheckOffset2" min="-2" pref="95" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Component id="btnCheckOffsetLine" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="btnShowJoinPoint" min="-2" pref="155" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnCreateParcel" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnShowJoinPoint" pref="141" max="32767" attributes="0"/>
+                          <Component id="btnCheckOffsetLine" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnCheckSegments" max="32767" attributes="0"/>
+                          <Component id="btnCreateParcel" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
@@ -73,7 +70,7 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtOffsetDistance" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCheckOffsetLine" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCheckOffset2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCheckSegments" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -129,15 +126,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckOffsetLineActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnCheckOffset2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Check Offset Method 2"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckOffset2ActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnShowJoinPoint">
       <Properties>
         <Property name="text" type="java.lang.String" value="Show Join Point Form"/>
@@ -152,6 +140,15 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshMapActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCheckSegments">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Check Segments"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCheckSegmentsActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

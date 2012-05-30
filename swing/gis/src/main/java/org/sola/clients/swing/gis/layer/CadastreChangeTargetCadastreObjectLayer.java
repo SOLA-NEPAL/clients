@@ -63,6 +63,19 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
     private static final String LAYER_STYLE_RESOURCE = "parcel_target.xml";
     private List<CadastreObjectTargetBean> cadastreObjectTargetList =
             new ArrayList<CadastreObjectTargetBean>();
+    
+    //for storing touching parcel by target parcel.
+    private TargetAffectedParcelLayer affected_parcels=null;
+
+    public TargetAffectedParcelLayer getAffected_parcels() throws InitializeLayerException {
+        if (affected_parcels==null)
+            affected_parcels=new TargetAffectedParcelLayer();
+        return affected_parcels;
+    }
+
+    public void setAffected_parcels(TargetAffectedParcelLayer affected_parcels) {
+        this.affected_parcels = affected_parcels;
+    }
 
     /**
      * Constructor

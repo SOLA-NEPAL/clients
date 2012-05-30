@@ -10,8 +10,6 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import org.sola.clients.swing.gis.segmentDetails;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -23,6 +21,7 @@ import org.geotools.geometry.jts.Geometries;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.swing.gis.ClsGeneral;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.clients.swing.gis.PointDetails;
 import org.sola.clients.swing.gis.PublicMethod;
@@ -89,6 +88,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
     public LocatePointPanel(
             CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException{
         this();
+        
         initializeFormVariable(segmentLayer);
     }
 
@@ -606,6 +606,22 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //finally remove the orignal segment.
         targetSegmentLayer.removeFeature(objId);
     }
+    
+    public void breakSegment(Point pt) {
+        //get features.
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //check the features.
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            String objId = fea.getID();
+            LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
+            if (PublicMethod.IsPointOnLine(geom, pt)) {
+                breakSegmentAtPoint(geom, pt,objId);
+                break;
+            }
+        }
+    }
      
     public void appendNewSegment(LineString newSegment,byte is_newLine) {
         String sn = Integer.toString(newSegment.hashCode());
@@ -692,7 +708,6 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //reflect the selected segment length into the total length textbox.
         txtTotalLength.setText(table.getValueAt(r, 1).toString());
         selected_rowIndex=r;
-        selected_Segid=getSelectedSegmentID();
     }//GEN-LAST:event_tableMouseClicked
 
     public void addPointInPointCollection(Point point_to_add) {
@@ -766,7 +781,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             endPoint = lineSeg.getStartPoint();
         }
         //find new point based on the given distance.
-        Point interPoint = PublicMethod.getIntermediatePoint(startPoint, endPoint, lineSeg.getLength(), dist);
+        Point interPoint = ClsGeneral.getIntermediatePoint(startPoint, endPoint, lineSeg.getLength(), dist);
         if (interPoint == null) {
             JOptionPane.showMessageDialog(this, "Could not locate point.");
             return;
@@ -814,9 +829,10 @@ public class LocatePointPanel extends javax.swing.JPanel {
         segmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnReloadActionPerformed
 
-    private String getSelectedSegmentID(){
-        btnDelete.setEnabled(false);
-        if (selected_rowIndex<0) return "";
+    private boolean isRemovableSegment(){
+        //btnDelete.setEnabled(false);
+        selected_Segid="";
+        if (selected_rowIndex<0) return false;
         //get features.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
@@ -829,31 +845,73 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 //validate segment before delete.
                 byte newLine=Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_NEW_SEGMENT).toString());
                 if (newLine==1){
-                   btnDelete.setEnabled(true);
+                   break;
                 }
-                break;
+                //check if the selectected line lies on the parcel boundary.
+                LineString seg=(LineString)fea.getAttribute(0);//get the shape.
+                if (PublicMethod.isSegmentOn_Selected_Parcel(
+                                        segmentLayer.getPolyAreaList(), seg)){
+                    return false;
+                }
             }
         }
-        return segid;
+        selected_Segid=segid;
+        return true;
+    }
+    
+    private void removeIsolatednode(LineString removed_seg){
+        //get features.
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //check the isolation status of the end points.
+        Point startpt=removed_seg.getStartPoint();
+        Point endpt=removed_seg.getEndPoint();
+        boolean remove_firstnode=true;
+        boolean remove_secondnode=true;
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            LineString seg=(LineString)fea.getAttribute(0);//Feature as segment.
+            if (PublicMethod.IsPointOnLine(seg, startpt)){
+                remove_firstnode=false;
+            }
+            if (PublicMethod.IsPointOnLine(seg, endpt)){
+                remove_secondnode=false;
+            }
+            if (!remove_firstnode && !remove_secondnode) return;
+        }
+        //try to remove the nodes.
+        if (remove_firstnode) {
+            segmentLayer.removeFeature(Integer.toString(startpt.hashCode()));
+        }
+        if (remove_secondnode) {
+            segmentLayer.removeFeature(Integer.toString(endpt.hashCode()));
+        }
     }
     
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (selected_rowIndex<0) return;
-
-        targetSegmentLayer.removeFeature(selected_Segid);
-        DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
-        tblmodel.removeRow(selected_rowIndex);
-        table.setModel(tblmodel);
-        table.repaint();
-        
-        //Clean the status selected segment.
-        optFirst.setText("Distance From Start Vertex");
-        optSecond.setText("Distance From End Vertex");
-        
-        //refresh map.
-        targetSegmentLayer.getMapControl().refresh();
+        //check the removable status and get id of segment to be removed.
+        if (!isRemovableSegment()){
+            JOptionPane.showMessageDialog(this, "The segment on parcel boundary is not allowed to remove.");
+            return;
+        }
+        SimpleFeature fea=targetSegmentLayer.removeFeature(selected_Segid);
+        if (fea!=null){
+            LineString seg=(LineString)fea.getAttribute(0);//Feature as segment.
+            removeIsolatednode(seg);
+            //refresh table.
+            DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
+            tblmodel.removeRow(selected_rowIndex);
+            table.setModel(tblmodel);
+            table.repaint();
+            //Clean the status selected segment.
+            optFirst.setText("Distance From Start Vertex");
+            optSecond.setText("Distance From End Vertex");
+            //refresh map.
+            targetSegmentLayer.getMapControl().refresh();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPoint;
     private javax.swing.JButton btnClearSelection;

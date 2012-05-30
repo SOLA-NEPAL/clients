@@ -20,6 +20,7 @@ import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.swing.gis.ClsGeneral;
 import org.sola.clients.swing.gis.NodedLineStringGenerator;
 import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
@@ -403,11 +404,11 @@ public class DefinePointListForm extends javax.swing.JDialog {
         GeometryFactory geomFactory=new GeometryFactory();
         //Handle first segment.
         LineString seg1=surveyLines[0];
-        Point startpt= PublicMethod.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -halfLen);
+        Point startpt= ClsGeneral.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -halfLen);
         //Handle last segment.
         int n=surveyLines.length-1;
         LineString seg2=surveyLines[n];
-        Point endpt= PublicMethod.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), halfLen);
+        Point endpt= ClsGeneral.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), halfLen);
         
         if (surveyLines.length>1){
             Coordinate[] co=new Coordinate[]{startpt.getCoordinate(),seg1.getEndPoint().getCoordinate()};

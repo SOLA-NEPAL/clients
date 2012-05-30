@@ -137,7 +137,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Choose Moth acc to VDC/MP">
+            <TitledBorder title="Choose Moth according to VDC/MP">
               <Font PropertyName="font" name="Aharoni" size="18" style="0"/>
               <Color PropertyName="color" blue="33" green="66" red="0" type="rgb"/>
             </TitledBorder>
@@ -184,6 +184,9 @@
               <Properties>
                 <Property name="editable" type="boolean" value="true"/>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="elements" source="vdcListBean1" sourcePath="${vdc}" target="cmbVDC1" targetPath="elements" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbVDC1ItemStateChanged"/>
               </Events>
@@ -223,8 +226,8 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
-                    <StringItem index="0" value="Moth"/>
-                    <StringItem index="1" value="Luj"/>
+                    <StringItem index="0" value="M"/>
+                    <StringItem index="1" value="L"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -266,6 +269,7 @@
             <Component class="javax.swing.JComboBox" name="cmbMothLujNo">
               <BindingProperties>
                 <BindingProperty name="elements" source="mothListBean" sourcePath="${moths}" target="cmbMothLujNo" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="mothListBean" sourcePath="${selectedMoth}" target="cmbMothLujNo" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
           </SubComponents>
@@ -360,6 +364,7 @@
                 <Property name="editable" type="boolean" value="true"/>
               </Properties>
               <BindingProperties>
+                <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdc}" target="cmbVDC" targetPath="elements" updateStrategy="0" immediately="false"/>
                 <BindingProperty name="selectedItem" source="mothBean" sourcePath="${vdc}" target="cmbVDC" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
@@ -393,8 +398,8 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
-                    <StringItem index="0" value="Moth"/>
-                    <StringItem index="1" value="Luj"/>
+                    <StringItem index="0" value="M"/>
+                    <StringItem index="1" value="L"/>
                   </StringArray>
                 </Property>
               </Properties>

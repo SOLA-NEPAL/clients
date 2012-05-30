@@ -12,16 +12,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.geotools.data.simple.SimpleFeatureCollection;
-import org.geotools.feature.FeatureIterator;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
-import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
+import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
+import org.sola.clients.swing.gis.layer.TargetAffectedParcelLayer;
 
 /**
  *
@@ -236,22 +237,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     //<<<<<<<<<<<<<<<<Section for location point based on the given area and already defined point.
-    private int totalNodeCount() {
-        int nodenumber = 0;
-        //find the point collection
-        SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
-        while (ptIterator.hasNext()) {
-            SimpleFeature fea = ptIterator.next();
-            byte insertednode = Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED).toString());
-            if (insertednode != 2) {
-                nodenumber++;
-            }
-        }
-
-        return nodenumber;
-    }
-
     private Coordinate locate_Point_Clockwise(Point[] pts, Point keyPoint, int i1, int i2) {
         List<Coordinate> pList = new ArrayList<Coordinate>();
         double areaReq = Double.parseDouble(txtRequiredArea.getText());
@@ -261,7 +246,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         //Loop until the polygon formed does not have area greater than required area.
         for (int i = i2; i < pts.length; i++) {
             pList.add(pts[i].getCoordinate());
-            if (checkAreaFormed(pList, areaReq)) {
+            if (AreaObject.checkAreaFormed(pList, areaReq)) {
                 nextLoopAlso=false;
                 break;
             }
@@ -270,62 +255,13 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         if (nextLoopAlso){
             for (int i = 0; i <= i1; i++) {
                 pList.add(pts[i].getCoordinate());
-                if (checkAreaFormed(pList, areaReq)) {
+                if (AreaObject.checkAreaFormed(pList, areaReq)) {
                     break;
                 }
             }
         }
 
-        return point_to_form_RequiredArea(pList, areaReq);
-    }
-
-    private Coordinate midPoint_of_Given_TwoPoints(Coordinate co1, Coordinate co2) {
-        Coordinate co = new Coordinate();
-        co.x = (co1.x + co2.x) / 2;
-        co.y = (co1.y + co2.y) / 2;
-
-        return co;
-    }
-
-    //Bisection method to find the given area.
-    private Coordinate point_to_form_RequiredArea(List<Coordinate> pts, double areaReq) {
-        int n = pts.size() - 1;//find 0 based upperbound.
-        //last two point.
-        Coordinate lastPt = pts.get(n);
-        Coordinate secondlastPt = pts.get(n - 1);
-        //Bisection iterative method.
-        Coordinate midpoint = midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
-        pts.remove(n);
-        pts.add(midpoint);
-        double areaFound = AreaObject.getAreaFromCoordinateList(pts);
-        DecimalFormat df = new DecimalFormat("0.000");
-
-        while (!df.format(areaFound).equals(df.format(areaReq))) {
-            if (midpoint.equals(secondlastPt) || midpoint.equals(lastPt)) {
-                break;
-            }
-            if (areaFound < areaReq) {
-                secondlastPt = midpoint;
-            } else {
-                lastPt = midpoint;
-            }
-
-            midpoint = midPoint_of_Given_TwoPoints(secondlastPt, lastPt);
-            pts.remove(n);
-            pts.add(midpoint);
-            areaFound = AreaObject.getAreaFromCoordinateList(pts);
-        }
-        return midpoint;
-    }
-
-    private boolean checkAreaFormed(List<Coordinate> pList, double areaReq) {
-        if (pList.size() > 2) {
-            double areaFound = AreaObject.getAreaFromCoordinateList(pList);
-            if (areaFound > areaReq) {
-                return true;
-            }
-        }
-        return false;
+        return AreaObject.point_to_form_RequiredArea(pList, areaReq);
     }
 
     private Coordinate locate_Point_counterClockwise(Point[] pts, Point keyPoint, int i1, int i2) {
@@ -336,7 +272,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         pList.add(keyPoint.getCoordinate());
         for (int i = i1; i >= 0; i--) {
             pList.add(pts[i].getCoordinate());
-            if (checkAreaFormed(pList, areaReq)) {
+            if (AreaObject.checkAreaFormed(pList, areaReq)) {
                 nextLoopAlso=false;
                 break;
             }
@@ -345,13 +281,13 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         if (nextLoopAlso){
             for (int i = pts.length - 1; i >= i2; i--) {
                 pList.add(pts[i].getCoordinate());
-                if (checkAreaFormed(pList, areaReq)) {
+                if (AreaObject.checkAreaFormed(pList, areaReq)) {
                     break;
                 }
             }
         }
 
-        return point_to_form_RequiredArea(pList, areaReq);
+        return AreaObject.point_to_form_RequiredArea(pList, areaReq);
     }
 
     private void createNewSegment(Point[] pts, Point keyPoint, int i1, int i2) {
@@ -376,23 +312,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         locatePointPanel.appendNewSegment(newSegment,is_newLine);
         //Key points has been already handled by locate Point Panel.
         //break segment containing the new points.
-        breakSegment(newPoint);
-    }
-
-    private void breakSegment(Point pt) {
-        //get features.
-        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
-        //check the features.
-        while (feaIterator.hasNext()) {
-            SimpleFeature fea = feaIterator.next();
-            String objId = fea.getID();
-            LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
-            if (PublicMethod.IsPointOnLine(geom, pt)) {
-                locatePointPanel.breakSegmentAtPoint(geom, pt,objId);
-                break;
-            }
-        }
+        locatePointPanel.breakSegment(newPoint);
     }
     //End of the section for finding the specified area>>>>>>>>>>>>>>>>>>>>
 
@@ -423,39 +343,52 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         //Validate the area entered.
         if (!isValid_data()) return;
         //process points.
-        Point[] pts = new Point[totalNodeCount()];
+        Point[] pts= PublicMethod.getPointInParcel(segmentLayer);
         //find the point collection
-        SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
-        FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
-        int i = 0;
         int i1 = 0;
         int i2 = 0;
         //Storing points and key indices for area iteration.
-        while (ptIterator.hasNext()) {
-            SimpleFeature fea = ptIterator.next();
-            byte insertednode = Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED).toString());
-            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
-            //store point.
-            if (insertednode != 2) {
-                if (pt.equals(lineSeg.getStartPoint())) {
-                    i1 = i;//initial index.
-                }
-                if (pt.equals(lineSeg.getEndPoint())) {
-                    i2 = i;//end index.
-                }
-                pts[i++] = pt;
+        for (int i=0;i<pts.length;i++) {
+            if (pts[i].equals(lineSeg.getStartPoint())) {
+                i1 = i;//initial index.
+            }
+            if (pts[i].equals(lineSeg.getEndPoint())) {
+                i2 = i;//end index.
             }
         }
         
-        Point keyPoint=pointFixed;
-        createNewSegment(pts, keyPoint, i1, i2);
+        createNewSegment(pts, pointFixed, i1, i2);
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+//<editor-fold defaultstate="collapsed" desc="uncomment to check nodes in affected parcel">
+//        try {
+//            displayPointsOnMap(targetParcelsLayer.getAffected_parcels());
+//        } catch (InitializeLayerException ex) {
+//            Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//</editor-fold>
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
         segmentLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
+    //<editor-fold defaultstate="collapse" desc="check for nodes in affected parcels">
+    public void displayPointsOnMap( TargetAffectedParcelLayer layer){
+        GeometryFactory geomFactory=new GeometryFactory();
+        //iterate through the touching parcels.
+        SimpleFeatureCollection fea_col=layer.getFeatureCollection();
+        SimpleFeatureIterator fea_iter=fea_col.features();
+        while (fea_iter.hasNext()){
+            SimpleFeature fea=fea_iter.next();
+            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Coordinate[] cors=geom.getCoordinates();
+            for (Coordinate co:cors){
+                locatePointPanel.addPointInPointCollection(geomFactory.createPoint(co),(byte)0);
+            }
+        }
+    }
+    //</editor-fold>
+    
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshTable(Object lineSeg,Object pointFixed,String parID, boolean updateTable ){
         this.lineSeg=(LineString)lineSeg;
