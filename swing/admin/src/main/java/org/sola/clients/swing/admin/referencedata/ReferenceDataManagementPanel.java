@@ -229,11 +229,6 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     RrrTypeBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.RRR_TYPE_CODES_KEY);
             refDataTOClass = RrrTypeTO.class;
-        } else if (refDataClass == SourceBaUnitRelationTypeBean.class) {
-            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getSourceBaUnitRelationTypes(null),
-                    SourceBaUnitRelationTypeBean.class, (List) refDataList);
-            CacheManager.remove(CacheManager.SOURCE_BA_UNIT_RELATION_TYPE_CODES_KEY);
-            refDataTOClass = SourceBaUnitRelationTypeTO.class;
         } else if (refDataClass == BaUnitRelTypeBean.class) {
             TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getBaUnitRelTypes(null),
                     BaUnitRelTypeBean.class, (List) refDataList);
