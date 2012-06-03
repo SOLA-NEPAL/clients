@@ -175,4 +175,7 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
     public void setReadOnly(boolean readOnly) {
         this.getMap().getMapActionByName(CadastreBoundarySelectTool.NAME).setEnabled(!readOnly);
     }
+    
+    //By Kabindra
+    //public abstract void update_Parcel_Geometry();
 }

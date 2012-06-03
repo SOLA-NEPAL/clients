@@ -102,7 +102,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtAreaCount = new javax.swing.JTextField();
         btnNewPacel = new javax.swing.JToggleButton();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtMaxArea = new javax.swing.JTextField();
         btnUndoSplit = new javax.swing.JButton();
@@ -130,7 +130,12 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Maximum Area(m2):");
 
@@ -182,7 +187,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
                         .addGap(75, 75, 75)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNewPacel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -207,7 +212,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNewPacel)
                     .addComponent(btnRefreshMap)
-                    .addComponent(btnSave))
+                    .addComponent(btnOK))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -420,12 +425,18 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         btnNewPacel.setEnabled(true);
     }//GEN-LAST:event_btnCheckSplitLinesActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSplitLines;
     private javax.swing.JToggleButton btnNewPacel;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRedrawALL;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

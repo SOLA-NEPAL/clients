@@ -127,15 +127,9 @@ public class listSelectedCadastreObjects extends ExtendedTool {
             //Prepare for fresh selection.
             if (!ev.isControlDown()) removeAllFeatures();
            
-            SimpleFeature fea=this.targetParcelsLayer.getFeatureCollection().getFeature(cadastreObject.getId());
-            //just remove the item or remove first and add again.
-            this.targetParcelsLayer.removeFeature(cadastreObject.getId());
+            append_PolygonSelected(cadastreObject,ev.isControlDown());
+            
             boolean arearemove=this.removeAreaObject(cadastreObject.getId());
-            if (!ev.isControlDown() || fea==null){
-                this.targetParcelsLayer.addFeature(
-                        cadastreObject.getId(),
-                        cadastreObject.getGeomPolygon(), null);
-            } 
             processPolygonSelected(cadastreObject,ev.isControlDown(),arearemove);//,remove);
             getPointsFromPolygonSelected(cadastreObject,ev.isControlDown());
             //store the parcel touched by selected parcel.
@@ -152,10 +146,33 @@ public class listSelectedCadastreObjects extends ExtendedTool {
         }
     }
     
+    private void append_PolygonSelected(CadastreObjectTO cadastreObject,boolean isCtrlDown) 
+                throws ParseException{
+        SimpleFeature fea=this.targetParcelsLayer.getFeatureCollection().getFeature(cadastreObject.getId());
+        //just remove the item or remove first and add again.
+        this.targetParcelsLayer.removeFeature(cadastreObject.getId());
+        
+        WKBReader wkb_reader = new WKBReader();
+        Geometry geom_poly =  wkb_reader.read(cadastreObject.getGeomPolygon());
+        
+        DecimalFormat df=new DecimalFormat("0.00");
+        if (isCtrlDown || fea==null){
+            //properties.
+            HashMap<String,Object> fldvalues=new HashMap<String,Object>();
+            fldvalues.put(CadastreChangeTargetCadastreObjectLayer.LAYER_FIELD_FID, cadastreObject.getId());
+            String shape_area=df.format(geom_poly.getArea());
+            fldvalues.put(CadastreChangeTargetCadastreObjectLayer.LAYER_FIELD_AREA, shape_area);
+            
+            this.targetParcelsLayer.addFeature(
+                    cadastreObject.getId(),geom_poly, fldvalues);
+        } 
+    }
+    
     private void removeAllFeatures() throws InitializeLayerException{
         //Access polygon features.
         targetParcelsLayer.getFeatureCollection().clear();
-        targetParcelsLayer.getAffected_parcels().getFeatureCollection().clear();
+        targetParcelsLayer.getCadastreObjectTargetList().clear();
+        targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
 
         //Access segment features.
         this.getTargetSegmentLayer().getFeatureCollection().clear();
@@ -319,7 +336,7 @@ public class listSelectedCadastreObjects extends ExtendedTool {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="WKT based intersection"> 
+// <editor-fold defaultstate="collapsed" desc="commented WKT based intersection"> 
 //    private void getParcels_Touched_by_SelectedParcel(CadastreObjectTO cadastreObject)
 //            throws ParseException, InitializeLayerException{
 //        WKBReader wkb_reader = new WKBReader();
@@ -370,9 +387,9 @@ public class listSelectedCadastreObjects extends ExtendedTool {
         for (CadastreObjectTO parcel:the_parcels){
             if (parcel.getId().equals(cadastreObject.getId())) continue;
             //just remove the item or remove first.
-            this.targetParcelsLayer.getAffected_parcels().removeFeature(parcel.getId());
+            this.targetParcelsLayer.getNeighbour_parcels().removeFeature(parcel.getId());
             //add latest.
-            this.targetParcelsLayer.getAffected_parcels().addFeature(
+            this.targetParcelsLayer.getNeighbour_parcels().addFeature(
                     parcel.getId(),
                     parcel.getGeomPolygon(), null);
         }

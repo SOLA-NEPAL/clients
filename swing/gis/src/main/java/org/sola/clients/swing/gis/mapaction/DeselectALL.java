@@ -4,10 +4,8 @@
  */
 package org.sola.clients.swing.gis.mapaction;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.geotools.swing.extended.Map;
-import org.geotools.swing.extended.exception.InitializeLayerException;
+import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.common.messaging.GisMessage;
@@ -36,15 +34,7 @@ public class DeselectALL extends ComponentShow {
     
     @Override
     public void onClick() {
-        //clear all the selection.
-        pointsLayer.getSegmentLayer().getFeatureCollection().clear();
-        pointsLayer.getFeatureCollection().clear();
-        targetParcelsLayer.getFeatureCollection().clear();
-        try {
-            targetParcelsLayer.getAffected_parcels().getFeatureCollection().clear();
-        } catch (InitializeLayerException ex) {
-            Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        PublicMethod.deselect_All(pointsLayer, targetParcelsLayer);
         //refresh the map.
         mapObj.refresh();
     }

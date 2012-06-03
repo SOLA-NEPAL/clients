@@ -135,7 +135,6 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //Obtain segment list.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
-
         int[] selrow = new int[table.getRowCount()];
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         tableModel.setRowCount(0);
@@ -158,6 +157,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 selrow[rowno] = 1;
             }
         }
+        feaIterator.close();
+        
         if (table.getRowCount()<1) return;
         //set temporary parcel id.
         parcelID=table.getValueAt(0, 2).toString();
@@ -438,6 +439,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
 
             t_segs.add(seg);
         }
+        feaIterator.close();
         
         return t_segs;
     }
@@ -506,6 +508,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
             segs.add(seg);
         }
+        feaIterator.close();
         
         build_new_FeatureCollection(segs,targetSegmentLayer);
         processPointCollection(selsegs);
@@ -547,6 +550,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
 
             pts.add(tmpPoint);
         }
+        ptIterator.close();
 
         build_new_PointsCollection(pts,segmentLayer);
     }
@@ -590,6 +594,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
 
             t_pts.add(tmpPoint);
         }
+        ptIterator.close();
 
         return t_pts;
     }
@@ -636,6 +641,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 break;
             }
         }
+        feaIterator.close();
     }
      
     public void appendNewSegment(LineString newSegment,byte is_newLine) {
@@ -701,6 +707,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 }
             }
         }
+        feaIterator.close();
     }
     
     private String getNodeName(Point pt1) {
@@ -719,6 +726,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 break;
             }
         }
+        ptIterator.close();
 
         return nodename;
     }
@@ -882,6 +890,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 }
             }
         }
+        feaIterator.close();
+        
         selected_Segid=segid;
         return true;
     }
@@ -909,6 +919,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
             if (!remove_firstnode && !remove_secondnode) return;
         }
+        feaIterator.close();
+        
         //try to remove the nodes.
         if (remove_firstnode) {
             segmentLayer.removeFeature(Integer.toString(startpt.hashCode()));

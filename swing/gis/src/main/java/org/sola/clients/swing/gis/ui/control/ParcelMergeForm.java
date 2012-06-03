@@ -74,6 +74,8 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             
             tblmodel.addRow(Itms);
         }
+        feaIter.close();
+        
         tblParcels.setModel(tblmodel);
         tblParcels.repaint();
     }
@@ -92,6 +94,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnMergePolygon = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -133,6 +136,13 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             }
         });
 
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,13 +152,14 @@ public class ParcelMergeForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnMergePolygon, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMergePolygon, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -160,7 +171,9 @@ public class ParcelMergeForm extends javax.swing.JDialog {
                 .addComponent(btnUndoSplit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMergePolygon)
-                .addGap(19, 19, 19))
+                .addGap(7, 7, 7)
+                .addComponent(btnOK)
+                .addContainerGap())
         );
 
         pack();
@@ -198,7 +211,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         if (geomfld.isEmpty()) return;
         
         SimpleFeatureIterator feaIter=feacol.features();
-
         Geometry[] geom=new Geometry[feacol.size()];
         String parcel_id="";//store last parcel id.
         int i=0;
@@ -207,6 +219,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             parcel_id=fea.getID();
             geom[i++]=(Geometry)fea.getAttribute(geomfld);//first item always geometry.
         }
+        feaIter.close();
         if (geom.length<1) return;
         
         //merge the polygons.
@@ -244,9 +257,15 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMergePolygon;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JScrollPane jScrollPane1;

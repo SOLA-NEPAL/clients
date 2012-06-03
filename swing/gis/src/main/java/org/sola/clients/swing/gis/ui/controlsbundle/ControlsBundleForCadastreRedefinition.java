@@ -168,4 +168,9 @@ public final class ControlsBundleForCadastreRedefinition extends ControlsBundleF
         this.getMap().getMapActionByName(
                 CadastreRedefinitionReset.MAPACTION_NAME).setEnabled(!readOnly);
     }
+
+//    @Override
+//    public void update_Parcel_Geometry() {
+//        //throw new UnsupportedOperationException("Not supported yet.");
+//    }
 }

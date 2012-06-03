@@ -91,7 +91,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
         optClockwise = new javax.swing.JRadioButton();
         optCounterClockWise = new javax.swing.JRadioButton();
@@ -139,7 +139,12 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Area Details:");
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         btnCheckSegments.setText("Check Segments");
         btnCheckSegments.setEnabled(false);
@@ -164,7 +169,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnSave)
+                        .addComponent(btnOK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -213,7 +218,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                                 .addComponent(optCounterClockWise)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
+                    .addComponent(btnOK)
                     .addComponent(btnRefreshMap)
                     .addComponent(btnUndoSplit)
                     .addComponent(btnNewPacel)
@@ -692,11 +697,17 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         btnCheckSegments.setEnabled(false);
     }//GEN-LAST:event_btnCheckSegmentsActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JToggleButton btnNewPacel;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel5;

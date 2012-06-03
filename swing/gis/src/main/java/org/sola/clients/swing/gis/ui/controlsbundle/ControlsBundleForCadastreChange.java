@@ -131,7 +131,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 
     @Override
     public TransactionCadastreChangeBean getTransactionBean() {
-       transactionBean.setCadastreObjectList(
+        transactionBean.setCadastreObjectList(
                 this.newCadastreObjectLayer.getCadastreObjectList());
         
         transactionBean.setSurveyPointList(this.newPointsLayer.getSurveyPointList());
@@ -139,8 +139,9 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         transactionBean.setCadastreObjectTargetList(
                 this.targetParcelsLayer.getCadastreObjectTargetList());
         
-        //transactionBean.setSegmentList(this.targetSegmentLayer.getsegmentList());
-
+        transactionBean.setCadastreObjectNeighboursList(
+                this.targetParcelsLayer.getCadastreNeighboursList());
+        
         return transactionBean;
     }
 
@@ -148,33 +149,27 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
     @Override
     protected void addLayers() throws InitializeLayerException {
         super.addLayers();
-
-        this.targetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
-        this.getMap().addLayer(targetParcelsLayer);
         
+        this.newCadastreObjectLayer = new CadastreChangeNewCadastreObjectLayer(this.applicationNumber);
+        this.newCadastreObjectLayer.setCadastreObjectList(this.transactionBean.getCadastreObjectList());
+        this.getMap().addLayer(newCadastreObjectLayer);
+        
+        this.newPointsLayer = new CadastreChangeNewSurveyPointLayer(this.newCadastreObjectLayer);
+        this.getMap().addLayer(newPointsLayer);
+        this.newPointsLayer.setSurveyPointList(this.transactionBean.getSurveyPointList());
+        
+        this.targetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
+        this.targetParcelsLayer.setNew_parcels(this.newCadastreObjectLayer);//get reference of the newparcel layer object.
+        this.targetParcelsLayer.setCadastreObjectTargetList(transactionBean.getCadastreObjectTargetList());
+        this.getMap().addLayer(targetParcelsLayer);
         //selection affected parcels.
-        this.targetParcelsLayer.getAffected_parcels().setVisible(true);
-        this.getMap().addLayer(this.targetParcelsLayer.getAffected_parcels());
+        this.targetParcelsLayer.getNeighbour_parcels().setVisible(true);
+        this.getMap().addLayer(this.targetParcelsLayer.getNeighbour_parcels());
         
         //segment new layer.
         this.targetSegmentLayer = new CadastreTargetSegmentLayer();
         this.getMap().addLayer(this.targetSegmentLayer);
         this.getMap().addLayer(this.targetSegmentLayer.getSegmentLayer());
-
-        this.newCadastreObjectLayer = new CadastreChangeNewCadastreObjectLayer(
-                this.applicationNumber);
-        this.getMap().addLayer(newCadastreObjectLayer);
-
-        this.newPointsLayer = new CadastreChangeNewSurveyPointLayer(this.newCadastreObjectLayer);
-        this.getMap().addLayer(newPointsLayer);
-        
-        this.newPointsLayer.setSurveyPointList(this.transactionBean.getSurveyPointList());
-        
-        this.newCadastreObjectLayer.setCadastreObjectList(
-        this.transactionBean.getCadastreObjectList());
-        
-        this.targetParcelsLayer.setCadastreObjectTargetList(
-                transactionBean.getCadastreObjectTargetList());
     }
 
     //<editor-fold defaultstate="collapsed" desc="By Kabindra">
@@ -282,4 +277,15 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().getMapActionByName(
                 CadastreChangeNewCadastreObjectListFormShow.MAPACTION_NAME).setEnabled(!readOnly);
     }
+
+    //By Kabindra.
+//    @Override
+//    public void update_Parcel_Geometry() {
+//        try {
+//            targetParcelsLayer.updateStatus_TargetParcel();
+//            targetParcelsLayer.updateGeometry_TouchingParcels(this.getMap().getSrid());
+//        } catch (InitializeLayerException ex) {
+//            Logger.getLogger(ControlsBundleForCadastreChange.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }
