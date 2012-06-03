@@ -113,6 +113,12 @@ public class ExtendedLayerEditor extends ExtendedLayerGraphics {
             java.util.HashMap<String, Object> fieldsWithValues) throws ParseException {
         return this.addFeature(fid, wkbReader.read(geomAsBytes), fieldsWithValues);
     }
+    
+    //By Kabindra
+    public SimpleFeature addFeature(String fid, byte[] geomAsBytes,
+            java.util.HashMap<String, Object> fieldsWithValues,boolean refreshmap) throws ParseException {
+        return this.addFeature(fid, wkbReader.read(geomAsBytes), fieldsWithValues,refreshmap);
+    }
 
     /**
      * For description see the same method being overridden. <br/>

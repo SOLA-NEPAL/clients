@@ -100,15 +100,7 @@ public class GraphicsFeatureCollection extends ListFeatureCollection {
             for (String fieldName : fieldsWithValues.keySet()) {
                 if (this.getSchema().getDescriptor(fieldName) != null) {
                     this.builder.set(fieldName, fieldsWithValues.get(fieldName));
-                } //else {
-//                    //Name na = new NameImpl(fieldName);
-//                    //InternationalString des=null;
-//                    //List<Filter> fi=null;
-//                    //PropertyType ptype=new PropertyTypeImpl(na,SegmentBean.class,false,fi,null, des) {};
-//                    PropertyDescriptor pd =null;
-//                    this.schema.getDescriptors().add(pd);
-//                    System.out.println(this.schema.getAttributeCount());
-//                }
+                }
             }
         }
 

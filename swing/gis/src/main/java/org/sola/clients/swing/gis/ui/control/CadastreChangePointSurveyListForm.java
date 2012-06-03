@@ -39,13 +39,8 @@
  */
 package org.sola.clients.swing.gis.ui.control;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
 import java.io.*;
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -57,6 +52,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import org.sola.clients.swing.gis.ClsGeneral;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewSurveyPointLayer;
@@ -383,7 +379,7 @@ private void optionRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     this.txtAcceptableShift.setText(this.getAcceptanceShift(true).toString());
 }//GEN-LAST:event_optionRuralActionPerformed
 
-//Addition by Kabindra for point import from text file.
+//<editor-fold defaultstate="collapse" desc="Addition by Kabindra for point import from text file.">
 //------------------------------------------------------------------------------
     private FileFilter getTextFileFilter() {
         //prepare file filter.
@@ -395,7 +391,7 @@ private void optionRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
                     return true;
                 } else {
                     String filepathname = f.getAbsolutePath().toLowerCase();
-                    if (filepathname.endsWith(".csv")) {
+                    if (filepathname.endsWith(".ssu")) {
                         return true;
                     }
 //                    else if (filepathname.endsWith(".txt"))
@@ -407,7 +403,7 @@ private void optionRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             @Override
             public String getDescription() {
                 //return "Text Files (*.txt|*.csv)";
-                return "Text Files (*.csv)";
+                return "Text Files (*.ssu)";
             }
         };
 
@@ -449,7 +445,8 @@ private void optionRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    //</editor-fold>
+    
     private void importPoints() {
         JFileChooser fileOpen = new JFileChooser();
         fileOpen.setDialogTitle("Choose text file to load in table.");
@@ -478,8 +475,8 @@ private void cmdLoadFromExternalSourceActionPerformed(java.awt.event.ActionEvent
     private void btnShowPointsOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPointsOnMapActionPerformed
         this.layer.setBlnAppend_table(false);//do not allow to append into the table.
         for (int i=0;i<table.getRowCount();i++){
-            double x=Double.valueOf(table.getValueAt(i, 1).toString());
-            double y=Double.valueOf(table.getValueAt(i,2).toString());
+            double x=ClsGeneral.getDoubleValue(table.getValueAt(i, 1).toString());
+            double y=ClsGeneral.getDoubleValue(table.getValueAt(i,2).toString());
             this.layer.addPoint(x, y, false);
         }
         this.layer.setBlnAppend_table(true);//allow append in table.

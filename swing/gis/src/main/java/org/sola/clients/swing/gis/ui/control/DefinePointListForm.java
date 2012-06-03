@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
@@ -36,7 +35,6 @@ public class DefinePointListForm extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     
     private LocatePointPanel locatePointPanel;
@@ -60,7 +58,6 @@ public class DefinePointListForm extends javax.swing.JDialog {
         this.setAlwaysOnTop(true);
         //Initialize other variables.
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel=new LocatePointPanel(segmentLayer);
@@ -90,7 +87,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
         btnSaveTextFile = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
         btnCreatePolygon = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         btnAddRow = new javax.swing.JButton();
         btnUndoSplit = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
@@ -159,7 +156,12 @@ public class DefinePointListForm extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         btnAddRow.setText("Add Row");
         btnAddRow.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +192,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCreatePolygon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,7 +220,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCreatePolygon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSave)
+                .addComponent(btnOK)
                 .addGap(7, 7, 7))
         );
 
@@ -237,7 +239,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
                 else
                 {
                     String filepathname = f.getAbsolutePath().toLowerCase();
-                    if (filepathname.endsWith(".csv"))
+                    if (filepathname.endsWith(".spo"))
                         return true;
 //                    else if (filepathname.endsWith(".txt"))
 //                        return true;
@@ -247,7 +249,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
             @Override
             public String getDescription() {
                //return "Text Files (*.txt|*.csv)";
-                return "Text Files (*.csv)";
+                return "Text Files (*.spo)";
             }
         };
 
@@ -270,10 +272,12 @@ public class DefinePointListForm extends javax.swing.JDialog {
         tblPoints.setModel(defTable);
         tblPoints.repaint();
         //fill table from text file.
-        readTextFileData(iFile);
+        if (!readTextFileData(iFile)){
+            JOptionPane.showConfirmDialog(this, "File format is not ok, please check it.");
+        }
     }
 
-    private void readTextFileData(File iFile) {
+    private boolean readTextFileData(File iFile) {
         //fill data into table from text file.
         try {
             DefaultTableModel table=(DefaultTableModel)tblPoints.getModel();
@@ -285,6 +289,9 @@ public class DefinePointListForm extends javax.swing.JDialog {
             DecimalFormat df=new DecimalFormat("0.000");//mm precision.
             while (txtline!=null && !txtline.isEmpty()){
                 String[] pt=txtline.split(",");
+                if (pt.length<2){
+                    return false;
+                }
                 if (pt!=null && pt.length>1){
                     Object[] row=new Object[]{i++,
                         df.format(Double.parseDouble(pt[0])),
@@ -299,8 +306,9 @@ public class DefinePointListForm extends javax.swing.JDialog {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-                Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return true;
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnAddRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRowActionPerformed
@@ -368,10 +376,10 @@ public class DefinePointListForm extends javax.swing.JDialog {
         LineString[] segs=new LineString[tblPoints.getRowCount()-1];
         for (int i=0;i<tblPoints.getRowCount()-1;i++){
             if (tblPoints.getValueAt(i, 1)==null || tblPoints.getValueAt(i+1, 1)==null) continue;
-            double x= Double.parseDouble(tblPoints.getValueAt(i, 1).toString());//x-cordinate.
-            double y= Double.parseDouble(tblPoints.getValueAt(i, 2).toString());//y-cordinate.
-            double x1= Double.parseDouble(tblPoints.getValueAt(i+1, 1).toString());//x-cordinate.
-            double y1= Double.parseDouble(tblPoints.getValueAt(i+1, 2).toString());//y-cordinate.
+            double x= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 1).toString());//x-cordinate.
+            double y= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i, 2).toString());//y-cordinate.
+            double x1= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i+1, 1).toString());//x-cordinate.
+            double y1= ClsGeneral.getDoubleValue(tblPoints.getValueAt(i+1, 2).toString());//y-cordinate.
             if (x==x1 &&  y==y1) continue;
             Coordinate[] co=new Coordinate[]{new Coordinate(x, y),new Coordinate(x1,y1)};
             segs[i]=geomFactory.createLineString(co);
@@ -433,6 +441,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
         lineGenerator.generateNodedSegments();
         
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        targetParcelsLayer.getMapControl().refresh();
         btnCreatePolygon.setEnabled(false);
     }//GEN-LAST:event_btnCreatePolygonActionPerformed
 
@@ -457,13 +466,19 @@ public class DefinePointListForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRow;
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnCreatePolygon;
     private javax.swing.JButton btnImport;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveTextFile;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JButton jButton1;

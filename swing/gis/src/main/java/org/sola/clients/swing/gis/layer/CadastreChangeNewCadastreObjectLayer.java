@@ -36,10 +36,10 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.ParseException;
 import java.awt.Component;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -67,9 +67,10 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
     public static final String LAYER_FIELD_FIRST_PART = "first_part";
     public static final String LAYER_FIELD_LAST_PART = "last_part";
     public static final String LAYER_FIELD_OFFICIAL_AREA = "official_area";
-    private static final String LAYER_NAME = "New Parcels";
+    public static final String LAYER_NAME = "New Parcels";
+    
     private static final String LAYER_STYLE_RESOURCE = "parcel_new.xml";
-    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:0",
+    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:\"\"",
             LAYER_FIELD_FIRST_PART, LAYER_FIELD_LAST_PART, LAYER_FIELD_OFFICIAL_AREA);
     private List<CadastreObjectBean> cadastreObjectList = new ArrayList<CadastreObjectBean>();
     private Integer firstPartGenerator = 1;
@@ -183,7 +184,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                             }
                         }
                     }
-                    this.addFeature(null, cadastreObjectBean.getGeomPolygon(), fieldsWithValues);
+                    this.addFeature(null, cadastreObjectBean.getGeomPolygon(), fieldsWithValues,false);
                 }
             } catch (ParseException ex) {
                 Messaging.getInstance().show(
@@ -208,18 +209,32 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
             String fid,
             Geometry geom,
             java.util.HashMap<String, Object> fieldsWithValues) {
+         
+        return addFeature(fid,geom,fieldsWithValues,true);
+    }
+    
+    //boolean added by Kabindra
+    @Override
+    public SimpleFeature addFeature(
+            String fid,
+            Geometry geom,
+            java.util.HashMap<String, Object> fieldsWithValues, boolean refreshmap) {
         fid = fidGenerator.toString();
         fidGenerator++;
+        
+        DecimalFormat df=new DecimalFormat("0.00");
         if (fieldsWithValues == null) {
             fieldsWithValues = new HashMap<String, Object>();
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART,
                     firstPartGenerator.toString());
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, 
                     this.lastPart);
+            //fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA, 
+                    //Math.round(geom.getArea()));
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA, 
-                    Math.round(geom.getArea()));
+                    df.format(geom.getArea()));
         }
-        SimpleFeature addedFeature = super.addFeature(fid, geom, fieldsWithValues);
+        SimpleFeature addedFeature = super.addFeature(fid, geom, fieldsWithValues,refreshmap);
         firstPartGenerator++;
         return addedFeature;
     }

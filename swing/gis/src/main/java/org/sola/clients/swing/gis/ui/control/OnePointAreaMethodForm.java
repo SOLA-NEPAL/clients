@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
@@ -22,7 +21,7 @@ import org.sola.clients.swing.gis.AreaObject;
 import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
-import org.sola.clients.swing.gis.layer.TargetAffectedParcelLayer;
+import org.sola.clients.swing.gis.layer.TargetNeighbourParcelLayer;
 
 /**
  *
@@ -33,7 +32,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     private LineString lineSeg = null;
@@ -57,7 +55,6 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         this.setLocation(100, 100);
         
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.initializeFormVariable(segmentLayer);
@@ -90,7 +87,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtRequiredArea = new javax.swing.JTextField();
         btnNewPacel = new javax.swing.JToggleButton();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtMaxArea = new javax.swing.JTextField();
         btnUndoSplit = new javax.swing.JButton();
@@ -126,7 +123,12 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Maximum Area(m2):");
 
@@ -163,7 +165,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(btnSave)
+                        .addComponent(btnOK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,7 +193,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnNewPacel)
-                            .addComponent(btnSave)
+                            .addComponent(btnOK)
                             .addComponent(btnUndoSplit)
                             .addComponent(btnRefreshMap)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -212,10 +214,10 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(4, 4, 4))
+            .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +234,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Make all layers off except the target layers.
         //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
+        Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -368,24 +370,28 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
 //</editor-fold>
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
-        segmentLayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
     //<editor-fold defaultstate="collapse" desc="check for nodes in affected parcels">
-    public void displayPointsOnMap( TargetAffectedParcelLayer layer){
+    public void displayPointsOnMap( TargetNeighbourParcelLayer layer){
         GeometryFactory geomFactory=new GeometryFactory();
         //iterate through the touching parcels.
         SimpleFeatureCollection fea_col=layer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(fea_col);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator fea_iter=fea_col.features();
         while (fea_iter.hasNext()){
             SimpleFeature fea=fea_iter.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//polygon.
             Coordinate[] cors=geom.getCoordinates();
             for (Coordinate co:cors){
                 locatePointPanel.addPointInPointCollection(geomFactory.createPoint(co),(byte)0);
             }
         }
+        fea_iter.close();
     }
     //</editor-fold>
     
@@ -439,10 +445,16 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnNewPacel;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.ButtonGroup groupDirection;
     private javax.swing.JLabel jLabel5;

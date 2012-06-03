@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.AreaObject;
@@ -36,7 +35,6 @@ public class EqualAreaMethod extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     private String parcel_ID="";
@@ -55,7 +53,6 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         //this.setLocation(100, 100);
         
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -105,7 +102,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtAreaCount = new javax.swing.JTextField();
         btnNewPacel = new javax.swing.JToggleButton();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txtMaxArea = new javax.swing.JTextField();
         btnUndoSplit = new javax.swing.JButton();
@@ -133,7 +130,12 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Maximum Area(m2):");
 
@@ -185,7 +187,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
                         .addGap(75, 75, 75)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNewPacel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -210,7 +212,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNewPacel)
                     .addComponent(btnRefreshMap)
-                    .addComponent(btnSave))
+                    .addComponent(btnOK))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -282,7 +284,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
-        segmentLayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
@@ -363,7 +365,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Make all layers off except the target layers.
         //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
+        Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -419,16 +421,22 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             part_count++;
         }
         //refresh map.
-        segmentLayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(true);
     }//GEN-LAST:event_btnCheckSplitLinesActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSplitLines;
     private javax.swing.JToggleButton btnNewPacel;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRedrawALL;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

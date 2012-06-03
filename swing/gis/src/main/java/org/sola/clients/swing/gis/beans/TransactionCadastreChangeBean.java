@@ -48,19 +48,20 @@ import org.sola.webservices.transferobjects.transaction.TransactionCadastreChang
 public class TransactionCadastreChangeBean extends TransactionBean{
     
     private List<CadastreObjectBean> cadastreObjectList = new ArrayList<CadastreObjectBean>();
-    private List<SegmentBean> segmentList=new ArrayList<SegmentBean>();
    
     private List<CadastreObjectTargetBean> cadastreObjectTargetList = 
             new ArrayList<CadastreObjectTargetBean>();
     private List<SurveyPointBean> surveyPointList = new ArrayList<SurveyPointBean>();
 
-    
-    public List<SegmentBean> getSegmentList() {
-        return segmentList;
+    private List<CadastreObjectTargetRedefinitionBean> cadastreObjectNeighboursList =
+            new ArrayList<CadastreObjectTargetRedefinitionBean>();
+
+    public List<CadastreObjectTargetRedefinitionBean> getCadastreObjectNeighboursList() {
+        return cadastreObjectNeighboursList;
     }
 
-    public void setSegmentList(List<SegmentBean> segmentList) {
-        this.segmentList = segmentList;
+    public void setCadastreObjectNeighboursList(List<CadastreObjectTargetRedefinitionBean> cadastreObjectNeighboursList) {
+        this.cadastreObjectNeighboursList = cadastreObjectNeighboursList;
     }
     
     /**
