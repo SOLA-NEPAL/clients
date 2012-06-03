@@ -400,6 +400,7 @@ public class DefinePointListForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnCreatePolygon.setEnabled(false);
         //refresh map.
         targetParcelsLayer.getMapControl().refresh();

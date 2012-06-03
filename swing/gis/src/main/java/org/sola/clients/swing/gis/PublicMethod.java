@@ -723,15 +723,26 @@ public class PublicMethod {
         targetParcelsLayer.getFeatureCollection().clear();
         try {
             targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-     public static void deselect_All(CadastreTargetSegmentLayer pointsLayer){
+    public static void deselect_All(CadastreTargetSegmentLayer pointsLayer){
         //clear all the selection.
         pointsLayer.getSegmentLayer().getFeatureCollection().clear();
         pointsLayer.getFeatureCollection().clear();
+    }
+     
+    public static void remove_All_newParcel(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer ){
+        //clear all the selection.
+        try {
+            targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
+        } catch (Exception ex) { 
+        }
     }
     //</editor-fold>
 }

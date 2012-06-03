@@ -352,6 +352,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnNewPacel.setEnabled(false);
         btnCheckSplitLines.setEnabled(false);
         //refresh map.

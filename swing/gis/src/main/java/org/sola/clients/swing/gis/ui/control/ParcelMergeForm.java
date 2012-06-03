@@ -45,6 +45,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         this.setTitle("Merge Selected Parcel Form.");
         this.setAlwaysOnTop(true);
         //Initialize other variables.
+        targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();//remove neighbouring parcel status.
         this.targetParcelsLayer = targetParcelsLayer;
         this.segmentLayer=segmentLayer;
         //using only for segment details.
@@ -200,6 +201,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         //refresh map.
         showParcelsInTable();//refresh information in table also.
         targetParcelsLayer.getMapControl().refresh();
@@ -237,20 +239,23 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         //first clear all point, segment and parcel selection details.
         segmentLayer.getFeatureCollection().clear();
         segmentLayer.getSegmentLayer().getFeatureCollection().clear();
-        targetParcelsLayer.getFeatureCollection().clear();
-        //re-entry the combined polygon and refresh the map.
-        targetParcelsLayer.addFeature(parcel_id, merged_geom, null);
-        //refresh point collection only.
-        Coordinate[] cors=merged_geom.getCoordinates();
-        if (cors==null || cors.length<1) return;
-        
-        for (int i=0;i<cors.length-1;i++){
-            Point pt=geomFactory.createPoint(cors[i]);
-            
-            locatePointPanel.addPointInPointCollection(pt);
+        try {
+            //re-entry the combined polygon and refresh the map.
+            targetParcelsLayer.getNew_parcels().addFeature(parcel_id, merged_geom, null);
+            //refresh point collection only.
+            Coordinate[] cors=merged_geom.getCoordinates();
+            if (cors==null || cors.length<1) return;
+
+            for (int i=0;i<cors.length-1;i++){
+                Point pt=geomFactory.createPoint(cors[i]);
+
+                locatePointPanel.addPointInPointCollection(pt);
+            }
+            //reload data into table and map.
+            showParcelsInTable();//refresh information in table also.
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(ParcelMergeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //reload data into table and map.
-        showParcelsInTable();//refresh information in table also.
     }//GEN-LAST:event_btnMergePolygonActionPerformed
 
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
@@ -259,6 +264,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         PublicMethod.deselect_All(segmentLayer);
+        
         targetParcelsLayer.getMapControl().refresh();
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed

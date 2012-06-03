@@ -230,6 +230,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnCheckOffsetLine.setEnabled(false);
         btnCreateParcel.setEnabled(false);
         //refresh map.

@@ -352,6 +352,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnCheckSegments.setEnabled(false);
         btnPolygonize.setEnabled(false);
         //refresh map.
