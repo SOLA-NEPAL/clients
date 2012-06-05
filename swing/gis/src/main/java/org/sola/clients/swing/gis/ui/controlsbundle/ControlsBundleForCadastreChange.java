@@ -212,8 +212,8 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
         //add toolbar for import Point from shape file.
-//        this.getMap().addMapAction(new ImportShapeFileShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-//                                        this.getToolbar(), true);
+        this.getMap().addMapAction(new ImportShapeFileShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                                        this.getToolbar(), true);
     }
     //</editor-fold>
 

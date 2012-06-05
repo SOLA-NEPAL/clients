@@ -29,7 +29,6 @@
  */
 package org.sola.clients.swing.desktop;
 
-import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -524,7 +523,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuLanguage.add(menuLangEN);
 
-        menuLangIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/flags/it.jpg"))); // NOI18N
+        menuLangIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/flags/np.png"))); // NOI18N
         menuLangIT.setText(bundle.getString("MainForm.menuLangIT.text")); // NOI18N
         menuLangIT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -780,7 +779,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuLangENActionPerformed
 
     private void menuLangITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLangITActionPerformed
-        setLanguage("it", "IT");
+        setLanguage("np", "NP");
     }//GEN-LAST:event_menuLangITActionPerformed
 
     private void btnOpenBaUnitSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenBaUnitSearchActionPerformed
