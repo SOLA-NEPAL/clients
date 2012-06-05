@@ -27,7 +27,9 @@
  */
 package org.sola.clients.beans.cadastre;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedBean;
@@ -52,6 +54,8 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public static final String CADASTRE_OBJECT_TYPE_PROPERTY = "cadastreObjectType";
     public static final String GEOM_POLYGON_PROPERTY = "geomPolygon";
     public static final String SELECTED_PROPERTY = "selected";
+    public static final String MAP_SHEET_PROPERTY = "mapSheet";
+    public static final String SPATIAL_VALUE_AREA_PROPERTY = "spatialValueAreaList";
     
     private Date approvalDatetime;
     private Date historicDatetime;
@@ -64,7 +68,8 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     private CadastreObjectTypeBean cadastreObjectType;
     private byte[] geomPolygon;
     private transient boolean selected;
-    
+    private List<SpatialValueAreaBean> spatialValueAreaList = new ArrayList<SpatialValueAreaBean>();
+    private MapSheetBean mapSheet;
     public CadastreObjectBean() {
         super();
     }
@@ -184,5 +189,26 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         }
         return result;
     }
+
+    public MapSheetBean getMapSheet() {
+        return mapSheet;
+    }
+
+    public void setMapSheet(MapSheetBean mapSheet) {
+        MapSheetBean oldValue=this.mapSheet;        
+        this.mapSheet = mapSheet;
+        propertySupport.firePropertyChange(MAP_SHEET_PROPERTY,oldValue,this.mapSheet);
+    }
+
+    public List<SpatialValueAreaBean> getSpatialValueAreaList() {
+        return spatialValueAreaList;
+    }
+
+    public void setSpatialValueAreaList(List<SpatialValueAreaBean> spatialValueAreaList) {
+        List<SpatialValueAreaBean> oldValue=this.spatialValueAreaList;
+        this.spatialValueAreaList=spatialValueAreaList;
+        propertySupport.firePropertyChange(SPATIAL_VALUE_AREA_PROPERTY,oldValue,this.spatialValueAreaList);
+    }
+    
     
 }
