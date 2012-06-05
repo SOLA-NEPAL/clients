@@ -51,6 +51,8 @@ public class FullExtent extends ExtendedAction{
      */
     @Override
     public void onClick(){
+        //recording zoom window.
+        this.getMapControl().record_ZoomEnvelope();
         this.getMapControl().zoomToFullExtent();
     }
 

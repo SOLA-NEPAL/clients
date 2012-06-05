@@ -40,11 +40,12 @@ import org.sola.clients.beans.application.ApplicationSummaryBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
-import org.sola.clients.swing.desktop.application.ApplicationDetailsForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationAssignmentPanel;
+import org.sola.clients.swing.desktop.application.ApplicationTransferForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.renderers.BooleanCellRenderer;
 import org.sola.clients.swing.ui.renderers.DateTimeRenderer;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
@@ -131,7 +132,6 @@ public class DashBoardPanel extends ContentPanel {
         } else if (evt.getPropertyName().equals(ApplicationSearchResultsListBean.SELECTED_APPLICATION_PROPERTY)) {
 
             boolean isEditEnabled;
-
             ApplicationSearchResultBean app = (ApplicationSearchResultBean) evt.getNewValue();
 
             if (app == null) {
@@ -146,9 +146,7 @@ public class DashBoardPanel extends ContentPanel {
     }
 
     /**
-     * Opens application assignment form with selected application ID.
-     *
-     * @param appBean Selected application summary bean.
+     * Opens application assignment.
      */
     private void openAssignmentForm() {
         for (ApplicationSearchResultBean searchResult : appListBean.getCheckedApplications()) {
@@ -166,6 +164,22 @@ public class DashBoardPanel extends ContentPanel {
                 ApplicationAssignmentPanel panel = new ApplicationAssignmentPanel(appListBean.getCheckedApplications());
                 panel.addPropertyChangeListener(ApplicationAssignmentPanel.APPLICATIONS_ASSGINED, assignmentPanelListener);
                 getMainContentPanel().addPanel(panel, MainContentPanel.CARD_APPASSIGNMENT, true);
+                return null;
+            }
+        };
+        TaskManager.getInstance().runTask(t);
+    }
+    
+    /** Opens application transfer form */
+    private void openTransferForm(){
+        SolaTask t = new SolaTask<Void, Void>() {
+
+            @Override
+            public Void doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APP_TRANSFER));
+                ApplicationTransferForm panel = new ApplicationTransferForm(appListBean.getCheckedApplications());
+                panel.addPropertyChangeListener(ApplicationTransferForm.APPLICATIONS_TRANSFERED, assignmentPanelListener);
+                getMainContentPanel().addPanel(panel, MainContentPanel.CARD_APPTRANSFER, true);
                 return null;
             }
         };
@@ -314,6 +328,11 @@ public class DashBoardPanel extends ContentPanel {
         btnTransferApplications.setFocusable(false);
         btnTransferApplications.setName(bundle.getString("DashBoardPanel.btnTransferApplications.name")); // NOI18N
         btnTransferApplications.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnTransferApplications.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferApplicationsActionPerformed(evt);
+            }
+        });
         toolbarApplications.add(btnTransferApplications);
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/refresh.png"))); // NOI18N
@@ -379,10 +398,6 @@ public class DashBoardPanel extends ContentPanel {
         columnBinding.setColumnName("Service List");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${agent}"));
-        columnBinding.setColumnName("Agent");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${assigneeName}"));
         columnBinding.setColumnName("Assignee Name");
         columnBinding.setColumnClass(String.class);
@@ -417,10 +432,10 @@ public class DashBoardPanel extends ContentPanel {
         tbApplications.getColumnModel().getColumn(4).setMinWidth(180);
         tbApplications.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("DashBoard.tbAssigned.columnModel.title6")); // NOI18N
         tbApplications.getColumnModel().getColumn(4).setCellRenderer(new org.sola.clients.swing.ui.renderers.CellDelimitedListRenderer());
-        tbApplications.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("DashBoard.tbAssigned.columnModel.title3")); // NOI18N
-        tbApplications.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("DashBoardPanel.tbApplications.columnModel.title5")); // NOI18N
-        tbApplications.getColumnModel().getColumn(7).setHeaderValue(bundle.getString("DashBoard.tbAssigned.columnModel.title4")); // NOI18N
-        tbApplications.getColumnModel().getColumn(8).setHeaderValue(bundle.getString("DashBoardPanel.tbApplications.columnModel.title8")); // NOI18N
+        tbApplications.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("DashBoardPanel.tbApplications.columnModel.title5")); // NOI18N
+        tbApplications.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("DashBoard.tbAssigned.columnModel.title4")); // NOI18N
+        tbApplications.getColumnModel().getColumn(7).setHeaderValue(bundle.getString("DashBoardPanel.tbApplications.columnModel.title8")); // NOI18N
+        tbApplications.getColumnModel().getColumn(7).setCellRenderer(new BooleanCellRenderer());
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -475,6 +490,10 @@ public class DashBoardPanel extends ContentPanel {
     private void cbxShowOnlyMyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxShowOnlyMyMouseClicked
         appListBean.showOnlyMyApplications(cbxShowOnlyMy.isSelected());
     }//GEN-LAST:event_cbxShowOnlyMyMouseClicked
+
+    private void btnTransferApplicationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferApplicationsActionPerformed
+        openTransferForm();
+    }//GEN-LAST:event_btnTransferApplicationsActionPerformed
 
     /**
      * Refreshes assigned and unassigned application lists.

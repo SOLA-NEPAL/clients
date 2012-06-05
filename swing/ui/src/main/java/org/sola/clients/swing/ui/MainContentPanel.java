@@ -61,6 +61,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_BAUNIT_SEARCH = "baunitsearch";
     public final static String CARD_DOCUMENT_SEARCH = "documentsearch";
     public final static String CARD_APPASSIGNMENT = "appassignment";
+    public final static String CARD_APPTRANSFER = "appTransfer";
     public final static String CARD_APPDETAILS = "appdetails";
     public final static String CARD_MAP = "map";
     public final static String CARD_APPLICATION = "application";
@@ -86,12 +87,8 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_ADMIN_USER_PASSWORD = "userPasswordPanel";
     public final static String CARD_ADMIN_BR_MANAGE = "brManagementPanel";
     public final static String CARD_ADMIN_BR = "brPanel";
-//<<<<<<< HEAD
     public final static String CARD_SOURCE = "sourcePanel";
-    
-//=======
     public final static String CARD_ADMIN_CALENDAR = "calendarPanel";
-//>>>>>>> nepal_custom
     private HashMap<String, Component> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;

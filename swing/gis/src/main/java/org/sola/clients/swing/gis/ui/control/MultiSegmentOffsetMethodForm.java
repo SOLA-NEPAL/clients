@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.*;
@@ -29,7 +28,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     //private LineString lineSeg=null;
@@ -42,7 +40,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         initComponents();
 
         otherInitializations(segmentLayer, targetParcelsLayer);
-        btnCheckOffset2.setVisible(false);
     }
 
     private void otherInitializations(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
@@ -50,7 +47,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         this.setAlwaysOnTop(true);
         //Initialize other variables.
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.initializeFormVariable(segmentLayer);
@@ -72,14 +68,14 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
 
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
         btnUndoSplit = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         btnCreateParcel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtOffsetDistance = new javax.swing.JTextField();
         btnCheckOffsetLine = new javax.swing.JButton();
-        btnCheckOffset2 = new javax.swing.JButton();
         btnShowJoinPoint = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
+        btnCheckSegments = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -98,7 +94,12 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         btnCreateParcel.setText("Create Parcel");
         btnCreateParcel.setEnabled(false);
@@ -118,14 +119,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnCheckOffset2.setText("Check Offset Method 2");
-        btnCheckOffset2.setEnabled(false);
-        btnCheckOffset2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckOffset2ActionPerformed(evt);
-            }
-        });
-
         btnShowJoinPoint.setText("Show Join Point Form");
         btnShowJoinPoint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +133,14 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
+        btnCheckSegments.setText("Check Segments");
+        btnCheckSegments.setEnabled(false);
+        btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckSegmentsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,7 +148,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -159,18 +160,16 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnUndoSplit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSave)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCheckOffset2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCheckOffsetLine))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnShowJoinPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCreateParcel)))
-                        .addContainerGap(13, Short.MAX_VALUE))))
+                                .addComponent(btnOK)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnShowJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCheckOffsetLine, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCreateParcel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,11 +180,11 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(txtOffsetDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCheckOffsetLine)
-                    .addComponent(btnCheckOffset2))
+                    .addComponent(btnCheckSegments))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUndoSplit)
-                    .addComponent(btnSave)
+                    .addComponent(btnOK)
                     .addComponent(btnRefreshMap)
                     .addComponent(btnCreateParcel)
                     .addComponent(btnShowJoinPoint))
@@ -198,7 +197,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Make all layers off except the target layers.
         //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
+        Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -231,20 +230,18 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnCheckOffsetLine.setEnabled(false);
-        btnCheckOffset2.setEnabled(false);
         btnCreateParcel.setEnabled(false);
         //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
     
     private void btnCreateParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateParcelActionPerformed
-        //Generate new line collection.
-        NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
-        lineGenerator.generateNodedSegments();
-        
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        targetParcelsLayer.getMapControl().refresh();
         btnCreateParcel.setEnabled(false);
+        btnCheckSegments.setEnabled(false);
     }//GEN-LAST:event_btnCreateParcelActionPerformed
     
     private void append_OffsetLines(LineString[] offsetLine){
@@ -257,9 +254,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         }
         
         //refresh everything including map.
-        locatePointPanel.showSegmentListInTable();
-        targetParcelsLayer.getMapControl().refresh();        
-        btnCreateParcel.setEnabled(true);
+        locatePointPanel.showSegmentListInTable();     
     }
     
     //Find polyline including the mid point of the selected lines.
@@ -304,7 +299,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private Coordinate[] filtered_OffsetPoints(Coordinate[] offsetCors){
         if (offsetCors==null) return null;
         
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         GeometryFactory geomFactory=new GeometryFactory();
         List<Coordinate> cors=new ArrayList<Coordinate>();
     
@@ -326,7 +321,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     
     //find valid side offset points.
     private Coordinate[] get_Offset_Points(double offsetDist){
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         //left side offset points.
         MultiLineString poly_lines=getMidPointIncludedPolyline();
         Coordinate[] cors= getOffset_Coordinates(poly_lines,offsetDist,true,false);
@@ -370,7 +365,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         int j=0;
         pts[j++]=offsetCors[0];
         for (int i=2;i<offsetCors.length-1;i+=2){
-            pts[j++]=PublicMethod.getIntersectionCoordinate(offsetCors[i-2], offsetCors[i-1],offsetCors[i], offsetCors[i+1]);
+            pts[j++]=ClsGeneral.getIntersectionCoordinate(offsetCors[i-2], offsetCors[i-1],offsetCors[i], offsetCors[i+1]);
         }
         pts[j++]=offsetCors[offsetCors.length-1];
         //find only points inside polygons.
@@ -397,7 +392,9 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             return;
         } 
         //append newly formed lines and refresh details on map.
+        btnCheckSegments.setEnabled(true);
         append_OffsetLines(offsetLine);
+        targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnCheckOffsetLineActionPerformed
 
     private boolean isValid_Data(){
@@ -417,44 +414,22 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             return false;
         }
         //check the validity of selected legs.
-        selectedLines=NodedLineStringGenerator.Connected_Segments(tmp_lines);
+        selectedLines=PublicMethod.placeLinesInOrder(tmp_lines);
         //if (!NodedLineStringGenerator.isConnected_Segments(selectedLines)) return;
         if (selectedLines.size()<tmp_lines.size()){
-            JOptionPane.showMessageDialog(null, "Some not linked segments exist. please check it.");
+            JOptionPane.showMessageDialog(null, "Some independent links exist. please check the selected items in tables.");
             return false;
         }
         
         return true;
     }
     
-    private void btnCheckOffset2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckOffset2ActionPerformed
-//        double offsetDist= Double.parseDouble((txtOffsetDistance.getText()));
-//        if (!isValid_Data(offsetDist)) return;
-//        //for proper offset line with CurveLineOffset Builder.
-//        Coordinate[] input_pts=PublicMethod.getInputCoordinates(selectedLines);
-//        Coordinate[] buffer_pts=PublicMethod.getOffsetBufferPoints(input_pts,offsetDist);
-//        if (buffer_pts==null || buffer_pts.length<1) return;
-//        //refined buffer points.
-//        Geometry parcel=getSelected_Parcel(parcel_ID);
-//        Coordinate[] pts=PublicMethod.refineBuffered_Offset_LinePoints(parcel, buffer_pts, offsetDist);
-//        pts=PublicMethod.refineBuffered_Offset_Points(input_pts, pts, offsetDist);
-//        //offset lines.
-//        LineString[] buff_lines=PublicMethod.getLineStrings(pts);
-//        LineString[] offsetLine=getEndExtended(buff_lines);//extend offset lines at ends.
-//        if (offsetLine==null){
-//            JOptionPane.showMessageDialog(null, "Could not create valid offset please check other option.");
-//            return;
-//        }    
-//        //append newly formed lines and refresh details on map.
-//        append_OffsetLines(offsetLine);
-    }//GEN-LAST:event_btnCheckOffset2ActionPerformed
-
     private void btnShowJoinPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowJoinPointActionPerformed
         try {
             //Generate new line collection.
             NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
             lineGenerator.generateNodedSegments();
-            segmentLayer.getMapControl().refresh();
+            targetParcelsLayer.getMapControl().refresh();
         
             TwoPointMethodForm pointListForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
             pointListForm.showPointListInTable();
@@ -473,21 +448,35 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
 
+    private void btnCheckSegmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckSegmentsActionPerformed
+        //Generate new line collection.
+        NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
+        lineGenerator.generateNodedSegments();
+        targetParcelsLayer.getMapControl().refresh();
+        btnCreateParcel.setEnabled(true);
+    }//GEN-LAST:event_btnCheckSegmentsActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     //make extended start and end segment to form close figure.
     //it assures the intersection of polygon by offset line.
     private LineString[] getEndExtended(LineString[] offsetLine){
         if (offsetLine==null || offsetLine.length<1) return null;
         
         GeometryFactory geomFactory=new GeometryFactory();
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         double semi_Perimeter=parcel.getLength()/2;
         //Handle first segment.
         LineString seg1=offsetLine[0];
-        Point startpt= PublicMethod.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -semi_Perimeter);
+        Point startpt= ClsGeneral.getIntermediatePoint(seg1.getStartPoint(), seg1.getEndPoint(), seg1.getLength(), -semi_Perimeter);
         //Handle last segment.
         int n=offsetLine.length-1;
         LineString seg2=offsetLine[n];
-        Point endpt= PublicMethod.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), semi_Perimeter);
+        Point endpt= ClsGeneral.getIntermediatePoint(seg2.getStartPoint(), seg2.getEndPoint(), seg2.getLength(), semi_Perimeter);
         
         if (offsetLine.length>1){
             Coordinate[] co=new Coordinate[]{startpt.getCoordinate(),seg1.getEndPoint().getCoordinate()};
@@ -508,22 +497,11 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         return offsetLine;
     }
    
-    //Determine the selected parcel.
-    private Geometry getSelected_Parcel(String parcel_id){
-        for (AreaObject aa : segmentLayer.getPolyAreaList()) {
-            if (parcel_id.equals(aa.getId())) {
-                return aa.getThe_Geom();
-            }
-        }
-        
-        return null;
-    }
-   
     //check given point set is inside the polygon or not.
     private boolean IsLines_IntersectPolygon(Coordinate[] pts){
         boolean isIntersect=false;
         GeometryFactory geomFactory=new GeometryFactory();
-        Geometry parcel=getSelected_Parcel(parcel_ID);
+        Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
         if (parcel==null) return false;
         
         for (int i=0;i<pts.length-1;i++){
@@ -545,15 +523,14 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         //this.pointFixed=(Point)pointFixed;
         parcel_ID=parID;
         btnCheckOffsetLine.setEnabled(true);
-        btnCheckOffset2.setEnabled(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCheckOffset2;
     private javax.swing.JButton btnCheckOffsetLine;
+    private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnCreateParcel;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnShowJoinPoint;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;

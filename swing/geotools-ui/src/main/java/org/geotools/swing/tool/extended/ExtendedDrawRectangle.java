@@ -73,7 +73,9 @@ public abstract class ExtendedDrawRectangle extends ExtendedTool{
      */
     @Override
     public void onMouseReleased(MapMouseEvent ev) {
-        if (dragged && !ev.getPoint().equals(startDragPos)) {
+        //avoid the zooming window at the time scroll button pan action.
+        if (dragged && !ev.getPoint().equals(startDragPos) &&
+                ev.getButton() != java.awt.event.MouseEvent.BUTTON2) {
             dragged = false;
             Envelope2D env = new Envelope2D();
             env.setFrameFromDiagonal(startDragPos, ev.getWorldPos());

@@ -1,26 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO). All rights
- * reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice,this list of conditions
- * and the following disclaimer. 2. Redistributions in binary form must reproduce the above
- * copyright notice,this list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this software without
- * specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 /*
@@ -35,21 +39,28 @@
  */
 package org.sola.clients.swing.gis.ui.control;
 
+import java.io.*;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.table.DefaultTableModel;
+import org.sola.clients.swing.gis.ClsGeneral;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewSurveyPointLayer;
 import org.sola.common.messaging.GisMessage;
 
 /**
- * This form is used to display information about the survey points during the cadastre change
- * process.
+ * This form is used to display information about the survey points during the
+ * cadastre change process.
  *
  * @author Elton Manoku
  */
@@ -63,7 +74,7 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
     public CadastreChangePointSurveyListForm() {
         initComponents();
         this.setAlwaysOnTop(true);
-        this.setModalityType(ModalityType.APPLICATION_MODAL);
+        //this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.txtAcceptableShift.setText(
                 optionRural.isSelected()
                 ? this.getAcceptanceShift(true).toString()
@@ -95,8 +106,8 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
     }
 
     /**
-     * Gets the table which shows for each survey point a row with information about the survey
-     * point
+     * Gets the table which shows for each survey point a row with information
+     * about the survey point
      *
      * @return
      */
@@ -105,7 +116,8 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
     }
 
     /**
-     * Gets the accepted shift for survey points shifts from their original position
+     * Gets the accepted shift for survey points shifts from their original
+     * position
      *
      * @param forRuralArea
      * @return
@@ -133,8 +145,9 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
     }
 
     /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT
-     * modify this code. The content of this method is always regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -158,6 +171,7 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
         txtAcceptableShift = new javax.swing.JTextField();
         lblAcceptableShift = new javax.swing.JLabel();
         cmdLoadFromExternalSource = new javax.swing.JButton();
+        btnShowPointsOnMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -220,6 +234,12 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(table);
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
+        table.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("CadastreChangePointSurveyListForm.table.columnModel.title0")); // NOI18N
+        table.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("CadastreChangePointSurveyListForm.table.columnModel.title1")); // NOI18N
+        table.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("CadastreChangePointSurveyListForm.table.columnModel.title2")); // NOI18N
+        table.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("CadastreChangePointSurveyListForm.table.columnModel.title3")); // NOI18N
+        table.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("CadastreChangePointSurveyListForm.table.columnModel.title4")); // NOI18N
+        table.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("CadastreChangePointSurveyListForm.table.columnModel.title5")); // NOI18N
 
         txtX.setText(bundle.getString("CadastreChangePointSurveyListForm.txtX.text")); // NOI18N
 
@@ -248,6 +268,13 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
             }
         });
 
+        btnShowPointsOnMap.setText(bundle.getString("CadastreChangePointSurveyListForm.btnShowPointsOnMap.text")); // NOI18N
+        btnShowPointsOnMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowPointsOnMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,7 +282,7 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblMeanShift)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,13 +295,13 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
                         .addComponent(optionUrban, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(optionRural)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                         .addComponent(lblAcceptableShift)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtAcceptableShift, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cmdLoadFromExternalSource)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addComponent(lblX)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtX, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,7 +312,10 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
                         .addGap(28, 28, 28)
                         .addComponent(cmdAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmdRemove)))
+                        .addComponent(cmdRemove))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnShowPointsOnMap, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -311,8 +341,9 @@ public class CadastreChangePointSurveyListForm extends javax.swing.JDialog {
                     .addComponent(cmdAdd)
                     .addComponent(cmdRemove))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnShowPointsOnMap))
         );
 
         pack();
@@ -348,10 +379,112 @@ private void optionRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     this.txtAcceptableShift.setText(this.getAcceptanceShift(true).toString());
 }//GEN-LAST:event_optionRuralActionPerformed
 
+//<editor-fold defaultstate="collapse" desc="Addition by Kabindra for point import from text file.">
+//------------------------------------------------------------------------------
+    private FileFilter getTextFileFilter() {
+        //prepare file filter.
+        FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    String filepathname = f.getAbsolutePath().toLowerCase();
+                    if (filepathname.endsWith(".ssu")) {
+                        return true;
+                    }
+//                    else if (filepathname.endsWith(".txt"))
+//                        return true;
+                }
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                //return "Text Files (*.txt|*.csv)";
+                return "Text Files (*.ssu)";
+            }
+        };
+
+        return filter;
+    }
+
+    private void readTextFileData(File iFile) {
+        //fill data into table from text file.
+        try {
+            DefaultTableModel tblpoint = (DefaultTableModel) table.getModel();
+            FileReader iReader = new FileReader(iFile);
+            BufferedReader buff_reader = new BufferedReader((Reader) iReader);
+
+            buff_reader.readLine();//read title line.
+            DecimalFormat df = new DecimalFormat("0.000");//mm precision.
+            String txtline = buff_reader.readLine();
+            while (txtline != null && !txtline.isEmpty()) {
+                String[] pt = txtline.split(",");
+                if (pt != null && pt.length > 4) {//ignoring z and remarks field.
+                    Object[] row = new Object[6];
+                    row[0]= pt[0].toString();
+                    for (int i=1;i<3;i++){
+                        row[i]= Double.valueOf(pt[i].toString());
+                    }
+                    row[3]= true;//temporary values.
+                    row[4]=false;
+                    row[5]=0.0;
+                     
+                    tblpoint.addRow(row);
+                }
+                txtline = buff_reader.readLine();
+            }
+            buff_reader.close();
+            table.setModel(tblpoint);
+            table.repaint();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    //</editor-fold>
+    
+    private void importPoints() {
+        JFileChooser fileOpen = new JFileChooser();
+        fileOpen.setDialogTitle("Choose text file to load in table.");
+        fileOpen.setVisible(true);
+        FileFilter filter = getTextFileFilter();
+        fileOpen.setFileFilter(filter);
+         
+        fileOpen.showOpenDialog(this);
+        File iFile = fileOpen.getSelectedFile();
+        if (iFile == null) {
+            return;
+        }
+        //prepare table to input data.
+        DefaultTableModel defTable = (DefaultTableModel) table.getModel();
+        defTable.setRowCount(0);
+        table.setModel(defTable);
+        table.repaint();
+        //fill table from text file.
+        readTextFileData(iFile);
+    }
+//------------------------------------------------------------------------------
 private void cmdLoadFromExternalSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLoadFromExternalSourceActionPerformed
-    Messaging.getInstance().show(GisMessage.GENERAL_UNDER_CONSTRUCTION);
+    importPoints();
 }//GEN-LAST:event_cmdLoadFromExternalSourceActionPerformed
+
+    private void btnShowPointsOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPointsOnMapActionPerformed
+        this.layer.setBlnAppend_table(false);//do not allow to append into the table.
+        for (int i=0;i<table.getRowCount();i++){
+            double x=ClsGeneral.getDoubleValue(table.getValueAt(i, 1).toString());
+            double y=ClsGeneral.getDoubleValue(table.getValueAt(i,2).toString());
+            this.layer.addPoint(x, y, false);
+        }
+        this.layer.setBlnAppend_table(true);//allow append in table.
+        this.layer.getMapControl().refresh();
+    }//GEN-LAST:event_btnShowPointsOnMapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnShowPointsOnMap;
     private javax.swing.JButton cmdAdd;
     private javax.swing.JButton cmdLoadFromExternalSource;
     private javax.swing.JButton cmdRemove;

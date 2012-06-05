@@ -10,8 +10,6 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import org.sola.clients.swing.gis.segmentDetails;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -23,6 +21,7 @@ import org.geotools.geometry.jts.Geometries;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.swing.gis.ClsGeneral;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.clients.swing.gis.PointDetails;
 import org.sola.clients.swing.gis.PublicMethod;
@@ -89,6 +88,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
     public LocatePointPanel(
             CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException{
         this();
+        
         initializeFormVariable(segmentLayer);
     }
 
@@ -135,7 +135,6 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //Obtain segment list.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
-
         int[] selrow = new int[table.getRowCount()];
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         tableModel.setRowCount(0);
@@ -158,6 +157,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 selrow[rowno] = 1;
             }
         }
+        feaIterator.close();
+        
         if (table.getRowCount()<1) return;
         //set temporary parcel id.
         parcelID=table.getValueAt(0, 2).toString();
@@ -419,6 +420,9 @@ public class LocatePointPanel extends javax.swing.JPanel {
         List<segmentDetails> t_segs = new ArrayList<segmentDetails>();
         //get features.
         SimpleFeatureCollection feacol = ref_targetSegmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return null;
+        
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
         //Record the features.
         while (feaIterator.hasNext()) {
@@ -430,11 +434,12 @@ public class LocatePointPanel extends javax.swing.JPanel {
             String fid = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString();
             byte isnewline=Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_NEW_SEGMENT).toString());
       
-            Geometry geom = (Geometry) fea.getAttribute(0);//First attribute element for geometry value.
+            Geometry geom = (Geometry) fea.getAttribute(geomfld);//First attribute element for geometry value.
             segmentDetails seg = new segmentDetails(objId, shapelen, geom, parID, selected, fid,isnewline);
 
             t_segs.add(seg);
         }
+        feaIterator.close();
         
         return t_segs;
     }
@@ -474,6 +479,9 @@ public class LocatePointPanel extends javax.swing.JPanel {
         List<segmentDetails> selsegs = new ArrayList<segmentDetails>();
         //get features.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
         //Record the features.
         while (feaIterator.hasNext()) {
@@ -483,7 +491,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             double shapelen = Double.parseDouble(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN).toString());
             int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
             String fid = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString();
-            Geometry geom = (Geometry) fea.getAttribute(0);//First attribute element for geometry value.
+            Geometry geom = (Geometry) fea.getAttribute(geomfld);//First attribute element for geometry value.
             for (int i = 0; i < indx.length; i++) {
                 String segid = this.table.getModel().getValueAt(indx[i], 3).toString();//hash code.
                 if (objId.equals(segid)) {
@@ -500,6 +508,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
             segs.add(seg);
         }
+        feaIterator.close();
         
         build_new_FeatureCollection(segs,targetSegmentLayer);
         processPointCollection(selsegs);
@@ -516,10 +525,13 @@ public class LocatePointPanel extends javax.swing.JPanel {
         List<PointDetails> pts = new ArrayList<PointDetails>();
         //find the point collection
         SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feapoints);
+        if (geomfld.isEmpty()) return;
+        
         FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
         while (ptIterator.hasNext()) {
             SimpleFeature fea = ptIterator.next();
-            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
+            Point pt = (Point) fea.getAttribute(geomfld);//First attribute as geometry attribute.
             //Check point exit in the selected segment list or not.
             byte selected = 0;
             for (segmentDetails seg : selsegs) {
@@ -538,6 +550,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
 
             pts.add(tmpPoint);
         }
+        ptIterator.close();
 
         build_new_PointsCollection(pts,segmentLayer);
     }
@@ -565,10 +578,13 @@ public class LocatePointPanel extends javax.swing.JPanel {
         List<PointDetails> t_pts = new ArrayList<PointDetails>();
         //find the point collection
         SimpleFeatureCollection feapoints = ref_segmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feapoints);
+        if (geomfld.isEmpty()) return null;
+        
         FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
         while (ptIterator.hasNext()) {
             SimpleFeature fea = ptIterator.next();
-            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
+            Point pt = (Point) fea.getAttribute(geomfld);//First attribute as geometry attribute.
             //Check point exit in the selected segment list or not.
             byte selected = 0;
             String feacode = fea.getID();
@@ -578,6 +594,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
 
             t_pts.add(tmpPoint);
         }
+        ptIterator.close();
 
         return t_pts;
     }
@@ -606,8 +623,30 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //finally remove the orignal segment.
         targetSegmentLayer.removeFeature(objId);
     }
+    
+    public void breakSegment(Point pt) {
+        //get features.
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //check the features.
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            String objId = fea.getID();
+            LineString geom = (LineString) fea.getAttribute(geomfld);//First attribute element for geometry value.
+            if (PublicMethod.IsPointOnLine(geom, pt)) {
+                breakSegmentAtPoint(geom, pt,objId);
+                break;
+            }
+        }
+        feaIterator.close();
+    }
      
     public void appendNewSegment(LineString newSegment,byte is_newLine) {
+        if (newSegment==null) return;
+        
         String sn = Integer.toString(newSegment.hashCode());
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -642,6 +681,9 @@ public class LocatePointPanel extends javax.swing.JPanel {
         }
         //get features.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
         //Record the features.
         int ub = 1;//indx.length;
@@ -651,7 +693,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 SimpleFeature fea = feaIterator.next();
                 String objId = fea.getID();
                 if (objId.equals(segid)) {
-                    LineString geom = (LineString) fea.getAttribute(0);//First attribute element for geometry value.
+                    LineString geom = (LineString) fea.getAttribute(geomfld);//First attribute element for geometry value.
                     parcelID=fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
                     lineID=fea.getID();
                     lineSeg = geom;
@@ -665,21 +707,26 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 }
             }
         }
+        feaIterator.close();
     }
     
     private String getNodeName(Point pt1) {
         String nodename = "";
         //find the point collection
         SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feapoints);
+        if (geomfld.isEmpty()) return "";
+        
         FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
         while (ptIterator.hasNext()) {
             SimpleFeature fea = ptIterator.next();
-            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
+            Point pt = (Point) fea.getAttribute(geomfld);//First attribute as geometry attribute.
             if (pt.equals(pt1)) {
                 nodename = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString();
                 break;
             }
         }
+        ptIterator.close();
 
         return nodename;
     }
@@ -692,7 +739,6 @@ public class LocatePointPanel extends javax.swing.JPanel {
         //reflect the selected segment length into the total length textbox.
         txtTotalLength.setText(table.getValueAt(r, 1).toString());
         selected_rowIndex=r;
-        selected_Segid=getSelectedSegmentID();
     }//GEN-LAST:event_tableMouseClicked
 
     public void addPointInPointCollection(Point point_to_add) {
@@ -703,6 +749,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
     
     //Receives selected attribute as 3 for point inserted after finding intersection between segments.
     public void addPointInPointCollection(Point point_to_add, byte selected) {
+        if (point_to_add==null) return;
         //Find last serial number for new point.
         String objId = Integer.toString(point_to_add.hashCode());
         String nodecount = PublicMethod.newNodeName(segmentLayer);
@@ -766,7 +813,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             endPoint = lineSeg.getStartPoint();
         }
         //find new point based on the given distance.
-        Point interPoint = PublicMethod.getIntermediatePoint(startPoint, endPoint, lineSeg.getLength(), dist);
+        Point interPoint = ClsGeneral.getIntermediatePoint(startPoint, endPoint, lineSeg.getLength(), dist);
         if (interPoint == null) {
             JOptionPane.showMessageDialog(this, "Could not locate point.");
             return;
@@ -814,11 +861,15 @@ public class LocatePointPanel extends javax.swing.JPanel {
         segmentLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnReloadActionPerformed
 
-    private String getSelectedSegmentID(){
-        btnDelete.setEnabled(false);
-        if (selected_rowIndex<0) return "";
+    private boolean isRemovableSegment(){
+        //btnDelete.setEnabled(false);
+        selected_Segid="";
+        if (selected_rowIndex<0) return false;
         //get features.
         SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return false;
+        
         FeatureIterator<SimpleFeature> feaIterator = feacol.features();
         //Record the features.
         String segid = this.table.getModel().getValueAt(selected_rowIndex, 3).toString();//hash code.
@@ -829,31 +880,80 @@ public class LocatePointPanel extends javax.swing.JPanel {
                 //validate segment before delete.
                 byte newLine=Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_NEW_SEGMENT).toString());
                 if (newLine==1){
-                   btnDelete.setEnabled(true);
+                   break;
                 }
-                break;
+                //check if the selectected line lies on the parcel boundary.
+                LineString seg=(LineString)fea.getAttribute(geomfld);//get the shape.
+                if (PublicMethod.isSegmentOn_Selected_Parcel(
+                                        segmentLayer.getPolyAreaList(), seg)){
+                    return false;
+                }
             }
         }
-        return segid;
+        feaIterator.close();
+        
+        selected_Segid=segid;
+        return true;
+    }
+    
+    private void removeIsolatednode(LineString removed_seg){
+        //get features.
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //check the isolation status of the end points.
+        Point startpt=removed_seg.getStartPoint();
+        Point endpt=removed_seg.getEndPoint();
+        boolean remove_firstnode=true;
+        boolean remove_secondnode=true;
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();
+            LineString seg=(LineString)fea.getAttribute(geomfld);//Feature as segment.
+            if (PublicMethod.IsPointOnLine(seg, startpt)){
+                remove_firstnode=false;
+            }
+            if (PublicMethod.IsPointOnLine(seg, endpt)){
+                remove_secondnode=false;
+            }
+            if (!remove_firstnode && !remove_secondnode) return;
+        }
+        feaIterator.close();
+        
+        //try to remove the nodes.
+        if (remove_firstnode) {
+            segmentLayer.removeFeature(Integer.toString(startpt.hashCode()));
+        }
+        if (remove_secondnode) {
+            segmentLayer.removeFeature(Integer.toString(endpt.hashCode()));
+        }
     }
     
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (selected_rowIndex<0) return;
-
-        targetSegmentLayer.removeFeature(selected_Segid);
-        DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
-        tblmodel.removeRow(selected_rowIndex);
-        table.setModel(tblmodel);
-        table.repaint();
-        
-        //Clean the status selected segment.
-        optFirst.setText("Distance From Start Vertex");
-        optSecond.setText("Distance From End Vertex");
-        
-        //refresh map.
-        targetSegmentLayer.getMapControl().refresh();
+        //check the removable status and get id of segment to be removed.
+        if (!isRemovableSegment()){
+            JOptionPane.showMessageDialog(this, "The segment on parcel boundary is not allowed to remove.");
+            return;
+        }
+        SimpleFeature fea=targetSegmentLayer.removeFeature(selected_Segid);
+        if (fea!=null){
+            LineString seg=(LineString)fea.getAttribute(0);//Feature as segment.
+            removeIsolatednode(seg);
+            //refresh table.
+            DefaultTableModel tblmodel=(DefaultTableModel)table.getModel();
+            tblmodel.removeRow(selected_rowIndex);
+            table.setModel(tblmodel);
+            table.repaint();
+            //Clean the status selected segment.
+            optFirst.setText("Distance From Start Vertex");
+            optSecond.setText("Distance From End Vertex");
+            //refresh map.
+            targetSegmentLayer.getMapControl().refresh();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPoint;
     private javax.swing.JButton btnClearSelection;

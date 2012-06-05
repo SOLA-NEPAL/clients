@@ -65,12 +65,14 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
 
     private static final String LAYER_NAME = "New points";
     private static final String LAYER_STYLE_RESOURCE = "cadastrechange_newpoints.xml";
+    
     public static final String LAYER_FIELD_FID = "fid";
-    private static final String LAYER_FIELD_LABEL = "label";
+    public static final String LAYER_FIELD_LABEL = "label";
     public static final String LAYER_FIELD_ISBOUNDARY = "is_boundary";
     public static final String LAYER_FIELD_ISLINKED = "is_linked";
     public static final String LAYER_FIELD_SHIFT = "shift";
-    private static final String LAYER_FIELD_ORIGINAL_GEOMETRY = "original_geometry";
+    public static final String LAYER_FIELD_ORIGINAL_GEOMETRY = "original_geometry";
+    
     private static final String LAYER_ATTRIBUTE_DEFINITION =
             String.format("%s:\"\",%s:0,%s:0,%s:0.0,%s:Point",
             LAYER_FIELD_LABEL, LAYER_FIELD_ISBOUNDARY, LAYER_FIELD_ISLINKED,
@@ -80,6 +82,15 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
     private CadastreChangeNewCadastreObjectLayer newCadastreObjectLayer = null;
     private List<SurveyPointBean> surveyPointList = new ArrayList<SurveyPointBean>();
     private Component hostForm = null;
+    private boolean blnAppend_table=true;
+
+    public boolean isBlnAppend_table() {
+        return blnAppend_table;
+    }
+
+    public void setBlnAppend_table(boolean blnAppend_table) {
+        this.blnAppend_table = blnAppend_table;
+    }
 
     /**
      * Constructor.
@@ -314,6 +325,12 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
         this.addFeature(null, pointGeom, null);
         this.getMapControl().refresh();
     }
+    
+    public void addPoint(Double x, Double y,boolean refreshMap) {
+        Point pointGeom = this.getGeometryFactory().createPoint(new Coordinate(x, y));
+        this.addFeature(null, pointGeom, null,refreshMap);
+        if (refreshMap) this.getMapControl().refresh();
+    }
 
     /**
      * It adds a new feature of survey point type
@@ -330,6 +347,12 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
             java.util.HashMap<String, Object> fieldsWithValues) {
         fid = fidGenerator.toString();
         fidGenerator++;
+        fieldsWithValues = getFieldValues(fieldsWithValues, geom, fid);
+        SimpleFeature addedFeature = super.addFeature(fid, geom, fieldsWithValues);
+        return addedFeature;
+    }
+
+    public HashMap<String, Object> getFieldValues(HashMap<String, Object> fieldsWithValues, Geometry geom, String fid) {
         if (fieldsWithValues == null) {
             fieldsWithValues = new HashMap<String, Object>();
             fieldsWithValues.put(LAYER_FIELD_ISBOUNDARY, 1);
@@ -338,10 +361,23 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
             fieldsWithValues.put(LAYER_FIELD_ORIGINAL_GEOMETRY, geom.clone());
         }
         fieldsWithValues.put(LAYER_FIELD_LABEL, fid);
-        SimpleFeature addedFeature = super.addFeature(fid, geom, fieldsWithValues);
+        return fieldsWithValues;
+    }
+    
+    //by Kabindra
+    //-------------------------------------------------------------------------
+    public SimpleFeature addFeature(
+            String fid,
+            Geometry geom,
+            java.util.HashMap<String, Object> fieldsWithValues, boolean refreshMap) {
+        fid = fidGenerator.toString();
+        fidGenerator++;
+        fieldsWithValues = getFieldValues(fieldsWithValues, geom, fid);
+        SimpleFeature addedFeature = super.addFeature(fid, geom, fieldsWithValues,refreshMap);
         return addedFeature;
     }
-
+    //--------------------------------------------------------------------------
+    
     /**
      * It removes a feature of survey point type. It is first checked if the point is used
      * in a new cadastre object.
@@ -389,7 +425,7 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
         if (ev.getEventType() == CollectionEvent.FEATURES_ADDED) {
             for (SimpleFeature feature : ev.getFeatures()) {
                 this.getSurveyPointList().add(this.newBean(feature));
-                addInTable(feature);
+                if (blnAppend_table) addInTable(feature);
             }
         } else if (ev.getEventType() == CollectionEvent.FEATURES_REMOVED) {
             for (SimpleFeature feature : ev.getFeatures()) {
@@ -426,6 +462,7 @@ public class CadastreChangeNewSurveyPointLayer extends ExtendedLayerEditor {
         row[3] = pointObject.getAttribute(LAYER_FIELD_ISBOUNDARY).equals(1);
         row[4] = pointObject.getAttribute(LAYER_FIELD_ISLINKED).equals(1);
         row[5] = pointObject.getAttribute(LAYER_FIELD_SHIFT);
+ 
         tableModel.addRow(row);
     }
 

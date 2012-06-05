@@ -86,19 +86,6 @@ public class MainForm extends javax.swing.JFrame {
                 postInit();
             }
         });
-        //Calendar.getInstance().getTime()
-        
-        //DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");          
-        //Date userGivenengDate=dateFormat.parse(englishDate);  
-        //try{
-       // Date defaultEngDate=dateFormat.parse("2006-01-01");
-        //JOptionPane.showMessageDialog(this,"Nepali Date For 4/5/2012 = "+ WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime()));
-        //JOptionPane.showMessageDialog(this,"English Date For 2068-12-23 = "+ WSManager.getInstance().getAdminService().getGregorianDate("2068-12-23"));
-       // }
-       // catch(ParseException px){
-            //JOptionPane.showMessageDialog(this, "Invalid Date", "Date Check", JOptionPane.ERROR_MESSAGE);
-                    
-       // }
     }
 
     /**
@@ -312,6 +299,10 @@ public class MainForm extends javax.swing.JFrame {
         return hasChanges;
     }
 
+    public MainContentPanel getMainContentPanel(){
+        return pnlContent;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
