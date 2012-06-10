@@ -27,7 +27,9 @@
  */
 package org.sola.clients.beans.security;
 
+import java.util.Locale;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.referencedata.DepartmentBean;
 import org.sola.webservices.transferobjects.search.UserSearchParamsTO;
 
 /**
@@ -36,20 +38,22 @@ import org.sola.webservices.transferobjects.search.UserSearchParamsTO;
  */
 public class UserSearchParamsBean extends AbstractBindingBean {
     
-    public static final String GROUP_ID_PROPERTY = "groupId";
+    public static final String DEPARTMENT_CODE_PROPERTY = "departmentCode";
     public static final String USER_NAME_PROPERTY = "userName";
     public static final String FIRST_NAME_PROPERTY = "firstName";
     public static final String LAST_NAME_PROPERTY = "lastName";
-    public static final String GROUP_BEAN_PROPERTY = "groupBean";
+    public static final String DEPARTMENT_BEAN_PROPERTY = "departmentBean";
     
-    private String groupId;
+    private String departmentCode;
     private String userName;
     private String firstName;
     private String lastName;
-    private GroupSummaryBean groupBean;
+    private DepartmentBean departmentBean;
+    private String locale;
     
     public UserSearchParamsBean(){
         super();
+        locale = Locale.getDefault().getLanguage();
     }
 
     public String getFirstName() {
@@ -62,14 +66,14 @@ public class UserSearchParamsBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(FIRST_NAME_PROPERTY, oldValue, this.firstName);
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
-    public void setGroupId(String groupId) {
-        String oldValue = this.groupId;
-        this.groupId = groupId;
-        propertySupport.firePropertyChange(GROUP_ID_PROPERTY, oldValue, this.groupId);
+    public void setDepartmentCode(String departmentCode) {
+        String oldValue = this.departmentCode;
+        this.departmentCode = departmentCode;
+        propertySupport.firePropertyChange(DEPARTMENT_CODE_PROPERTY, oldValue, this.departmentCode);
     }
 
     public String getLastName() {
@@ -92,17 +96,25 @@ public class UserSearchParamsBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(USER_NAME_PROPERTY, oldValue, this.userName);
     }
 
-    public GroupSummaryBean getGroupBean() {
-        return groupBean;
+    public DepartmentBean getDepartmentBean() {
+        return departmentBean;
     }
 
-    public void setGroupBean(GroupSummaryBean groupBean) {
-        this.groupBean = groupBean;
-        propertySupport.firePropertyChange(GROUP_BEAN_PROPERTY, null, this.groupBean);
-        if(groupBean!=null){
-            setGroupId(groupBean.getId());
+    public void setDepartmentBean(DepartmentBean departmentBean) {
+        this.departmentBean = departmentBean;
+        propertySupport.firePropertyChange(DEPARTMENT_BEAN_PROPERTY, null, this.departmentBean);
+        if(departmentBean!=null){
+            setDepartmentCode(departmentBean.getCode());
         }else{
-            setGroupId(null);
+            setDepartmentCode(null);
         }
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }

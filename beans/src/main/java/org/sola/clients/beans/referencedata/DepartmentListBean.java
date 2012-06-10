@@ -19,23 +19,27 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
-import org.sola.clients.beans.security.SecurityBean;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  * Holds list of {@link DepartmentBean} objects.
  */
-public class DepartmentListBean  extends AbstractBindingListBean {
+public class DepartmentListBean extends AbstractBindingListBean {
+
     public static final String SELECTED_DEPARTMENT_PROPERTY = "selectedDepartment";
     private SolaCodeList<DepartmentBean> departments;
     private DepartmentBean selectedDepartment;
-    
-    /** Default constructor. */
-    public DepartmentListBean(){
+
+    /**
+     * Default constructor.
+     */
+    public DepartmentListBean() {
         this(false);
     }
-    
-    /** 
+
+    /**
      * Creates object instance.
+     *
      * @param createDummy Indicates whether to add empty object on the list.
      */
     public DepartmentListBean(boolean createDummy) {
@@ -51,6 +55,7 @@ public class DepartmentListBean  extends AbstractBindingListBean {
     public DepartmentListBean(boolean createDummy, String... excludedCodes) {
         super();
         departments = new SolaCodeList<DepartmentBean>(excludedCodes);
+        loadList(createDummy);
     }
 
     /**
@@ -59,9 +64,11 @@ public class DepartmentListBean  extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      */
     public final void loadList(boolean createDummy) {
-        loadList(createDummy, SecurityBean.getCurrentUser().getDepartment().getOfficeCode());
+        if (WSManager.getInstance().getAdminService() != null) {
+            loadList(createDummy, OfficeBean.getCurrentOffice().getCode());
+        }
     }
-    
+
     /**
      * Loads list of {@link DepartmentBean}.
      *
@@ -69,8 +76,10 @@ public class DepartmentListBean  extends AbstractBindingListBean {
      * @param officeCode Office code which departments to load
      */
     public final void loadList(boolean createDummy, String officeCode) {
-        loadCodeList(DepartmentBean.class, departments, 
-                CacheManager.getDepartments(officeCode), createDummy);
+        if (WSManager.getInstance().getReferenceDataService() != null) {
+            loadCodeList(DepartmentBean.class, departments,
+                    CacheManager.getDepartments(officeCode), createDummy);
+        }
     }
 
     public void setExcludedCodes(String... codes) {
@@ -89,5 +98,18 @@ public class DepartmentListBean  extends AbstractBindingListBean {
         DepartmentBean oldValue = this.selectedDepartment;
         this.selectedDepartment = selectedDepartment;
         propertySupport.firePropertyChange(SELECTED_DEPARTMENT_PROPERTY, oldValue, this.selectedDepartment);
+    }
+    
+    public void setSelectedDepartment(String deparmentCode) {
+        if(deparmentCode == null || deparmentCode.isEmpty()){
+            return;
+        }
+        
+        for(DepartmentBean department : getDepartments()){
+            if(department.getCode().equals(deparmentCode)){
+                setSelectedDepartment(department);
+                return;
+            }
+        }
     }
 }

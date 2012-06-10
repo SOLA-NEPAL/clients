@@ -1,34 +1,41 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.ui.security;
 
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import org.sola.clients.beans.referencedata.DepartmentBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.security.UserBean;
+import org.sola.clients.swing.common.controls.BrowseControlListener;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -40,26 +47,49 @@ public class UserPanel extends javax.swing.JPanel {
 
     private UserBean user;
 
-    /** Default constructor. */
+    /**
+     * Default constructor.
+     */
     public UserPanel() {
         this(null);
-        
-        
     }
 
-    /** 
-     * Constructs panel with predefined {@link UserBean} instance. 
+    /**
+     * Constructs panel with predefined {@link UserBean} instance.
+     *
      * @param user {@link UserBean} instance to bind on the form.
      */
     public UserPanel(UserBean user) {
         setupUserBean(user);
-        initComponents();        
+        initComponents();
+        browseDepartments.addBrowseControlEventListener(new BrowseControlListener() {
+
+            @Override
+            public void deleteButtonClicked(MouseEvent e) {
+                clearDepartment();
+            }
+
+            @Override
+            public void browseButtonClicked(MouseEvent e) {
+                showDepartmentSelectionForm();
+            }
+
+            @Override
+            public void controlClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void textClicked(MouseEvent e) {
+            }
+        });
         postInit();
-        
     }
 
-    /** Setup {@link UserBean} object, used to bind data on the form. */
+    /**
+     * Setup {@link UserBean} object, used to bind data on the form.
+     */
     private void setupUserBean(UserBean user) {
+        clearDepartment();
         if (user != null) {
             this.user = user;
         } else {
@@ -68,7 +98,20 @@ public class UserPanel extends javax.swing.JPanel {
         firePropertyChange("user", null, this.user);
     }
 
-    /** Runs post initialization tasks. */
+    private void clearDepartment() {
+        if (browseDepartments != null) {
+            browseDepartments.setText("");
+            getUser().setDepartment(null);
+        }
+    }
+
+    private void loadDepartmentsList() {
+        departments.loadList(false);
+    }
+
+    /**
+     * Runs post initialization tasks.
+     */
     private void postInit() {
         userGroupHelperList.setUserGroups(this.user.getUserGroups());
         pnlPassword.setVisible(getUser().isNew());
@@ -77,18 +120,39 @@ public class UserPanel extends javax.swing.JPanel {
         txtUserName.setEnabled(getUser().isNew());
     }
 
-    /** Returns {@link UserBean} object, bound on the form. */
+    private void showDepartmentSelectionForm() {
+        final DepartmentSelectionForm form = new DepartmentSelectionForm(null, true);
+        form.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals(DepartmentSelectionForm.DEPARTMENT_SELECTED_PROPERTY)) {
+                    user.setDepartment((DepartmentBean) evt.getNewValue());
+                    form.setVisible(false);
+                }
+            }
+        });
+        form.setVisible(true);
+    }
+
+    /**
+     * Returns {@link UserBean} object, bound on the form.
+     */
     public UserBean getUser() {
         return user;
     }
 
-    /** Sets {@link UserBean} object to bind on the form. */
+    /**
+     * Sets {@link UserBean} object to bind on the form.
+     */
     public void setUser(UserBean user) {
         setupUserBean(user);
         postInit();
     }
 
-    /** Disables or enables panel components. */
+    /**
+     * Disables or enables panel components.
+     */
     public void lockForm(boolean isLocked) {
         txtDescription.setEnabled(!isLocked);
         txtFirstName.setEnabled(!isLocked);
@@ -96,8 +160,10 @@ public class UserPanel extends javax.swing.JPanel {
         txtPassword.setEnabled(!isLocked);
         txtPasswordConfirmation.setEnabled(!isLocked);
     }
-    
-    /** Validates user. */
+
+    /**
+     * Validates user.
+     */
     public boolean validateUser(boolean showMessage) {
         if (user.validate(showMessage).size() < 1 && (!pnlPassword.isVisible()
                 || (pnlPassword.isVisible() && passwordBean.validate(showMessage).size() < 1))) {
@@ -113,7 +179,9 @@ public class UserPanel extends javax.swing.JPanel {
         return false;
     }
 
-    /** Saves user. */
+    /**
+     * Saves user.
+     */
     public boolean saveUser(boolean showMessage) {
         if (validateUser(showMessage)) {
             user.save();
@@ -133,6 +201,8 @@ public class UserPanel extends javax.swing.JPanel {
 
         passwordBean = new org.sola.clients.beans.security.PasswordBean();
         userGroupHelperList = new org.sola.clients.beans.security.UserGroupHelperListBean();
+        departments = new org.sola.clients.beans.referencedata.DepartmentListBean();
+        loadDepartmentsList();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -151,6 +221,8 @@ public class UserPanel extends javax.swing.JPanel {
         groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableGroups = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        jLabel3 = new javax.swing.JLabel();
+        browseDepartments = new org.sola.clients.swing.common.controls.BrowseControl();
         pnlPassword = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -205,9 +277,9 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(cbxActive, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(jLabel5))
                 .addContainerGap())
         );
@@ -264,8 +336,8 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(jLabel4))
                 .addContainerGap())
         );
@@ -320,17 +392,37 @@ public class UserPanel extends javax.swing.JPanel {
         tableGroups.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title2_1")); // NOI18N
         tableGroups.getColumnModel().getColumn(2).setCellRenderer(new TableCellTextAreaRenderer());
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        jLabel3.setText(bundle.getString("UserPanel.jLabel3.text")); // NOI18N
+        jLabel3.setName(bundle.getString("UserPanel.jLabel3.name")); // NOI18N
+
+        browseDepartments.setColor(new java.awt.Color(0, 0, 0));
+        browseDepartments.setDisplayDeleteButton(false);
+        browseDepartments.setName(bundle.getString("UserPanel.browseDepartments.name")); // NOI18N
+        browseDepartments.setUnderline(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${user.department.departmentAndOfficeName}"), browseDepartments, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout pnlGroupsLayout = new javax.swing.GroupLayout(pnlGroups);
         pnlGroups.setLayout(pnlGroupsLayout);
         pnlGroupsLayout.setHorizontalGroup(
             pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGroupsLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
             .addGroup(pnlGroupsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(pnlGroupsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGroupsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(browseDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlGroupsLayout.setVerticalGroup(
@@ -338,8 +430,12 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(pnlGroupsLayout.createSequentialGroup()
                 .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(browseDepartments, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         jPanel9.add(pnlGroups, java.awt.BorderLayout.CENTER);
@@ -369,7 +465,7 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(jLabel7))
                 .addContainerGap())
         );
@@ -404,7 +500,7 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(51, 51, 51)))
@@ -425,9 +521,9 @@ public class UserPanel extends javax.swing.JPanel {
         pnlPassword.setLayout(pnlPasswordLayout);
         pnlPasswordLayout.setHorizontalGroup(
             pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 699, Short.MAX_VALUE)
+            .addGap(0, 488, Short.MAX_VALUE)
             .addGroup(pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPasswordLayout.setVerticalGroup(
             pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +541,7 @@ public class UserPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,12 +554,14 @@ public class UserPanel extends javax.swing.JPanel {
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.sola.clients.swing.common.controls.BrowseControl browseDepartments;
     private javax.swing.JCheckBox cbxActive;
+    private org.sola.clients.beans.referencedata.DepartmentListBean departments;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
