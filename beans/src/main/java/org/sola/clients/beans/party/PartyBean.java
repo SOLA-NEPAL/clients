@@ -68,6 +68,7 @@ public class PartyBean extends PartySummaryBean {
     public static final String FATHERSNAME_PROPERTY = "fathersName";
     public static final String GRANDFATHERSNAME_PROPERTY = "fathersLastName";
     public static final String ALIAS_PROPERTY = "alias";
+    public static final String STREET_PROPERTY="street";
     //additional fields exposing.
     public static final String GRAND_FATHER_NAME_PROPERTY="grandfatherName";
     public static final String GRAND_FATHER_LAST_NAME_PROPERTY="grGandFatherLastName";
@@ -94,6 +95,7 @@ public class PartyBean extends PartySummaryBean {
     private CommunicationTypeBean communicationTypeBean;
     private SolaList<PartyRoleBean> roleList;
     private transient PartyRoleBean selectedRole;
+    private String street;
     //additional fields
     private String grandfatherName;
     private String grandFatherLastName;
@@ -104,6 +106,14 @@ public class PartyBean extends PartySummaryBean {
     private String rmks;
     private OfficeBean officeBean;
     private Date idIssueDate;
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
     public DistrictBean getDistrictBean() {
         if (districtBean==null){
