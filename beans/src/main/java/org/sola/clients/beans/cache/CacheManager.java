@@ -178,10 +178,12 @@ public final class CacheManager {
         if (cache.contains(key)) {
             result = (List<VdcBean>) cache.get(key);
         } else{
-            TypeConverters.TransferObjectListToBeanList(
+            if (WSManager.getInstance().getReferenceDataService()!=null){
+                TypeConverters.TransferObjectListToBeanList(
                     WSManager.getInstance().getReferenceDataService().getVdcs(districtCode), 
                     VdcBean.class, (List) result);
                     cache.put(key, result);
+            }
         }
         return result;
     }
@@ -190,6 +192,23 @@ public final class CacheManager {
         return getCachedBeanList(OfficeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_OFFICES, OFFICE_KEY);
+    }
+    
+    public static List<OfficeBean> getOffices(String districtCode) {
+        List<OfficeBean> result=new ArrayList<OfficeBean>();
+        String key = OFFICE_KEY + districtCode;
+        
+        if (cache.contains(key)) {
+            result = (List<OfficeBean>) cache.get(key);
+        } else{
+            if (WSManager.getInstance().getReferenceDataService()!=null){
+                TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getReferenceDataService().getOfficesByDistrict(districtCode), 
+                    OfficeBean.class, (List) result);
+                    cache.put(key, result);
+            }
+        }
+        return result;
     }
     
     public static List<DistrictBean> getDistricts() {

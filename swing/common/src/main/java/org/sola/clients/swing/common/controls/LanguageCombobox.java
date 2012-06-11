@@ -47,7 +47,19 @@ import org.sola.common.messaging.MessageUtility;
  * Allows to select different languages to change language of the application.
  */
 public class LanguageCombobox extends JComboBox {
+    private boolean showMessage = true;
+    private String[] languageStrings = {"English", "नेपाली"};
+    private String[] languageIconNames = {"en.jpg", "np.png"};
+    private ImageIcon[] languageIcons;
+    private Class<?> applicationMainClass;
+    private static final Map<String, Integer> languagesMap = Collections.unmodifiableMap(new HashMap(2, 1.0f) {
 
+        {
+            put("en", 0);
+            put("np", 1);
+        }
+    });
+    
     /** ComboBox renderer class. Displays flags for each language. */
     private class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 
@@ -107,19 +119,6 @@ public class LanguageCombobox extends JComboBox {
             setText(uhOhText);
         }
     }
-    private boolean showMessage = true;
-    private String[] languageStrings = {"English", "Italian", "नेपाली"};
-    private String[] languageIconNames = {"en.jpg", "it.jpg", "np.png"};
-    private ImageIcon[] languageIcons;
-    private Class<?> applicationMainClass;
-    private static final Map<String, Integer> languagesMap = Collections.unmodifiableMap(new HashMap(2, 1.0f) {
-
-        {
-            put("en", 0);
-            put("it", 1);
-            put("np", 2);
-        }
-    });
 
     /** Default class constructor. */
     public LanguageCombobox() {
@@ -135,7 +134,7 @@ public class LanguageCombobox extends JComboBox {
     public LanguageCombobox(Class<?> applicationMainClass) {
         super();
         if (applicationMainClass != null) {
-            setModel(new javax.swing.DefaultComboBoxModel(new Integer[]{0, 1, 2}));
+            setModel(new javax.swing.DefaultComboBoxModel(new Integer[]{0, 1}));
             this.applicationMainClass = applicationMainClass;
             addLanguageIcons();
             setRenderer(new ComboBoxRenderer());
@@ -174,9 +173,7 @@ public class LanguageCombobox extends JComboBox {
         if (getSelectedItem() != null) {
             int language = (Integer) getSelectedItem();
 
-            if ("italian".equalsIgnoreCase(languageStrings[language])) {
-                LocalizationManager.setLanguage(applicationMainClass, "it", "IT");
-            } else if ("english".equalsIgnoreCase(languageStrings[language])) {
+            if ("english".equalsIgnoreCase(languageStrings[language])) {
                 LocalizationManager.setLanguage(applicationMainClass, "en", "US");
             } else if ("नेपाली".equalsIgnoreCase(languageStrings[language])) {
                 LocalizationManager.setLanguage(applicationMainClass, "np", "NP");

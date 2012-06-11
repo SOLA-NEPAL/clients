@@ -24,8 +24,12 @@ import org.sola.clients.beans.AbstractCodeBean;
 public class VdcBean extends AbstractCodeBean {
 
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
-    private String districtCode;
-
+    private String districtCode;  
+    
+    public VdcBean(){
+        super();
+    }
+    
     public String getDistrictCode() {
         return districtCode;
     }
