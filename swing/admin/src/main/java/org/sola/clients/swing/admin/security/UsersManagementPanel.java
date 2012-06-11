@@ -27,15 +27,20 @@
  */
 package org.sola.clients.swing.admin.security;
 
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import org.sola.clients.beans.referencedata.DepartmentBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.security.UserBean;
 import org.sola.clients.beans.security.UserSearchAdvancedResultBean;
 import org.sola.clients.beans.security.UserSearchAdvancedResultListBean;
+import org.sola.clients.swing.common.controls.BrowseControlListener;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.renderers.BooleanCellRenderer;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
+import org.sola.clients.swing.ui.security.DepartmentSelectionForm;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -47,8 +52,7 @@ public class UsersManagementPanel extends ContentPanel {
     /** Creates new form UsersManagementPanel */
     public UsersManagementPanel() {
         initComponents();
-        groupsList.loadGroups(true);
-        comboGroups.setSelectedIndex(0);
+        departments.loadList(true);
         userSearchResultList.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -58,6 +62,28 @@ public class UsersManagementPanel extends ContentPanel {
                 }
             }
         });
+        
+        browseDepartment.addBrowseControlEventListener(new BrowseControlListener() {
+
+            @Override
+            public void deleteButtonClicked(MouseEvent e) {
+                userSearchParams.setDepartmentBean(new DepartmentBean());
+            }
+
+            @Override
+            public void browseButtonClicked(MouseEvent e) {
+                showDepartmentSelectionForm();
+            }
+
+            @Override
+            public void controlClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void textClicked(MouseEvent e) {
+            }
+        });
+        
         customizeUserButtons(null);
     }
     
@@ -107,6 +133,21 @@ public class UsersManagementPanel extends ContentPanel {
         }
     }
 
+    private void showDepartmentSelectionForm(){
+        final DepartmentSelectionForm form = new DepartmentSelectionForm(null, true);
+        form.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(DepartmentSelectionForm.DEPARTMENT_SELECTED_PROPERTY)){
+                    userSearchParams.setDepartmentBean((DepartmentBean)evt.getNewValue());
+                    form.setVisible(false);
+                }
+            }
+        });
+        form.setVisible(true);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -117,9 +158,9 @@ public class UsersManagementPanel extends ContentPanel {
         menuEditUser = new javax.swing.JMenuItem();
         menuSetPassword = new javax.swing.JMenuItem();
         menuRemoveUser = new javax.swing.JMenuItem();
-        groupsList = new org.sola.clients.beans.security.GroupSummaryListBean();
         userSearchParams = new org.sola.clients.beans.security.UserSearchParamsBean();
         userSearchResultList = new org.sola.clients.beans.security.UserSearchAdvancedResultListBean();
+        departments = new org.sola.clients.beans.referencedata.DepartmentListBean();
         pnlHeader = new org.sola.clients.swing.ui.HeaderPanel();
         pnlLayout = new javax.swing.JPanel();
         pnlUsers = new javax.swing.JPanel();
@@ -131,7 +172,7 @@ public class UsersManagementPanel extends ContentPanel {
         txtUsername = new javax.swing.JTextField();
         txtFirstName = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
-        comboGroups = new javax.swing.JComboBox();
+        browseDepartment = new org.sola.clients.swing.common.controls.BrowseControl();
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableUsers = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
@@ -231,23 +272,21 @@ public class UsersManagementPanel extends ContentPanel {
         pnlSearchCriteria.add(txtFirstName);
 
         txtLastName.setName("txtLastName"); // NOI18N
-        txtLastName.setNextFocusableComponent(comboGroups);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, userSearchParams, org.jdesktop.beansbinding.ELProperty.create("${lastName}"), txtLastName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         pnlSearchCriteria.add(txtLastName);
 
-        comboGroups.setName("comboGroups"); // NOI18N
-        comboGroups.setNextFocusableComponent(btnSearch);
+        browseDepartment.setColor(new java.awt.Color(0, 0, 0));
+        browseDepartment.setName(bundle.getString("UsersManagementPanel.browseDepartment.name")); // NOI18N
+        browseDepartment.setSelectionColor(new java.awt.Color(0, 0, 0));
+        browseDepartment.setUnderline(false);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${groupSummaryList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, groupsList, eLProperty, comboGroups);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, userSearchParams, org.jdesktop.beansbinding.ELProperty.create("${groupBean}"), comboGroups, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, userSearchParams, org.jdesktop.beansbinding.ELProperty.create("${departmentBean.departmentAndOfficeName}"), browseDepartment, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        pnlSearchCriteria.add(comboGroups);
+        pnlSearchCriteria.add(browseDepartment);
 
         btnSearch.setText(bundle.getString("UsersManagementPanel.btnSearch.text")); // NOI18N
         btnSearch.setName("btnSearch"); // NOI18N
@@ -262,26 +301,22 @@ public class UsersManagementPanel extends ContentPanel {
         tableUsers.setComponentPopupMenu(popupUsers);
         tableUsers.setName("tableUsers"); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${usersList}");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${usersList}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, userSearchResultList, eLProperty, tableUsers);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${userName}"));
-        columnBinding.setColumnName("Username");
+        columnBinding.setColumnName("User Name");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${firstName}"));
-        columnBinding.setColumnName("First name");
+        columnBinding.setColumnName("First Name");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lastName}"));
-        columnBinding.setColumnName("Last name");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${description}"));
-        columnBinding.setColumnName("Description");
+        columnBinding.setColumnName("Last Name");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${groupsList}"));
-        columnBinding.setColumnName("Groups");
+        columnBinding.setColumnName("Groups List");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${active}"));
@@ -293,9 +328,14 @@ public class UsersManagementPanel extends ContentPanel {
         bindingGroup.addBinding(binding);
 
         jScrollPane1.setViewportView(tableUsers);
+        tableUsers.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("UsersManagementPanel.tableUsers.columnModel.title0")); // NOI18N
+        tableUsers.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("UsersManagementPanel.tableUsers.columnModel.title1")); // NOI18N
+        tableUsers.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("UsersManagementPanel.tableUsers.columnModel.title2")); // NOI18N
+        tableUsers.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("UsersManagementPanel.tableUsers.columnModel.title4")); // NOI18N
         tableUsers.getColumnModel().getColumn(3).setCellRenderer(new TableCellTextAreaRenderer());
-        tableUsers.getColumnModel().getColumn(4).setCellRenderer(new TableCellTextAreaRenderer());
-        tableUsers.getColumnModel().getColumn(5).setMaxWidth(50);
+        tableUsers.getColumnModel().getColumn(4).setMaxWidth(50);
+        tableUsers.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("UsersManagementPanel.tableUsers.columnModel.title5")); // NOI18N
+        tableUsers.getColumnModel().getColumn(4).setCellRenderer(new BooleanCellRenderer());
 
         toolbarUsers.setFloatable(false);
         toolbarUsers.setRollover(true);
@@ -361,7 +401,7 @@ public class UsersManagementPanel extends ContentPanel {
                 .addGroup(pnlUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(toolbarUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                     .addGroup(pnlUsersLayout.createSequentialGroup()
-                        .addComponent(pnlSearchCriteria, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                        .addComponent(pnlSearchCriteria, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(2, 2, 2))
@@ -376,7 +416,7 @@ public class UsersManagementPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(toolbarUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
         );
 
         pnlLayout.add(pnlUsers, "card3");
@@ -385,10 +425,10 @@ public class UsersManagementPanel extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(pnlLayout, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+                .addComponent(pnlLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
@@ -396,7 +436,7 @@ public class UsersManagementPanel extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlLayout, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addComponent(pnlLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -469,13 +509,13 @@ public class UsersManagementPanel extends ContentPanel {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.sola.clients.swing.common.controls.BrowseControl browseDepartment;
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnEditUser;
     private javax.swing.JButton btnRemoveUser;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSetPassword;
-    private javax.swing.JComboBox comboGroups;
-    private org.sola.clients.beans.security.GroupSummaryListBean groupsList;
+    private org.sola.clients.beans.referencedata.DepartmentListBean departments;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

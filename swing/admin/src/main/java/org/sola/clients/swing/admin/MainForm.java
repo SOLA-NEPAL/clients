@@ -78,10 +78,6 @@ public class MainForm extends javax.swing.JFrame {
         menuRoles.setEnabled(btnRoles.isEnabled());
         menuUsers.setEnabled(btnUsers.isEnabled());
         menuGroups.setEnabled(btnGroups.isEnabled());
-
-        btnSystemSettings.setEnabled(hasSettingsRole);
-        btnGISSettings.setEnabled(hasSettingsRole);
-        btnLanguage.setEnabled(hasSettingsRole);
         btnBr.setEnabled(hasBRRole);
 
         menuRefData.setEnabled(hasRefdataRole);
@@ -105,11 +101,6 @@ public class MainForm extends javax.swing.JFrame {
         btnGroups = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        btnLanguage = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        btnSystemSettings = new javax.swing.JButton();
-        btnGISSettings = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
         btnBr = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         btnCalendar = new javax.swing.JButton();
@@ -117,7 +108,6 @@ public class MainForm extends javax.swing.JFrame {
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
         jLabel1 = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         mainContentPanel = new org.sola.clients.swing.ui.MainContentPanel();
         mainMenu = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -212,51 +202,6 @@ public class MainForm extends javax.swing.JFrame {
         jSeparator1.setName("jSeparator1"); // NOI18N
         mainToolbar.add(jSeparator1);
 
-        btnLanguage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/language.png"))); // NOI18N
-        btnLanguage.setText(bundle.getString("MainForm.btnLanguage.text")); // NOI18N
-        btnLanguage.setFocusable(false);
-        btnLanguage.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnLanguage.setName("btnLanguage"); // NOI18N
-        btnLanguage.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnLanguage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLanguageActionPerformed(evt);
-            }
-        });
-        mainToolbar.add(btnLanguage);
-
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        mainToolbar.add(jSeparator2);
-
-        btnSystemSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/settings.png"))); // NOI18N
-        btnSystemSettings.setText(bundle.getString("MainForm.btnSystemSettings.text")); // NOI18N
-        btnSystemSettings.setFocusable(false);
-        btnSystemSettings.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnSystemSettings.setName("btnSystemSettings"); // NOI18N
-        btnSystemSettings.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSystemSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSystemSettingsActionPerformed(evt);
-            }
-        });
-        mainToolbar.add(btnSystemSettings);
-
-        btnGISSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
-        btnGISSettings.setText(bundle.getString("MainForm.btnGISSettings.text")); // NOI18N
-        btnGISSettings.setFocusable(false);
-        btnGISSettings.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnGISSettings.setName("btnGISSettings"); // NOI18N
-        btnGISSettings.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGISSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGISSettingsActionPerformed(evt);
-            }
-        });
-        mainToolbar.add(btnGISSettings);
-
-        jSeparator3.setName("jSeparator3"); // NOI18N
-        mainToolbar.add(jSeparator3);
-
         btnBr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/traffic-light.png"))); // NOI18N
         btnBr.setText(bundle.getString("MainForm.btnBr.text")); // NOI18N
         btnBr.setFocusable(false);
@@ -307,7 +252,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(taskPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(taskPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,11 +265,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
         mainContentPanel.setName("mainContentPanel"); // NOI18N
-        jScrollPane1.setViewportView(mainContentPanel);
 
         mainMenu.setName("mainMenu"); // NOI18N
 
@@ -671,16 +612,16 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(mainContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(mainToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(mainToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(mainContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -807,18 +748,6 @@ public class MainForm extends javax.swing.JFrame {
         manageBRTechnicalTypes();
     }//GEN-LAST:event_menuBRTechnicalTypeActionPerformed
 
-    private void btnLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanguageActionPerformed
-        manageLanguages();
-    }//GEN-LAST:event_btnLanguageActionPerformed
-
-    private void btnSystemSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSystemSettingsActionPerformed
-        manageSystemSettings();
-    }//GEN-LAST:event_btnSystemSettingsActionPerformed
-
-    private void btnGISSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGISSettingsActionPerformed
-        manageGisSettings();
-    }//GEN-LAST:event_btnGISSettingsActionPerformed
-
     private void btnBrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrActionPerformed
         manageBr();
     }//GEN-LAST:event_btnBrActionPerformed
@@ -877,10 +806,6 @@ public class MainForm extends javax.swing.JFrame {
             UsersManagementPanel panel = new UsersManagementPanel();
             mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_USER_MANAGE, true);
         }
-    }
-
-    private void manageLanguages() {
-        JOptionPane.showMessageDialog(this, "Not yet implemented.");
     }
 
     private void manageSystemSettings() {
@@ -987,18 +912,13 @@ public class MainForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
     private javax.swing.JButton btnCalendar;
-    private javax.swing.JButton btnGISSettings;
     private javax.swing.JButton btnGroups;
-    private javax.swing.JButton btnLanguage;
     private javax.swing.JButton btnRoles;
-    private javax.swing.JButton btnSystemSettings;
     private javax.swing.JButton btnUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel lblUserName;

@@ -17,12 +17,14 @@ package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.security.SecurityBean;
+import org.sola.services.boundary.wsclients.WSManager;
 
 public class OfficeBean extends AbstractCodeBean {
 
     public static final String DISTRICT_CODE = "districtCode";
-    
+    private static OfficeBean currentOffice;
     private String districtCode;
 
     public OfficeBean() {
@@ -38,14 +40,13 @@ public class OfficeBean extends AbstractCodeBean {
         this.districtCode = districtCode;
         propertySupport.firePropertyChange(DISPLAY_VALUE_PROPERTY, oldValue, this.districtCode);
     }
-    
-    public static OfficeBean getCurrentOffice(){
-        for(OfficeBean office : CacheManager.getOffices()){
-            if(SecurityBean.getCurrentUser()!=null && office.getCode().equals(
-                    SecurityBean.getCurrentUser().getDepartment().getOfficeCode())){
-                return office;
-            }
+
+    public static OfficeBean getCurrentOffice() {
+        if (currentOffice == null) {
+            currentOffice = TypeConverters.TransferObjectToBean(
+                    WSManager.getInstance().getAdminService().getCurrentOffice(),
+                    OfficeBean.class, null);
         }
-        return null;
+        return currentOffice;
     }
 }

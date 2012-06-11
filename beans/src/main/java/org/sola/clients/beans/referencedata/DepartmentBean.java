@@ -16,29 +16,55 @@
 package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 
-/** 
- * Represents Department object in the domain model. 
- * Could be populated from the {@link DepartmentTO} object.<br />
- * For more information see data dictionary <b>System</b> schema.
+/**
+ * Represents Department object in the domain model. Could be populated from the {@link DepartmentTO}
+ * object.<br /> For more information see data dictionary <b>System</b> schema.
  */
 public class DepartmentBean extends AbstractCodeBean {
+
     public static final String OFFICE_CODE_PROPERTY = "officeCode";
-    
-    private String officeCode;
-    
-    public DepartmentBean(){
+    public static final String OFFICE_PROPERTY = "office";
+    private OfficeBean office;
+
+    public DepartmentBean() {
         super();
+    }
+
+    public OfficeBean getOffice() {
+        return office;
+    }
+
+    public void setOffice(OfficeBean office) {
+        OfficeBean oldValue = this.office;
+        this.office = office;
+        propertySupport.firePropertyChange(OFFICE_PROPERTY, oldValue, this.office);
     }
     
     public String getOfficeCode() {
-        return officeCode;
+        if(getOffice()!=null){
+            return getOffice().getCode();
+        }
+        return null;
     }
 
     public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
+        String oldValue = getOfficeCode();
+        OfficeBean officeBean = null;
+        if(officeCode!=null && !officeCode.isEmpty()){
+            officeBean = CacheManager.getBeanByCode(CacheManager.getOffices(), officeCode);
+        }
+        setOffice(officeBean);
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, officeCode);
+    }
+    
+    public String getDepartmentAndOfficeName(){
+        String name = getDisplayValue();
+        if(name!=null && getOffice() !=null && getOffice().getDisplayValue() !=null){
+            name = name.concat(" (" + getOffice().getDisplayValue() + ")");
+        }
+        return name;
     }
 }

@@ -6,6 +6,11 @@
     </Component>
     <Component class="org.sola.clients.beans.security.UserGroupHelperListBean" name="userGroupHelperList">
     </Component>
+    <Component class="org.sola.clients.beans.referencedata.DepartmentListBean" name="departments">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="loadDepartmentsList();"/>
+      </AuxValues>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="alignmentX" type="float" value="0.0"/>
@@ -27,7 +32,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
-          <Component id="jPanel9" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel9" alignment="0" pref="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -64,9 +69,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtFirstName" alignment="0" pref="329" max="32767" attributes="2"/>
+                          <Component id="txtFirstName" alignment="0" pref="224" max="32767" attributes="2"/>
                           <Component id="cbxActive" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
-                          <Component id="txtUserName" alignment="0" pref="329" max="32767" attributes="2"/>
+                          <Component id="txtUserName" alignment="0" pref="224" max="32767" attributes="2"/>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -168,8 +173,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtLastName" alignment="1" pref="329" max="32767" attributes="2"/>
-                          <Component id="jScrollPane1" alignment="0" pref="329" max="32767" attributes="2"/>
+                          <Component id="txtLastName" alignment="1" pref="224" max="32767" attributes="2"/>
+                          <Component id="jScrollPane1" alignment="0" pref="224" max="32767" attributes="2"/>
                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -278,12 +283,22 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                      <Component id="jScrollPane2" pref="679" max="32767" attributes="2"/>
+                      <Component id="jScrollPane2" pref="468" max="32767" attributes="2"/>
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="groupPanel1" max="32767" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="browseDepartments" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -293,8 +308,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="groupPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="85" max="-2" attributes="0"/>
-                      <EmptySpace pref="19" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="86" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="browseDepartments" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -370,6 +389,36 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="jLabel3">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/common/red_asterisk.gif"/>
+                </Property>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/ui/security/Bundle.properties" key="UserPanel.jLabel3.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/ui/security/Bundle.properties" key="UserPanel.jLabel3.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="org.sola.clients.swing.common.controls.BrowseControl" name="browseDepartments">
+              <Properties>
+                <Property name="color" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="displayDeleteButton" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/ui/security/Bundle.properties" key="UserPanel.browseDepartments.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+                <Property name="underline" type="boolean" value="false"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${user.department.departmentAndOfficeName}" target="browseDepartments" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlPassword">
@@ -385,9 +434,9 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="699" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="488" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="jPanel2" alignment="0" pref="699" max="32767" attributes="1"/>
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -425,7 +474,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtPassword" alignment="0" pref="329" max="32767" attributes="2"/>
+                                  <Component id="txtPassword" alignment="0" pref="224" max="32767" attributes="2"/>
                                   <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -484,7 +533,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtPasswordConfirmation" alignment="0" pref="329" max="32767" attributes="2"/>
+                                  <Component id="txtPasswordConfirmation" alignment="0" pref="224" max="32767" attributes="2"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>

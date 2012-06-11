@@ -29,9 +29,7 @@ package org.sola.clients.swing.admin.security;
 
 import java.util.ResourceBundle;
 import org.sola.clients.beans.security.UserBean;
-import org.sola.clients.swing.admin.VdcAssignment;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.security.UserPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -137,14 +135,9 @@ public class UserPanelForm extends ContentPanel {
 
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        btnAsignVDC = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         userPanel = new org.sola.clients.swing.ui.security.UserPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        cmbLMO = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
 
         setCloseOnHide(true);
         setHeaderPanel(headerPanel);
@@ -156,18 +149,6 @@ public class UserPanelForm extends ContentPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
-
-        btnAsignVDC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/assign.png"))); // NOI18N
-        btnAsignVDC.setText(bundle.getString("UserPanelForm.btnAsignVDC.text")); // NOI18N
-        btnAsignVDC.setFocusable(false);
-        btnAsignVDC.setName(bundle.getString("UserPanelForm.btnAsignVDC.name")); // NOI18N
-        btnAsignVDC.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAsignVDC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsignVDCActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnAsignVDC);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
         btnSave.setText(bundle.getString("UserPanelForm.btnSave.text")); // NOI18N
@@ -182,71 +163,20 @@ public class UserPanelForm extends ContentPanel {
         });
         jToolBar1.add(btnSave);
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setName(bundle.getString("UserPanelForm.jScrollPane1.name")); // NOI18N
+
+        userPanel.setMinimumSize(new java.awt.Dimension(394, 300));
         userPanel.setName("userPanel"); // NOI18N
-
-        jPanel4.setName(bundle.getString("UserPanelForm.jPanel4.name")); // NOI18N
-
-        jPanel3.setName(bundle.getString("UserPanelForm.jPanel3.name")); // NOI18N
-        jPanel3.setLayout(new java.awt.GridLayout(1, 2, 25, 0));
-
-        jPanel2.setName(bundle.getString("UserPanelForm.jPanel2.name")); // NOI18N
-
-        cmbLMO.setName(bundle.getString("UserPanelForm.cmbLMO.name")); // NOI18N
-
-        jLabel2.setText(bundle.getString("UserPanelForm.jLabel2.text")); // NOI18N
-        jLabel2.setName(bundle.getString("UserPanelForm.jLabel2.name")); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(cmbLMO, 0, 603, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmbLMO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
-        );
-
-        jPanel3.add(jPanel2);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jScrollPane1.setViewportView(userPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addContainerGap())))
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,11 +184,8 @@ public class UserPanelForm extends ContentPanel {
                 .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -286,22 +213,10 @@ public class UserPanelForm extends ContentPanel {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnAsignVDCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignVDCActionPerformed
-        // TODO add your handling code here:
-        VdcAssignment vdc=new VdcAssignment();
-        getMainContentPanel().addPanel(vdc, MainContentPanel.CARD_ADMIN_VDC, true);        
-        
-    }//GEN-LAST:event_btnAsignVDCActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAsignVDC;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cmbLMO;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private org.sola.clients.swing.ui.security.UserPanel userPanel;
     // End of variables declaration//GEN-END:variables

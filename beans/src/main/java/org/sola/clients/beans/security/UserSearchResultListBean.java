@@ -142,24 +142,13 @@ public class UserSearchResultListBean extends AbstractBindingBean {
      * applications.
      */
     public void loadUsersWithAssignRightByOffice() {
-        loadUsersWithAssignRightByOffice(SecurityBean.getCurrentUser().getDepartment().getOfficeCode());
-    }
-    
-    /**
-     * Populates the list of users from the given office who can assign
-     * applications.
-     *
-     * @param officeCode Code of office for which to load users with Assign
-     * rights
-     */
-    public void loadUsersWithAssignRightByOffice(String officeCode) {
         if (WSManager.getInstance().getSearchService() != null) {
-            List<UserSearchResultTO> userListTO = WSManager.getInstance().getSearchService().getUsersWithAssignRightByOffice(officeCode);
+            List<UserSearchResultTO> userListTO = WSManager.getInstance().getSearchService().getUsersWithAssignRightByOffice();
             TypeConverters.TransferObjectListToBeanList(userListTO,
                     UserSearchResultBean.class, (List) usersList);
         }
     }
-
+  
     public ObservableList<UserSearchResultBean> getUsers() {
         return usersList.getFilteredList();
     }

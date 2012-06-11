@@ -28,6 +28,7 @@
 package org.sola.clients.beans.security;
 
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.controls.SolaList;
@@ -50,6 +51,7 @@ public class UserBean extends UserSummaryBean {
     public final static String USER_GROUPS_PROPERTY = "groups";
     public static final String USERNAME_PROPERTY = "userName";
     public static final String ACTIVE_PROPERTY = "active";
+    public static final String DEPARTMENT_PROPERTY = "department";
     
     @NotEmpty(message=ClientMessage.CHECK_NOTNULL_USERNAME, payload=Localized.class)
     private String userName;
@@ -57,6 +59,7 @@ public class UserBean extends UserSummaryBean {
     @Size(min=1, message=ClientMessage.CHECK_MIN_USERGROUP, payload=Localized.class)
     private SolaList<UserGroupBean> userGroups;
     private SolaList<RoleBean> roles;
+    @NotNull(message=ClientMessage.CHECK_USER_DEPARTMENT_NOT_NULL, payload=Localized.class)
     private DepartmentBean department;
             
     public UserBean() {
@@ -103,16 +106,23 @@ public class UserBean extends UserSummaryBean {
     }
 
     public DepartmentBean getDepartment() {
-        if(department == null){
-            department = new DepartmentBean();
-        }
         return department;
     }
 
     public void setDepartment(DepartmentBean department) {
+        DepartmentBean oldValue = this.department;
         this.department = department;
+        propertySupport.firePropertyChange(DEPARTMENT_PROPERTY, oldValue, this.department);
     }
 
+    @Override
+    public String getDepartmentCode(){
+        if(department == null){
+            return null;
+        }
+        return department.getCode();
+    }
+    
     // Methods
     
     /** Checks whether user belongs to one of the roles or not. */

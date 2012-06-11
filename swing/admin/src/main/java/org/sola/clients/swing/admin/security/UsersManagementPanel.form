@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
@@ -69,11 +69,11 @@
         </MenuItem>
       </SubComponents>
     </Container>
-    <Component class="org.sola.clients.beans.security.GroupSummaryListBean" name="groupsList">
-    </Component>
     <Component class="org.sola.clients.beans.security.UserSearchParamsBean" name="userSearchParams">
     </Component>
     <Component class="org.sola.clients.beans.security.UserSearchAdvancedResultListBean" name="userSearchResultList">
+    </Component>
+    <Component class="org.sola.clients.beans.referencedata.DepartmentListBean" name="departments">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -99,10 +99,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlHeader" alignment="0" pref="617" max="32767" attributes="0"/>
+          <Component id="pnlHeader" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="pnlLayout" pref="597" max="32767" attributes="0"/>
+              <Component id="pnlLayout" max="32767" attributes="0"/>
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
           </Group>
       </Group>
@@ -112,7 +112,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="pnlHeader" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnlLayout" pref="359" max="32767" attributes="0"/>
+              <Component id="pnlLayout" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -151,7 +151,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="toolbarUsers" alignment="1" pref="595" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="pnlSearchCriteria" pref="494" max="32767" attributes="0"/>
+                              <Component id="pnlSearchCriteria" pref="0" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnSearch" min="-2" pref="83" max="-2" attributes="0"/>
                           </Group>
@@ -171,7 +171,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="toolbarUsers" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="277" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="271" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -249,9 +249,6 @@
                 <Component class="javax.swing.JTextField" name="txtLastName">
                   <Properties>
                     <Property name="name" type="java.lang.String" value="txtLastName" noResource="true"/>
-                    <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                      <ComponentRef name="comboGroups"/>
-                    </Property>
                   </Properties>
                   <BindingProperties>
                     <BindingProperty name="text" source="userSearchParams" sourcePath="${lastName}" target="txtLastName" targetPath="text" updateStrategy="0" immediately="false">
@@ -259,16 +256,23 @@
                     </BindingProperty>
                   </BindingProperties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="comboGroups">
+                <Component class="org.sola.clients.swing.common.controls.BrowseControl" name="browseDepartment">
                   <Properties>
-                    <Property name="name" type="java.lang.String" value="comboGroups" noResource="true"/>
-                    <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                      <ComponentRef name="btnSearch"/>
+                    <Property name="color" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/sola/clients/swing/admin/security/Bundle.properties" key="UsersManagementPanel.browseDepartment.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="underline" type="boolean" value="false"/>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="elements" source="groupsList" sourcePath="${groupSummaryList}" target="comboGroups" targetPath="elements" updateStrategy="0" immediately="false"/>
-                    <BindingProperty name="selectedItem" source="userSearchParams" sourcePath="${groupBean}" target="comboGroups" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                    <BindingProperty name="text" source="userSearchParams" sourcePath="${departmentBean.departmentAndOfficeName}" target="browseDepartment" targetPath="text" updateStrategy="0" immediately="false">
+                      <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                    </BindingProperty>
                   </BindingProperties>
                 </Component>
               </SubComponents>
@@ -299,38 +303,43 @@
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
+                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                            <ResourceString bundle="org/sola/clients/swing/admin/security/Bundle.properties" key="UsersManagementPanel.tableUsers.columnModel.title0" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          </Title>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
+                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                            <ResourceString bundle="org/sola/clients/swing/admin/security/Bundle.properties" key="UsersManagementPanel.tableUsers.columnModel.title1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          </Title>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
+                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                            <ResourceString bundle="org/sola/clients/swing/admin/security/Bundle.properties" key="UsersManagementPanel.tableUsers.columnModel.title2" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          </Title>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
-                          <Editor/>
-                          <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                            <Connection code="new TableCellTextAreaRenderer()" type="code"/>
-                          </Renderer>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
+                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                            <ResourceString bundle="org/sola/clients/swing/admin/security/Bundle.properties" key="UsersManagementPanel.tableUsers.columnModel.title4" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          </Title>
                           <Editor/>
                           <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                             <Connection code="new TableCellTextAreaRenderer()" type="code"/>
                           </Renderer>
                         </Column>
                         <Column maxWidth="50" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
+                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                            <ResourceString bundle="org/sola/clients/swing/admin/security/Bundle.properties" key="UsersManagementPanel.tableUsers.columnModel.title5" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          </Title>
                           <Editor/>
-                          <Renderer/>
+                          <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                            <Connection code="new BooleanCellRenderer()" type="code"/>
+                          </Renderer>
                         </Column>
                       </TableColumnModel>
                     </Property>
@@ -345,32 +354,22 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="userSearchResultList" sourcePath="${usersList}" target="tableUsers" targetPath="elements" updateStrategy="0" immediately="true">
                       <Subbinding sourcePath="${userName}">
-                        <BindingParameter name="NAME" value="Username"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${firstName}">
-                        <BindingParameter name="NAME" value="First name"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${lastName}">
-                        <BindingParameter name="NAME" value="Last name"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${description}">
-                        <BindingParameter name="NAME" value="Description"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${groupsList}">
-                        <BindingParameter name="NAME" value="Groups"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${active}">
-                        <BindingParameter name="NAME" value="Active"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Boolean.class"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
