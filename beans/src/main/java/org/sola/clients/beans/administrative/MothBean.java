@@ -15,7 +15,11 @@
  */
 package org.sola.clients.beans.administrative;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -35,13 +39,25 @@ public class MothBean extends AbstractIdBean {
     public static final String LMOCD_PROPERTY = "lmocd";
     public static final String VDC_PROPERTY = "vdc";
     public static final String SELECTED_VDC = "selectedVdc";
+    public static final String LOC_LIST_PROPERTY = "locList";
     private String mothlujNumber;
     private String vdcCode;
     private int wardNo;
     private String mothLuj;
     private int financialYear;
     private int lmocd;
+    private List<LOCBean> locList;
     private VdcBean vdc;
+   
+    public List<LOCBean> getLocList() {
+        return locList;
+    }
+
+    public void setLocList(List<LOCBean> locList) {
+        List<LOCBean> oldValue=this.locList;        
+        this.locList = locList;
+        propertySupport.firePropertyChange(LOC_LIST_PROPERTY,oldValue,this.locList);
+    }
 
     public String getVdcCode() {
         if (vdc != null) {
@@ -56,7 +72,7 @@ public class MothBean extends AbstractIdBean {
         if (vdc != null) {
             oldValue = vdc.getCode();
         }
-        this.vdcCode = vdcCode;       
+        this.vdcCode = vdcCode;
         propertySupport.firePropertyChange(VDC_SID_PROPERTY, oldValue, this.vdcCode);
     }
 
@@ -135,4 +151,8 @@ public class MothBean extends AbstractIdBean {
     public String toString() {
         return mothlujNumber;
     }
+    
+    
+    
+    
 }

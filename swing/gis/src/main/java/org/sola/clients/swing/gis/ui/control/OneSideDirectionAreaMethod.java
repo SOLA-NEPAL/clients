@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
@@ -30,7 +29,6 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
     private CadastreTargetSegmentLayer segmentLayer = null;
-    private ExtendedLayerGraphics targetSegmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     private LineString lineSeg = null;
@@ -58,7 +56,6 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         this.setLocation(100, 100);
         
         this.segmentLayer = segmentLayer;
-        this.targetSegmentLayer = segmentLayer.getSegmentLayer();
         this.targetParcelsLayer = targetParcelsLayer;
 
         locatePointPanel.initializeFormVariable(segmentLayer);
@@ -94,7 +91,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        btnSave = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
         optClockwise = new javax.swing.JRadioButton();
         optCounterClockWise = new javax.swing.JRadioButton();
@@ -142,7 +139,12 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Area Details:");
 
-        btnSave.setText("Save");
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         btnCheckSegments.setText("Check Segments");
         btnCheckSegments.setEnabled(false);
@@ -167,7 +169,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnSave)
+                        .addComponent(btnOK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -216,7 +218,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                                 .addComponent(optCounterClockWise)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
+                    .addComponent(btnOK)
                     .addComponent(btnRefreshMap)
                     .addComponent(btnUndoSplit)
                     .addComponent(btnNewPacel)
@@ -246,7 +248,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Make all layers off except the target layers.
         //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetSegmentLayer.getMapControl();
+        Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -613,7 +615,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
-        segmentLayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
     
@@ -658,6 +660,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnNewPacel.setEnabled(false);
         //refresh map.
         targetParcelsLayer.getMapControl().refresh();
@@ -690,16 +693,22 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         //for parcel with required area.
         extractParcel(pts, pointFixed, i1, i2);
         //refresh map.
-        segmentLayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(true);
         btnCheckSegments.setEnabled(false);
     }//GEN-LAST:event_btnCheckSegmentsActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JToggleButton btnNewPacel;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel5;

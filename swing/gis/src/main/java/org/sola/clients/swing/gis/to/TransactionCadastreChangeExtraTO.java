@@ -32,6 +32,7 @@
 package org.sola.clients.swing.gis.to;
 
 import java.util.List;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTargetRedefinitionTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTargetTO;
 import org.sola.webservices.transferobjects.cadastre.SurveyPointTO;
 import org.sola.webservices.transferobjects.transaction.TransactionSourceTO;
@@ -51,6 +52,10 @@ extends org.sola.webservices.transferobjects.transaction.TransactionCadastreChan
         for(CadastreObjectExtraTO coExtraTO: newCadastreObjectList){
             this.cadastreObjectList.add(coExtraTO);
         }
+    }
+
+    public void setCadastreObjectNeighboursList(List<CadastreObjectTargetRedefinitionTO> cadastreObjectNeighboursList) {
+        this.cadastreObjectNeighboursList = cadastreObjectNeighboursList;
     }
     
     public void setTransactionSourceList(List<TransactionSourceTO> transactionSourceList) {

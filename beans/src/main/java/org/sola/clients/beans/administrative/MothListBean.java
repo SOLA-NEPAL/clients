@@ -20,6 +20,7 @@ import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
@@ -32,6 +33,7 @@ public class MothListBean extends AbstractBindingBean {
     public static final String SELECTED_MOTH = "selectedMoth";
     private MothBean selectedMoth;
     ObservableList<MothBean> moths;
+    SolaList<LOCBean> locs;
 
     public ObservableList<MothBean> getMoths() {
         if (moths == null) {
@@ -52,5 +54,31 @@ public class MothListBean extends AbstractBindingBean {
         MothBean oldValue = this.selectedMoth;
         this.selectedMoth = selectedMoth;
         propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
+    }
+
+    public SolaList<LOCBean> getLocs() {
+        if (locs == null) {
+            locs = new SolaList<LOCBean>();
+        }
+        return locs;
+    }
+
+    public ObservableList<LOCBean> getFilteredLocs() {
+        return getLocs().getFilteredList();
+    }
+
+    public void loadLocs(int panaNo) {
+        locs = getLocs();
+    }
+
+    public LOCBean getLocs(int panaNo) {
+        List<LOCBean> locList = getSelectedMoth().getLocList();
+
+        for (LOCBean locBean : locList) {
+            if (locBean.getPanaNo() == panaNo) {
+                return locBean;
+            }
+        }
+        return null;
     }
 }

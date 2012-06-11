@@ -7,26 +7,22 @@ package org.sola.clients.swing.gis;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import com.vividsolutions.jts.operation.buffer.OffsetCurveBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JCheckBox;
-import javax.swing.tree.DefaultTreeModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.map.extended.layer.ExtendedLayer;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
-import org.geotools.swing.control.extended.TocLayerNode;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.layer.TargetAffectedParcelLayer;
+import org.sola.clients.swing.gis.layer.TargetNeighbourParcelLayer;
+import org.sola.clients.swing.gis.mapaction.DeselectALL;
 
 /**
  *
@@ -36,26 +32,51 @@ public class PublicMethod {
     //Make all layer off excepts target layers.
     public static void maplayerOnOff(Map mapObj, boolean showOtherLayers) {
         //Set layer tick status in TOC.
-        DefaultTreeModel treeModel = (DefaultTreeModel) mapObj.getToc().getTreeModel();
-        Object parent = treeModel.getRoot();
-        //Assuming the layer name is "target" (not the title)
-        for (int i = 0; i < treeModel.getChildCount(parent); i++) {
-            TocLayerNode tocNode = (TocLayerNode) treeModel.getChild(parent, i);
-
-            ExtendedLayer layer = tocNode.getLayer();
+        LinkedHashMap<String,ExtendedLayer> layers= mapObj.getSolaLayers();
+        for (ExtendedLayer layer:layers.values()){
             String layerName = layer.getLayerName();
-            if (layerName.contains("Target")) {
+            //Target and New words are from source code
+            //pending word is from database--> system.config_map_layer
+            if (layerName.contains("Target") 
+                    || layerName.contains("New")
+                        || layerName.contains("pending")) {
                 continue;
             }
 
-            //mapObj.getToc().changeNodeSwitch(tocNode);
-            JCheckBox checkbox = tocNode.getVisualisationComponent();
-            checkbox.setSelected(showOtherLayers);
-            layer.setVisible(showOtherLayers);
+            if (showOtherLayers){
+               if (!layer.isVisible()) mapObj.getToc().changeNodeSwitch(layerName);
+            }
+            else {
+               if (layer.isVisible()) mapObj.getToc().changeNodeSwitch(layerName);
+            }
         }
-        mapObj.getToc().repaint();
-        mapObj.refresh();
     }
+    
+//<editor-fold defaultstate="collapsed" desc="Old method of map on/off">
+    //Make all layer off excepts target layers.
+//    public static void maplayerOnOff(Map mapObj, boolean showOtherLayers) {
+//        //Set layer tick status in TOC.
+//        DefaultTreeModel treeModel = (DefaultTreeModel) mapObj.getToc().getTreeModel();
+//        Object parent = treeModel.getRoot();
+//        //Assuming the layer name is "target" (not the title)
+//        for (int i = 0; i < treeModel.getChildCount(parent); i++) {
+//            TocLayerNode tocNode = (TocLayerNode) treeModel.getChild(parent, i);
+//
+//            ExtendedLayer layer = tocNode.getLayer();
+//            String layerName = layer.getLayerName();
+//            if (layerName.contains("Target")) {
+//                continue;
+//            }
+//
+//            //mapObj.getToc().changeNodeSwitch(tocNode);
+//            JCheckBox checkbox = tocNode.getVisualisationComponent();
+//            checkbox.setSelected(showOtherLayers);
+//            layer.setVisible(showOtherLayers);
+//        }
+//        mapObj.getToc().repaint();
+//        mapObj.refresh();
+//    }
+//</editor-fold>
     
     //return incremented node number.
     public static String newNodeName(CadastreTargetSegmentLayer segmentLayer) {
@@ -70,6 +91,7 @@ public class PublicMethod {
                 nodenumber = n_number;
             }
         }
+        ptIterator.close();
 
         nodenumber++;
         return Integer.toString(nodenumber);
@@ -89,6 +111,7 @@ public class PublicMethod {
                 nodenumber++;
             }
         }
+        ptIterator.close();
 
         return nodenumber;
     }
@@ -106,12 +129,13 @@ public class PublicMethod {
                 segnumber = n_number;
             }
         }
+        segIterator.close();
 
         segnumber++;
         return Integer.toString(segnumber);
     }
     
-//<editor-fold defaultstate="collapsed" desc="routine to check the coincidence of line">
+//<editor-fold defaultstate="collapsed" desc="commendted routine to check the coincidence of line">
     //Sum of partial distances are equal to the total segment length, then 
     //the point lies on the given line.
 //    public static boolean IsPointOnLine(LineString seg, Point pt) {
@@ -262,7 +286,7 @@ public class PublicMethod {
     }
     //</editor-fold>
     
-//<editor-fold defaultstate="collapsed" desc="Checking for offset through buffer">
+//<editor-fold defaultstate="collapsed" desc="commented Checking for offset through buffer">
 //
 //    public static Coordinate[] refineBuffered_Offset_LinePoints(Geometry parcel,Coordinate[] buffer_Cors, double offsetDist){
 //        List<Coordinate> cors=new ArrayList<Coordinate>();
@@ -378,32 +402,57 @@ public class PublicMethod {
         dest_targetParcelsLayer.getFeatureCollection().clear();
         //get feature collection.
         SimpleFeatureCollection polys=src_targetParcelsLayer.getFeatureCollection();
+        String geomfld=theGeomFieldName(polys);
+        if (geomfld.isEmpty()) return;
+        
+        DecimalFormat df=new DecimalFormat("0.00");
         SimpleFeatureIterator polyIterator=polys.features();
         while (polyIterator.hasNext()){
             SimpleFeature fea=polyIterator.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//first item as geometry.
             String objId= fea.getID().toString();
-            
-            dest_targetParcelsLayer.addFeature(objId, geom, null);
+            //properties.
+            HashMap<String,Object> fldvalues=new HashMap<String,Object>();
+            fldvalues.put(CadastreChangeTargetCadastreObjectLayer.LAYER_FIELD_FID, objId);
+            String shape_area=df.format(geom.getArea());
+            fldvalues.put(CadastreChangeTargetCadastreObjectLayer.LAYER_FIELD_AREA, shape_area);
+            //append to collection.
+            dest_targetParcelsLayer.addFeature(objId, geom, fldvalues);
         }
+        polyIterator.close();
         //topology checking features.
         try {
-            dest_targetParcelsLayer.getAffected_parcels().getFeatureCollection().clear();
+            dest_targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
             //get target affected feature collection.
-            polys=src_targetParcelsLayer.getAffected_parcels().getFeatureCollection();
+            polys=src_targetParcelsLayer.getNeighbour_parcels().getFeatureCollection();
+            geomfld=theGeomFieldName(polys);
+            if (geomfld.isEmpty()) return;
+            
             polyIterator=polys.features();
             while (polyIterator.hasNext()){
                 SimpleFeature fea=polyIterator.next();
-                Geometry geom=(Geometry)fea.getAttribute(0);//first item as geometry.
+                Geometry geom=(Geometry)fea.getAttribute(geomfld);//first item as geometry.
                 String objId= fea.getID().toString();
-
-                dest_targetParcelsLayer.getAffected_parcels().addFeature(objId, geom, null);
+                dest_targetParcelsLayer.getNeighbour_parcels().addFeature(objId, geom, null);
             }
         } catch (InitializeLayerException ex) {
             Logger.getLogger(PublicMethod.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    public static String theGeomFieldName(SimpleFeatureCollection fea_col){
+        if (fea_col.size()<1) return "";
+        
+        SimpleFeatureIterator fea_iterator=fea_col.features();
+        String geomfld="";
+        if (fea_iterator.hasNext()){
+            SimpleFeature fea=fea_iterator.next();
+            geomfld=fea.getFeatureType().getGeometryDescriptor().getName().toString();
+        }
+        fea_iterator.close();
+        
+        return geomfld;
+    }
     //Check the count of the selected parcels and segments.
     //----------------------------------------------------
     public static int count_Parcels_Selected(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer){
@@ -501,18 +550,22 @@ public class PublicMethod {
         Point[] pts = new Point[totalNodeCount(segmentLayer)];
         //find the point collection
         SimpleFeatureCollection feapoints = segmentLayer.getFeatureCollection();
+        String geomfld=theGeomFieldName(feapoints);
+        if (geomfld.isEmpty()) return null;
+        
         FeatureIterator<SimpleFeature> ptIterator = feapoints.features();
         int i = 0;
         //Storing points and key indices for area iteration.
         while (ptIterator.hasNext()) {
             SimpleFeature fea = ptIterator.next();
             byte insertednode = Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_IS_POINT_SELECTED).toString());
-            Point pt = (Point) fea.getAttribute(0);//First attribute as geometry attribute.
+            Point pt = (Point) fea.getAttribute(geomfld);//First attribute as geometry attribute.
             //store point.
             if (insertednode != 2) {
                 pts[i++] = pt;
             }
         }
+        ptIterator.close();
         
         return pts;
     }
@@ -584,18 +637,23 @@ public class PublicMethod {
     //<editor-fold defaultstate="collapsed" desc="rectification of touching parcel">
     //rectify the topology of the affected parcel by selected parcels.
     public static void rectify_TouchingParcels(
-            TargetAffectedParcelLayer target_affected_layer,
-                CadastreChangeTargetCadastreObjectLayer the_parcels){
-        SimpleFeatureCollection fea_col=the_parcels.getFeatureCollection();
+            TargetNeighbourParcelLayer target_affected_layer,
+                CadastreChangeTargetCadastreObjectLayer the_parcels) 
+                        throws InitializeLayerException{
+        SimpleFeatureCollection fea_col=the_parcels.getNew_parcels().getFeatureCollection();
+        String geomfld=theGeomFieldName(fea_col);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator fea_iter=fea_col.features();
         while (fea_iter.hasNext()){
             SimpleFeature fea=fea_iter.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//polygon.
             Coordinate[] cors=geom.getCoordinates();
             for (Coordinate co:cors){
                 rectify_TouchingParcel(target_affected_layer,co);
             }
         }
+        fea_iter.close();
     }
     
     public static int Index_to_place_point(Coordinate[] cors, Coordinate cur_co) {
@@ -628,15 +686,18 @@ public class PublicMethod {
     }
     
     public static void rectify_TouchingParcel(
-            TargetAffectedParcelLayer layer, Coordinate co){
+            TargetNeighbourParcelLayer layer, Coordinate co){
         GeometryFactory geomFactory=new GeometryFactory();
         //iterate through the touching parcels.
         SimpleFeatureCollection fea_col=layer.getFeatureCollection();
+        String geomfld=theGeomFieldName(fea_col);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator fea_iter=fea_col.features();
         Point pt=geomFactory.createPoint(co);
         while (fea_iter.hasNext()){
             SimpleFeature fea=fea_iter.next();
-            Geometry geom=(Geometry)fea.getAttribute(0);//polygon.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//polygon.
             if (PublicMethod.IsPointOnGeometry(geom, pt)){
                 int indx=Index_to_place_point(geom.getCoordinates(), pt);
                 if (indx<0) continue;
@@ -648,6 +709,39 @@ public class PublicMethod {
                 Polygon new_parcel=geomFactory.createPolygon(outer_ring, null);
                 layer.replaceFeatureGeometry(fea, (Geometry)new_parcel);
             }
+        }
+        fea_iter.close();
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="removing temporary informations">
+    public static void deselect_All(CadastreTargetSegmentLayer pointsLayer
+                        ,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer ){
+        //clear all the selection.
+        pointsLayer.getSegmentLayer().getFeatureCollection().clear();
+        pointsLayer.getFeatureCollection().clear();
+        targetParcelsLayer.getFeatureCollection().clear();
+        try {
+            targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void deselect_All(CadastreTargetSegmentLayer pointsLayer){
+        //clear all the selection.
+        pointsLayer.getSegmentLayer().getFeatureCollection().clear();
+        pointsLayer.getFeatureCollection().clear();
+    }
+     
+    public static void remove_All_newParcel(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer ){
+        //clear all the selection.
+        try {
+            targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
+        } catch (Exception ex) { 
         }
     }
     //</editor-fold>

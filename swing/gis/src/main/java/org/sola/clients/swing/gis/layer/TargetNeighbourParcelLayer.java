@@ -14,11 +14,11 @@ import org.sola.clients.swing.gis.data.PojoDataAccess;
  *
  * @author Shrestha_Kabin
  */
-public class TargetAffectedParcelLayer  extends ExtendedLayerGraphics {
+public class TargetNeighbourParcelLayer  extends ExtendedLayerGraphics {
     //For point data.
     public static final String POINT_LAYER_FIELD_LABEL = "label";
     
-    private static final String LAYER_NAME = "Target Affected";
+    private static final String LAYER_NAME = "Target Neighbours";
     private static final String LAYER_STYLE_RESOURCE = "affected_parcels.xml";
     
     //For segment data.
@@ -31,7 +31,7 @@ public class TargetAffectedParcelLayer  extends ExtendedLayerGraphics {
      * Gets the form that is responsible with handling other attributes of features
      * @return 
      */
-    public TargetAffectedParcelLayer() throws InitializeLayerException {
+    public TargetNeighbourParcelLayer() throws InitializeLayerException {
         //create Target point layer.
         super(LAYER_NAME, Geometries.POLYGON, LAYER_STYLE_RESOURCE, LAYER_ATTRIBUTE_DEFINITION);
         this.setShowInToc(true);

@@ -94,13 +94,14 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         lstTo = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnJoinPoint = new javax.swing.JButton();
-        btnPolygonize = new javax.swing.JButton();
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
-        btnUndoSplit = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnOK = new javax.swing.JButton();
+        btnJoinPoint = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
+        btnPolygonize = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
+        btnUndoSplit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -122,10 +123,24 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
 
         jLabel2.setText("To Point");
 
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
         btnJoinPoint.setText("Join Points");
         btnJoinPoint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJoinPointActionPerformed(evt);
+            }
+        });
+
+        btnCheckSegments.setText("Check Segments");
+        btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckSegmentsActionPerformed(evt);
             }
         });
 
@@ -137,22 +152,6 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnUndoSplit.setText("Undo Split");
-        btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUndoSplitActionPerformed(evt);
-            }
-        });
-
-        btnSave.setText("Save");
-
-        btnCheckSegments.setText("Check Segments");
-        btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckSegmentsActionPerformed(evt);
-            }
-        });
-
         btnRefreshMap.setText("Refresh Map");
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,11 +159,56 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             }
         });
 
+        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoSplitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnJoinPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCheckSegments)
+                    .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUndoSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPolygonize)
+                    .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCheckSegments, btnJoinPoint, btnOK, btnPolygonize, btnRefreshMap, btnUndoSplit});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnJoinPoint)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCheckSegments)
+                .addGap(36, 36, 36)
+                .addComponent(btnRefreshMap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUndoSplit)
+                .addGap(18, 18, 18)
+                .addComponent(btnPolygonize)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOK)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,17 +216,12 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPolygonize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel2)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,21 +233,9 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnJoinPoint)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCheckSegments)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRefreshMap)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUndoSplit)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPolygonize)
-                        .addContainerGap())
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -237,6 +264,9 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
 
         //Find Features.
         SimpleFeatureCollection points = targetPointlayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(points);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator ptIterator = points.features();
         ///find first point.
         Coordinate pt1 = null;
@@ -245,7 +275,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = ptIterator.next();
             Object fealable = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL);
             if (selectedFromPoint.equals(fealable)) {
-                Point pt = (Point) fea.getAttribute(0);//point geometry.
+                Point pt = (Point) fea.getAttribute(geomfld);//point geometry.
                 pt1 = pt.getCoordinate();
                 break;
             }
@@ -256,22 +286,23 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             SimpleFeature fea = ptIterator.next();
             Object fealable = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL);
             if (selectedToPoint.equals(fealable)) {
-                Point pt = (Point) fea.getAttribute(0);//point geometry.
+                Point pt = (Point) fea.getAttribute(geomfld);//point geometry.
                 pt2 = pt.getCoordinate();
                 break;
             }
         }
-        
+        ptIterator.close();
         addSegment(pt1,pt2);
         //repaint the map.
         btnCheckSegments.setEnabled(true);
         locatePointPanel.showSegmentListInTable();
-        targetPointlayer.getMapControl().refresh();
+        targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnJoinPointActionPerformed
 
     // create new polygon from the segment formed.
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
         Polygonization.formPolygon(targetPointlayer, targetParcelsLayer);
+        targetParcelsLayer.getMapControl().refresh();
         btnPolygonize.setEnabled(false);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
     
@@ -321,6 +352,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         btnCheckSegments.setEnabled(false);
         btnPolygonize.setEnabled(false);
         //refresh map.
@@ -340,15 +372,22 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(targetPointlayer);
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnJoinPoint;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnPolygonize;
     private javax.swing.JButton btnRefreshMap;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.sola.clients.swing.gis.ui.control.LocatePointPanel locatePointPanel;

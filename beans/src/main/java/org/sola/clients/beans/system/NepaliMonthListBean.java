@@ -70,18 +70,18 @@ public class NepaliMonthListBean extends AbstractBindingBean {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().saveNepaliMonth(nepaliTO), NepaliMonthBean.class, (List) months);
     }
 
-    public void addNepaliMonth(NepaliMonthBean nepMonth,int lastYear) {
+    public void addNepaliMonth(NepaliMonthBean nepMonth, int lastYear) {
         getMonths().clear();
-        int k = 1;    
+        int k = 1;
         for (int i = 0; i < 12; i++) {
             nepMonth.setDayss(0);
-            nepMonth.setNepYear(lastYear+1);
+            nepMonth.setNepYear(lastYear + 1);
             nepMonth.setNepMonth(k);
-            getMonths().add(nepMonth);  
-            nepMonth=new NepaliMonthBean();
+            getMonths().add(nepMonth);
+            nepMonth = new NepaliMonthBean();
             k++;
         }
-       
+
     }
 
     public void deleteSelectedMonth() {
@@ -93,5 +93,4 @@ public class NepaliMonthListBean extends AbstractBindingBean {
     public void getNepaliYear() {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdminService().getNepaliYear(), NepaliMonthBean.class, null);
     }
-    
 }

@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.admin;
@@ -49,23 +51,27 @@ import org.sola.common.RolesConstants;
  */
 public class MainForm extends javax.swing.JFrame {
 
-    /** Creates new form MainForm */
+    /**
+     * Creates new form MainForm
+     */
     public MainForm() {
         initComponents();
-        
+
         URL imgURL = this.getClass().getResource("/images/common/admin.png");
         this.setIconImage(new ImageIcon(imgURL).getImage());
         lblUserName.setText(SecurityBean.getCurrentUser().getUserName());
         customizeForm();
     }
 
-    /** Customizes main form regarding user access rights. */
-    private void customizeForm(){
+    /**
+     * Customizes main form regarding user access rights.
+     */
+    private void customizeForm() {
         boolean hasSecurityRole = SecurityBean.isInRole(RolesConstants.ADMIN_MANAGE_SECURITY);
         boolean hasRefdataRole = SecurityBean.isInRole(RolesConstants.ADMIN_MANAGE_REFDATA);
         boolean hasSettingsRole = SecurityBean.isInRole(RolesConstants.ADMIN_MANAGE_SETTINGS);
         boolean hasBRRole = SecurityBean.isInRole(RolesConstants.ADMIN_MANAGE_BR);
-        
+
         btnRoles.setEnabled(hasSecurityRole);
         btnUsers.setEnabled(hasSecurityRole);
         btnGroups.setEnabled(hasSecurityRole);
@@ -73,17 +79,19 @@ public class MainForm extends javax.swing.JFrame {
         menuUsers.setEnabled(btnUsers.isEnabled());
         menuGroups.setEnabled(btnGroups.isEnabled());
         btnBr.setEnabled(hasBRRole);
-        
+
         menuRefData.setEnabled(hasRefdataRole);
     }
-    
-    /** Opens reference data management panel for different reference data type.*/
+
+    /**
+     * Opens reference data management panel for different reference data type.
+     */
     private <T extends AbstractCodeBean> void openReferenceDataPanel(
-            Class<T> refDataClass, String headerTitle){
+            Class<T> refDataClass, String headerTitle) {
         ReferenceDataManagementPanel panel = new ReferenceDataManagementPanel(refDataClass, headerTitle);
         mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_MANAGE, true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -135,6 +143,10 @@ public class MainForm extends javax.swing.JFrame {
         menuBRTechnicalType = new javax.swing.JMenuItem();
         menuTransaction = new javax.swing.JMenu();
         menuRegistrationStatusType = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenu1 = new javax.swing.JMenu();
+        menuVDCSetup = new javax.swing.JMenuItem();
+        menuDistrict = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -539,6 +551,32 @@ public class MainForm extends javax.swing.JFrame {
 
         menuRefData.add(menuTransaction);
 
+        jSeparator5.setName(bundle.getString("MainForm.jSeparator5.name")); // NOI18N
+        menuRefData.add(jSeparator5);
+
+        jMenu1.setText(bundle.getString("MainForm.jMenu1.text")); // NOI18N
+        jMenu1.setName(bundle.getString("MainForm.jMenu1.name")); // NOI18N
+
+        menuVDCSetup.setText(bundle.getString("MainForm.menuVDCSetup.text")); // NOI18N
+        menuVDCSetup.setName(bundle.getString("MainForm.menuVDCSetup.name")); // NOI18N
+        menuVDCSetup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVDCSetupActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuVDCSetup);
+
+        menuDistrict.setText(bundle.getString("MainForm.menuDistrict.text")); // NOI18N
+        menuDistrict.setName(bundle.getString("MainForm.menuDistrict.name")); // NOI18N
+        menuDistrict.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDistrictActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuDistrict);
+
+        menuRefData.add(jMenu1);
+
         mainMenu.add(menuRefData);
 
         menuReports.setText(bundle.getString("MainForm.menuReports.text_1")); // NOI18N
@@ -590,7 +628,10 @@ public class MainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- /** Opens {@link ReportViewerForm} to display report.*/
+
+    /**
+     * Opens {@link ReportViewerForm} to display report.
+     */
     private void showReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
@@ -718,35 +759,50 @@ public class MainForm extends javax.swing.JFrame {
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
         // TODO add your handling code here:
         //NepaliCalendar nepCal=new NepaliCalendar();
-        CalendarManagement nepCal=new CalendarManagement();
-        mainContentPanel.addPanel(nepCal,MainContentPanel.CARD_ADMIN_CALENDAR, true);
+        CalendarManagement nepCal = new CalendarManagement();
+        mainContentPanel.addPanel(nepCal, MainContentPanel.CARD_ADMIN_CALENDAR, true);
     }//GEN-LAST:event_btnCalendarActionPerformed
 
-    /** Opens roles management panel. */
+    private void menuVDCSetupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVDCSetupActionPerformed
+        // TODO add your handling code here:
+        manageVDCs();
+    }//GEN-LAST:event_menuVDCSetupActionPerformed
+
+    private void menuDistrictActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDistrictActionPerformed
+        manageDistricts();
+    }//GEN-LAST:event_menuDistrictActionPerformed
+
+    /**
+     * Opens roles management panel.
+     */
     private void manageRoles() {
-        if(mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_ROLES_MANAGE)){
+        if (mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_ROLES_MANAGE)) {
             mainContentPanel.showPanel(MainContentPanel.CARD_ADMIN_ROLES_MANAGE);
-        }else{
+        } else {
             RolesManagementPanel panel = new RolesManagementPanel();
             mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_ROLES_MANAGE, true);
         }
     }
 
-    /** Opens groups management panel. */
+    /**
+     * Opens groups management panel.
+     */
     private void manageGroups() {
-        if(mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_GROUP_MANAGE)){
+        if (mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_GROUP_MANAGE)) {
             mainContentPanel.showPanel(MainContentPanel.CARD_ADMIN_GROUP_MANAGE);
-        }else{
+        } else {
             GroupsManagementPanel groupManagementPanel = new GroupsManagementPanel();
             mainContentPanel.addPanel(groupManagementPanel, MainContentPanel.CARD_ADMIN_GROUP_MANAGE, true);
         }
     }
 
-    /** Opens users management panel. */
+    /**
+     * Opens users management panel.
+     */
     private void manageUsers() {
-        if(mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_USER_MANAGE)){
+        if (mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_USER_MANAGE)) {
             mainContentPanel.showPanel(MainContentPanel.CARD_ADMIN_USER_MANAGE);
-        }else{
+        } else {
             UsersManagementPanel panel = new UsersManagementPanel();
             mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_USER_MANAGE, true);
         }
@@ -761,7 +817,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void manageCommunicationTypes() {
-        openReferenceDataPanel(CommunicationTypeBean.class, 
+        openReferenceDataPanel(CommunicationTypeBean.class,
                 menuCommunicationType.getText());
     }
 
@@ -837,15 +893,22 @@ public class MainForm extends javax.swing.JFrame {
         openReferenceDataPanel(BrTechnicalTypeBean.class, menuBRTechnicalType.getText());
     }
 
+    private void manageVDCs() {
+        openReferenceDataPanel(VdcBean.class, menuVDCSetup.getText());
+    }
+
+    private void manageDistricts() {
+        openReferenceDataPanel(DistrictBean.class, menuDistrict.getText());
+    }
+
     private void manageBr() {
-        if(mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_BR_MANAGE)){
+        if (mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_BR_MANAGE)) {
             mainContentPanel.showPanel(MainContentPanel.CARD_ADMIN_BR_MANAGE);
-        }else{
+        } else {
             BrManagementPanel panel = new BrManagementPanel();
             mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_BR_MANAGE, true);
         }
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
     private javax.swing.JButton btnCalendar;
@@ -853,8 +916,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnRoles;
     private javax.swing.JButton btnUsers;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel lblUserName;
     private org.sola.clients.swing.ui.MainContentPanel mainContentPanel;
     private javax.swing.JMenuBar mainMenu;
@@ -867,6 +933,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuBaUnitRelationTypes;
     private javax.swing.JMenuItem menuBaUnitType;
     private javax.swing.JMenuItem menuCommunicationType;
+    private javax.swing.JMenuItem menuDistrict;
     private javax.swing.JMenuItem menuExit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuGenders;
@@ -896,6 +963,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuTransaction;
     private javax.swing.JMenuItem menuTypeActions;
     private javax.swing.JMenuItem menuUsers;
+    private javax.swing.JMenuItem menuVDCSetup;
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;
     // End of variables declaration//GEN-END:variables

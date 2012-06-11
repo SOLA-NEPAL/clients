@@ -45,6 +45,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         this.setTitle("Merge Selected Parcel Form.");
         this.setAlwaysOnTop(true);
         //Initialize other variables.
+        targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();//remove neighbouring parcel status.
         this.targetParcelsLayer = targetParcelsLayer;
         this.segmentLayer=segmentLayer;
         //using only for segment details.
@@ -54,6 +55,9 @@ public class ParcelMergeForm extends javax.swing.JDialog {
 
     public void showParcelsInTable(){
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator feaIter=feacol.features();
         //point to the table model.
         DefaultTableModel tblmodel=(DefaultTableModel)tblParcels.getModel();
@@ -65,12 +69,14 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             SimpleFeature fea=feaIter.next();
             
             String feaID=fea.getID();
-            Geometry geom=(Geometry)fea.getAttribute(0);//first item always geometry.
+            Geometry geom=(Geometry)fea.getAttribute(geomfld);//first item always geometry.
             String poly_area=df.format(geom.getArea());
             Object Itms[]=new Object[]{i++,feaID,poly_area};
             
             tblmodel.addRow(Itms);
         }
+        feaIter.close();
+        
         tblParcels.setModel(tblmodel);
         tblParcels.repaint();
     }
@@ -89,6 +95,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnMergePolygon = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -130,6 +137,13 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             }
         });
 
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,13 +153,14 @@ public class ParcelMergeForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnMergePolygon, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMergePolygon, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,7 +172,9 @@ public class ParcelMergeForm extends javax.swing.JDialog {
                 .addComponent(btnUndoSplit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMergePolygon)
-                .addGap(19, 19, 19))
+                .addGap(7, 7, 7)
+                .addComponent(btnOK)
+                .addContainerGap())
         );
 
         pack();
@@ -184,6 +201,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         locatePointPanel.getPreviousData();
         //copy data from old collection to current collection.
         PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
+        PublicMethod.remove_All_newParcel(targetParcelsLayer);
         //refresh map.
         showParcelsInTable();//refresh information in table also.
         targetParcelsLayer.getMapControl().refresh();
@@ -191,16 +209,19 @@ public class ParcelMergeForm extends javax.swing.JDialog {
 
     private void btnMergePolygonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMergePolygonActionPerformed
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
         SimpleFeatureIterator feaIter=feacol.features();
-
         Geometry[] geom=new Geometry[feacol.size()];
         String parcel_id="";//store last parcel id.
         int i=0;
         while (feaIter.hasNext()){
             SimpleFeature fea=feaIter.next();
             parcel_id=fea.getID();
-            geom[i++]=(Geometry)fea.getAttribute(0);//first item always geometry.
+            geom[i++]=(Geometry)fea.getAttribute(geomfld);//first item always geometry.
         }
+        feaIter.close();
         if (geom.length<1) return;
         
         //merge the polygons.
@@ -210,36 +231,47 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         Geometry merged_geom=geoms.buffer(0);
         //refresh map and data in the collections.
         updateFeatureCollections(parcel_id, merged_geom,geomFactory);
+        //refresh map.
+        targetParcelsLayer.getMapControl().refresh();
     }
 
     private void updateFeatureCollections(String parcel_id, Geometry merged_geom,GeometryFactory geomFactory) {
         //first clear all point, segment and parcel selection details.
         segmentLayer.getFeatureCollection().clear();
         segmentLayer.getSegmentLayer().getFeatureCollection().clear();
-        targetParcelsLayer.getFeatureCollection().clear();
-        //re-entry the combined polygon and refresh the map.
-        targetParcelsLayer.addFeature(parcel_id, merged_geom, null);
-        //refresh point collection only.
-        Coordinate[] cors=merged_geom.getCoordinates();
-        if (cors==null || cors.length<1) return;
-        
-        for (int i=0;i<cors.length-1;i++){
-            Point pt=geomFactory.createPoint(cors[i]);
-            
-            locatePointPanel.addPointInPointCollection(pt);
+        try {
+            //re-entry the combined polygon and refresh the map.
+            targetParcelsLayer.getNew_parcels().addFeature(parcel_id, merged_geom, null);
+            //refresh point collection only.
+            Coordinate[] cors=merged_geom.getCoordinates();
+            if (cors==null || cors.length<1) return;
+
+            for (int i=0;i<cors.length-1;i++){
+                Point pt=geomFactory.createPoint(cors[i]);
+
+                locatePointPanel.addPointInPointCollection(pt);
+            }
+            //reload data into table and map.
+            showParcelsInTable();//refresh information in table also.
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(ParcelMergeForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //reload data into table and map.
-        targetParcelsLayer.getMapControl().refresh();
-        showParcelsInTable();//refresh information in table also.
     }//GEN-LAST:event_btnMergePolygonActionPerformed
 
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        PublicMethod.deselect_All(segmentLayer);
+        
+        targetParcelsLayer.getMapControl().refresh();
+        this.dispose();
+    }//GEN-LAST:event_btnOKActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMergePolygon;
+    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JScrollPane jScrollPane1;
