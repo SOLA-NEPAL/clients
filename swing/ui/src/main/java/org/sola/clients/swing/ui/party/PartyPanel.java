@@ -249,9 +249,12 @@ public class PartyPanel extends javax.swing.JPanel {
             cboOffice.setEnabled(false);
             cboVDCs.setEnabled(false);
             txtIssueDate.setEditable(false);
+            txtIssueDate.setBackground(Color.LIGHT_GRAY);
             txtBirthDate.setEnabled(false);
             txtGrandFatherFirstName.setEnabled(false);
             txtGrandFatherLastName.setEnabled(false);
+            txtWardNo.setEnabled(false);
+            txtRemarks.setEnabled(false);
         }
     }
 
