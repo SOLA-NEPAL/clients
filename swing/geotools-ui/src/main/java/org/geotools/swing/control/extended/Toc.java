@@ -40,6 +40,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import org.geotools.map.extended.layer.ExtendedLayer;
+import org.geotools.swing.control.TreeNodePopupMenu;
 import org.geotools.swing.extended.Map;
 
 /**
@@ -105,10 +106,16 @@ public class Toc extends JPanel {
         if (tp == null) {
             return;
         }
+       
         Object clickedNode = tp.getLastPathComponent();
         if (clickedNode instanceof TocLayerNode) {
             TocLayerNode clickedTocNode = (TocLayerNode) tp.getLastPathComponent();
-            changeNodeSwitch(clickedTocNode);
+            if (me.getButton()== MouseEvent.BUTTON3){
+                handle_MouseRightClick(clickedTocNode,me.getX(),me.getY());
+            }
+            else{
+                changeNodeSwitch(clickedTocNode);
+            }
         }
     }
 
@@ -182,5 +189,15 @@ public class Toc extends JPanel {
             tocNode.OnNodeClicked();
             this.treeModel.nodeChanged(tocNode);
         }
+    }
+    
+    //Addition by Kabindra
+    public void handle_MouseRightClick(TocLayerNode clickedTocNode,int x, int y){
+        TreeNodePopupMenu popup=new TreeNodePopupMenu();
+        clickedTocNode.getVisualisationComponent().setSelected(true);
+        this.treeModel.nodeChanged(clickedTocNode);
+        
+        popup.setMapLayer(clickedTocNode.getLayer());
+        popup.getJPopupMenu().show(this, x, y);
     }
 }

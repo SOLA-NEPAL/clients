@@ -25,7 +25,6 @@ public class DistrictBean extends AbstractCodeBean{
     public static final String ZONE_CODE_PROPERTY = "zoneCode";
     private int zoneCode;
 
-    
     public DistrictBean(){
         super();
     }

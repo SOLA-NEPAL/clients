@@ -24,12 +24,21 @@ import org.sola.webservices.transferobjects.referencedata.VdcTO;
 public class VdcBean extends AbstractCodeBean {
 
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
+<<<<<<< HEAD
     private String districtCode;
 
     public VdcBean() {
         super();
     }
 
+=======
+    private String districtCode;  
+    
+    public VdcBean(){
+        super();
+    }
+    
+>>>>>>> nepal_custom
     public String getDistrictCode() {
         return districtCode;
     }

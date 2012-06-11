@@ -211,7 +211,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add toolbar for one side, direction and area method splitting.
         this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
-        //add toolbar for import Point from shape file.
+        //add toolbar for import lines from line,shape and dxf file.
 //        this.getMap().addMapAction(new ImportShapeFileShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
 //                                        this.getToolbar(), true);
     }

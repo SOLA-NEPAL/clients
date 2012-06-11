@@ -67,6 +67,11 @@ public class OfficeListBean extends AbstractBindingListBean {
         loadCodeList(OfficeBean.class, offices,
                 CacheManager.getOffices(), createDummy);
     }
+    
+    public final void loadList(boolean createDummy,String districtCode) {
+        loadCodeList(OfficeBean.class, offices,
+                CacheManager.getOffices(districtCode), createDummy);
+    }
 
     public void setExcludedCodes(String... codes) {
         offices.setExcludedCodes(codes);
