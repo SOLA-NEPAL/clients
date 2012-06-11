@@ -27,21 +27,22 @@
  */
 package org.sola.clients.swing.ui.referencedata;
 
-import org.sola.clients.beans.AbstractCodeBean;
+import org.sola.clients.beans.referencedata.DistrictBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
-import org.sola.webservices.transferobjects.AbstractCodeTO;
+import org.sola.webservices.transferobjects.referencedata.VdcTO;
 
 /**
- * Used to manage beans, inheriting from {@link AbstractCodeBean}.
+ * Used to manage beans, inheriting from {@link VdcBean}.
  */
-public class ReferenceDataPanel extends javax.swing.JPanel {
+public class VDCPanel extends javax.swing.JPanel {
 
-    private AbstractCodeBean referenceDataBean;
-    private Class<? extends AbstractCodeBean> refDataClass;
-    private Class<? extends AbstractCodeTO> refDataTOClass;
+    private VdcBean vdcBean;
+    private Class<? extends VdcBean> vdcClass;
+    private Class<? extends VdcTO> vdcTOClass;
     
     /** Default constructor. */
-    public ReferenceDataPanel() {
+    public VDCPanel() {
         initComponents();
     }
 
@@ -50,57 +51,58 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
      * @param refDataClass Class of reference data bean to create and bind on the panel.
      * @param refDataTOClass Class of reference data transfer object to be used for saving on the server side.
      */
-    public <T extends AbstractCodeBean, S extends AbstractCodeTO> ReferenceDataPanel
+    public <T extends VdcBean, S extends VdcTO> VDCPanel
             (Class<T> refDataClass, Class<S> refDataTOClass) {
-        this.refDataClass = refDataClass;
-        this.refDataTOClass = refDataTOClass;
+        this.vdcClass = refDataClass;
+        this.vdcTOClass = refDataTOClass;
         initComponents();
-        setupRefDataBean(null);
+        setupVdcBean(vdcBean);
     }
 
     /** Setup reference data bean object, used to bind data on the form. */
-    private void setupRefDataBean(AbstractCodeBean referenceDataBean) {
-        txtCode.setEnabled(referenceDataBean == null);
+    private void setupVdcBean(VdcBean vdcBean) {
+        txtCode.setEnabled(vdcBean == null);
         
-        if (referenceDataBean != null) {
-            this.referenceDataBean = referenceDataBean;
+        if (vdcBean != null) {
+            this.vdcBean = vdcBean;
         } else {
             try {
-                this.referenceDataBean = refDataClass.newInstance();
+                this.vdcBean = vdcClass.newInstance();
             } catch (Exception ex) {
             }
         }
         
-        descriptionValues.loadLocalizedValues(this.referenceDataBean.getDescription());
-        displayValues.loadLocalizedValues(this.referenceDataBean.getDisplayValue());
-        firePropertyChange("referenceDataBean", null, this.referenceDataBean);
+        descriptionValues.loadLocalizedValues(this.vdcBean.getDescription());
+        displayValues.loadLocalizedValues(this.vdcBean.getDisplayValue());
+        firePropertyChange("vdcBean", null, this.vdcBean);
     }
 
     /** Returns reference data bean, bound on the panel. */
-    public AbstractCodeBean getReferenceDataBean() {
-        return referenceDataBean;
+    public VdcBean getVdcBean() {
+        return vdcBean;
     }
 
     /** Sets reference data bean, to bind on the panel. */
-    public <T extends AbstractCodeBean, S extends AbstractCodeTO> void 
-            setReferenceDataBean(Class<T> refDataClass, 
-            Class<S> refDataTOClass, AbstractCodeBean referenceDataBean) {
-        this.refDataTOClass = refDataTOClass;
-        this.refDataClass = refDataClass;
-        setupRefDataBean(referenceDataBean);
+    public <T extends VdcBean, S extends VdcTO> void 
+            setVdcBean(Class<T> refDataClass, 
+            Class<S> vdcTOClass, VdcBean vdcBean) {
+        this.vdcTOClass = vdcTOClass;
+        this.vdcClass = refDataClass;
+        setupVdcBean(vdcBean);
     }
     
     /** Validates reference data object. */
-    public boolean validateRefData(boolean showMessage){
-        return referenceDataBean.validate(showMessage).size()<1;
+    public boolean validateVdc(boolean showMessage){
+        return vdcBean.validate(showMessage).size()<1;
     }
 
     /** Calls saving procedure of reference data object. */
     public boolean save(boolean showMessage){
-        referenceDataBean.setDisplayValue(displayValues.buildMultilingualString());
-        referenceDataBean.setDescription(descriptionValues.buildMultilingualString());
-        if(validateRefData(showMessage)){
-            AbstractCodeBean.saveRefData(referenceDataBean, refDataTOClass);
+        vdcBean.setDisplayValue(displayValues.buildMultilingualString());
+        vdcBean.setDescription(descriptionValues.buildMultilingualString());
+        vdcBean.setDistrictCode(((DistrictBean)cmbDistrict.getSelectedItem()).getCode());
+        if(validateVdc(showMessage)){
+            VdcBean.saveRefData(vdcBean, vdcTOClass);
             return true;
         }else {
             return false;
@@ -114,13 +116,17 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
 
         displayValues = new org.sola.clients.beans.system.LocalizedValuesListBean();
         descriptionValues = new org.sola.clients.beans.system.LocalizedValuesListBean();
+        districts = new org.sola.clients.beans.referencedata.DistrictListBean();
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCode = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtStatus = new javax.swing.JTextField();
+        cmbDistrict = new javax.swing.JComboBox();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtStatus1 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -138,12 +144,12 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/referencedata/Bundle"); // NOI18N
-        jLabel1.setText(bundle.getString("ReferenceDataPanel.jLabel1.text")); // NOI18N
+        jLabel1.setText(bundle.getString("VDCPanel.jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
         txtCode.setName("txtCode"); // NOI18N
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${referenceDataBean.code}"), txtCode, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${vdcBean.code}"), txtCode, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -151,7 +157,7 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1)
-            .addComponent(txtCode, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+            .addComponent(txtCode, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,13 +173,14 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         jPanel2.setName("jPanel2"); // NOI18N
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
-        jLabel3.setText(bundle.getString("ReferenceDataPanel.jLabel3.text")); // NOI18N
+        jLabel3.setText(bundle.getString("VDCPanel.jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        txtStatus.setName("txtStatus"); // NOI18N
+        cmbDistrict.setName(bundle.getString("VDCPanel.cmbDistrict.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${referenceDataBean.status}"), txtStatus, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districts, eLProperty, cmbDistrict);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -181,18 +188,49 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(204, Short.MAX_VALUE))
-            .addComponent(txtStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addContainerGap(117, Short.MAX_VALUE))
+            .addComponent(cmbDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cmbDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel5.add(jPanel2);
+
+        jPanel7.setName(bundle.getString("VDCPanel.jPanel7.name")); // NOI18N
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        jLabel5.setText(bundle.getString("VDCPanel.jLabel5.text")); // NOI18N
+        jLabel5.setName(bundle.getString("VDCPanel.jLabel5.name")); // NOI18N
+
+        txtStatus1.setName(bundle.getString("VDCPanel.txtStatus1.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${vdcBean.status}"), txtStatus1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addContainerGap(115, Short.MAX_VALUE))
+            .addComponent(txtStatus1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel5.add(jPanel7);
 
         jPanel6.setName("jPanel6"); // NOI18N
         jPanel6.setLayout(new java.awt.GridLayout(2, 0, 0, 17));
@@ -200,14 +238,14 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         jPanel3.setName("jPanel3"); // NOI18N
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
-        jLabel4.setText(bundle.getString("ReferenceDataPanel.jLabel4.text")); // NOI18N
+        jLabel4.setText(bundle.getString("VDCPanel.jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         tableDisplayValues.setName("tableDisplayValues"); // NOI18N
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${localizedValues}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${localizedValues}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, displayValues, eLProperty, tableDisplayValues);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${language.displayValue}"));
         columnBinding.setColumnName("Language.display Value");
@@ -221,8 +259,8 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tableDisplayValues);
         tableDisplayValues.getColumnModel().getColumn(0).setPreferredWidth(150);
         tableDisplayValues.getColumnModel().getColumn(0).setMaxWidth(150);
-        tableDisplayValues.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("ReferenceDataPanel.tableDisplayValues.columnModel.title0_1")); // NOI18N
-        tableDisplayValues.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("ReferenceDataPanel.tableDisplayValues.columnModel.title1_1")); // NOI18N
+        tableDisplayValues.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("VDCPanel.tableDisplayValues.columnModel.title0_1")); // NOI18N
+        tableDisplayValues.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("VDCPanel.tableDisplayValues.columnModel.title1_1")); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -263,11 +301,11 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tableDescription);
         tableDescription.getColumnModel().getColumn(0).setPreferredWidth(150);
         tableDescription.getColumnModel().getColumn(0).setMaxWidth(150);
-        tableDescription.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("ReferenceDataPanel.tableDescription.columnModel.title0_1")); // NOI18N
-        tableDescription.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("ReferenceDataPanel.tableDescription.columnModel.title1_1")); // NOI18N
+        tableDescription.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("VDCPanel.tableDescription.columnModel.title0_1")); // NOI18N
+        tableDescription.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("VDCPanel.tableDescription.columnModel.title1_1")); // NOI18N
         tableDescription.getColumnModel().getColumn(1).setCellRenderer(new TableCellTextAreaRenderer());
 
-        jLabel2.setText(bundle.getString("ReferenceDataPanel.jLabel2.text")); // NOI18N
+        jLabel2.setText(bundle.getString("VDCPanel.jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -293,7 +331,7 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -307,24 +345,28 @@ public class ReferenceDataPanel extends javax.swing.JPanel {
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cmbDistrict;
     private org.sola.clients.beans.system.LocalizedValuesListBean descriptionValues;
     private org.sola.clients.beans.system.LocalizedValuesListBean displayValues;
+    private org.sola.clients.beans.referencedata.DistrictListBean districts;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableDescription;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableDisplayValues;
     private javax.swing.JTextField txtCode;
-    private javax.swing.JTextField txtStatus;
+    private javax.swing.JTextField txtStatus1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

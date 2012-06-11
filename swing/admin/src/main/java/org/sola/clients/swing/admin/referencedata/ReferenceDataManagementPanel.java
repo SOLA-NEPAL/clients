@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.admin.referencedata;
@@ -58,13 +60,16 @@ public class ReferenceDataManagementPanel extends ContentPanel {
     private ObservableList<? extends AbstractCodeBean> refDataList;
     private AbstractCodeBean selectedRefData;
 
-    /** Default panel constructor. */
+    /**
+     * Default panel constructor.
+     */
     public ReferenceDataManagementPanel() {
         initComponents();
     }
 
-    /** 
+    /**
      * Creates new instance of panel with predefined parameters.
+     *
      * @param refDataClass Type of reference data to load.
      * @param headerTitle Reference data name to put on the title of the panel.
      */
@@ -89,35 +94,47 @@ public class ReferenceDataManagementPanel extends ContentPanel {
         customizeRefDataButtons(null);
     }
 
-    /** Returns selected reference data object. */
+    /**
+     * Returns selected reference data object.
+     */
     public AbstractCodeBean getSelectedRefData() {
         return selectedRefData;
     }
 
-    /** Sets selected reference data object. */
+    /**
+     * Sets selected reference data object.
+     */
     public void setSelectedRefData(AbstractCodeBean selectedRefData) {
         AbstractCodeBean oldValue = this.selectedRefData;
         this.selectedRefData = selectedRefData;
         firePropertyChange(SELECTED_REF_DATA, oldValue, this.selectedRefData);
     }
 
-    /** Returns title header for the panel. */
+    /**
+     * Returns title header for the panel.
+     */
     public String getHeaderTitle() {
         return headerPanel.getTitleText();
     }
 
-    /** Sets title header for the panel. */
+    /**
+     * Sets title header for the panel.
+     */
     public void setHeaderTitle(String headerTitle) {
         headerPanel.setTitleText(headerTitle);
     }
 
-    /** Returns list of reference data objects, bound on the form. */
+    /**
+     * Returns list of reference data objects, bound on the form.
+     */
     public List<? extends AbstractCodeBean> getRefDataList() {
         return refDataList;
     }
 
     // Methods 
-    /** Enables/disables reference data buttons. */
+    /**
+     * Enables/disables reference data buttons.
+     */
     private void customizeRefDataButtons(AbstractCodeBean refDataBean) {
         btnEditRefData.setEnabled(refDataBean != null);
         btnRemoveRefData.setEnabled(refDataBean != null);
@@ -125,10 +142,12 @@ public class ReferenceDataManagementPanel extends ContentPanel {
         menuRemoveRefData.setEnabled(btnRemoveRefData.isEnabled());
     }
 
-    /** Shows the panel with selected reference data object. */
+    /**
+     * Shows the panel with selected reference data object.
+     */
     private void showRefData(final AbstractCodeBean refDataBean) {
         if (refDataClass == RequestTypeBean.class) {
-            RequestTypePanelForm panel = new RequestTypePanelForm((RequestTypeBean) refDataBean, 
+            RequestTypePanelForm panel = new RequestTypePanelForm((RequestTypeBean) refDataBean,
                     true, refDataBean != null);
             panel.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -143,7 +162,7 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                 }
             });
             getMainContentPanel().addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_REQUEST_TYPE, true);
-            
+
         } else if (refDataClass == RrrTypeBean.class) {
             RrrTypePanelForm panel = new RrrTypePanelForm((RrrTypeBean) refDataBean, true, refDataBean != null);
             panel.addPropertyChangeListener(new PropertyChangeListener() {
@@ -159,9 +178,41 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                 }
             });
             getMainContentPanel().addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA, true);
-            
+        } else if (refDataClass == DistrictBean.class) {
+            ReferenceDataPanelForm panel = new ReferenceDataPanelForm(refDataClass,
+                    refDataTOClass, refDataBean, headerPanel.getTitleText(), true, refDataBean != null);
+            panel.addPropertyChangeListener(new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (evt.getPropertyName().equals(ReferenceDataPanelForm.REFDATA_SAVED_PROPERTY)) {
+                        if (refDataBean == null) {
+                            ((ReferenceDataPanelForm) evt.getSource()).setRefDataBean(refDataClass, refDataTOClass, null);
+                        }
+                        initRefDataList();
+                    }
+                }
+            });
+            getMainContentPanel().addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA, true);
+        } else if (refDataClass == VdcBean.class) {
+            VdcPanelForm panel = new VdcPanelForm((Class<? extends VdcBean>) refDataClass,(Class<? extends VdcTO>) refDataTOClass, (VdcBean)refDataBean, headerPanel.getTitleText(), true, refDataBean != null);
+                    //VdcPanelForm panel = new VdcPanelForm(refDataClass, refDataTOClass, refDataBean, headerPanel.getTitleText(), true, refDataBean != null);
+            panel.addPropertyChangeListener(new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (evt.getPropertyName().equals(ReferenceDataPanelForm.REFDATA_SAVED_PROPERTY)) {
+                        if (refDataBean == null) {
+                            ((VdcPanelForm) evt.getSource()).setVdcBean((Class<? extends VdcBean>)refDataClass, (Class<? extends VdcTO>)refDataTOClass, null);
+                        }
+                        initRefDataList();
+                    }
+                }
+            });
+            getMainContentPanel().addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA, true);
+        
         } else {
-            ReferenceDataPanelForm panel = new ReferenceDataPanelForm(refDataClass, 
+            ReferenceDataPanelForm panel = new ReferenceDataPanelForm(refDataClass,
                     refDataTOClass, refDataBean, headerPanel.getTitleText(), true, refDataBean != null);
             panel.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -178,8 +229,10 @@ public class ReferenceDataManagementPanel extends ContentPanel {
             getMainContentPanel().addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA, true);
         }
     }
-   
-    /** Loads reference data list, related to provided reference data type.*/
+
+    /**
+     * Loads reference data list, related to provided reference data type.
+     */
     public final void initRefDataList() {
         createRefDataList();
         // PARTY
@@ -288,11 +341,24 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     RegistrationStatusTypeBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.REGISTRATION_STATUS_TYPE_CODES_KEY);
             refDataTOClass = RegistrationStatusTypeTO.class;
+        } else if (refDataClass == VdcBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getVdcList(),
+                    VdcBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.VDC_KEY);
+            refDataTOClass = VdcTO.class;
+        } else if (refDataClass == DistrictBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getDistricts(),
+                    DistrictBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.DISTRICT_KEY);
+            refDataTOClass = DistrictTO.class;
         }
+
     }
 
-    /** 
-     * Creates new instance of the reference data list if it is null. *
+    /**
+     * Creates new instance of the reference data list if it is null.
+     *
+     *
      * @param refDataBeanClass Class type used to create list.
      */
     private <T extends AbstractCodeBean> void createRefDataList() {

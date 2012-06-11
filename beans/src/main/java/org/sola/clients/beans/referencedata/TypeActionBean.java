@@ -28,13 +28,13 @@
 package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
-import org.sola.webservices.transferobjects.referencedata.TypeActionTO;
+//import org.sola.webservices.transferobjects.referencedata.TypeActionTO;
 
-/** 
- * Represents reference data object of the <b>type_action</b> table. 
- * Could be populated from the {@link TypeActionTO} object.<br />
- * For more information see data dictionary <b>Application</b> schema.
- */
+///** 
+// * Represents reference data object of the <b>type_action</b> table. 
+// * Could be populated from the {@link TypeActionTO} object.<br />
+// * For more information see data dictionary <b>Application</b> schema.
+// */
 public class TypeActionBean extends AbstractCodeBean {
     public static final String CODE_CANCEL = "cancel";
     public static final String CODE_NEW = "new";
