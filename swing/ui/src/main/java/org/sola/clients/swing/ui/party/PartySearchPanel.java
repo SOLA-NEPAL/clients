@@ -29,7 +29,6 @@
  */
 package org.sola.clients.swing.ui.party;
 
-import java.awt.MouseInfo;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -55,6 +54,12 @@ public class PartySearchPanel extends JPanel {
     public static final String REMOVE_PARTY_PROPERTY = "removeParty";
     public static final String SELECT_PARTY_PROPERTY = "selectParty";
     public static final String VIEW_PARTY_PROPERTY = "viewParty";
+    
+    private boolean blndisabledelete;
+
+    public void setBlnDisabledelete(boolean blndisabledelete) {
+        this.blndisabledelete = blndisabledelete;
+    }
 
     /**
      * Creates new form PartySearchPanel
@@ -165,6 +170,11 @@ public class PartySearchPanel extends JPanel {
         menuAdd.setEnabled(btnAddParty.isEnabled());
         menuEdit.setEnabled(btnEditParty.isEnabled());
         menuRemove.setEnabled(btnRemoveParty.isEnabled());
+        //addition by Kabindra.
+        if (blndisabledelete) {
+            btnRemoveParty.setEnabled(false);
+            menuRemove.setEnabled(false);
+        }
     }
 
     /**
@@ -677,6 +687,11 @@ public class PartySearchPanel extends JPanel {
             search();
         }
     }
+
+    public PartySearchResultListBean getPartySearchResuls() {
+        return partySearchResuls;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddParty;
     private javax.swing.JButton btnEditParty;
