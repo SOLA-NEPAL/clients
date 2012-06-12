@@ -25,20 +25,20 @@ import org.sola.clients.beans.AbstractBindingBean;
  *
  * @author KumarKhadka
  */
-public class LOCListBean extends AbstractBindingBean {
+public class LocListBean extends AbstractBindingBean {
 
-    ObservableList<LOCBean> locs;
+    ObservableList<LocBean> locs;
 
-    public ObservableList<LOCBean> getLocs() {
+    public ObservableList<LocBean> getLocs() {
         if (locs == null) {
-            locs = ObservableCollections.observableList(new ArrayList<LOCBean>());
+            locs = ObservableCollections.observableList(new ArrayList<LocBean>());
         }
         return locs;
     }
 
-    public LOCBean getLoc(MothBean mothBean, int panaNo) {
-        List<LOCBean> locList = mothBean.getLocList();
-        for (LOCBean locBean : locList) {
+    public LocBean getLoc(MothBean mothBean, int panaNo) {
+        List<LocBean> locList = mothBean.getLocList();
+        for (LocBean locBean : locList) {
             if (locBean.getPanaNo() == panaNo) {
                 return locBean;
             }

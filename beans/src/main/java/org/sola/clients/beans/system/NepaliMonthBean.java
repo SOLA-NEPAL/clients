@@ -15,7 +15,6 @@
  */
 package org.sola.clients.beans.system;
 
-import org.hibernate.validator.constraints.Range;
 import org.sola.clients.beans.AbstractBindingBean;
 
 /**
