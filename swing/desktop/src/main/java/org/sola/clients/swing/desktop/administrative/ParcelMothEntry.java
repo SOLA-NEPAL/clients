@@ -4,11 +4,15 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
-import java.util.List;
 import javax.swing.JOptionPane;
 import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.LOCBean;
+import org.sola.clients.beans.administrative.BaUnitContainsSpatialUnitBean;
+import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.administrative.MothBean;
+import org.sola.clients.beans.cadastre.CadastreObjectBean;
+import org.sola.clients.beans.cadastre.MapSheetBean;
+import org.sola.clients.beans.controls.SolaList;
+import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 
@@ -18,9 +22,60 @@ import org.sola.clients.swing.ui.MainContentPanel;
  */
 public class ParcelMothEntry extends ContentPanel {
 
-//    String vdcName;
-//    String mothLuj;
-//    String mothLujNo;
+    BaUnitBean baUnitBean;
+    MapSheetBean map;
+//    private SolaObservableList<BaUnitBean> baUnits;
+//
+//    public SolaObservableList<BaUnitBean> getBaUnits() {
+//        if(baUnits==null){
+//            baUnits=new SolaObservableList<BaUnitBean>();
+//        }
+//        return baUnits;
+//    }
+//
+//    public void setBaUnits(SolaObservableList<BaUnitBean> baUnits) { 
+//        if(baUnits==null){
+//            baUnits=new SolaObservableList<BaUnitBean>();
+//            
+//        }
+//        this.baUnits = baUnits;
+//       firePropertyChange("baUnits",null, this.baUnits);
+//    }
+    BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean;
+
+    public BaUnitContainsSpatialUnitBean getBaUnitContainsSpatialUnitBean() {
+        if (baUnitContainsSpatialUnitBean == null) {
+            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
+        }
+        return baUnitContainsSpatialUnitBean;
+    }
+
+    public void setBaUnitContainsSpatialUnitBean(BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean) {
+        if (baUnitContainsSpatialUnitBean == null) {
+            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
+
+        }
+        this.baUnitContainsSpatialUnitBean = baUnitContainsSpatialUnitBean;
+        firePropertyChange("baUnitContainsSpatialUnitBean", null, this.baUnitContainsSpatialUnitBean);
+    }
+    private SolaList<CadastreObjectBean> cadastreObjects;
+
+    public SolaList<CadastreObjectBean> getCadastreObjects() {
+        if (cadastreObjects == null) {
+            cadastreObjects = new SolaList<CadastreObjectBean>();
+        }
+        return cadastreObjects;
+    }
+
+    public void setCadastreObjects(SolaList<CadastreObjectBean> cadastreObjects) {
+        if (cadastreObjects == null) {
+            cadastreObjects = new SolaList<CadastreObjectBean>();
+
+        }
+        this.cadastreObjects = cadastreObjects;
+        firePropertyChange("cadastreObjects", null, this.cadastreObjects);
+    }
+
     public MainContentPanel getPnlContent() {
         return pnlContent;
     }
@@ -39,10 +94,7 @@ public class ParcelMothEntry extends ContentPanel {
     public ParcelMothEntry(MothBean mothBean) {
         this.mothBean = mothBean;
         initComponents();
-//        txtVDC.setText(vdcName);
-//        txtMothLuj.setText(mothLuj);
-//        txtMothLujNo.setText(mothLujNo);
-
+        mapSheetListBean.loadMapSheetList();
 
     }
 
@@ -52,21 +104,7 @@ public class ParcelMothEntry extends ContentPanel {
         }
         return mothBean;
     }
-//    public LOCBean getLoc(int panaNo) {
-//        List<LOCBean> locList = mothBean.getLocList();
-//
-//        for (LOCBean locBean : locList) {
-//            if (locBean.getPanaNo() == panaNo) {
-//                return locBean;
-//            }
-//        }
-//        return null;
-//    }
-//    public void setValues(){
-//        txtVDC.setText(vdcName);
-//        txtMothLuj.setText(mothLuj);
-//        txtMothLujNo.setText(mothLujNo);
-//    }
+//    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,15 +118,17 @@ public class ParcelMothEntry extends ContentPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         mothBean = createMothBean();
-        lOCListBean = new org.sola.clients.beans.administrative.LOCListBean();
+        locListBean = new org.sola.clients.beans.administrative.LocListBean();
         cadastreObjectBean = new org.sola.clients.beans.cadastre.CadastreObjectBean();
-        baUnitBean = new org.sola.clients.beans.administrative.BaUnitBean();
-        lOCBean = new org.sola.clients.beans.administrative.LOCBean();
+        locBean = new org.sola.clients.beans.administrative.LocBean();
+        mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
+        cadastreObjectListBean = new org.sola.clients.beans.cadastre.CadastreObjectListBean();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtVDC = new javax.swing.JTextField();
+        txtVdc = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtMothLuj = new javax.swing.JTextField();
@@ -102,50 +142,59 @@ public class ParcelMothEntry extends ContentPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        btnSave = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btnSave1 = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jPanel11 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jPanel8 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jPanel10 = new javax.swing.JPanel();
-        jComboBox4 = new javax.swing.JComboBox();
-        jPanel9 = new javax.swing.JPanel();
-        jComboBox3 = new javax.swing.JComboBox();
+        btnNewEntry = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
+        txtWardNo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
+        txtParcelNo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
-        jTextField7 = new javax.swing.JTextField();
+        txtSectionNo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox();
+        cmbUnit = new javax.swing.JComboBox();
         jPanel16 = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
+        txtRopani = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
-        jTextField9 = new javax.swing.JTextField();
+        txtAana = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
-        jTextField10 = new javax.swing.JTextField();
+        txtPaisa = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
-        jTextField11 = new javax.swing.JTextField();
+        txtDam = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
-        jTextField12 = new javax.swing.JTextField();
+        txtSquareMeter = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jPanel26 = new javax.swing.JPanel();
+        jPanel23 = new javax.swing.JPanel();
+        rdbFreeMap = new javax.swing.JRadioButton();
+        rdbControlMap = new javax.swing.JRadioButton();
+        jPanel25 = new javax.swing.JPanel();
+        cmbMapNo1 = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        cmbMapNo2 = new javax.swing.JComboBox();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel28 = new javax.swing.JPanel();
+        cmbMapNo3 = new javax.swing.JComboBox();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel29 = new javax.swing.JPanel();
+        cmbMapNo4 = new javax.swing.JComboBox();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel22 = new javax.swing.JPanel();
+        cmbParcelNo = new javax.swing.JComboBox();
+        jLabel14 = new javax.swing.JLabel();
 
         setHeaderPanel(headerPanel1);
 
@@ -155,9 +204,9 @@ public class ParcelMothEntry extends ContentPanel {
 
         jLabel1.setText("VDC/M.P");
 
-        txtVDC.setEnabled(false);
+        txtVdc.setEnabled(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${vdcCode}"), txtVDC, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${vdcCode}"), txtVdc, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -167,14 +216,14 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtVDC, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtVDC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtVdc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
@@ -194,7 +243,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +270,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +298,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,11 +315,16 @@ public class ParcelMothEntry extends ContentPanel {
 
         jTable1.setColumnSelectionAllowed(true);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${filteredBaUnits}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lOCBean, eLProperty, jTable1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
-        columnBinding.setColumnName("ee");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapSheet.mapNumber}"));
+        columnBinding.setColumnName("Map No.");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
+        columnBinding.setColumnName("Parcel No");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
@@ -296,12 +350,6 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave.setText("Save");
-        btnSave.setFocusable(false);
-        btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(btnSave);
-
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/revert.png"))); // NOI18N
         jButton2.setText("Import earlier details");
         jButton2.setFocusable(false);
@@ -314,103 +362,45 @@ public class ParcelMothEntry extends ContentPanel {
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
 
+        btnSave1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
+        btnSave1.setText("Save");
+        btnSave1.setFocusable(false);
+        btnSave1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSave1);
+
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
-        jButton4.setText("New Entry");
-        jButton4.setFocusable(false);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton4);
+        btnNewEntry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
+        btnNewEntry.setText("Add New Parcel");
+        btnNewEntry.setFocusable(false);
+        btnNewEntry.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNewEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewEntryActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnNewEntry);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
-        jButton6.setText("Edit");
-        jButton6.setFocusable(false);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton6);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
-        jButton5.setText("Remove");
-        jButton5.setFocusable(false);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton5);
-
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Map No.", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
-        jPanel11.setLayout(new java.awt.GridLayout(1, 4, 30, 0));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 159, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel11.add(jPanel7);
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox2, 0, 159, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel11.add(jPanel8);
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.TRAILING, 0, 159, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel11.add(jPanel10);
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, 159, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel11.add(jPanel9);
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
+        btnSave.setText("Save");
+        btnSave.setFocusable(false);
+        btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnSave);
 
         jPanel21.setLayout(new java.awt.GridLayout(1, 9, 15, 0));
+
+        txtWardNo.setEnabled(false);
 
         jLabel5.setText("Ward No.");
 
@@ -420,19 +410,21 @@ public class ParcelMothEntry extends ContentPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addGap(0, 22, Short.MAX_VALUE))
-            .addComponent(jTextField5)
+                .addGap(0, 34, Short.MAX_VALUE))
+            .addComponent(txtWardNo)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel12);
+
+        txtParcelNo.setEnabled(false);
 
         jLabel6.setText("Parcel No");
 
@@ -443,18 +435,20 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel6)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+            .addComponent(txtParcelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel13);
+
+        txtSectionNo.setEnabled(false);
 
         jLabel7.setText("Section No.");
 
@@ -464,15 +458,15 @@ public class ParcelMothEntry extends ContentPanel {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel7)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addGap(0, 25, Short.MAX_VALUE))
+            .addComponent(txtSectionNo)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSectionNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -480,7 +474,8 @@ public class ParcelMothEntry extends ContentPanel {
 
         jLabel8.setText("Unit");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbUnit.setEditable(true);
+        cmbUnit.setEnabled(false);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -489,18 +484,20 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jComboBox5, 0, 68, Short.MAX_VALUE)
+            .addComponent(cmbUnit, 0, 80, Short.MAX_VALUE)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel15);
+
+        txtRopani.setEnabled(false);
 
         jLabel9.setText("Ropani");
 
@@ -511,18 +508,20 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+            .addComponent(txtRopani, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtRopani, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel16);
+
+        txtAana.setEnabled(false);
 
         jLabel10.setText("Aana");
 
@@ -532,19 +531,21 @@ public class ParcelMothEntry extends ContentPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 43, Short.MAX_VALUE))
-            .addComponent(jTextField9)
+                .addGap(0, 55, Short.MAX_VALUE))
+            .addComponent(txtAana)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel17);
+
+        txtPaisa.setEnabled(false);
 
         jLabel11.setText("Paisa");
 
@@ -554,19 +555,21 @@ public class ParcelMothEntry extends ContentPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 43, Short.MAX_VALUE))
-            .addComponent(jTextField10)
+                .addGap(0, 55, Short.MAX_VALUE))
+            .addComponent(txtPaisa)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPaisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel18);
+
+        txtDam.setEnabled(false);
 
         jLabel12.setText("Dam");
 
@@ -576,19 +579,21 @@ public class ParcelMothEntry extends ContentPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 47, Short.MAX_VALUE))
-            .addComponent(jTextField11)
+                .addGap(0, 59, Short.MAX_VALUE))
+            .addComponent(txtDam)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel19);
+
+        txtSquareMeter.setEnabled(false);
 
         jLabel13.setText("Square Meter");
 
@@ -596,21 +601,205 @@ public class ParcelMothEntry extends ContentPanel {
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField12)
+            .addComponent(txtSquareMeter)
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSquareMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel21.add(jPanel20);
+
+        jPanel26.setLayout(new java.awt.GridLayout(1, 6, 15, 0));
+
+        buttonGroup1.add(rdbFreeMap);
+        rdbFreeMap.setText("Free Map");
+        rdbFreeMap.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdbFreeMapItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(rdbControlMap);
+        rdbControlMap.setText("Control Map");
+
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rdbFreeMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(rdbControlMap, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+        );
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addComponent(rdbFreeMap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rdbControlMap)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel26.add(jPanel23);
+
+        cmbMapNo1.setEditable(true);
+        cmbMapNo1.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheet}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cmbMapNo1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        cmbMapNo1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMapNo1ItemStateChanged(evt);
+            }
+        });
+
+        jLabel15.setText("Map No.");
+
+        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
+        jPanel25.setLayout(jPanel25Layout);
+        jPanel25Layout.setHorizontalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel15)
+            .addComponent(cmbMapNo1, 0, 126, Short.MAX_VALUE)
+        );
+        jPanel25Layout.setVerticalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbMapNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel26.add(jPanel25);
+
+        cmbMapNo2.setEditable(true);
+        cmbMapNo2.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheet}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cmbMapNo2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        cmbMapNo2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMapNo2ItemStateChanged(evt);
+            }
+        });
+
+        jLabel16.setText("Map No.");
+
+        javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
+        jPanel27.setLayout(jPanel27Layout);
+        jPanel27Layout.setHorizontalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel16)
+            .addComponent(cmbMapNo2, 0, 126, Short.MAX_VALUE)
+        );
+        jPanel27Layout.setVerticalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbMapNo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel26.add(jPanel27);
+
+        cmbMapNo3.setEditable(true);
+        cmbMapNo3.setEnabled(false);
+        cmbMapNo3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMapNo3ItemStateChanged(evt);
+            }
+        });
+
+        jLabel17.setText("Map No.");
+
+        javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
+        jPanel28.setLayout(jPanel28Layout);
+        jPanel28Layout.setHorizontalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel17)
+            .addComponent(cmbMapNo3, 0, 126, Short.MAX_VALUE)
+        );
+        jPanel28Layout.setVerticalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbMapNo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel26.add(jPanel28);
+
+        cmbMapNo4.setEditable(true);
+        cmbMapNo4.setEnabled(false);
+        cmbMapNo4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbMapNo4ItemStateChanged(evt);
+            }
+        });
+
+        jLabel18.setText("Map No.");
+
+        javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
+        jPanel29.setLayout(jPanel29Layout);
+        jPanel29Layout.setHorizontalGroup(
+            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel18)
+            .addComponent(cmbMapNo4, 0, 126, Short.MAX_VALUE)
+        );
+        jPanel29Layout.setVerticalGroup(
+            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel29Layout.createSequentialGroup()
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbMapNo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel26.add(jPanel29);
+
+        cmbParcelNo.setEditable(true);
+        cmbParcelNo.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastres}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectListBean, eLProperty, cmbParcelNo);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedCadastreObjectBean}"), cmbParcelNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        jLabel14.setText(" Parcel No.");
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addComponent(jLabel14)
+                .addContainerGap())
+            .addComponent(cmbParcelNo, 0, 126, Short.MAX_VALUE)
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel26.add(jPanel22);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -621,11 +810,13 @@ public class ParcelMothEntry extends ContentPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -638,52 +829,150 @@ public class ParcelMothEntry extends ContentPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(119, 119, 119)
+                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-    private List<BaUnitBean> baUnitList;
+
     private void txtPageNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPageNoKeyPressed
         // TODO add your handling code here:
         if ("".equals(txtPageNo.getText())) {
-          lOCBean = null;
-          return;
+            locBean = null;
+            return;
         }
-        LOCBean loc = lOCListBean.getLoc(mothBean, Integer.parseInt(txtPageNo.getText().toString()));
+        LocBean loc = locListBean.getLoc(mothBean, Integer.parseInt(txtPageNo.getText().toString()));
         if (loc == null) {
-            JOptionPane.showMessageDialog(this, "Hello");
+            if (JOptionPane.showConfirmDialog(this, "There is no any page " + txtPageNo.getText() + ". Do you like to create a new page", "Page Not Found Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) {
+                locBean = new LocBean();
+                locBean.setMothId(mothBean.getId());
+                locBean.setPanaNo(Integer.parseInt(txtPageNo.getText()));
+                locBean.saveLoc();
+                JOptionPane.showMessageDialog(null, "Page Created");
+            } else {
+                return;
+            }
+
         } else {
-            lOCBean = loc;
-            // baUnitList=lOCBean.getBaUnit();
+            locBean = loc;
+            //setBaunits(lOCBean.getBaUnits());
+            SolaObservableList<BaUnitBean> baUnits = locBean.getBaUnits();
+            for (BaUnitBean b : baUnits) {
+                setCadastreObjects(b.getCadastreObjectList());
+            }
+
         }
     }//GEN-LAST:event_txtPageNoKeyPressed
+
+    public void setEnableComponents() {
+//        cmbMapNo1.setEnabled(true);
+//        txtWardNo.setEnabled(true);
+//        txtParcelNo.setEnabled(true);
+//        txtSectionNo.setEnabled(true);
+//        cmbUnit.setEnabled(true);
+//        txtRopani.setEnabled(true);
+//        txtAana.setEnabled(true);
+//        txtDam.setEnabled(true);
+//        txtPaisa.setEnabled(true);
+//        txtSquareMeter.setEnabled(true);
+        cmbMapNo1.setEnabled(true);
+        cmbParcelNo.setEnabled(true);
+    }
+    private void btnNewEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewEntryActionPerformed
+        // TODO add your handling code here:
+        setEnableComponents();
+    }//GEN-LAST:event_btnNewEntryActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        CadastreObjectBean cad = cadastreObjectListBean.getSelectedCadastreObjectBean();
+        if (locBean.getBaUnits().size() == 0) {
+            baUnitBean = new BaUnitBean();
+            baUnitBean.setLocId(locBean.getId());
+            baUnitBean.setName("TEst");
+            baUnitBean.setName("test");
+            baUnitBean.setNameLastpart("test");
+            baUnitBean.setTypeCode("administrativeUnit");
+            baUnitBean.setStatusCode("current");
+            baUnitBean.saveBaUnitTest();
+            locBean.getBaUnits().add(baUnitBean);
+            baUnitContainsSpatialUnitBean.setBaUnitId(baUnitBean.getId());
+            baUnitContainsSpatialUnitBean.setSpatialUnitId(cad.getId());
+            baUnitContainsSpatialUnitBean.saveBaUnitContainsSpatialUnit();
+
+        } else {
+            for (BaUnitBean bU : locBean.getBaUnits()) {
+                String test = bU.getId();
+                BaUnitContainsSpatialUnitBean baU = getBaUnitContainsSpatialUnitBean();
+                baU.setSpatialUnitId(cad.getId());
+                baU.setBaUnitId(test);
+                baU.saveBaUnitContainsSpatialUnit();
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cmbMapNo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMapNo1ItemStateChanged
+        // TODO add your handling code here:
+        map = (MapSheetBean) cmbMapNo1.getSelectedItem();
+        cadastreObjectListBean.loadCadastreObjectList(map.getId());
+    }//GEN-LAST:event_cmbMapNo1ItemStateChanged
+
+    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSave1ActionPerformed
+
+    private void cmbMapNo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMapNo2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMapNo2ItemStateChanged
+
+    private void cmbMapNo3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMapNo3ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMapNo3ItemStateChanged
+
+    private void cmbMapNo4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMapNo4ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMapNo4ItemStateChanged
+
+    private void rdbFreeMapItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbFreeMapItemStateChanged
+        // TODO add your handling code here:
+       cmbMapNo1.setEnabled(true);
+       cmbMapNo1.setEnabled(true);
+       cmbMapNo1.setEnabled(true);
+       cmbMapNo1.setEnabled(true);
+       cmbMapNo1.setEnabled(true);
+    }//GEN-LAST:event_rdbFreeMapItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.sola.clients.beans.administrative.BaUnitBean baUnitBean;
+    private javax.swing.JButton btnNewEntry;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSave1;
+    private javax.swing.ButtonGroup buttonGroup1;
     private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
+    private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
+    private javax.swing.JComboBox cmbMapNo1;
+    private javax.swing.JComboBox cmbMapNo2;
+    private javax.swing.JComboBox cmbMapNo3;
+    private javax.swing.JComboBox cmbMapNo4;
+    private javax.swing.JComboBox cmbParcelNo;
+    private javax.swing.JComboBox cmbUnit;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JComboBox jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -693,8 +982,6 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -706,32 +993,39 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
-    private org.sola.clients.beans.administrative.LOCBean lOCBean;
-    private org.sola.clients.beans.administrative.LOCListBean lOCListBean;
+    private org.sola.clients.beans.administrative.LocBean locBean;
+    private org.sola.clients.beans.administrative.LocListBean locListBean;
+    private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private org.sola.clients.beans.administrative.MothBean mothBean;
+    private javax.swing.JRadioButton rdbControlMap;
+    private javax.swing.JRadioButton rdbFreeMap;
+    private javax.swing.JTextField txtAana;
+    private javax.swing.JTextField txtDam;
     private javax.swing.JTextField txtMothLuj;
     private javax.swing.JTextField txtMothLujNo;
     private javax.swing.JTextField txtPageNo;
-    private javax.swing.JTextField txtVDC;
+    private javax.swing.JTextField txtPaisa;
+    private javax.swing.JTextField txtParcelNo;
+    private javax.swing.JTextField txtRopani;
+    private javax.swing.JTextField txtSectionNo;
+    private javax.swing.JTextField txtSquareMeter;
+    private javax.swing.JTextField txtVdc;
+    private javax.swing.JTextField txtWardNo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

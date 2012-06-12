@@ -15,6 +15,7 @@
  */
 package org.sola.clients.beans.cadastre;
 
+import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
 
 /**
@@ -58,5 +59,10 @@ public class MapSheetBean extends AbstractIdBean {
         int oldValue = this.sheetType;
         this.sheetType = sheetType;
         propertySupport.firePropertyChange(SHEET_TYPE_PROPERTY, oldValue, this.sheetType);
+    }
+    
+    @Override
+    public String toString(){
+        return mapNumber;
     }
 }
