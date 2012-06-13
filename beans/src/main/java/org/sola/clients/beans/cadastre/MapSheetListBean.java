@@ -13,29 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.beans.administrative;
+package org.sola.clients.beans.cadastre;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
-import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *
  * @author KumarKhadka
  */
-public class BaUnitListBean extends AbstractBindingBean {
+public class MapSheetListBean extends AbstractBindingListBean {
 
-    ObservableList<BaUnitBean> baUnits;
+    ObservableList<MapSheetBean> mapSheet;
 
-    public BaUnitListBean() {
-        super();
+    public ObservableList<MapSheetBean> getMapSheet() {
+        if (mapSheet == null) {
+            mapSheet = ObservableCollections.observableList(new ArrayList<MapSheetBean>());
+        }
+        return mapSheet;
     }
 
-    public ObservableList<BaUnitBean> getBaUnits() {
-        if (baUnits == null) {
-            baUnits = ObservableCollections.observableList(new ArrayList<BaUnitBean>());
-        }
-        return baUnits;
+    public void loadMapSheetList() {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (List) mapSheet);
     }
 }

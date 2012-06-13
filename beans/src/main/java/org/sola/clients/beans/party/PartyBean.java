@@ -27,6 +27,7 @@
  */
 package org.sola.clients.beans.party;
 
+import java.util.Date;
 import java.util.UUID;
 import org.hibernate.validator.constraints.Email;
 import org.jdesktop.observablecollections.ObservableList;
@@ -67,6 +68,17 @@ public class PartyBean extends PartySummaryBean {
     public static final String FATHERSNAME_PROPERTY = "fathersName";
     public static final String GRANDFATHERSNAME_PROPERTY = "fathersLastName";
     public static final String ALIAS_PROPERTY = "alias";
+    public static final String STREET_PROPERTY="street";
+    //additional fields exposing.
+    public static final String GRAND_FATHER_NAME_PROPERTY="grandfatherName";
+    public static final String GRAND_FATHER_LAST_NAME_PROPERTY="grGandFatherLastName";
+    public static final String WARD_NO_PROPERTY = "wardNo";
+    public static final String BIRTH_DATE_PROPERTY = "brithDate";
+    public static final String VDC_CODE_PROPERTY ="vdcCode";
+    public static final String REMARKS_PROPERTY="rmks";
+    public static final String ID_ISSUING_OFFICE_PROPERTY= "id_issuing_office_code";
+    public static final String ID_ISSUE_DATE_PROPERTY= "id_issueDate";
+    public static final String DISTRICT_CODE_PROPERTY="districtcode";
     
     @Email(message = ClientMessage.CHECK_INVALID_EMAIL, payload=Localized.class)
     private String email;
@@ -83,6 +95,151 @@ public class PartyBean extends PartySummaryBean {
     private CommunicationTypeBean communicationTypeBean;
     private SolaList<PartyRoleBean> roleList;
     private transient PartyRoleBean selectedRole;
+    private String street;
+    //additional fields
+    private String grandfatherName;
+    private String grandFatherLastName;
+    private Date birthDate;
+    private DistrictBean districtBean;
+    private VdcBean vdcBean;
+    private int wardNo;
+    private String rmks;
+    private OfficeBean officeBean;
+    private Date idIssueDate;
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public DistrictBean getDistrictBean() {
+        if (districtBean==null){
+            districtBean=new DistrictBean();
+        }
+        return districtBean;
+    }
+
+    public void setDistrictBean(DistrictBean districtBean) {
+        //this.districtBean = districtBean;
+        this.setJointRefDataBean(this.getDistrictBean(), districtBean, DISTRICT_CODE_PROPERTY);
+    }
+
+    public String getDistrictCode() {
+        return this.getDistrictBean().getCode();
+    }
+
+    public void setDistrictCode(String value) {
+        String oldValue = this.getDistrictBean().getCode();
+        setDistrictBean(CacheManager.getBeanByCode(CacheManager.getDistricts(), value));
+        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, value);
+    }
+    
+    public OfficeBean getOfficeBean() {
+        if (officeBean==null) {
+            officeBean=new OfficeBean();
+        }
+        return officeBean;
+    }
+
+    public void setOfficeBean(OfficeBean officeBean) {
+        //this.officeBean = officeBean;
+        this.setJointRefDataBean(this.getOfficeBean(), officeBean, ID_ISSUING_OFFICE_PROPERTY);
+    }
+    
+    public String getIssuingOfficeCode() {
+        return this.getOfficeBean().getCode();
+    }
+
+    public void setIssuingOfficeCode(String value) {
+        String oldValue = getIssuingOfficeCode();
+        setOfficeBean(CacheManager.getBeanByCode(CacheManager.getOffices(), value));
+        propertySupport.firePropertyChange(ID_ISSUING_OFFICE_PROPERTY, oldValue, value);
+    }
+
+    public VdcBean getVdcBean() {
+        if (vdcBean==null){
+            vdcBean=new VdcBean();
+        }
+        return vdcBean;
+    }
+
+    public void setVdcBean(VdcBean vdcBean) {
+        //this.vdcBean = vdcBean;
+        this.setJointRefDataBean(this.getVdcBean(), vdcBean, VDC_CODE_PROPERTY);
+    }
+    
+    public String getVdcCode() {
+        return this.getVdcBean().getCode();
+    }
+
+    public void setVdcCode(String value) {
+        String oldValue = this.getVdcBean().getCode();
+        setVdcBean(CacheManager.getBeanByCode(CacheManager.getVdcs(this.getDistrictBean().getCode()), value));
+        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, value);
+    }
+    
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        Date oldValue=this.birthDate;
+        this.birthDate = birthDate;
+        propertySupport.firePropertyChange(BIRTH_DATE_PROPERTY, oldValue, this.birthDate);
+    }
+
+    public String getGrandFatherLastName() {
+        return grandFatherLastName;
+    }
+
+    public void setGrandFatherLastName(String grandFatherLastName) {
+        String oldValue=this.grandFatherLastName;
+        this.grandFatherLastName = grandFatherLastName;
+        propertySupport.firePropertyChange(GRAND_FATHER_LAST_NAME_PROPERTY, oldValue, this.grandFatherLastName);
+    }
+
+    public String getGrandfatherName() {
+        return grandfatherName;
+    }
+
+    public void setGrandfatherName(String grandfatherName) {
+        String oldValue=this.grandfatherName;
+        this.grandfatherName = grandfatherName;
+        propertySupport.firePropertyChange(GRANDFATHERSNAME_PROPERTY, oldValue, this.grandfatherName);
+    }
+
+    public Date getIdIssueDate() {
+        return idIssueDate;
+    }
+
+    public void setIdIssueDate(Date idIssueDate) {
+        Date oldValue=this.idIssueDate;
+        this.idIssueDate = idIssueDate;
+        propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
+    }
+
+    public String getRmks() {
+        return rmks;
+    }
+
+    public void setRmks(String rmks) {
+        String oldValue=this.rmks;
+        this.rmks = rmks;
+        propertySupport.firePropertyChange(REMARKS_PROPERTY, oldValue, this.rmks);
+    }
+
+    public int getWardNo() {
+        return wardNo;
+    }
+
+    public void setWardNo(int wardNo) {
+        int oldValue=this.wardNo;
+        this.wardNo = wardNo;
+        propertySupport.firePropertyChange(WARD_NO_PROPERTY, oldValue, this.wardNo);
+    }
 
     /** 
      * Default constructor to create party bean. Initializes 
@@ -104,6 +261,10 @@ public class PartyBean extends PartySummaryBean {
         this.setAlias(null);
         this.setGenderType(new GenderTypeBean());
         this.setIdType(new IdTypeBean());
+        //new aditional beans.
+        this.setVdcBean(new VdcBean());
+        this.setDistrictBean(new DistrictBean());
+        this.setOfficeBean(new OfficeBean());
         this.setPreferredCommunication(new CommunicationTypeBean());
         this.setName(null);
         this.setLastName(null);
@@ -332,7 +493,11 @@ public class PartyBean extends PartySummaryBean {
      */
     public boolean saveParty() {
         PartyTO party = TypeConverters.BeanToTrasferObject(this, PartyTO.class);
-
+        //reset the office values. //remove later on after correct mapping.
+        //party.setIdIssuingOfficeCode(this.getId_issuing_office_code());
+        //party.setBirthDate(TypeConverters.DateToXMLDate(this.birthDate));
+        //party.setIdIssueDate(TypeConverters.DateToXMLDate(this.id_issueDate));
+        
         if (getAddress() != null && getAddress().isNew() && (getAddress().getDescription() == null
                 || getAddress().getDescription().length() < 1)) {
             party.setAddress(null);
@@ -352,7 +517,13 @@ public class PartyBean extends PartySummaryBean {
             return null;
         }
         PartyTO partyTO = WSManager.getInstance().getCaseManagementService().getParty(partyId);
-        return TypeConverters.TransferObjectToBean(partyTO, PartyBean.class, null);
+        PartyBean pBean=TypeConverters.TransferObjectToBean(partyTO, PartyBean.class, null);
+        //reset the values. //remove later on after correct mapping.
+        //pBean.setId_issuing_office_code(partyTO.getIdIssuingOfficeCode());
+        //pBean.setBirthDate(TypeConverters.XMLDateToDate(partyTO.getBirthDate()));
+       // pBean.setId_issueDate(TypeConverters.XMLDateToDate(partyTO.getIdIssueDate()));
+        
+        return pBean;
     }
     
     /** Removes party. */

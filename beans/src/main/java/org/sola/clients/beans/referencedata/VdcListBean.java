@@ -28,9 +28,9 @@ import org.sola.services.boundary.wsclients.WSManager;
 public class VdcListBean extends AbstractBindingListBean {
 
     public static final String SELECTED_VDC_PROPERTY = "selectedVdc";
-    SolaCodeList<VdcBean> vdcs;
+    private SolaCodeList<VdcBean> vdcs;
     private VdcBean selectedVdc;
-     ObservableList<VdcBean> vdc;
+    private ObservableList<VdcBean> vdc;
 
     public VdcListBean(){
         this(false);

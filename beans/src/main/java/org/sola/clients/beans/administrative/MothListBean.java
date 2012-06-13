@@ -15,12 +15,8 @@
  */
 package org.sola.clients.beans.administrative;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.controls.SolaList;
+import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
@@ -28,22 +24,22 @@ import org.sola.services.boundary.wsclients.WSManager;
  *
  * @author KumarKhadka
  */
+
 public class MothListBean extends AbstractBindingBean {
 
     public static final String SELECTED_MOTH = "selectedMoth";
     private MothBean selectedMoth;
-    ObservableList<MothBean> moths;
-    SolaList<LOCBean> locs;
+    SolaObservableList<MothBean> moths; 
 
-    public ObservableList<MothBean> getMoths() {
+    public SolaObservableList<MothBean> getMoths() {
         if (moths == null) {
-            moths = ObservableCollections.observableList(new ArrayList<MothBean>());
+            moths = new SolaObservableList<MothBean>();//ObservableCollections.observableList(new ArrayList<MothBean>());
         }
         return moths;
     }
 
     public void loadMothList(String vdcCode, String mothLuj) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getMoths(vdcCode, mothLuj), MothBean.class, (List) moths);
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getMoths(vdcCode, mothLuj), MothBean.class, (SolaObservableList) moths);
     }
 
     public MothBean getSelectedMoth() {
@@ -56,29 +52,9 @@ public class MothListBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
     }
 
-    public SolaList<LOCBean> getLocs() {
-        if (locs == null) {
-            locs = new SolaList<LOCBean>();
-        }
-        return locs;
-    }
+   
 
-    public ObservableList<LOCBean> getFilteredLocs() {
-        return getLocs().getFilteredList();
-    }
+   
 
-    public void loadLocs(int panaNo) {
-        locs = getLocs();
-    }
-
-    public LOCBean getLocs(int panaNo) {
-        List<LOCBean> locList = getSelectedMoth().getLocList();
-
-        for (LOCBean locBean : locList) {
-            if (locBean.getPanaNo() == panaNo) {
-                return locBean;
-            }
-        }
-        return null;
-    }
+    
 }

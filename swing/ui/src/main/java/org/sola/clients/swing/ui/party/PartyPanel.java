@@ -1,32 +1,35 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.ui.party;
 
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -35,17 +38,14 @@ import javax.swing.JTextField;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartyRoleBean;
-import org.sola.clients.beans.referencedata.CommunicationTypeListBean;
-import org.sola.clients.beans.referencedata.GenderTypeListBean;
-import org.sola.clients.beans.referencedata.IdTypeListBean;
-import org.sola.clients.beans.referencedata.PartyRoleTypeBean;
-import org.sola.clients.beans.referencedata.PartyRoleTypeListBean;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.swing.common.utils.BindingTools;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
- * Used to create or edit party object. {@link PartyBean} is used to bind data on the form.
+ * Used to create or edit party object. {@link PartyBean} is used to bind data
+ * on the form.
  */
 public class PartyPanel extends javax.swing.JPanel {
 
@@ -53,26 +53,30 @@ public class PartyPanel extends javax.swing.JPanel {
     static String individualString = "naturalPerson";
     static String entityString = "nonNaturalPerson";
     private static final String individualLabel = MessageUtility.getLocalizedMessage(
-                            ClientMessage.GENERAL_LABELS_INDIVIDUAL).getMessage();
+            ClientMessage.GENERAL_LABELS_INDIVIDUAL).getMessage();
     private static final String entityLabel = MessageUtility.getLocalizedMessage(
-                            ClientMessage.GENERAL_LABELS_ENTITY).getMessage();
+            ClientMessage.GENERAL_LABELS_ENTITY).getMessage();
     private boolean readOnly = false;
-
-    /** Default form constructor. */
+    private boolean startuptime=false;
+    /**
+     * Default form constructor.
+     */
     public PartyPanel() {
         readOnly = false;
         initComponents();
     }
 
-    /** 
-     * Form constructor. 
-     * @param savePartyOnAction Boolean flag to indicate whether to save party 
+    /**
+     * Form constructor.
+     *
+     * @param savePartyOnAction Boolean flag to indicate whether to save party
      * when Save button is clicked.
      * @param partyBean {@link PartyBean} instance to display.
      * @param readOnly Indicates whether to allow any changes on the form.
      */
     public PartyPanel(PartyBean partyBean, boolean readOnly) {
         this.readOnly = readOnly;
+        this.startuptime=true;
         initComponents();
         setupPartyBean(partyBean);
 
@@ -88,15 +92,16 @@ public class PartyPanel extends javax.swing.JPanel {
 
         customizeAddRoleButton(null);
         customizeRoleButtons(null);
+        this.startuptime=false;
     }
 
-    private PartyRoleTypeListBean createPartyRolesList(){
-        if(partyRoleTypes == null){
+    private PartyRoleTypeListBean createPartyRolesList() {
+        if (partyRoleTypes == null) {
             partyRoleTypes = new PartyRoleTypeListBean(true);
         }
         return partyRoleTypes;
     }
-    
+
     public boolean isReadOnly() {
         return readOnly;
     }
@@ -114,10 +119,12 @@ public class PartyPanel extends javax.swing.JPanel {
         return partyBean;
     }
 
+    
     public void setPartyBean(PartyBean partyBean) {
         setupPartyBean(partyBean);
     }
 
+    
     private IdTypeListBean createIdTypes() {
         if (idTypes == null) {
             idTypes = new IdTypeListBean(true);
@@ -139,7 +146,9 @@ public class PartyPanel extends javax.swing.JPanel {
         return communicationTypes;
     }
 
-    /** Setup reference data bean object, used to bind data on the form. */
+    /**
+     * Setup reference data bean object, used to bind data on the form.
+     */
     private void setupPartyBean(PartyBean partyBean) {
         detailsPanel.setSelectedIndex(0);
         cbxPartyRoleTypes.setSelectedIndex(0);
@@ -148,8 +157,12 @@ public class PartyPanel extends javax.swing.JPanel {
             this.partyBean = partyBean;
         } else {
             this.partyBean = new PartyBean();
+            //Allow user to select the administrative unit.
+            cboDistrict.setSelectedIndex(-1);
+            cboVDCs.setSelectedIndex(-1);
+            cboOffice.setSelectedIndex(-1);
         }
-        
+
         communicationTypes.setExcludedCodes(this.partyBean.getPreferredCommunicationCode());
         idTypes.setExcludedCodes(this.partyBean.getIdTypeCode());
         genderTypes.setExcludedCodes(this.partyBean.getGenderCode());
@@ -163,30 +176,36 @@ public class PartyPanel extends javax.swing.JPanel {
                 }
             }
         });
-
+        //popup vdc list.
+        if (partyBean!=null){
+            vdcListBean.loadList(false, partyBean.getDistrictCode());
+        }
         customizePanel();
+        
         firePropertyChange("partyBean", null, this.partyBean);
         BindingTools.refreshBinding(bindingGroup, "rolesGroup");
     }
 
-    /** 
-     * Enables or disables "add", depending on selection in the list of role 
-     * types and user rights. 
+    /**
+     * Enables or disables "add", depending on selection in the list of role
+     * types and user rights.
      */
     private void customizeAddRoleButton(PartyRoleTypeBean partyRoleType) {
-        btnAddRole.setEnabled(partyRoleType != null && !readOnly && partyRoleType.getCode()!=null);
+        btnAddRole.setEnabled(partyRoleType != null && !readOnly && partyRoleType.getCode() != null);
     }
 
-    /** 
-     * Enables or disables "remove" and "view" buttons for roles, depending on 
-     * selection in the roles list and user rights. 
+    /**
+     * Enables or disables "remove" and "view" buttons for roles, depending on
+     * selection in the roles list and user rights.
      */
     private void customizeRoleButtons(PartyRoleBean partyRole) {
         btnRemoveRole.setEnabled(partyRole != null && !readOnly);
         menuRemoveRole.setEnabled(btnRemoveRole.isEnabled());
     }
 
-    /** Applies post initialization settings. */
+    /**
+     * Applies post initialization settings.
+     */
     private void customizePanel() {
         if (partyBean.isNew()) {
             switchPartyType(true);
@@ -225,10 +244,23 @@ public class PartyPanel extends javax.swing.JPanel {
             txtFax.setEnabled(false);
             txtEmail.setEnabled(false);
             txtMobile.setEnabled(false);
+            //additional fields.
+            cboDistrict.setEnabled(false);
+            cboOffice.setEnabled(false);
+            cboVDCs.setEnabled(false);
+            txtIssueDate.setEditable(false);
+            txtIssueDate.setBackground(Color.LIGHT_GRAY);
+            txtBirthDate.setEnabled(false);
+            txtGrandFatherFirstName.setEnabled(false);
+            txtGrandFatherLastName.setEnabled(false);
+            txtWardNo.setEnabled(false);
+            txtRemarks.setEnabled(false);
         }
     }
 
-    /** Switch individual and entity type */
+    /**
+     * Switch individual and entity type
+     */
     private void switchPartyType(boolean isIndividual) {
         if (isIndividual) {
             partyBean.setTypeCode(individualString);
@@ -250,6 +282,12 @@ public class PartyPanel extends javax.swing.JPanel {
         partyBean.setGenderCode(null);
         partyBean.setIdType(null);
         enableIndividualFields(isIndividual);
+        //additional field.
+        cboOffice.setSelectedIndex(-1);
+        partyBean.setIdIssueDate(null);
+        partyBean.setOfficeBean(null);
+        partyBean.setGrandFatherLastName(null);
+        partyBean.setGrandfatherName(null);
     }
 
     private void enableIndividualFields(boolean enable) {
@@ -260,20 +298,31 @@ public class PartyPanel extends javax.swing.JPanel {
         cbxGender.setEnabled(enable);
         cbxIdType.setEnabled(enable);
         txtIdref.setEnabled(enable);
+        //additional fields.
+        cboOffice.setEnabled(enable);
+        txtIssueDate.setEditable(enable);
+        if (enable){
+            txtIssueDate.setBackground(Color.WHITE);
+        }
+        else{
+            txtIssueDate.setBackground(Color.LIGHT_GRAY);
+        }
+        txtGrandFatherFirstName.setEnabled(enable);
+        txtGrandFatherLastName.setEnabled(enable);
     }
-    
-    public boolean validateParty(boolean showMessage){
+
+    public boolean validateParty(boolean showMessage) {
         return partyBean.validate(showMessage).size() < 1;
     }
-    
-    public boolean saveParty(){
+
+    public boolean saveParty() {
         if (validateParty(true)) {
             return partyBean.saveParty();
         } else {
             return false;
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -286,16 +335,22 @@ public class PartyPanel extends javax.swing.JPanel {
         popupRoles = new javax.swing.JPopupMenu();
         menuRemoveRole = new javax.swing.JMenuItem();
         genderTypes = createGenderTypes();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        officeListBean = new org.sola.clients.beans.referencedata.OfficeListBean();
+        districtListBean = new org.sola.clients.beans.referencedata.DistrictListBean();
+        vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
         detailsPanel = new javax.swing.JTabbedPane();
         basicPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        roleTableScrollPanel = new javax.swing.JScrollPane();
-        tablePartyRole = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar1 = new javax.swing.JToolBar();
         cbxPartyRoleTypes = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         btnAddRole = new javax.swing.JButton();
         btnRemoveRole = new javax.swing.JButton();
+        groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
+        roleTableScrollPanel = new javax.swing.JScrollPane();
+        tablePartyRole = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jPanel10 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         labName = new javax.swing.JLabel();
@@ -303,19 +358,36 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         labLastName = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
+        jPanel27 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        cboDistrict = new javax.swing.JComboBox();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        cboVDCs = new javax.swing.JComboBox();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtWardNo = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         labIdType = new javax.swing.JLabel();
         cbxIdType = new javax.swing.JComboBox();
         jPanel7 = new javax.swing.JPanel();
         labIdref = new javax.swing.JLabel();
         txtIdref = new javax.swing.JTextField();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtIssueDate = new javax.swing.JFormattedTextField();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cboOffice = new javax.swing.JComboBox();
         jPanel8 = new javax.swing.JPanel();
         lblGender = new javax.swing.JLabel();
         cbxGender = new javax.swing.JComboBox();
         jPanel9 = new javax.swing.JPanel();
         labAddress = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
-        groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
+        jPanel26 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtBirthDate = new javax.swing.JFormattedTextField();
         fullPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -327,6 +399,15 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel16 = new javax.swing.JPanel();
         labAlias = new javax.swing.JLabel();
         txtAlias = new javax.swing.JTextField();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtGrandFatherFirstName = new javax.swing.JTextField();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtGrandFatherLastName = new javax.swing.JTextField();
+        jPanel25 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtRemarks = new javax.swing.JTextField();
         jPanel18 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         labPhone = new javax.swing.JLabel();
@@ -363,6 +444,13 @@ public class PartyPanel extends javax.swing.JPanel {
         });
         popupRoles.add(menuRemoveRole);
 
+        jScrollPane1.setName(bundle.getString("PartyPanel.jScrollPane1.name")); // NOI18N
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setName(bundle.getString("PartyPanel.jTextArea1.name")); // NOI18N
+        jScrollPane1.setViewportView(jTextArea1);
+
         setMinimumSize(new java.awt.Dimension(300, 425));
         setName("Form"); // NOI18N
 
@@ -373,34 +461,16 @@ public class PartyPanel extends javax.swing.JPanel {
 
         jPanel1.setName("jPanel1"); // NOI18N
 
-        roleTableScrollPanel.setName("roleTableScrollPanel"); // NOI18N
-
-        tablePartyRole.setComponentPopupMenu(popupRoles);
-        tablePartyRole.setName("tablePartyRole"); // NOI18N
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyBean.filteredRoleList}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tablePartyRole, "rolesGroup");
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${role.displayValue}"));
-        columnBinding.setColumnName("Role.display Value");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.selectedRole}"), tablePartyRole, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
-        bindingGroup.addBinding(binding);
-
-        roleTableScrollPanel.setViewportView(tablePartyRole);
-        tablePartyRole.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PartyPanel.tablePartyRole.columnModel.title0_1")); // NOI18N
-
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
         cbxPartyRoleTypes.setName("cbxPartyRoleTypes"); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyRoleTypeList}");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyRoleTypeList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partyRoleTypes, eLProperty, cbxPartyRoleTypes);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partyRoleTypes, org.jdesktop.beansbinding.ELProperty.create("${selectedPartyRoleType}"), cbxPartyRoleTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partyRoleTypes, org.jdesktop.beansbinding.ELProperty.create("${selectedPartyRoleType}"), cbxPartyRoleTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         jToolBar1.add(cbxPartyRoleTypes);
@@ -430,23 +500,49 @@ public class PartyPanel extends javax.swing.JPanel {
         });
         jToolBar1.add(btnRemoveRole);
 
+        groupPanel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        groupPanel1.setName("groupPanel1"); // NOI18N
+        groupPanel1.setTitleText(bundle.getString("PartyPanel.groupPanel1.titleText")); // NOI18N
+
+        roleTableScrollPanel.setName("roleTableScrollPanel"); // NOI18N
+
+        tablePartyRole.setComponentPopupMenu(popupRoles);
+        tablePartyRole.setName("tablePartyRole"); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyBean.filteredRoleList}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tablePartyRole, "rolesGroup");
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${role.displayValue}"));
+        columnBinding.setColumnName("Role.display Value");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.selectedRole}"), tablePartyRole, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
+        roleTableScrollPanel.setViewportView(tablePartyRole);
+        tablePartyRole.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PartyPanel.tablePartyRole.columnModel.title0_1")); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(groupPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(roleTableScrollPanel)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel10.setName("jPanel10"); // NOI18N
-        jPanel10.setLayout(new java.awt.GridLayout(3, 2, 15, 0));
+        jPanel10.setLayout(new java.awt.GridLayout(6, 2, 15, 0));
 
         jPanel4.setName("jPanel4"); // NOI18N
 
@@ -468,15 +564,15 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labName, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+            .addComponent(labName, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addComponent(txtFirstName)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(labName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(txtFirstName)
                 .addContainerGap())
         );
 
@@ -500,19 +596,125 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+            .addComponent(labLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addComponent(txtLastName)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(labLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(txtLastName)
                 .addContainerGap())
         );
 
         jPanel10.add(jPanel5);
+
+        jPanel27.setName(bundle.getString("PartyPanel.jPanel27.name")); // NOI18N
+
+        jLabel9.setText(bundle.getString("PartyPanel.jLabel9.text")); // NOI18N
+        jLabel9.setName(bundle.getString("PartyPanel.jLabel9.name")); // NOI18N
+
+        cboDistrict.setBackground(new java.awt.Color(226, 244, 224));
+        cboDistrict.setName(bundle.getString("PartyPanel.cboDistrict.name")); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cboDistrict);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.districtBean}"), cboDistrict, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        cboDistrict.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboDistrictItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
+        jPanel27.setLayout(jPanel27Layout);
+        jPanel27Layout.setHorizontalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addComponent(jLabel9)
+                .addGap(0, 240, Short.MAX_VALUE))
+            .addComponent(cboDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel27Layout.setVerticalGroup(
+            jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cboDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
+        );
+
+        jPanel10.add(jPanel27);
+
+        jPanel21.setName(bundle.getString("PartyPanel.jPanel21.name")); // NOI18N
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        jLabel3.setText(bundle.getString("PartyPanel.jLabel3.text")); // NOI18N
+        jLabel3.setName(bundle.getString("PartyPanel.jLabel3.name")); // NOI18N
+
+        cboVDCs.setBackground(new java.awt.Color(226, 244, 224));
+        cboVDCs.setName(bundle.getString("PartyPanel.cboVDCs.name")); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cboVDCs);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.vdcBean}"), cboVDCs, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 197, Short.MAX_VALUE))
+            .addComponent(cboVDCs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cboVDCs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jPanel10.add(jPanel21);
+
+        jPanel22.setName(bundle.getString("PartyPanel.jPanel22.name")); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        jLabel4.setText(bundle.getString("PartyPanel.jLabel4.text")); // NOI18N
+        jLabel4.setName(bundle.getString("PartyPanel.jLabel4.name")); // NOI18N
+
+        txtWardNo.setName(bundle.getString("PartyPanel.txtWardNo.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.wardNo}"), txtWardNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 238, Short.MAX_VALUE))
+            .addComponent(txtWardNo, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jPanel10.add(jPanel22);
 
         jPanel6.setName("jPanel6"); // NOI18N
 
@@ -533,15 +735,15 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labIdType, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-            .addComponent(cbxIdType, 0, 232, Short.MAX_VALUE)
+            .addComponent(labIdType, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addComponent(cbxIdType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(labIdType, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxIdType, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(cbxIdType)
                 .addContainerGap())
         );
 
@@ -561,19 +763,87 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labIdref, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-            .addComponent(txtIdref, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+            .addComponent(labIdref, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addComponent(txtIdref)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(labIdref, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIdref, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(txtIdref)
                 .addContainerGap())
         );
 
         jPanel10.add(jPanel7);
+
+        jPanel20.setName(bundle.getString("PartyPanel.jPanel20.name")); // NOI18N
+
+        jLabel2.setText(bundle.getString("PartyPanel.jLabel2.text")); // NOI18N
+        jLabel2.setName(bundle.getString("PartyPanel.jLabel2.name")); // NOI18N
+
+        txtIssueDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
+        txtIssueDate.setText(bundle.getString("PartyPanel.txtIssueDate.text_1")); // NOI18N
+        txtIssueDate.setName(bundle.getString("PartyPanel.txtIssueDate.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.idIssueDate}"), txtIssueDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(0, 165, Short.MAX_VALUE))
+            .addComponent(txtIssueDate)
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtIssueDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jPanel10.add(jPanel20);
+
+        jPanel19.setName(bundle.getString("PartyPanel.jPanel19.name")); // NOI18N
+
+        jLabel1.setText(bundle.getString("PartyPanel.jLabel1.text")); // NOI18N
+        jLabel1.setName(bundle.getString("PartyPanel.jLabel1.name")); // NOI18N
+
+        cboOffice.setBackground(new java.awt.Color(226, 244, 224));
+        cboOffice.setMinimumSize(new java.awt.Dimension(24, 20));
+        cboOffice.setName(bundle.getString("PartyPanel.cboOffice.name")); // NOI18N
+        cboOffice.setPreferredSize(new java.awt.Dimension(24, 20));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${offices}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, officeListBean, eLProperty, cboOffice);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.officeBean}"), cboOffice, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 226, Short.MAX_VALUE))
+            .addComponent(cboOffice, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cboOffice, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel10.add(jPanel19);
 
         jPanel8.setName("jPanel8"); // NOI18N
 
@@ -595,15 +865,15 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblGender, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-            .addComponent(cbxGender, 0, 232, Short.MAX_VALUE)
+            .addComponent(cbxGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblGender, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(lblGender, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxGender, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(cbxGender)
                 .addContainerGap())
         );
 
@@ -626,46 +896,71 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-            .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+            .addComponent(labAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addComponent(txtAddress)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(labAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(txtAddress)
                 .addContainerGap())
         );
 
         jPanel10.add(jPanel9);
 
-        groupPanel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        groupPanel1.setName("groupPanel1"); // NOI18N
-        groupPanel1.setTitleText(bundle.getString("PartyPanel.groupPanel1.titleText")); // NOI18N
+        jPanel26.setName(bundle.getString("PartyPanel.jPanel26.name")); // NOI18N
+
+        jLabel8.setText(bundle.getString("PartyPanel.jLabel8.text")); // NOI18N
+        jLabel8.setName(bundle.getString("PartyPanel.jLabel8.name")); // NOI18N
+
+        txtBirthDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
+        txtBirthDate.setText(bundle.getString("PartyPanel.txtBirthDate.text_1")); // NOI18N
+        txtBirthDate.setName(bundle.getString("PartyPanel.txtBirthDate.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.birthDate}"), txtBirthDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
+        jPanel26.setLayout(jPanel26Layout);
+        jPanel26Layout.setHorizontalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addGap(0, 172, Short.MAX_VALUE))
+            .addComponent(txtBirthDate)
+        );
+        jPanel26Layout.setVerticalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(txtBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel10.add(jPanel26);
 
         javax.swing.GroupLayout basicPanelLayout = new javax.swing.GroupLayout(basicPanel);
         basicPanel.setLayout(basicPanelLayout);
         basicPanelLayout.setHorizontalGroup(
             basicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basicPanelLayout.createSequentialGroup()
+            .addGroup(basicPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(basicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(groupPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(basicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         basicPanelLayout.setVerticalGroup(
             basicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(basicPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(269, 269, 269))
         );
 
         detailsPanel.addTab(bundle.getString("PartyPanel.basicPanel.TabConstraints.tabTitle"), basicPanel); // NOI18N
@@ -673,7 +968,7 @@ public class PartyPanel extends javax.swing.JPanel {
         fullPanel.setName("fullPanel"); // NOI18N
 
         jPanel3.setName("jPanel3"); // NOI18N
-        jPanel3.setLayout(new java.awt.GridLayout(2, 2, 15, 0));
+        jPanel3.setLayout(new java.awt.GridLayout(3, 2, 15, 0));
 
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -691,8 +986,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labFatherFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
-            .addComponent(txtFatherFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(182, Short.MAX_VALUE))
+            .addComponent(txtFatherFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -700,7 +995,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labFatherFirstName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFatherFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel2);
@@ -721,8 +1016,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(labFatherLastName)
-                .addContainerGap(143, Short.MAX_VALUE))
-            .addComponent(txtFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(218, Short.MAX_VALUE))
+            .addComponent(txtFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -730,7 +1025,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labFatherLastName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFatherLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel17);
@@ -751,8 +1046,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(labAlias)
-                .addContainerGap(206, Short.MAX_VALUE))
-            .addComponent(txtAlias, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(281, Short.MAX_VALUE))
+            .addComponent(txtAlias, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,10 +1055,98 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labAlias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAlias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel16);
+
+        jPanel23.setName(bundle.getString("PartyPanel.jPanel23.name")); // NOI18N
+
+        jLabel5.setText(bundle.getString("PartyPanel.jLabel5.text")); // NOI18N
+        jLabel5.setName(bundle.getString("PartyPanel.jLabel5.name")); // NOI18N
+
+        txtGrandFatherFirstName.setName(bundle.getString("PartyPanel.txtGrandFatherFirstName.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.grandfatherName}"), txtGrandFatherFirstName, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 154, Short.MAX_VALUE))
+            .addComponent(txtGrandFatherFirstName)
+        );
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtGrandFatherFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel23);
+
+        jPanel24.setName(bundle.getString("PartyPanel.jPanel24.name")); // NOI18N
+
+        jLabel6.setText(bundle.getString("PartyPanel.jLabel6.text")); // NOI18N
+        jLabel6.setName(bundle.getString("PartyPanel.jLabel6.name")); // NOI18N
+
+        txtGrandFatherLastName.setName(bundle.getString("PartyPanel.txtGrandFatherLastName.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.grandFatherLastName}"), txtGrandFatherLastName, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(txtGrandFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtGrandFatherLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel24);
+
+        jPanel25.setName(bundle.getString("PartyPanel.jPanel25.name")); // NOI18N
+
+        jLabel7.setText(bundle.getString("PartyPanel.jLabel7.text")); // NOI18N
+        jLabel7.setName(bundle.getString("PartyPanel.jLabel7.name")); // NOI18N
+
+        txtRemarks.setName(bundle.getString("PartyPanel.txtRemarks.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.rmks}"), txtRemarks, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
+        jPanel25.setLayout(jPanel25Layout);
+        jPanel25Layout.setHorizontalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 209, Short.MAX_VALUE))
+            .addComponent(txtRemarks)
+        );
+        jPanel25Layout.setVerticalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtRemarks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel25);
 
         jPanel18.setName("jPanel18"); // NOI18N
         jPanel18.setLayout(new java.awt.GridLayout(3, 2, 15, 3));
@@ -788,8 +1171,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(labPhone)
-                .addContainerGap(198, Short.MAX_VALUE))
-            .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(273, Short.MAX_VALUE))
+            .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -797,7 +1180,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labPhone)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel18.add(jPanel11);
@@ -818,8 +1201,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(labMobile)
-                .addContainerGap(198, Short.MAX_VALUE))
-            .addComponent(txtMobile, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(273, Short.MAX_VALUE))
+            .addComponent(txtMobile, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -827,7 +1210,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labMobile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel18.add(jPanel12);
@@ -851,8 +1234,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(labFax)
-                .addContainerGap(210, Short.MAX_VALUE))
-            .addComponent(txtFax, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(285, Short.MAX_VALUE))
+            .addComponent(txtFax, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -860,7 +1243,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labFax)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel18.add(jPanel13);
@@ -888,8 +1271,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(labPreferredWay, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-            .addComponent(cbxCommunicationWay, 0, 232, Short.MAX_VALUE)
+                .addContainerGap(114, Short.MAX_VALUE))
+            .addComponent(cbxCommunicationWay, 0, 307, Short.MAX_VALUE)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -897,7 +1280,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labPreferredWay)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbxCommunicationWay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel18.add(jPanel15);
@@ -921,8 +1304,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(labEmail)
-                .addContainerGap(200, Short.MAX_VALUE))
-            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addContainerGap(275, Short.MAX_VALUE))
+            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -930,7 +1313,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(labEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel18.add(jPanel14);
@@ -946,21 +1329,21 @@ public class PartyPanel extends javax.swing.JPanel {
             .addGroup(fullPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(groupPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         fullPanelLayout.setVerticalGroup(
             fullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fullPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(groupPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(groupPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         detailsPanel.addTab(bundle.getString("PartyPanel.fullPanel.TabConstraints.tabTitle"), fullPanel); // NOI18N
@@ -991,13 +1374,11 @@ public class PartyPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(individualButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(entityButton))
-                    .addComponent(detailsPanel))
+                .addComponent(individualButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(entityButton)
                 .addContainerGap())
+            .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1005,9 +1386,9 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(individualButton)
                     .addComponent(entityButton))
-                .addGap(7, 7, 7)
-                .addComponent(detailsPanel)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(detailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -1037,17 +1418,45 @@ public class PartyPanel extends javax.swing.JPanel {
         removeRole();
     }//GEN-LAST:event_menuRemoveRoleActionPerformed
 
+    private void cboDistrictItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDistrictItemStateChanged
+        if (this.startuptime) return;
+        try {
+            if (cboDistrict.getSelectedItem()==null) return;
+            
+            DistrictBean district=(DistrictBean)cboDistrict.getSelectedItem();
+            if (district!=null){
+                String distric_code=district.getCode();
+                partyBean.setDistrictCode(distric_code);
+                //load corresponding vdcs.
+                if (!this.readOnly){
+                    vdcListBean.loadList(false, distric_code);
+                    cboVDCs.setSelectedIndex(-1);
+                }
+                //load corresponding offices.
+                if (!this.readOnly){
+                    officeListBean.loadList(false,distric_code);
+                    cboOffice.setSelectedIndex(-1);
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cboDistrictItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel basicPanel;
     private javax.swing.JButton btnAddRole;
     private javax.swing.JButton btnRemoveRole;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cboDistrict;
+    private javax.swing.JComboBox cboOffice;
+    private javax.swing.JComboBox cboVDCs;
     public javax.swing.JComboBox cbxCommunicationWay;
     public javax.swing.JComboBox cbxGender;
     public javax.swing.JComboBox cbxIdType;
     private javax.swing.JComboBox cbxPartyRoleTypes;
     private org.sola.clients.beans.referencedata.CommunicationTypeListBean communicationTypes;
     private javax.swing.JTabbedPane detailsPanel;
+    private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
     private javax.swing.JRadioButton entityButton;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel fullPanel;
@@ -1056,6 +1465,15 @@ public class PartyPanel extends javax.swing.JPanel {
     private org.sola.clients.swing.ui.GroupPanel groupPanel2;
     private org.sola.clients.beans.referencedata.IdTypeListBean idTypes;
     private javax.swing.JRadioButton individualButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1066,7 +1484,16 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1074,6 +1501,8 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel labAddress;
     private javax.swing.JLabel labAlias;
@@ -1090,21 +1519,29 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JLabel labPreferredWay;
     private javax.swing.JLabel lblGender;
     private javax.swing.JMenuItem menuRemoveRole;
+    private org.sola.clients.beans.referencedata.OfficeListBean officeListBean;
     private org.sola.clients.beans.referencedata.PartyRoleTypeListBean partyRoleTypes;
     private javax.swing.JPopupMenu popupRoles;
     private javax.swing.JScrollPane roleTableScrollPanel;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tablePartyRole;
     public javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAlias;
+    private javax.swing.JFormattedTextField txtBirthDate;
     public javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFatherFirstName;
     private javax.swing.JTextField txtFatherLastName;
     public javax.swing.JTextField txtFax;
     public javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtGrandFatherFirstName;
+    private javax.swing.JTextField txtGrandFatherLastName;
     private javax.swing.JTextField txtIdref;
+    private javax.swing.JFormattedTextField txtIssueDate;
     public javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtMobile;
     public javax.swing.JTextField txtPhone;
+    private javax.swing.JTextField txtRemarks;
+    private javax.swing.JTextField txtWardNo;
+    private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 

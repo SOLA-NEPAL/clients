@@ -48,8 +48,8 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel13" min="-2" pref="47" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel26" min="-2" pref="282" max="-2" attributes="0"/>
-              <EmptySpace pref="62" max="32767" attributes="0"/>
+              <Component id="jPanel26" min="-2" pref="232" max="-2" attributes="0"/>
+              <EmptySpace pref="117" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

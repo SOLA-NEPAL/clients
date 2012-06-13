@@ -15,11 +15,8 @@
  */
 package org.sola.clients.beans.administrative;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractIdBean;
-import org.sola.clients.beans.controls.SolaList;
+import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -33,7 +30,7 @@ public class MothBean extends AbstractIdBean {
 
     public static final String FINANCIAL_YEAR_PROPERTY = "financialYear";
     public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
-    public static final String VDC_SID_PROPERTY = "vdcCode";
+    public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String MOTHLUJ_PROPERTY = "mothLuj";
     public static final String LMOCD_PROPERTY = "lmocd";
@@ -46,17 +43,22 @@ public class MothBean extends AbstractIdBean {
     private String mothLuj;
     private int financialYear;
     private int lmocd;
-    private List<LOCBean> locList;
+    private SolaObservableList<LocBean> locList;
     private VdcBean vdc;
-   
-    public List<LOCBean> getLocList() {
+
+    public MothBean() {
+        super();
+        locList = new SolaObservableList<LocBean>();
+    }
+
+    public SolaObservableList<LocBean> getLocList() {
         return locList;
     }
 
-    public void setLocList(List<LOCBean> locList) {
-        List<LOCBean> oldValue=this.locList;        
+    public void setLocList(SolaObservableList<LocBean> locList) {
+        SolaObservableList<LocBean> oldValue = this.locList;
         this.locList = locList;
-        propertySupport.firePropertyChange(LOC_LIST_PROPERTY,oldValue,this.locList);
+        propertySupport.firePropertyChange(LOC_LIST_PROPERTY, oldValue, this.locList);
     }
 
     public String getVdcCode() {
@@ -73,11 +75,7 @@ public class MothBean extends AbstractIdBean {
             oldValue = vdc.getCode();
         }
         this.vdcCode = vdcCode;
-        propertySupport.firePropertyChange(VDC_SID_PROPERTY, oldValue, this.vdcCode);
-    }
-
-    public MothBean() {
-        super();
+        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcCode);
     }
 
     public VdcBean getVdc() {
@@ -87,7 +85,7 @@ public class MothBean extends AbstractIdBean {
     public void setVdc(VdcBean vdc) {
         VdcBean oldValue = this.vdc;
         this.vdc = vdc;
-        propertySupport.firePropertyChange(LMOCD_PROPERTY, oldValue, this.vdc);
+        propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
     }
 
     public int getFinancialYear() {
@@ -151,8 +149,4 @@ public class MothBean extends AbstractIdBean {
     public String toString() {
         return mothlujNumber;
     }
-    
-    
-    
-    
 }

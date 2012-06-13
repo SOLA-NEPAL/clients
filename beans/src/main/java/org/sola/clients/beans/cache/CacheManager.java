@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.RoleBean;
@@ -123,6 +124,8 @@ public final class CacheManager {
     public static final String OFFICE_KEY = OfficeBean.class.getName() + LIST_POSTFIX;
     /** Cache key of the {@link VdcBean} collection.*/
     public static final String VDC_KEY = VdcBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link MapSheetBean} collection.*/
+    public static final String MAP_SHEET_KEY = MapSheetBean.class.getName() + LIST_POSTFIX;
     /** Cache key of the {@link DepartmentBean} collection.*/
     public static final String DEPARTMENT_KEY = DepartmentBean.class.getName() + LIST_POSTFIX;
     
@@ -178,10 +181,12 @@ public final class CacheManager {
         if (cache.contains(key)) {
             result = (List<VdcBean>) cache.get(key);
         } else{
-            TypeConverters.TransferObjectListToBeanList(
+            if (WSManager.getInstance().getReferenceDataService()!=null){
+                TypeConverters.TransferObjectListToBeanList(
                     WSManager.getInstance().getReferenceDataService().getVdcs(districtCode), 
                     VdcBean.class, (List) result);
                     cache.put(key, result);
+            }
         }
         return result;
     }
@@ -190,6 +195,23 @@ public final class CacheManager {
         return getCachedBeanList(OfficeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_OFFICES, OFFICE_KEY);
+    }
+    
+    public static List<OfficeBean> getOffices(String districtCode) {
+        List<OfficeBean> result=new ArrayList<OfficeBean>();
+        String key = OFFICE_KEY + districtCode;
+        
+        if (cache.contains(key)) {
+            result = (List<OfficeBean>) cache.get(key);
+        } else{
+            if (WSManager.getInstance().getReferenceDataService()!=null){
+                TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getReferenceDataService().getOfficesByDistrict(districtCode), 
+                    OfficeBean.class, (List) result);
+                    cache.put(key, result);
+            }
+        }
+        return result;
     }
     
     public static List<DistrictBean> getDistricts() {
@@ -519,4 +541,26 @@ public final class CacheManager {
             cache.remove(key);
         }
     }
+    
+    
+    //<editor-fold defaultstate="collapsed" desc="By Kumar">
+    //***************************************************************************************************
+    public static List<MapSheetBean> getMapSheets() {
+        List<MapSheetBean> result=new ArrayList<MapSheetBean>();
+        String key = MAP_SHEET_KEY;
+        
+        if (cache.contains(key)) {
+            result = (List<MapSheetBean>) cache.get(key);
+        } else{
+            TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getCadastreService().getMapSheetList(),
+                    MapSheetBean.class, (List) result);
+            cache.put(key, result);
+        }
+        return result;
+    }
+    //*************************************************************************************************************
+    //</editor-fold>
+    
+    
 }

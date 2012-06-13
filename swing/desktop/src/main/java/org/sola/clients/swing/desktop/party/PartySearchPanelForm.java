@@ -32,7 +32,6 @@ import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
-import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.party.PartySearchPanel;
@@ -137,4 +136,8 @@ public class PartySearchPanelForm extends ContentPanel {
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
     private org.sola.clients.swing.ui.party.PartySearchPanel partySearchPanel;
     // End of variables declaration//GEN-END:variables
+
+    public PartySearchPanel getPartySearchPanel() {
+        return partySearchPanel;
+    }
 }

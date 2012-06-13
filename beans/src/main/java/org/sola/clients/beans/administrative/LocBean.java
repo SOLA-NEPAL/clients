@@ -15,17 +15,17 @@
  */
 package org.sola.clients.beans.administrative;
 
-import java.util.List;
-import ognl.TypeConverter;
-import org.jdesktop.observablecollections.ObservableList;
-import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.controls.SolaList;
+import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.controls.SolaObservableList;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.administrative.LocTO;
 
 /**
  *
  * @author KumarKhadka
  */
-public class LOCBean extends AbstractBindingBean {
+public class LocBean extends AbstractIdBean {
 
     public static final String MOTH_ID_PROPERTY = "mothId";
     public static final String PANA_NO_PROPERTY = "panaNo";
@@ -33,51 +33,39 @@ public class LOCBean extends AbstractBindingBean {
     public static final String PROPERTY_TYPE_PROPERTY = "propertyType";
     public static final String OSHP_TYPE_PROPERTY = "oshpType";
     public static final String TRANSACTION_NO_PROPERTY = "transactionNo";
-    public static final String BAUNIT_PROPERTY = "baUnit";
+    public static final String BAUNIT_PROPERTY = "baUnits";
     private String mothId;
     private int panaNo;
     private int tmpPanaNo;
     private int propertyType;
     private int oshpType;
     private int transactionNo;
-    private List<BaUnitBean> baUnit;
-    
-    public List<BaUnitBean> getBaUnit() {
-        return baUnit;
-    }
+    private SolaObservableList<BaUnitBean> baUnits;
 
-    public void setBaUnit(List<BaUnitBean> baUnit) {
-        List<BaUnitBean> oldValue = this.baUnit;
-        this.baUnit = baUnit;
-        propertySupport.firePropertyChange(BAUNIT_PROPERTY, oldValue, this.baUnit);
-    }
-
-    
-    private SolaList<BaUnitBean> baUnits;
-    public LOCBean(){
+    public LocBean() {
         super();
-        ///baUnits= baUnit;        
+        baUnits = new SolaObservableList<BaUnitBean>();
     }
 
-    public SolaList<BaUnitBean> getBaUnits() {
+    public SolaObservableList<BaUnitBean> getBaUnits() {
         return baUnits;
     }
-    
-    
-   public ObservableList<BaUnitBean> getFilteredBaUnits(){
-       return baUnits.getFilteredList();
-   }   
-    
-    
+
+    public void setBaUnits(SolaObservableList<BaUnitBean> baUnits) {
+        SolaObservableList<BaUnitBean> oldValue = this.baUnits;
+        this.baUnits = baUnits;
+        propertySupport.firePropertyChange(BAUNIT_PROPERTY, oldValue, this.baUnits);
+    }
+
     public String getMothId() {
         return mothId;
-        
+
     }
 
     public void setMothId(String mothId) {
         String oldValue = this.mothId;
         this.mothId = mothId;
-        propertySupport.firePropertyChange(MOTH_ID_PROPERTY,oldValue,this.mothId);
+        propertySupport.firePropertyChange(MOTH_ID_PROPERTY, oldValue, this.mothId);
     }
 
     public int getOshpType() {
@@ -85,9 +73,9 @@ public class LOCBean extends AbstractBindingBean {
     }
 
     public void setOshpType(int oshpType) {
-        int oldValue=this.oshpType;
+        int oldValue = this.oshpType;
         this.oshpType = oshpType;
-        propertySupport.firePropertyChange(OSHP_TYPE_PROPERTY,oldValue,this.oshpType);
+        propertySupport.firePropertyChange(OSHP_TYPE_PROPERTY, oldValue, this.oshpType);
     }
 
     public int getPanaNo() {
@@ -95,9 +83,9 @@ public class LOCBean extends AbstractBindingBean {
     }
 
     public void setPanaNo(int panaNo) {
-       int oldValue=this.panaNo;
+        int oldValue = this.panaNo;
         this.panaNo = panaNo;
-        propertySupport.firePropertyChange(PANA_NO_PROPERTY,oldValue,this.panaNo);
+        propertySupport.firePropertyChange(PANA_NO_PROPERTY, oldValue, this.panaNo);
     }
 
     public int getPropertyType() {
@@ -105,9 +93,9 @@ public class LOCBean extends AbstractBindingBean {
     }
 
     public void setPropertyType(int propertyType) {
-       int oldValue=this.propertyType;
+        int oldValue = this.propertyType;
         this.propertyType = propertyType;
-        propertySupport.firePropertyChange(PROPERTY_TYPE_PROPERTY,oldValue,this.propertyType);
+        propertySupport.firePropertyChange(PROPERTY_TYPE_PROPERTY, oldValue, this.propertyType);
     }
 
     public int getTmpPanaNo() {
@@ -115,9 +103,9 @@ public class LOCBean extends AbstractBindingBean {
     }
 
     public void setTmpPanaNo(int tmpPanaNo) {
-       int oldValue=this.tmpPanaNo;
+        int oldValue = this.tmpPanaNo;
         this.tmpPanaNo = tmpPanaNo;
-        propertySupport.firePropertyChange(TEMP_PANA_NO_PROPERTY,oldValue,this.tmpPanaNo);
+        propertySupport.firePropertyChange(TEMP_PANA_NO_PROPERTY, oldValue, this.tmpPanaNo);
     }
 
     public int getTransactionNo() {
@@ -125,8 +113,14 @@ public class LOCBean extends AbstractBindingBean {
     }
 
     public void setTransactionNo(int transactionNo) {
-        int oldValue=this.transactionNo;
+        int oldValue = this.transactionNo;
         this.transactionNo = transactionNo;
-        propertySupport.firePropertyChange(TRANSACTION_NO_PROPERTY,oldValue,this.transactionNo);
+        propertySupport.firePropertyChange(TRANSACTION_NO_PROPERTY, oldValue, this.transactionNo);
+    }
+    
+    public void saveLoc() {
+        LocTO locTO = TypeConverters.BeanToTrasferObject(this, LocTO.class);
+        locTO = WSManager.getInstance().getAdministrative().saveLoc(locTO);
+        TypeConverters.TransferObjectToBean(locTO, LocBean.class, this);
     }
 }
