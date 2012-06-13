@@ -15,32 +15,50 @@
  */
 package org.sola.clients.beans.referencedata;
 
+import javax.validation.constraints.NotNull;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.security.SecurityBean;
+import org.sola.clients.beans.validation.Localized;
+import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 
 public class OfficeBean extends AbstractCodeBean {
 
-    public static final String DISTRICT_CODE = "districtCode";
+    public static final String DISTRICT_CODE_PROPERTY = "districtCode";
+    public static final String DISTRICT_PROPERTY = "district";
+    
     private static OfficeBean currentOffice;
-    private String districtCode;
+    @NotNull(message=ClientMessage.CHECK_SELECT_DISTRICT, payload=Localized.class)
+    private DistrictBean district;
 
     public OfficeBean() {
         super();
     }
 
     public String getDistrictCode() {
-        return districtCode;
+        if(district == null){
+            return null;
+        }
+        return district.getCode();
     }
 
     public void setDistrictCode(String districtCode) {
-        String oldValue = this.districtCode;
-        this.districtCode = districtCode;
-        propertySupport.firePropertyChange(DISPLAY_VALUE_PROPERTY, oldValue, this.districtCode);
+        String oldValue = getDistrictCode();
+        setDistrict(CacheManager.getBeanByCode(CacheManager.getDistricts(), districtCode));
+        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, districtCode);
     }
 
+    public DistrictBean getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(DistrictBean district) {
+        DistrictBean oldValue = this.district;
+        this.district = district;
+        propertySupport.firePropertyChange(DISTRICT_PROPERTY, oldValue, this.district);
+    }
+    
     public static OfficeBean getCurrentOffice() {
         if (currentOffice == null) {
             currentOffice = TypeConverters.TransferObjectToBean(

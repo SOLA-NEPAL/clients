@@ -37,6 +37,8 @@ import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.reports.ReportManager;
+import org.sola.clients.swing.admin.referencedata.DepartmentManagementPanel;
+import org.sola.clients.swing.admin.referencedata.OfficeManagementPanel;
 import org.sola.clients.swing.admin.referencedata.ReferenceDataManagementPanel;
 import org.sola.clients.swing.admin.security.GroupsManagementPanel;
 import org.sola.clients.swing.admin.security.RolesManagementPanel;
@@ -92,6 +94,16 @@ public class MainForm extends javax.swing.JFrame {
         mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_MANAGE, true);
     }
 
+    private void showOfficesForm(){
+        OfficeManagementPanel form = new OfficeManagementPanel();
+        mainContentPanel.addPanel(form, MainContentPanel.CARD_OFFICES, true);
+    }
+    
+    private void showDepartmentsForm(){
+        DepartmentManagementPanel form = new DepartmentManagementPanel();
+        mainContentPanel.addPanel(form, MainContentPanel.CARD_DEPARTMENTS, true);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -147,6 +159,8 @@ public class MainForm extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuVDCSetup = new javax.swing.JMenuItem();
         menuDistrict = new javax.swing.JMenuItem();
+        menuOffices = new javax.swing.JMenuItem();
+        menuDepartments = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -575,6 +589,24 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuDistrict);
 
+        menuOffices.setText(bundle.getString("MainForm.menuOffices.text")); // NOI18N
+        menuOffices.setName(bundle.getString("MainForm.menuOffices.name")); // NOI18N
+        menuOffices.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOfficesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuOffices);
+
+        menuDepartments.setText(bundle.getString("MainForm.menuDepartments.text")); // NOI18N
+        menuDepartments.setName(bundle.getString("MainForm.menuDepartments.name")); // NOI18N
+        menuDepartments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDepartmentsActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuDepartments);
+
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -772,6 +804,14 @@ public class MainForm extends javax.swing.JFrame {
         manageDistricts();
     }//GEN-LAST:event_menuDistrictActionPerformed
 
+    private void menuOfficesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOfficesActionPerformed
+        showOfficesForm();
+    }//GEN-LAST:event_menuOfficesActionPerformed
+
+    private void menuDepartmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDepartmentsActionPerformed
+        showDepartmentsForm();
+    }//GEN-LAST:event_menuDepartmentsActionPerformed
+
     /**
      * Opens roles management panel.
      */
@@ -917,7 +957,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -933,6 +972,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuBaUnitRelationTypes;
     private javax.swing.JMenuItem menuBaUnitType;
     private javax.swing.JMenuItem menuCommunicationType;
+    private javax.swing.JMenuItem menuDepartments;
     private javax.swing.JMenuItem menuDistrict;
     private javax.swing.JMenuItem menuExit;
     private javax.swing.JMenu menuFile;
@@ -942,6 +982,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuIdTypes;
     private javax.swing.JMenuItem menuLodgementReport;
     private javax.swing.JMenuItem menuMortgageTypes;
+    private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenu menuParty;
     private javax.swing.JMenuItem menuPartyRoleType;
     private javax.swing.JMenuItem menuPartyType;

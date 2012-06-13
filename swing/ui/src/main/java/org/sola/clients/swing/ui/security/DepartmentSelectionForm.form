@@ -122,7 +122,7 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="lstOffices">
                   <BindingProperties>
-                    <BindingProperty name="elements" source="offices" sourcePath="${offices}" target="lstOffices" targetPath="elements" updateStrategy="0" immediately="false">
+                    <BindingProperty name="elements" source="offices" sourcePath="${officesFiltered}" target="lstOffices" targetPath="elements" updateStrategy="0" immediately="false">
                       <BindingParameter name="DISPLAY" value="${displayValue}"/>
                     </BindingProperty>
                     <BindingProperty name="selectedElement" source="offices" sourcePath="${selectedOffice}" target="lstOffices" targetPath="selectedElement" updateStrategy="0" immediately="false">
@@ -173,7 +173,7 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="lstDepartments">
                   <BindingProperties>
-                    <BindingProperty name="elements" source="departments" sourcePath="${departments}" target="lstDepartments" targetPath="elements" updateStrategy="0" immediately="false">
+                    <BindingProperty name="elements" source="departments" sourcePath="${departmentsFiltered}" target="lstDepartments" targetPath="elements" updateStrategy="0" immediately="false">
                       <BindingParameter name="DISPLAY" value="${displayValue}"/>
                     </BindingProperty>
                     <BindingProperty name="selectedElement" source="departments" sourcePath="${selectedDepartment}" target="lstDepartments" targetPath="selectedElement" updateStrategy="0" immediately="false">
