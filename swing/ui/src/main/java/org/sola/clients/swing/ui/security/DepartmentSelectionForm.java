@@ -99,7 +99,7 @@ public class DepartmentSelectionForm extends javax.swing.JDialog {
 
         jLabel1.setText(bundle.getString("DepartmentSelectionForm.jLabel1.text")); // NOI18N
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${offices}");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${officesFiltered}");
         org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, offices, eLProperty, lstOffices);
         jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty.create("${displayValue}"));
         bindingGroup.addBinding(jListBinding);
@@ -129,7 +129,7 @@ public class DepartmentSelectionForm extends javax.swing.JDialog {
 
         jLabel2.setText(bundle.getString("DepartmentSelectionForm.jLabel2.text")); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${departments}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${departmentsFiltered}");
         jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, departments, eLProperty, lstDepartments);
         jListBinding.setDetailBinding(org.jdesktop.beansbinding.ELProperty.create("${displayValue}"));
         bindingGroup.addBinding(jListBinding);

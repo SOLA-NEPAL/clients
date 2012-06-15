@@ -15,10 +15,16 @@
  */
 package org.sola.clients.beans.referencedata;
 
+import java.util.List;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.referencedata.OfficeTO;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  *
@@ -73,12 +79,24 @@ public class OfficeListBean extends AbstractBindingListBean {
                 CacheManager.getOffices(districtCode), createDummy);
     }
 
+    /** Loads list of offices with untranslated display_value and description.*/
+    public final void loadListUntranslated() {
+        offices.clear();
+        TypeConverters.TransferObjectListToBeanList(
+        WSManager.getInstance().getReferenceDataService().getOffices(null),
+        OfficeBean.class, (List)offices);
+    }
+    
     public void setExcludedCodes(String... codes) {
         offices.setExcludedCodes(codes);
     }
 
-    public ObservableList<OfficeBean> getOffices() {
+    public ObservableList<OfficeBean> getOfficesFiltered() {
         return offices.getFilteredList();
+    }
+    
+    public ObservableList<OfficeBean> getOffices() {
+        return offices;
     }
 
     public OfficeBean getSelectedOffice() {
@@ -89,5 +107,12 @@ public class OfficeListBean extends AbstractBindingListBean {
         OfficeBean oldValue = this.selectedOffice;
         this.selectedOffice = selectedOffice;
         propertySupport.firePropertyChange(SELECTED_OFFICE_PROPERTY, oldValue, this.selectedOffice);
+    }
+    
+    public void removeSelectedOffice(){
+        if(selectedOffice!=null){
+            selectedOffice.setEntityAction(EntityAction.DELETE);
+            AbstractCodeBean.saveRefData(selectedOffice, OfficeTO.class);
+        }
     }
 }

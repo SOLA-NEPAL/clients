@@ -15,11 +15,16 @@
  */
 package org.sola.clients.beans.referencedata;
 
+import java.util.List;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  * Holds list of {@link DepartmentBean} objects.
@@ -82,14 +87,27 @@ public class DepartmentListBean extends AbstractBindingListBean {
         }
     }
 
+    public final void loadUntranslatedList(String officeCode) {
+        departments.clear();
+        if(officeCode!=null && !officeCode.isEmpty()){
+            TypeConverters.TransferObjectListToBeanList(
+            WSManager.getInstance().getReferenceDataService().getDepartments(officeCode, null),
+            DepartmentBean.class, (List)departments);
+        }
+    }
+    
     public void setExcludedCodes(String... codes) {
         departments.setExcludedCodes(codes);
     }
 
     public ObservableList<DepartmentBean> getDepartments() {
-        return departments.getFilteredList();
+        return departments;
     }
 
+    public ObservableList<DepartmentBean> getDepartmentsFiltered() {
+        return departments.getFilteredList();
+    }
+    
     public DepartmentBean getSelectedDepartment() {
         return selectedDepartment;
     }
@@ -110,6 +128,13 @@ public class DepartmentListBean extends AbstractBindingListBean {
                 setSelectedDepartment(department);
                 return;
             }
+        }
+    }
+    
+     public void removeSelectedDepartment(){
+        if(selectedDepartment!=null){
+            selectedDepartment.setEntityAction(EntityAction.DELETE);
+            AbstractCodeBean.saveRefData(selectedDepartment, DepartmentTO.class);
         }
     }
 }

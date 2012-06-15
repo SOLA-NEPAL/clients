@@ -20,6 +20,7 @@ import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.controls.SolaCodeList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
@@ -29,16 +30,20 @@ import org.sola.services.boundary.wsclients.WSManager;
  */
 public class MapSheetListBean extends AbstractBindingListBean {
 
-    ObservableList<MapSheetBean> mapSheet;
+    ObservableList<MapSheetBean> mapSheets;
 
-    public ObservableList<MapSheetBean> getMapSheet() {
-        if (mapSheet == null) {
-            mapSheet = ObservableCollections.observableList(new ArrayList<MapSheetBean>());
+    public ObservableList<MapSheetBean> getMapSheets() {
+        if (mapSheets == null) {
+            mapSheets = ObservableCollections.observableList(new ArrayList<MapSheetBean>());
         }
-        return mapSheet;
+        return mapSheets;
     }
 
     public void loadMapSheetList() {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (List) mapSheet);
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (List) mapSheets);
+    }
+    
+     public void loadMapSheetList(String mapSheetType) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (List) mapSheets);
     }
 }

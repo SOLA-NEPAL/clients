@@ -15,17 +15,22 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
+import org.sola.clients.beans.cadastre.CadastreObjectBean;
+import org.sola.clients.swing.ui.ContentPanel;
+
 /**
  *
  * @author KumarKhadka
  */
-public class NewJPanel extends javax.swing.JPanel {
+public class ParcelSearch extends ContentPanel{
 
     /**
-     * Creates new form NewJPanel
+     * Creates new form ParcelSearch
      */
-    public NewJPanel() {
-        initComponents();
+    CadastreObjectBean newCadastreObjectBean;
+
+    public ParcelSearch() {
+        initComponents();      
     }
 
     /**
@@ -37,18 +42,23 @@ public class NewJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cadastreObjectPanel1 = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
+
+        setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 783, Short.MAX_VALUE)
+            .addComponent(cadastreObjectPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 342, Short.MAX_VALUE)
+            .addComponent(cadastreObjectPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.sola.clients.swing.ui.cadastre.CadastreObjectPanel cadastreObjectPanel1;
     // End of variables declaration//GEN-END:variables
 }

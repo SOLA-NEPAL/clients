@@ -15,8 +15,11 @@
  */
 package org.sola.clients.beans.referencedata;
 
+import javax.validation.constraints.NotNull;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.validation.Localized;
+import org.sola.common.messaging.ClientMessage;
 import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 
 /**
@@ -27,6 +30,8 @@ public class DepartmentBean extends AbstractCodeBean {
 
     public static final String OFFICE_CODE_PROPERTY = "officeCode";
     public static final String OFFICE_PROPERTY = "office";
+    
+    @NotNull(message=ClientMessage.CHECK_SELECT_OFFICE, payload=Localized.class)
     private OfficeBean office;
 
     public DepartmentBean() {
