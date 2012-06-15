@@ -70,8 +70,7 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public static final String SELECTED_SPATIAL_VALUE_AREA_PROPERTY = "selectedSpatialValueArea";
     public static final String MAPSHEET_CODE_PROPERTY = "mapSheetCode";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
-     public static final String SPATIAL_VALUE_AREA_PROPERTY = "SpatialValueArea";
-    
+    public static final String SPATIAL_VALUE_AREA_PROPERTY = "SpatialValueArea";
     private Date approvalDatetime;
     private Date historicDatetime;
     private String sourceReference;
@@ -102,11 +101,11 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     }
 
     public void setSpatialValueArea(SpatialValueAreaBean SpatialValueArea) {
-        SpatialValueAreaBean oldValue=this.SpatialValueArea;        
+        SpatialValueAreaBean oldValue = this.SpatialValueArea;
         this.SpatialValueArea = SpatialValueArea;
-        propertySupport.firePropertyChange(SPATIAL_VALUE_AREA_PROPERTY,oldValue,this.SpatialValueArea);
+        propertySupport.firePropertyChange(SPATIAL_VALUE_AREA_PROPERTY, oldValue, this.SpatialValueArea);
     }
-    
+
     public CadastreObjectBean() {
         super();
         spatialValueAreaList = new SolaObservableList<SpatialValueAreaBean>();
@@ -341,9 +340,7 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
 //        }
 //        return result;
 //    }
-    
-    
-   // @Override
+    // @Override
 //    public String toString() {
 //        String result = "";
 //        if (nameFirstpart != null) {
@@ -354,12 +351,11 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
 //        }
 //        return result;
 //    }
-     
-     
- @Override
-    public String toString() {       
+    @Override
+    public String toString() {
         return Integer.toString(parcelno);
     }
+
     public MapSheetBean getMapSheet() {
         return mapSheet;
     }
@@ -384,5 +380,15 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         CadastreObjectTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectTO.class);
         cadTO = WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
         TypeConverters.TransferObjectToBean(cadTO, CadastreObjectBean.class, this);
+    }
+
+    public CadastreObjectBean getCadastreObjectByVdcWardParcel(String vdcCode, String wardNo, int parcelNo) {
+
+      return  TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByVdcWardParcel(vdcCode, wardNo, parcelNo), CadastreObjectBean.class, null);
+    }
+
+    public CadastreObjectBean getCadastreObjectByVdcWardParcel(String mapSheetCode, int parcelNo) {
+
+       return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByMapSheetParcel(mapSheetCode, parcelNo), CadastreObjectBean.class, null);
     }
 }
