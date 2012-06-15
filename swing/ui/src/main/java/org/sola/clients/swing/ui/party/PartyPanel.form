@@ -496,7 +496,7 @@
                       </Properties>
                       <BindingProperties>
                         <BindingProperty name="elements" source="districtListBean" sourcePath="${districts}" target="cboDistrict" targetPath="elements" updateStrategy="0" immediately="false"/>
-                        <BindingProperty name="selectedItem" source="Form" sourcePath="${partyBean.districtBean}" target="cboDistrict" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                        <BindingProperty name="selectedItem" source="Form" sourcePath="${partyBean.address.districtBean}" target="cboDistrict" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                       <Events>
                         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboDistrictItemStateChanged"/>
@@ -557,7 +557,7 @@
                       </Properties>
                       <BindingProperties>
                         <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdcs}" target="cboVDCs" targetPath="elements" updateStrategy="0" immediately="false"/>
-                        <BindingProperty name="selectedItem" source="Form" sourcePath="${partyBean.vdcBean}" target="cboVDCs" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                        <BindingProperty name="selectedItem" source="Form" sourcePath="${partyBean.address.vdcBean}" target="cboVDCs" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
                   </SubComponents>
@@ -611,7 +611,7 @@
                         </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="text" source="Form" sourcePath="${partyBean.wardNo}" target="txtWardNo" targetPath="text" updateStrategy="0" immediately="false">
+                        <BindingProperty name="text" source="Form" sourcePath="${partyBean.address.wardNo}" target="txtWardNo" targetPath="text" updateStrategy="0" immediately="false">
                           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                         </BindingProperty>
                       </BindingProperties>

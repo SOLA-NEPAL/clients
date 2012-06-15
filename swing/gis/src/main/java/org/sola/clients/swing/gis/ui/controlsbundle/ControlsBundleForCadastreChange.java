@@ -199,9 +199,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add toolbar for offset method.
         this.getMap().addMapAction(new MultiOffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
-        //add toolbar for Define Point List form.
-        this.getMap().addMapAction(new DefinePointListShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
         //add toolbar for parcel merging.
         this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);  

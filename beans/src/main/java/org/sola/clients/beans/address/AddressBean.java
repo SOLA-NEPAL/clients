@@ -29,6 +29,9 @@ package org.sola.clients.beans.address;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.referencedata.DistrictBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.webservices.transferobjects.casemanagement.AddressTO;
@@ -41,10 +44,82 @@ public class AddressBean extends AbstractIdBean {
 
     public static final String DESCRIPTION_PROPERTY = "description";
     public static final String EXT_ADDRESS_ID_PROPERTY = "extAddressId";
+    //additional
+    public static final String STREET_PROPERTY="street";
+    public static final String WARD_NO_PROPERTY = "wardNo";
+    public static final String VDC_CODE_PROPERTY ="vdcCode";
+    public static final String DISTRICT_CODE_PROPERTY="districtcode";
     
     @NotEmpty(message= ClientMessage.CHECK_NOTNULL_ADDRESS, payload=Localized.class)
     private String description;
     private String extAddressId;
+    //additional fields.
+    private String street;
+    private DistrictBean districtBean;
+    private VdcBean vdcBean;
+    private String wardNo;
+    
+    public VdcBean getVdcBean() {
+        if (vdcBean==null){
+            vdcBean=new VdcBean();
+        }
+        return vdcBean;
+    }
+
+    public void setVdcBean(VdcBean vdcBean) {
+        //this.vdcBean = vdcBean;
+        this.setJointRefDataBean(this.getVdcBean(), vdcBean, VDC_CODE_PROPERTY);
+    }
+    
+    public String getVdcCode() {
+        return this.getVdcBean().getCode();
+    }
+
+    public void setVdcCode(String value) {
+        String oldValue = this.getVdcBean().getCode();
+        setVdcBean(CacheManager.getBeanByCode(CacheManager.getVdcs(this.getDistrictBean().getCode()), value));
+        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, value);
+    }
+    
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public DistrictBean getDistrictBean() {
+        if (districtBean==null){
+            districtBean=new DistrictBean();
+        }
+        return districtBean;
+    }
+    
+    public void setDistrictBean(DistrictBean districtBean) {
+        //this.districtBean = districtBean;
+        this.setJointRefDataBean(this.getDistrictBean(), districtBean, DISTRICT_CODE_PROPERTY);
+    }
+
+    public String getDistrictCode() {
+        return this.getDistrictBean().getCode();
+    }
+
+    public void setDistrictCode(String value) {
+        String oldValue = this.getDistrictBean().getCode();
+        setDistrictBean(CacheManager.getBeanByCode(CacheManager.getDistricts(), value));
+        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, value);
+    }
+    
+    public String getWardNo() {
+        return wardNo;
+    }
+
+    public void setWardNo(String wardNo) {
+        String oldValue=this.wardNo;
+        this.wardNo = wardNo;
+        propertySupport.firePropertyChange(WARD_NO_PROPERTY, oldValue, this.wardNo);
+    }
     
     public AddressBean() {
         super();

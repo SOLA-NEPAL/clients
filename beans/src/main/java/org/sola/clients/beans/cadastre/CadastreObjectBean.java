@@ -61,10 +61,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
     public static final String SPATIAL_VALUE_AREA_LIST_PROPERTY = "spatialValueAreaList";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
-    public static final String DISTRICT_PROPERTY = "district";
-    public static final String VDC_PROPERTY = "vdc";
-    public static final String WARD_NO_PROPERTY = "wardno";
-    public static final String GRIDS1_PROPERTY = "grids1";
     public static final String PARCEL_NOTE_PROPERTY = "parcelNote";
     public static final String PARCEL_TYPE_PROPERTY = "parcelType";
     public static final String SELECTED_SPATIAL_VALUE_AREA_PROPERTY = "selectedSpatialValueArea";
@@ -86,10 +82,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     private String mapSheetCode;
     private SolaObservableList<SpatialValueAreaBean> spatialValueAreaList;
     private int parcelno;
-    private int district;
-    private int vdc;
-    private String wardno;
-    private String grids1;
     private String parcelNote;
     private int parcelType;
     private SolaObservableList<SpatialValueAreaBean> selectedSpatialValueArea;
@@ -149,28 +141,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
     }
 
-    public int getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(int district) {
-        int oldValue = this.district;
-        this.district = district;
-        propertySupport.firePropertyChange(DISTRICT_PROPERTY,
-                oldValue, this.district);
-    }
-
-    public String getGrids1() {
-        return grids1;
-    }
-
-    public void setGrids1(String grids1) {
-        String oldValue = this.grids1;
-        this.grids1 = grids1;
-        propertySupport.firePropertyChange(GRIDS1_PROPERTY,
-                oldValue, this.grids1);
-    }
-
     public String getParcelNote() {
         return parcelNote;
     }
@@ -202,28 +172,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         this.parcelno = parcelno;
         propertySupport.firePropertyChange(PARCEL_NO_PROPERTY,
                 oldValue, this.parcelno);
-    }
-
-    public int getVdc() {
-        return vdc;
-    }
-
-    public void setVdc(int vdc) {
-        int oldValue = this.vdc;
-        this.vdc = vdc;
-        propertySupport.firePropertyChange(VDC_PROPERTY,
-                oldValue, this.vdc);
-    }
-
-    public String getWardno() {
-        return wardno;
-    }
-
-    public void setWardno(String wardno) {
-        String oldValue = this.wardno;
-        this.wardno = wardno;
-        propertySupport.firePropertyChange(WARD_NO_PROPERTY,
-                oldValue, this.wardno);
     }
 
     public Date getApprovalDatetime() {

@@ -615,22 +615,32 @@ public class PublicMethod {
     
     //Determine if the given segment is on the selected parcel.
     public static boolean isSegmentOn_Selected_Parcel(List<AreaObject> parcels,LineString seg){
-        double dist=0.0005;//mm precision.
-        GeometryFactory geomFactory=new GeometryFactory();
         for (AreaObject aa : parcels) {
              Geometry geom= aa.getThe_Geom();
-             Coordinate[] cors=geom.getCoordinates();
-             for (int i=0;i<cors.length-1;i++){
-                 Coordinate[] co=new Coordinate[]{cors[i],cors[i+1]};
-                 LineString tmpLine=geomFactory.createLineString(co);
-                 //check the colinear condition of the two lines.
-                 if (tmpLine.isWithinDistance(seg.getStartPoint(), dist) &&
-                         tmpLine.isWithinDistance(seg.getEndPoint(), dist)) {
-                    return true;
-                }
+             if (isSegmentOn_Selected_Parcel(geom,seg)){
+                 return true;
              }
         }
         
+        return false;
+    }
+    
+    //Determine if the given segment is on the selected parcel.
+    public static boolean isSegmentOn_Selected_Parcel(Geometry geom,LineString seg){
+        double dist=0.0005;//mm precision.
+        GeometryFactory geomFactory=new GeometryFactory();
+        
+        Coordinate[] cors=geom.getCoordinates();
+        for (int i=0;i<cors.length-1;i++){
+            Coordinate[] co=new Coordinate[]{cors[i],cors[i+1]};
+            LineString tmpLine=geomFactory.createLineString(co);
+            //check the colinear condition of the two lines.
+            if (tmpLine.isWithinDistance(seg.getStartPoint(), dist) &&
+                        tmpLine.isWithinDistance(seg.getEndPoint(), dist)) {
+                return true;
+            }
+        }
+
         return false;
     }
     
@@ -723,8 +733,7 @@ public class PublicMethod {
         targetParcelsLayer.getFeatureCollection().clear();
         try {
             targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
-            targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
-            targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
+            remove_All_newParcel(targetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -741,6 +750,8 @@ public class PublicMethod {
         try {
             targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
             targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
+            targetParcelsLayer.getNew_parcels().getVerticesLayer().removeFeatures();
+            targetParcelsLayer.getNew_parcels().getVertexList().clear();
         } catch (Exception ex) { 
         }
     }

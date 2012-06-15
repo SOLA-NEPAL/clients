@@ -9,7 +9,9 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.swing.extended.exception.InitializeLayerException;
@@ -89,5 +91,31 @@ public class Polygonization {
         }
         
         return false;
+    }
+    
+    public static List<Geometry> getPolygons(LineString[] segs){
+        Collection segments= (Collection)Arrays.asList(segs);
+        
+        List<Geometry> parcels=new ArrayList<Geometry>();
+        //add fresh parcel data.
+        Polygonizer polygons= new Polygonizer();
+        polygons.add(segments);//Add segment collection to the polygonizer.
+        Collection polys= polygons.getPolygons();
+
+        for (Object poly:polys){
+            Geometry geom=(Geometry)poly;
+            parcels.add(geom);
+        }
+
+        return parcels;
+    }
+    
+    public static List<Geometry> getPolygons(List<LineString> segs){
+        if (segs==null || segs.size()<3) return null;
+        
+        LineString[] tmpSegs=new LineString[segs.size()];
+        tmpSegs=segs.toArray(tmpSegs);
+        
+        return getPolygons(tmpSegs);
     }
 }
