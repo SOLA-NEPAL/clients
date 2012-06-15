@@ -142,44 +142,13 @@ public class ParcelMothEntry extends ContentPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        btnSave1 = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         btnNewEntry = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jPanel21 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
-        txtWardNo = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
-        txtParcelNo = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        txtSectionNo = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        cmbUnit = new javax.swing.JComboBox();
-        jPanel16 = new javax.swing.JPanel();
-        txtRopani = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        txtAana = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jPanel18 = new javax.swing.JPanel();
-        txtPaisa = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
-        txtDam = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        txtSquareMeter = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jPanel26 = new javax.swing.JPanel();
-        jPanel23 = new javax.swing.JPanel();
-        rdbFreeMap = new javax.swing.JRadioButton();
-        rdbControlMap = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
+        pnlMap = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
         cmbMapNo1 = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
@@ -195,6 +164,9 @@ public class ParcelMothEntry extends ContentPanel {
         jPanel22 = new javax.swing.JPanel();
         cmbParcelNo = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
+        rdbFreeMap = new javax.swing.JRadioButton();
+        rdbControlMap = new javax.swing.JRadioButton();
 
         setHeaderPanel(headerPanel1);
 
@@ -216,7 +188,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +215,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +242,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +270,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,28 +322,11 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/revert.png"))); // NOI18N
-        jButton2.setText("Import earlier details");
-        jButton2.setFocusable(false);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document-view.png"))); // NOI18N
         jButton3.setText("Parcel Details");
         jButton3.setFocusable(false);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
-
-        btnSave1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave1.setText("Save");
-        btnSave1.setFocusable(false);
-        btnSave1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSave1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSave1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnSave1);
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
@@ -389,6 +344,7 @@ public class ParcelMothEntry extends ContentPanel {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.setEnabled(false);
         btnSave.setFocusable(false);
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -398,255 +354,19 @@ public class ParcelMothEntry extends ContentPanel {
         });
         jToolBar2.add(btnSave);
 
-        jPanel21.setLayout(new java.awt.GridLayout(1, 9, 15, 0));
-
-        txtWardNo.setEnabled(false);
-
-        jLabel5.setText("Ward No.");
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addGap(0, 34, Short.MAX_VALUE))
-            .addComponent(txtWardNo)
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel12);
-
-        txtParcelNo.setEnabled(false);
-
-        jLabel6.setText("Parcel No");
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtParcelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel13);
-
-        txtSectionNo.setEnabled(false);
-
-        jLabel7.setText("Section No.");
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addComponent(jLabel7)
-                .addGap(0, 25, Short.MAX_VALUE))
-            .addComponent(txtSectionNo)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtSectionNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel14);
-
-        jLabel8.setText("Unit");
-
-        cmbUnit.setEditable(true);
-        cmbUnit.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(cmbUnit, 0, 80, Short.MAX_VALUE)
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmbUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel15);
-
-        txtRopani.setEnabled(false);
-
-        jLabel9.setText("Ropani");
-
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addComponent(jLabel9)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtRopani, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-        );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtRopani, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel16);
-
-        txtAana.setEnabled(false);
-
-        jLabel10.setText("Aana");
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addGap(0, 55, Short.MAX_VALUE))
-            .addComponent(txtAana)
-        );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtAana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel17);
-
-        txtPaisa.setEnabled(false);
-
-        jLabel11.setText("Paisa");
-
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addComponent(jLabel11)
-                .addGap(0, 55, Short.MAX_VALUE))
-            .addComponent(txtPaisa)
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtPaisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel18);
-
-        txtDam.setEnabled(false);
-
-        jLabel12.setText("Dam");
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addComponent(jLabel12)
-                .addGap(0, 59, Short.MAX_VALUE))
-            .addComponent(txtDam)
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtDam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel19);
-
-        txtSquareMeter.setEnabled(false);
-
-        jLabel13.setText("Square Meter");
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtSquareMeter)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addComponent(jLabel13)
-                .addGap(0, 15, Short.MAX_VALUE))
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtSquareMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel21.add(jPanel20);
-
-        jPanel26.setLayout(new java.awt.GridLayout(1, 6, 15, 0));
-
-        buttonGroup1.add(rdbFreeMap);
-        rdbFreeMap.setText("Free Map");
-        rdbFreeMap.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdbFreeMapItemStateChanged(evt);
+        jButton1.setText("jButton1");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
+        jToolBar2.add(jButton1);
 
-        buttonGroup1.add(rdbControlMap);
-        rdbControlMap.setText("Control Map");
-
-        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
-        jPanel23.setLayout(jPanel23Layout);
-        jPanel23Layout.setHorizontalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rdbFreeMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(rdbControlMap, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-        );
-        jPanel23Layout.setVerticalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addComponent(rdbFreeMap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rdbControlMap)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        jPanel26.add(jPanel23);
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Map Sheet Number"));
+        jPanel7.setLayout(new java.awt.GridLayout(1, 4, 15, 0));
 
         cmbMapNo1.setEditable(true);
         cmbMapNo1.setEnabled(false);
@@ -661,25 +381,25 @@ public class ParcelMothEntry extends ContentPanel {
             }
         });
 
-        jLabel15.setText("Map No.");
-
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel15)
-            .addComponent(cmbMapNo1, 0, 126, Short.MAX_VALUE)
+            .addComponent(cmbMapNo1, 0, 82, Short.MAX_VALUE)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel25Layout.setVerticalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel25Layout.createSequentialGroup()
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMapNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel26.add(jPanel25);
+        jPanel7.add(jPanel25);
 
         cmbMapNo2.setEditable(true);
         cmbMapNo2.setEnabled(false);
@@ -694,81 +414,93 @@ public class ParcelMothEntry extends ContentPanel {
             }
         });
 
-        jLabel16.setText("Map No.");
-
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel16)
-            .addComponent(cmbMapNo2, 0, 126, Short.MAX_VALUE)
+            .addComponent(cmbMapNo2, 0, 82, Short.MAX_VALUE)
+            .addGroup(jPanel27Layout.createSequentialGroup()
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel27Layout.setVerticalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel27Layout.createSequentialGroup()
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMapNo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel26.add(jPanel27);
+        jPanel7.add(jPanel27);
 
         cmbMapNo3.setEditable(true);
         cmbMapNo3.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheet}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cmbMapNo3);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         cmbMapNo3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbMapNo3ItemStateChanged(evt);
             }
         });
 
-        jLabel17.setText("Map No.");
-
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel17)
-            .addComponent(cmbMapNo3, 0, 126, Short.MAX_VALUE)
+            .addComponent(cmbMapNo3, 0, 82, Short.MAX_VALUE)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
-                .addComponent(jLabel17)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbMapNo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel26.add(jPanel28);
+        jPanel7.add(jPanel28);
 
         cmbMapNo4.setEditable(true);
         cmbMapNo4.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheet}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cmbMapNo4);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         cmbMapNo4.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbMapNo4ItemStateChanged(evt);
             }
         });
 
-        jLabel18.setText("Map No.");
-
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
         jPanel29Layout.setHorizontalGroup(
             jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel18)
-            .addComponent(cmbMapNo4, 0, 126, Short.MAX_VALUE)
+            .addComponent(cmbMapNo4, 0, 82, Short.MAX_VALUE)
+            .addGroup(jPanel29Layout.createSequentialGroup()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel29Layout.setVerticalGroup(
             jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel29Layout.createSequentialGroup()
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMapNo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel26.add(jPanel29);
+        jPanel7.add(jPanel29);
+
+        jPanel22.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcel Number"));
 
         cmbParcelNo.setEditable(true);
         cmbParcelNo.setEnabled(false);
@@ -779,27 +511,80 @@ public class ParcelMothEntry extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedCadastreObjectBean}"), cmbParcelNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel14.setText(" Parcel No.");
-
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cmbParcelNo, 0, 285, Short.MAX_VALUE)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addComponent(jLabel14)
-                .addContainerGap())
-            .addComponent(cmbParcelNo, 0, 126, Short.MAX_VALUE)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel26.add(jPanel22);
+        jPanel23.setBorder(javax.swing.BorderFactory.createTitledBorder("Sheet Type"));
+
+        buttonGroup1.add(rdbFreeMap);
+        rdbFreeMap.setText("Free Sheet");
+        rdbFreeMap.setEnabled(false);
+        rdbFreeMap.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdbFreeMapItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(rdbControlMap);
+        rdbControlMap.setText("Control Sheet");
+        rdbControlMap.setEnabled(false);
+        rdbControlMap.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdbControlMapItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rdbFreeMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(rdbControlMap, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+        );
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addComponent(rdbFreeMap, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rdbControlMap, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout pnlMapLayout = new javax.swing.GroupLayout(pnlMap);
+        pnlMap.setLayout(pnlMapLayout);
+        pnlMapLayout.setHorizontalGroup(
+            pnlMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMapLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnlMapLayout.setVerticalGroup(
+            pnlMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMapLayout.createSequentialGroup()
+                .addGroup(pnlMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -807,16 +592,15 @@ public class ParcelMothEntry extends ContentPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pnlMap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -831,10 +615,9 @@ public class ParcelMothEntry extends ContentPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119)
-                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -870,21 +653,17 @@ public class ParcelMothEntry extends ContentPanel {
     }//GEN-LAST:event_txtPageNoKeyPressed
 
     public void setEnableComponents() {
-//        cmbMapNo1.setEnabled(true);
-//        txtWardNo.setEnabled(true);
-//        txtParcelNo.setEnabled(true);
-//        txtSectionNo.setEnabled(true);
-//        cmbUnit.setEnabled(true);
-//        txtRopani.setEnabled(true);
-//        txtAana.setEnabled(true);
-//        txtDam.setEnabled(true);
-//        txtPaisa.setEnabled(true);
-//        txtSquareMeter.setEnabled(true);
-        cmbMapNo1.setEnabled(true);
-        cmbParcelNo.setEnabled(true);
+
+        rdbFreeMap.setEnabled(true);
+        rdbControlMap.setEnabled(true);
+        btnSave.setEnabled(true);
     }
     private void btnNewEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewEntryActionPerformed
         // TODO add your handling code here:
+        if (locBean.getPanaNo() == 0) {
+            JOptionPane.showMessageDialog(null, "No Page is selected for Moth");
+            return;
+        }
         setEnableComponents();
     }//GEN-LAST:event_btnNewEntryActionPerformed
 
@@ -922,10 +701,6 @@ public class ParcelMothEntry extends ContentPanel {
         cadastreObjectListBean.loadCadastreObjectList(map.getId());
     }//GEN-LAST:event_cmbMapNo1ItemStateChanged
 
-    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSave1ActionPerformed
-
     private void cmbMapNo2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMapNo2ItemStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMapNo2ItemStateChanged
@@ -940,17 +715,37 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void rdbFreeMapItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbFreeMapItemStateChanged
         // TODO add your handling code here:
-       cmbMapNo1.setEnabled(true);
-       cmbMapNo1.setEnabled(true);
-       cmbMapNo1.setEnabled(true);
-       cmbMapNo1.setEnabled(true);
-       cmbMapNo1.setEnabled(true);
+        cmbMapNo1.setEnabled(true);
+        cmbMapNo2.setEnabled(true);
+        cmbMapNo3.setEnabled(true);
+        cmbMapNo4.setEnabled(true);
+        cmbParcelNo.setEnabled(true);
     }//GEN-LAST:event_rdbFreeMapItemStateChanged
+
+    //public 
+    private void rdbControlMapItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbControlMapItemStateChanged
+        // TODO add your handling code here:
+        cmbMapNo1.setEnabled(true);
+        cmbMapNo2.setEnabled(false);
+        cmbMapNo3.setEnabled(false);
+        cmbMapNo4.setEnabled(false);
+        cmbParcelNo.setEnabled(true);
+    }//GEN-LAST:event_rdbControlMapItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
+           ParcelSearch pcl=new ParcelSearch();
+            getMainContentPanel().addPanel(pcl, MainContentPanel.CARD_PARCEL_SEARCH);
+        }
+        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNewEntry;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSave1;
     private javax.swing.ButtonGroup buttonGroup1;
     private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
     private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
@@ -959,15 +754,10 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JComboBox cmbMapNo3;
     private javax.swing.JComboBox cmbMapNo4;
     private javax.swing.JComboBox cmbParcelNo;
-    private javax.swing.JComboBox cmbUnit;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -976,27 +766,11 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel25;
-    private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
@@ -1004,6 +778,7 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
@@ -1012,20 +787,13 @@ public class ParcelMothEntry extends ContentPanel {
     private org.sola.clients.beans.administrative.LocListBean locListBean;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private org.sola.clients.beans.administrative.MothBean mothBean;
+    private javax.swing.JPanel pnlMap;
     private javax.swing.JRadioButton rdbControlMap;
     private javax.swing.JRadioButton rdbFreeMap;
-    private javax.swing.JTextField txtAana;
-    private javax.swing.JTextField txtDam;
     private javax.swing.JTextField txtMothLuj;
     private javax.swing.JTextField txtMothLujNo;
     private javax.swing.JTextField txtPageNo;
-    private javax.swing.JTextField txtPaisa;
-    private javax.swing.JTextField txtParcelNo;
-    private javax.swing.JTextField txtRopani;
-    private javax.swing.JTextField txtSectionNo;
-    private javax.swing.JTextField txtSquareMeter;
     private javax.swing.JTextField txtVdc;
-    private javax.swing.JTextField txtWardNo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

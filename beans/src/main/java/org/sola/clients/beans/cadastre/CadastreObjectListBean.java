@@ -19,6 +19,7 @@ import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
@@ -49,5 +50,9 @@ public class CadastreObjectListBean extends AbstractBindingListBean{
         this.selectedCadastreObjectBean = selectedCadastreObjectBean;
         propertySupport.firePropertyChange(SELECTED_CADASTRE, oldValue, this.selectedCadastreObjectBean);
     }
+    
+     public void getCadastreObjectList(String vdcCode,String wardNo) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getCadastreObjectList(vdcCode,wardNo), CadastreObjectBean.class, (SolaObservableList) cadastres);
+    }  
     
 }

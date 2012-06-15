@@ -53,6 +53,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_SEARCH_BY_LAND_OWNER = "srchLandOwner";
     public final static String CARD_MothShresta_Entry = "mothShrestaEntry";
     public final static String CARD_LandOwner_Entry = "landOwnerEntry";
+    public final static String CARD_PARCEL_SEARCH = "parcelSearch";
     public final static String CARD_Parcel_Entry = "parcelsEntry";
     public final static String CARD_ADMIN_VDC = "vdcAssignmnet";
     public final static String CARD_SEARCH_PERSONS = "searchPersons";
