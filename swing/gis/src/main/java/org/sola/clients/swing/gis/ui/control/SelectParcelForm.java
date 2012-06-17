@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.swing.extended.Map;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.swing.gis.SelectedParcelInfo;
@@ -71,11 +70,11 @@ public class SelectParcelForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstParcelInfo = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
-        parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -96,13 +95,10 @@ public class SelectParcelForm extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                         .addGap(12, 12, 12)
                         .addComponent(btnOK))
                     .addGroup(layout.createSequentialGroup()
@@ -113,16 +109,13 @@ public class SelectParcelForm extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnOK))))
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 217, Short.MAX_VALUE)
+                .addComponent(btnOK))
         );
 
         pack();
@@ -182,6 +175,6 @@ public class SelectParcelForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lstParcelInfo;
-    private org.sola.clients.swing.ui.cadastre.CadastreObjectPanel parcelSearchPanel;
+    private org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel parcelSearchPanel;
     // End of variables declaration//GEN-END:variables
 }
