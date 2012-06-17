@@ -35,7 +35,7 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
     }
     //------------------------------------------
     
-    public CadastreObjectPanel() {
+    public CadastreObjectSearchPanel() {
         initComponents(); 
         //mapSheetListBean.loadMapSheetList();
         //cmbMapNo1.setSelectedIndex(-1);
@@ -459,7 +459,7 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
             newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
             refresh_Parcel_Information();
         } catch (Exception ex) {
-            Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastreObjectSearchPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSearch2ActionPerformed
 
@@ -556,6 +556,7 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnSearch2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
     private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
     private javax.swing.JComboBox cmbDistrict;
     private javax.swing.JComboBox cmbMapNo1;
@@ -571,11 +572,6 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -584,10 +580,6 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private javax.swing.JPanel pnlSearch1;
     private javax.swing.JRadioButton rdbControSheet;
