@@ -162,7 +162,7 @@ public class MainForm extends javax.swing.JFrame {
         menuDistrict = new javax.swing.JMenuItem();
         menuOffices = new javax.swing.JMenuItem();
         menuDepartments = new javax.swing.JMenuItem();
-        menuMapSheet = new javax.swing.JMenuItem();
+        menuMapsheet = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -609,14 +609,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuDepartments);
 
-        menuMapSheet.setText(bundle.getString("MainForm.menuMapSheet.text")); // NOI18N
-        menuMapSheet.setName(bundle.getString("MainForm.menuMapSheet.name")); // NOI18N
-        menuMapSheet.addActionListener(new java.awt.event.ActionListener() {
+        menuMapsheet.setText(bundle.getString("MainForm.menuMapsheet.text")); // NOI18N
+        menuMapsheet.setName(bundle.getString("MainForm.menuMapsheet.name")); // NOI18N
+        menuMapsheet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuMapSheetActionPerformed(evt);
+                menuMapsheetActionPerformed(evt);
             }
         });
-        jMenu1.add(menuMapSheet);
+        jMenu1.add(menuMapsheet);
 
         menuRefData.add(jMenu1);
 
@@ -824,9 +824,9 @@ public class MainForm extends javax.swing.JFrame {
         showDepartmentsForm();
     }//GEN-LAST:event_menuDepartmentsActionPerformed
 
-    private void menuMapSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMapSheetActionPerformed
+    private void menuMapsheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMapsheetActionPerformed
         manageMapSheet();
-    }//GEN-LAST:event_menuMapSheetActionPerformed
+    }//GEN-LAST:event_menuMapsheetActionPerformed
 
 
     /**
@@ -1003,7 +1003,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuIdTypes;
     private javax.swing.JMenuItem menuLodgementReport;
-    private javax.swing.JMenuItem menuMapSheet;
+    private javax.swing.JMenuItem menuMapsheet;
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenu menuParty;

@@ -32,7 +32,7 @@ import org.sola.webservices.transferobjects.EntityAction;
 public class MapSheetListBean extends AbstractBindingListBean {
 
     public static final String SELECTED_MAPSHEET = "selectedMapSheet";
-    ObservableList<MapSheetBean> mapSheet;
+    ObservableList<MapSheetBean> mapSheets;
     private MapSheetBean selectedMapSheet;
 
     public MapSheetBean getSelectedMapSheet() {
@@ -69,7 +69,7 @@ public class MapSheetListBean extends AbstractBindingListBean {
         if (mapSheetBean == null) {
             return;
         }
-        mapSheet.add(mapSheetBean);
+        mapSheets.add(mapSheetBean);
     }
 /**
  * remove selectedMapSheet from the list
@@ -79,7 +79,7 @@ public class MapSheetListBean extends AbstractBindingListBean {
         if (selectedMapSheet != null) {
             selectedMapSheet.setEntityAction(EntityAction.DELETE);
             selectedMapSheet.saveMapSheet();
-             mapSheet.remove(selectedMapSheet);
+             mapSheets.remove(selectedMapSheet);
         }
     }
 }
