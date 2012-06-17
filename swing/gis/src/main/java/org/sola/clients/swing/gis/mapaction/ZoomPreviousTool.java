@@ -5,7 +5,6 @@
 package org.sola.clients.swing.gis.mapaction;
 
 import org.geotools.swing.extended.Map;
-import org.sola.clients.swing.gis.ui.control.DefinePointListForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -15,7 +14,6 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class ZoomPreviousTool extends ComponentShow {
     public final static String MAPACTION_NAME = "Zoom Previous";
-    public DefinePointListForm pointsForm=null;
     
     private Map mapObj=null;
     

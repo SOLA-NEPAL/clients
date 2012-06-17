@@ -12,7 +12,7 @@ import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.ui.control.ImportFromShapeFile;
+import org.sola.clients.swing.gis.ui.control.ImportLinesFromFile;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -22,7 +22,7 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class ImportShapeFileShow  extends ComponentShow{
     public final static String MAPACTION_NAME = "Features from shape files";
-    public ImportFromShapeFile pointsForm=null;
+    public ImportLinesFromFile pointsForm=null;
     
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
@@ -54,7 +54,7 @@ public class ImportShapeFileShow  extends ComponentShow{
         try {
             //Display segment list.
             if (pointsForm==null)
-                pointsForm=new ImportFromShapeFile(segmentLayer, targetParcelsLayer);
+                pointsForm=new ImportLinesFromFile(segmentLayer, targetParcelsLayer);
             pointsForm.setVisible(true);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(ImportShapeFileShow.class.getName()).log(Level.SEVERE, null, ex);

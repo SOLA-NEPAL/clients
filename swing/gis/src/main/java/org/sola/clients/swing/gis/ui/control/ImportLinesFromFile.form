@@ -124,13 +124,14 @@
                       <Component id="btnUndoSplit" linkSize="1" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
                       <Component id="btnCreatePolygon" linkSize="1" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                       <Component id="btnSaveTextFile" linkSize="1" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
-                      <Component id="btnImport" linkSize="1" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
+                      <Component id="btnImportLines" linkSize="1" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                       <Component id="btnAddRow" linkSize="1" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
                       <Component id="btnOK" linkSize="1" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                       <Component id="btnDxfImport" linkSize="1" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
                       <Component id="btnShowInMap" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnRefreshMap" linkSize="1" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
                       <Component id="btnOpenShapeFile" linkSize="1" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="btnImportPoints" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -141,15 +142,17 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnAddRow" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                  <Component id="btnImport" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnImportPoints" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnImportLines" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnDxfImport" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnOpenShapeFile" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnSaveTextFile" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   <Component id="btnRefreshMap" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="btnUndoSplit" min="-2" max="-2" attributes="0"/>
@@ -197,12 +200,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRowActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnImport">
+        <Component class="javax.swing.JButton" name="btnImportLines">
           <Properties>
             <Property name="text" type="java.lang.String" value="Import Line File"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportLinesActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnOK">
@@ -244,6 +247,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreatePolygonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnImportPoints">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Import Point File"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportPointsActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

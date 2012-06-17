@@ -7,6 +7,7 @@ package org.sola.clients.swing.gis.ui.control;
 import com.vividsolutions.jts.geom.*;
 import java.io.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +31,7 @@ import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
  *
  * @author ShresthaKabin
  */
-public class ImportFromShapeFile extends javax.swing.JDialog {
+public class ImportLinesFromFile extends javax.swing.JDialog {
     //Store for old data collection.
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
@@ -41,7 +42,7 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
     /**
      * Creates new form DefinePointListForm
      */
-    public ImportFromShapeFile(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
+    public ImportLinesFromFile(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
                     throws InitializeLayerException {
         initComponents();
         //set table dimesion.
@@ -88,12 +89,13 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
         btnSaveTextFile = new javax.swing.JButton();
         btnUndoSplit = new javax.swing.JButton();
         btnAddRow = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
+        btnImportLines = new javax.swing.JButton();
         btnOK = new javax.swing.JButton();
         btnDxfImport = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
         btnShowInMap = new javax.swing.JButton();
         btnCreatePolygon = new javax.swing.JButton();
+        btnImportPoints = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -160,10 +162,10 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
             }
         });
 
-        btnImport.setText("Import Line File");
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
+        btnImportLines.setText("Import Line File");
+        btnImportLines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
+                btnImportLinesActionPerformed(evt);
             }
         });
 
@@ -203,6 +205,13 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
             }
         });
 
+        btnImportPoints.setText("Import Point File");
+        btnImportPoints.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportPointsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -213,32 +222,35 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
                     .addComponent(btnUndoSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCreatePolygon, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSaveTextFile, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImportLines, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddRow, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDxfImport, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnShowInMap)
                     .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOpenShapeFile, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnOpenShapeFile, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImportPoints, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAddRow, btnCreatePolygon, btnDxfImport, btnImport, btnOK, btnOpenShapeFile, btnRefreshMap, btnSaveTextFile, btnShowInMap, btnUndoSplit});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAddRow, btnCreatePolygon, btnDxfImport, btnImportLines, btnOK, btnOpenShapeFile, btnRefreshMap, btnSaveTextFile, btnShowInMap, btnUndoSplit});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAddRow)
-                .addGap(49, 49, 49)
-                .addComponent(btnImport)
+                .addGap(32, 32, 32)
+                .addComponent(btnImportPoints)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnImportLines)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDxfImport)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOpenShapeFile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSaveTextFile)
-                .addGap(51, 51, 51)
+                .addGap(39, 39, 39)
                 .addComponent(btnRefreshMap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUndoSplit)
@@ -299,9 +311,9 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
         return filter;
     }
     
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+    private void btnImportLinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportLinesActionPerformed
         JFileChooser fileOpen=new JFileChooser();
-        fileOpen.setDialogTitle("Choose text file to load into table.");
+        fileOpen.setDialogTitle("Choose point text file to load into table.");
         fileOpen.setVisible(true);
         FileFilter filter=getTextFileFilter(".sli","Text Files (*.sli)");
         fileOpen.setFileFilter(filter);
@@ -351,13 +363,13 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
             tblPoints.setModel(table);
             tblPoints.repaint();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return true;
-    }//GEN-LAST:event_btnImportActionPerformed
+    }//GEN-LAST:event_btnImportLinesActionPerformed
 
     private void btnAddRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRowActionPerformed
         DefaultTableModel tblmodel=(DefaultTableModel)tblPoints.getModel();
@@ -406,7 +418,7 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
             //fill table from text file.
             saveTextFileData(oFile);
         } catch (IOException ex) {
-            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSaveTextFileActionPerformed
 
@@ -490,7 +502,7 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
             tblPoints.repaint();
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -543,9 +555,9 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
             tblPoints.setModel(table);
             tblPoints.repaint();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ImportFromShapeFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDxfImportActionPerformed
 
@@ -588,11 +600,82 @@ public class ImportFromShapeFile extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
+    private void btnImportPointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportPointsActionPerformed
+        JFileChooser fileOpen = new JFileChooser();
+        fileOpen.setDialogTitle("Choose text file to load in table.");
+        fileOpen.setVisible(true);
+        FileFilter filter = getTextFileFilter(".spo","Text Files (*.spo)");
+        fileOpen.setFileFilter(filter);
+        //FileNameExtensionFilter extFilter=new FileNameExtensionFilter("Text Files", "*.txt|*.csv");
+        fileOpen.showOpenDialog(this);
+        File iFile = fileOpen.getSelectedFile();
+        if (iFile == null) {
+            return;
+        }
+        //prepare table to input data.
+        DefaultTableModel defTable = (DefaultTableModel) tblPoints.getModel();
+        defTable.setRowCount(0);
+        tblPoints.setModel(defTable);
+        tblPoints.repaint();
+        //fill table from text file.
+        if (!readPointTextFileData(iFile)) {
+            JOptionPane.showConfirmDialog(this, "File format is not ok, please check it.");
+        }
+    }
+
+    private boolean readPointTextFileData(File iFile) {
+        //fill data into table from text file.
+        try {
+            DefaultTableModel table = (DefaultTableModel) tblPoints.getModel();
+            FileReader iReader = new FileReader(iFile);
+            BufferedReader buff_reader = new BufferedReader((Reader) iReader);
+
+            String txtline = buff_reader.readLine();
+            DecimalFormat df = new DecimalFormat("0.000");//mm precision.
+            //read data.
+            List<Coordinate> cors=new ArrayList<Coordinate>();
+            while (txtline != null && !txtline.isEmpty()) {
+                String[] pt = txtline.split(",");
+                if (pt.length < 2) {
+                    return false;
+                }
+                if (pt != null && pt.length > 1) {
+                    double x= ClsGeneral.getDoubleValue(pt[0]);//x-cordinate.
+                    double y= ClsGeneral.getDoubleValue(pt[1]);//y-cordinate.
+                    Coordinate co=new Coordinate(x,y);
+                    cors.add(co);
+                }
+                txtline = buff_reader.readLine();
+            }
+            if (cors.size()<2) return false;
+            //display into table.
+            for (int i=1;i<cors.size();i++){
+                double x1=cors.get(i-1).x;
+                double y1=cors.get(i-1).y;
+                double x2=cors.get(i).x;
+                double y2=cors.get(i).y;
+                Object[] row=new Object[]{i, 
+                            df.format(x1), df.format(y1), 
+                                  df.format(x2), df.format(y2)};
+                table.addRow(row);
+            }
+            buff_reader.close();
+            tblPoints.setModel(table);
+            tblPoints.repaint();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ImportLinesFromFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
+    }//GEN-LAST:event_btnImportPointsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRow;
     private javax.swing.JButton btnCreatePolygon;
     private javax.swing.JButton btnDxfImport;
-    private javax.swing.JButton btnImport;
+    private javax.swing.JButton btnImportLines;
+    private javax.swing.JButton btnImportPoints;
     private javax.swing.JButton btnOK;
     private javax.swing.JButton btnOpenShapeFile;
     private javax.swing.JButton btnRefreshMap;

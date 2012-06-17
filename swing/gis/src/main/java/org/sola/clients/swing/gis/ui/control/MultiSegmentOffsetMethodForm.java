@@ -7,7 +7,9 @@ package org.sola.clients.swing.gis.ui.control;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.operation.overlay.validate.OffsetPointGenerator;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +36,9 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private List<LineString> selectedLines = null;
     //private Point pointFixed = null;
     private String parcel_ID="";
+    //temporary variable just to use for iterative offset.
+    //0--> no proper offset, 1--> leftsided offset, 2--> right sided offset.
+    private byte leftside_offset=0;
     
     public MultiSegmentOffsetMethodForm( CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
                     throws InitializeLayerException {
@@ -66,16 +71,20 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        offsetOptions = new javax.swing.ButtonGroup();
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
-        btnUndoSplit = new javax.swing.JButton();
-        btnOK = new javax.swing.JButton();
-        btnCreateParcel = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        txtOffsetDistance = new javax.swing.JTextField();
-        btnCheckOffsetLine = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        optOffsetByDistance = new javax.swing.JRadioButton();
+        txtOffsetValue = new javax.swing.JTextField();
         btnShowJoinPoint = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
+        btnCreateParcel = new javax.swing.JButton();
+        optOffsetByArea = new javax.swing.JRadioButton();
+        btnUndoSplit = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
+        btnCheckOffsetLine = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
+        lblOffsetValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -87,35 +96,12 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnUndoSplit.setText("Undo Split");
-        btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUndoSplitActionPerformed(evt);
-            }
-        });
-
-        btnOK.setText("OK");
-        btnOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOKActionPerformed(evt);
-            }
-        });
-
-        btnCreateParcel.setText("Create Parcel");
-        btnCreateParcel.setEnabled(false);
-        btnCreateParcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateParcelActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Offset Distance (m):");
-
-        btnCheckOffsetLine.setText("Check Offset Method");
-        btnCheckOffsetLine.setEnabled(false);
-        btnCheckOffsetLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckOffsetLineActionPerformed(evt);
+        offsetOptions.add(optOffsetByDistance);
+        optOffsetByDistance.setSelected(true);
+        optOffsetByDistance.setText("Offset By Distance");
+        optOffsetByDistance.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                optOffsetByDistanceStateChanged(evt);
             }
         });
 
@@ -133,6 +119,44 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
+        btnCreateParcel.setText("Create Parcel");
+        btnCreateParcel.setEnabled(false);
+        btnCreateParcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateParcelActionPerformed(evt);
+            }
+        });
+
+        offsetOptions.add(optOffsetByArea);
+        optOffsetByArea.setText("Offset by Area");
+        optOffsetByArea.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                optOffsetByAreaStateChanged(evt);
+            }
+        });
+
+        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoSplitActionPerformed(evt);
+            }
+        });
+
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
+        btnCheckOffsetLine.setText("Check Offset Lines");
+        btnCheckOffsetLine.setEnabled(false);
+        btnCheckOffsetLine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckOffsetLineActionPerformed(evt);
+            }
+        });
+
         btnCheckSegments.setText("Check Segments");
         btnCheckSegments.setEnabled(false);
         btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +165,71 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
+        lblOffsetValue.setText("Offset Distance (m):");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRefreshMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUndoSplit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOK))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(optOffsetByDistance)
+                            .addComponent(lblOffsetValue))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(optOffsetByArea)
+                            .addComponent(txtOffsetValue, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnShowJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCheckOffsetLine, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCreateParcel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCheckSegments, btnCreateParcel});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(optOffsetByDistance)
+                    .addComponent(optOffsetByArea))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCheckOffsetLine)
+                            .addComponent(btnCheckSegments))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCreateParcel)
+                            .addComponent(btnShowJoinPoint)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblOffsetValue)
+                            .addComponent(txtOffsetValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnUndoSplit)
+                            .addComponent(btnOK)
+                            .addComponent(btnRefreshMap))))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,47 +237,15 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtOffsetDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnRefreshMap)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUndoSplit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnOK)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnShowJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCheckOffsetLine, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCreateParcel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                    .addComponent(locatePointPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(locatePointPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtOffsetDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCheckOffsetLine)
-                    .addComponent(btnCheckSegments))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUndoSplit)
-                    .addComponent(btnOK)
-                    .addComponent(btnRefreshMap)
-                    .addComponent(btnCreateParcel)
-                    .addComponent(btnShowJoinPoint))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -327,32 +384,27 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         Coordinate[] cors= getOffset_Coordinates(poly_lines,offsetDist,true,false);
         if (cors!=null && cors.length>0){
             boolean isInside=PublicMethod.IsAnyPoint_InsidePolygon(parcel,cors);
-            if (!isInside && !IsLines_IntersectPolygon(cors)) { //If not check the offset line at right.
+            leftside_offset=1;
+            if (!isInside && !IsLines_IntersectPolygon(cors)) {  
                 //rightsided offset line.
                 cors= getOffset_Coordinates(poly_lines,offsetDist,false,true);
                 if (cors!=null && cors.length>0){
                     isInside = PublicMethod.IsAnyPoint_InsidePolygon(parcel,cors);
                     if (!isInside && !IsLines_IntersectPolygon(cors)){
                         JOptionPane.showMessageDialog(this, "Could not find valid offset line.");
+                        leftside_offset=0; 
                         return null;
                     }
+                    leftside_offset=2;
                 }
+                else leftside_offset=0;   
             }
         }
-        //test point on map.
-//        GeometryFactory geomFactory=new GeometryFactory();
-//        for (Coordinate co:cors){
-//            Point pt=geomFactory.createPoint(co);
-//            locatePointPanel.addPointInPointCollection(pt);
-//        }       
+     
         return cors;
     }
     
-    //check the validity of buffered offset points
-    //if not do manual operation to find the valid offset points.
-    private LineString[] checked_OffsetLines(double offsetDist){ 
-        Coordinate[] offsetCors= get_Offset_Points(offsetDist);
-        if (offsetCors==null || offsetCors.length<2) return null;
+     private LineString[] getLinesFromCoors(Coordinate[] offsetCors) {
         //forming connected lines manually.
         GeometryFactory geomFactory=new GeometryFactory();
         if (offsetCors.length==2){
@@ -378,34 +430,120 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         }
         return tmp_lines;
     }
+     
+    //check the validity of buffered offset points
+    //if not do manual operation to find the valid offset points.
+    private LineString[] checked_OffsetLines(double offsetDist){ 
+        Coordinate[] offsetCors= get_Offset_Points(offsetDist);
+        if (offsetCors==null || offsetCors.length<2) return null;
+        return getLinesFromCoors(offsetCors);
+    }
+    
+    private double getLength_Selected(){
+        double lenSelected=0;
+        for(LineString tmp_line:selectedLines){
+            lenSelected+= tmp_line.getLength();
+        }
+        
+        return lenSelected;
+    }
+    
+    //do iteration for find the proper offset distance at which 
+    //given split area will be resulted.
+    private LineString[] checked_OffsetLines(double minOffsetDistance,double maxOffsetDistance
+                    ,double areaReq,Geometry parcel){ 
+        double mid_distance= (maxOffsetDistance+minOffsetDistance)/2;
+        LineString[] offsetLine=checked_OffsetLines(mid_distance);
+        offsetLine=getEndExtended(offsetLine);//extend offset lines at ends.
+        if (leftside_offset==0 || offsetLine==null) return null;
+        //confirmed sided offset
+        double areaFound=checkAreaFormed(offsetLine,parcel);
+        DecimalFormat df = new DecimalFormat("0.000");
+
+        //form boolean for side of offsetting.
+        boolean leftsided_offset=false;
+        MultiLineString poly_lines=getMidPointIncludedPolyline();
+        if (leftside_offset==1) leftsided_offset=true;
+        while (!df.format(areaFound).equals(df.format(areaReq))) {
+            if (areaFound<0) return null;
+            if (df.format(mid_distance).equals(df.format(minOffsetDistance)) ||
+                 df.format(mid_distance).equals(df.format(maxOffsetDistance))) {
+                break;
+            }
+            if (areaFound < areaReq) {
+                minOffsetDistance = mid_distance;
+            } else {
+                maxOffsetDistance = mid_distance;
+            }
+            mid_distance= (maxOffsetDistance+minOffsetDistance)/2;
+            Coordinate[] offsetCors= getOffset_Coordinates(poly_lines,
+                               mid_distance,leftsided_offset,!leftsided_offset);
+            if (offsetCors==null || offsetCors.length<2) return null;
+            //check new polygon formed.
+            offsetLine= getLinesFromCoors(offsetCors);
+            offsetLine=getEndExtended(offsetLine);//extend offset lines at ends.
+            areaFound=checkAreaFormed(offsetLine,parcel);
+        }
+        return offsetLine;
+    }
+    
+    private double checkAreaFormed(LineString[] offsetLine,Geometry parcel){
+        LineString[] segs=PublicMethod.getLineStrings(parcel.getCoordinates());
+        
+        List<LineString> segments=new ArrayList<LineString>();
+        segments.addAll(Arrays.asList(segs));
+        segments.addAll(Arrays.asList(offsetLine));
+        List<LineString> noded_segments= 
+                NodedLineStringGenerator.generateNodedGeometry(segments);
+        //form new parcels by polygonization method.
+        List<Geometry> parcels=Polygonization.getPolygons(noded_segments);
+        
+        //find the correct parcel with points on selected lines.
+        for (LineString seg:selectedLines){
+            for (Geometry tmp_parcel:parcels){
+                if (PublicMethod.isSegmentOn_Selected_Parcel(tmp_parcel, seg)){
+                    return tmp_parcel.getArea();
+                }
+            }
+        }
+        return -1;
+    }
     
     private void btnCheckOffsetLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckOffsetLineActionPerformed
         if (!isValid_Data()) return;
-        double offsetDist= Double.parseDouble((txtOffsetDistance.getText()));
-
+        double offsetValue= Double.parseDouble((txtOffsetValue.getText()));
+        LineString[] offsetLine=null;
         //Find the proper offset lines with extended ends.
-        LineString[] offsetLine=checked_OffsetLines(offsetDist);
-        
-        offsetLine=getEndExtended(offsetLine);//extend offset lines at ends.
-        if (offsetLine==null){
-            JOptionPane.showMessageDialog(null, "Could not create valid offset please check other option.");
-            return;
-        } 
+        if (optOffsetByDistance.isSelected()){
+            offsetLine=checked_OffsetLines(offsetValue);
+            offsetLine=getEndExtended(offsetLine);//extend offset lines at ends.
+            if (offsetLine==null){
+                JOptionPane.showMessageDialog(null, "Could not create valid offset please check other option.");
+                return;
+            } 
+        }
+        else{
+            Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
+            double lenSelected=getLength_Selected();
+            double maxOffsetDist= parcel.getArea()/lenSelected;//like with of the rectangular parcel.
+            offsetLine=checked_OffsetLines(0,maxOffsetDist,offsetValue,parcel);
+        }
+        if (offsetLine==null) return;
         //append newly formed lines and refresh details on map.
-        btnCheckSegments.setEnabled(true);
         append_OffsetLines(offsetLine);
+        btnCheckSegments.setEnabled(true);
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnCheckOffsetLineActionPerformed
 
     private boolean isValid_Data(){
-        if (txtOffsetDistance.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please provide offset distance first and proceed again.");
+        if (txtOffsetValue.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please provide offset value first and proceed again.");
             return false;
         }
         
-        double offsetDist= Double.parseDouble((txtOffsetDistance.getText()));
+        double offsetDist= Double.parseDouble((txtOffsetValue.getText()));
         if (offsetDist<=0){
-            JOptionPane.showMessageDialog(this, "The offset distance given is not valid, check it first.");
+            JOptionPane.showMessageDialog(this, "The offset value given is not valid, check it first.");
             return false;
         }
         List<LineString> tmp_lines=locatePointPanel.getSelectedLines();
@@ -462,6 +600,18 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
+    private void optOffsetByDistanceStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_optOffsetByDistanceStateChanged
+        if (optOffsetByDistance.isSelected()){
+            lblOffsetValue.setText("Offset Distance(m)");
+        }
+    }//GEN-LAST:event_optOffsetByDistanceStateChanged
+
+    private void optOffsetByAreaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_optOffsetByAreaStateChanged
+        if (optOffsetByArea.isSelected()){
+            lblOffsetValue.setText("Offset Area(m2)");
+        }
+    }//GEN-LAST:event_optOffsetByAreaStateChanged
+
     //make extended start and end segment to form close figure.
     //it assures the intersection of polygon by offset line.
     private LineString[] getEndExtended(LineString[] offsetLine){
@@ -493,7 +643,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             Coordinate[] co=new Coordinate[]{startpt.getCoordinate(),endpt.getCoordinate()};
             offsetLine[0]=geomFactory.createLineString(co);
         }
-            
+        
         return offsetLine;
     }
    
@@ -533,8 +683,12 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnShowJoinPoint;
     private javax.swing.JButton btnUndoSplit;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblOffsetValue;
     private org.sola.clients.swing.gis.ui.control.LocatePointPanel locatePointPanel;
-    private javax.swing.JTextField txtOffsetDistance;
+    private javax.swing.ButtonGroup offsetOptions;
+    private javax.swing.JRadioButton optOffsetByArea;
+    private javax.swing.JRadioButton optOffsetByDistance;
+    private javax.swing.JTextField txtOffsetValue;
     // End of variables declaration//GEN-END:variables
 }

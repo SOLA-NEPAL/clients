@@ -440,9 +440,9 @@ private void optionRuralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             table.setModel(tblpoint);
             table.repaint();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastreChangePointSurveyListForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(DefinePointListForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastreChangePointSurveyListForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //</editor-fold>

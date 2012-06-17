@@ -6,6 +6,7 @@ package org.sola.clients.swing.gis;
 
 import com.vividsolutions.jts.geom.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.opengis.feature.simple.SimpleFeature;
@@ -74,6 +75,36 @@ public class NodedLineStringGenerator {
         //refresh everything including map.
         locatePointPanel.showSegmentListInTable();
     }  
+    
+    public static List<LineString> generateNodedGeometry(LineString[] segs) {   
+        List<LineString> tmp_segs=Arrays.asList(segs);
+        
+        return generateNodedGeometry(tmp_segs);
+    }
+    
+    public static List<LineString> generateNodedGeometry(List<LineString> segs) {                                                 
+        // find intersection points.
+        List<LineString> noded_segs=new ArrayList<LineString>();
+        Geometry segsSet= getLines_Union(segs);
+        //Append all segment as new
+        for (int i=0;i<segsSet.getNumGeometries();i++){
+            LineString seg=(LineString)segsSet.getGeometryN(i);
+            //append line to the collection.
+            noded_segs.add(seg);
+        }
+        return noded_segs;
+    }  
+    
+    private static Geometry getLines_Union(List<LineString> segs){
+        //form noded line string.
+        Geometry nodedLineStrings=segs.get(0);;
+        //Alternatively we can use MultiLineString.Union method also to create nodedLineString.
+        for (int i=1;i<segs.size();i++){
+            nodedLineStrings=nodedLineStrings.union(segs.get(i));
+        }
+        
+        return nodedLineStrings;
+    }
     
     public static boolean isConnected_Segments(List<LineString> segs){
         //form noded line string.
