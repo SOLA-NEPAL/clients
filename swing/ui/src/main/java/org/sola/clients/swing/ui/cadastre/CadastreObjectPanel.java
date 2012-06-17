@@ -4,6 +4,10 @@
  */
 package org.sola.clients.swing.ui.cadastre;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.referencedata.DistrictBean;
@@ -18,13 +22,27 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     /**
      * Creates new form CadastreObjectPanel
      */
-    CadastreObjectBean newCadastreObjectBean=null;
+    private CadastreObjectBean newCadastreObjectBean=null;
+    
+    //By Kabindra
+    //--------------------------------------------
+    private Method search_Completed_Trigger=null;
+    private Object method_holder_object=null;
+    
+    public void set_SearchCompletedTriggers(Method search_completed, Object method_holder){
+        this.search_Completed_Trigger=search_completed;
+        this.method_holder_object=method_holder;
+    }
+    //------------------------------------------
+    
     public CadastreObjectPanel() {
         initComponents(); 
         //mapSheetListBean.loadMapSheetList();
         //cmbMapNo1.setSelectedIndex(-1);
+        rdbSearchByBoundaryItemStateChanged(null);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,6 +51,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
@@ -41,85 +60,132 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         cadastreObjectListBean = new org.sola.clients.beans.cadastre.CadastreObjectListBean();
         mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
         cadastreObjectBean = new org.sola.clients.beans.cadastre.CadastreObjectBean();
-        btnSearch2 = new javax.swing.JButton();
-        rdbFreeSheet = new javax.swing.JRadioButton();
-        rdbControSheet = new javax.swing.JRadioButton();
         rdbSearchByBoundary = new javax.swing.JRadioButton();
-        rdbSearchByMapSheet = new javax.swing.JRadioButton();
-        pnlSearch = new javax.swing.JPanel();
+        btnSearch1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        cmbDistrict = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        cmbVdc = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        txtWardNo = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtParcelNo = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        cmbVdc = new javax.swing.JComboBox();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtWardNo = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        cmbDistrict = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
         pnlSearch1 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         cmbMapNo1 = new javax.swing.JComboBox();
         jPanel17 = new javax.swing.JPanel();
         cmbMapNo2 = new javax.swing.JComboBox();
-        jPanel9 = new javax.swing.JPanel();
-        cmbMapNo3 = new javax.swing.JComboBox();
         jPanel10 = new javax.swing.JPanel();
         cmbMapNo4 = new javax.swing.JComboBox();
+        jPanel9 = new javax.swing.JPanel();
+        cmbMapNo3 = new javax.swing.JComboBox();
         jPanel11 = new javax.swing.JPanel();
         txtParcelNo1 = new javax.swing.JTextField();
-        btnSearch1 = new javax.swing.JButton();
+        btnSearch2 = new javax.swing.JButton();
+        rdbFreeSheet = new javax.swing.JRadioButton();
+        rdbControSheet = new javax.swing.JRadioButton();
+        rdbSearchByMapSheet = new javax.swing.JRadioButton();
 
-        btnSearch2.setText("Search");
-        btnSearch2.setEnabled(false);
-        btnSearch2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearch2ActionPerformed(evt);
-            }
-        });
-
-        rdbFreeSheet.setText("Free Sheet");
-        rdbFreeSheet.setEnabled(false);
-        rdbFreeSheet.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdbFreeSheetItemStateChanged(evt);
-            }
-        });
-
-        rdbControSheet.setText("Control Sheet");
-        rdbControSheet.setEnabled(false);
-        rdbControSheet.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdbControSheetItemStateChanged(evt);
-            }
-        });
-
-        rdbSearchByBoundary.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        rdbSearchByBoundary.setText("Search By Boundary");
+        buttonGroup1.add(rdbSearchByBoundary);
+        rdbSearchByBoundary.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rdbSearchByBoundary.setSelected(true);
+        rdbSearchByBoundary.setText("Search By Administrative Boundary Information");
         rdbSearchByBoundary.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 rdbSearchByBoundaryItemStateChanged(evt);
             }
         });
 
-        rdbSearchByMapSheet.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        rdbSearchByMapSheet.setText("Searchl By Map Sheet Number");
-        rdbSearchByMapSheet.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdbSearchByMapSheetItemStateChanged(evt);
+        btnSearch1.setText("Search");
+        btnSearch1.setEnabled(false);
+        btnSearch1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearch1ActionPerformed(evt);
             }
         });
 
-        pnlSearch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel4.setText("Parcel No.");
 
-        jPanel5.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addComponent(txtParcelNo)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel2.setText("Vdc/Municipality");
+
+        cmbVdc.setEditable(true);
+        cmbVdc.setEnabled(false);
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cmbVdc);
+        bindingGroup.addBinding(jComboBoxBinding);
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedVdc}"), cmbVdc, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cmbVdc, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbVdc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel3.setText("Ward Number");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 9, Short.MAX_VALUE))
+            .addComponent(txtWardNo)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         cmbDistrict.setEditable(true);
         cmbDistrict.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cmbDistrict);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedDistrict}"), cmbDistrict, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
         cmbDistrict.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbDistrictItemStateChanged(evt);
@@ -134,8 +200,8 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(137, 137, Short.MAX_VALUE))
-            .addComponent(cmbDistrict, 0, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(cmbDistrict, 0, 153, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,94 +212,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.add(jPanel2);
-
-        cmbVdc.setEditable(true);
-        cmbVdc.setEnabled(false);
-
-        jLabel2.setText("Vdc/Mp");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(135, 135, Short.MAX_VALUE))
-            .addComponent(cmbVdc, 0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbVdc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel5.add(jPanel3);
-
-        jLabel3.setText("Ward/No");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 127, Short.MAX_VALUE))
-            .addComponent(txtWardNo)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel5.add(jPanel4);
-
-        jLabel4.setText("Parcel No.");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addContainerGap(121, Short.MAX_VALUE))
-            .addComponent(txtParcelNo)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanel5.add(jPanel6);
-
-        javax.swing.GroupLayout pnlSearchLayout = new javax.swing.GroupLayout(pnlSearch);
-        pnlSearch.setLayout(pnlSearchLayout);
-        pnlSearchLayout.setHorizontalGroup(
-            pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pnlSearchLayout.setVerticalGroup(
-            pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSearchLayout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
-        );
-
-        pnlSearch1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jPanel7.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
-
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Map No 1"));
 
         cmbMapNo1.setEditable(true);
@@ -243,17 +221,12 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cmbMapNo1, 0, 121, Short.MAX_VALUE)
+            .addComponent(cmbMapNo1, 0, 146, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmbMapNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addComponent(cmbMapNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        jPanel7.add(jPanel8);
 
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Map No 2"));
 
@@ -265,39 +238,12 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cmbMapNo2, 0, 121, Short.MAX_VALUE)
+            .addComponent(cmbMapNo2, 0, 153, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmbMapNo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addComponent(cmbMapNo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        jPanel7.add(jPanel17);
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Map No 3"));
-
-        cmbMapNo3.setEditable(true);
-        cmbMapNo3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-        cmbMapNo3.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cmbMapNo3, 0, 121, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmbMapNo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-
-        jPanel7.add(jPanel9);
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Map No 4"));
 
@@ -309,17 +255,57 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cmbMapNo4, 0, 121, Short.MAX_VALUE)
+            .addComponent(cmbMapNo4, 0, 142, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmbMapNo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addComponent(cmbMapNo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel7.add(jPanel10);
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Map No 3"));
+
+        cmbMapNo3.setEditable(true);
+        cmbMapNo3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+        cmbMapNo3.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cmbMapNo3, 0, 151, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cmbMapNo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Parcel No."));
 
@@ -327,62 +313,131 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtParcelNo1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+            .addComponent(txtParcelNo1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtParcelNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addComponent(txtParcelNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel7.add(jPanel11);
+        btnSearch2.setText("Search");
+        btnSearch2.setEnabled(false);
+        btnSearch2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearch2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlSearch1Layout = new javax.swing.GroupLayout(pnlSearch1);
         pnlSearch1.setLayout(pnlSearch1Layout);
         pnlSearch1Layout.setHorizontalGroup(
             pnlSearch1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(pnlSearch1Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlSearch1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlSearch1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlSearch1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(btnSearch2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnlSearch1Layout.setVerticalGroup(
             pnlSearch1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSearch1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSearch2)
+                .addContainerGap())
+            .addGroup(pnlSearch1Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btnSearch1.setText("Search");
-        btnSearch1.setEnabled(false);
-        btnSearch1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearch1ActionPerformed(evt);
+        buttonGroup2.add(rdbFreeSheet);
+        rdbFreeSheet.setText("Free Sheet");
+        rdbFreeSheet.setEnabled(false);
+        rdbFreeSheet.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdbFreeSheetItemStateChanged(evt);
             }
         });
+
+        buttonGroup2.add(rdbControSheet);
+        rdbControSheet.setText("Control Sheet");
+        rdbControSheet.setEnabled(false);
+        rdbControSheet.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdbControSheetItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(rdbSearchByMapSheet);
+        rdbSearchByMapSheet.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rdbSearchByMapSheet.setText("Searchl By Map Sheet Number");
+        rdbSearchByMapSheet.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdbSearchByMapSheetItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(rdbSearchByMapSheet)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdbFreeSheet)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdbControSheet)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbSearchByMapSheet)
+                    .addComponent(rdbControSheet)
+                    .addComponent(rdbFreeSheet))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlSearch1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(rdbSearchByMapSheet)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdbFreeSheet)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdbControSheet)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSearch2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(rdbSearchByBoundary)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSearch1)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rdbSearchByBoundary, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSearch1))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,25 +446,21 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdbSearchByBoundary)
                     .addComponent(btnSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(1, 1, 1)
-                .addComponent(pnlSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbSearchByMapSheet)
-                    .addComponent(rdbControSheet)
-                    .addComponent(rdbFreeSheet)
-                    .addComponent(btnSearch2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
-        // TODO add your handling code here:
-
-        MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-        newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
+        try {
+            MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
+            newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
+            refresh_Parcel_Information();
+        } catch (Exception ex) {
+            Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSearch2ActionPerformed
 
     private void rdbFreeSheetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbFreeSheetItemStateChanged
@@ -473,18 +524,32 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             DistrictBean district = (DistrictBean) cmbDistrict.getSelectedItem();
             if (district != null) {
                 String districCode = district.getCode();
-
                 vdcListBean.loadList(false, districCode);
-                //cmbVdc.setSelectedIndex(-1);
+                cmbVdc.setSelectedIndex(-1);
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_cmbDistrictItemStateChanged
 
+    private void refresh_Parcel_Information() 
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        //By Kabindra
+        search_Completed_Trigger.invoke(method_holder_object,
+                new Object[]{newCadastreObjectBean,
+                    cmbDistrict.getSelectedItem().toString(),
+                    cmbVdc.getSelectedItem().toString(),
+                    txtWardNo.getText()});
+    }
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
-        // TODO add your handling code here:
-        VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-        newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString()));
+        //invoke method.
+        try {
+            VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
+            newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(
+                vdc.getCode(), txtWardNo.getText().toString(), 
+                Integer.parseInt(txtParcelNo.getText().toString()));
+            refresh_Parcel_Information();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnSearch1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -505,11 +570,11 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -517,7 +582,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
-    private javax.swing.JPanel pnlSearch;
     private javax.swing.JPanel pnlSearch1;
     private javax.swing.JRadioButton rdbControSheet;
     private javax.swing.JRadioButton rdbFreeSheet;
@@ -527,5 +591,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtParcelNo1;
     private javax.swing.JTextField txtWardNo;
     private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -183,33 +183,44 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 //        for (int i=0;i<12;i++) //if needed blank tool of long distance.
 //            this.getMap().addMapAction(new BlankTool(),this.getToolbar(), true);
         
+        this.getMap().addMapAction(new SearchParcelFormShow(this.getPojoDataAccess(),
+                this.getMap(),targetSegmentLayer, targetParcelsLayer)
+                            , this.getToolbar(), true);
         //new tool for parcel selection.
-        listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects((this.getPojoDataAccess()));
-        listParcel.setTargetParcelsLayer(targetParcelsLayer);
-        listParcel.setTargetPointLayer(targetSegmentLayer);
+        listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects(this.getPojoDataAccess());
+        listParcel.getParcel_selected().setTargetLayers(targetSegmentLayer,targetParcelsLayer);
         this.getMap().addTool(listParcel, this.getToolbar(), true);
         //add deselect tool.
-        this.getMap().addMapAction(new DeselectALL(this.getMap(),targetSegmentLayer,targetParcelsLayer), this.getToolbar(), true);
+        this.getMap().addMapAction(new DeselectALL(
+                this.getMap(),targetSegmentLayer,targetParcelsLayer)
+                        , this.getToolbar(), true);
         //add toolbar for the one point and Area method show forms.
-        this.getMap().addMapAction(new CadastreOnePointAreaFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
+        this.getMap().addMapAction(new CadastreOnePointAreaFormShow(
+                this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                           this.getToolbar(), true);
         //add toolbar for the multiple join show forms.
-        this.getMap().addMapAction(new CadastreTwoPointFormShow(this.getMap(),  targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
+        this.getMap().addMapAction(new CadastreTwoPointFormShow(
+                 this.getMap(),  targetSegmentLayer,targetParcelsLayer),
+                            this.getToolbar(), true);
         //add toolbar for offset method.
-        this.getMap().addMapAction(new MultiOffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);
+        this.getMap().addMapAction(new MultiOffestFormShow(
+                 this.getMap(), targetSegmentLayer,targetParcelsLayer),
+                             this.getToolbar(), true);
         //add toolbar for parcel merging.
-        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+        this.getMap().addMapAction(new MergeParcelFormShow(
+                 this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);  
         //add toolbar for equal area splitting method.
-        this.getMap().addMapAction(new EqualAreaMethodFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+        this.getMap().addMapAction(new EqualAreaMethodFormShow(
+                 this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
         //add toolbar for one side, direction and area method splitting.
-        this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer),
+        this.getMap().addMapAction(new OneSideDirectionAreaShow(
+                 this.getMap(),targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
         //add toolbar for import lines from line,shape and dxf file.
-        this.getMap().addMapAction(new ImportShapeFileShow(this.getMap(), targetSegmentLayer,targetParcelsLayer),
+        this.getMap().addMapAction(new ImportShapeFileShow(
+                 this.getMap(), targetSegmentLayer,targetParcelsLayer),
                                         this.getToolbar(), true);
     }
     //</editor-fold>
