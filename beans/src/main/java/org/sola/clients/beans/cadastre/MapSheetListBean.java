@@ -22,6 +22,7 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  *
@@ -29,7 +30,19 @@ import org.sola.services.boundary.wsclients.WSManager;
  */
 public class MapSheetListBean extends AbstractBindingListBean {
 
+    public static final String SELECTED_MAPSHEET = "selectedMapSheet";
     ObservableList<MapSheetBean> mapSheet;
+    private MapSheetBean selectedMapSheet;
+
+    public MapSheetBean getSelectedMapSheet() {
+        return selectedMapSheet;
+    }
+
+    public void setSelectedMapSheet(MapSheetBean selectedMapSheet) {
+        MapSheetBean oldValue = this.selectedMapSheet;
+        this.selectedMapSheet = selectedMapSheet;
+        propertySupport.firePropertyChange(SELECTED_MAPSHEET, oldValue, this.selectedMapSheet);
+    }
 
     public ObservableList<MapSheetBean> getMapSheet() {
         if (mapSheet == null) {
@@ -40,5 +53,28 @@ public class MapSheetListBean extends AbstractBindingListBean {
 
     public void loadMapSheetList() {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (List) mapSheet);
+    }
+
+    /**
+     * add new beans to the list.
+     *
+     * @param mapSheetBean mapsheetbean instance to be added.
+     */
+    public void addMapSheet(MapSheetBean mapSheetBean) {
+        if (mapSheetBean == null) {
+            return;
+        }
+        mapSheet.add(mapSheetBean);
+    }
+/**
+ * remove selectedMapSheet from the list
+ */
+    
+    public void removeSelected() {
+        if (selectedMapSheet != null) {
+            selectedMapSheet.setEntityAction(EntityAction.DELETE);
+            selectedMapSheet.saveMapSheet();
+             mapSheet.remove(selectedMapSheet);
+        }
     }
 }
