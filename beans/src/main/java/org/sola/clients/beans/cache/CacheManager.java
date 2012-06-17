@@ -158,6 +158,7 @@ public final class CacheManager {
     private static final String GET_BA_UNIT_REL_TYPES = "getBaUnitRelTypes";
     private static final String GET_DISTRICTS = "getDistricts";
     private static final String GET_OFFICES = "getOffices";
+    private static final String GET_MAPSHEETS= "getMapSheets";
     
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result=new ArrayList<DepartmentBean>();

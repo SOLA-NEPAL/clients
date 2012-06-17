@@ -44,6 +44,7 @@ import org.sola.clients.swing.admin.security.GroupsManagementPanel;
 import org.sola.clients.swing.admin.security.RolesManagementPanel;
 import org.sola.clients.swing.admin.security.UsersManagementPanel;
 import org.sola.clients.swing.admin.system.BrManagementPanel;
+import org.sola.clients.swing.admin.system.MapSheetNoManagementPanel;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.RolesConstants;
@@ -161,6 +162,7 @@ public class MainForm extends javax.swing.JFrame {
         menuDistrict = new javax.swing.JMenuItem();
         menuOffices = new javax.swing.JMenuItem();
         menuDepartments = new javax.swing.JMenuItem();
+        menuMapSheet = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -607,6 +609,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuDepartments);
 
+        menuMapSheet.setText(bundle.getString("MainForm.menuMapSheet.text")); // NOI18N
+        menuMapSheet.setName(bundle.getString("MainForm.menuMapSheet.name")); // NOI18N
+        menuMapSheet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMapSheetActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuMapSheet);
+
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -804,6 +815,7 @@ public class MainForm extends javax.swing.JFrame {
         manageDistricts();
     }//GEN-LAST:event_menuDistrictActionPerformed
 
+
     private void menuOfficesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOfficesActionPerformed
         showOfficesForm();
     }//GEN-LAST:event_menuOfficesActionPerformed
@@ -811,6 +823,11 @@ public class MainForm extends javax.swing.JFrame {
     private void menuDepartmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDepartmentsActionPerformed
         showDepartmentsForm();
     }//GEN-LAST:event_menuDepartmentsActionPerformed
+
+    private void menuMapSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMapSheetActionPerformed
+        manageMapSheet();
+    }//GEN-LAST:event_menuMapSheetActionPerformed
+
 
     /**
      * Opens roles management panel.
@@ -941,6 +958,11 @@ public class MainForm extends javax.swing.JFrame {
         openReferenceDataPanel(DistrictBean.class, menuDistrict.getText());
     }
 
+    private void manageMapSheet() {
+        MapSheetNoManagementPanel panel = new MapSheetNoManagementPanel();
+        mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_MANAGE, true);
+    }
+
     private void manageBr() {
         if (mainContentPanel.isPanelOpened(MainContentPanel.CARD_ADMIN_BR_MANAGE)) {
             mainContentPanel.showPanel(MainContentPanel.CARD_ADMIN_BR_MANAGE);
@@ -981,6 +1003,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuIdTypes;
     private javax.swing.JMenuItem menuLodgementReport;
+    private javax.swing.JMenuItem menuMapSheet;
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenu menuParty;
