@@ -13,14 +13,32 @@ import org.sola.clients.beans.referencedata.VdcBean;
  *
  * @author KumarKhadka
  */
-public class CadastreObjectPanel extends javax.swing.JPanel {
+public class CadastreObjectSearchPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form CadastreObjectPanel
+     * Creates new form CadastreObjectSearchPanel
      */
-    CadastreObjectBean newCadastreObjectBean=null;
-    public CadastreObjectPanel() {
-        initComponents(); 
+    private CadastreObjectBean cadastreObjectBean;
+
+    public CadastreObjectBean getCadastreObjectBean() {
+        if(cadastreObjectBean==null){
+            cadastreObjectBean=new CadastreObjectBean();
+        }
+        return cadastreObjectBean;
+    }
+
+    public void setCadastreObjectBean(CadastreObjectBean cadastreObjectBean) {
+        
+        if(cadastreObjectBean==null){
+            cadastreObjectBean=new CadastreObjectBean();
+        }   
+        //CadastreObjectBean oldValue = this.cadastreObjectBean;
+        this.cadastreObjectBean = cadastreObjectBean;
+        firePropertyChange("cadastreObjectBean", null, this.cadastreObjectBean);
+    }
+
+    public CadastreObjectSearchPanel() {
+        initComponents();
         //mapSheetListBean.loadMapSheetList();
         //cmbMapNo1.setSelectedIndex(-1);
     }
@@ -33,6 +51,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
@@ -40,7 +59,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
         cadastreObjectListBean = new org.sola.clients.beans.cadastre.CadastreObjectListBean();
         mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
-        cadastreObjectBean = new org.sola.clients.beans.cadastre.CadastreObjectBean();
         btnSearch2 = new javax.swing.JButton();
         rdbFreeSheet = new javax.swing.JRadioButton();
         rdbControSheet = new javax.swing.JRadioButton();
@@ -73,6 +91,20 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         txtParcelNo1 = new javax.swing.JTextField();
         btnSearch1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
 
         btnSearch2.setText("Search");
         btnSearch2.setEnabled(false);
@@ -120,6 +152,13 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
 
         cmbDistrict.setEditable(true);
         cmbDistrict.setEnabled(false);
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cmbDistrict);
+        bindingGroup.addBinding(jComboBoxBinding);
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedDistrict}"), cmbDistrict, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
         cmbDistrict.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbDistrictItemStateChanged(evt);
@@ -150,6 +189,12 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
 
         cmbVdc.setEditable(true);
         cmbVdc.setEnabled(false);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cmbVdc);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedVdc}"), cmbVdc, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         jLabel2.setText("Vdc/Mp");
 
@@ -361,16 +406,144 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastre Object Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+
+        jPanel16.setLayout(new java.awt.GridLayout(1, 4, 15, 0));
+
+        jLabel5.setText("Parcel No:");
+
+        jTextField1.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObjectBean.parcelno}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addGap(0, 114, Short.MAX_VALUE))
+            .addComponent(jTextField1)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 19, Short.MAX_VALUE))
+        );
+
+        jPanel16.add(jPanel12);
+
+        jLabel6.setText("District");
+
+        jTextField2.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObjectBean.district}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addGap(0, 130, Short.MAX_VALUE))
+            .addComponent(jTextField2)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 19, Short.MAX_VALUE))
+        );
+
+        jPanel16.add(jPanel13);
+
+        jLabel7.setText("Vdc/Mp");
+
+        jTextField3.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObjectBean.vdc}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addGap(0, 128, Short.MAX_VALUE))
+            .addComponent(jTextField3)
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 19, Short.MAX_VALUE))
+        );
+
+        jPanel16.add(jPanel14);
+
+        jLabel8.setText("Ward No");
+
+        jTextField4.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObjectBean.wardno}"), jTextField4, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addGap(0, 121, Short.MAX_VALUE))
+            .addComponent(jTextField4)
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 19, Short.MAX_VALUE))
+        );
+
+        jPanel16.add(jPanel15);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlSearch1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(rdbSearchByMapSheet)
                         .addGap(18, 18, 18)
                         .addComponent(rdbFreeSheet)
@@ -378,10 +551,11 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                         .addComponent(rdbControSheet)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSearch2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(rdbSearchByBoundary)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSearch1)))
+                        .addComponent(btnSearch1))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -401,15 +575,19 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                     .addComponent(btnSearch2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         // TODO add your handling code here:
 
         MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-        newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
+        cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
     }//GEN-LAST:event_btnSearch2ActionPerformed
 
     private void rdbFreeSheetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbFreeSheetItemStateChanged
@@ -460,7 +638,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         txtParcelNo.setEnabled(false);
         btnSearch1.setEnabled(false);
         rdbFreeSheet.setEnabled(true);
-        rdbControSheet.setEnabled(true);        
+        rdbControSheet.setEnabled(true);
     }//GEN-LAST:event_rdbSearchByMapSheetItemStateChanged
 
     private void cmbDistrictItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDistrictItemStateChanged
@@ -473,7 +651,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             DistrictBean district = (DistrictBean) cmbDistrict.getSelectedItem();
             if (district != null) {
                 String districCode = district.getCode();
-
                 vdcListBean.loadList(false, districCode);
                 //cmbVdc.setSelectedIndex(-1);
             }
@@ -484,15 +661,13 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
         // TODO add your handling code here:
         VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-        newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString()));
+        cadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString()));
     }//GEN-LAST:event_btnSearch1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch1;
     private javax.swing.JButton btnSearch2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
     private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
     private javax.swing.JComboBox cmbDistrict;
     private javax.swing.JComboBox cmbMapNo1;
@@ -505,8 +680,18 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -516,6 +701,10 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JPanel pnlSearch1;
@@ -527,5 +716,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtParcelNo1;
     private javax.swing.JTextField txtWardNo;
     private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

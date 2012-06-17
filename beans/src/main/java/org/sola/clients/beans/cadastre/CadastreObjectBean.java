@@ -85,8 +85,8 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     private String mapSheetCode;
     private SolaObservableList<SpatialValueAreaBean> spatialValueAreaList;
     private int parcelno;
-    private int district;
-    private int vdc;
+    private String district;
+    private String vdc;
     private String wardno;
     private String grids1;
     private String parcelNote;
@@ -148,12 +148,12 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
     }
 
-    public int getDistrict() {
+    public String getDistrict() {
         return district;
     }
 
-    public void setDistrict(int district) {
-        int oldValue = this.district;
+    public void setDistrict(String district) {
+        String oldValue = this.district;
         this.district = district;
         propertySupport.firePropertyChange(DISTRICT_PROPERTY,
                 oldValue, this.district);
@@ -203,12 +203,12 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
                 oldValue, this.parcelno);
     }
 
-    public int getVdc() {
+    public String getVdc() {
         return vdc;
     }
 
-    public void setVdc(int vdc) {
-        int oldValue = this.vdc;
+    public void setVdc(String vdc) {
+        String oldValue = this.vdc;
         this.vdc = vdc;
         propertySupport.firePropertyChange(VDC_PROPERTY,
                 oldValue, this.vdc);
