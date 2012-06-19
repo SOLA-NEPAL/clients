@@ -20,7 +20,6 @@ import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
-import org.sola.clients.beans.controls.SolaCodeList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
@@ -34,6 +33,12 @@ public class MapSheetListBean extends AbstractBindingListBean {
     public static final String SELECTED_MAPSHEET = "selectedMapSheet";
     ObservableList<MapSheetBean> mapSheets;
     private MapSheetBean selectedMapSheet;
+    
+//    public MapSheetListBean()
+//    {
+//        mapSheets= ObservableCollections.observableList(new ArrayList<MapSheetBean>());
+//    }
+            
 
     public MapSheetBean getSelectedMapSheet() {
         return selectedMapSheet;

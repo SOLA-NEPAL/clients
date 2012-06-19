@@ -15,8 +15,13 @@
  */
 package org.sola.clients.beans.cadastre;
 
+import javax.validation.constraints.NotNull;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.referencedata.OfficeBean;
+import org.sola.clients.beans.validation.Localized;
+import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.MapSheetTO;
 
@@ -28,13 +33,18 @@ public class MapSheetBean extends AbstractIdBean {
 
     public static final String MAP_NUMBER_PROPERTY = "mapNumber";
     public static final String SHEET_TYPE_PROPERTY = "sheetType";
+    public static final String OFFICE_PROPERTY = "office";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     public static final String FREE_SHEET = "Free Sheet";
     public static final String CONTROL_SHEET = "Control Sheet";
 //    public static final String ALPHA_CODE_PROPERTY = "alpha_code";
     private String mapNumber;
     private int sheetType;
     private String sheetTypeString;
-
+    
+     @NotNull(message=ClientMessage.CHECK_SELECT_OFFICE, payload=Localized.class)
+    private OfficeBean office;
+     
 //    private String alphaCode;
 //
 //    public String getAlphaCode() {
@@ -45,6 +55,7 @@ public class MapSheetBean extends AbstractIdBean {
 //        this.alphaCode = alphacode;
 //        propertySupport.firePropertyChange(ALPHA_CODE_PROPERTY, oldValue, this.alphaCode);
 //    }
+
     public String getMapNumber() {
         return mapNumber;
     }
@@ -61,12 +72,12 @@ public class MapSheetBean extends AbstractIdBean {
 
     public void setSheetType(int sheetType) {
         int oldValue = this.sheetType;
-        String oldValueString =this. sheetTypeString;
+        String oldValueString = this.sheetTypeString;
         this.sheetType = sheetType;
         if (sheetType == 0) {
-            sheetTypeString= CONTROL_SHEET;
+            sheetTypeString = CONTROL_SHEET;
         } else {
-           sheetTypeString= FREE_SHEET;
+            sheetTypeString = FREE_SHEET;
         }
         propertySupport.firePropertyChange("sheetTypeString", oldValueString, this.sheetTypeString);
         propertySupport.firePropertyChange(SHEET_TYPE_PROPERTY, oldValue, this.sheetType);
@@ -96,5 +107,31 @@ public class MapSheetBean extends AbstractIdBean {
     @Override
     public String toString() {
         return mapNumber;
+    }
+
+    
+    public OfficeBean getOffice() {
+        if (this.office==null){
+            this.office= new OfficeBean();
+        }
+        return office;
+    }
+
+    public void setOffice(OfficeBean office) {
+        OfficeBean oldValue = this.office;
+        this.office = office;
+        propertySupport.firePropertyChange(OFFICE_PROPERTY, oldValue, this.office);
+    }
+    
+    public String getOfficeCode() {
+        return this.getOffice().getCode();
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = getOfficeCode();
+        if(officeCode!=null && !officeCode.isEmpty()){
+            setOffice(CacheManager.getBeanByCode(CacheManager.getOffices(), officeCode));
+            propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, officeCode);
+        }        
     }
 }
