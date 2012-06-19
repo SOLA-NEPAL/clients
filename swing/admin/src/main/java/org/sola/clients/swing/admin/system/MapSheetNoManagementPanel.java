@@ -46,10 +46,11 @@ public class MapSheetNoManagementPanel extends ContentPanel {
             this.mapSheetBean = mapSheetBean;
         } else {
             try {
-                this.mapSheetBean = new MapSheetBean();
+                this.mapSheetBean = new MapSheetBean();                
             } catch (Exception ex) {
             }
         }
+        
         firePropertyChange("mapSheetBean", null, this.mapSheetBean);
     }
 //    public ObservableList<? extends MapSheetBean> getMapSheetList() {
@@ -87,8 +88,8 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                     setMapSheetBean((MapSheetBean) mapSheetListBean.getSelectedMapSheet().copy());
                 }
             }
-        });             
-     
+        });
+
     }
 
     public final void initMapSheetList() {
@@ -369,10 +370,10 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         if (editMode) {
 
             if (mapSheetListBean.getSelectedMapSheet() != null) {
-            mapSheetBean.setMapNumber(mapSheetListBean.getSelectedMapSheet().getMapNumber());
+                mapSheetListBean.getSelectedMapSheet().setMapNumber(mapSheetBean.getMapNumber());
                 //mapSheetListBean.getSelectedMapSheet().copyFromObject(mapSheetBean);
                 mapSheetListBean.getSelectedMapSheet().setSheetTypeString(mapSheetBean.getSheetTypeString());
-                mapSheetListBean.getSelectedMapSheet().setOffice((OfficeBean) cmbOffice.getSelectedItem());
+                mapSheetListBean.getSelectedMapSheet().setOffice(mapSheetBean.getOffice());
             }
         } else {
             mapSheetListBean.addMapSheet(mapSheetBean);
@@ -396,7 +397,6 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     private void cmbOfficeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOfficeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbOfficeActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRefData;
     private javax.swing.JButton btnEditRefData;
@@ -426,6 +426,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     private void addMapSheet() {
         editMode = false;
         setMapSheetBean(new MapSheetBean());
+        mapSheetBean.setOffice((OfficeBean) cmbOffice.getSelectedItem());
     }
 
     private void editMapSheet() {
