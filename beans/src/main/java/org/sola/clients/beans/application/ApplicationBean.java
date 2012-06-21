@@ -85,6 +85,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String ASSIGNEE_ID_PROPERTY = "assigneeId";
     public static final String STATUS_TYPE_PROPERTY = "statusType";
     public static final String APPLICATION_PROPERTY = "application";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
+    
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
     private SolaList<ApplicationPropertyBean> propertyList;
@@ -104,6 +106,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private PartySummaryBean agent;
     private String assigneeId;
     private ApplicationStatusTypeBean statusBean;
+    private String officeCode;
 
     /**
      * Default constructor to create application bean. Initializes the following
@@ -458,6 +461,16 @@ public class ApplicationBean extends ApplicationSummaryBean {
         BigDecimal old = totalFee;
         totalFee = value;
         propertySupport.firePropertyChange(TOTAL_FEE_PROPERTY, old, value);
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = this.officeCode;
+        this.officeCode = officeCode;
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 
     /**

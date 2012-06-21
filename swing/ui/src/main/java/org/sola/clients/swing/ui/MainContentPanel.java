@@ -95,6 +95,8 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_OFFICE = "office";
     public final static String CARD_DEPARTMENTS = "departmetns";
     public final static String CARD_DEPARTMENT = "department";
+    public final static String CARD_VDC = "vdc";
+    public final static String CARD_VDCS = "vdcs";
     private HashMap<String, Component> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;
