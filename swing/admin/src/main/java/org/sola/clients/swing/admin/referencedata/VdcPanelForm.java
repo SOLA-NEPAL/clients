@@ -41,7 +41,7 @@ import org.sola.webservices.transferobjects.referencedata.VdcTO;
  */
 public class VdcPanelForm extends ContentPanel {
 
-    public static final String REFDATA_SAVED_PROPERTY = "RefDataSaved";
+    public static final String VDC_SAVED_PROPERTY = "VdcSaved";
     
     private boolean saveOnAction;
     private boolean closeOnSave;
@@ -186,7 +186,7 @@ public class VdcPanelForm extends ContentPanel {
         
         if(saveOnAction){
             if(vdcPanel.save(true)){
-                MessageUtility.displayMessage(ClientMessage.ADMIN_REFDATA_SAVED, 
+                MessageUtility.displayMessage(ClientMessage.ADMIN_VDC_SAVED, 
                         new String[]{vdcPanel.getVdcBean().getTranslatedDisplayValue()});
                 isSaved = true;
             }
@@ -197,7 +197,7 @@ public class VdcPanelForm extends ContentPanel {
         }
         
         if(isSaved){
-            firePropertyChange(REFDATA_SAVED_PROPERTY, false, true);
+            firePropertyChange(VDC_SAVED_PROPERTY, false, true);
             if(closeOnSave){
                 close();
             } else {

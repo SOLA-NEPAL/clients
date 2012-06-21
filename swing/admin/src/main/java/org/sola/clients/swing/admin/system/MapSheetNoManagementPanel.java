@@ -18,9 +18,12 @@ package org.sola.clients.swing.admin.system;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.swing.ui.ContentPanel;
+import org.sola.common.messaging.ClientMessage;
+import org.sola.common.messaging.MessageUtility;
 
 /**
  *
@@ -46,11 +49,11 @@ public class MapSheetNoManagementPanel extends ContentPanel {
             this.mapSheetBean = mapSheetBean;
         } else {
             try {
-                this.mapSheetBean = new MapSheetBean();                
+                this.mapSheetBean = new MapSheetBean();
             } catch (Exception ex) {
             }
         }
-        
+
         firePropertyChange("mapSheetBean", null, this.mapSheetBean);
     }
 //    public ObservableList<? extends MapSheetBean> getMapSheetList() {
@@ -365,8 +368,10 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     }//GEN-LAST:event_cmbMapSheetTypeActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        //mapSheetBean.setOfficeCode("test");
         mapSheetBean.saveMapSheet();
+        MessageUtility.displayMessage(ClientMessage.ADMIN_VDC_SAVED,
+                new String[]{mapSheetBean.getMapNumber()});
+
         if (editMode) {
 
             if (mapSheetListBean.getSelectedMapSheet() != null) {
@@ -441,6 +446,14 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     }
 
     private void removeMapSheet() {
-        mapSheetListBean.removeSelected();
+        if (mapSheetListBean.getSelectedMapSheet() != null) {
+            if (MessageUtility.displayMessage(
+                    ClientMessage.ADMIN_CONFIRM_MAPSHEET_REMOVAL,
+                    new String[]{mapSheetListBean.getSelectedMapSheet().getMapNumber()}) == MessageUtility.BUTTON_ONE) {
+                CacheManager.remove(CacheManager.MAP_SHEET_KEY + mapSheetListBean.getSelectedMapSheet().getOfficeCode());
+                mapSheetListBean.removeSelected();
+            }
+        }
+
     }
 }
