@@ -2,11 +2,6 @@
 
 <Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createMothBean()"/>
-      </AuxValues>
-    </Component>
     <Component class="org.sola.clients.beans.administrative.LocListBean" name="locListBean">
     </Component>
     <Component class="org.sola.clients.beans.cadastre.CadastreObjectBean" name="cadastreObjectBean">
@@ -18,6 +13,12 @@
     <Component class="org.sola.clients.beans.cadastre.CadastreObjectListBean" name="cadastreObjectListBean">
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+    <Component class="org.sola.clients.beans.administrative.MothBean" name="mothBean">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createMothBean()"/>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="ParcelMothEntry_mothBean"/>
+      </AuxValues>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -71,7 +72,7 @@
               <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="40" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -125,7 +126,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="mothBean" sourcePath="${vdcCode}" target="txtVdc" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="mothBean" sourcePath="${vdc.displayValue}" target="txtVdc" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -343,7 +344,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnNewEntry">
+        <Component class="javax.swing.JButton" name="btnSearchNewParcel">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/common/add.png"/>
@@ -353,7 +354,7 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewEntryActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchNewParcelActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSave">
@@ -474,10 +475,23 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
+                <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="elements" source="Form" sourcePath="${parties}" target="jTable2" targetPath="elements" updateStrategy="0" immediately="true">
+                  <Subbinding sourcePath="${name}">
+                    <BindingParameter name="NAME" value="First Name"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${lastName}">
+                    <BindingParameter name="NAME" value="Last Name"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                  </Subbinding>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>

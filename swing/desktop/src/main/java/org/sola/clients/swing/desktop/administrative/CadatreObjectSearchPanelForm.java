@@ -45,7 +45,7 @@ public class CadatreObjectSearchPanelForm extends ContentPanel{
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        cadastreObjectSearchPanel2 = new org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel();
+        cadastreObjectSearchPanel2 = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
 
         setEnabled(false);
         setHeaderPanel(headerPanel1);
@@ -84,7 +84,7 @@ public class CadatreObjectSearchPanelForm extends ContentPanel{
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel cadastreObjectSearchPanel2;
+    private org.sola.clients.swing.ui.cadastre.CadastreObjectPanel cadastreObjectSearchPanel2;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JToolBar jToolBar1;

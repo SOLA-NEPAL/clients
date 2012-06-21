@@ -17,10 +17,10 @@ import org.sola.clients.beans.referencedata.VdcBean;
  *
  * @author KumarKhadka
  */
-public class CadastreObjectSearchPanel extends javax.swing.JPanel {
+public class CadastreObjectPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form CadastreObjectSearchPanel
+     * Creates new form CadastreObjectPanel
      */
     private CadastreObjectBean newCadastreObjectBean=null;
     
@@ -35,7 +35,7 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
     }
     //------------------------------------------
     
-    public CadastreObjectSearchPanel() {
+    public CadastreObjectPanel() {
         initComponents(); 
         //mapSheetListBean.loadMapSheetList();
         //cmbMapNo1.setSelectedIndex(-1);
@@ -459,7 +459,7 @@ public class CadastreObjectSearchPanel extends javax.swing.JPanel {
             newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
             refresh_Parcel_Information();
         } catch (Exception ex) {
-            Logger.getLogger(CadastreObjectSearchPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSearch2ActionPerformed
 

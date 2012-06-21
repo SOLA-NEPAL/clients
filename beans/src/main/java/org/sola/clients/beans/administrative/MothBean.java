@@ -33,16 +33,15 @@ public class MothBean extends AbstractIdBean {
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String MOTHLUJ_PROPERTY = "mothLuj";
-    public static final String LMOCD_PROPERTY = "lmocd";
     public static final String VDC_PROPERTY = "vdc";
+    public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String SELECTED_VDC = "selectedVdc";
     public static final String LOC_LIST_PROPERTY = "locList";
     private String mothlujNumber;
     private String vdcCode;
-    private int wardNo;
     private String mothLuj;
-    private int financialYear;
-    private int lmocd;
+    private String financialYear;
+    private String transactionId;
     private SolaObservableList<LocBean> locList;
     private VdcBean vdc;
 
@@ -88,24 +87,24 @@ public class MothBean extends AbstractIdBean {
         propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
     }
 
-    public int getFinancialYear() {
+    public String getFinancialYear() {
         return financialYear;
     }
 
-    public void setFinancialYear(int financialYear) {
-        int oldValue = this.financialYear;
+    public void setFinancialYear(String financialYear) {
+        String oldValue = this.financialYear;
         this.financialYear = financialYear;
         propertySupport.firePropertyChange(FINANCIAL_YEAR_PROPERTY, oldValue, this.financialYear);
     }
 
-    public int getLmocd() {
-        return lmocd;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setLmocd(int lmocd) {
-        int oldValue = this.lmocd;
-        this.lmocd = lmocd;
-        propertySupport.firePropertyChange(LMOCD_PROPERTY, oldValue, this.lmocd);
+    public void setTransactionId(String transactionId) {
+        String oldValue = this.transactionId;
+        this.transactionId = transactionId;
+        propertySupport.firePropertyChange(TRANSACTION_ID_PROPERTY, oldValue, this.transactionId);
     }
 
     public String getMothLuj() {
@@ -129,20 +128,11 @@ public class MothBean extends AbstractIdBean {
         propertySupport.firePropertyChange(MOTH_LUJ_NUMBER_PROPERTY, oldValue, this.mothlujNumber);
     }
 
-    public int getWardNo() {
-        return wardNo;
-    }
-
-    public void setWardNo(int wardNo) {
-        int oldValue = this.wardNo;
-        this.wardNo = wardNo;
-        propertySupport.firePropertyChange(WARD_NO_PROPERTY, oldValue, this.wardNo);
-    }
-
-    public void saveMoth() {
+    public boolean saveMoth() {
         MothTO mtTO = TypeConverters.BeanToTrasferObject(this, MothTO.class);
         mtTO = WSManager.getInstance().getAdministrative().saveMoth(mtTO);
         TypeConverters.TransferObjectToBean(mtTO, MothBean.class, this);
+        return true;
     }
 
     @Override

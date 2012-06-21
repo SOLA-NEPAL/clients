@@ -69,7 +69,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel" name="cadastreObjectSearchPanel2">
+    <Component class="org.sola.clients.swing.ui.cadastre.CadastreObjectPanel" name="cadastreObjectSearchPanel2">
     </Component>
   </SubComponents>
 </Form>

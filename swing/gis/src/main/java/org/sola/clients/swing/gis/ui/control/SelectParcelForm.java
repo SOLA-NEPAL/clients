@@ -70,7 +70,7 @@ public class SelectParcelForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel();
+        parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstParcelInfo = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
@@ -98,7 +98,7 @@ public class SelectParcelForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                         .addGap(12, 12, 12)
                         .addComponent(btnOK))
                     .addGroup(layout.createSequentialGroup()
@@ -111,10 +111,10 @@ public class SelectParcelForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1))
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 217, Short.MAX_VALUE)
+                .addGap(0, 535, Short.MAX_VALUE)
                 .addComponent(btnOK))
         );
 
@@ -175,6 +175,6 @@ public class SelectParcelForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lstParcelInfo;
-    private org.sola.clients.swing.ui.cadastre.CadastreObjectSearchPanel parcelSearchPanel;
+    private org.sola.clients.swing.ui.cadastre.CadastreObjectPanel parcelSearchPanel;
     // End of variables declaration//GEN-END:variables
 }

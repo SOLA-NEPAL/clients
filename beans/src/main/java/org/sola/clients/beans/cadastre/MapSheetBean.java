@@ -15,7 +15,6 @@
  */
 package org.sola.clients.beans.cadastre;
 
-import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
 
 /**
@@ -26,20 +25,20 @@ public class MapSheetBean extends AbstractIdBean {
 
     public static final String MAP_NUMBER_PROPERTY = "mapNumber";
     public static final String SHEET_TYPE_PROPERTY = "sheetType";
-    public static final String ALPHA_CODE_PROPERTY = "alpha_code";
+    //public static final String ALPHA_CODE_PROPERTY = "alpha_code";
     private String mapNumber;
     private int sheetType;
-    private String alpha_code;
+   // private String alpha_code;
 
-    public String getAlpha_code() {
-        return alpha_code;
-    }
-
-    public void setAlpha_code(String alpha_code) {
-        String oldValue = this.alpha_code;
-        this.alpha_code = alpha_code;
-        propertySupport.firePropertyChange(ALPHA_CODE_PROPERTY, oldValue, this.alpha_code);
-    }
+//    public String getAlpha_code() {
+//        return alpha_code;
+//    }
+//
+//    public void setAlpha_code(String alpha_code) {
+//        String oldValue = this.alpha_code;
+//        this.alpha_code = alpha_code;
+//        propertySupport.firePropertyChange(ALPHA_CODE_PROPERTY, oldValue, this.alpha_code);
+//    }
 
     public String getMapNumber() {
         return mapNumber;
