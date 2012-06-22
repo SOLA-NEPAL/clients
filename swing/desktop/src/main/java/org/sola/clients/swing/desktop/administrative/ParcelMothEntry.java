@@ -15,17 +15,21 @@ import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.controls.SolaObservableList;
+import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
+import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
+import org.sola.clients.swing.gis.ui.control.SelectParcelForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
@@ -492,6 +496,12 @@ public class ParcelMothEntry extends ContentPanel {
     }
 
     private void cadastreObjectOperation(SolaObservableList<CadastreObjectBean> cadastreObjectBeans) {
+        if(cadastreObjects.size()>0){
+            for(CadastreObjectBean cad : cadastreObjectBeans){
+                cadastreObjects.add(cad);
+            }
+            return;
+        }
         setCadastreObjects(cadastreObjectBeans);
     }
     
@@ -548,40 +558,36 @@ public class ParcelMothEntry extends ContentPanel {
     private void btnSearchNewParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNewParcelActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
-        PersonSearchForm partySearchForm = new PersonSearchForm();
+        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
         //Event delegate passing to the child JPanel.
-        Class[] cls = new Class[]{PartySearchResultBean.class};
+        Class[] cls = new Class[]{CadastreObjectTO.class};
         Class workingForm = this.getClass();
         Method taskCompletion = null;
         try {
-            taskCompletion = workingForm.getMethod("refreshPartyDetails", cls);
+            taskCompletion = workingForm.getMethod("refreshCadastreDetails", cls);
         } catch (NoSuchMethodException | SecurityException ex) {
-            Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastreObjectTO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
-        partySearchForm.setSize(700, 800);
-        partySearchForm.setVisible(true);
-        partySearchForm.setTitle("Details of the applicant");
-        partySearchForm.setAlwaysOnTop(true);
+        parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
+        parcelSearchForm.setVisible(true);
+        parcelSearchForm.setTitle("Details of the Cadastre Object");
+        parcelSearchForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btnSearchNewParcelActionPerformed
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshCadastreDetails(PartySearchResultBean partySummary) {
+    public void refreshCadastreDetails(CadastreObjectTO cadastreTO) {
         //do as required.
-        if (partySummary == null) {
+        if (cadastreTO == null) {
             return;
         }
-        //System.out.println(partySummary.getId());
-        //txtFirstName.setText(partySummary.getName());
-        //txtLastName.setText(partySummary.getLastName());
-        PartyBean party = partySummary.getPartyBean();
-        //txtAddress.setText(party.getAddress().getDescription());
-        //txtPhone.setText(party.getPhone());
-        //txtFax.setText(party.getFax());
-        //txtEmail.setText(party.getEmail());
-        //cbxCommunicationWay.setSelectedItem(party.getPreferredCommunication());
-        //appBean.setContactPerson(party);
+
+        CadastreObjectBean cadastreBean = TypeConverters.TransferObjectToBean(
+                cadastreTO, CadastreObjectBean.class, null);
+       SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
+       cadObjLst.add(cadastreBean);
+       cadastreObjectOperation(cadObjLst);
     }
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         CadastreObjectBean cad = cadastreObjectListBean.getSelectedCadastreObjectBean();

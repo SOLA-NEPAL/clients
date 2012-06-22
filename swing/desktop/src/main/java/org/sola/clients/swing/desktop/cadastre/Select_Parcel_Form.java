@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.sola.clients.swing.gis.ui.control;
+package org.sola.clients.swing.desktop.cadastre;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -12,40 +12,35 @@ import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.swing.gis.SelectedParcelInfo;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
-import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
-import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
  * @author ShresthaKabin
  */
-public class SelectParcelForm extends javax.swing.JDialog {
-    private CadastreTargetSegmentLayer pointsLayer = null;
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
-    private PojoDataAccess dataAccess=null;
+public class Select_Parcel_Form extends javax.swing.JDialog {
     //temporary variable.
     private CadastreObjectTO cadastreObject=null;
     private Geometry the_Polygon=null;
+    
+    private Method search_Completed_Trigger=null;
+    private Object method_holder_object=null;
+    
+    public void set_SearchCompletedTriggers(Method search_completed, Object method_holder){
+        this.search_Completed_Trigger=search_completed;
+        this.method_holder_object=method_holder;
+    }
     /**
      * Creates new form SelectParcelForm
      */
-    public SelectParcelForm(PojoDataAccess dataAccess,
-                                CadastreTargetSegmentLayer pointsLayer,
-                    CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public Select_Parcel_Form() {
         super();
         initComponents();
         //initialize variables.
         set_SearchCompletionTrigger();
-        this.dataAccess=dataAccess;
-        this.pointsLayer=pointsLayer;
-        this.targetParcelsLayer=targetParcelsLayer;
     }
 
     private void set_SearchCompletionTrigger(){
@@ -56,7 +51,7 @@ public class SelectParcelForm extends javax.swing.JDialog {
         try {
             taskCompletion = workingForm.getMethod("refresh_Cadastre_Object_Searching", cls);
         } catch (Exception ex) {
-            Logger.getLogger(SelectParcelForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Select_Parcel_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         parcelSearchPanel.set_SearchCompletedTriggers(taskCompletion, this);
@@ -150,34 +145,21 @@ public class SelectParcelForm extends javax.swing.JDialog {
         try {
             the_Polygon = wkb_reader.read(cadastreObject.getGeomPolygon());
         } catch (ParseException ex) {
-            Logger.getLogger(SelectParcelForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Select_Parcel_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
         def_model.addElement("Parcel Area: " + df.format(the_Polygon.getArea())+ " sqr. meters");
         def_model.addElement("Parcel Key: " +
                     parcel.getNameFirstpart() + "-" + parcel.getNameLastpart());
         lstParcelInfo.setModel(def_model);
-        //refresh on map.
-        show_Selected_Parcel_onMap();
-    }
-    
-    private void show_Selected_Parcel_onMap(){
-        if (cadastreObject==null) return;
-        
-        //zoom to the selected parcel.
-        if (the_Polygon!=null){
-            ReferencedEnvelope ref_Envelope= JTS.toEnvelope(the_Polygon);
-            double expand_by=ref_Envelope.getHeight() * 0.2;//expand 20 % of height
-            ref_Envelope.expandBy(expand_by);
-            this.targetParcelsLayer.getMapControl().setDisplayArea(ref_Envelope);
-            //main class to store the selection information.
-            SelectedParcelInfo parcel_selected=new SelectedParcelInfo(dataAccess);
-            parcel_selected.setTargetLayers(pointsLayer, targetParcelsLayer);
-            //Prepare for fresh selection.
-            parcel_selected.display_Selected_Parcel(cadastreObject,false);
-        }
     }
     
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        //By Kabindra
+        try {
+            search_Completed_Trigger.invoke(method_holder_object,
+                new Object[]{cadastreObject});  
+        } catch (Exception e) {
+        }
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
