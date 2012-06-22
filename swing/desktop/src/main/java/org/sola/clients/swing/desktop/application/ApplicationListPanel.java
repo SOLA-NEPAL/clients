@@ -132,7 +132,6 @@ public class ApplicationListPanel extends javax.swing.JPanel {
 
         menuRemoveFromList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
         menuRemoveFromList.setText(bundle.getString("ApplicationListPanel.menuRemoveFromList.text")); // NOI18N
-        menuRemoveFromList.setToolTipText(bundle.getString("ApplicationListPanel.menuRemoveFromList.toolTipText")); // NOI18N
         popupApplications.add(menuRemoveFromList);
 
         jToolBar1.setFloatable(false);
@@ -187,6 +186,7 @@ public class ApplicationListPanel extends javax.swing.JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status}"));
         columnBinding.setColumnName("Status");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${feePaid}"));
         columnBinding.setColumnName("Fee Paid");
         columnBinding.setColumnClass(Boolean.class);
@@ -201,6 +201,7 @@ public class ApplicationListPanel extends javax.swing.JPanel {
         tableApplications.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("ApplicationListPanel.tableApplications.columnModel.title2_1")); // NOI18N
         tableApplications.getColumnModel().getColumn(3).setMinWidth(180);
         tableApplications.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("ApplicationListPanel.tableApplications.columnModel.title3_1")); // NOI18N
+        tableApplications.getColumnModel().getColumn(3).setCellRenderer(new org.sola.clients.swing.ui.renderers.CellDelimitedListRenderer());
         tableApplications.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("ApplicationListPanel.tableApplications.columnModel.title4")); // NOI18N
         tableApplications.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("ApplicationListPanel.tableApplications.columnModel.title5")); // NOI18N
         tableApplications.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("ApplicationListPanel.tableApplications.columnModel.title6")); // NOI18N

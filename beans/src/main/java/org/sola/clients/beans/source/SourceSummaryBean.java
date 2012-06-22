@@ -54,6 +54,7 @@ public class SourceSummaryBean extends AbstractTransactionedBean {
     public static final String SUBMISSION_PROPERTY = "submission";
     public static final String SOURCE_TYPE_CODE_PROPERTY = "typeCode";
     public static final String SOURCE_TYPE_PROPERTY = "sourceType";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     private Date acceptance;
     private String archiveId;
     private String archiveDocumentId;
@@ -65,6 +66,7 @@ public class SourceSummaryBean extends AbstractTransactionedBean {
     private Date submission;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_SOURCETYPE, payload=Localized.class)
     private SourceTypeBean sourceType;
+    private String officeCode;
 
     public SourceSummaryBean() {
         super();
@@ -179,5 +181,15 @@ public class SourceSummaryBean extends AbstractTransactionedBean {
         Date old = submission;
         submission = value;
         propertySupport.firePropertyChange(SUBMISSION_PROPERTY, old, value);
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = this.officeCode;
+        this.officeCode = officeCode;
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 }

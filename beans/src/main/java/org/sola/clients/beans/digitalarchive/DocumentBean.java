@@ -50,9 +50,12 @@ public class DocumentBean extends AbstractIdBean {
     public static final String EXTENSION_PROPERTY = "extension";
     public static final String NR_PROPERTY = "nr";
     public static final String NAME_PROPERTY = "name";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
+    
     private String description;
     private String extension;
     private String nr;
+    private String officeCode;
 
     public DocumentBean() {
         super();
@@ -112,6 +115,16 @@ public class DocumentBean extends AbstractIdBean {
         }else{
             return null;
         }
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = this.officeCode;
+        this.officeCode = officeCode;
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 
     /** 

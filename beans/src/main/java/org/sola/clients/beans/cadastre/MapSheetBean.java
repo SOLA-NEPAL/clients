@@ -27,9 +27,11 @@ public class MapSheetBean extends AbstractIdBean {
     public static final String MAP_NUMBER_PROPERTY = "mapNumber";
     public static final String SHEET_TYPE_PROPERTY = "sheetType";
     public static final String ALPHA_CODE_PROPERTY = "alpha_code";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     private String mapNumber;
     private int sheetType;
     private String alpha_code;
+    private String officeCode;
 
     public String getAlpha_code() {
         return alpha_code;
@@ -61,8 +63,18 @@ public class MapSheetBean extends AbstractIdBean {
         propertySupport.firePropertyChange(SHEET_TYPE_PROPERTY, oldValue, this.sheetType);
     }
     
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = this.officeCode;
+        this.officeCode = officeCode;
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return mapNumber;
     }
 }

@@ -49,6 +49,7 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String nameLastPart;
     private RegistrationStatusTypeBean registrationStatus;
     private String rightholders;
+    private String officeCode;
     
     public BaUnitSearchResultBean(){
         super();
@@ -123,5 +124,13 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
 
     public void setRegistrationStatus(RegistrationStatusTypeBean registrationStatus) {
         this.setJointRefDataBean(getRegistrationStatus(), registrationStatus, REGISTRATION_STATUS_PROPERTY);
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
     }
 }

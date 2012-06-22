@@ -50,6 +50,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedBean {
     //@NotEmpty(message = ClientMessage.CHECK_NOTNULL_FIRSTPART, payload=Localized.class)
     private String nameLastpart;
     private BaUnitTypeBean baUnitType;
+    private String officeCode;
     
     public BaUnitSummaryBean(){
         super();
@@ -112,5 +113,13 @@ public class BaUnitSummaryBean extends AbstractTransactionedBean {
             this.baUnitType = new BaUnitTypeBean();
         }
         this.setJointRefDataBean(this.baUnitType, baUnitType, BA_UNIT_TYPE_PROPERTY);
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
     }
 }

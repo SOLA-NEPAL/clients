@@ -41,7 +41,8 @@ public class LocBean extends AbstractIdBean {
     private int oshpType;
     private int transactionNo;
     private SolaObservableList<BaUnitBean> baUnits;
-
+    private String officeCode;
+    
     public LocBean() {
         super();
         baUnits = new SolaObservableList<BaUnitBean>();
@@ -122,5 +123,13 @@ public class LocBean extends AbstractIdBean {
         LocTO locTO = TypeConverters.BeanToTrasferObject(this, LocTO.class);
         locTO = WSManager.getInstance().getAdministrative().saveLoc(locTO);
         TypeConverters.TransferObjectToBean(locTO, LocBean.class, this);
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
     }
 }

@@ -742,41 +742,41 @@ public class ApplicationPanel extends ContentPanel {
                 } else {
                     //New ownership overwritten by custom nepal service.
                     // Open property form for new title registration
-                    if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_APARTMENT)
-                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_FREEHOLD)
-                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_OWNERSHIP)
-                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_STATE)) {
+//                    if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_APARTMENT)
+//                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_FREEHOLD)
+//                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_OWNERSHIP)
+//                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_STATE)) {
                         if (!readOnly) {
                             // Open empty property form
                             openPropertyForm(new BaUnitBean(), readOnly);
                         }
-                    } else {
-
-                        // Open property form for existing title changes
-                        if (appBean.getPropertyList().getFilteredList().size() == 1) {
-                            openPropertyForm(appBean.getPropertyList().getFilteredList().get(0), readOnly);
-                        } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
-                            PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
-                            propertyListForm.setLocationRelativeTo(this);
-
-                            propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
-
-                                @Override
-                                public void propertyChange(PropertyChangeEvent evt) {
-                                    if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
-                                            && evt.getNewValue() != null) {
-                                        ApplicationPropertyBean property = (ApplicationPropertyBean) evt.getNewValue();
-                                        ((JDialog) evt.getSource()).dispose();
-                                        openPropertyForm(property, readOnly);
-                                    }
-                                }
-                            });
-
-                            propertyListForm.setVisible(true);
-                        } else {
-                            MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_LIST_EMPTY);
-                        }
-                    }
+//                    } else {
+//
+//                        // Open property form for existing title changes
+//                        if (appBean.getPropertyList().getFilteredList().size() == 1) {
+//                            openPropertyForm(appBean.getPropertyList().getFilteredList().get(0), readOnly);
+//                        } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
+//                            PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
+//                            propertyListForm.setLocationRelativeTo(this);
+//
+//                            propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
+//
+//                                @Override
+//                                public void propertyChange(PropertyChangeEvent evt) {
+//                                    if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
+//                                            && evt.getNewValue() != null) {
+//                                        ApplicationPropertyBean property = (ApplicationPropertyBean) evt.getNewValue();
+//                                        ((JDialog) evt.getSource()).dispose();
+//                                        openPropertyForm(property, readOnly);
+//                                    }
+//                                }
+//                            });
+//
+//                            propertyListForm.setVisible(true);
+//                        } else {
+//                            MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_LIST_EMPTY);
+//                        }
+//                    }
                 }
             }
 

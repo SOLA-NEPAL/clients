@@ -45,6 +45,7 @@ public class ApplicationSummaryBean extends AbstractIdBean {
     public static final String AGENT_ID_PROPERTY = "agentId";
     public static final String CONTACT_PERSON_ID_PROPERTY = "contactPersonId";
     public static final String FEE_PAID_PROPERTY = "feePaid";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     
     private String nr;
     private Date lodgingDatetime;
@@ -52,6 +53,7 @@ public class ApplicationSummaryBean extends AbstractIdBean {
     private Date assignedDatetime;
     private String agentId;
     private String contactPersonId;
+    private String officeCode;
     private boolean feePaid;
 
     public ApplicationSummaryBean() {
@@ -114,6 +116,16 @@ public class ApplicationSummaryBean extends AbstractIdBean {
         Date old = this.lodgingDatetime;
         this.lodgingDatetime = lodgingDatetime;
         propertySupport.firePropertyChange(LODGING_DATE_TIME_PROPERTY, old, this.lodgingDatetime);
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = this.officeCode;
+        this.officeCode = officeCode;
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.lodgingDatetime);
     }
 
     public String getNr() {

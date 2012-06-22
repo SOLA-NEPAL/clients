@@ -75,6 +75,7 @@ public class PartyBean extends PartySummaryBean {
     public static final String REMARKS_PROPERTY="rmks";
     public static final String ID_ISSUING_OFFICE_PROPERTY= "id_issuing_office_code";
     public static final String ID_ISSUE_DATE_PROPERTY= "id_issueDate";
+    public static final String OFFICE_CODE_PROPERTY= "officeCode";
     
     @Email(message = ClientMessage.CHECK_INVALID_EMAIL, payload=Localized.class)
     private String email;
@@ -99,6 +100,7 @@ public class PartyBean extends PartySummaryBean {
     private String rmks;
     private OfficeBean officeBean;
     private Date idIssueDate;
+    private String officeCode;
     
     public OfficeBean getOfficeBean() {
         if (officeBean==null) {
@@ -414,6 +416,16 @@ public class PartyBean extends PartySummaryBean {
         if (selectedRole != null && roleList != null) {
             roleList.safeRemove(selectedRole, EntityAction.DELETE);
         }
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        String oldValue = this.officeCode;
+        this.officeCode = officeCode;
+        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 
     /** 
