@@ -32,16 +32,17 @@ public class LocBean extends AbstractIdBean {
     public static final String TEMP_PANA_NO_PROPERTY = "tmpPanaNo";
     public static final String PROPERTY_TYPE_PROPERTY = "propertyType";
     public static final String OSHP_TYPE_PROPERTY = "oshpType";
-    public static final String TRANSACTION_NO_PROPERTY = "transactionNo";
+    public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String BAUNIT_PROPERTY = "baUnits";
+    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     private String mothId;
     private int panaNo;
     private int tmpPanaNo;
     private int propertyType;
     private int oshpType;
-    private int transactionNo;
-    private SolaObservableList<BaUnitBean> baUnits;
+    private String transactionId;
     private String officeCode;
+    private SolaObservableList<BaUnitBean> baUnits;
     
     public LocBean() {
         super();
@@ -109,20 +110,21 @@ public class LocBean extends AbstractIdBean {
         propertySupport.firePropertyChange(TEMP_PANA_NO_PROPERTY, oldValue, this.tmpPanaNo);
     }
 
-    public int getTransactionNo() {
-        return transactionNo;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setTransactionNo(int transactionNo) {
-        int oldValue = this.transactionNo;
-        this.transactionNo = transactionNo;
-        propertySupport.firePropertyChange(TRANSACTION_NO_PROPERTY, oldValue, this.transactionNo);
+    public void setTransactionId(String transactionId) {
+        String oldValue = this.transactionId;
+        this.transactionId = transactionId;
+        propertySupport.firePropertyChange(TRANSACTION_ID_PROPERTY, oldValue, this.transactionId);
     }
-    
-    public void saveLoc() {
+
+    public boolean saveLoc() {
         LocTO locTO = TypeConverters.BeanToTrasferObject(this, LocTO.class);
         locTO = WSManager.getInstance().getAdministrative().saveLoc(locTO);
         TypeConverters.TransferObjectToBean(locTO, LocBean.class, this);
+        return true;
     }
 
     public String getOfficeCode() {

@@ -35,11 +35,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import javax.swing.JTextField;
-import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartyRoleBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.swing.common.utils.BindingTools;
+import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -57,7 +57,8 @@ public class PartyPanel extends javax.swing.JPanel {
     private static final String entityLabel = MessageUtility.getLocalizedMessage(
             ClientMessage.GENERAL_LABELS_ENTITY).getMessage();
     private boolean readOnly = false;
-    private boolean startuptime=false;
+    private boolean startuptime = false;
+
     /**
      * Default form constructor.
      */
@@ -76,7 +77,7 @@ public class PartyPanel extends javax.swing.JPanel {
      */
     public PartyPanel(PartyBean partyBean, boolean readOnly) {
         this.readOnly = readOnly;
-        this.startuptime=true;
+        this.startuptime = true;
         initComponents();
         setupPartyBean(partyBean);
 
@@ -92,7 +93,7 @@ public class PartyPanel extends javax.swing.JPanel {
 
         customizeAddRoleButton(null);
         customizeRoleButtons(null);
-        this.startuptime=false;
+        this.startuptime = false;
     }
 
     private PartyRoleTypeListBean createPartyRolesList() {
@@ -119,12 +120,10 @@ public class PartyPanel extends javax.swing.JPanel {
         return partyBean;
     }
 
-    
     public void setPartyBean(PartyBean partyBean) {
         setupPartyBean(partyBean);
     }
 
-    
     private IdTypeListBean createIdTypes() {
         if (idTypes == null) {
             idTypes = new IdTypeListBean(true);
@@ -152,7 +151,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private void setupPartyBean(PartyBean partyBean) {
         detailsPanel.setSelectedIndex(0);
         cbxPartyRoleTypes.setSelectedIndex(0);
-        
+
         if (partyBean != null) {
             this.partyBean = partyBean;
         } else {
@@ -181,7 +180,7 @@ public class PartyPanel extends javax.swing.JPanel {
             vdcListBean.loadList(false, partyBean.getAddress().getDistrictCode());
         }
         customizePanel();
-        
+
         firePropertyChange("partyBean", null, this.partyBean);
         BindingTools.refreshBinding(bindingGroup, "rolesGroup");
     }
@@ -301,10 +300,9 @@ public class PartyPanel extends javax.swing.JPanel {
         //additional fields.
         cboOffice.setEnabled(enable);
         txtIssueDate.setEditable(enable);
-        if (enable){
+        if (enable) {
             txtIssueDate.setBackground(Color.WHITE);
-        }
-        else{
+        } else {
             txtIssueDate.setBackground(Color.LIGHT_GRAY);
         }
         txtGrandFatherFirstName.setEnabled(enable);
@@ -1419,7 +1417,9 @@ public class PartyPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_menuRemoveRoleActionPerformed
 
     private void cboDistrictItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDistrictItemStateChanged
-        if (this.startuptime) return;
+        if (this.startuptime) {
+            return;
+        }
         try {
             if (cboDistrict.getSelectedItem()==null) return;
             
@@ -1428,20 +1428,19 @@ public class PartyPanel extends javax.swing.JPanel {
                 String distric_code=district.getCode();
                 partyBean.getAddress().setDistrictCode(distric_code);
                 //load corresponding vdcs.
-                if (!this.readOnly){
+                if (!this.readOnly) {
                     vdcListBean.loadList(false, distric_code);
                     cboVDCs.setSelectedIndex(-1);
                 }
                 //load corresponding offices.
-                if (!this.readOnly){
-                    officeListBean.loadList(false,distric_code);
+                if (!this.readOnly) {
+                    officeListBean.loadList(false, distric_code);
                     cboOffice.setSelectedIndex(-1);
                 }
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_cboDistrictItemStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel basicPanel;
     private javax.swing.JButton btnAddRole;

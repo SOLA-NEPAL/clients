@@ -37,13 +37,12 @@ import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.reports.ReportManager;
-import org.sola.clients.swing.admin.referencedata.DepartmentManagementPanel;
-import org.sola.clients.swing.admin.referencedata.OfficeManagementPanel;
-import org.sola.clients.swing.admin.referencedata.ReferenceDataManagementPanel;
+import org.sola.clients.swing.admin.referencedata.*;
 import org.sola.clients.swing.admin.security.GroupsManagementPanel;
 import org.sola.clients.swing.admin.security.RolesManagementPanel;
 import org.sola.clients.swing.admin.security.UsersManagementPanel;
 import org.sola.clients.swing.admin.system.BrManagementPanel;
+import org.sola.clients.swing.admin.system.MapSheetNoManagementPanel;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.RolesConstants;
@@ -94,16 +93,16 @@ public class MainForm extends javax.swing.JFrame {
         mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_MANAGE, true);
     }
 
-    private void showOfficesForm(){
+    private void showOfficesForm() {
         OfficeManagementPanel form = new OfficeManagementPanel();
         mainContentPanel.addPanel(form, MainContentPanel.CARD_OFFICES, true);
     }
-    
-    private void showDepartmentsForm(){
+
+    private void showDepartmentsForm() {
         DepartmentManagementPanel form = new DepartmentManagementPanel();
         mainContentPanel.addPanel(form, MainContentPanel.CARD_DEPARTMENTS, true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -161,6 +160,7 @@ public class MainForm extends javax.swing.JFrame {
         menuDistrict = new javax.swing.JMenuItem();
         menuOffices = new javax.swing.JMenuItem();
         menuDepartments = new javax.swing.JMenuItem();
+        menuMapsheet = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -607,6 +607,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuDepartments);
 
+        menuMapsheet.setText(bundle.getString("MainForm.menuMapsheet.text")); // NOI18N
+        menuMapsheet.setName(bundle.getString("MainForm.menuMapsheet.name")); // NOI18N
+        menuMapsheet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMapsheetActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuMapsheet);
+
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -812,6 +821,10 @@ public class MainForm extends javax.swing.JFrame {
         showDepartmentsForm();
     }//GEN-LAST:event_menuDepartmentsActionPerformed
 
+    private void menuMapsheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMapsheetActionPerformed
+        manageMapSheet();
+    }//GEN-LAST:event_menuMapsheetActionPerformed
+
     /**
      * Opens roles management panel.
      */
@@ -934,11 +947,17 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void manageVDCs() {
-        openReferenceDataPanel(VdcBean.class, menuVDCSetup.getText());
+        VdcManagementPanel panel = new VdcManagementPanel();
+        mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_MANAGE, true);
     }
 
     private void manageDistricts() {
         openReferenceDataPanel(DistrictBean.class, menuDistrict.getText());
+    }
+
+    private void manageMapSheet() {
+        MapSheetNoManagementPanel panel = new MapSheetNoManagementPanel();
+        mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_REFDATA_MANAGE, true);
     }
 
     private void manageBr() {
@@ -981,6 +1000,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuIdTypes;
     private javax.swing.JMenuItem menuLodgementReport;
+    private javax.swing.JMenuItem menuMapsheet;
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenu menuParty;

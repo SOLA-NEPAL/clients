@@ -44,7 +44,6 @@ public class PersonSearchForm extends javax.swing.JDialog {
     
     private void openSearchParties() {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));

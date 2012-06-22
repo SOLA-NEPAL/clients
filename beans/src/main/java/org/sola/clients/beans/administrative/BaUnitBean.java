@@ -41,6 +41,7 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.referencedata.TypeActionBean;
 import org.sola.clients.beans.source.SourceBean;
@@ -187,6 +188,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private String estateType;
     private TypeActionBean pendingTypeAction;
     private String locId;
+    private SolaList<PartyBean> parties;
 
     public String getLocId() {
         return locId;
@@ -198,11 +200,34 @@ public class BaUnitBean extends BaUnitSummaryBean {
         propertySupport.firePropertyChange("locId", oldValue, this.locId);
     }
 
+    public SolaList<PartyBean> getParties() {
+        return parties;
+    }
+    
+    public ObservableList<PartyBean> getPartiesFilteredList() {
+        return parties.getFilteredList();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public BaUnitBean() {
         super();
         rrrList = new SolaList();
         baUnitNotationList = new SolaList();
         cadastreObjectList = new SolaList();
+        parties=new SolaList();
         childBaUnits = new SolaList();
         parentBaUnits = new SolaList();
         sourceList = new SolaList();
@@ -215,7 +240,8 @@ public class BaUnitBean extends BaUnitSummaryBean {
 
         AllBaUnitNotationsListUpdater allBaUnitNotationsListener = new AllBaUnitNotationsListUpdater();
         rrrList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
-        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
+        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);    
+       
     }
 
     public void createPaperTitle(SourceBean source) {

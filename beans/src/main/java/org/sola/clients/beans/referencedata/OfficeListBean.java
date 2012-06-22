@@ -77,6 +77,7 @@ public class OfficeListBean extends AbstractBindingListBean {
     public final void loadList(boolean createDummy,String districtCode) {
         loadCodeList(OfficeBean.class, offices,
                 CacheManager.getOffices(districtCode), createDummy);
+     
     }
 
     /** Loads list of offices with untranslated display_value and description.*/

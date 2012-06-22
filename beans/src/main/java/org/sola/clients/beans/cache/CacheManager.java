@@ -38,11 +38,7 @@ import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.RoleBean;
-import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.system.LanguageBean;
-import org.sola.clients.beans.referencedata.OfficeBean;
-import org.sola.clients.beans.referencedata.DepartmentBean;
-import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.AbstractWSClient;
@@ -158,6 +154,7 @@ public final class CacheManager {
     private static final String GET_BA_UNIT_REL_TYPES = "getBaUnitRelTypes";
     private static final String GET_DISTRICTS = "getDistricts";
     private static final String GET_OFFICES = "getOffices";
+    private static final String GET_MAPSHEETS= "getMapSheets";
     
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result=new ArrayList<DepartmentBean>();

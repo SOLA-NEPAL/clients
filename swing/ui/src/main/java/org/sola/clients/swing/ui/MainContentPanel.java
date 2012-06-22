@@ -55,6 +55,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_LandOwner_Entry = "landOwnerEntry";
     public final static String CARD_PARCEL_SEARCH = "parcelSearch";
     public final static String CARD_Parcel_Entry = "parcelsEntry";
+    public final static String CARD_Add_NEW_OWNER = "addNewOwner";
     public final static String CARD_ADMIN_VDC = "vdcAssignmnet";
     public final static String CARD_SEARCH_PERSONS = "searchPersons";
     public final static String CARD_PERSON = "person";
@@ -94,6 +95,8 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_OFFICE = "office";
     public final static String CARD_DEPARTMENTS = "departmetns";
     public final static String CARD_DEPARTMENT = "department";
+    public final static String CARD_VDC = "vdc";
+    public final static String CARD_VDCS = "vdcs";
     private HashMap<String, Component> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;

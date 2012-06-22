@@ -20,10 +20,13 @@ import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.EntityAction;
+import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 
 public class VdcListBean extends AbstractBindingListBean {
 
@@ -96,4 +99,10 @@ public class VdcListBean extends AbstractBindingListBean {
     public void loadVdcList() {
        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getVdcList(), VdcBean.class, (List) vdc);
     }   
+     public void removeSelectedVdc(){
+        if(selectedVdc!=null){
+            selectedVdc.setEntityAction(EntityAction.DELETE);
+            AbstractCodeBean.saveRefData(selectedVdc, DepartmentTO.class);
+        }
+    }
 }
