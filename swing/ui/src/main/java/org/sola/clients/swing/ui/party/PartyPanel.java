@@ -187,16 +187,8 @@ public class PartyPanel extends javax.swing.JPanel {
         
         firePropertyChange("partyBean", null, this.partyBean);
         BindingTools.refreshBinding(bindingGroup, "rolesGroup");
-        //refresh image display.
-        refreshImage();
     }
-
-    private void refreshImage(){
-       lblPhoto.setIcon(partyBean.getPhotoDoc().getLabelIcon()); 
-       lblLeftFinger.setIcon(partyBean.getLeftFingerDoc().getLabelIcon());
-       lblRightFinger.setIcon(partyBean.getRightFingerDoc().getLabelIcon());
-       lblSignature.setIcon(partyBean.getSignatureDoc().getLabelIcon());
-    }
+    
     /**
      * Enables or disables "add", depending on selection in the list of role
      * types and user rights.
@@ -451,15 +443,19 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel29 = new javax.swing.JPanel();
         lblPhoto = new javax.swing.JLabel();
         btnBrowsePhoto = new javax.swing.JButton();
+        btnClearImg = new javax.swing.JButton();
         rightFinger = new javax.swing.JPanel();
         lblRightFinger = new javax.swing.JLabel();
         btnBrowseRightFinger = new javax.swing.JButton();
+        btnClearRFP = new javax.swing.JButton();
         signature = new javax.swing.JPanel();
         lblSignature = new javax.swing.JLabel();
         btnBrowseSignature = new javax.swing.JButton();
+        btnClearSignature = new javax.swing.JButton();
         leftFinger = new javax.swing.JPanel();
         lblLeftFinger = new javax.swing.JLabel();
         btnBrowseLeftFinger = new javax.swing.JButton();
+        btnClearLFP = new javax.swing.JButton();
         entityButton = new javax.swing.JRadioButton();
         individualButton = new javax.swing.JRadioButton();
 
@@ -1021,8 +1017,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labFatherFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(180, Short.MAX_VALUE))
-            .addComponent(txtFatherFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(177, Short.MAX_VALUE))
+            .addComponent(txtFatherFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1051,8 +1047,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(labFatherLastName)
-                .addContainerGap(216, Short.MAX_VALUE))
-            .addComponent(txtFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(213, Short.MAX_VALUE))
+            .addComponent(txtFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1081,8 +1077,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(labAlias)
-                .addContainerGap(279, Short.MAX_VALUE))
-            .addComponent(txtAlias, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(276, Short.MAX_VALUE))
+            .addComponent(txtAlias, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1111,7 +1107,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 152, Short.MAX_VALUE))
+                .addGap(0, 149, Short.MAX_VALUE))
             .addComponent(txtGrandFatherFirstName)
         );
         jPanel23Layout.setVerticalGroup(
@@ -1139,8 +1135,8 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtGrandFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+            .addComponent(txtGrandFatherLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1169,7 +1165,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel25Layout.createSequentialGroup()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 207, Short.MAX_VALUE))
+                .addGap(0, 204, Short.MAX_VALUE))
             .addComponent(txtRemarks)
         );
         jPanel25Layout.setVerticalGroup(
@@ -1206,8 +1202,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(labPhone)
-                .addContainerGap(271, Short.MAX_VALUE))
-            .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(268, Short.MAX_VALUE))
+            .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1236,8 +1232,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(labMobile)
-                .addContainerGap(271, Short.MAX_VALUE))
-            .addComponent(txtMobile, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(268, Short.MAX_VALUE))
+            .addComponent(txtMobile, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1269,8 +1265,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(labFax)
-                .addContainerGap(283, Short.MAX_VALUE))
-            .addComponent(txtFax, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(280, Short.MAX_VALUE))
+            .addComponent(txtFax, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1306,8 +1302,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(labPreferredWay, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
-            .addComponent(cbxCommunicationWay, 0, 305, Short.MAX_VALUE)
+                .addContainerGap(109, Short.MAX_VALUE))
+            .addComponent(cbxCommunicationWay, 0, 302, Short.MAX_VALUE)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1339,8 +1335,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(labEmail)
-                .addContainerGap(273, Short.MAX_VALUE))
-            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addContainerGap(270, Short.MAX_VALUE))
+            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1381,21 +1377,35 @@ public class PartyPanel extends javax.swing.JPanel {
             }
         });
 
+        btnClearImg.setText(bundle.getString("PartyPanel.btnClearImg.text")); // NOI18N
+        btnClearImg.setName(bundle.getString("PartyPanel.btnClearImg.name")); // NOI18N
+        btnClearImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearImgActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
         jPanel29Layout.setHorizontalGroup(
             jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel29Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBrowsePhoto))
+                .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel29Layout.createSequentialGroup()
+                .addComponent(btnClearImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBrowsePhoto)
+                .addGap(12, 12, 12))
         );
         jPanel29Layout.setVerticalGroup(
             jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel29Layout.createSequentialGroup()
                 .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(btnBrowsePhoto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBrowsePhoto)
+                    .addComponent(btnClearImg))
                 .addGap(0, 0, 0))
         );
 
@@ -1417,21 +1427,33 @@ public class PartyPanel extends javax.swing.JPanel {
             }
         });
 
+        btnClearRFP.setText(bundle.getString("PartyPanel.btnClearRFP.text")); // NOI18N
+        btnClearRFP.setName(bundle.getString("PartyPanel.btnClearRFP.name")); // NOI18N
+        btnClearRFP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearRFPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightFingerLayout = new javax.swing.GroupLayout(rightFinger);
         rightFinger.setLayout(rightFingerLayout);
         rightFingerLayout.setHorizontalGroup(
             rightFingerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblRightFinger, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(rightFingerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addComponent(btnClearRFP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBrowseRightFinger))
         );
         rightFingerLayout.setVerticalGroup(
             rightFingerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightFingerLayout.createSequentialGroup()
                 .addComponent(lblRightFinger, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(btnBrowseRightFinger)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(rightFingerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBrowseRightFinger)
+                    .addComponent(btnClearRFP))
                 .addGap(0, 0, 0))
         );
 
@@ -1442,7 +1464,7 @@ public class PartyPanel extends javax.swing.JPanel {
         lblSignature.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 0)));
         lblSignature.setName(bundle.getString("PartyPanel.lblSignature.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.photoDoc.labelIcon}"), lblSignature, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.signatureDoc.labelIcon}"), lblSignature, org.jdesktop.beansbinding.BeanProperty.create("icon"));
         bindingGroup.addBinding(binding);
 
         btnBrowseSignature.setText(bundle.getString("PartyPanel.btnBrowseSignature.text")); // NOI18N
@@ -1453,13 +1475,23 @@ public class PartyPanel extends javax.swing.JPanel {
             }
         });
 
+        btnClearSignature.setText(bundle.getString("PartyPanel.btnClearSignature.text")); // NOI18N
+        btnClearSignature.setName(bundle.getString("PartyPanel.btnClearSignature.name")); // NOI18N
+        btnClearSignature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearSignatureActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout signatureLayout = new javax.swing.GroupLayout(signature);
         signature.setLayout(signatureLayout);
         signatureLayout.setHorizontalGroup(
             signatureLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblSignature, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(signatureLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addComponent(btnClearSignature, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBrowseSignature))
         );
         signatureLayout.setVerticalGroup(
@@ -1467,7 +1499,9 @@ public class PartyPanel extends javax.swing.JPanel {
             .addGroup(signatureLayout.createSequentialGroup()
                 .addComponent(lblSignature, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBrowseSignature))
+                .addGroup(signatureLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBrowseSignature)
+                    .addComponent(btnClearSignature)))
         );
 
         leftFinger.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PartyPanel.leftFinger.border.title"))); // NOI18N
@@ -1488,21 +1522,33 @@ public class PartyPanel extends javax.swing.JPanel {
             }
         });
 
+        btnClearLFP.setText(bundle.getString("PartyPanel.btnClearLFP.text")); // NOI18N
+        btnClearLFP.setName(bundle.getString("PartyPanel.btnClearLFP.name")); // NOI18N
+        btnClearLFP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearLFPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftFingerLayout = new javax.swing.GroupLayout(leftFinger);
         leftFinger.setLayout(leftFingerLayout);
         leftFingerLayout.setHorizontalGroup(
             leftFingerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblLeftFinger, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(leftFingerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addComponent(btnClearLFP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBrowseLeftFinger))
         );
         leftFingerLayout.setVerticalGroup(
             leftFingerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftFingerLayout.createSequentialGroup()
                 .addComponent(lblLeftFinger, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBrowseLeftFinger)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(leftFingerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBrowseLeftFinger)
+                    .addComponent(btnClearLFP))
                 .addGap(0, 0, 0))
         );
 
@@ -1511,7 +1557,7 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
-                .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rightFinger, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1524,12 +1570,12 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rightFinger, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(signature, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(leftFinger, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(rightFinger, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leftFinger, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(signature, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout fullPanelLayout = new javax.swing.GroupLayout(fullPanel);
@@ -1539,11 +1585,11 @@ public class PartyPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fullPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                     .addComponent(groupPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(groupPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(groupPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         fullPanelLayout.setVerticalGroup(
@@ -1558,7 +1604,8 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(groupPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         detailsPanel.addTab(bundle.getString("PartyPanel.fullPanel.TabConstraints.tabTitle"), fullPanel); // NOI18N
@@ -1593,7 +1640,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(entityButton)
                 .addContainerGap())
-            .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
+            .addComponent(detailsPanel)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1602,8 +1649,7 @@ public class PartyPanel extends javax.swing.JPanel {
                     .addComponent(individualButton)
                     .addComponent(entityButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -1661,30 +1707,56 @@ public class PartyPanel extends javax.swing.JPanel {
         Icon photo= getImageFile(partyBean.getPhotoDoc()); 
         partyBean.getPhotoDoc().setLabelIcon(photo,
                     lblPhoto.getHeight(),lblPhoto.getWidth());
-        lblPhoto.setIcon(partyBean.getPhotoDoc().getLabelIcon());
+        refresh_lable_icon(lblPhoto,partyBean.getPhotoDoc());
     }//GEN-LAST:event_btnBrowsePhotoActionPerformed
 
     private void btnBrowseRightFingerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseRightFingerActionPerformed
         Icon rightfng= getImageFile(partyBean.getRightFingerDoc());
         partyBean.getRightFingerDoc().setLabelIcon(rightfng,
                     lblRightFinger.getHeight(),lblRightFinger.getWidth());
-        lblRightFinger.setIcon(partyBean.getRightFingerDoc().getLabelIcon());
+        refresh_lable_icon(lblRightFinger,partyBean.getRightFingerDoc());
     }//GEN-LAST:event_btnBrowseRightFingerActionPerformed
 
+    private void refresh_lable_icon(JLabel lable,DocumentBean doc){
+        if (doc!=null){
+            lable.setIcon(doc.getLabelIcon());
+        }
+        else{
+            lable.setIcon(null);
+            lable.repaint();
+        }    
+    }
+    
     private void btnBrowseLeftFingerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseLeftFingerActionPerformed
         Icon leftfng= getImageFile(partyBean.getLeftFingerDoc());
         partyBean.getLeftFingerDoc().setLabelIcon(leftfng,
                     lblLeftFinger.getHeight(),lblLeftFinger.getWidth());
-        lblLeftFinger.setIcon(partyBean.getLeftFingerDoc().getLabelIcon());
+        refresh_lable_icon(lblLeftFinger,partyBean.getLeftFingerDoc());
     }//GEN-LAST:event_btnBrowseLeftFingerActionPerformed
 
     private void btnBrowseSignatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseSignatureActionPerformed
         Icon sgnIcon= getImageFile(partyBean.getSignatureDoc());
         partyBean.getSignatureDoc().setLabelIcon(sgnIcon,
                     lblSignature.getHeight(),lblSignature.getWidth());
-        lblSignature.setIcon(partyBean.getSignatureDoc().getLabelIcon());
+        refresh_lable_icon(lblSignature,partyBean.getSignatureDoc());
     }//GEN-LAST:event_btnBrowseSignatureActionPerformed
 
+    private void btnClearImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearImgActionPerformed
+        refresh_lable_icon(lblPhoto,null);
+    }//GEN-LAST:event_btnClearImgActionPerformed
+
+    private void btnClearRFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearRFPActionPerformed
+        refresh_lable_icon(lblRightFinger, null);
+    }//GEN-LAST:event_btnClearRFPActionPerformed
+
+    private void btnClearLFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearLFPActionPerformed
+        refresh_lable_icon(lblLeftFinger, null);
+    }//GEN-LAST:event_btnClearLFPActionPerformed
+
+    private void btnClearSignatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSignatureActionPerformed
+        refresh_lable_icon(lblSignature, null);
+    }//GEN-LAST:event_btnClearSignatureActionPerformed
+    
     private Icon getImageFile(DocumentBean doc){
         JFileChooser fileOpen=new JFileChooser();
         fileOpen.setDialogTitle("Choose point text file to load into table.");
@@ -1744,6 +1816,10 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnBrowsePhoto;
     private javax.swing.JButton btnBrowseRightFinger;
     private javax.swing.JButton btnBrowseSignature;
+    private javax.swing.JButton btnClearImg;
+    private javax.swing.JButton btnClearLFP;
+    private javax.swing.JButton btnClearRFP;
+    private javax.swing.JButton btnClearSignature;
     private javax.swing.JButton btnRemoveRole;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cboDistrict;

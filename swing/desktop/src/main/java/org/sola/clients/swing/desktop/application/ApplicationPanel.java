@@ -87,6 +87,7 @@ import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 
 /**
@@ -787,7 +788,8 @@ public class ApplicationPanel extends ContentPanel {
 
     private boolean saveApplication() {
         appBean.setLocation(this.mapControl.getApplicationLocation());
-         
+        //making readonly and not saving.
+        //appBean.getContactPerson().setEntityAction(EntityAction.READ_ONLY);
         if (applicationID != null && !applicationID.equals("")) {
             return appBean.saveApplication();
         } else {
@@ -3144,6 +3146,7 @@ public class ApplicationPanel extends ContentPanel {
         //txtFax.setText(party.getFax());
         //txtEmail.setText(party.getEmail());
         //cbxCommunicationWay.setSelectedItem(party.getPreferredCommunication());
+        //party.setEntityAction(EntityAction.READ_ONLY);
         appBean.setContactPerson(party);
     }
     /**

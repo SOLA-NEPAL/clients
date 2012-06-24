@@ -72,15 +72,18 @@ public class DocumentBean extends AbstractIdBean {
     private Icon labelIcon;
 
     public Icon getLabelIcon() {
-        if (labelIcon==null){
+        //if (labelIcon==null){ //confirm the correct image.
             if (body!=null && body.length>1){
                 try {
-                    String fileName = "sola_arch_" + nr + "." + extension;
+                    String fileName="sola_arch_"  + description;
+                    int start_indx=description.lastIndexOf(".");
+                    if (start_indx<0)//put extension.
+                        fileName += "." + extension;
                     labelIcon=FileUtility.getImageIcon(body, fileName);
                     //labelIcon=new ImageIcon(body, description);
                 } catch (Exception e) { }
             }
-        }
+        //}
         return labelIcon;
     }
 
@@ -100,6 +103,7 @@ public class DocumentBean extends AbstractIdBean {
             Logger.getLogger(DocumentBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.body= baos.toByteArray();
+        baos.flush();
         baos.close();
     }
     
@@ -132,6 +136,7 @@ public class DocumentBean extends AbstractIdBean {
             Logger.getLogger(DocumentBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.body= baos.toByteArray();
+        baos.flush();
         baos.close();
         //resized image.
         return new ImageIcon(scaled_img);

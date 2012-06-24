@@ -110,7 +110,7 @@
               <Component id="entityButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
-          <Component id="detailsPanel" alignment="0" pref="645" max="32767" attributes="0"/>
+          <Component id="detailsPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -121,8 +121,7 @@
                   <Component id="entityButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="detailsPanel" pref="598" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="detailsPanel" pref="627" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -1017,11 +1016,11 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jPanel3" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanel28" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanel3" alignment="0" pref="620" max="32767" attributes="0"/>
                           <Component id="groupPanel2" alignment="0" max="32767" attributes="0"/>
                           <Component id="jPanel18" alignment="0" pref="0" max="32767" attributes="0"/>
                           <Component id="groupPanel3" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanel28" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1039,7 +1038,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="groupPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel28" max="32767" attributes="0"/>
+                      <Component id="jPanel28" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1066,9 +1066,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labFatherFirstName" min="-2" pref="125" max="-2" attributes="1"/>
-                              <EmptySpace pref="180" max="32767" attributes="0"/>
+                              <EmptySpace pref="177" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtFatherFirstName" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtFatherFirstName" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1113,9 +1113,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labFatherLastName" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="216" max="32767" attributes="0"/>
+                              <EmptySpace pref="213" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtFatherLastName" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtFatherLastName" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1160,9 +1160,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="labAlias" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="279" max="32767" attributes="0"/>
+                              <EmptySpace pref="276" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtAlias" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtAlias" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1209,7 +1209,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jLabel5" min="-2" pref="153" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="152" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="149" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txtGrandFatherFirstName" max="32767" attributes="0"/>
                       </Group>
@@ -1260,8 +1260,8 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtGrandFatherLastName" pref="305" max="32767" attributes="0"/>
-                          <Component id="jLabel6" alignment="0" pref="305" max="32767" attributes="0"/>
+                          <Component id="txtGrandFatherLastName" pref="302" max="32767" attributes="0"/>
+                          <Component id="jLabel6" alignment="0" pref="302" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1312,7 +1312,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jLabel7" min="-2" pref="98" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="207" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="204" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txtRemarks" max="32767" attributes="0"/>
                       </Group>
@@ -1377,9 +1377,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labPhone" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="271" max="32767" attributes="0"/>
+                              <EmptySpace pref="268" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtPhone" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtPhone" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1431,9 +1431,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labMobile" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="271" max="32767" attributes="0"/>
+                              <EmptySpace pref="268" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtMobile" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtMobile" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1478,9 +1478,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labFax" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="283" max="32767" attributes="0"/>
+                              <EmptySpace pref="280" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtFax" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtFax" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1529,9 +1529,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labPreferredWay" min="-2" pref="193" max="-2" attributes="1"/>
-                              <EmptySpace pref="112" max="32767" attributes="0"/>
+                              <EmptySpace pref="109" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="cbxCommunicationWay" alignment="0" pref="305" max="32767" attributes="3"/>
+                          <Component id="cbxCommunicationWay" alignment="0" pref="302" max="32767" attributes="3"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1585,9 +1585,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labEmail" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="273" max="32767" attributes="0"/>
+                              <EmptySpace pref="270" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtEmail" alignment="0" pref="305" max="32767" attributes="1"/>
+                          <Component id="txtEmail" alignment="0" pref="302" max="32767" attributes="1"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1663,7 +1663,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jPanel29" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel29" min="-2" pref="152" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="rightFinger" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -1678,14 +1678,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="rightFinger" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel29" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="signature" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="leftFinger" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="rightFinger" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jPanel29" alignment="0" max="32767" attributes="0"/>
+                              <Component id="leftFinger" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signature" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1708,10 +1707,15 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblPhoto" min="-2" pref="133" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblPhoto" min="-2" pref="133" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btnClearImg" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnBrowsePhoto" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1719,8 +1723,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblPhoto" min="-2" pref="151" max="-2" attributes="0"/>
-                              <EmptySpace pref="11" max="32767" attributes="0"/>
-                              <Component id="btnBrowsePhoto" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnBrowsePhoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnClearImg" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1760,6 +1767,19 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowsePhotoActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="btnClearImg">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearImg.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearImg.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearImgActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="rightFinger">
@@ -1781,7 +1801,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblRightFinger" min="-2" pref="139" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Component id="btnClearRFP" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnBrowseRightFinger" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1790,8 +1812,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblRightFinger" min="-2" pref="150" max="-2" attributes="0"/>
-                              <EmptySpace pref="12" max="32767" attributes="0"/>
-                              <Component id="btnBrowseRightFinger" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnBrowseRightFinger" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnClearRFP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1831,6 +1856,19 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowseRightFingerActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="btnClearRFP">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearRFP.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearRFP.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearRFPActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="signature">
@@ -1852,7 +1890,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblSignature" min="-2" pref="139" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Component id="btnClearSignature" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnBrowseSignature" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1862,7 +1902,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblSignature" min="-2" pref="152" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnBrowseSignature" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnBrowseSignature" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnClearSignature" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1885,7 +1928,7 @@
                         </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="icon" source="Form" sourcePath="${partyBean.photoDoc.labelIcon}" target="lblSignature" targetPath="icon" updateStrategy="0" immediately="false"/>
+                        <BindingProperty name="icon" source="Form" sourcePath="${partyBean.signatureDoc.labelIcon}" target="lblSignature" targetPath="icon" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnBrowseSignature">
@@ -1899,6 +1942,19 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowseSignatureActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnClearSignature">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearSignature.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearSignature.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearSignatureActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1922,7 +1978,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblLeftFinger" min="-2" pref="139" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Component id="btnClearLFP" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnBrowseLeftFinger" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1931,8 +1989,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblLeftFinger" min="-2" pref="152" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnBrowseLeftFinger" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="10" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnBrowseLeftFinger" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnClearLFP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1970,6 +2031,19 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowseLeftFingerActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnClearLFP">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearLFP.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.btnClearLFP.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearLFPActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

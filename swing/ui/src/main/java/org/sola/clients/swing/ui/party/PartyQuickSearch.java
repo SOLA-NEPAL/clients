@@ -74,5 +74,4 @@ public class PartyQuickSearch extends FreeTextSearch {
     public PartySearchParamsBean getSearchParams() {
         return searchParams;
     }
-
 }
