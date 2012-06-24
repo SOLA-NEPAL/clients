@@ -47,7 +47,7 @@ public class SelectParcelForm extends javax.swing.JDialog {
         this.pointsLayer=pointsLayer;
         this.targetParcelsLayer=targetParcelsLayer;
     }
-
+    
     private void set_SearchCompletionTrigger(){
         Class[] cls=new Class[]{CadastreObjectBean.class,
             String.class,String.class,String.class};
@@ -132,9 +132,18 @@ public class SelectParcelForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void display_parcel_Not_Found_note(){
+        DefaultListModel def_model= new DefaultListModel();
+        def_model.clear();
+        def_model.addElement("No parcel found with given search string, check it");
+        lstParcelInfo.setModel(def_model);
+    }
     public void refresh_Cadastre_Object_Searching(CadastreObjectBean parcel,
             String ddc, String vdc, String wardno){
-        if (parcel==null) return;
+        if (parcel==null){
+            display_parcel_Not_Found_note();
+            return;
+        }
         
         cadastreObject= TypeConverters.BeanToTrasferObject(parcel, CadastreObjectTO.class);
         //display details of the cadastre object found.
@@ -144,20 +153,27 @@ public class SelectParcelForm extends javax.swing.JDialog {
         def_model.addElement("District: " + ddc);
         def_model.addElement("VDC: " + vdc);
         def_model.addElement("Ward Number: " + wardno);
-        //get the geometry object.
-        WKBReader wkb_reader = new WKBReader();
-        DecimalFormat df=new DecimalFormat("0.000");
-        try {
-            the_Polygon = wkb_reader.read(cadastreObject.getGeomPolygon());
-        } catch (ParseException ex) {
-            Logger.getLogger(SelectParcelForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        def_model.addElement("Parcel Area: " + df.format(the_Polygon.getArea())+ " sqr. meters");
+        String areaValue = parcel_Area_Value();
+        def_model.addElement("Parcel Area: " + areaValue + " sqr. meters");
         def_model.addElement("Parcel Key: " +
                     parcel.getNameFirstpart() + "-" + parcel.getNameLastpart());
         lstParcelInfo.setModel(def_model);
         //refresh on map.
         show_Selected_Parcel_onMap();
+    }
+    
+    private String parcel_Area_Value() {
+        //get the geometry object.
+        String areaValue="0";
+        WKBReader wkb_reader = new WKBReader();
+        DecimalFormat df=new DecimalFormat("0.000");
+        try {
+            the_Polygon = wkb_reader.read(cadastreObject.getGeomPolygon());
+            areaValue=df.format(the_Polygon.getArea());
+        } catch (ParseException ex) {
+            Logger.getLogger(SelectParcelForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return areaValue;
     }
     
     private void show_Selected_Parcel_onMap(){

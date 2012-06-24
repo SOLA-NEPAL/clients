@@ -44,6 +44,7 @@ public class MothBean extends AbstractIdBean {
     private String transactionId;
     private SolaObservableList<LocBean> locList;
     private VdcBean vdc;
+    private String officeCode;
 
     public MothBean() {
         super();
@@ -145,5 +146,13 @@ public class MothBean extends AbstractIdBean {
     @Override
     public String toString() {
         return mothlujNumber;
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
     }
 }

@@ -150,7 +150,6 @@ public class ApplicationTransferForm extends ContentPanel {
         setHeaderPanel(headerPanel);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle"); // NOI18N
-        headerPanel.setToolTipText(bundle.getString("ApplicationTransferForm.headerPanel.toolTipText")); // NOI18N
         headerPanel.setTitleText(bundle.getString("ApplicationTransferForm.headerPanel.titleText")); // NOI18N
 
         pnlWizard.setLayout(new java.awt.CardLayout());

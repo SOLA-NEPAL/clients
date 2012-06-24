@@ -43,17 +43,6 @@ public class LocBean extends AbstractIdBean {
     private String transactionId;
     private String officeCode;
     private SolaObservableList<BaUnitBean> baUnits;
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue=this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
-    }
-
     
     public LocBean() {
         super();
@@ -136,5 +125,13 @@ public class LocBean extends AbstractIdBean {
         locTO = WSManager.getInstance().getAdministrative().saveLoc(locTO);
         TypeConverters.TransferObjectToBean(locTO, LocBean.class, this);
         return true;
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
     }
 }

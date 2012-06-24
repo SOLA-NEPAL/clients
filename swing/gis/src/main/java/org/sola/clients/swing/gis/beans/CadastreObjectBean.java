@@ -47,7 +47,16 @@ public class CadastreObjectBean implements Serializable {
     private String typeCode = "parcel";
     private byte[] geomPolygon;
     private List<SpatialValueAreaBean> spatialValueAreaList = new ArrayList<SpatialValueAreaBean>();
+    private String officeCode;
+    
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
+    
     /**
      * Gets id
      */

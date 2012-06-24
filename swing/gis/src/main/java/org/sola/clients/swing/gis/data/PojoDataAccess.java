@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.common.MappingManager;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
 import org.sola.clients.swing.gis.beans.TransactionCadastreRedefinitionBean;
@@ -138,7 +139,8 @@ public class PojoDataAccess {
         spatialQueryInfo.setNorth(north);
         spatialQueryInfo.setSrid(srid);
         spatialQueryInfo.setPixelResolution(pixelTolerance);
-            return getSpatialService().getSpatialForNavigation(spatialQueryInfo);
+            return getSpatialService().getSpatialForNavigation(spatialQueryInfo, 
+                    OfficeBean.getCurrentOffice().getCode());
     }
 
     /**
