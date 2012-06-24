@@ -7,6 +7,7 @@ package org.sola.clients.swing.desktop.cadastre;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKBReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
@@ -14,14 +15,14 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.swing.gis.data.PojoDataAccess;
+import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
  * @author ShresthaKabin
  */
-public class Select_Parcel_Form extends javax.swing.JDialog {
+public class Select_Parcel_Form extends ContentPanel {
     //temporary variable.
     private CadastreObjectTO cadastreObject=null;
     private Geometry the_Polygon=null;
@@ -50,7 +51,7 @@ public class Select_Parcel_Form extends javax.swing.JDialog {
         Method taskCompletion=null;
         try {
             taskCompletion = workingForm.getMethod("refresh_Cadastre_Object_Searching", cls);
-        } catch (Exception ex) {
+        } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(Select_Parcel_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -72,7 +73,7 @@ public class Select_Parcel_Form extends javax.swing.JDialog {
         parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setHeaderPanel(headerPanel1);
 
         jScrollPane1.setViewportView(lstParcelInfo);
 
@@ -90,18 +91,18 @@ public class Select_Parcel_Form extends javax.swing.JDialog {
 
         headerPanel1.setTitleText("Select Parcel");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(parcelSearchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(parcelSearchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
@@ -112,25 +113,23 @@ public class Select_Parcel_Form extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
-                    .addComponent(btnOK))
+                        .addGap(0, 93, Short.MAX_VALUE)
+                        .addComponent(btnOK))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void refresh_Cadastre_Object_Searching(CadastreObjectBean parcel,
             String ddc, String vdc, String wardno){
         if (parcel==null) return;
-        
         cadastreObject= TypeConverters.BeanToTrasferObject(parcel, CadastreObjectTO.class);
         //display details of the cadastre object found.
         DefaultListModel def_model= new DefaultListModel();
@@ -158,9 +157,9 @@ public class Select_Parcel_Form extends javax.swing.JDialog {
         try {
             search_Completed_Trigger.invoke(method_holder_object,
                 new Object[]{cadastreObject});  
-        } catch (Exception e) {
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
         }
-        this.dispose();
+        this.close();        
     }//GEN-LAST:event_btnOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

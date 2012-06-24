@@ -16,6 +16,7 @@
 package org.sola.clients.beans.cadastre;
 
 import javax.validation.constraints.NotNull;
+import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -29,7 +30,7 @@ import org.sola.webservices.transferobjects.cadastre.MapSheetTO;
  *
  * @author KumarKhadka
  */
-public class MapSheetBean extends AbstractIdBean {
+public class MapSheetBean extends AbstractCodeBean {
 
     public static final String MAP_NUMBER_PROPERTY = "mapNumber";
     public static final String SHEET_TYPE_PROPERTY = "sheetType";

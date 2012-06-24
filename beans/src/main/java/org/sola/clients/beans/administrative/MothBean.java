@@ -61,17 +61,24 @@ public class MothBean extends AbstractIdBean {
     }
 
     public String getVdcCode() {
-        if (vdc != null) {
-            return vdc.getCode();
+        if (getVdc() != null) {
+            return getVdc().getCode();
         } else {
             return null;
-        }
+        }       
     }
-
+    
     public void setVdcCode(String vdcCode) {
+//        String oldValue=getVdcCode();
+//        VdcBean vdcBean=null;
+//       if(vdcCode!=null && !vdcCode.isEmpty()){
+//            vdcBean = CacheManager.getBeanByCode(CacheManager.getVdcs(), vdcCode);
+//        }
+//        setVdc(vdcBean);
+//        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcCode);
         String oldValue = null;
-        if (vdc != null) {
-            oldValue = vdc.getCode();
+        if (getVdc() != null) {
+            oldValue = getVdc().getCode();
         }
         this.vdcCode = vdcCode;
         propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcCode);

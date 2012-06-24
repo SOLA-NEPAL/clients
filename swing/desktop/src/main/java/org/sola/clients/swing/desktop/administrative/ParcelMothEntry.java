@@ -5,6 +5,7 @@
 package org.sola.clients.swing.desktop.administrative;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,11 +25,11 @@ import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
-import org.sola.clients.swing.gis.ui.control.SelectParcelForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
+import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -38,19 +39,20 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class ParcelMothEntry extends ContentPanel {
 
     public static final String LOC_SAVED = "LocSaved";
-    BaUnitBean baUnitBean;
+    // BaUnitBean baUnitBean;
     MapSheetBean map;
     BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean;
     private SolaObservableList<CadastreObjectBean> cadastreObjects;
     private SolaObservableList<PartyBean> parties;
-    
-    //MothBean mothBean;
+   // private SolaObservableList<BaUnitBean> baUnits;
 
+    //MothBean mothBean;
     /**
      * Creates new form ParcelMothEntry
      */
     public ParcelMothEntry() {
         initComponents();
+
     }
 
     public ParcelMothEntry(MothBean mothBean) {
@@ -65,40 +67,50 @@ public class ParcelMothEntry extends ContentPanel {
         }
         return mothBean;
     }
-   
 
-    public BaUnitContainsSpatialUnitBean getBaUnitContainsSpatialUnitBean() {
-        if (baUnitContainsSpatialUnitBean == null) {
-            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
-        }
-        return baUnitContainsSpatialUnitBean;
-    }
-
-    public void setBaUnitContainsSpatialUnitBean(BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean) {
-        if (baUnitContainsSpatialUnitBean == null) {
-            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
-
-        }
-        this.baUnitContainsSpatialUnitBean = baUnitContainsSpatialUnitBean;
-        firePropertyChange("baUnitContainsSpatialUnitBean", null, this.baUnitContainsSpatialUnitBean);
-    }
-
+//    public SolaObservableList<BaUnitBean> getBaUnits() {
+//        if (baUnits == null) {
+//            baUnits = new SolaObservableList<>();
+//        }
+//        return baUnits;
+//    }
+//
+//    public void setBaUnits(SolaObservableList<BaUnitBean> baUnits) {
+//         if (baUnits == null) {
+//            baUnits = new SolaObservableList<>();
+//        }
+//        this.baUnits = baUnits;
+//        firePropertyChange("baUnits", null, this.baUnits);
+//    }
+//    public BaUnitContainsSpatialUnitBean getBaUnitContainsSpatialUnitBean() {
+//        if (baUnitContainsSpatialUnitBean == null) {
+//            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
+//        }
+//        return baUnitContainsSpatialUnitBean;
+//    }
+//
+//    public void setBaUnitContainsSpatialUnitBean(BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean) {
+//        if (baUnitContainsSpatialUnitBean == null) {
+//            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
+//
+//        }
+//        this.baUnitContainsSpatialUnitBean = baUnitContainsSpatialUnitBean;
+//        firePropertyChange("baUnitContainsSpatialUnitBean", null, this.baUnitContainsSpatialUnitBean);
+//    }
     public SolaObservableList<PartyBean> getParties() {
-        if(parties==null){
-            parties=new SolaObservableList<>();
+        if (parties == null) {
+            parties = new SolaObservableList<>();
         }
         return parties;
     }
 
     public void setParties(SolaObservableList<PartyBean> parties) {
-         if(parties==null){
-            parties=new SolaObservableList<>();
+        if (parties == null) {
+            parties = new SolaObservableList<>();
         }
         this.parties = parties;
         firePropertyChange("parties", null, this.parties);
     }
-    
-    
 
     public SolaObservableList<CadastreObjectBean> getCadastreObjects() {
         if (cadastreObjects == null) {
@@ -115,7 +127,6 @@ public class ParcelMothEntry extends ContentPanel {
         this.cadastreObjects = cadastreObjects;
         firePropertyChange("cadastreObjects", null, this.cadastreObjects);
     }
-//    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,7 +165,6 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar1 = new javax.swing.JToolBar();
         btnSearchNewParcel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         btnAddNewOwner = new javax.swing.JButton();
         btnSave1 = new javax.swing.JButton();
@@ -284,13 +294,11 @@ public class ParcelMothEntry extends ContentPanel {
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapSheet.mapNumber}"));
-        columnBinding.setColumnName("Map No.");
+        columnBinding.setColumnName("Map No");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
-        columnBinding.setColumnName("Parcel No");
+        columnBinding.setColumnName("");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
@@ -337,17 +345,6 @@ public class ParcelMothEntry extends ContentPanel {
             }
         });
         jToolBar1.add(btnSave);
-
-        jButton1.setText("jButton1");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton1);
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
@@ -413,16 +410,16 @@ public class ParcelMothEntry extends ContentPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -468,10 +465,10 @@ public class ParcelMothEntry extends ContentPanel {
                 return;
             }
 
-        }        
+        }
         //get the baUnits included in selected loc
-        SolaObservableList<BaUnitBean> baUnits = locBean.getBaUnits();
-        baUnitOperation(baUnits);
+        // setBaUnits(locBean.getBaUnits());       
+        baUnitOperation( locBean.getBaUnits());
     }
 
     private void refreshMoth(LocBean locBean) {
@@ -480,35 +477,54 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void baUnitOperation(SolaObservableList<BaUnitBean> baUnits) {
         SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
-         SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
-        for (BaUnitBean b : baUnits) {
-            for (CadastreObjectBean cadBean : b.getCadastreObjectList()) {
+        SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
+        if (baUnits.size() > 0) {           
+            for (CadastreObjectBean cadBean : baUnits.get(0).getCadastreObjectList()) {
                 cadObjLst.add(cadBean);
             }
-            
-            for (PartyBean partyBean : b.getParties()) {
+            for (PartyBean partyBean : baUnits.get(0).getParties()) {
                 partyList.add(partyBean);
-            }            
-            
-        }
+            }
         cadastreObjectOperation(cadObjLst);
         partiesOperation(partyList);
+        }else{
+            
+        }      
+       
     }
 
     private void cadastreObjectOperation(SolaObservableList<CadastreObjectBean> cadastreObjectBeans) {
-        if(cadastreObjects.size()>0){
-            for(CadastreObjectBean cad : cadastreObjectBeans){
+        if (cadastreObjects.size() > 0) {
+            for (CadastreObjectBean cad : cadastreObjectBeans) {
                 cadastreObjects.add(cad);
+                //locBean.getBaUnits().get(0).getCadastreObjectList().add(cad);
             }
             return;
         }
-        setCadastreObjects(cadastreObjectBeans);
+       setCadastreObjects(cadastreObjectBeans);    
     }
-    
-    private void partiesOperation(SolaObservableList<PartyBean> partyList){
+
+    private void partiesOperation(SolaObservableList<PartyBean> partyList) {
+        if (parties.size() > 0) {
+            for (PartyBean pty : partyList) {
+                parties.add(pty);
+                //locBean.getBaUnits().get(0).getParties().add(pty);
+            }
+            return;
+        }
         setParties(partyList);
     }
 
+    private void test(){
+       List<CadastreObjectBean> cadList=locBean.getBaUnits().get(0).getCadastreObjectList();
+        for(CadastreObjectBean cad : cadastreObjects){
+            if(!cadList.contains(cad)){
+                
+            }
+        }
+    }
+    
+    
     private boolean newPanaCreation() {
         if ((JOptionPane.showConfirmDialog(this, "There is no any page " + txtPageNo.getText() + ". Do you like to create a new page", "Page Not Found Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION)) {
             return true;
@@ -538,7 +554,7 @@ public class ParcelMothEntry extends ContentPanel {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
                 return saveLoc();
             }
-            
+
             @Override
             public void taskDone() {
                 if (get() != null && get()) {
@@ -557,7 +573,6 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSearchNewParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNewParcelActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
         Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{CadastreObjectTO.class};
@@ -569,10 +584,15 @@ public class ParcelMothEntry extends ContentPanel {
             Logger.getLogger(CadastreObjectTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
-        parcelSearchForm.setVisible(true);
-        parcelSearchForm.setTitle("Details of the Cadastre Object");
-        parcelSearchForm.setAlwaysOnTop(true);
+        displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSearchNewParcelActionPerformed
+
+    private void displayForm(Select_Parcel_Form parcelSearchForm) {
+        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
+            getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
+        }
+        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
+    }
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshCadastreDetails(CadastreObjectTO cadastreTO) {
@@ -583,67 +603,53 @@ public class ParcelMothEntry extends ContentPanel {
 
         CadastreObjectBean cadastreBean = TypeConverters.TransferObjectToBean(
                 cadastreTO, CadastreObjectBean.class, null);
-       SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
-       cadObjLst.add(cadastreBean);
-       cadastreObjectOperation(cadObjLst);
+        SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
+        cadObjLst.add(cadastreBean);
+        cadastreObjectOperation(cadObjLst);
     }
-    
+
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        CadastreObjectBean cad = cadastreObjectListBean.getSelectedCadastreObjectBean();
-        if (locBean.getBaUnits().size() == 0) {
-            baUnitBean = new BaUnitBean();
-            baUnitBean.setLocId(locBean.getId());            
-            baUnitBean.setName("test");
-            baUnitBean.setNameLastpart("test");
-            baUnitBean.setTypeCode("administrativeUnit");
-            baUnitBean.setStatusCode("current");
-            baUnitBean.saveBaUnitTest();
-            locBean.getBaUnits().add(baUnitBean);
-            baUnitContainsSpatialUnitBean.setBaUnitId(baUnitBean.getId());
-            baUnitContainsSpatialUnitBean.setSpatialUnitId(cad.getId());
-            baUnitContainsSpatialUnitBean.saveBaUnitContainsSpatialUnit();
-
-        } else {
-            for (BaUnitBean bU : locBean.getBaUnits()) {
-                String test = bU.getId();
-                BaUnitContainsSpatialUnitBean baU = getBaUnitContainsSpatialUnitBean();
-                baU.setSpatialUnitId(cad.getId());
-                baU.setBaUnitId(test);
-                baU.saveBaUnitContainsSpatialUnit();
-            }
-        }
+       // saveCadastreList();
+         
+            locBean.setEntityAction(EntityAction.UPDATE);
+            locBean.saveLoc();
+            //AbstractCodeBean.saveRefData(selectedVdc, DepartmentTO.class);
+        
+        // saveLoc(false);
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
-            CadatreObjectSearchPanelForm pcl = new CadatreObjectSearchPanelForm();
-            getMainContentPanel().addPanel(pcl, MainContentPanel.CARD_PARCEL_SEARCH);
-        }
-        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+//    private void saveCadastreList() {
+//        BaUnitContainsSpatialUnitBean baU = new BaUnitContainsSpatialUnitBean();
+//        for (CadastreObjectBean cadBean : cadastreObjects )  {
+//            if (locBean.getBaUnits().size() == 0) {
+//                baUnitBean = new BaUnitBean();
+//            } else {
+//                baUnitBean = locBean.getBaUnits().get(0);
+//            }
+//            baU.setSpatialUnitId(cadBean.getId());
+//            baU.setBaUnitId(baUnitBean.getId());
+//            baU.saveBaUnitContainsSpatialUnit();
+//        }
+//    }
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         // TODO add your handling code here:
+       saveLoc(false);
     }//GEN-LAST:event_btnSave1ActionPerformed
 
+    private void saveOwnerList() {
+    }
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
+
     public void refreshPartyDetails(PartySearchResultBean partySummary) {
         //do as required.
         if (partySummary == null) {
             return;
         }
-        //System.out.println(partySummary.getId());
-        //txtFirstName.setText(partySummary.getName());
-        //txtLastName.setText(partySummary.getLastName());
         PartyBean party = partySummary.getPartyBean();
-        //txtAddress.setText(party.getAddress().getDescription());
-        //txtPhone.setText(party.getPhone());
-        //txtFax.setText(party.getFax());
-        //txtEmail.setText(party.getEmail());
-        //cbxCommunicationWay.setSelectedItem(party.getPreferredCommunication());
-        //appBean.setContactPerson(party);
+        SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
+        partyList.add(party);
+        partiesOperation(partyList);
     }
 
     private void btnAddNewOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewOwnerActionPerformed
@@ -673,7 +679,6 @@ public class ParcelMothEntry extends ContentPanel {
     private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
     private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

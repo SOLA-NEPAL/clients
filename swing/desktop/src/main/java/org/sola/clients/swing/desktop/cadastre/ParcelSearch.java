@@ -760,7 +760,7 @@ public class ParcelSearch extends ContentPanel {
         // TODO add your handling code here:
 
         MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-        cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(cmbParcel.getSelectedItem().toString()));
+        cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getCode().toString(), Integer.parseInt(cmbParcel.getSelectedItem().toString()));
     }//GEN-LAST:event_btnSearch2ActionPerformed
 
     private void txtWardNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtWardNoKeyPressed
@@ -784,7 +784,7 @@ public class ParcelSearch extends ContentPanel {
 
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
             if (map != null) {
-                cadastreObjectListBean.loadCadastreObjectList(map.getId());
+                cadastreObjectListBean.loadCadastreObjectList(map.getCode());
             }
         } catch (Exception e) {
         }
