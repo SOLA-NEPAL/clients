@@ -81,18 +81,6 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         initComponents();
         initMapSheetList();
         addMapSheet();
-        ListSelectionModel rowSelectionModel = jTable2.getSelectionModel();
-        rowSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (mapSheetListBean.getSelectedMapSheet() != null && editMode) {
-                    setMapSheetBean((MapSheetBean) mapSheetListBean.getSelectedMapSheet().copy());
-                }
-            }
-        });
-
     }
 
     public final void initMapSheetList() {
@@ -373,12 +361,11 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 new String[]{mapSheetBean.getMapNumber()});
 
         if (editMode) {
-
             if (mapSheetListBean.getSelectedMapSheet() != null) {
-                mapSheetListBean.getSelectedMapSheet().setMapNumber(mapSheetBean.getMapNumber());
-                //mapSheetListBean.getSelectedMapSheet().copyFromObject(mapSheetBean);
-                mapSheetListBean.getSelectedMapSheet().setSheetTypeString(mapSheetBean.getSheetTypeString());
-                mapSheetListBean.getSelectedMapSheet().setOffice(mapSheetBean.getOffice());
+                //mapSheetListBean.getSelectedMapSheet().setMapNumber(mapSheetBean.getMapNumber());
+                mapSheetListBean.getSelectedMapSheet().copyFromObject(mapSheetBean);
+                //mapSheetListBean.getSelectedMapSheet().setSheetTypeString(mapSheetBean.getSheetTypeString());
+                //mapSheetListBean.getSelectedMapSheet().setOffice(mapSheetBean.getOffice());
             }
         } else {
             mapSheetListBean.addMapSheet(mapSheetBean);
@@ -431,7 +418,6 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     private void addMapSheet() {
         editMode = false;
         setMapSheetBean(new MapSheetBean());
-        mapSheetBean.setOffice((OfficeBean) cmbOffice.getSelectedItem());
     }
 
     private void editMapSheet() {
@@ -441,8 +427,6 @@ public class MapSheetNoManagementPanel extends ContentPanel {
             editMode = true;
             //jTable2.setEnabled(false);
         }
-
-        firePropertyChange("selectedRow", null, jTable2);
     }
 
     private void removeMapSheet() {
