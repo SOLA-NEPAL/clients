@@ -44,6 +44,7 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.ApplicationActionTypeBean;
@@ -59,6 +60,7 @@ import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.ActionedApplicationTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
+import org.sola.webservices.transferobjects.digitalarchive.DocumentTO;
 import org.sola.webservices.transferobjects.search.PropertyVerifierTO;
 
 /**
@@ -832,12 +834,36 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public boolean lodgeApplication() {
         ApplicationTO app = TypeConverters.BeanToTrasferObject(this, ApplicationTO.class);
+        checkDocuments(app);
         app = WSManager.getInstance().getCaseManagementService().createApplication(app);
         TypeConverters.TransferObjectToBean(app, ApplicationBean.class, this);
         propertySupport.firePropertyChange(APPLICATION_PROPERTY, null, this);
         return true;
     }
 
+    //rectify the appBean to check document bean status.
+    private void checkDocuments(ApplicationTO app){
+        app.getContactPerson().setPhotoDoc(
+                getDocumentExisting(app.getContactPerson().getPhotoDoc()));
+        app.getContactPerson().setRightFingerDoc(
+                getDocumentExisting(app.getContactPerson().getRightFingerDoc()));
+        app.getContactPerson().setLeftFingerDoc(
+                getDocumentExisting(app.getContactPerson().getLeftFingerDoc()));
+        app.getContactPerson().setSignatureDoc(
+                getDocumentExisting(app.getContactPerson().getSignatureDoc()));
+    }
+    
+    public DocumentTO getDocumentExisting(DocumentTO doc){
+        if (doc==null) return null;
+        
+        String desc=doc.getDescription();
+        if (desc==null || desc.isEmpty() || doc.getBody()==null){
+            return null;
+        }
+        
+        return doc;
+    }
+    
     /**
      * Saves application into the database.
      *
@@ -845,6 +871,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public boolean saveApplication() {
         ApplicationTO app = TypeConverters.BeanToTrasferObject(this, ApplicationTO.class);
+        checkDocuments(app);
         app = WSManager.getInstance().getCaseManagementService().saveApplication(app);
         TypeConverters.TransferObjectToBean(app, ApplicationBean.class, this);
         propertySupport.firePropertyChange(APPLICATION_PROPERTY, null, this);

@@ -173,10 +173,17 @@ public abstract class AbstractBindingBean implements Serializable {
 
             for (Iterator<ConstraintViolation<T>> it = warningsList.iterator(); it.hasNext();) {
                 ConstraintViolation<T> constraintViolation = it.next();
+                //line introduced by Kabindra just for temporary checking.
+                if (constraintViolation.getMessage().contains("last name")) continue;
                 stringBuilder.append(String.format("- %s\n", constraintViolation.getMessage()));
             }
-            MessageUtility.displayMessage(ClientMessage.GENERAL_BEAN_VALIDATION,
+            if (!stringBuilder.toString().trim().isEmpty()){
+                MessageUtility.displayMessage(ClientMessage.GENERAL_BEAN_VALIDATION,
                     new Object[]{stringBuilder.toString()});
+            }
+            else{//line introduced by Kabindra just for temporary checking.
+                warningsList.clear();
+            }
         }
     }
 
