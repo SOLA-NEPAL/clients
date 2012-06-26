@@ -17,7 +17,6 @@ package org.sola.clients.beans.cadastre;
 
 import javax.validation.constraints.NotNull;
 import org.sola.clients.beans.AbstractCodeBean;
-import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.OfficeBean;
