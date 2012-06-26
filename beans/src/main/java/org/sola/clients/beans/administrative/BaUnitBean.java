@@ -207,21 +207,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public ObservableList<PartyBean> getPartiesFilteredList() {
         return parties.getFilteredList();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     public BaUnitBean() {
         super();
         rrrList = new SolaList();

@@ -7,14 +7,16 @@ package org.sola.clients.swing.desktop.cadastre;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKBReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+//using more detailed one (i.e. not using bean from gis part.)
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -156,11 +158,11 @@ public class Select_Parcel_Form extends javax.swing.JDialog {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         //By Kabindra
         try {
-            search_Completed_Trigger.invoke(method_holder_object,
-                new Object[]{cadastreObject});  
-        } catch (Exception e) {
+            search_Completed_Trigger.invoke(method_holder_object, new Object[]{cadastreObject});  
+            this.dispose();
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

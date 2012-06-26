@@ -30,6 +30,7 @@
 package org.sola.clients.swing.desktop.administrative;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
@@ -199,8 +200,31 @@ public class PropertyPanel extends ContentPanel {
         resourceBundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle");
         initComponents();
         portInit();
+        hideUncessaryTabs();
     }
 
+     private void hideUncessaryTabs(){
+        for (Component jp:tabsMain.getComponents()){
+            String panel_name=jp.getName();
+            if (is_UnnecessaryTab(panel_name)){
+                //jp.setVisible(false);
+                tabsMain.remove(jp);
+            }
+        }
+    }
+     
+    private boolean is_UnnecessaryTab(String panel_name) {
+        switch (panel_name){
+            case "pnlPriorProperties":
+                return true;
+//            case "tabNotation":
+//                return true;
+            case "mapPanel":
+                return true;
+        }
+        
+        return false;
+    }
     /**
      * Makes post initialization tasks.
      */
@@ -1017,7 +1041,7 @@ public class PropertyPanel extends ContentPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableOwnership = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
-        jPanel4 = new javax.swing.JPanel();
+        tabNotation = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableNotations = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar3 = new javax.swing.JToolBar();
@@ -1762,7 +1786,7 @@ public class PropertyPanel extends ContentPanel {
 
         tabsMain.addTab(bundle.getString("PropertyPanel.jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
 
-        jPanel4.setName("jPanel4"); // NOI18N
+        tabNotation.setName("tabNotation"); // NOI18N
 
         jScrollPane4.setName("jScrollPane4"); // NOI18N
 
@@ -1838,15 +1862,15 @@ public class PropertyPanel extends ContentPanel {
         jLabel15.setText(bundle.getString("PropertyPanel.jLabel15.text")); // NOI18N
         jLabel15.setName("jLabel15"); // NOI18N
 
-        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+        org.jdesktop.layout.GroupLayout tabNotationLayout = new org.jdesktop.layout.GroupLayout(tabNotation);
+        tabNotation.setLayout(tabNotationLayout);
+        tabNotationLayout.setHorizontalGroup(
+            tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, tabNotationLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                .add(tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
-                    .add(jPanel4Layout.createSequentialGroup()
+                    .add(tabNotationLayout.createSequentialGroup()
                         .add(jLabel15)
                         .add(9, 9, 9)
                         .add(txtNotationText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
@@ -1854,13 +1878,13 @@ public class PropertyPanel extends ContentPanel {
                         .add(jToolBar3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel4Layout.createSequentialGroup()
+        tabNotationLayout.setVerticalGroup(
+            tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(tabNotationLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                .add(tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jToolBar3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(txtNotationText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(jLabel15)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -1868,7 +1892,7 @@ public class PropertyPanel extends ContentPanel {
                 .addContainerGap())
         );
 
-        tabsMain.addTab(bundle.getString("PropertyPanel.jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
+        tabsMain.addTab(bundle.getString("PropertyPanel.tabNotation.TabConstraints.tabTitle"), tabNotation); // NOI18N
 
         pnlPriorProperties.setName("pnlPriorProperties"); // NOI18N
 
@@ -2079,7 +2103,7 @@ public class PropertyPanel extends ContentPanel {
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2317,7 +2341,6 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -2362,6 +2385,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private javax.swing.JPopupMenu popupParentBaUnits;
     private javax.swing.JPopupMenu popupRights;
     private org.sola.clients.beans.referencedata.RrrTypeListBean rrrTypes;
+    private javax.swing.JPanel tabNotation;
     private javax.swing.JTable tableChildBaUnits;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableNotations;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableOwnership;
