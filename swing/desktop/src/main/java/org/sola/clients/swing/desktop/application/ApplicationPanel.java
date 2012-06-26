@@ -3150,8 +3150,8 @@ public class ApplicationPanel extends ContentPanel {
         parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
         
         parcelSearchForm.setVisible(true);
-        parcelSearchForm.setTitle("Parcel Selection Screen");
-        parcelSearchForm.setAlwaysOnTop(true);
+        //parcelSearchForm.setTitle("Parcel Selection Screen");
+        //parcelSearchForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btnBrowseParcelActionPerformed
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.

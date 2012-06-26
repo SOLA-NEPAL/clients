@@ -562,7 +562,7 @@ public class ParcelSearch extends ContentPanel {
         // TODO add your handling code here:
 
         MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-        newCadastreObjectBean=cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getId().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
+        newCadastreObjectBean=cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getCode().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
     }//GEN-LAST:event_btnSearch2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

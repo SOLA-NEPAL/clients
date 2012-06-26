@@ -124,19 +124,26 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         this.selectedSpatialValueArea = selectedSpatialValueArea;
         propertySupport.firePropertyChange(SELECTED_SPATIAL_VALUE_AREA_PROPERTY, oldValue, this.selectedSpatialValueArea);
     }
-
+    
     public String getMapSheetCode() {
-        if (mapSheet != null) {
-            return mapSheet.getId();
+        if (getMapSheet() != null) {
+            return getMapSheet().getCode();
         } else {
             return null;
         }
     }
 
     public void setMapSheetCode(String mapSheetCode) {
+//        String oldValue=getMapSheetCode();
+//        MapSheetBean mapSheetBean=null;
+//       if(mapSheetCode!=null && !mapSheetCode.isEmpty()){
+//            mapSheetBean = CacheManager.getBeanByCode(CacheManager.getMapSheets(), mapSheetCode);
+//        }
+//        setMapSheet(mapSheetBean);
+//        propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
         String oldValue = null;
         if (mapSheet != null) {
-            oldValue = mapSheet.getId();
+            oldValue = mapSheet.getCode();
         }
         this.mapSheetCode = mapSheetCode;
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);

@@ -155,6 +155,7 @@ public final class CacheManager {
     private static final String GET_DISTRICTS = "getDistricts";
     private static final String GET_OFFICES = "getOffices";
     private static final String GET_MAPSHEETS= "getMapSheets";
+    private static final String GET_VDCS = "getVdcs";
     
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result=new ArrayList<DepartmentBean>();
@@ -542,20 +543,35 @@ public final class CacheManager {
     
     //<editor-fold defaultstate="collapsed" desc="By Kumar">
     //***************************************************************************************************
-    public static List<MapSheetBean> getMapSheets() {
-        List<MapSheetBean> result=new ArrayList<MapSheetBean>();
-        String key = MAP_SHEET_KEY;
-        
-        if (cache.contains(key)) {
-            result = (List<MapSheetBean>) cache.get(key);
-        } else{
-            TypeConverters.TransferObjectListToBeanList(
-                    WSManager.getInstance().getCadastreService().getMapSheetList(),
-                    MapSheetBean.class, (List) result);
-            cache.put(key, result);
-        }
-        return result;
+//    public static List<MapSheetBean> getMapSheets() {
+//        List<MapSheetBean> result=new ArrayList<MapSheetBean>();
+//        String key = MAP_SHEET_KEY;
+//        
+//        if (cache.contains(key)) {
+//            result = (List<MapSheetBean>) cache.get(key);
+//        } else{
+//            TypeConverters.TransferObjectListToBeanList(
+//                    WSManager.getInstance().getCadastreService().getMapSheetList(),
+//                    MapSheetBean.class, (List) result);
+//            cache.put(key, result);
+//        }
+//        return result;
+//    }
+    
+    
+    public static List<VdcBean> getVdcs() {
+        return getCachedBeanList(VdcBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_VDCS, VDC_KEY);
     }
+    
+    
+     public static List<MapSheetBean> getMapSheets() {
+        return getCachedBeanList(MapSheetBean.class,
+                WSManager.getInstance().getCadastreService(),
+                GET_MAPSHEETS, MAP_SHEET_KEY);
+    }
+    
     //*************************************************************************************************************
     //</editor-fold>
     
