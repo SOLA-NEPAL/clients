@@ -42,6 +42,7 @@ public class MothSrestaEntry extends ContentPanel {
         cmbDistrict.setSelectedIndex(-1);
         cmbDistrict1.setSelectedIndex(-1);
         cmbVdc.setSelectedIndex(-1);
+        cmbMothLuj2.setSelectedIndex(-1);
 
     }
 
@@ -481,7 +482,6 @@ public class MothSrestaEntry extends ContentPanel {
     }//GEN-LAST:event_toolLandOwnerDetailActionPerformed
 
     private void cmbDistrict1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDistrict1ItemStateChanged
-        // TODO add your handling code here:
         // TODO add your handling code here:
         try {
             if (cmbDistrict1.getSelectedItem() == null) {

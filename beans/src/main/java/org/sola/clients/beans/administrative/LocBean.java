@@ -121,6 +121,10 @@ public class LocBean extends AbstractIdBean {
     }
 
     public boolean saveLoc() {
+        //make cadastreobject readonly.
+//        for (BaUnitBean bu:this.baUnits){
+//            bu.make_CadastreObject_ReadyOnly();
+//        }
         LocTO locTO = TypeConverters.BeanToTrasferObject(this, LocTO.class);
         locTO = WSManager.getInstance().getAdministrative().saveLoc(locTO);
         TypeConverters.TransferObjectToBean(locTO, LocBean.class, this);
