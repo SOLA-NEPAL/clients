@@ -161,6 +161,11 @@ public class MainForm extends javax.swing.JFrame {
         menuOffices = new javax.swing.JMenuItem();
         menuDepartments = new javax.swing.JMenuItem();
         menuMapsheet = new javax.swing.JMenuItem();
+        menuRestrictionRelease = new javax.swing.JMenu();
+        menuRestrictionType = new javax.swing.JMenuItem();
+        menuRestrictionReason = new javax.swing.JMenuItem();
+        menuRestrictionReleaseReason = new javax.swing.JMenuItem();
+        menuRestrictionOffice = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -616,6 +621,47 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuMapsheet);
 
+        menuRestrictionRelease.setText(bundle.getString("MainForm.menuRestrictionRelease.text")); // NOI18N
+        menuRestrictionRelease.setName(bundle.getString("MainForm.menuRestrictionRelease.name")); // NOI18N
+
+        menuRestrictionType.setText(bundle.getString("MainForm.menuRestrictionType.text")); // NOI18N
+        menuRestrictionType.setName(bundle.getString("MainForm.menuRestrictionType.name")); // NOI18N
+        menuRestrictionType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRestrictionTypeActionPerformed(evt);
+            }
+        });
+        menuRestrictionRelease.add(menuRestrictionType);
+
+        menuRestrictionReason.setText(bundle.getString("MainForm.menuRestrictionReason.text")); // NOI18N
+        menuRestrictionReason.setName(bundle.getString("MainForm.menuRestrictionReason.name")); // NOI18N
+        menuRestrictionReason.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRestrictionReasonActionPerformed(evt);
+            }
+        });
+        menuRestrictionRelease.add(menuRestrictionReason);
+
+        menuRestrictionReleaseReason.setText(bundle.getString("MainForm.menuRestrictionReleaseReason.text")); // NOI18N
+        menuRestrictionReleaseReason.setName(bundle.getString("MainForm.menuRestrictionReleaseReason.name")); // NOI18N
+        menuRestrictionReleaseReason.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRestrictionReleaseReasonActionPerformed(evt);
+            }
+        });
+        menuRestrictionRelease.add(menuRestrictionReleaseReason);
+
+        menuRestrictionOffice.setText(bundle.getString("MainForm.menuRestrictionOffice.text")); // NOI18N
+        menuRestrictionOffice.setName(bundle.getString("MainForm.menuRestrictionOffice.name")); // NOI18N
+        menuRestrictionOffice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRestrictionOfficeActionPerformed(evt);
+            }
+        });
+        menuRestrictionRelease.add(menuRestrictionOffice);
+
+        jMenu1.add(menuRestrictionRelease);
+
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -825,6 +871,22 @@ public class MainForm extends javax.swing.JFrame {
         manageMapSheet();
     }//GEN-LAST:event_menuMapsheetActionPerformed
 
+    private void menuRestrictionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionTypeActionPerformed
+        manageRestrictionType();
+    }//GEN-LAST:event_menuRestrictionTypeActionPerformed
+
+    private void menuRestrictionReleaseReasonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionReleaseReasonActionPerformed
+        manageRestrictionReleaseType();
+    }//GEN-LAST:event_menuRestrictionReleaseReasonActionPerformed
+
+    private void menuRestrictionReasonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionReasonActionPerformed
+        manageRestrictionReason();
+    }//GEN-LAST:event_menuRestrictionReasonActionPerformed
+
+    private void menuRestrictionOfficeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionOfficeActionPerformed
+        manageRestrictionOffice();
+    }//GEN-LAST:event_menuRestrictionOfficeActionPerformed
+
     /**
      * Opens roles management panel.
      */
@@ -1011,6 +1073,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuReports;
     private javax.swing.JMenuItem menuRequestCategory;
     private javax.swing.JMenuItem menuRequestTypes;
+    private javax.swing.JMenuItem menuRestrictionOffice;
+    private javax.swing.JMenuItem menuRestrictionReason;
+    private javax.swing.JMenu menuRestrictionRelease;
+    private javax.swing.JMenuItem menuRestrictionReleaseReason;
+    private javax.swing.JMenuItem menuRestrictionType;
     private javax.swing.JMenuItem menuRoles;
     private javax.swing.JMenuItem menuRrrGroupTypes;
     private javax.swing.JMenuItem menuRrrTypes;
@@ -1028,4 +1095,20 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;
     // End of variables declaration//GEN-END:variables
+
+    private void manageRestrictionType() {
+        openReferenceDataPanel(RestrictionTypeBean.class, menuRestrictionType.getText());
+    }
+
+    private void manageRestrictionReason() {
+        openReferenceDataPanel(RestrictionReasonBean.class, menuRestrictionReason.getText());
+    }
+
+    private void manageRestrictionReleaseType() {
+        openReferenceDataPanel(RestrictionReleaseReasonBean.class, menuRestrictionReleaseReason.getText());
+    }
+
+    private void manageRestrictionOffice() {
+        openReferenceDataPanel(RestrictionOfficeBean.class, menuRestrictionOffice.getText());
+    }
 }

@@ -351,6 +351,26 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     DistrictBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.DISTRICT_KEY);
             refDataTOClass = DistrictTO.class;
+        }else if (refDataClass == RestrictionTypeBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getRestrictionTypes(null),
+                    RestrictionTypeBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.RESTRICTION_TYPE_KEY);
+            refDataTOClass = RestrictionTypeTO.class;
+        }else if (refDataClass == RestrictionReasonBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getRestrictionReasons(null),
+                    RestrictionReasonBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.RESTRICTION_REASON_KEY);
+            refDataTOClass = RestrictionReasonTO.class;
+        }else if (refDataClass == RestrictionReleaseReasonBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getRestrictionReleaseReasons(null),
+                    RestrictionReleaseReasonBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.RESTRICTION_RELEASE_REASON_KEY);
+            refDataTOClass = RestrictionReleaseReasonTO.class;
+        }else if (refDataClass == RestrictionOfficeBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getRestrictionOffices(null),
+                    RestrictionOfficeBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.RESTRICTION_OFFICE_KEY);
+            refDataTOClass = RestrictionOfficeTO.class;
         }
 
     }

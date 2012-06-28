@@ -124,6 +124,15 @@ public final class CacheManager {
     public static final String MAP_SHEET_KEY = MapSheetBean.class.getName() + LIST_POSTFIX;
     /** Cache key of the {@link DepartmentBean} collection.*/
     public static final String DEPARTMENT_KEY = DepartmentBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link RestrictionTypeBean} collection.*/
+    public static final String RESTRICTION_TYPE_KEY = RestrictionTypeBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link RestrictionReasonBean} collection.*/
+    public static final String RESTRICTION_REASON_KEY = RestrictionReasonBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link RestrictionReleaseReasonBean} collection.*/
+    public static final String RESTRICTION_RELEASE_REASON_KEY = RestrictionReleaseReasonBean.class.getName() + LIST_POSTFIX;
+     /** Cache key of the {@link RestrictionOfficeBean} collection.*/
+    public static final String RESTRICTION_OFFICE_KEY = RestrictionOfficeBean.class.getName() + LIST_POSTFIX;
+    
     
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
