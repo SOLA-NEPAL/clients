@@ -4,6 +4,7 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -455,7 +456,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void txtPageNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPageNoKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==evt.VK_ENTER){
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
              locOperation();
         }       
     }//GEN-LAST:event_txtPageNoKeyPressed
@@ -622,6 +623,10 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSearchNewParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNewParcelActionPerformed
         // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
         Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{CadastreObjectTO.class};
@@ -659,12 +664,20 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
         saveLoc(false);
         refreshMoth(locBean);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
         saveLoc(false);
         refreshMoth(locBean);
     }//GEN-LAST:event_btnSave1ActionPerformed
@@ -682,6 +695,10 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnAddNewOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewOwnerActionPerformed
         // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
         PersonSearchForm partySearchForm = new PersonSearchForm();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{PartySearchResultBean.class};
@@ -701,6 +718,10 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnRemove1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove1ActionPerformed
         // TODO add your handling code here:
+        if(cadastreObjects.size()==0){
+            JOptionPane.showMessageDialog(null, "No List is specified");
+            return;
+        }
         if (removeConfirmation()) {
             CadastreObjectBean cadBean = getSelectedCadastreObjectBean();
             cadastreObjects.remove(cadBean);
@@ -708,7 +729,6 @@ public class ParcelMothEntry extends ContentPanel {
                 locBean.getBaUnits().get(0).getCadastreObjectList().remove(cadBean);
             }
         } else {
-            return;
         }
     }//GEN-LAST:event_btnRemove1ActionPerformed
 
@@ -722,6 +742,10 @@ public class ParcelMothEntry extends ContentPanel {
     }
     private void btnRemove2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove2ActionPerformed
         // TODO add your handling code here:
+        if(parties.size()==0){
+            JOptionPane.showMessageDialog(null, "No List is specified");
+            return;
+        }
         if (removeConfirmation()) {
             PartyBean selectedBean = getSelectedPartyBean();
             parties.remove(selectedBean);
@@ -729,7 +753,6 @@ public class ParcelMothEntry extends ContentPanel {
                 locBean.getBaUnits().get(0).getParties().remove(selectedBean);
             }
         } else {
-            return;
         }
 
     }//GEN-LAST:event_btnRemove2ActionPerformed

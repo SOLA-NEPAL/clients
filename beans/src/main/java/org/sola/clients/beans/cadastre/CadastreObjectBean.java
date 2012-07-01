@@ -357,5 +357,5 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public CadastreObjectBean getCadastreObjectByVdcWardParcel(String mapSheetCode, int parcelNo) {
 
        return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByMapSheetParcel(mapSheetCode, parcelNo), CadastreObjectBean.class, null);
-    }
+    }   
 }

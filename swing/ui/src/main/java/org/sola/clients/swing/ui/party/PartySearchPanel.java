@@ -56,7 +56,7 @@ public class PartySearchPanel extends JPanel {
     public static final String VIEW_PARTY_PROPERTY = "viewParty";
     
     private boolean blndisabledelete;
-
+    private PartyBean party;
     public void setBlnDisabledelete(boolean blndisabledelete) {
         this.blndisabledelete = blndisabledelete;
     }
@@ -205,18 +205,25 @@ public class PartySearchPanel extends JPanel {
     private void firePartyEvent(String propertyName) {
         if (partySearchResuls.getSelectedPartySearchResult() != null) {
             firePropertyChange(propertyName, null,
-                    PartyBean.getParty(partySearchResuls.getSelectedPartySearchResult().getId()));
+                    party=PartyBean.getParty(partySearchResuls.getSelectedPartySearchResult().getId()));
         }
     }
 
+    public PartyBean getParty() {
+        return party;
+    }
+
+    
     private void selectParty() {
         firePartyEvent(SELECT_PARTY_PROPERTY);
     }
 
     private void viewParty() {
         firePartyEvent(VIEW_PARTY_PROPERTY);
-    }
+    }   
 
+   
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

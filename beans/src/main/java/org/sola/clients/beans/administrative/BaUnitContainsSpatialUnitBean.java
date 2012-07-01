@@ -16,11 +16,6 @@
 package org.sola.clients.beans.administrative;
 
 import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.services.boundary.transferobjects.administrative.BaUnitTO;
-import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.administrative.BaUnitContainsSpatialUnitTO;
-
 
 /**
  *
@@ -38,7 +33,7 @@ public class BaUnitContainsSpatialUnitBean extends AbstractBindingBean {
     }
 
     public void setBaUnitId(String baUnitId) {
-        String oldValue=this.baUnitId;
+        String oldValue = this.baUnitId;
         this.baUnitId = baUnitId;
         propertySupport.firePropertyChange(BAUNIT_ID, oldValue, this.baUnitId);
     }
@@ -48,14 +43,8 @@ public class BaUnitContainsSpatialUnitBean extends AbstractBindingBean {
     }
 
     public void setSpatialUnitId(String spatialUnitId) {
-        String oldValue=this.spatialUnitId;
+        String oldValue = this.spatialUnitId;
         this.spatialUnitId = spatialUnitId;
         propertySupport.firePropertyChange(SPATIAL_UNIT_ID, oldValue, this.spatialUnitId);
-    }
-    
-    public void saveBaUnitContainsSpatialUnit() {
-        BaUnitContainsSpatialUnitTO buTO = TypeConverters.BeanToTrasferObject(this, BaUnitContainsSpatialUnitTO.class);
-        buTO = WSManager.getInstance().getAdministrative().saveBaUnitContainsSpatialUnit(buTO);
-        TypeConverters.TransferObjectToBean(buTO, BaUnitBean.class, this);
     }
 }

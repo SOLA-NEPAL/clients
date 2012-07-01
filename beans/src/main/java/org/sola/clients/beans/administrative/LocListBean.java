@@ -15,23 +15,34 @@
  */
 package org.sola.clients.beans.administrative;
 
-import java.util.ArrayList;
 import java.util.List;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.controls.SolaObservableList;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *
  * @author KumarKhadka
  */
 public class LocListBean extends AbstractBindingBean {
+    public static final String SELECTED_LOC="selectedLoc";
+    private LocBean selectedLoc;
+    SolaObservableList<LocBean> locs;
 
-    ObservableList<LocBean> locs;
+    public LocBean getSelectedLoc() {
+        return selectedLoc;
+    }
 
-    public ObservableList<LocBean> getLocs() {
+    public void setSelectedLoc(LocBean selectedLoc) {
+        LocBean oldValue=this.selectedLoc;
+        this.selectedLoc = selectedLoc;
+        propertySupport.firePropertyChange(SELECTED_LOC, oldValue, this.selectedLoc);
+    }
+
+    public  SolaObservableList<LocBean>getLocs() {
         if (locs == null) {
-            locs = ObservableCollections.observableList(new ArrayList<LocBean>());
+            locs = new SolaObservableList<LocBean>();
         }
         return locs;
     }
@@ -45,4 +56,9 @@ public class LocListBean extends AbstractBindingBean {
         }
         return null;
     }
+    
+     public void loadLocList(String mothId) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getLocList(mothId), LocBean.class, (SolaObservableList) locs);
+    }
+    
 }

@@ -20,6 +20,7 @@ import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
@@ -31,7 +32,7 @@ import org.sola.webservices.transferobjects.EntityAction;
 public class MapSheetListBean extends AbstractBindingListBean {
 
     public static final String SELECTED_MAPSHEET = "selectedMapSheet";
-    ObservableList<MapSheetBean> mapSheets;
+    SolaObservableList<MapSheetBean> mapSheets;
     private MapSheetBean selectedMapSheet;
     
 //    public MapSheetListBean()
@@ -50,19 +51,19 @@ public class MapSheetListBean extends AbstractBindingListBean {
         propertySupport.firePropertyChange(SELECTED_MAPSHEET, oldValue, this.selectedMapSheet);
     }
 
-    public ObservableList<MapSheetBean> getMapSheets() {
+    public SolaObservableList<MapSheetBean> getMapSheets() {
         if (mapSheets == null) {
-            mapSheets = ObservableCollections.observableList(new ArrayList<MapSheetBean>());
+            mapSheets = new SolaObservableList<MapSheetBean>();
         }
         return mapSheets;
     }
 
     public void loadMapSheetList() {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (List) mapSheets);
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (SolaObservableList) mapSheets);
     }
     
-     public void loadMapSheetList(String mapSheetType) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (List) mapSheets);
+     public void loadMapSheetList(int mapSheetType) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (SolaObservableList) mapSheets);
     }
 
     /**

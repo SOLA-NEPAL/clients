@@ -138,4 +138,9 @@ public class LocBean extends AbstractIdBean {
     public void setOfficeCode(String officeCode) {
         this.officeCode = officeCode;
     }
+    
+    @Override
+    public String toString(){
+        return Integer.toString(panaNo);
+    }
 }

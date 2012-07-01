@@ -24,12 +24,11 @@ import org.sola.services.boundary.wsclients.WSManager;
  *
  * @author KumarKhadka
  */
-
 public class MothListBean extends AbstractBindingBean {
 
     public static final String SELECTED_MOTH = "selectedMoth";
     private MothBean selectedMoth;
-    SolaObservableList<MothBean> moths; 
+    SolaObservableList<MothBean> moths;
 
     public SolaObservableList<MothBean> getMoths() {
         if (moths == null) {
@@ -51,10 +50,4 @@ public class MothListBean extends AbstractBindingBean {
         this.selectedMoth = selectedMoth;
         propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
     }
-
-   
-
-   
-
-    
 }
