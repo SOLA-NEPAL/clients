@@ -13,6 +13,8 @@ import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+//using more detailed one (i.e. not using bean from gis part.)
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.swing.ui.ContentPanel;
@@ -73,8 +75,6 @@ public class Select_Parcel_Form extends ContentPanel {
         parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
 
-        setHeaderPanel(headerPanel1);
-
         jScrollPane1.setViewportView(lstParcelInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
@@ -95,7 +95,7 @@ public class Select_Parcel_Form extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +120,7 @@ public class Select_Parcel_Form extends ContentPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 80, Short.MAX_VALUE)
+                        .addGap(0, 43, Short.MAX_VALUE)
                         .addComponent(btnOK))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -155,11 +155,11 @@ public class Select_Parcel_Form extends ContentPanel {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         //By Kabindra
         try {
-            search_Completed_Trigger.invoke(method_holder_object,
-                new Object[]{cadastreObject});  
+            search_Completed_Trigger.invoke(method_holder_object, new Object[]{cadastreObject});  
+            this.close();
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        this.close();        
     }//GEN-LAST:event_btnOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

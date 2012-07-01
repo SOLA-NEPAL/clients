@@ -1,5 +1,6 @@
 /**
  * ******************************************************************************************
+ 
  * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
  * (FAO). All rights reserved.
  *
@@ -38,11 +39,12 @@ import java.util.Locale;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.sola.clients.beans.digitalarchive.DocumentBean;
-import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
+import org.sola.clients.beans.digitalarchive.DocumentBodyManipulator;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartyRoleBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.swing.common.utils.BindingTools;
+import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -61,6 +63,7 @@ public class PartyPanel extends javax.swing.JPanel {
             ClientMessage.GENERAL_LABELS_ENTITY).getMessage();
     private boolean readOnly = false;
     private boolean startuptime=false;
+
     /**
      * Default form constructor.
      */
@@ -187,6 +190,15 @@ public class PartyPanel extends javax.swing.JPanel {
         
         firePropertyChange("partyBean", null, this.partyBean);
         BindingTools.refreshBinding(bindingGroup, "rolesGroup");
+        //display images.
+        displayImages();
+    }
+    
+    private void displayImages(){
+        display_lable_icon(lblPhoto,this.partyBean.getPhotoDoc());
+        display_lable_icon(lblLeftFinger, this.partyBean.getLeftFingerDoc());
+        display_lable_icon(lblRightFinger, this.partyBean.getRightFingerDoc());
+        display_lable_icon(lblSignature, this.partyBean.getSignatureDoc());
     }
     
     /**
@@ -263,6 +275,10 @@ public class PartyPanel extends javax.swing.JPanel {
             btnBrowseLeftFinger.setEnabled(false);
             btnBrowseRightFinger.setEnabled(false);
             btnBrowseSignature.setEnabled(false);
+            btnClearImg.setEnabled(false);
+            btnClearLFP.setEnabled(false);
+            btnClearRFP.setEnabled(false);
+            btnClearSignature.setEnabled(false);
         }
     }
 
@@ -1366,9 +1382,6 @@ public class PartyPanel extends javax.swing.JPanel {
         lblPhoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 51)));
         lblPhoto.setName(bundle.getString("PartyPanel.lblPhoto.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.partyBean.photoDoc.labelIcon}"), lblPhoto, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
         btnBrowsePhoto.setText(bundle.getString("PartyPanel.btnBrowsePhoto.text")); // NOI18N
         btnBrowsePhoto.setName(bundle.getString("PartyPanel.btnBrowsePhoto.name")); // NOI18N
         btnBrowsePhoto.addActionListener(new java.awt.event.ActionListener() {
@@ -1416,9 +1429,6 @@ public class PartyPanel extends javax.swing.JPanel {
         lblRightFinger.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
         lblRightFinger.setName(bundle.getString("PartyPanel.lblRightFinger.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.rightFingerDoc.labelIcon}"), lblRightFinger, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
         btnBrowseRightFinger.setText(bundle.getString("PartyPanel.btnBrowseRightFinger.text")); // NOI18N
         btnBrowseRightFinger.setName(bundle.getString("PartyPanel.btnBrowseRightFinger.name")); // NOI18N
         btnBrowseRightFinger.addActionListener(new java.awt.event.ActionListener() {
@@ -1464,9 +1474,6 @@ public class PartyPanel extends javax.swing.JPanel {
         lblSignature.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 0)));
         lblSignature.setName(bundle.getString("PartyPanel.lblSignature.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.signatureDoc.labelIcon}"), lblSignature, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
         btnBrowseSignature.setText(bundle.getString("PartyPanel.btnBrowseSignature.text")); // NOI18N
         btnBrowseSignature.setName(bundle.getString("PartyPanel.btnBrowseSignature.name")); // NOI18N
         btnBrowseSignature.addActionListener(new java.awt.event.ActionListener() {
@@ -1510,9 +1517,6 @@ public class PartyPanel extends javax.swing.JPanel {
         lblLeftFinger.setText(bundle.getString("PartyPanel.lblLeftFinger.text")); // NOI18N
         lblLeftFinger.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 0)));
         lblLeftFinger.setName(bundle.getString("PartyPanel.lblLeftFinger.name")); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.leftFingerDoc.labelIcon}"), lblLeftFinger, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
 
         btnBrowseLeftFinger.setText(bundle.getString("PartyPanel.btnBrowseLeftFinger.text")); // NOI18N
         btnBrowseLeftFinger.setName(bundle.getString("PartyPanel.btnBrowseLeftFinger.name")); // NOI18N
@@ -1585,7 +1589,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fullPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                     .addComponent(groupPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -1705,21 +1709,32 @@ public class PartyPanel extends javax.swing.JPanel {
 
     private void btnBrowsePhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowsePhotoActionPerformed
         Icon photo= getImageFile(partyBean.getPhotoDoc()); 
-        partyBean.getPhotoDoc().setLabelIcon(photo,
-                    lblPhoto.getHeight(),lblPhoto.getWidth());
-        refresh_lable_icon(lblPhoto,partyBean.getPhotoDoc());
+        refresh_lable_icon(lblPhoto,partyBean.getPhotoDoc(),photo);
     }//GEN-LAST:event_btnBrowsePhotoActionPerformed
 
     private void btnBrowseRightFingerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseRightFingerActionPerformed
         Icon rightfng= getImageFile(partyBean.getRightFingerDoc());
-        partyBean.getRightFingerDoc().setLabelIcon(rightfng,
-                    lblRightFinger.getHeight(),lblRightFinger.getWidth());
-        refresh_lable_icon(lblRightFinger,partyBean.getRightFingerDoc());
+        refresh_lable_icon(lblRightFinger,partyBean.getRightFingerDoc(),rightfng);
     }//GEN-LAST:event_btnBrowseRightFingerActionPerformed
 
-    private void refresh_lable_icon(JLabel lable,DocumentBean doc){
+    private void refresh_lable_icon(JLabel lable,DocumentBean doc, Icon img){
+        if (img!=null){
+            DocumentBodyManipulator imageManager=new DocumentBodyManipulator();
+            imageManager.setBody(img,lblPhoto.getHeight(),lblPhoto.getWidth());
+            doc.setBody(imageManager.getBody());
+            lable.setIcon(imageManager.getLabelIcon());
+        }
+        else{
+            lable.setIcon(null);
+            lable.repaint();
+        }    
+    }
+    
+    private void display_lable_icon(JLabel lable,DocumentBean doc){
         if (doc!=null){
-            lable.setIcon(doc.getLabelIcon());
+            DocumentBodyManipulator imageManager=new DocumentBodyManipulator();
+            imageManager.setBody(doc.getBody());
+            lable.setIcon(imageManager.getLabelIcon());
         }
         else{
             lable.setIcon(null);
@@ -1729,32 +1744,28 @@ public class PartyPanel extends javax.swing.JPanel {
     
     private void btnBrowseLeftFingerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseLeftFingerActionPerformed
         Icon leftfng= getImageFile(partyBean.getLeftFingerDoc());
-        partyBean.getLeftFingerDoc().setLabelIcon(leftfng,
-                    lblLeftFinger.getHeight(),lblLeftFinger.getWidth());
-        refresh_lable_icon(lblLeftFinger,partyBean.getLeftFingerDoc());
+        refresh_lable_icon(lblLeftFinger,partyBean.getLeftFingerDoc(),leftfng);
     }//GEN-LAST:event_btnBrowseLeftFingerActionPerformed
 
     private void btnBrowseSignatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseSignatureActionPerformed
         Icon sgnIcon= getImageFile(partyBean.getSignatureDoc());
-        partyBean.getSignatureDoc().setLabelIcon(sgnIcon,
-                    lblSignature.getHeight(),lblSignature.getWidth());
-        refresh_lable_icon(lblSignature,partyBean.getSignatureDoc());
+        refresh_lable_icon(lblSignature,partyBean.getSignatureDoc(),sgnIcon);
     }//GEN-LAST:event_btnBrowseSignatureActionPerformed
 
     private void btnClearImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearImgActionPerformed
-        refresh_lable_icon(lblPhoto,null);
+        refresh_lable_icon(lblPhoto, null, null);
     }//GEN-LAST:event_btnClearImgActionPerformed
 
     private void btnClearRFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearRFPActionPerformed
-        refresh_lable_icon(lblRightFinger, null);
+        refresh_lable_icon(lblRightFinger, null, null);
     }//GEN-LAST:event_btnClearRFPActionPerformed
 
     private void btnClearLFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearLFPActionPerformed
-        refresh_lable_icon(lblLeftFinger, null);
+        refresh_lable_icon(lblLeftFinger, null, null);
     }//GEN-LAST:event_btnClearLFPActionPerformed
 
     private void btnClearSignatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSignatureActionPerformed
-        refresh_lable_icon(lblSignature, null);
+        refresh_lable_icon(lblSignature, null, null);
     }//GEN-LAST:event_btnClearSignatureActionPerformed
     
     private Icon getImageFile(DocumentBean doc){

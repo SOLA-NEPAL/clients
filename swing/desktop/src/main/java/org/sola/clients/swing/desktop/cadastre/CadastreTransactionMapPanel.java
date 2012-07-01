@@ -239,7 +239,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         TransactionBean transactionBean = this.mapControl.getTransactionBean();//for generic sola.
         transactionBean.setSourceIdList(this.documentsPanel.getSourceIds(false));
         List<ValidationResultBean> result = transactionBean.save();
-        //this.mapControl.update_Parcel_Geometry();//test indendent update.
+        //this.mapControl.update_Parcel_Geometry();//test independent update.
         String message = MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_CHANGE_SAVED_SUCCESSFULLY).getMessage();
         this.mapControl.refresh(true);
