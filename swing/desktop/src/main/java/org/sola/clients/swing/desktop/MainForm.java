@@ -588,6 +588,7 @@ public class MainForm extends javax.swing.JFrame {
 
         menuDataEntry.setText(bundle.getString("MainForm.menuDataEntry.text")); // NOI18N
 
+        menuMothStrestaEnry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document--pencil.png"))); // NOI18N
         menuMothStrestaEnry.setText(bundle.getString("MainForm.menuMothStrestaEnry.text")); // NOI18N
         menuMothStrestaEnry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -600,6 +601,7 @@ public class MainForm extends javax.swing.JFrame {
 
         menuSrch.setText(bundle.getString("MainForm.menuSrch.text")); // NOI18N
 
+        menuSearchByPerson.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         menuSearchByPerson.setText(bundle.getString("MainForm.menuSearchByPerson.text")); // NOI18N
         menuSearchByPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -608,6 +610,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSrch.add(menuSearchByPerson);
 
+        mnuSearchByMothPana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         mnuSearchByMothPana.setText(bundle.getString("MainForm.mnuSearchByMothPana.text")); // NOI18N
         mnuSearchByMothPana.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -616,6 +619,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSrch.add(mnuSearchByMothPana);
 
+        mnuSearchByParcelNo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         mnuSearchByParcelNo.setText(bundle.getString("MainForm.mnuSearchByParcelNo.text")); // NOI18N
         mnuSearchByParcelNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -624,6 +628,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSrch.add(mnuSearchByParcelNo);
 
+        mnuSearchByMothPanaParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         mnuSearchByMothPanaParcel.setText(bundle.getString("MainForm.mnuSearchByMothPanaParcel.text")); // NOI18N
         mnuSearchByMothPanaParcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

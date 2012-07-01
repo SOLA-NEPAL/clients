@@ -32,7 +32,6 @@ import org.sola.clients.swing.ui.ContentPanel;
  */
 public class SearchByParcelNo extends ContentPanel {
 
-    private SolaObservableList<CadastreObjectBean> cadastreObjects;
     private List<PartyBean> parties;
     private CadastreObjectBean selectedParcel;
     private SolaObservableList<CadastreObjectBean> cadastreDetails;
@@ -47,7 +46,7 @@ public class SearchByParcelNo extends ContentPanel {
     public SolaObservableList<CadastreObjectBean> getCadastreDetails() {
         if (cadastreDetails == null) {
             cadastreDetails = new SolaObservableList<>();
-        }       
+        }
         return cadastreDetails;
     }
 
@@ -57,22 +56,19 @@ public class SearchByParcelNo extends ContentPanel {
 
         }
         this.cadastreDetails = cadastreDetails;
-        firePropertyChange("cadastreDetails", null, this.cadastreDetails);        
+        firePropertyChange("cadastreDetails", null, this.cadastreDetails);
     }
 
-    
     public CadastreObjectBean getSelectedParcel() {
         return selectedParcel;
     }
 
     public void setSelectedParcel(CadastreObjectBean selectedParcel) {
-        CadastreObjectBean oldValue=this.selectedParcel;
+        CadastreObjectBean oldValue = this.selectedParcel;
         this.selectedParcel = selectedParcel;
         firePropertyChange("selectedParcel", oldValue, this.selectedParcel);
     }
 
-    
-    
     public List<PartyBean> getParties() {
         if (parties == null) {
             parties = new ArrayList<>();
@@ -88,23 +84,6 @@ public class SearchByParcelNo extends ContentPanel {
         firePropertyChange("parties", null, this.parties);
     }
 
-    public SolaObservableList<CadastreObjectBean> getCadastreObjects() {
-        if (cadastreObjects == null) {
-            cadastreObjects = new SolaObservableList<>();
-        }
-        return cadastreObjects;
-    }
-
-    public void setCadastreObjects(SolaObservableList<CadastreObjectBean> cadastreObjects) {
-        if (cadastreObjects == null) {
-            cadastreObjects = new SolaObservableList<>();
-
-        }
-        this.cadastreObjects = cadastreObjects;
-        firePropertyChange("cadastreObjects", null, this.cadastreObjects);
-    }
-
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -120,11 +99,11 @@ public class SearchByParcelNo extends ContentPanel {
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPersonDetails = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblParcelDetails1 = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jPanel4 = new javax.swing.JPanel();
         btnSearch = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -143,6 +122,7 @@ public class SearchByParcelNo extends ContentPanel {
         txtParcelNo = new javax.swing.JTextField();
 
         setHeaderPanel(headerPanel1);
+        setMinimumSize(new java.awt.Dimension(400, 400));
 
         headerPanel1.setTitleText("Search by Parcel No.");
 
@@ -151,25 +131,23 @@ public class SearchByParcelNo extends ContentPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persons", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblPersonDetails);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
         columnBinding.setColumnName("Name");
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane3.setViewportView(tblPersonDetails);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel1);
@@ -177,23 +155,23 @@ public class SearchByParcelNo extends ContentPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcel Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreDetails}");
-        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblParcelDetails1);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
         columnBinding.setColumnName("Parcel No");
         columnBinding.setColumnClass(Integer.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane4.setViewportView(tblParcelDetails1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel2);
@@ -247,8 +225,8 @@ public class SearchByParcelNo extends ContentPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addComponent(cmbDistrict, 0, 88, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addComponent(cmbDistrict, 0, 0, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,8 +253,8 @@ public class SearchByParcelNo extends ContentPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-            .addComponent(cmbVdc, 0, 88, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cmbVdc, 0, 0, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,7 +275,7 @@ public class SearchByParcelNo extends ContentPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap())
             .addComponent(txtWardNo)
         );
         jPanel9Layout.setVerticalGroup(
@@ -319,7 +297,7 @@ public class SearchByParcelNo extends ContentPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addComponent(txtParcelNo)
         );
         jPanel13Layout.setVerticalGroup(
@@ -337,7 +315,7 @@ public class SearchByParcelNo extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,27 +335,27 @@ public class SearchByParcelNo extends ContentPanel {
                     .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-   
+
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        
+
         //invoke method.
         try {
             VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
             CadastreObjectBean cadBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(
                     vdc.getCode(), txtWardNo.getText().toString(),
                     Integer.parseInt(txtParcelNo.getText().toString()));
-             cadastreDetails.clear();
-             cadastreDetails.add(cadBean);
-             getBaUnitContainsSpatialUnitList(cadBean);             
+            cadastreDetails.clear();
+            cadastreDetails.add(cadBean);
+            getBaUnitContainsSpatialUnitList(cadBean);
         } catch (Exception e) {
-        }       
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void cmbDistrictItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDistrictItemStateChanged
@@ -397,33 +375,31 @@ public class SearchByParcelNo extends ContentPanel {
         }
     }//GEN-LAST:event_cmbDistrictItemStateChanged
 
-    private void  getBaUnitContainsSpatialUnitList(CadastreObjectBean cadastreObjectBean){
-        List<BaUnitContainsSpatialUnitBean> baSpatialUnits=new ArrayList<>();
-           if(cadastreObjectBean!=null){
-               baSpatialUnits=BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
-           }
-           getParcelRelatedBaUnits(baSpatialUnits);
-    }       
-
-    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits){
-        List<BaUnitBean> baUnitBeans=new ArrayList<>();
-         for(BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits){
-             BaUnitBean baUnitBean=BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
-             baUnitBeans.add(baUnitBean);
-         }     
-         getCadasterRelatedParties(baUnitBeans);
+    private void getBaUnitContainsSpatialUnitList(CadastreObjectBean cadastreObjectBean) {
+        List<BaUnitContainsSpatialUnitBean> baSpatialUnits = new ArrayList<>();
+        if (cadastreObjectBean != null) {
+            baSpatialUnits = BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
+        }
+        getParcelRelatedBaUnits(baSpatialUnits);
     }
-    
-    private void getCadasterRelatedParties(List<BaUnitBean> baUnitBeans){
-         List<PartyBean> partyList=new ArrayList<>();
-         for(BaUnitBean baUnitBean : baUnitBeans){
-             partyList.addAll(baUnitBean.getParties());
-         }
-         parties.clear();
-         setParties(partyList);          
-     } 
-    
-   
+
+    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits) {
+        List<BaUnitBean> baUnitBeans = new ArrayList<>();
+        for (BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits) {
+            BaUnitBean baUnitBean = BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
+            baUnitBeans.add(baUnitBean);
+        }
+        getCadasterRelatedParties(baUnitBeans);
+    }
+
+    private void getCadasterRelatedParties(List<BaUnitBean> baUnitBeans) {
+        List<PartyBean> partyList = new ArrayList<>();
+        for (BaUnitBean baUnitBean : baUnitBeans) {
+            partyList.addAll(baUnitBean.getParties());
+        }
+        parties.clear();
+        setParties(partyList);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox cmbDistrict;
@@ -444,10 +420,10 @@ public class SearchByParcelNo extends ContentPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblParcelDetails1;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblPersonDetails;
     private javax.swing.JTextField txtParcelNo;
     private javax.swing.JTextField txtWardNo;
     private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;
