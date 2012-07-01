@@ -75,6 +75,8 @@ public class Select_Parcel_Form extends ContentPanel {
         parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
 
+        setHeaderPanel(headerPanel1);
+
         jScrollPane1.setViewportView(lstParcelInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N

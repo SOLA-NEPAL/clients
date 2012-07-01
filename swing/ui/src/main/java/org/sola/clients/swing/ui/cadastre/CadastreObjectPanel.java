@@ -197,7 +197,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
             .addComponent(cmbMapNo1, 0, 0, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
@@ -226,7 +226,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
             .addComponent(cmbMapNo2, 0, 0, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
@@ -255,7 +255,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel9)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
             .addComponent(cmbMapNo3, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
@@ -284,7 +284,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel7)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
             .addComponent(cmbMapNo4, 0, 0, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
@@ -309,7 +309,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel8)
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addGap(0, 53, Short.MAX_VALUE))
             .addComponent(cmbParcelNo1, 0, 0, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -387,6 +387,8 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Ward Number");
 
+        txtWardNo.setEnabled(false);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -406,6 +408,8 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         );
 
         jLabel4.setText("Parcel No.");
+
+        txtParcelNo.setEnabled(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -493,7 +497,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(0, 47, Short.MAX_VALUE))
             .addComponent(cmbDistrict1, 0, 79, Short.MAX_VALUE)
         );
         jPanel22Layout.setVerticalGroup(
@@ -530,7 +534,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
             .addComponent(cmbVdc1, 0, 0, Short.MAX_VALUE)
         );
         jPanel23Layout.setVerticalGroup(
@@ -562,7 +566,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
             .addComponent(cmbMothLujType, 0, 0, Short.MAX_VALUE)
         );
         jPanel24Layout.setVerticalGroup(
@@ -599,7 +603,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
             .addComponent(cmbMothLujNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
@@ -636,7 +640,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel14)
-                .addGap(0, 35, Short.MAX_VALUE))
+                .addGap(0, 36, Short.MAX_VALUE))
             .addComponent(cmbPanaNo, 0, 79, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
@@ -665,7 +669,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addComponent(jLabel15)
-                .addGap(0, 34, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
             .addComponent(cmbCadastreList, 0, 79, Short.MAX_VALUE)
         );
         jPanel20Layout.setVerticalGroup(
