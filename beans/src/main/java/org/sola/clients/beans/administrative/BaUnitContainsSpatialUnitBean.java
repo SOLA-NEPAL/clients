@@ -15,7 +15,10 @@
  */
 package org.sola.clients.beans.administrative;
 
+import java.util.List;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *
@@ -46,5 +49,11 @@ public class BaUnitContainsSpatialUnitBean extends AbstractBindingBean {
         String oldValue = this.spatialUnitId;
         this.spatialUnitId = spatialUnitId;
         propertySupport.firePropertyChange(SPATIAL_UNIT_ID, oldValue, this.spatialUnitId);
+    }
+    
+    public static List<BaUnitContainsSpatialUnitBean> getBaUnitContainsSpatialUnitsList(String spatialUnitId) {
+        return TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getAdministrative().getBaUnitContainsSpatialUnitsList(spatialUnitId),
+                BaUnitContainsSpatialUnitBean.class,null);
     }
 }

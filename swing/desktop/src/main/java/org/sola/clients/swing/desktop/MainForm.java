@@ -53,6 +53,8 @@ import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
+import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
+import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByPerson;
 import org.sola.clients.swing.desktop.party.PartySearchPanelForm;
 import org.sola.clients.swing.desktop.party.SrchLandOwner;
@@ -348,6 +350,8 @@ public class MainForm extends javax.swing.JFrame {
         menuSrch = new javax.swing.JMenu();
         menuSearchByPerson = new javax.swing.JMenuItem();
         mnuSearchByMothPana = new javax.swing.JMenuItem();
+        mnuSearchByParcelNo = new javax.swing.JMenuItem();
+        mnuSearchByMothPanaParcel = new javax.swing.JMenuItem();
         menuSearch = new javax.swing.JMenu();
         menuSearchApplication = new javax.swing.JMenuItem();
         menuBaUnitSearch = new javax.swing.JMenuItem();
@@ -612,6 +616,22 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSrch.add(mnuSearchByMothPana);
 
+        mnuSearchByParcelNo.setText(bundle.getString("MainForm.mnuSearchByParcelNo.text")); // NOI18N
+        mnuSearchByParcelNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSearchByParcelNoActionPerformed(evt);
+            }
+        });
+        menuSrch.add(mnuSearchByParcelNo);
+
+        mnuSearchByMothPanaParcel.setText(bundle.getString("MainForm.mnuSearchByMothPanaParcel.text")); // NOI18N
+        mnuSearchByMothPanaParcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSearchByMothPanaParcelActionPerformed(evt);
+            }
+        });
+        menuSrch.add(mnuSearchByMothPanaParcel);
+
         jMenu4.add(menuSrch);
 
         menuBar.add(jMenu4);
@@ -834,7 +854,30 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         showSearchByMothPana();
     }//GEN-LAST:event_mnuSearchByMothPanaActionPerformed
-   
+
+    private void mnuSearchByMothPanaParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByMothPanaParcelActionPerformed
+        // TODO add your handling code here:
+        showSearchByMothPanaAndParcelNo();
+    }//GEN-LAST:event_mnuSearchByMothPanaParcelActionPerformed
+
+    private void mnuSearchByParcelNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByParcelNoActionPerformed
+        // TODO add your handling code here:
+        showSearchByParcelNo();
+    }//GEN-LAST:event_mnuSearchByParcelNoActionPerformed
+    private void showSearchByParcelNo() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO)) {
+            SearchByParcelNo srchParcel = new SearchByParcelNo();
+            pnlContent.addPanel(srchParcel, MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
+    }
+    private void showSearchByMothPanaAndParcelNo() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL)) {
+            SearchByMothPanaParcelNo srchMohPanaParcel = new SearchByMothPanaParcelNo();
+            pnlContent.addPanel(srchMohPanaParcel, MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
+    }
     private void showSearchByMothPana() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA)) {
             SearchByMothAndPageNo srchMohPana = new SearchByMothAndPageNo();
@@ -905,6 +948,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuSrch;
     private javax.swing.JMenu menuView;
     private javax.swing.JMenuItem mnuSearchByMothPana;
+    private javax.swing.JMenuItem mnuSearchByMothPanaParcel;
+    private javax.swing.JMenuItem mnuSearchByParcelNo;
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;

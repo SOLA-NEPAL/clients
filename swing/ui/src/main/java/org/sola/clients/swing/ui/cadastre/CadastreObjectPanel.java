@@ -868,7 +868,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         //invoke method.
         try {
             VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-            newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(
+            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(
                     vdc.getCode(), txtWardNo.getText().toString(),
                     Integer.parseInt(txtParcelNo.getText().toString()));
             refresh_Parcel_Information();
@@ -879,7 +879,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         try {
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-            newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(map.getCode().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
+            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getCode().toString(), Integer.parseInt(txtParcelNo1.getText().toString()));
             refresh_Parcel_Information();
         } catch (Exception ex) {
             Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);

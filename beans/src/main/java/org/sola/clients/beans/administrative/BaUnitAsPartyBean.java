@@ -17,7 +17,6 @@ package org.sola.clients.beans.administrative;
 
 import java.util.List;
 import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
@@ -32,14 +31,6 @@ public class BaUnitAsPartyBean extends AbstractBindingBean {
    
     private String baUnitId;
     private String partyId;
-
-//    public static SolaObservableList<BaUnitAsPartyBean> baAs;
-//    public  SolaObservableList<BaUnitAsPartyBean>getBaAs() {
-//        if (baAs == null) {
-//            baAs = new SolaObservableList<BaUnitAsPartyBean>();
-//        }
-//        return baAs;
-//    }
     
     public String getBaUnitId() {
         return baUnitId;

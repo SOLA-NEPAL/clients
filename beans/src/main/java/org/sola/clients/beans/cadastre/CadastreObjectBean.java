@@ -349,12 +349,12 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         TypeConverters.TransferObjectToBean(cadTO, CadastreObjectBean.class, this);
     }
 
-    public CadastreObjectBean getCadastreObjectByVdcWardParcel(String vdcCode, String wardNo, int parcelNo) {
+    public static CadastreObjectBean getCadastreObjectByVdcWardParcel(String vdcCode, String wardNo, int parcelNo) {
 
       return  TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByVdcWardParcel(vdcCode, wardNo, parcelNo), CadastreObjectBean.class, null);
     }
 
-    public CadastreObjectBean getCadastreObjectByVdcWardParcel(String mapSheetCode, int parcelNo) {
+    public static CadastreObjectBean getCadastreObjectByMapAndParcelNo(String mapSheetCode, int parcelNo) {
 
        return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByMapSheetParcel(mapSheetCode, parcelNo), CadastreObjectBean.class, null);
     }   

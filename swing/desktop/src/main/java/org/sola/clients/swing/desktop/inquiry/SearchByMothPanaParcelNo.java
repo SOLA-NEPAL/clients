@@ -15,7 +15,11 @@
  */
 package org.sola.clients.swing.desktop.inquiry;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.sola.clients.beans.administrative.BaUnitAsPartyBean;
 import org.sola.clients.beans.administrative.BaUnitBean;
+import org.sola.clients.beans.administrative.BaUnitContainsSpatialUnitBean;
 import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
@@ -29,28 +33,59 @@ import org.sola.clients.swing.ui.ContentPanel;
  *
  * @author KumarKhadka
  */
-public class SearchByMothAndPageNo extends ContentPanel {
+public class SearchByMothPanaParcelNo extends ContentPanel {
 
     private SolaObservableList<CadastreObjectBean> cadastreObjects;
-    private SolaObservableList<PartyBean> parties;
+    private List<PartyBean> parties;
+    private CadastreObjectBean selectedParcel;
+    private SolaObservableList<CadastreObjectBean> cadastreDetails;
 
     /**
      * Creates new form SearchByMothAndPageNo
      */
-    public SearchByMothAndPageNo() {
+    public SearchByMothPanaParcelNo() {
         initComponents();
     }
 
-    public SolaObservableList<PartyBean> getParties() {
+    public SolaObservableList<CadastreObjectBean> getCadastreDetails() {
+        if (cadastreDetails == null) {
+            cadastreDetails = new SolaObservableList<>();
+        }       
+        return cadastreDetails;
+    }
+
+    public void setCadastreDetails(SolaObservableList<CadastreObjectBean> cadastreDetails) {
+        if (cadastreDetails == null) {
+            cadastreDetails = new SolaObservableList<>();
+
+        }
+        this.cadastreDetails = cadastreDetails;
+        firePropertyChange("cadastreDetails", null, this.cadastreDetails);        
+    }
+
+    
+    public CadastreObjectBean getSelectedParcel() {
+        return selectedParcel;
+    }
+
+    public void setSelectedParcel(CadastreObjectBean selectedParcel) {
+        CadastreObjectBean oldValue=this.selectedParcel;
+        this.selectedParcel = selectedParcel;
+        firePropertyChange("selectedParcel", oldValue, this.selectedParcel);
+    }
+
+    
+    
+    public List<PartyBean> getParties() {
         if (parties == null) {
-            parties = new SolaObservableList<>();
+            parties = new ArrayList<>();
         }
         return parties;
     }
 
-    public void setParties(SolaObservableList<PartyBean> parties) {
+    public void setParties(List<PartyBean> parties) {
         if (parties == null) {
-            parties = new SolaObservableList<>();
+            parties = new ArrayList<>();
         }
         this.parties = parties;
         firePropertyChange("parties", null, this.parties);
@@ -72,6 +107,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
         firePropertyChange("cadastreObjects", null, this.cadastreObjects);
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,6 +139,9 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel19 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         cmbPanaNo = new javax.swing.JComboBox();
+        jPanel5 = new javax.swing.JPanel();
+        cmbParcelNo = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,7 +155,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Search by Moth and Page No");
+        headerPanel1.setTitleText("Search by Moth Pana and Parcel No.");
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
 
@@ -142,7 +181,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, 0, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
@@ -209,7 +248,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 7, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(cmbMothLujType, 0, 0, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
@@ -245,7 +284,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(cmbMothLujNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
@@ -269,13 +308,19 @@ public class SearchByMothAndPageNo extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, locListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedLoc}"), cmbPanaNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
+        cmbPanaNo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbPanaNoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel14)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
             .addComponent(cmbPanaNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
@@ -288,6 +333,38 @@ public class SearchByMothAndPageNo extends ContentPanel {
         );
 
         jPanel8.add(jPanel19);
+
+        cmbParcelNo.setEditable(true);
+        cmbParcelNo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbParcelNo.setSelectedIndex(-1);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, cmbParcelNo);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedParcel}"), cmbParcelNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        jLabel2.setText("Parcel No.");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(cmbParcelNo, 0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jPanel8.add(jPanel5);
 
         jPanel3.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
@@ -306,20 +383,20 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel3.add(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcels", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcel Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreDetails}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
         columnBinding.setColumnName("Parcel No");
@@ -332,11 +409,11 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel2);
@@ -370,13 +447,13 @@ public class SearchByMothAndPageNo extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -390,7 +467,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -447,39 +524,66 @@ public class SearchByMothAndPageNo extends ContentPanel {
         locListBean.loadLocList(moth.getId());
     }
 
-    private void baUnitOperation(SolaObservableList<BaUnitBean> baUnits) {
-        BaUnitBean baUnit;
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        CadastreObjectBean cadBean=(CadastreObjectBean)cmbParcelNo.getSelectedItem();
+        cadastreDetails.clear();
+        cadastreDetails.add(cadBean);
+        getBaUnitContainsSpatialUnitList(cadBean);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void  getBaUnitContainsSpatialUnitList(CadastreObjectBean cadastreObjectBean){
+        List<BaUnitContainsSpatialUnitBean> baSpatialUnits=new ArrayList<>();
+           if(cadastreObjectBean!=null){
+               baSpatialUnits=BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
+           }
+           getParcelRelatedBaUnits(baSpatialUnits);
+    }       
+
+    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits){
+        List<BaUnitBean> baUnitBeans=new ArrayList<>();
+         for(BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits){
+             BaUnitBean baUnitBean=BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
+             baUnitBeans.add(baUnitBean);
+         }     
+         getCadasterRelatedParties(baUnitBeans);
+    }
+    
+    private void getCadasterRelatedParties(List<BaUnitBean> baUnitBeans){
+         List<PartyBean> partyList=new ArrayList<>();
+         for(BaUnitBean baUnitBean : baUnitBeans){
+             partyList.addAll(baUnitBean.getParties());
+         }
+         setParties(partyList);          
+     }
+    private void cmbPanaNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPanaNoItemStateChanged
+        // TODO add your handling code here:
+        loadParcels();
+        cmbParcelNo.setSelectedIndex(-1);
+    }//GEN-LAST:event_cmbPanaNoItemStateChanged
+
+    private void loadParcels() {
+        if (cmbPanaNo.getSelectedItem() != null) {
+            LocBean loc = (LocBean) cmbPanaNo.getSelectedItem();
+            parcelsOp(loc.getBaUnits());
+        }
+    }
+    
+    private void parcelsOp(SolaObservableList<BaUnitBean> baUnits){      
         if (baUnits.size() == 0) {
             return;
         }
-        baUnit = baUnits.get(0);
-        baUnitFinalOperation(baUnit);
-    }
-
-    private void baUnitFinalOperation(BaUnitBean baUnitBean) {
-        SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
-        SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
-        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
-            cadObjLst.add(cadBean);
+        for (CadastreObjectBean cadBean : baUnits.get(0).getCadastreObjectList()) {
+            cadastreObjects.add(cadBean);            
         }
-        for (PartyBean partyBean : baUnitBean.getParties()) {
-            partyList.add(partyBean);
-        }
-        setCadastreObjects(cadObjLst);
-        setParties(partyList);
     }
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-        LocBean locBean = (LocBean) cmbPanaNo.getSelectedItem();
-        baUnitOperation(locBean.getBaUnits());
-    }//GEN-LAST:event_btnSearchActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox cmbDistrict;
     private javax.swing.JComboBox cmbMothLujNo;
     private javax.swing.JComboBox cmbMothLujType;
     private javax.swing.JComboBox cmbPanaNo;
+    private javax.swing.JComboBox cmbParcelNo;
     private javax.swing.JComboBox cmbVdc;
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
@@ -489,6 +593,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -498,6 +603,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
