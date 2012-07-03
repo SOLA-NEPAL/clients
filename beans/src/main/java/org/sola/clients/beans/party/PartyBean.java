@@ -29,6 +29,7 @@ package org.sola.clients.beans.party;
 
 import java.util.Date;
 import java.util.UUID;
+import org.dozer.Mapper;
 import org.hibernate.validator.constraints.Email;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.address.AddressBean;
@@ -40,10 +41,12 @@ import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.party.validation.PartyIdTypeCheck;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
+import org.sola.common.MappingManager;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.PartyTO;
+import org.sola.webservices.transferobjects.digitalarchive.DocumentTO;
 
 /** 
  * Represents party object in the domain model. 

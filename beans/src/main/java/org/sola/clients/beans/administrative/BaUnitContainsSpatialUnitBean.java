@@ -17,7 +17,6 @@ package org.sola.clients.beans.administrative;
 
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.services.boundary.transferobjects.administrative.BaUnitTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.BaUnitContainsSpatialUnitTO;
 

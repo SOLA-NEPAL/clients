@@ -49,6 +49,12 @@ public class MapSheetListBean extends AbstractBindingListBean {
         this.selectedMapSheet = selectedMapSheet;
         propertySupport.firePropertyChange(SELECTED_MAPSHEET, oldValue, this.selectedMapSheet);
     }
+    
+    public void updateSelectedMapSheet(MapSheetBean newMapSheet){
+        if(selectedMapSheet!=null && newMapSheet!=null && mapSheets.contains(selectedMapSheet)){
+            mapSheets.set(mapSheets.indexOf(selectedMapSheet), newMapSheet);
+        }
+    }
 
     public ObservableList<MapSheetBean> getMapSheets() {
         if (mapSheets == null) {

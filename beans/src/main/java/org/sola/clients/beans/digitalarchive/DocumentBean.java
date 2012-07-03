@@ -72,18 +72,13 @@ public class DocumentBean extends AbstractIdBean {
     private Icon labelIcon;
 
     public Icon getLabelIcon() {
-        //if (labelIcon==null){ //confirm the correct image.
+        if (labelIcon==null){
             if (body!=null && body.length>1){
-                try {
-                    String fileName="sola_arch_"  + description;
-                    int start_indx=description.lastIndexOf(".");
-                    if (start_indx<0)//put extension.
-                        fileName += "." + extension;
-                    labelIcon=FileUtility.getImageIcon(body, fileName);
-                    //labelIcon=new ImageIcon(body, description);
-                } catch (Exception e) { }
+                labelIcon = new ImageIcon(body);
+            } else {
+                labelIcon = new ImageIcon();
             }
-        //}
+        }
         return labelIcon;
     }
 
