@@ -91,6 +91,15 @@ public class LocatePointPanel extends javax.swing.JPanel {
         
         initializeFormVariable(segmentLayer);
     }
+    
+    public void disableLocatePoint(){
+        //if (offsetMethod){
+            optFirst.setEnabled(false);
+            optSecond.setEnabled(false);
+            btnAddPoint.setEnabled(false);
+            txtDistance.setEnabled(false);
+        //}
+    }
 
     public final void initializeFormVariable(CadastreTargetSegmentLayer segmentLayer) throws InitializeLayerException  {
         this.segmentLayer = segmentLayer;

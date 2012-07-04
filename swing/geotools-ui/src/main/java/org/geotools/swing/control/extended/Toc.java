@@ -93,7 +93,6 @@ public class Toc extends JPanel {
                 doMouseClicked(me);
             }
         });
-
     }
 
     /**
@@ -111,7 +110,9 @@ public class Toc extends JPanel {
         if (clickedNode instanceof TocLayerNode) {
             TocLayerNode clickedTocNode = (TocLayerNode) tp.getLastPathComponent();
             if (me.getButton()== MouseEvent.BUTTON3){
-                handle_MouseRightClick(clickedTocNode,me.getX(),me.getY());
+                //if (clickedTocNode.getLayer().getLayerName().equals("New Parcels")){
+                    handle_MouseRightClick(clickedTocNode,me.getX(),me.getY());
+                //}
             }
             else{
                 changeNodeSwitch(clickedTocNode);
@@ -191,13 +192,17 @@ public class Toc extends JPanel {
         }
     }
     
-    //Addition by Kabindra
+    //<editor-fold defaultstate="collapsed" desc="Addition by Kabindra">
     public void handle_MouseRightClick(TocLayerNode clickedTocNode,int x, int y){
         TreeNodePopupMenu popup=new TreeNodePopupMenu();
         clickedTocNode.getVisualisationComponent().setSelected(true);
         this.treeModel.nodeChanged(clickedTocNode);
+        //show the row selection in tree node.
+        int r=this.tree.getClosestRowForLocation(x, y);
+        this.tree.setSelectionRow(r);
         
         popup.setMapLayer(clickedTocNode.getLayer());
         popup.getJPopupMenu().show(this, x, y);
     }
+    //</editor-fold>
 }

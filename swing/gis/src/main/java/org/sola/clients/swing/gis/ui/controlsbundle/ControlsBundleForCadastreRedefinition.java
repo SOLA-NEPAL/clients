@@ -43,6 +43,7 @@ import org.sola.clients.swing.gis.tool.CadastreBoundarySelectTool;
 import org.sola.clients.swing.gis.tool.CadastreRedefinitionAddNodeTool;
 import org.sola.clients.swing.gis.tool.CadastreRedefinitionBoundarySelectTool;
 import org.sola.clients.swing.gis.tool.CadastreRedefinitionModifyNodeTool;
+import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**
  * A control bundle that is used for cadastre redefinition process. 
@@ -173,4 +174,9 @@ public final class ControlsBundleForCadastreRedefinition extends ControlsBundleF
 //    public void update_Parcel_Geometry() {
 //        //throw new UnsupportedOperationException("Not supported yet.");
 //    }
+
+    @Override
+    public void show_Selected_Parcel_onMap(CadastreObjectSearchResultTO selected_parcel) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

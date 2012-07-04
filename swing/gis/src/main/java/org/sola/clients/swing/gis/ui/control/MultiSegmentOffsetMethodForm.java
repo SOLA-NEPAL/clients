@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.*;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 
 /**
  *
@@ -39,11 +41,14 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     //temporary variable just to use for iterative offset.
     //0--> no proper offset, 1--> leftsided offset, 2--> right sided offset.
     private byte leftside_offset=0;
+    private JToolBar jTool;
     
-    public MultiSegmentOffsetMethodForm( CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
-                    throws InitializeLayerException {
+    public MultiSegmentOffsetMethodForm( CadastreTargetSegmentLayer segmentLayer,
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer
+            ,JToolBar jTool)throws InitializeLayerException {
         initComponents();
-
+        
+        this.jTool=jTool;
         otherInitializations(segmentLayer, targetParcelsLayer);
     }
 
@@ -256,6 +261,8 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         //List<Layer> lays=mapObj.getMapContent().layers();
         Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
+        PublicMethod.enable_disable_Select_Tool(jTool, 
+                            listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -569,7 +576,8 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             lineGenerator.generateNodedSegments();
             targetParcelsLayer.getMapControl().refresh();
         
-            TwoPointMethodForm pointListForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
+            TwoPointMethodForm pointListForm=new TwoPointMethodForm(segmentLayer,
+                    targetParcelsLayer,jTool);
             pointListForm.showPointListInTable();
             pointListForm.setVisible(!pointListForm.isVisible());
             //Display segment list.
