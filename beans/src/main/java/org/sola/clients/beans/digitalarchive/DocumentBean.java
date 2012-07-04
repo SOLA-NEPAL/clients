@@ -27,18 +27,9 @@
  */
 package org.sola.clients.beans.digitalarchive;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.AbstractVersionedBean;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -67,86 +58,6 @@ public class DocumentBean extends AbstractIdBean {
     private byte[] body;
     
     private String officeCode;
-    
-    //<editor-fold defaultstate="collapsed" desc="By Kabindra">
-    private Icon labelIcon;
-
-    public Icon getLabelIcon() {
-        if (labelIcon==null){
-            if (body!=null && body.length>1){
-                labelIcon = new ImageIcon(body);
-            } else {
-                labelIcon = new ImageIcon();
-            }
-        }
-        return labelIcon;
-    }
-
-    private void getImageByteArray(Icon labelIcon) throws IOException {
-        if (labelIcon==null) return;
-        //original image buffer.
-        BufferedImage img= new BufferedImage(labelIcon.getIconWidth()
-                , labelIcon.getIconHeight(),BufferedImage.TYPE_INT_RGB);
-        Graphics g = img.getGraphics();//.createGraphics();                 
-        labelIcon.paintIcon(null, g, 0,0);// paint the Icon to the BufferedImage.
-       
-        //producing byte stream output.
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        try {
-            ImageIO.write((RenderedImage)img, extension, baos);
-        } catch (IOException ex) {
-            Logger.getLogger(DocumentBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.body= baos.toByteArray();
-        baos.flush();
-        baos.close();
-    }
-    
-    public void setLabelIcon(Icon labelIcon){
-        if (labelIcon!=null){
-            try {
-                getImageByteArray(labelIcon);
-            } catch (Exception e) {}
-        }
-        this.labelIcon = labelIcon;
-    }
-
-    private Icon getScaled_ImageByteArray(Icon labelIcon,int image_ht,int image_wdth) throws IOException {
-        if (labelIcon==null) return null;
-        //original image buffer.
-        BufferedImage img= new BufferedImage(labelIcon.getIconWidth()
-                , labelIcon.getIconHeight(),BufferedImage.TYPE_INT_RGB);
-        Graphics g = img.createGraphics();                 
-        labelIcon.paintIcon(null, g, 0,0);// paint the Icon to the BufferedImage.
-        //scale image buffer.
-        Image scaled_img=img.getScaledInstance(image_wdth, image_ht, Image.SCALE_DEFAULT);
-        BufferedImage s_img= new BufferedImage(image_wdth,image_ht,BufferedImage.TYPE_INT_RGB);
-        Graphics s_g = s_img.getGraphics();//createGraphics();
-        s_g.drawImage(scaled_img, 0, 0, null);
-        //producing byte stream output.
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        try {
-            ImageIO.write((RenderedImage)s_img, extension, baos);
-        } catch (IOException ex) {
-            Logger.getLogger(DocumentBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.body= baos.toByteArray();
-        baos.flush();
-        baos.close();
-        //resized image.
-        return new ImageIcon(scaled_img);
-    }
-    
-    public void setLabelIcon(Icon labelIcon,int image_ht,int image_wdth){
-        if (labelIcon!=null){
-            try {
-                this.labelIcon=getScaled_ImageByteArray(labelIcon,image_ht,image_wdth);
-            } catch (Exception e) { }
-            return;
-        }
-        this.labelIcon = null;
-    }
-    //</editor-fold>
     
     public byte[] getBody() {
         return body;

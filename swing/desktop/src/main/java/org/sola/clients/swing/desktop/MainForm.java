@@ -52,6 +52,10 @@ import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
+import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
+import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
+import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
+import org.sola.clients.swing.desktop.inquiry.SearchByPerson;
 import org.sola.clients.swing.desktop.party.PartySearchPanelForm;
 import org.sola.clients.swing.desktop.party.SrchLandOwner;
 import org.sola.clients.swing.desktop.reports.LodgementReportParamsForm;
@@ -344,7 +348,10 @@ public class MainForm extends javax.swing.JFrame {
         menuDataEntry = new javax.swing.JMenu();
         menuMothStrestaEnry = new javax.swing.JMenuItem();
         menuSrch = new javax.swing.JMenu();
-        menuSearchByLandOwner = new javax.swing.JMenuItem();
+        menuSearchByPerson = new javax.swing.JMenuItem();
+        mnuSearchByMothPana = new javax.swing.JMenuItem();
+        mnuSearchByParcelNo = new javax.swing.JMenuItem();
+        mnuSearchByMothPanaParcel = new javax.swing.JMenuItem();
         menuSearch = new javax.swing.JMenu();
         menuSearchApplication = new javax.swing.JMenuItem();
         menuBaUnitSearch = new javax.swing.JMenuItem();
@@ -581,6 +588,7 @@ public class MainForm extends javax.swing.JFrame {
 
         menuDataEntry.setText(bundle.getString("MainForm.menuDataEntry.text")); // NOI18N
 
+        menuMothStrestaEnry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document--pencil.png"))); // NOI18N
         menuMothStrestaEnry.setText(bundle.getString("MainForm.menuMothStrestaEnry.text")); // NOI18N
         menuMothStrestaEnry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -593,13 +601,41 @@ public class MainForm extends javax.swing.JFrame {
 
         menuSrch.setText(bundle.getString("MainForm.menuSrch.text")); // NOI18N
 
-        menuSearchByLandOwner.setText(bundle.getString("MainForm.menuSearchByLandOwner.text")); // NOI18N
-        menuSearchByLandOwner.addActionListener(new java.awt.event.ActionListener() {
+        menuSearchByPerson.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        menuSearchByPerson.setText(bundle.getString("MainForm.menuSearchByPerson.text")); // NOI18N
+        menuSearchByPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSearchByLandOwnerActionPerformed(evt);
+                menuSearchByPersonActionPerformed(evt);
             }
         });
-        menuSrch.add(menuSearchByLandOwner);
+        menuSrch.add(menuSearchByPerson);
+
+        mnuSearchByMothPana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        mnuSearchByMothPana.setText(bundle.getString("MainForm.mnuSearchByMothPana.text")); // NOI18N
+        mnuSearchByMothPana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSearchByMothPanaActionPerformed(evt);
+            }
+        });
+        menuSrch.add(mnuSearchByMothPana);
+
+        mnuSearchByParcelNo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        mnuSearchByParcelNo.setText(bundle.getString("MainForm.mnuSearchByParcelNo.text")); // NOI18N
+        mnuSearchByParcelNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSearchByParcelNoActionPerformed(evt);
+            }
+        });
+        menuSrch.add(mnuSearchByParcelNo);
+
+        mnuSearchByMothPanaParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        mnuSearchByMothPanaParcel.setText(bundle.getString("MainForm.mnuSearchByMothPanaParcel.text")); // NOI18N
+        mnuSearchByMothPanaParcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSearchByMothPanaParcelActionPerformed(evt);
+            }
+        });
+        menuSrch.add(mnuSearchByMothPanaParcel);
 
         jMenu4.add(menuSrch);
 
@@ -814,24 +850,59 @@ public class MainForm extends javax.swing.JFrame {
         mothShrestaEntry();
     }//GEN-LAST:event_menuMothStrestaEnryActionPerformed
 
-    private void menuSearchByLandOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchByLandOwnerActionPerformed
+    private void menuSearchByPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchByPersonActionPerformed
         // TODO add your handling code here:
-        showSearchByLandOwner();
-    }//GEN-LAST:event_menuSearchByLandOwnerActionPerformed
-   
-     private void showSearchByLandOwner() {
+        showSearchPerson();
+    }//GEN-LAST:event_menuSearchByPersonActionPerformed
+
+    private void mnuSearchByMothPanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByMothPanaActionPerformed
+        // TODO add your handling code here:
+        showSearchByMothPana();
+    }//GEN-LAST:event_mnuSearchByMothPanaActionPerformed
+
+    private void mnuSearchByMothPanaParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByMothPanaParcelActionPerformed
+        // TODO add your handling code here:
+        showSearchByMothPanaAndParcelNo();
+    }//GEN-LAST:event_mnuSearchByMothPanaParcelActionPerformed
+
+    private void mnuSearchByParcelNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByParcelNoActionPerformed
+        // TODO add your handling code here:
+        showSearchByParcelNo();
+    }//GEN-LAST:event_mnuSearchByParcelNoActionPerformed
+    private void showSearchByParcelNo() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO)) {
+            SearchByParcelNo srchParcel = new SearchByParcelNo();
+            pnlContent.addPanel(srchParcel, MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
+    }
+    private void showSearchByMothPanaAndParcelNo() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL)) {
+            SearchByMothPanaParcelNo srchMohPanaParcel = new SearchByMothPanaParcelNo();
+            pnlContent.addPanel(srchMohPanaParcel, MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
+    }
+    private void showSearchByMothPana() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA)) {
+            SearchByMothAndPageNo srchMohPana = new SearchByMothAndPageNo();
+            pnlContent.addPanel(srchMohPana, MainContentPanel.CARD_SEARCH_BY_MOTH_PANA);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA);
+    }
+     private void showSearchPerson() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
-            SrchLandOwner srchLndOwner = new SrchLandOwner();
+            SearchByPerson srchLndOwner = new SearchByPerson();
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
         }
         pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
     }
      private void mothShrestaEntry() {
-        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MothShresta_Entry)) {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY)) {
             MothSrestaEntry srchLndOwner = new MothSrestaEntry();           
-            pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MothShresta_Entry);
+            pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
         }
-        pnlContent.showPanel(MainContentPanel.CARD_MothShresta_Entry);
+        pnlContent.showPanel(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
     }
     
     
@@ -877,10 +948,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuReportsDesktop;
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
-    private javax.swing.JMenuItem menuSearchByLandOwner;
+    private javax.swing.JMenuItem menuSearchByPerson;
     private javax.swing.JMenuItem menuShowMap;
     private javax.swing.JMenu menuSrch;
     private javax.swing.JMenu menuView;
+    private javax.swing.JMenuItem mnuSearchByMothPana;
+    private javax.swing.JMenuItem mnuSearchByMothPanaParcel;
+    private javax.swing.JMenuItem mnuSearchByParcelNo;
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;

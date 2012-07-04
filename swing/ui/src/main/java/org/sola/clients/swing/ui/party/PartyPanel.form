@@ -1016,7 +1016,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jPanel28" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanel28" pref="620" max="32767" attributes="0"/>
                           <Component id="jPanel3" alignment="0" pref="620" max="32767" attributes="0"/>
                           <Component id="groupPanel2" alignment="0" max="32767" attributes="0"/>
                           <Component id="jPanel18" alignment="0" pref="0" max="32767" attributes="0"/>
@@ -1750,9 +1750,6 @@
                           <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.lblPhoto.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="icon" source="Form" sourcePath="${partyBean.partyBean.photoDoc.labelIcon}" target="lblPhoto" targetPath="icon" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnBrowsePhoto">
                       <Properties>
@@ -1839,9 +1836,6 @@
                           <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.lblRightFinger.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="icon" source="Form" sourcePath="${partyBean.rightFingerDoc.labelIcon}" target="lblRightFinger" targetPath="icon" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnBrowseRightFinger">
                       <Properties>
@@ -1927,9 +1921,6 @@
                           <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.lblSignature.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="icon" source="Form" sourcePath="${partyBean.signatureDoc.labelIcon}" target="lblSignature" targetPath="icon" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnBrowseSignature">
                       <Properties>
@@ -2016,9 +2007,6 @@
                           <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="PartyPanel.lblLeftFinger.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="icon" source="Form" sourcePath="${partyBean.leftFingerDoc.labelIcon}" target="lblLeftFinger" targetPath="icon" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnBrowseLeftFinger">
                       <Properties>

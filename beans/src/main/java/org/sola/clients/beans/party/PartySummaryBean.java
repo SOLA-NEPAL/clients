@@ -132,6 +132,10 @@ public class PartySummaryBean extends AbstractIdBean {
         propertySupport.firePropertyChange(TYPE_CODE_PROPERTY, oldValue, value);
     }
 
+    //Not good idea to have partybean inside partysummarybean
+    //, for time being it is left as it is .
+    //It is just to expose partybean to application bean.
+    //need to change some day in future.
     public PartyBean getPartyBean() {
         PartyTO party = WSManager.getInstance().getCaseManagementService().getParty(this.getId());
         return TypeConverters.TransferObjectToBean(party, PartyBean.class, null);

@@ -190,6 +190,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private String locId;
     private SolaList<PartyBean> parties;
 
+//    public void make_CadastreObject_ReadyOnly(){
+//        for (CadastreObjectBean cob:cadastreObjectList){
+//            cob.setEntityAction(EntityAction.READ_ONLY);
+//        }
+//    }
+    
     public String getLocId() {
         return locId;
     }
@@ -207,21 +213,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public ObservableList<PartyBean> getPartiesFilteredList() {
         return parties.getFilteredList();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     public BaUnitBean() {
         super();
         rrrList = new SolaList();

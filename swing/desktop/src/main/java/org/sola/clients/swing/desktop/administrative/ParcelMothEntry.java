@@ -4,16 +4,15 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.BaUnitContainsSpatialUnitBean;
 import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
-import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.PartyBean;
@@ -24,7 +23,6 @@ import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
-import org.sola.clients.swing.gis.ui.control.SelectParcelForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -38,25 +36,22 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class ParcelMothEntry extends ContentPanel {
 
     public static final String LOC_SAVED = "LocSaved";
-    BaUnitBean baUnitBean;
-    MapSheetBean map;
-    BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean;
     private SolaObservableList<CadastreObjectBean> cadastreObjects;
     private SolaObservableList<PartyBean> parties;
-    
-    //MothBean mothBean;
+    private CadastreObjectBean selectedCadastreObjectBean;
+    private PartyBean selectedPartyBean;
 
     /**
      * Creates new form ParcelMothEntry
      */
     public ParcelMothEntry() {
         initComponents();
+
     }
 
     public ParcelMothEntry(MothBean mothBean) {
         this.mothBean = mothBean;
         initComponents();
-
     }
 
     private MothBean createMothBean() {
@@ -65,40 +60,41 @@ public class ParcelMothEntry extends ContentPanel {
         }
         return mothBean;
     }
-   
 
-    public BaUnitContainsSpatialUnitBean getBaUnitContainsSpatialUnitBean() {
-        if (baUnitContainsSpatialUnitBean == null) {
-            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
-        }
-        return baUnitContainsSpatialUnitBean;
+    public CadastreObjectBean getSelectedCadastreObjectBean() {
+        return selectedCadastreObjectBean;
     }
 
-    public void setBaUnitContainsSpatialUnitBean(BaUnitContainsSpatialUnitBean baUnitContainsSpatialUnitBean) {
-        if (baUnitContainsSpatialUnitBean == null) {
-            baUnitContainsSpatialUnitBean = new BaUnitContainsSpatialUnitBean();
+    public void setSelectedCadastreObjectBean(CadastreObjectBean selectedCadastreObjectBean) {
+        CadastreObjectBean oldValue = this.selectedCadastreObjectBean;
+        this.selectedCadastreObjectBean = selectedCadastreObjectBean;
+        firePropertyChange("selectedCadastreObjectBean", oldValue, this.selectedCadastreObjectBean);
+    }
 
-        }
-        this.baUnitContainsSpatialUnitBean = baUnitContainsSpatialUnitBean;
-        firePropertyChange("baUnitContainsSpatialUnitBean", null, this.baUnitContainsSpatialUnitBean);
+    public PartyBean getSelectedPartyBean() {
+        return selectedPartyBean;
+    }
+
+    public void setSelectedPartyBean(PartyBean selectedPartyBean) {
+        PartyBean oldValue = this.selectedPartyBean;
+        this.selectedPartyBean = selectedPartyBean;
+        firePropertyChange("selectedPartyBean", oldValue, this.selectedPartyBean);
     }
 
     public SolaObservableList<PartyBean> getParties() {
-        if(parties==null){
-            parties=new SolaObservableList<>();
+        if (parties == null) {
+            parties = new SolaObservableList<>();
         }
         return parties;
     }
 
     public void setParties(SolaObservableList<PartyBean> parties) {
-         if(parties==null){
-            parties=new SolaObservableList<>();
+        if (parties == null) {
+            parties = new SolaObservableList<>();
         }
         this.parties = parties;
         firePropertyChange("parties", null, this.parties);
     }
-    
-    
 
     public SolaObservableList<CadastreObjectBean> getCadastreObjects() {
         if (cadastreObjects == null) {
@@ -115,7 +111,6 @@ public class ParcelMothEntry extends ContentPanel {
         this.cadastreObjects = cadastreObjects;
         firePropertyChange("cadastreObjects", null, this.cadastreObjects);
     }
-//    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,19 +143,21 @@ public class ParcelMothEntry extends ContentPanel {
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtPageNo = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPersonDetails = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar1 = new javax.swing.JToolBar();
         btnSearchNewParcel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnRemove1 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblParcelDetails1 = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar2 = new javax.swing.JToolBar();
         btnAddNewOwner = new javax.swing.JButton();
         btnSave1 = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        btnRemove2 = new javax.swing.JButton();
 
         setHeaderPanel(headerPanel1);
 
@@ -182,7 +179,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +206,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +233,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,7 +261,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,46 +274,23 @@ public class ParcelMothEntry extends ContentPanel {
 
         jPanel1.add(jPanel5);
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcel List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel9.setLayout(new java.awt.GridLayout(2, 1, 0, 10));
 
-        jTable1.setColumnSelectionAllowed(true);
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcels List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapSheet.mapNumber}"));
-        columnBinding.setColumnName("Map No.");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblPersonDetails);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
         columnBinding.setColumnName("Parcel No");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jScrollPane3.setViewportView(tblPersonDetails);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        btnSearchNewParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
+        btnSearchNewParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         btnSearchNewParcel.setText("Search Parcel");
         btnSearchNewParcel.setFocusable(false);
         btnSearchNewParcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -338,21 +312,49 @@ public class ParcelMothEntry extends ContentPanel {
         });
         jToolBar1.add(btnSave);
 
-        jButton1.setText("jButton1");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRemove1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
+        btnRemove1.setText("Remove");
+        btnRemove1.setFocusable(false);
+        btnRemove1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRemove1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRemove1ActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(btnRemove1);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+        );
+
+        jPanel9.add(jPanel7);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persons List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblParcelDetails1);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
+        columnBinding.setColumnName("First Name");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane4.setViewportView(tblParcelDetails1);
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
 
-        btnAddNewOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
+        btnAddNewOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         btnAddNewOwner.setText("Search Owner");
         btnAddNewOwner.setFocusable(false);
         btnAddNewOwner.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -374,55 +376,44 @@ public class ParcelMothEntry extends ContentPanel {
         });
         jToolBar2.add(btnSave1);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Owner List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        btnRemove2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
+        btnRemove2.setText("Remove");
+        btnRemove2.setFocusable(false);
+        btnRemove2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRemove2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemove2ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnRemove2);
 
-        jTable2.setColumnSelectionAllowed(true);
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
-        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
-        columnBinding.setColumnName("First Name");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lastName}"));
-        columnBinding.setColumnName("Last Name");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane2.setViewportView(jTable2);
-        jTable2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addContainerGap())
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
         );
+
+        jPanel9.add(jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -431,15 +422,8 @@ public class ParcelMothEntry extends ContentPanel {
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -447,10 +431,14 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void txtPageNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPageNoKeyPressed
         // TODO add your handling code here:
-        locOperation();
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+             locOperation();
+        }       
     }//GEN-LAST:event_txtPageNoKeyPressed
 
     private void locOperation() {
+        cadastreObjects.clear();
+        parties.clear();
         if ("".equals(txtPageNo.getText())) {
             locBean = null;
             return;
@@ -462,16 +450,16 @@ public class ParcelMothEntry extends ContentPanel {
                 locBean = new LocBean();
                 locBean.setMothId(mothBean.getId());
                 locBean.setPanaNo(Integer.parseInt(txtPageNo.getText()));
-                saveLoc(false);
+                if(locBean.saveLoc()){
+                    JOptionPane.showMessageDialog(null, "Page Created");
+                }
                 refreshMoth(locBean);
             } else {
                 return;
             }
-
-        }        
-        //get the baUnits included in selected loc
-        SolaObservableList<BaUnitBean> baUnits = locBean.getBaUnits();
-        baUnitOperation(baUnits);
+        }
+        //get the baUnits included in selected loc            
+        baUnitOperation(locBean.getBaUnits());
     }
 
     private void refreshMoth(LocBean locBean) {
@@ -479,34 +467,87 @@ public class ParcelMothEntry extends ContentPanel {
     }
 
     private void baUnitOperation(SolaObservableList<BaUnitBean> baUnits) {
+        BaUnitBean baUnit;
+        if (baUnits.size() > 0) {
+            baUnit = baUnits.get(0);
+            baUnitFinalOperation(baUnit);
+        } else {
+            //create baUnit
+            baUnit = createBaUnit();
+            locBean.getBaUnits().add(baUnit);
+            baUnitFinalOperation(baUnit);
+        }
+
+    }
+
+    private BaUnitBean createBaUnit() {
+        BaUnitBean baUnit = new BaUnitBean();
+        baUnit.setLocId(locBean.getId());
+        baUnit.setTypeCode("administrativeUnit");
+        baUnit.setName("TestBaunit");
+        baUnit.setNameFirstpart("TestBaunit");
+        baUnit.setNameLastpart("TestBaunit");
+        baUnit.setStatusCode("current");
+        baUnit.saveBaUnit(null);
+        return baUnit;
+    }
+
+    private void baUnitFinalOperation(BaUnitBean baUnitBean) {
         SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
-         SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
-        for (BaUnitBean b : baUnits) {
-            for (CadastreObjectBean cadBean : b.getCadastreObjectList()) {
-                cadObjLst.add(cadBean);
-            }
-            
-            for (PartyBean partyBean : b.getParties()) {
-                partyList.add(partyBean);
-            }            
-            
+        SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
+        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
+            cadObjLst.add(cadBean);
+        }
+        for (PartyBean partyBean : baUnitBean.getParties()) {
+            partyList.add(partyBean);
         }
         cadastreObjectOperation(cadObjLst);
         partiesOperation(partyList);
     }
 
     private void cadastreObjectOperation(SolaObservableList<CadastreObjectBean> cadastreObjectBeans) {
-        if(cadastreObjects.size()>0){
-            for(CadastreObjectBean cad : cadastreObjectBeans){
-                cadastreObjects.add(cad);
+        if (cadastreObjects.size() > 0) {
+            for (CadastreObjectBean cad : cadastreObjectBeans) {
+                if (!cadastreObjects.contains(cad)) {
+                    cadastreObjects.add(cad);
+                }
             }
+            refreshCadastresInLoc();
             return;
         }
         setCadastreObjects(cadastreObjectBeans);
+        refreshCadastresInLoc();
     }
-    
-    private void partiesOperation(SolaObservableList<PartyBean> partyList){
+
+    private void refreshCadastresInLoc() {
+        for (CadastreObjectBean cad : cadastreObjects) {
+            if (!locBean.getBaUnits().get(0).getCadastreObjectList().contains(cad)) {
+                locBean.getBaUnits().get(0).getCadastreObjectList().add(cad);
+            }
+        }
+
+    }
+
+    private void partiesOperation(SolaObservableList<PartyBean> partyList) {
+        if (parties.size() > 0) {
+            for (PartyBean pty : partyList) {
+                if (!parties.contains(pty)) {
+                    parties.add(pty);
+                }
+            }
+            refreshPartiesInLoc();
+            return;
+        }
         setParties(partyList);
+        refreshPartiesInLoc();
+    }
+
+    private void refreshPartiesInLoc() {
+        for (PartyBean pty : parties) {
+            if (!locBean.getBaUnits().get(0).getParties().contains(pty)) {
+                locBean.getBaUnits().get(0).getParties().add(pty);
+            }
+        }
     }
 
     private boolean newPanaCreation() {
@@ -538,7 +579,7 @@ public class ParcelMothEntry extends ContentPanel {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
                 return saveLoc();
             }
-            
+
             @Override
             public void taskDone() {
                 if (get() != null && get()) {
@@ -557,7 +598,10 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSearchNewParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNewParcelActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
         Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{CadastreObjectTO.class};
@@ -569,10 +613,15 @@ public class ParcelMothEntry extends ContentPanel {
             Logger.getLogger(CadastreObjectTO.class.getName()).log(Level.SEVERE, null, ex);
         }
         parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
-        parcelSearchForm.setVisible(true);
-        parcelSearchForm.setTitle("Details of the Cadastre Object");
-        parcelSearchForm.setAlwaysOnTop(true);
+        displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSearchNewParcelActionPerformed
+
+    private void displayForm(Select_Parcel_Form parcelSearchForm) {
+        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
+            getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
+        }
+        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
+    }
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshCadastreDetails(CadastreObjectTO cadastreTO) {
@@ -583,71 +632,48 @@ public class ParcelMothEntry extends ContentPanel {
 
         CadastreObjectBean cadastreBean = TypeConverters.TransferObjectToBean(
                 cadastreTO, CadastreObjectBean.class, null);
-       SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
-       cadObjLst.add(cadastreBean);
-       cadastreObjectOperation(cadObjLst);
+        SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
+        cadObjLst.add(cadastreBean);
+        cadastreObjectOperation(cadObjLst);
     }
-    
+
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        CadastreObjectBean cad = cadastreObjectListBean.getSelectedCadastreObjectBean();
-        if (locBean.getBaUnits().size() == 0) {
-            baUnitBean = new BaUnitBean();
-            baUnitBean.setLocId(locBean.getId());            
-            baUnitBean.setName("test");
-            baUnitBean.setNameLastpart("test");
-            baUnitBean.setTypeCode("administrativeUnit");
-            baUnitBean.setStatusCode("current");
-            baUnitBean.saveBaUnitTest();
-            locBean.getBaUnits().add(baUnitBean);
-            baUnitContainsSpatialUnitBean.setBaUnitId(baUnitBean.getId());
-            baUnitContainsSpatialUnitBean.setSpatialUnitId(cad.getId());
-            baUnitContainsSpatialUnitBean.saveBaUnitContainsSpatialUnit();
-
-        } else {
-            for (BaUnitBean bU : locBean.getBaUnits()) {
-                String test = bU.getId();
-                BaUnitContainsSpatialUnitBean baU = getBaUnitContainsSpatialUnitBean();
-                baU.setSpatialUnitId(cad.getId());
-                baU.setBaUnitId(test);
-                baU.saveBaUnitContainsSpatialUnit();
-            }
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
         }
+        saveLoc(false);
+        refreshMoth(locBean);
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
-            CadatreObjectSearchPanelForm pcl = new CadatreObjectSearchPanelForm();
-            getMainContentPanel().addPanel(pcl, MainContentPanel.CARD_PARCEL_SEARCH);
-        }
-        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
+        saveLoc(false);
+        refreshMoth(locBean);
     }//GEN-LAST:event_btnSave1ActionPerformed
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshPartyDetails(PartySearchResultBean partySummary) {
-        //do as required.
         if (partySummary == null) {
             return;
         }
-        //System.out.println(partySummary.getId());
-        //txtFirstName.setText(partySummary.getName());
-        //txtLastName.setText(partySummary.getLastName());
         PartyBean party = partySummary.getPartyBean();
-        //txtAddress.setText(party.getAddress().getDescription());
-        //txtPhone.setText(party.getPhone());
-        //txtFax.setText(party.getFax());
-        //txtEmail.setText(party.getEmail());
-        //cbxCommunicationWay.setSelectedItem(party.getPreferredCommunication());
-        //appBean.setContactPerson(party);
+        SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
+        partyList.add(party);
+        partiesOperation(partyList);
     }
 
     private void btnAddNewOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewOwnerActionPerformed
         // TODO add your handling code here:
+        if(locBean.getPanaNo()==0){
+            JOptionPane.showMessageDialog(null, "No Page is specified");
+            return;
+        }
         PersonSearchForm partySearchForm = new PersonSearchForm();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{PartySearchResultBean.class};
@@ -664,8 +690,51 @@ public class ParcelMothEntry extends ContentPanel {
         partySearchForm.setTitle("Details of the applicant");
         partySearchForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btnAddNewOwnerActionPerformed
+
+    private void btnRemove1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove1ActionPerformed
+        // TODO add your handling code here:
+        if(cadastreObjects.size()==0){
+            JOptionPane.showMessageDialog(null, "No List is specified");
+            return;
+        }
+        if (removeConfirmation()) {
+            CadastreObjectBean cadBean = getSelectedCadastreObjectBean();
+            cadastreObjects.remove(cadBean);
+            if (locBean.getBaUnits().get(0).getCadastreObjectList().size() > 0) {
+                locBean.getBaUnits().get(0).getCadastreObjectList().remove(cadBean);
+            }
+        } else {
+        }
+    }//GEN-LAST:event_btnRemove1ActionPerformed
+
+    private boolean removeConfirmation() {
+        if ((JOptionPane.showConfirmDialog(this, "Are you sure to remove this content from list ?", "Remove Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+    private void btnRemove2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove2ActionPerformed
+        // TODO add your handling code here:
+        if(parties.size()==0){
+            JOptionPane.showMessageDialog(null, "No List is specified");
+            return;
+        }
+        if (removeConfirmation()) {
+            PartyBean selectedBean = getSelectedPartyBean();
+            parties.remove(selectedBean);
+            if (locBean.getBaUnits().get(0).getParties().size() > 0) {
+                locBean.getBaUnits().get(0).getParties().remove(selectedBean);
+            }
+        } else {
+        }
+
+    }//GEN-LAST:event_btnRemove2ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNewOwner;
+    private javax.swing.JButton btnRemove1;
+    private javax.swing.JButton btnRemove2;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSave1;
     private javax.swing.JButton btnSearchNewParcel;
@@ -673,7 +742,6 @@ public class ParcelMothEntry extends ContentPanel {
     private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
     private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -685,16 +753,17 @@ public class ParcelMothEntry extends ContentPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private org.sola.clients.beans.administrative.LocBean locBean;
     private org.sola.clients.beans.administrative.LocListBean locListBean;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private org.sola.clients.beans.administrative.MothBean mothBean;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblParcelDetails1;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblPersonDetails;
     private javax.swing.JTextField txtMothLuj;
     private javax.swing.JTextField txtMothLujNo;
     private javax.swing.JTextField txtPageNo;

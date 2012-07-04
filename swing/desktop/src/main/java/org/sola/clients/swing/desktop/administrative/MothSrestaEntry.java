@@ -15,12 +15,12 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
+import javax.swing.JOptionPane;
 import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
-import org.sola.clients.swing.desktop.party.LandownerDecription;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -42,6 +42,7 @@ public class MothSrestaEntry extends ContentPanel {
         cmbDistrict.setSelectedIndex(-1);
         cmbDistrict1.setSelectedIndex(-1);
         cmbVdc.setSelectedIndex(-1);
+        cmbMothLuj2.setSelectedIndex(-1);
 
     }
 
@@ -64,8 +65,6 @@ public class MothSrestaEntry extends ContentPanel {
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         toolMnuParcelEntry = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        toolLandOwnerDetail = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -113,23 +112,6 @@ public class MothSrestaEntry extends ContentPanel {
         });
         jToolBar1.add(toolMnuParcelEntry);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document-view.png"))); // NOI18N
-        jButton4.setText("Parcel description");
-        jButton4.setFocusable(false);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
-
-        toolLandOwnerDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/users.png"))); // NOI18N
-        toolLandOwnerDetail.setText("Land owner details entry");
-        toolLandOwnerDetail.setFocusable(false);
-        toolLandOwnerDetail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolLandOwnerDetail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toolLandOwnerDetailActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(toolLandOwnerDetail);
-
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose Moth according to VDC/MP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
@@ -154,7 +136,7 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel7)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(cmbDistrict, 0, 168, Short.MAX_VALUE)
+            .addComponent(cmbDistrict, 0, 108, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +170,7 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addContainerGap())
-            .addComponent(cmbVdc, 0, 168, Short.MAX_VALUE)
+            .addComponent(cmbVdc, 0, 108, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +198,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
             .addComponent(cmbMothLuj2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -244,8 +226,8 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(110, Short.MAX_VALUE))
-            .addComponent(cmbMothLujNo, 0, 168, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE))
+            .addComponent(cmbMothLujNo, 0, 108, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +278,7 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(cmbDistrict1, 0, 150, Short.MAX_VALUE)
+            .addComponent(cmbDistrict1, 0, 89, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,8 +307,8 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(37, 112, Short.MAX_VALUE))
-            .addComponent(cmbVdc1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(37, 51, Short.MAX_VALUE))
+            .addComponent(cmbVdc1, 0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,7 +335,7 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addContainerGap())
-            .addComponent(cmbMothLuj, 0, 150, Short.MAX_VALUE)
+            .addComponent(cmbMothLuj, 0, 89, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +359,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addComponent(txtMothLujNo)
         );
         jPanel6Layout.setVerticalGroup(
@@ -399,8 +381,8 @@ public class MothSrestaEntry extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -425,10 +407,18 @@ public class MothSrestaEntry extends ContentPanel {
 
     private void toolMnuParcelEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolMnuParcelEntryActionPerformed
         // TODO add your handling code here:
+        if(cmbDistrict.getSelectedItem()==null||cmbVdc.getSelectedItem()==null||cmbMothLuj2.getSelectedItem()==null || cmbMothLujNo.getSelectedItem()==null){
+               JOptionPane.showMessageDialog(null, "Some Fields are Empty");
+               return;
+        }
         parcelsEntry();
     }//GEN-LAST:event_toolMnuParcelEntryActionPerformed
 
     private void toolMenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolMenuSaveActionPerformed
+        if(cmbDistrict1.getSelectedItem()==null||cmbVdc1.getSelectedItem()==null||cmbMothLuj.getSelectedItem()==null || txtMothLujNo.getText()==null){
+               JOptionPane.showMessageDialog(null, "Some Fields are Empty");
+               return;
+        }
         saveMoth(false);
     }//GEN-LAST:event_toolMenuSaveActionPerformed
 
@@ -475,13 +465,7 @@ public class MothSrestaEntry extends ContentPanel {
         listofMoths();
     }//GEN-LAST:event_cmbMothLuj2ItemStateChanged
 
-    private void toolLandOwnerDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolLandOwnerDetailActionPerformed
-        // TODO add your handling code here:
-        landOwnerDetails();
-    }//GEN-LAST:event_toolLandOwnerDetailActionPerformed
-
     private void cmbDistrict1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDistrict1ItemStateChanged
-        // TODO add your handling code here:
         // TODO add your handling code here:
         try {
             if (cmbDistrict1.getSelectedItem() == null) {
@@ -530,20 +514,13 @@ public class MothSrestaEntry extends ContentPanel {
     }
     
     private void parcelsEntry() {
-        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_Parcel_Entry)) {
+        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_ENTRY)) {
             ParcelMothEntry pclMoth = new ParcelMothEntry(mothListBean.getSelectedMoth());
-            getMainContentPanel().addPanel(pclMoth, MainContentPanel.CARD_Parcel_Entry);
+            getMainContentPanel().addPanel(pclMoth, MainContentPanel.CARD_PARCEL_ENTRY);
         }
-        getMainContentPanel().showPanel(MainContentPanel.CARD_Parcel_Entry);
+        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_ENTRY);
     }
-
-    private void landOwnerDetails() {
-        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_LandOwner_Entry)) {
-            LandownerDecription lndOwner = new LandownerDecription();
-            getMainContentPanel().addPanel(lndOwner, MainContentPanel.CARD_LandOwner_Entry);
-        }
-        getMainContentPanel().showPanel(MainContentPanel.CARD_LandOwner_Entry);
-    }
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cmbDistrict;
     private javax.swing.JComboBox cmbDistrict1;
@@ -555,7 +532,6 @@ public class MothSrestaEntry extends ContentPanel {
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean1;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -578,7 +554,6 @@ public class MothSrestaEntry extends ContentPanel {
     private javax.swing.JToolBar jToolBar2;
     private org.sola.clients.beans.administrative.MothBean mothBean;
     private org.sola.clients.beans.administrative.MothListBean mothListBean;
-    private javax.swing.JButton toolLandOwnerDetail;
     private javax.swing.JButton toolMenuSave;
     private javax.swing.JButton toolMnuParcelEntry;
     private javax.swing.JTextField txtMothLujNo;

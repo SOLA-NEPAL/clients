@@ -24,13 +24,14 @@ import org.sola.services.boundary.wsclients.WSManager;
  *
  * @author KumarKhadka
  */
-public class BaUnitContainsSpatialUnitBean extends AbstractBindingBean {
+public class BaUnitAsPartyBean extends AbstractBindingBean {
 
-    public static final String BAUNIT_ID = "baUnitId";
-    public static final String SPATIAL_UNIT_ID = "spatialUnitId";
+    public static final String BAUNIT_ID_PROPERTY = "baUnitId";
+    public static final String PARTY_ID_PROPERTY = "partyId";
+   
     private String baUnitId;
-    private String spatialUnitId;
-
+    private String partyId;
+    
     public String getBaUnitId() {
         return baUnitId;
     }
@@ -38,22 +39,22 @@ public class BaUnitContainsSpatialUnitBean extends AbstractBindingBean {
     public void setBaUnitId(String baUnitId) {
         String oldValue = this.baUnitId;
         this.baUnitId = baUnitId;
-        propertySupport.firePropertyChange(BAUNIT_ID, oldValue, this.baUnitId);
+        propertySupport.firePropertyChange(BAUNIT_ID_PROPERTY, oldValue, this.baUnitId);
     }
 
-    public String getSpatialUnitId() {
-        return spatialUnitId;
+    public String getPartyId() {
+        return partyId;
     }
 
-    public void setSpatialUnitId(String spatialUnitId) {
-        String oldValue = this.spatialUnitId;
-        this.spatialUnitId = spatialUnitId;
-        propertySupport.firePropertyChange(SPATIAL_UNIT_ID, oldValue, this.spatialUnitId);
+    public void setPartyId(String partyId) {
+        String oldValue = this.partyId;
+        this.partyId = partyId;
+        propertySupport.firePropertyChange(PARTY_ID_PROPERTY, oldValue, this.partyId);
     }
-    
-    public static List<BaUnitContainsSpatialUnitBean> getBaUnitContainsSpatialUnitsList(String spatialUnitId) {
+
+    public static List<BaUnitAsPartyBean> getBaUnitAsPartyList(String partyId) {
         return TypeConverters.TransferObjectListToBeanList(
-                WSManager.getInstance().getAdministrative().getBaUnitContainsSpatialUnitsList(spatialUnitId),
-                BaUnitContainsSpatialUnitBean.class,null);
+                WSManager.getInstance().getAdministrative().getBaUnitAsPartyList(partyId),
+                BaUnitAsPartyBean.class,null);
     }
 }
