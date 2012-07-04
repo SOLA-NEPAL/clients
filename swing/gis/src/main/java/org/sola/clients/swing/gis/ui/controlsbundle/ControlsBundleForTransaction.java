@@ -47,6 +47,7 @@ import org.sola.clients.swing.gis.layer.PojoLayer;
 import org.sola.clients.swing.gis.tool.CadastreBoundaryEditTool;
 import org.sola.clients.swing.gis.tool.CadastreBoundarySelectTool;
 import org.sola.common.messaging.GisMessage;
+import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**
  * An abstract bundle that defines common functionality that is used in the cadastre transaction
@@ -178,4 +179,6 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
     
     //By Kabindra
     //public abstract void update_Parcel_Geometry();
+    
+    public abstract void show_Selected_Parcel_onMap(CadastreObjectSearchResultTO selected_parcel);
 }

@@ -614,6 +614,22 @@ public class Map extends JMapPane {
         } else {
             btn = new JButton(action);
         }
+
+        this.toolsGroup.add(btn);
+        inToolbar.add(btn);
+    }
+    
+    public void addMapAction(
+            AbstractAction action, boolean hasTool, JToolBar inToolbar,
+            boolean enabled, String buttonName) {
+        action.setEnabled(enabled);
+        AbstractButton btn = null;
+        if (hasTool) {
+            btn = new ExtendedToolItem(action);
+        } else {
+            btn = new JButton(action);
+        }
+        btn.setName(buttonName);
         this.toolsGroup.add(btn);
         inToolbar.add(btn);
     }
@@ -628,6 +644,12 @@ public class Map extends JMapPane {
     public void addTool(ExtendedTool tool, JToolBar inToolbar, boolean enabled) {
         this.addMapAction(new ExtendedAction(this, tool), inToolbar, enabled);
     }
+    
+    public void addTool(ExtendedTool tool, JToolBar inToolbar, boolean enabled,
+            String buttonName) {
+        this.addMapAction(new ExtendedAction(this, tool), inToolbar,
+                enabled, buttonName);
+    }
 
     /**
      * Add an action of type ExtendedAction in a toolbar.
@@ -637,6 +659,12 @@ public class Map extends JMapPane {
      */
     public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled) {
         this.addMapAction(action, action.getAttachedTool() != null, inToolbar, enabled);
+    }
+    
+    public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled,
+            String buttonName) {
+        this.addMapAction(action, action.getAttachedTool() != null, inToolbar
+                , enabled,buttonName);
     }
 
     /**

@@ -7,11 +7,13 @@ package org.sola.clients.swing.gis.mapaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 import org.sola.clients.swing.gis.ui.control.TwoPointMethodForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -27,9 +29,11 @@ public class CadastreTwoPointFormShow extends ComponentShow{
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
+    private JToolBar jTool;
 
     public CadastreTwoPointFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
-                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
+                                JToolBar jTool) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_TWO_POINT_SHOW).getMessage(),
@@ -38,6 +42,7 @@ public class CadastreTwoPointFormShow extends ComponentShow{
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
         this.targetParcelsLayer=targetParcelsLayer;
+        this.jTool=jTool;
     }
     
     @Override
@@ -57,10 +62,13 @@ public class CadastreTwoPointFormShow extends ComponentShow{
         try {
             //Display segment list.
             if (twoPointForm==null)
-                twoPointForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
+                twoPointForm=new TwoPointMethodForm(segmentLayer,
+                        targetParcelsLayer,jTool);
 
             twoPointForm.setVisible(true);
             twoPointForm.showPointListInTable();
+            PublicMethod.enable_disable_Select_Tool(jTool, 
+                            listSelectedCadastreObjects.NAME, false);
             twoPointForm.getLocatePointPanel().reload_Data();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(CadastreTwoPointFormShow.class.getName()).log(Level.SEVERE, null, ex);

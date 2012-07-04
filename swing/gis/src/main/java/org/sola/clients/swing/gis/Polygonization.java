@@ -58,7 +58,8 @@ public class Polygonization {
             //clean leaf segments.
             remove_Leaf_Segment(targetPointlayer,polygons);
             //rectify the topology other touching parcels.
-            PublicMethod.rectify_TouchingParcels(targetParcelsLayer.getNeighbour_parcels(), targetParcelsLayer);
+            //ununcomment it for modifying topoloy.
+            //PublicMethod.rectify_TouchingParcels(targetParcelsLayer.getNeighbour_parcels(), targetParcelsLayer);
         } catch (InitializeLayerException e) { }
     }
     

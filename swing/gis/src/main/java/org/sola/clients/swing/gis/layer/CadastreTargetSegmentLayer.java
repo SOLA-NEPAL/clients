@@ -8,6 +8,7 @@ package org.sola.clients.swing.gis.layer;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JToolBar;
 import org.geotools.geometry.jts.Geometries;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
@@ -62,9 +63,10 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
      * Gets the form that is responsible with handling other attributes of features
      * @return 
      */
-    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws NoSuchMethodException, InitializeLayerException {
+    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
+            JToolBar jTool) throws NoSuchMethodException, InitializeLayerException {
         if (this.hostForm == null){
-            this.hostForm = new TwoPointMethodForm(this,targetParcelsLayer);
+            this.hostForm = new TwoPointMethodForm(this,targetParcelsLayer,jTool);
         }
         
         return (TwoPointMethodForm)this.hostForm;

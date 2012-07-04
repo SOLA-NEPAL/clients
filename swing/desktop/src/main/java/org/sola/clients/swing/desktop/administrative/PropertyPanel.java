@@ -33,6 +33,9 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.administrative.BaUnitBean;
@@ -53,6 +56,8 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.ReportViewerForm;
+import org.sola.clients.swing.desktop.application.ApplicationPanel;
+import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForBaUnit;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -66,6 +71,7 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  * This form is used to manage property object ({@codeBaUnit}).
@@ -211,6 +217,7 @@ public class PropertyPanel extends ContentPanel {
                 tabsMain.remove(jp);
             }
         }
+        btnAddParcel.setVisible(false);
     }
      
     private boolean is_UnnecessaryTab(String panel_name) {
@@ -1023,6 +1030,7 @@ public class PropertyPanel extends ContentPanel {
         jToolBar1 = new javax.swing.JToolBar();
         btnAddParcel = new javax.swing.JButton();
         btnRemoveParcel = new javax.swing.JButton();
+        btnSelectParcel = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableRights = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
@@ -1551,6 +1559,18 @@ public class PropertyPanel extends ContentPanel {
             }
         });
         jToolBar1.add(btnRemoveParcel);
+
+        btnSelectParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        btnSelectParcel.setText(bundle.getString("PropertyPanel.btnSelectParcel.text")); // NOI18N
+        btnSelectParcel.setFocusable(false);
+        btnSelectParcel.setName(bundle.getString("PropertyPanel.btnSelectParcel.name")); // NOI18N
+        btnSelectParcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSelectParcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectParcelActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSelectParcel);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -2295,6 +2315,39 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private void btnAddNotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNotationActionPerformed
         addNotation();
     }//GEN-LAST:event_btnAddNotationActionPerformed
+
+     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
+    public void refreshNewProperty(CadastreObjectTO parcel){
+        //do as required.
+        CadastreObjectBean coBean= TypeConverters.TransferObjectToBean(
+                        parcel, CadastreObjectBean.class, null);
+        baUnitBean1.getCadastreObjectList().addAsNew(coBean);
+    }
+    
+    private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
+        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
+        //Event delegate passing to the child JPanel.
+        Class[] cls=new Class[]{CadastreObjectTO.class};
+        Class workingForm=this.getClass();
+        Method taskCompletion=null;
+        try {
+            taskCompletion = workingForm.getMethod("refreshNewProperty", cls);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //parcelSearchForm.setSize(700, 800);
+        parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
+        
+        displayForm(parcelSearchForm);
+    }//GEN-LAST:event_btnSelectParcelActionPerformed
+
+    private void displayForm(Select_Parcel_Form parcelSearchForm) {
+        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
+            getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
+        }
+        getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.administrative.BaUnitBean baUnitBean1;
     private org.sola.clients.beans.referencedata.RrrTypeListBean baUnitRrrTypes;
@@ -2314,6 +2367,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private javax.swing.JButton btnRemoveParent;
     private javax.swing.JButton btnRemoveRight;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSelectParcel;
     private javax.swing.JButton btnTerminate;
     private javax.swing.JButton btnViewPaperTitle;
     private javax.swing.JButton btnViewRight;

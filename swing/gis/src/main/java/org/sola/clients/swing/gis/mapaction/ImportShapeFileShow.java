@@ -7,11 +7,13 @@ package org.sola.clients.swing.gis.mapaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 import org.sola.clients.swing.gis.ui.control.ImportLinesFromFile;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -27,10 +29,12 @@ public class ImportShapeFileShow  extends ComponentShow{
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
+    private JToolBar jTool;
 
     public ImportShapeFileShow(Map mapObj,
                     CadastreTargetSegmentLayer segmentLayer,
-                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
+                            JToolBar jTool) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_CHANGE_IMPORT_SHAPE).getMessage(),
@@ -39,6 +43,7 @@ public class ImportShapeFileShow  extends ComponentShow{
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
         this.targetParcelsLayer=targetParcelsLayer;
+        this.jTool=jTool;
     }
     
     @Override
@@ -53,8 +58,12 @@ public class ImportShapeFileShow  extends ComponentShow{
         PublicMethod.maplayerOnOff(mapObj, false);
         try {
             //Display segment list.
-            if (pointsForm==null)
-                pointsForm=new ImportLinesFromFile(segmentLayer, targetParcelsLayer);
+            if (pointsForm==null){
+                pointsForm=new ImportLinesFromFile(segmentLayer,
+                        targetParcelsLayer,jTool);
+            }
+            PublicMethod.enable_disable_Select_Tool(jTool,
+                    listSelectedCadastreObjects.NAME, false);
             pointsForm.setVisible(true);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(ImportShapeFileShow.class.getName()).log(Level.SEVERE, null, ex);

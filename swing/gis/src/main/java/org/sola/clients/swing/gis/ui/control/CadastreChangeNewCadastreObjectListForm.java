@@ -37,11 +37,28 @@
  */
 package org.sola.clients.swing.gis.ui.control;
 
+import com.vividsolutions.jts.geom.Geometry;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.beans.cadastre.CadastreObjectBean;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
+import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  * This form is used to display information about the new cadastre objects 
@@ -57,7 +74,7 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
     public CadastreChangeNewCadastreObjectListForm() {
         initComponents();
         this.setAlwaysOnTop(true);
-        this.setModalityType(ModalityType.APPLICATION_MODAL);
+        this.setModalityType(ModalityType.MODELESS);
         this.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.table.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -65,6 +82,7 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         cmdRemove.setEnabled(true);
+                        btnEdit.setEnabled(true);
                     }
                 });
     }
@@ -96,6 +114,8 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
         cmdRemove = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        btnEdit = new javax.swing.JButton();
+        btnShowOnMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -137,6 +157,20 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
         table.getColumnModel().getColumn(0).setPreferredWidth(2);
         table.getColumnModel().getColumn(3).setResizable(false);
 
+        btnEdit.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.btnEdit.text")); // NOI18N
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
+        btnShowOnMap.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.btnShowOnMap.text")); // NOI18N
+        btnShowOnMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowOnMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,14 +179,22 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                    .addComponent(cmdRemove, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnShowOnMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmdRemove)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cmdRemove)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmdRemove)
+                    .addComponent(btnEdit)
+                    .addComponent(btnShowOnMap))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addContainerGap())
@@ -170,9 +212,137 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FID)).toString();
         this.layer.removeFeature(fid);
         cmdRemove.setEnabled(false);
+        btnEdit.setEnabled(false);
     }
 }//GEN-LAST:event_cmdRemoveActionPerformed
+
+    private CadastreObjectBean getSelected_parcel(){
+        int r=table.getSelectedRow();
+        String unique_id= table.getValueAt(r, 1).toString() + " " +
+                                table.getValueAt(r, 2).toString();
+        List<CadastreObjectTO> parcels=
+                WSManager.getInstance().getCadastreService()
+                            .getPendingParcelsByParts(unique_id);
+        //Assuming that part combination gives unique id, the list will have single parcel.
+        if (parcels==null || parcels.size()<1) return null;
+        CadastreObjectTO tmp_parcel=parcels.get(0);
+        CadastreObjectBean parcel=TypeConverters.TransferObjectToBean(
+                tmp_parcel, CadastreObjectBean.class, null);
+        
+        return parcel;
+    }
+    
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        CadastreObjectBean parcel=getSelected_parcel();
+        
+        EditParcelAttributeForm editParcel=new EditParcelAttributeForm();
+        //Event delegate passing to the child JPanel.
+        Class[] cls=new Class[]{CadastreObjectBean.class};
+        Class workingForm=this.getClass();
+        Method taskCompletion=null;
+        try {
+            taskCompletion = workingForm.getMethod("refresh_Data", cls);
+        } catch (Exception ex) {
+            Logger.getLogger(
+                    CadastreChangeNewCadastreObjectListForm.class.getName()).log(
+                            Level.SEVERE, null, ex);
+        }
+        editParcel.set_SearchCompletedTriggers(taskCompletion, this);
+        
+        editParcel.setParcel(parcel);
+        editParcel.setTitle("Edit Attributes of the parcels");
+        editParcel.setVisible(true);
+        editParcel.setAlwaysOnTop(true);
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void updateFeatureCollection(SimpleFeature fea,int selected,String geomfld){
+         //record attributes.
+        Object fea_id=fea.getAttribute(
+            CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FID);
+        if (fea_id==null) fea_id=fea.hashCode();
+        
+        String firstpart= fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString();
+        String lastpart=fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
+        String officical_area=fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA).toString();
+        
+        String id=String.valueOf(fea_id);
+        //prepare new params.
+        HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART, firstpart);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, lastpart);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED,selected);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA,officical_area);
+        
+        Geometry geom=(Geometry)fea.getAttribute(geomfld);
+        this.layer.addFeature(id, geom,fieldsWithValues,false);
+    }
+    
+    private void btnShowOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOnMapActionPerformed
+        SimpleFeatureCollection featrs=this.layer.getFeatureCollection();
+        SimpleFeatureIterator feaIter=featrs.features();
+        //collect features first.
+        List<SimpleFeature> tmpFeatures=new ArrayList<SimpleFeature>();
+        while (feaIter.hasNext()){
+            SimpleFeature fea=feaIter.next();
+            tmpFeatures.add(fea);
+        }
+        //remove and append the features.
+        String geomfld=PublicMethod.theGeomFieldName(this.layer.getFeatureCollection());
+        featrs.clear();
+        
+        Geometry the_Polygon=null;
+        this.layer.setAvoid_table_append(true);
+        for (SimpleFeature fea:tmpFeatures){
+            int selected= getFeature_SelectionStatus(fea);
+            if (selected==1){
+                the_Polygon=(Geometry)fea.getAttribute(geomfld);
+            }
+            //refresh the colleciton
+            updateFeatureCollection(fea,selected,geomfld);
+        }
+        this.layer.setAvoid_table_append(false);
+        //zoom to the panel.
+        if (the_Polygon!=null){
+            ReferencedEnvelope ref_Envelope= JTS.toEnvelope(the_Polygon);
+            double expand_by=ref_Envelope.getHeight() * 0.5;//expand 50 % of height
+            ref_Envelope.expandBy(expand_by);
+            this.layer.getMapControl().setDisplayArea(ref_Envelope);
+        }   
+        this.layer.getMapControl().refresh(false);
+    }//GEN-LAST:event_btnShowOnMapActionPerformed
+
+    private int getFeature_SelectionStatus(SimpleFeature fea){
+        int r= table.getSelectedRow();
+        if (r<0) return 0;
+        
+        String firstpart=table.getValueAt(r, 1).toString();
+        String lastpart=table.getValueAt(r, 2).toString();
+        
+        String selected_firstpart= fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString();
+        String selected_lastpart=fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
+        
+        if (firstpart.equals(selected_firstpart) && lastpart.equals(selected_lastpart))
+            return 1;
+        else
+            return 0;
+    }
+    
+    public void refresh_Data(CadastreObjectBean parcel){
+        int r=table.getSelectedRow();
+        if (r<0) return;
+        
+        table.setValueAt(parcel.getNameFirstpart(), r, 1);
+        table.setValueAt(parcel.getNameLastpart(), r, 2);
+        table.repaint();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnShowOnMap;
     private javax.swing.JButton cmdRemove;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;

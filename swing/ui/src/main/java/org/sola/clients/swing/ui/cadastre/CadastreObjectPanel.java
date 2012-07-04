@@ -4,10 +4,12 @@
  */
 package org.sola.clients.swing.ui.cadastre;
 
+import java.awt.HeadlessException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 //using more detailed one (i.e. not using bean from gis part.)
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
@@ -42,7 +44,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         //cmbMapNo1.setSelectedIndex(-1);
         rdbSearchByBoundaryItemStateChanged(null);
     }
-
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -535,6 +536,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                     cmbVdc.getSelectedItem().toString(),
                     txtWardNo.getText()});
     }
+    
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
         //invoke method.
         try {
@@ -542,17 +544,26 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(
                 vdc.getCode(), txtWardNo.getText(), 
                 Integer.parseInt(txtParcelNo.getText()));
-            refresh_Parcel_Information();
+            checkSearchedObject();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnSearch1ActionPerformed
 
+    private void checkSearchedObject() throws InvocationTargetException, IllegalAccessException, HeadlessException, IllegalArgumentException {
+        if (newCadastreObjectBean!=null){
+            refresh_Parcel_Information();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Couldn't find any parcel.");
+        }
+    }
+    
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         try {
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
             newCadastreObjectBean = cadastreObjectBean.getCadastreObjectByVdcWardParcel(
                     map.getCode(),Integer.parseInt(txtParcelNo1.getText()));
-            refresh_Parcel_Information();
+            checkSearchedObject();
         } catch (Exception ex) {
             Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
