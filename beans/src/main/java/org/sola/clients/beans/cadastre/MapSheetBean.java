@@ -73,8 +73,8 @@ public class MapSheetBean extends AbstractCodeBean {
     public void setSheetType(int sheetType) {
         int oldValue = this.sheetType;
         String oldValueString = this.sheetTypeString;
-        this.sheetType = sheetType;
-        if (sheetType == 0) {
+        this.sheetType = sheetType; 
+       if (sheetType == 0) {
             sheetTypeString = CONTROL_SHEET;
         } else {
             sheetTypeString = FREE_SHEET;
