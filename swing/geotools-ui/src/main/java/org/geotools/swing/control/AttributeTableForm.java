@@ -4,9 +4,16 @@
  */
 package org.geotools.swing.control;
 
+import java.io.IOException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.map.extended.layer.ExtendedFeatureLayer;
 import org.geotools.map.extended.layer.ExtendedLayer;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 
 /**
  *
@@ -77,30 +84,85 @@ public class AttributeTableForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        loadDataToJTable();
-    }//GEN-LAST:event_formWindowOpened
-
-    public void loadDataToJTable() {
+    public void prepareJTable(SimpleFeatureCollection feas) throws IOException {
         //get all recordsets.
         DefaultTableModel defModel = new DefaultTableModel();
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         defModel.setRowCount(0);
+        //convert back into pojolayer
+        String geomfld=theGeomFieldName(feas);
+        SimpleFeatureType schema = feas.getSchema();
+        //Rename of the column name based on the database table field name.
+        defModel.addColumn("SN");//for serial number.
+        for (int i = 0; i < schema.getAttributeCount(); i++) {
+            AttributeDescriptor att=schema.getDescriptor(i);
+            String colname = att.getLocalName();
+            if (colname.equals(geomfld)) continue;
+            if (colname.equals("the_geom")) continue;
+            if (colname.equals("geom")) continue;
+            defModel.addColumn(colname);
+        }
+        defModel.setRowCount(feas.size());
+        table.setModel(defModel);
+    }
+    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //do nothing for time being.
+    }//GEN-LAST:event_formWindowOpened
+
+    public void get_Table_Filled(String formTitle){
+        try {
+            ExtendedFeatureLayer fea_layer=(ExtendedFeatureLayer)mapLayer;
+            SimpleFeatureCollection feas=fea_layer.getFeatureSource().getFeatures(); 
+            
+            //this.setTitle("Readonly Attribute Table for [" 
+                               // + mapLayer.getLayerName() + "] layer");
+            this.setTitle(formTitle);
+            prepareJTable(feas);
+            loadDataToJTable(feas);
+        } catch (Exception e) {
+        }
+    }
+    
+    public void get_Table_Filled(SimpleFeatureCollection fea_col,String formTitle){
+        try {
+            this.setTitle(formTitle);
+            prepareJTable(fea_col);
+            loadDataToJTable(fea_col);
+        } catch (Exception e) {
+        }
+    }
+    
+    public static String theGeomFieldName(SimpleFeatureCollection fea_col){
+        if (fea_col.size()<1) return "";
+        
+        SimpleFeatureIterator fea_iterator=fea_col.features();
+        String geomfld="";
+        if (fea_iterator.hasNext()){
+            SimpleFeature fea=fea_iterator.next();
+            geomfld=fea.getFeatureType().getGeometryDescriptor().getName().toString();
+        }
+        fea_iterator.close();
+        
+        return geomfld;
+    }
+    
+    public void loadDataToJTable(SimpleFeatureCollection feas) throws IOException {
+        //convert back into pojolayer
+        SimpleFeatureIterator feaIter=feas.features();
+        if (!feaIter.hasNext()) return;
         int r = 0;
-//        //Rename of the column name based on the database table field name.
-//        for (int i = 1; i <= colcount; i++) {
-//            String colname = rsMetaData.getColumnName(i);
-//            defModel.addColumn(colname);
-//        }
-//        table.setModel(defModel);
-//       //Now fill data into the table.
-//        while (!rSet.isAfterLast()) {
-//            for (int j = 1; j <= colcount; j++) {
-//                table.setValueAt(rSet.getString(j), r, j - 1);
-//            }
-//            r++;
-//            rSet.next();
-//        }
+       //Now fill data into the table.
+        while (feaIter.hasNext()) {
+            SimpleFeature fea=feaIter.next();
+            table.setValueAt(r+1, r, 0);//serial number at first column.
+            //starting from index 1 assuming that first element alway geometry.
+            for (int j = 1; j < fea.getAttributeCount(); j++) {
+                table.setValueAt(fea.getAttribute(j), r, j);
+            }
+            r++;
+        }
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
 
     //<editor-fold defaultstate="collapsed" desc="main method">

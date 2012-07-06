@@ -50,6 +50,8 @@ public class TreeNodePopupMenu implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         AttributeTableForm attTable=new AttributeTableForm(mapLayer);
         attTable.setVisible(true);
+        attTable.get_Table_Filled("Readonly Attribute Table for [" 
+                               + mapLayer.getLayerName() + "] layer");        
         attTable.setAlwaysOnTop(true);
     }
 }

@@ -47,6 +47,7 @@ public class MergeParcelFormShow extends ComponentShow{
             JOptionPane.showMessageDialog(null, "Select the concerned parcels (at least two) and proceed again.");
             return;
         }
+        
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
         try {

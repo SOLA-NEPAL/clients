@@ -8,6 +8,7 @@ import com.vividsolutions.jts.geom.*;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.geotools.data.simple.SimpleFeatureCollection;
@@ -211,6 +212,11 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
         String geomfld=PublicMethod.theGeomFieldName(feacol);
         if (geomfld.isEmpty()) return;
+        //check isolated parcel selection.
+        if (PublicMethod.isGap_inBetween(feacol,geomfld)){
+            JOptionPane.showMessageDialog(this, "Some disjoint parcels exists, so please check it.");
+            return;
+        }
         
         SimpleFeatureIterator feaIter=feacol.features();
         Geometry[] geom=new Geometry[feacol.size()];

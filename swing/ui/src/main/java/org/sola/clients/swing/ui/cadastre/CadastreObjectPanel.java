@@ -4,10 +4,12 @@
  */
 package org.sola.clients.swing.ui.cadastre;
 
+import java.awt.HeadlessException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.administrative.MothBean;
@@ -879,6 +881,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                     cmbVdc.getSelectedItem().toString(),
                     txtWardNo.getText()});
     }
+    
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
         //invoke method.
         try {
@@ -891,6 +894,15 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSearch1ActionPerformed
 
+    private void checkSearchedObject() throws InvocationTargetException, IllegalAccessException, HeadlessException, IllegalArgumentException {
+        if (newCadastreObjectBean!=null){
+            refresh_Parcel_Information();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Couldn't find any parcel.");
+        }
+    }
+    
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         try {
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();

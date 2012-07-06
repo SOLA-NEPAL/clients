@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JToolBar;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.swing.extended.Map;
@@ -19,6 +20,7 @@ import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 
 /**
  *
@@ -34,18 +36,21 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     //private LineString lineSeg = null;
     //private Point pointFixed=null;
     //private String parcel_ID="";
+    private JToolBar jTool;
     
     /**
      * Creates new form JoinPointMethodForm
      */
-    public TwoPointMethodForm(CadastreTargetSegmentLayer targetPointlayer,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) 
-                            throws NoSuchMethodException, InitializeLayerException {
+    public TwoPointMethodForm(CadastreTargetSegmentLayer targetPointlayer,
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer, 
+                           JToolBar jTool)throws NoSuchMethodException, InitializeLayerException {
         initComponents();
         this.setAlwaysOnTop(true);
         this.setTitle("Join Multiple Point and Parcel Method for Splitting.");
         //this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.targetPointlayer = targetPointlayer;
         this.targetParcelsLayer=targetParcelsLayer;
+        this.jTool=jTool;
         //initialize data.
         locatePointPanel.initializeFormVariable(targetPointlayer);
     }
@@ -309,6 +314,8 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Map mapObj=targetPointlayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
+        PublicMethod.enable_disable_Select_Tool(jTool, 
+                            listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.

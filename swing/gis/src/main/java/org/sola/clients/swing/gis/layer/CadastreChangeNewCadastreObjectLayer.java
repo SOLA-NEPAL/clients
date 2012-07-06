@@ -68,10 +68,11 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
     public static final String LAYER_FIELD_LAST_PART = "last_part";
     public static final String LAYER_FIELD_OFFICIAL_AREA = "official_area";
     public static final String LAYER_NAME = "New Parcels";
+    public static final String LAYER_FIELD_SELECTED = "is_selected";
     
     private static final String LAYER_STYLE_RESOURCE = "parcel_new.xml";
-    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:\"\"",
-            LAYER_FIELD_FIRST_PART, LAYER_FIELD_LAST_PART, LAYER_FIELD_OFFICIAL_AREA);
+    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:\"\",%s:0",
+            LAYER_FIELD_FIRST_PART, LAYER_FIELD_LAST_PART, LAYER_FIELD_OFFICIAL_AREA, LAYER_FIELD_SELECTED);
     private List<CadastreObjectBean> cadastreObjectList = new ArrayList<CadastreObjectBean>();
     private Integer firstPartGenerator = 1;
     private Integer fidGenerator = 1;
@@ -79,7 +80,12 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
     private String lastPart = "";
     private DefaultTableModel tableModel = null;
     private Component hostForm = null;
+    private boolean avoid_table_append=false;
 
+    public void setAvoid_table_append(boolean avoid_table_append) {
+        this.avoid_table_append = avoid_table_append;
+    }
+    
     /**
      * Constructor for the layer. 
      * 
@@ -229,8 +235,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                     firstPartGenerator.toString());
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, 
                     this.lastPart);
-            //fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA, 
-                    //Math.round(geom.getArea()));
+            fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED,0);
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA, 
                     df.format(geom.getArea()));
         }
@@ -304,7 +309,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
         if (ev.getEventType() == CollectionEvent.FEATURES_ADDED) {
             for (SimpleFeature feature : ev.getFeatures()) {
                 this.getCadastreObjectList().add(this.newBean(feature));
-                this.addInTable(feature);
+                if (!avoid_table_append) this.addInTable(feature);
             }
         } else if (ev.getEventType() == CollectionEvent.FEATURES_REMOVED) {
             for (SimpleFeature feature : ev.getFeatures()) {
