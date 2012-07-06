@@ -38,12 +38,14 @@ public class MapSheetBean extends AbstractCodeBean {
     public static final String OFFICE_CODE_PROPERTY = "officeCode";
     public static final String FREE_SHEET = "Free Sheet";
     public static final String CONTROL_SHEET = "Control Sheet";
+    public static final String SRID_PROPERTY = "srid";
     @NotEmpty(message = ClientMessage.ADMIN_MAPSHEET_NUMBER_MISSING, payload = Localized.class)
     private String mapNumber;
-    private int sheetType=0;
-    private String sheetTypeString=CONTROL_SHEET;
+    private int sheetType = 0;
+    private String sheetTypeString = CONTROL_SHEET;
     @NotNull(message = ClientMessage.CHECK_SELECT_OFFICE, payload = Localized.class)
     private OfficeBean office;
+    private int srid;
 
     public String getMapNumber() {
         return mapNumber;
@@ -62,8 +64,8 @@ public class MapSheetBean extends AbstractCodeBean {
     public void setSheetType(int sheetType) {
         int oldValue = this.sheetType;
         String oldValueString = this.sheetTypeString;
-        this.sheetType = sheetType; 
-       if (sheetType == 0) {
+        this.sheetType = sheetType;
+        if (sheetType == 0) {
             sheetTypeString = CONTROL_SHEET;
         } else {
             sheetTypeString = FREE_SHEET;
@@ -122,5 +124,13 @@ public class MapSheetBean extends AbstractCodeBean {
             setOffice(CacheManager.getBeanByCode(CacheManager.getOffices(), officeCode));
             propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, officeCode);
         }
+    }
+
+    public int getSrid() {
+        return srid;
+    }
+
+    public void setSrid(int srid) {
+        this.srid = srid;
     }
 }
