@@ -70,7 +70,7 @@ public class FileInfoBean extends AbstractBindingBean {
     public ImageIcon getThumbnailIcon() {
         if (thumbnailIcon == null) {
             if (getThumbnail() != null) {
-                thumbnailIcon = new ImageIcon(getThumbnail().getContent());;
+                thumbnailIcon = new ImageIcon(getThumbnail().getContent());
             }
         }
         return thumbnailIcon;

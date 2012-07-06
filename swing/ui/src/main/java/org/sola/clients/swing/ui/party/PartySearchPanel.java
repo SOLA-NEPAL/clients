@@ -55,11 +55,7 @@ public class PartySearchPanel extends JPanel {
     public static final String SELECT_PARTY_PROPERTY = "selectParty";
     public static final String VIEW_PARTY_PROPERTY = "viewParty";
     
-    private boolean blndisabledelete;
     private PartyBean party;
-    public void setBlnDisabledelete(boolean blndisabledelete) {
-        this.blndisabledelete = blndisabledelete;
-    }
 
     /**
      * Creates new form PartySearchPanel
@@ -151,10 +147,12 @@ public class PartySearchPanel extends JPanel {
      */
     private void customizePartyButtons() {
         boolean hasPartySaveRole = SecurityBean.isInRole(RolesConstants.PARTY_SAVE);
-        boolean enabled = partySearchResuls.getSelectedPartySearchResult() != null;
+        boolean selected = partySearchResuls.getSelectedPartySearchResult()!=null;
+        boolean enabled = selected == true 
+                && partySearchResuls.getSelectedPartySearchResult().checkAccessByOffice();
 
-        btnView.setEnabled(enabled);
-        btnSelect.setEnabled(enabled);
+        btnView.setEnabled(selected);
+        btnSelect.setEnabled(selected);
         menuView.setEnabled(btnView.isEnabled());
         menuSelect.setEnabled(btnSelect.isEnabled());
 
@@ -170,11 +168,6 @@ public class PartySearchPanel extends JPanel {
         menuAdd.setEnabled(btnAddParty.isEnabled());
         menuEdit.setEnabled(btnEditParty.isEnabled());
         menuRemove.setEnabled(btnRemoveParty.isEnabled());
-        //addition by Kabindra.
-        if (blndisabledelete) {
-            btnRemoveParty.setEnabled(false);
-            menuRemove.setEnabled(false);
-        }
     }
 
     /**

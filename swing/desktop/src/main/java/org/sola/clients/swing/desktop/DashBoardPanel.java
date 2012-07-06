@@ -117,31 +117,30 @@ public class DashBoardPanel extends ContentPanel {
             menuTransferApplication.setEnabled(false);
             return;
         }
-
-        if (evt.getPropertyName().equals(ApplicationSearchResultsListBean.CHECKED_APPLICATION_PROPERTY)) {
-            boolean canAssign = SecurityBean.isInRole(RolesConstants.APPLICATION_ASSIGN_TO_ALL)
-                    || SecurityBean.isInRole(RolesConstants.APPLICATION_ASSIGN_TO_DEPARTMENT);
-            if (canAssign) {
-                canAssign = (Boolean) evt.getNewValue();
-            }
-            btnAssignApplication.setEnabled(canAssign);
-            btnTransferApplications.setEnabled(canAssign);
-            menuAssignApplication.setEnabled(btnAssignApplication.isEnabled());
-            menuTransferApplication.setEnabled(btnTransferApplications.isEnabled());
-
-        } else if (evt.getPropertyName().equals(ApplicationSearchResultsListBean.SELECTED_APPLICATION_PROPERTY)) {
-
-            boolean isEditEnabled;
-            ApplicationSearchResultBean app = (ApplicationSearchResultBean) evt.getNewValue();
-
-            if (app == null) {
-                isEditEnabled = false;
-            } else {
-                isEditEnabled = SecurityBean.isInRole(RolesConstants.APPLICATION_EDIT_APPS);
-            }
-
-            btnOpenApplication.setEnabled(isEditEnabled);
-            menuOpenApplication.setEnabled(isEditEnabled);
+        
+        switch (evt.getPropertyName()) {
+            case ApplicationSearchResultsListBean.CHECKED_APPLICATION_PROPERTY:
+                boolean canAssign = SecurityBean.isInRole(RolesConstants.APPLICATION_ASSIGN_TO_ALL)
+                        || SecurityBean.isInRole(RolesConstants.APPLICATION_ASSIGN_TO_DEPARTMENT);
+                if (canAssign) {
+                    canAssign = (Boolean) evt.getNewValue();
+                }
+                btnAssignApplication.setEnabled(canAssign);
+                btnTransferApplications.setEnabled(canAssign);
+                menuAssignApplication.setEnabled(btnAssignApplication.isEnabled());
+                menuTransferApplication.setEnabled(btnTransferApplications.isEnabled());
+                break;
+            case ApplicationSearchResultsListBean.SELECTED_APPLICATION_PROPERTY:
+                boolean isEditEnabled;
+                ApplicationSearchResultBean app = (ApplicationSearchResultBean) evt.getNewValue();
+                if (app == null) {
+                    isEditEnabled = false;
+                } else {
+                    isEditEnabled = SecurityBean.isInRole(RolesConstants.APPLICATION_EDIT_APPS);
+                }
+                btnOpenApplication.setEnabled(isEditEnabled);
+                menuOpenApplication.setEnabled(isEditEnabled);
+                break;
         }
     }
 

@@ -16,6 +16,7 @@
 package org.sola.clients.beans.cadastre;
 
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -37,24 +38,12 @@ public class MapSheetBean extends AbstractCodeBean {
     public static final String OFFICE_CODE_PROPERTY = "officeCode";
     public static final String FREE_SHEET = "Free Sheet";
     public static final String CONTROL_SHEET = "Control Sheet";
-//    public static final String ALPHA_CODE_PROPERTY = "alpha_code";
+    @NotEmpty(message = ClientMessage.ADMIN_MAPSHEET_NUMBER_MISSING, payload = Localized.class)
     private String mapNumber;
-    private int sheetType;
-    private String sheetTypeString;
-    
-     @NotNull(message=ClientMessage.CHECK_SELECT_OFFICE, payload=Localized.class)
+    private int sheetType=0;
+    private String sheetTypeString=CONTROL_SHEET;
+    @NotNull(message = ClientMessage.CHECK_SELECT_OFFICE, payload = Localized.class)
     private OfficeBean office;
-     
-//    private String alphaCode;
-//
-//    public String getAlphaCode() {
-//        return alphaCode;
-//    }
-//    public void setAlphaCode(String alphacode) {
-//        String oldValue = this.alphaCode;
-//        this.alphaCode = alphacode;
-//        propertySupport.firePropertyChange(ALPHA_CODE_PROPERTY, oldValue, this.alphaCode);
-//    }
 
     public String getMapNumber() {
         return mapNumber;
@@ -109,11 +98,7 @@ public class MapSheetBean extends AbstractCodeBean {
         return mapNumber;
     }
 
-    
     public OfficeBean getOffice() {
-        if (this.office==null){
-            this.office= new OfficeBean();
-        }
         return office;
     }
 
@@ -122,16 +107,20 @@ public class MapSheetBean extends AbstractCodeBean {
         this.office = office;
         propertySupport.firePropertyChange(OFFICE_PROPERTY, oldValue, this.office);
     }
-    
+
     public String getOfficeCode() {
-        return this.getOffice().getCode();
+        if (getOffice() == null) {
+            return null;
+        } else {
+            return getOffice().getCode();
+        }
     }
 
     public void setOfficeCode(String officeCode) {
         String oldValue = getOfficeCode();
-        if(officeCode!=null && !officeCode.isEmpty()){
+        if (officeCode != null && !officeCode.isEmpty()) {
             setOffice(CacheManager.getBeanByCode(CacheManager.getOffices(), officeCode));
             propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, officeCode);
-        }        
+        }
     }
 }

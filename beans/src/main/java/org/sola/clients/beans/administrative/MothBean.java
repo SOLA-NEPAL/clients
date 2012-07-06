@@ -16,6 +16,7 @@
 package org.sola.clients.beans.administrative;
 
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.VdcBean;
@@ -26,7 +27,7 @@ import org.sola.webservices.transferobjects.administrative.MothTO;
  *
  * @author KumarKhadka
  */
-public class MothBean extends AbstractIdBean {
+public class MothBean extends AbstractIdWithOfficeCodeBean {
 
     public static final String FINANCIAL_YEAR_PROPERTY = "financialYear";
     public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
@@ -44,7 +45,6 @@ public class MothBean extends AbstractIdBean {
     private String transactionId;
     private SolaObservableList<LocBean> locList;
     private VdcBean vdc;
-    private String officeCode;
 
     public MothBean() {
         super();
@@ -146,13 +146,5 @@ public class MothBean extends AbstractIdBean {
     @Override
     public String toString() {
         return mothlujNumber;
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        this.officeCode = officeCode;
     }
 }

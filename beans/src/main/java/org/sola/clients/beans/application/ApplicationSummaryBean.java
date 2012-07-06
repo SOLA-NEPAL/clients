@@ -29,6 +29,7 @@ package org.sola.clients.beans.application;
 
 import java.util.Date;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationSummaryTO;
 
 /**
@@ -36,7 +37,7 @@ import org.sola.webservices.transferobjects.casemanagement.ApplicationSummaryTO;
  * from the {@link ApplicationSummaryTO} object.<br /> 
  * For more information see data dictionary <b>Application</b> schema.
  */
-public class ApplicationSummaryBean extends AbstractIdBean {
+public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
 
     public static final String NR_PROPERTY = "nr";
     public static final String EXPECTED_COMPLETION_DATE_PROPERTY = "expectedCompletionDate";
@@ -45,15 +46,13 @@ public class ApplicationSummaryBean extends AbstractIdBean {
     public static final String AGENT_ID_PROPERTY = "agentId";
     public static final String CONTACT_PERSON_ID_PROPERTY = "contactPersonId";
     public static final String FEE_PAID_PROPERTY = "feePaid";
-    public static final String OFFICE_CODE_PROPERTY = "officeCode";
-    
+        
     private String nr;
     private Date lodgingDatetime;
     private Date expectedCompletionDate;
     private Date assignedDatetime;
     private String agentId;
     private String contactPersonId;
-    private String officeCode;
     private boolean feePaid;
 
     public ApplicationSummaryBean() {
@@ -116,16 +115,6 @@ public class ApplicationSummaryBean extends AbstractIdBean {
         Date old = this.lodgingDatetime;
         this.lodgingDatetime = lodgingDatetime;
         propertySupport.firePropertyChange(LODGING_DATE_TIME_PROPERTY, old, this.lodgingDatetime);
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.lodgingDatetime);
     }
 
     public String getNr() {
