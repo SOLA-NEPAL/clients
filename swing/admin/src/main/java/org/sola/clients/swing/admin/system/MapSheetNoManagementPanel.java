@@ -15,12 +15,15 @@
  */
 package org.sola.clients.swing.admin.system;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
+import org.sola.clients.beans.referencedata.OfficeListBean;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -79,12 +82,14 @@ public class MapSheetNoManagementPanel extends ContentPanel {
      */
     public MapSheetNoManagementPanel() {
         initComponents();
-        initMapSheetList();
+        postInint();
         addMapSheet();
         ListSelectionModel rowSelectionModel = jTable2.getSelectionModel();
         rowSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
-
+            
+       
+        
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (mapSheetListBean.getSelectedMapSheet() != null && editMode) {
@@ -94,9 +99,26 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         });
 
     }
+private void postInint() {
+     cmbOfficeFilter.setSelectedIndex(-1);
+        mapSheetListBean.getMapSheets().clear();
+        officeListBean1.addPropertyChangeListener(new PropertyChangeListener() {
 
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals(OfficeListBean.SELECTED_OFFICE_PROPERTY)) {
+                    initMapSheetList();
+                }
+            }
+        });
+}
     public final void initMapSheetList() {
-        mapSheetListBean.loadMapSheetList();
+            
+        if (officeListBean1.getSelectedOffice()==null)
+        {
+            return;
+        }
+        mapSheetListBean.loadMapSheetList(officeListBean1.getSelectedOffice().getCode(),null);
     }
 
     /**
@@ -111,6 +133,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
 
         mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
         officeListBean = new org.sola.clients.beans.referencedata.OfficeListBean();
+        officeListBean1 = new org.sola.clients.beans.referencedata.OfficeListBean();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -122,6 +145,9 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cmbMapSheetType = new javax.swing.JComboBox();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        cmbSrid = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtMapSheetNo = new javax.swing.JTextField();
@@ -131,6 +157,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         btnAddRefData = new javax.swing.JButton();
         btnEditRefData = new javax.swing.JButton();
         btnRemoveRefData = new javax.swing.JButton();
+        cmbOfficeFilter = new javax.swing.JComboBox();
 
         setHeaderPanel(headerPanel1);
 
@@ -145,12 +172,19 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sheetTypeString}"));
         columnBinding.setColumnName("Sheet Type");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapNumber}"));
         columnBinding.setColumnName("Map Number");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${office.displayValue}"));
         columnBinding.setColumnName("Office");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${srid}"));
+        columnBinding.setColumnName("SRID");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedMapSheet}"), jTable2, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
@@ -169,7 +203,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("New Map Sheet No."));
-        jPanel2.setLayout(new java.awt.GridLayout(3, 0, 0, 5));
+        jPanel2.setLayout(new java.awt.GridLayout(4, 0, 0, 5));
 
         jLabel3.setText("Office");
 
@@ -203,7 +237,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbOffice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel6);
@@ -238,10 +272,45 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMapSheetType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel4);
+
+        jLabel4.setText("SRID");
+
+        cmbSrid.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "97260", "97261", "97262" }));
+        cmbSrid.setName("");
+        cmbSrid.setOpaque(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${mapSheetBean.srid}"), cmbSrid, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        cmbSrid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSridActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(cmbSrid, 0, 299, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbSrid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel7);
 
         jLabel1.setText("Map Sheet No");
 
@@ -269,7 +338,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMapSheetNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel3);
@@ -324,21 +393,28 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         });
         toolbarRefData.add(btnRemoveRefData);
 
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${offices}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, officeListBean1, eLProperty, cmbOfficeFilter);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, officeListBean1, org.jdesktop.beansbinding.ELProperty.create("${selectedOffice}"), cmbOfficeFilter, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        toolbarRefData.add(cmbOfficeFilter);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(toolbarRefData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbarRefData, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,7 +425,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -369,7 +445,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         mapSheetBean.saveMapSheet();
-        MessageUtility.displayMessage(ClientMessage.ADMIN_VDC_SAVED,
+        MessageUtility.displayMessage(ClientMessage.ADMIN_MAPSHEET_SAVED,
                 new String[]{mapSheetBean.getMapNumber()});
 
         if (editMode) {
@@ -402,6 +478,11 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     private void cmbOfficeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOfficeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbOfficeActionPerformed
+
+    private void cmbSridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSridActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSridActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRefData;
     private javax.swing.JButton btnEditRefData;
@@ -409,20 +490,25 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbMapSheetType;
     private javax.swing.JComboBox cmbOffice;
+    private javax.swing.JComboBox cmbOfficeFilter;
+    private javax.swing.JComboBox cmbSrid;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private org.sola.clients.beans.referencedata.OfficeListBean officeListBean;
+    private org.sola.clients.beans.referencedata.OfficeListBean officeListBean1;
     private javax.swing.JToolBar toolbarRefData;
     private javax.swing.JTextField txtMapSheetNo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
@@ -432,6 +518,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         editMode = false;
         setMapSheetBean(new MapSheetBean());
         mapSheetBean.setOffice((OfficeBean) cmbOffice.getSelectedItem());
+        mapSheetBean.setSrid(Integer.parseInt(cmbSrid.getSelectedItem().toString()));
     }
 
     private void editMapSheet() {

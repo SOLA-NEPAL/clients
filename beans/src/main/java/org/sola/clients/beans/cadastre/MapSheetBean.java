@@ -37,10 +37,12 @@ public class MapSheetBean extends AbstractCodeBean {
     public static final String OFFICE_CODE_PROPERTY = "officeCode";
     public static final String FREE_SHEET = "Free Sheet";
     public static final String CONTROL_SHEET = "Control Sheet";
+    public static final String SRID_PROPERTY = "srid";
 //    public static final String ALPHA_CODE_PROPERTY = "alpha_code";
     private String mapNumber;
     private int sheetType;
     private String sheetTypeString;
+    private int srid;
     
      @NotNull(message=ClientMessage.CHECK_SELECT_OFFICE, payload=Localized.class)
     private OfficeBean office;
@@ -134,4 +136,13 @@ public class MapSheetBean extends AbstractCodeBean {
             propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, officeCode);
         }        
     }
+
+    public int getSrid() {
+        return srid;
+    }
+
+    public void setSrid(int srid) {
+        this.srid = srid;
+    }
+    
 }
