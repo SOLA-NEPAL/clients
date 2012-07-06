@@ -103,7 +103,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         btnCancel.setEnabled(!enabled);
 
         if (!enabled) {
-            if (getMapSheetBean().getRowId()==null) {
+            if (!editMode) {
                 btnSave.setText(MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_CREATE));
             } else {
                 btnSave.setText(MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_SAVE));

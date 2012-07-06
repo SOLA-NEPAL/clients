@@ -34,6 +34,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedBean;
+import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -47,7 +48,7 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * Contains properties and methods to manage <b>Cadastre</b> object of the
  * domain model. Could be populated from the {@link CadastreObjectTO} object.
  */
-public class CadastreObjectBean extends AbstractTransactionedBean {
+public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean {
 
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String APPROVAL_DATETIME_PROPERTY = "approvalDatetime";
@@ -67,7 +68,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public static final String MAPSHEET_CODE_PROPERTY = "mapSheetCode";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String SPATIAL_VALUE_AREA_PROPERTY = "SpatialValueArea";
-    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     private Date approvalDatetime;
     private Date historicDatetime;
     private String sourceReference;
@@ -88,7 +88,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     private MapSheetBean mapSheet;
     private String transactionId;
     private SpatialValueAreaBean SpatialValueArea;
-    private String officeCode;
 
     public SpatialValueAreaBean getSpatialValueArea() {
         return SpatialValueArea;
@@ -321,16 +320,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         MapSheetBean oldValue = this.mapSheet;
         this.mapSheet = mapSheet;
         propertySupport.firePropertyChange(MAP_SHEET_PROPERTY, oldValue, this.mapSheet);
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 
     public List<SpatialValueAreaBean> getSpatialValueAreaList() {

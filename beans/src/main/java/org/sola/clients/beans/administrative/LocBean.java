@@ -34,14 +34,13 @@ public class LocBean extends AbstractIdBean {
     public static final String OSHP_TYPE_PROPERTY = "oshpType";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String BAUNIT_PROPERTY = "baUnits";
-    public static final String OFFICE_CODE_PROPERTY = "officeCode";
+
     private String mothId;
     private int panaNo;
     private int tmpPanaNo;
     private int propertyType;
     private int oshpType;
     private String transactionId;
-    private String officeCode;
     private SolaObservableList<BaUnitBean> baUnits;
     
     public LocBean() {
@@ -121,22 +120,10 @@ public class LocBean extends AbstractIdBean {
     }
 
     public boolean saveLoc() {
-        //make cadastreobject readonly.
-//        for (BaUnitBean bu:this.baUnits){
-//            bu.make_CadastreObject_ReadyOnly();
-//        }
         LocTO locTO = TypeConverters.BeanToTrasferObject(this, LocTO.class);
         locTO = WSManager.getInstance().getAdministrative().saveLoc(locTO);
         TypeConverters.TransferObjectToBean(locTO, LocBean.class, this);
         return true;
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        this.officeCode = officeCode;
     }
     
     @Override

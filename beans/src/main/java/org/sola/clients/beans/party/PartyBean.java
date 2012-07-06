@@ -29,7 +29,8 @@ package org.sola.clients.beans.party;
 
 import java.util.Date;
 import java.util.UUID;
-import org.dozer.Mapper;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import org.hibernate.validator.constraints.Email;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.address.AddressBean;
@@ -41,12 +42,11 @@ import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.party.validation.PartyIdTypeCheck;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
-import org.sola.common.MappingManager;
+import org.sola.common.FileUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.PartyTO;
-import org.sola.webservices.transferobjects.digitalarchive.DocumentTO;
 
 /** 
  * Represents party object in the domain model. 
@@ -79,7 +79,10 @@ public class PartyBean extends PartySummaryBean {
     public static final String REMARKS_PROPERTY="rmks";
     public static final String ID_ISSUING_OFFICE_PROPERTY= "id_issuing_office_code";
     public static final String ID_ISSUE_DATE_PROPERTY= "id_issueDate";
-    public static final String OFFICE_CODE_PROPERTY= "officeCode";
+    public static final String PHOTO_PROPERTY= "photo";
+    public static final String LEFT_FINGERPRINT_PROPERTY= "leftFingerPrint";
+    public static final String RIGHT_FINGERPRINT_PROPERTY= "rightFingerPrint";
+    public static final String SIGNATURE_PROPERTY= "signature";
     
     @Email(message = ClientMessage.CHECK_INVALID_EMAIL, payload=Localized.class)
     private String email;
@@ -110,8 +113,6 @@ public class PartyBean extends PartySummaryBean {
     private DocumentBean rightFingerDoc;
     private DocumentBean signatureDoc;
     
-    private String officeCode;
-
     public DocumentBean getLeftFingerDoc() {
         if (this.leftFingerDoc==null){
             this.leftFingerDoc=new DocumentBean();
@@ -134,6 +135,38 @@ public class PartyBean extends PartySummaryBean {
         this.photoDoc = photoDoc;
     }
 
+    public Icon getPhoto(){
+        if(getPhotoDoc().getEntityAction() == EntityAction.DELETE || 
+                getPhotoDoc().getEntityAction() == EntityAction.DISASSOCIATE){
+            return new ImageIcon();
+        }
+        return FileUtility.getIcon(getPhotoDoc().getBody());
+    }
+    
+    public Icon getRightFingerPrint(){
+        if(getRightFingerDoc().getEntityAction() == EntityAction.DELETE || 
+                getRightFingerDoc().getEntityAction() == EntityAction.DISASSOCIATE){
+            return new ImageIcon();
+        }
+        return FileUtility.getIcon(getRightFingerDoc().getBody());
+    }
+    
+    public Icon getSignature(){
+        if(getSignatureDoc().getEntityAction() == EntityAction.DELETE || 
+                getSignatureDoc().getEntityAction() == EntityAction.DISASSOCIATE){
+            return new ImageIcon();
+        }
+        return FileUtility.getIcon(getSignatureDoc().getBody());
+    }
+    
+    public Icon getLeftFingerPrint(){
+        if(getLeftFingerDoc().getEntityAction() == EntityAction.DELETE || 
+                getLeftFingerDoc().getEntityAction() == EntityAction.DISASSOCIATE){
+            return new ImageIcon();
+        }
+        return FileUtility.getIcon(getLeftFingerDoc().getBody());
+    }
+    
     public DocumentBean getRightFingerDoc() {
         if (this.rightFingerDoc==null){
             this.rightFingerDoc=new DocumentBean();
@@ -477,16 +510,6 @@ public class PartyBean extends PartySummaryBean {
         }
     }
 
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
-    }
-
     /** 
      * Saves changes to the party into the database. 
      * @throws Exception
@@ -501,12 +524,7 @@ public class PartyBean extends PartySummaryBean {
                 || getAddress().getDescription().length() < 1)) {
             party.getAddress().setEntityAction(EntityAction.DISASSOCIATE);
         }
-        //modify document beans.
-        if (!isDocumentExist(this.photoDoc)) party.setPhotoDoc(null);
-        if (!isDocumentExist(this.rightFingerDoc)) party.setRightFingerDoc(null);
-        if (!isDocumentExist(this.leftFingerDoc)) party.setLeftFingerDoc(null);
-        if (!isDocumentExist(this.signatureDoc)) party.setSignatureDoc(null);
-            
+        
         party = WSManager.getInstance().getCaseManagementService().saveParty(party);
         TypeConverters.TransferObjectToBean(party, PartyBean.class, this);
         return true;
@@ -541,5 +559,37 @@ public class PartyBean extends PartySummaryBean {
         PartyTO partyTO = WSManager.getInstance().getCaseManagementService().getParty(partyId);
         partyTO.setEntityAction(EntityAction.DELETE);
         WSManager.getInstance().getCaseManagementService().saveParty(partyTO);
+    }
+    
+    public void setPhoto(byte[] imageBinary){
+        if(imageBinary == null && !getPhotoDoc().isNew()){
+            getPhotoDoc().setEntityAction(EntityAction.DELETE);
+        }
+        getPhotoDoc().setBody(imageBinary);
+        propertySupport.firePropertyChange(PHOTO_PROPERTY, null, getPhoto());
+    }
+    
+    public void setRightFingerPrint(byte[] imageBinary){
+        if(imageBinary == null && !getRightFingerDoc().isNew()){
+            getRightFingerDoc().setEntityAction(EntityAction.DELETE);
+        }
+        getRightFingerDoc().setBody(imageBinary);
+        propertySupport.firePropertyChange(RIGHT_FINGERPRINT_PROPERTY, null, getRightFingerPrint());
+    }
+    
+    public void setSignature(byte[] imageBinary){
+        if(imageBinary == null && !getSignatureDoc().isNew()){
+            getSignatureDoc().setEntityAction(EntityAction.DELETE);
+        }
+        getSignatureDoc().setBody(imageBinary);
+        propertySupport.firePropertyChange(SIGNATURE_PROPERTY, null, getSignature());
+    }
+    
+    public void setLeftFingerPrint(byte[] imageBinary){
+        if(imageBinary == null && !getLeftFingerDoc().isNew()){
+            getLeftFingerDoc().setEntityAction(EntityAction.DELETE);
+        }
+        getLeftFingerDoc().setBody(imageBinary);
+        propertySupport.firePropertyChange(LEFT_FINGERPRINT_PROPERTY, null, getLeftFingerPrint());
     }
 }

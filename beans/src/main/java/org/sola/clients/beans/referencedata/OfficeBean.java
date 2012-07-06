@@ -67,4 +67,12 @@ public class OfficeBean extends AbstractCodeBean {
         }
         return currentOffice;
     }
+    
+    public static String getCurrentOfficeCode() {
+        if (getCurrentOffice() == null) {
+            return null;
+        } else {
+            return getCurrentOffice().getCode();
+        }
+    }
 }
