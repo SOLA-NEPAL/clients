@@ -18,6 +18,7 @@ package org.sola.clients.beans.cadastre;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractCodeBean;
+import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.OfficeBean;
@@ -30,7 +31,7 @@ import org.sola.webservices.transferobjects.cadastre.MapSheetTO;
  *
  * @author KumarKhadka
  */
-public class MapSheetBean extends AbstractCodeBean {
+public class MapSheetBean extends AbstractIdBean {
 
     public static final String MAP_NUMBER_PROPERTY = "mapNumber";
     public static final String SHEET_TYPE_PROPERTY = "sheetType";
@@ -45,7 +46,7 @@ public class MapSheetBean extends AbstractCodeBean {
     private String sheetTypeString = CONTROL_SHEET;
     @NotNull(message = ClientMessage.CHECK_SELECT_OFFICE, payload = Localized.class)
     private OfficeBean office;
-    private int srid;
+    private int srid = 97260;
 
     public String getMapNumber() {
         return mapNumber;

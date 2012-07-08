@@ -126,7 +126,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     
     public String getMapSheetCode() {
         if (getMapSheet() != null) {
-            return getMapSheet().getCode();
+            return getMapSheet().getId();
         } else {
             return null;
         }
@@ -142,7 +142,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
 //        propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
         String oldValue = null;
         if (mapSheet != null) {
-            oldValue = mapSheet.getCode();
+            oldValue = mapSheet.getId();
         }
         this.mapSheetCode = mapSheetCode;
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
