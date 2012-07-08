@@ -906,7 +906,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         try {
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getCode().toString(), Integer.parseInt(cmbParcelNo1.getSelectedItem().toString()));
+            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getId().toString(), Integer.parseInt(cmbParcelNo1.getSelectedItem().toString()));
             refresh_Parcel_Information();
         } catch (Exception ex) {
             Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
