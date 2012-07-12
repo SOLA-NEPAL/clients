@@ -81,6 +81,7 @@ public class PrintoutGenerator {
     public String generate(PrintLayout layout, double scale) {
         String pathToResult;
         BufferedImage mapImage = this.getMapImage(layout.getMap(), scale);
+        //FileUtility.createImageFile(mapImage, "testImage.png");
         BufferedImage scalebarImage = this.getScalebarImage(layout.getScalebar(), scale);
         Rectangle pageSize = new Rectangle(
                 this.getDimesionInPoints(layout.getPageWidth()),

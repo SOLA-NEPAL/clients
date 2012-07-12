@@ -41,7 +41,9 @@ import org.geotools.swing.extended.exception.InitializeMapException;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.PojoLayer;
+import org.sola.clients.swing.gis.mapaction.BlankTool;
 import org.sola.clients.swing.gis.mapaction.SolaPrint;
+import org.sola.clients.swing.gis.mapaction.ZoomToScale;
 import org.sola.clients.swing.gis.tool.InformationTool;
 import org.sola.clients.swing.gis.ui.control.SearchPanel;
 import org.sola.common.messaging.GisMessage;
@@ -73,6 +75,12 @@ public abstract class SolaControlsBundle extends ControlsBundle {
         }
     }
 
+    public void setupForScaleBox(){
+        //By Kabindra
+        this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
+        this.getMap().addMapTextBoxAction(new ZoomToScale(this.getMap()),this.getToolbar(),true,"scale");
+        //-----------------------------------------------------------------
+    }
     /**
      * Sets up the bundle.
      * @param pojoDataAccess The data access library used to communicate with the server
@@ -89,6 +97,8 @@ public abstract class SolaControlsBundle extends ControlsBundle {
             this.getMap().addTool(infoTool, this.getToolbar(), true);
             this.solaPrint = new SolaPrint(this.getMap());
             this.getMap().addMapAction(this.solaPrint, this.getToolbar(), true);
+            //test the lable and text box addition.
+            setupForScaleBox();
             
             this.getMap().setFullExtent(
                     mapDefinition.getEast(),

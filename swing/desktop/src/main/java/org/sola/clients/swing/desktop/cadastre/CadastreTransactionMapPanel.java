@@ -107,8 +107,10 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         
         //assuming combination of first part and last part as unique.
         //the valued returned will be only one.
-        if (parcel==null || parcel.size()<1) return;
-        CadastreObjectSearchResultTO selected_parcel=parcel.get(0);
+        CadastreObjectSearchResultTO selected_parcel=null;
+        if (parcel!=null && parcel.size()>0){
+            selected_parcel= parcel.get(0);
+        }
         this.mapControl.show_Selected_Parcel_onMap(selected_parcel);
     }
     

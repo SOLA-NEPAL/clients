@@ -40,6 +40,8 @@ import java.util.List;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.swing.extended.exception.InitializeLayerException;
+import org.sola.clients.swing.gis.PublicMethod;
+import org.sola.clients.swing.gis.SelectedParcelInfo;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
@@ -98,7 +100,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         }
         this.applicationLocation=applicationLocation;
         //this.trSegmentBean= new TransactionSegmentBean();
-        this.Setup(PojoDataAccess.getInstance());
+        this.Setup(PojoDataAccess.getInstance()); 
 
         if (!this.transactionIsStarted()) {
             this.setTargetParcelsByBaUnit(baUnitId);
@@ -154,7 +156,10 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
     //partially by Kabindra.
     @Override
     protected void addLayers() throws InitializeLayerException {
-        super.addLayers();
+        super.addLayers(); 
+        
+        //add vertical bar.//By Kabindra
+        this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
         
         this.newCadastreObjectLayer = new CadastreChangeNewCadastreObjectLayer(this.applicationNumber);
         this.newCadastreObjectLayer.setCadastreObjectList(this.transactionBean.getCadastreObjectList());
@@ -168,11 +173,12 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.targetParcelsLayer.setNew_parcels(this.newCadastreObjectLayer);//get reference of the newparcel layer object.
         this.targetParcelsLayer.setCadastreObjectTargetList(transactionBean.getCadastreObjectTargetList());
         this.getMap().addLayer(targetParcelsLayer);
-        //selection affected parcels.
+        
+        //selection affected parcels.//By Kabindra
         this.targetParcelsLayer.getNeighbour_parcels().setVisible(true);
         this.getMap().addLayer(this.targetParcelsLayer.getNeighbour_parcels());
         
-        //segment new layer.
+        //segment new layer.//By Kabindra
         this.targetSegmentLayer = new CadastreTargetSegmentLayer();
         this.getMap().addLayer(this.targetSegmentLayer);
         this.getMap().addLayer(this.targetSegmentLayer.getSegmentLayer());
@@ -255,11 +261,17 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         } catch (Exception e) {
         }
         if (the_Polygon!=null){
+            //main class to store the selection information.
+            SelectedParcelInfo parcel_selected=new SelectedParcelInfo(this.getPojoDataAccess());
+            parcel_selected.setTargetLayers(targetSegmentLayer, targetParcelsLayer);
+            //Prepare for fresh selection.
+            PublicMethod.maplayerOnOff(this.targetParcelsLayer.getMapControl(), false);
+            parcel_selected.display_Selected_Parcel(parcel,false);
+            //zoom to the selected parcel.
             ReferencedEnvelope ref_Envelope= JTS.toEnvelope(the_Polygon);
             double expand_by=ref_Envelope.getHeight() * 0.5;//expand 50 % of height
             ref_Envelope.expandBy(expand_by);
             this.targetParcelsLayer.getMapControl().setDisplayArea(ref_Envelope);
-            //this.targetParcelsLayer.getMapControl().refresh(false);
         }
     }
     //</editor-fold>

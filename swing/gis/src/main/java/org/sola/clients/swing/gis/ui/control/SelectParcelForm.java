@@ -180,16 +180,16 @@ public class SelectParcelForm extends javax.swing.JDialog {
         if (cadastreObject==null) return;
         
         //zoom to the selected parcel.
-        if (the_Polygon!=null){
+        if (the_Polygon!=null){  
+            //main class to store the selection information.
+            SelectedParcelInfo parcel_selected=new SelectedParcelInfo(dataAccess);
+            parcel_selected.setTargetLayers(pointsLayer, targetParcelsLayer);
+            parcel_selected.display_Selected_Parcel(cadastreObject,false);
+            //zoom to the selected parcel.
             ReferencedEnvelope ref_Envelope= JTS.toEnvelope(the_Polygon);
             double expand_by=ref_Envelope.getHeight() * 0.2;//expand 20 % of height
             ref_Envelope.expandBy(expand_by);
             this.targetParcelsLayer.getMapControl().setDisplayArea(ref_Envelope);
-            //main class to store the selection information.
-            SelectedParcelInfo parcel_selected=new SelectedParcelInfo(dataAccess);
-            parcel_selected.setTargetLayers(pointsLayer, targetParcelsLayer);
-            //Prepare for fresh selection.
-            parcel_selected.display_Selected_Parcel(cadastreObject,false);
         }
     }
     

@@ -34,6 +34,7 @@ package org.geotools.swing.mapaction.extended;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -78,7 +79,9 @@ public class Print extends ExtendedAction {
             }
         }
         try {
-            this.printForm.setScale(this.getMapControl().getScale().intValue());
+            DecimalFormat df = new DecimalFormat("#0");
+            String currentScale= df.format(this.getMapControl().getScale());
+            this.printForm.setScale(Integer.valueOf(currentScale));
             this.printForm.setVisible(true);
             if (this.printForm.getPrintLayout() == null) {
                 return;

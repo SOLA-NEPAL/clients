@@ -5,9 +5,7 @@
 package org.sola.clients.swing.gis.ui.control;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import javax.swing.JOptionPane;
-import org.jdesktop.beansbinding.Binding;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -44,6 +42,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
      */
     public EditParcelAttributeForm() {
         initComponents();
+        mapSheetListBean.loadMapSheetList();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,9 +56,10 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
 
         jComboBox1 = new javax.swing.JComboBox();
         mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
+        parcelTypeBeanList = new org.sola.clients.beans.cadastre.ParcelTypeBeanList();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cboMapSheet = new javax.swing.JComboBox();
+        cboMapSheets = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtFirstPartName = new javax.swing.JTextField();
@@ -86,9 +86,9 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         jLabel1.setText("Map sheet number:");
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheets}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cboMapSheet);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cboMapSheets);
         bindingGroup.addBinding(jComboBoxBinding);
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.mapSheet}"), cboMapSheet, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.mapSheet}"), cboMapSheets, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -98,17 +98,15 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 111, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(cboMapSheet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(cboMapSheets, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cboMapSheet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cboMapSheets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel2.setText("First Part Name:");
@@ -116,7 +114,10 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.nameFirstpart}"), txtFirstPartName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jLabel3.setText("Second Part Name:");
+        jLabel3.setText("Last Part Name:");
+
+        txtSecondPartName.setEditable(false);
+        txtSecondPartName.setEnabled(false);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.nameLastpart}"), txtSecondPartName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -126,7 +127,19 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.parcelno}"), txtParcelNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
+        txtParcelNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtParcelNumberActionPerformed(evt);
+            }
+        });
+
         jLabel5.setText("Parcel Type:");
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parcelTypes}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelTypeBeanList, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.parceltypeBean}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         jLabel6.setText("Parcel Note (Maximum 255 Characters):");
 
@@ -223,10 +236,11 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
  
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        List<Binding> binds= this.bindingGroup.getBindings();
-        for (Binding bind:binds){
-            bind.refresh();
-        }
+//        List<Binding> binds= this.bindingGroup.getBindings();
+//        for (Binding bind:binds){
+//            bind.refresh();
+//        }
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -242,7 +256,6 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         parcel=TypeConverters.TransferObjectToBean(
                 cadTO,CadastreObjectBean.class, parcel);
         
-        //By Kabindra
         try {
             search_Completed_Trigger.invoke(method_holder_object,
                     new Object[]{parcel});  
@@ -252,9 +265,13 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void txtParcelNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtParcelNumberActionPerformed
+        txtSecondPartName.setText(txtParcelNumber.getText());
+    }//GEN-LAST:event_txtParcelNumberActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cboMapSheet;
+    private javax.swing.JComboBox cboMapSheets;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -268,6 +285,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
+    private org.sola.clients.beans.cadastre.ParcelTypeBeanList parcelTypeBeanList;
     private javax.swing.JTextField txtFirstPartName;
     private javax.swing.JTextField txtParcelNumber;
     private javax.swing.JTextField txtSecondPartName;

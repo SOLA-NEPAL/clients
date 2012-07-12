@@ -928,6 +928,7 @@ public class PartyPanel extends javax.swing.JPanel {
 
         jPanel9.setName("jPanel9"); // NOI18N
 
+        labAddress.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         labAddress.setText(bundle.getString("PartyPanel.labAddress.text")); // NOI18N
         labAddress.setName("labAddress"); // NOI18N
 

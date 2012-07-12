@@ -15,10 +15,6 @@
  */
 package org.sola.clients.beans.cadastre;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -62,7 +58,7 @@ public class MapSheetListBean extends AbstractBindingListBean {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (SolaObservableList) mapSheets);
     }
     
-     public void loadMapSheetList(int mapSheetType) {
+    public void loadMapSheetList(int mapSheetType) {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (SolaObservableList) mapSheets);
     }
 

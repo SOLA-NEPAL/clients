@@ -22,7 +22,7 @@
                         </Fill>
                         <Stroke>
                             <CssParameter name="stroke">#64E986</CssParameter>
-                            <CssParameter name="stroke-width">3</CssParameter>
+                            <CssParameter name="stroke-width">2</CssParameter>
                         </Stroke>
                     </PolygonSymbolizer>
                     <TextSymbolizer>
@@ -63,7 +63,7 @@
                         </Fill>
                         <Stroke>
                             <CssParameter name="stroke">#64E986</CssParameter>
-                            <CssParameter name="stroke-width">3</CssParameter>
+                            <CssParameter name="stroke-width">2</CssParameter>
                         </Stroke>
                     </PolygonSymbolizer>
                     <TextSymbolizer>

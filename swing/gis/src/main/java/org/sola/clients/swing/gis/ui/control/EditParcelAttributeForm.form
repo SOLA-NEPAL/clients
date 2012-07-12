@@ -16,6 +16,8 @@
     </Component>
     <Component class="org.sola.clients.beans.cadastre.MapSheetListBean" name="mapSheetListBean">
     </Component>
+    <Component class="org.sola.clients.beans.cadastre.ParcelTypeBeanList" name="parcelTypeBeanList">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -78,19 +80,16 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="111" max="32767" attributes="0"/>
               </Group>
-              <Group type="102" attributes="0">
-                  <Component id="cboMapSheet" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <Component id="cboMapSheets" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="cboMapSheet" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="cboMapSheets" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -101,10 +100,10 @@
             <Property name="text" type="java.lang.String" value="Map sheet number:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cboMapSheet">
+        <Component class="javax.swing.JComboBox" name="cboMapSheets">
           <BindingProperties>
-            <BindingProperty name="elements" source="mapSheetListBean" sourcePath="${mapSheets}" target="cboMapSheet" targetPath="elements" updateStrategy="0" immediately="false"/>
-            <BindingProperty name="selectedItem" source="Form" sourcePath="${parcel.mapSheet}" target="cboMapSheet" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="elements" source="mapSheetListBean" sourcePath="${mapSheets}" target="cboMapSheets" targetPath="elements" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="selectedItem" source="Form" sourcePath="${parcel.mapSheet}" target="cboMapSheets" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
       </SubComponents>
@@ -185,10 +184,14 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Second Part Name:"/>
+            <Property name="text" type="java.lang.String" value="Last Part Name:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSecondPartName">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
           <BindingProperties>
             <BindingProperty name="text" source="Form" sourcePath="${parcel.nameLastpart}" target="txtSecondPartName" targetPath="text" updateStrategy="0" immediately="false">
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
@@ -206,6 +209,9 @@
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
             </BindingProperty>
           </BindingProperties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtParcelNumberActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -213,11 +219,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox2">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
+          <BindingProperties>
+            <BindingProperty name="elements" source="parcelTypeBeanList" sourcePath="${parcelTypes}" target="jComboBox2" targetPath="elements" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="selectedItem" source="Form" sourcePath="${parcel.parceltypeBean}" target="jComboBox2" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>

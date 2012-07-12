@@ -90,6 +90,8 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         btnCheckOffsetLine = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
         lblOffsetValue = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtMaxArea = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -172,6 +174,11 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
 
         lblOffsetValue.setText("Offset Distance (m):");
 
+        jLabel1.setText("Maximum Area(m2):");
+
+        txtMaxArea.setEditable(false);
+        txtMaxArea.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -194,13 +201,16 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
                             .addComponent(optOffsetByArea)
                             .addComponent(txtOffsetValue, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnShowJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCheckOffsetLine, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnShowJoinPoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCheckOffsetLine, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCreateParcel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCreateParcel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaxArea))
                 .addContainerGap())
         );
 
@@ -212,7 +222,9 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(optOffsetByDistance)
-                    .addComponent(optOffsetByArea))
+                    .addComponent(optOffsetByArea)
+                    .addComponent(jLabel1)
+                    .addComponent(txtMaxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -265,6 +277,16 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
                             listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void displayArea(String parcel_id){
+        DecimalFormat df = new DecimalFormat("0.00");
+        for (AreaObject aa : segmentLayer.getPolyAreaList()) {
+            if (parcel_id.equals(aa.getId())) {
+                txtMaxArea.setText(df.format(aa.getArea()));
+                break;
+            }
+        }
+    }
+     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
          try {
             //Store data for undo action.
@@ -530,6 +552,12 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             } 
         }
         else{
+            double offsetMaxArea= Double.parseDouble((txtMaxArea.getText()));
+            double offsetArea= Double.parseDouble((txtOffsetValue.getText()));
+            if (offsetArea>= offsetMaxArea){
+                JOptionPane.showMessageDialog(this, "The offset value given is not in valid range, check it first.");
+                return;
+            }
             Geometry parcel=PublicMethod.getSelected_Parcel(segmentLayer.getPolyAreaList(),parcel_ID);
             double lenSelected=getLength_Selected();
             double maxOffsetDist= parcel.getArea()/lenSelected;//like with of the rectangular parcel.
@@ -681,6 +709,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         //this.pointFixed=(Point)pointFixed;
         parcel_ID=parID;
         btnCheckOffsetLine.setEnabled(true);
+        displayArea(parID);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -691,12 +720,14 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnShowJoinPoint;
     private javax.swing.JButton btnUndoSplit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblOffsetValue;
     private org.sola.clients.swing.gis.ui.control.LocatePointPanel locatePointPanel;
     private javax.swing.ButtonGroup offsetOptions;
     private javax.swing.JRadioButton optOffsetByArea;
     private javax.swing.JRadioButton optOffsetByDistance;
+    private javax.swing.JTextField txtMaxArea;
     private javax.swing.JTextField txtOffsetValue;
     // End of variables declaration//GEN-END:variables
 }

@@ -875,6 +875,10 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private void refresh_Parcel_Information()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         //By Kabindra
+        if (newCadastreObjectBean==null){
+            JOptionPane.showMessageDialog(this, "Could not find the specified parcel.");
+            return;
+        }
         search_Completed_Trigger.invoke(method_holder_object,
                 new Object[]{newCadastreObjectBean,
                     cmbDistrict.getSelectedItem().toString(),
