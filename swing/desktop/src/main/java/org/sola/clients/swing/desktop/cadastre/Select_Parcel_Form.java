@@ -79,10 +79,10 @@ public class Select_Parcel_Form extends ContentPanel {
 
         jScrollPane1.setViewportView(lstParcelInfo);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jLabel1.setText("Details of the selected Parcel:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/cadastre/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("Select_Parcel_Form.jLabel1.text")); // NOI18N
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("Select_Parcel_Form.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -91,7 +91,7 @@ public class Select_Parcel_Form extends ContentPanel {
 
         parcelSearchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        headerPanel1.setTitleText("Select Parcel");
+        headerPanel1.setTitleText(bundle.getString("Select_Parcel_Form.headerPanel1.titleText")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -165,11 +165,11 @@ public class Select_Parcel_Form extends ContentPanel {
     }//GEN-LAST:event_btnOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnOK;
-    private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList lstParcelInfo;
-    private org.sola.clients.swing.ui.cadastre.CadastreObjectPanel parcelSearchPanel;
+    javax.swing.JButton btnOK;
+    org.sola.clients.swing.ui.HeaderPanel headerPanel1;
+    javax.swing.JLabel jLabel1;
+    javax.swing.JScrollPane jScrollPane1;
+    javax.swing.JList lstParcelInfo;
+    org.sola.clients.swing.ui.cadastre.CadastreObjectPanel parcelSearchPanel;
     // End of variables declaration//GEN-END:variables
 }

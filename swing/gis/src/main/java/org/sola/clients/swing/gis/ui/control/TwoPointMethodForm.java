@@ -119,32 +119,33 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
         lstTo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(lstTo);
 
-        jLabel1.setText("From Point");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("TwoPointMethodForm.jLabel1.text")); // NOI18N
 
-        jLabel2.setText("To Point");
+        jLabel2.setText(bundle.getString("TwoPointMethodForm.jLabel2.text")); // NOI18N
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("TwoPointMethodForm.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
-        btnJoinPoint.setText("Join Points");
+        btnJoinPoint.setText(bundle.getString("TwoPointMethodForm.btnJoinPoint.text")); // NOI18N
         btnJoinPoint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJoinPointActionPerformed(evt);
             }
         });
 
-        btnCheckSegments.setText("Check Segments");
+        btnCheckSegments.setText(bundle.getString("TwoPointMethodForm.btnCheckSegments.text")); // NOI18N
         btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCheckSegmentsActionPerformed(evt);
             }
         });
 
-        btnPolygonize.setText("Create Polygons");
+        btnPolygonize.setText(bundle.getString("TwoPointMethodForm.btnPolygonize.text")); // NOI18N
         btnPolygonize.setEnabled(false);
         btnPolygonize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,14 +153,14 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("TwoPointMethodForm.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
             }
         });
 
-        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.setText(bundle.getString("TwoPointMethodForm.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);

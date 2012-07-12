@@ -124,11 +124,12 @@ public class SearchByParcelNo extends ContentPanel {
         setHeaderPanel(headerPanel1);
         setMinimumSize(new java.awt.Dimension(400, 400));
 
-        headerPanel1.setTitleText("Search by Parcel No.");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/inquiry/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("SearchByParcelNo.headerPanel1.titleText")); // NOI18N
 
         jPanel3.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persons", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("SearchByParcelNo.jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 102, 51))); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblPersonDetails);
@@ -143,16 +144,16 @@ public class SearchByParcelNo extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcel Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("SearchByParcelNo.jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 102, 51))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreDetails}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblParcelDetails1);
@@ -167,16 +168,16 @@ public class SearchByParcelNo extends ContentPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel2);
 
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("SearchByParcelNo.btnSearch.text")); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -217,7 +218,7 @@ public class SearchByParcelNo extends ContentPanel {
             }
         });
 
-        jLabel3.setText("District");
+        jLabel3.setText(bundle.getString("SearchByParcelNo.jLabel3.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -225,7 +226,7 @@ public class SearchByParcelNo extends ContentPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, 0, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
@@ -239,7 +240,7 @@ public class SearchByParcelNo extends ContentPanel {
 
         jPanel12.add(jPanel6);
 
-        jLabel2.setText("Vdc/Municipality");
+        jLabel2.setText(bundle.getString("SearchByParcelNo.jLabel2.text")); // NOI18N
 
         cmbVdc.setEditable(true);
 
@@ -253,7 +254,7 @@ public class SearchByParcelNo extends ContentPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
             .addComponent(cmbVdc, 0, 0, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
@@ -267,7 +268,7 @@ public class SearchByParcelNo extends ContentPanel {
 
         jPanel12.add(jPanel7);
 
-        jLabel4.setText("Ward Number");
+        jLabel4.setText(bundle.getString("SearchByParcelNo.jLabel4.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -275,7 +276,7 @@ public class SearchByParcelNo extends ContentPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addContainerGap())
+                .addContainerGap(17, Short.MAX_VALUE))
             .addComponent(txtWardNo)
         );
         jPanel9Layout.setVerticalGroup(
@@ -289,7 +290,7 @@ public class SearchByParcelNo extends ContentPanel {
 
         jPanel12.add(jPanel9);
 
-        jLabel5.setText("Parcel No.");
+        jLabel5.setText(bundle.getString("SearchByParcelNo.jLabel5.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -297,7 +298,7 @@ public class SearchByParcelNo extends ContentPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
             .addComponent(txtParcelNo)
         );
         jPanel13Layout.setVerticalGroup(
@@ -335,7 +336,7 @@ public class SearchByParcelNo extends ContentPanel {
                     .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

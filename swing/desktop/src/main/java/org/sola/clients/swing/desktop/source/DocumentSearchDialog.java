@@ -48,7 +48,8 @@ public class DocumentSearchDialog extends javax.swing.JDialog {
         documentSearchPanel = new org.sola.clients.swing.ui.source.DocumentSearchPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Document search");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/source/Bundle"); // NOI18N
+        setTitle(bundle.getString("DocumentSearchDialog.title")); // NOI18N
 
         documentSearchPanel.setShowAttachButton(false);
         documentSearchPanel.setShowEditButton(false);

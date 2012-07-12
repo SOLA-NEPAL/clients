@@ -97,7 +97,8 @@ public class DocumentForm extends ContentPanel {
 
         setHeaderPanel(headerPanel);
 
-        headerPanel.setTitleText("Document - %");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/source/Bundle"); // NOI18N
+        headerPanel.setTitleText(bundle.getString("DocumentForm.headerPanel.titleText")); // NOI18N
 
         documentPanel.setShowAddButton(false);
 
@@ -105,7 +106,7 @@ public class DocumentForm extends ContentPanel {
         jToolBar1.setRollover(true);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave.setText("Save & Close");
+        btnSave.setText(bundle.getString("DocumentForm.btnSave.text")); // NOI18N
         btnSave.setFocusable(false);
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSave.addActionListener(new java.awt.event.ActionListener() {

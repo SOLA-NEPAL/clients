@@ -76,7 +76,8 @@ public class CalendarManagement extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Nepali Calendar Managegement");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/admin/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("CalendarManagement.headerPanel1.titleText")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -93,7 +94,7 @@ public class CalendarManagement extends ContentPanel {
         jToolBar1.setRollover(true);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave.setText("Save");
+        btnSave.setText(bundle.getString("CalendarManagement.btnSave.text")); // NOI18N
         btnSave.setFocusable(false);
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +105,7 @@ public class CalendarManagement extends ContentPanel {
         jToolBar1.add(btnSave);
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/refresh.png"))); // NOI18N
-        btnRefresh.setText("Refresh");
+        btnRefresh.setText(bundle.getString("CalendarManagement.btnRefresh.text")); // NOI18N
         btnRefresh.setFocusable(false);
         btnRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +117,7 @@ public class CalendarManagement extends ContentPanel {
         jToolBar1.add(jSeparator1);
 
         btnYear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
-        btnYear.setText("Add Year");
+        btnYear.setText(bundle.getString("CalendarManagement.btnYear.text")); // NOI18N
         btnYear.setFocusable(false);
         btnYear.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnYear.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +147,7 @@ public class CalendarManagement extends ContentPanel {
 
         jScrollPane1.setViewportView(tblCalendar);
 
-        btnLoad.setText("Load");
+        btnLoad.setText(bundle.getString("CalendarManagement.btnLoad.text")); // NOI18N
         btnLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoadActionPerformed(evt);
@@ -161,7 +162,7 @@ public class CalendarManagement extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nepaliYearList, org.jdesktop.beansbinding.ELProperty.create("${selectedNepaliYear}"), cmbYear, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel2.setText("Year:");
+        jLabel2.setText(bundle.getString("CalendarManagement.jLabel2.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

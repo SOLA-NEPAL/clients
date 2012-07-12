@@ -4,7 +4,9 @@
   <NonVisualComponents>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.jButton1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
     </Component>
   </NonVisualComponents>
@@ -19,11 +21,11 @@
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
   </Events>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
@@ -170,7 +172,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnOpenShapeFile">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Import Shape File"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnOpenShapeFile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenShapeFileActionPerformed"/>
@@ -178,7 +182,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSaveTextFile">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Save to Text File"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnSaveTextFile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveTextFileActionPerformed"/>
@@ -186,7 +192,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnUndoSplit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Undo Split"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnUndoSplit.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUndoSplitActionPerformed"/>
@@ -194,7 +202,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnAddRow">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Row"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnAddRow.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRowActionPerformed"/>
@@ -202,7 +212,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnImportLines">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Import Line File"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnImportLines.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportLinesActionPerformed"/>
@@ -210,7 +222,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnOK">
           <Properties>
-            <Property name="text" type="java.lang.String" value="OK"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnOK.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOKActionPerformed"/>
@@ -218,7 +232,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnDxfImport">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Import DXF file"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnDxfImport.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDxfImportActionPerformed"/>
@@ -226,7 +242,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnRefreshMap">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Refresh Map"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnRefreshMap.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshMapActionPerformed"/>
@@ -234,7 +252,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnShowInMap">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Show Lines in Map"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnShowInMap.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowInMapActionPerformed"/>
@@ -242,7 +262,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCreatePolygon">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Create Polygons"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnCreatePolygon.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -251,7 +273,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnImportPoints">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Import Point File"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="ImportLinesFromFile.btnImportPoints.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportPointsActionPerformed"/>

@@ -150,13 +150,14 @@ public class CadastreRedefinitionNodeModifyForm extends javax.swing.JDialog {
 
         txtX.setName("txtX"); // NOI18N
 
-        lblY.setText("Y (Northing)");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        lblY.setText(bundle.getString("CadastreRedefinitionNodeModifyForm.lblY.text")); // NOI18N
         lblY.setName("lblY"); // NOI18N
 
-        lblX.setText("X (Easting)");
+        lblX.setText(bundle.getString("CadastreRedefinitionNodeModifyForm.lblX.text")); // NOI18N
         lblX.setName("lblX"); // NOI18N
 
-        cmdModify.setText("Modify");
+        cmdModify.setText(bundle.getString("CadastreRedefinitionNodeModifyForm.cmdModify.text")); // NOI18N
         cmdModify.setName("cmdModify"); // NOI18N
         cmdModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +165,7 @@ public class CadastreRedefinitionNodeModifyForm extends javax.swing.JDialog {
             }
         });
 
-        cmdRemove.setText("Remove");
+        cmdRemove.setText(bundle.getString("CadastreRedefinitionNodeModifyForm.cmdRemove.text")); // NOI18N
         cmdRemove.setName("cmdRemove"); // NOI18N
         cmdRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -29,18 +29,18 @@ package org.sola.clients.swing.ui.application;
 
 import java.awt.ComponentOrientation;
 import java.util.Collections;
-import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.clients.beans.application.ApplicationBean;
-import org.sola.clients.beans.digitalarchive.DocumentBean;
-import org.sola.clients.swing.common.converters.DateConverter;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.swing.ui.renderers.AttachedDocumentCellRenderer;
-import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
-import org.sola.clients.beans.sorters.ServicesSorterByOrder;
 import java.util.Locale;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+import org.sola.clients.beans.application.ApplicationBean;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.digitalarchive.DocumentBean;
+import org.sola.clients.beans.sorters.ServicesSorterByOrder;
 import org.sola.clients.swing.common.LafManager;
+import org.sola.clients.swing.common.converters.DateConverter;
+import org.sola.clients.swing.ui.renderers.AttachedDocumentCellRenderer;
+import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 /** 
  * Displays application details. This panel could be used on different forms, 
  * where application details are needed to display in the read only mode.
@@ -167,7 +167,7 @@ public class ApplicationDetailsPanel extends javax.swing.JPanel {
         setName("Form"); // NOI18N
 
         txtId.setEditable(false);
-        txtId.setFont(new java.awt.Font("Tahoma", 0, 3));
+        txtId.setFont(new java.awt.Font("Tahoma", 0, 3)); // NOI18N
         txtId.setForeground(new java.awt.Color(240, 240, 240));
         txtId.setBorder(null);
         txtId.setCaretColor(new java.awt.Color(240, 240, 240));
@@ -1032,14 +1032,14 @@ public class ApplicationDetailsPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabPanels, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+                .addComponent(tabPanels)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabPanels, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+                .addComponent(tabPanels)
                 .addContainerGap())
         );
 

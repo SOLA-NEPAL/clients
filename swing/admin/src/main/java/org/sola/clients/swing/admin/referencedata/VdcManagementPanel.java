@@ -135,6 +135,8 @@ public class VdcManagementPanel extends ContentPanel {
         cmbDistrict = new javax.swing.JComboBox();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
 
+        setHeaderPanel(headerPanel1);
+
         pnlRefDataList.setPreferredSize(new java.awt.Dimension(300, 200));
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
@@ -224,7 +226,7 @@ public class VdcManagementPanel extends ContentPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
         );
 
-        headerPanel1.setTitleText("VDC");
+        headerPanel1.setTitleText(bundle.getString("VdcManagementPanel.headerPanel1.titleText")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

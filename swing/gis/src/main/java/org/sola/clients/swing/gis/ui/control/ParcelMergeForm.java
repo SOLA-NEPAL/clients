@@ -116,28 +116,29 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblParcels);
 
-        btnUndoSplit.setText("Undo Split");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        btnUndoSplit.setText(bundle.getString("ParcelMergeForm.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);
             }
         });
 
-        btnMergePolygon.setText("Merge Polygons");
+        btnMergePolygon.setText(bundle.getString("ParcelMergeForm.btnMergePolygon.text")); // NOI18N
         btnMergePolygon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMergePolygonActionPerformed(evt);
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("ParcelMergeForm.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("ParcelMergeForm.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);

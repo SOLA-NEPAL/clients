@@ -155,11 +155,12 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Search by Moth Pana and Parcel No.");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/inquiry/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("SearchByMothPanaParcelNo.headerPanel1.titleText")); // NOI18N
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
 
-        jLabel10.setText("District");
+        jLabel10.setText(bundle.getString("SearchByMothPanaParcelNo.jLabel10.text")); // NOI18N
 
         cmbDistrict.setEditable(true);
 
@@ -195,7 +196,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
 
         jPanel8.add(jPanel10);
 
-        jLabel11.setText("Vdc/Municipality");
+        jLabel11.setText(bundle.getString("SearchByMothPanaParcelNo.jLabel11.text")); // NOI18N
 
         cmbVdc.setEditable(true);
 
@@ -231,7 +232,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
 
         jPanel8.add(jPanel11);
 
-        jLabel12.setText("Moth/Luj Type");
+        jLabel12.setText(bundle.getString("SearchByMothPanaParcelNo.jLabel12.text")); // NOI18N
 
         cmbMothLujType.setEditable(true);
         cmbMothLujType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "L" }));
@@ -262,7 +263,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
 
         jPanel8.add(jPanel17);
 
-        jLabel13.setText("Moth/Luj No");
+        jLabel13.setText(bundle.getString("SearchByMothPanaParcelNo.jLabel13.text")); // NOI18N
 
         cmbMothLujNo.setEditable(true);
 
@@ -298,7 +299,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
 
         jPanel8.add(jPanel18);
 
-        jLabel14.setText("Pana No.");
+        jLabel14.setText(bundle.getString("SearchByMothPanaParcelNo.jLabel14.text")); // NOI18N
 
         cmbPanaNo.setEditable(true);
 
@@ -344,7 +345,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedParcel}"), cmbParcelNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel2.setText("Parcel No.");
+        jLabel2.setText(bundle.getString("SearchByMothPanaParcelNo.jLabel2.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -368,7 +369,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
 
         jPanel3.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persons", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("SearchByMothPanaParcelNo.jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 102, 51))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblPersonDetails);
@@ -383,16 +384,16 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcel Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("SearchByMothPanaParcelNo.jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 102, 51))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreDetails}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblParcelDetails1);
@@ -407,16 +408,16 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel2);
 
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("SearchByMothPanaParcelNo.btnSearch.text")); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);

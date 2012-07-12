@@ -161,11 +161,12 @@ public class ParcelMothEntry extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Parcel Shresta Entry");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("ParcelMothEntry.headerPanel1.titleText")); // NOI18N
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 4, 30, 0));
 
-        jLabel1.setText("VDC/M.P");
+        jLabel1.setText(bundle.getString("ParcelMothEntry.jLabel1.text")); // NOI18N
 
         txtVdc.setEnabled(false);
 
@@ -179,7 +180,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                .addComponent(txtVdc, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +193,7 @@ public class ParcelMothEntry extends ContentPanel {
 
         jPanel1.add(jPanel2);
 
-        jLabel2.setText("Moth/Luj");
+        jLabel2.setText(bundle.getString("ParcelMothEntry.jLabel2.text")); // NOI18N
 
         txtMothLuj.setEnabled(false);
 
@@ -206,7 +207,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                .addComponent(txtMothLuj, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +220,7 @@ public class ParcelMothEntry extends ContentPanel {
 
         jPanel1.add(jPanel3);
 
-        jLabel3.setText("Moth/Luj No.");
+        jLabel3.setText(bundle.getString("ParcelMothEntry.jLabel3.text")); // NOI18N
 
         txtMothLujNo.setEnabled(false);
 
@@ -233,7 +234,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addComponent(txtMothLujNo, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,7 +247,7 @@ public class ParcelMothEntry extends ContentPanel {
 
         jPanel1.add(jPanel4);
 
-        jLabel4.setText("Page No.");
+        jLabel4.setText(bundle.getString("ParcelMothEntry.jLabel4.text")); // NOI18N
 
         txtPageNo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -261,7 +262,7 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                .addComponent(txtPageNo, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +277,7 @@ public class ParcelMothEntry extends ContentPanel {
 
         jPanel9.setLayout(new java.awt.GridLayout(2, 1, 0, 10));
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcels List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("ParcelMothEntry.jPanel7.border.title"))); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblPersonDetails);
@@ -291,7 +292,7 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar1.setRollover(true);
 
         btnSearchNewParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        btnSearchNewParcel.setText("Search Parcel");
+        btnSearchNewParcel.setText(bundle.getString("ParcelMothEntry.btnSearchNewParcel.text")); // NOI18N
         btnSearchNewParcel.setFocusable(false);
         btnSearchNewParcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSearchNewParcel.addActionListener(new java.awt.event.ActionListener() {
@@ -302,7 +303,7 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar1.add(btnSearchNewParcel);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave.setText("Save");
+        btnSave.setText(bundle.getString("ParcelMothEntry.btnSave.text")); // NOI18N
         btnSave.setFocusable(false);
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -313,7 +314,7 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar1.add(btnSave);
 
         btnRemove1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
-        btnRemove1.setText("Remove");
+        btnRemove1.setText(bundle.getString("ParcelMothEntry.btnRemove1.text")); // NOI18N
         btnRemove1.setFocusable(false);
         btnRemove1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRemove1.addActionListener(new java.awt.event.ActionListener() {
@@ -327,7 +328,7 @@ public class ParcelMothEntry extends ContentPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
@@ -335,12 +336,12 @@ public class ParcelMothEntry extends ContentPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
         );
 
         jPanel9.add(jPanel7);
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persons List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("ParcelMothEntry.jPanel6.border.title"))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblParcelDetails1);
@@ -355,7 +356,7 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar2.setRollover(true);
 
         btnAddNewOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        btnAddNewOwner.setText("Search Owner");
+        btnAddNewOwner.setText(bundle.getString("ParcelMothEntry.btnAddNewOwner.text")); // NOI18N
         btnAddNewOwner.setFocusable(false);
         btnAddNewOwner.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnAddNewOwner.addActionListener(new java.awt.event.ActionListener() {
@@ -366,7 +367,7 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar2.add(btnAddNewOwner);
 
         btnSave1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave1.setText("Save");
+        btnSave1.setText(bundle.getString("ParcelMothEntry.btnSave1.text")); // NOI18N
         btnSave1.setFocusable(false);
         btnSave1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSave1.addActionListener(new java.awt.event.ActionListener() {
@@ -377,7 +378,7 @@ public class ParcelMothEntry extends ContentPanel {
         jToolBar2.add(btnSave1);
 
         btnRemove2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
-        btnRemove2.setText("Remove");
+        btnRemove2.setText(bundle.getString("ParcelMothEntry.btnRemove2.text")); // NOI18N
         btnRemove2.setFocusable(false);
         btnRemove2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRemove2.addActionListener(new java.awt.event.ActionListener() {
@@ -392,14 +393,14 @@ public class ParcelMothEntry extends ContentPanel {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
         );
 
         jPanel9.add(jPanel6);
@@ -408,7 +409,7 @@ public class ParcelMothEntry extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

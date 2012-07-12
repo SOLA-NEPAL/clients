@@ -116,11 +116,12 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Search by Moth and Page No");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/inquiry/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("SearchByMothAndPageNo.headerPanel1.titleText")); // NOI18N
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
 
-        jLabel10.setText("District");
+        jLabel10.setText(bundle.getString("SearchByMothAndPageNo.jLabel10.text")); // NOI18N
 
         cmbDistrict.setEditable(true);
 
@@ -142,7 +143,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 48, Short.MAX_VALUE))
+                .addGap(0, 45, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, 0, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
@@ -156,7 +157,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         jPanel8.add(jPanel10);
 
-        jLabel11.setText("Vdc/Municipality");
+        jLabel11.setText(bundle.getString("SearchByMothAndPageNo.jLabel11.text")); // NOI18N
 
         cmbVdc.setEditable(true);
 
@@ -178,7 +179,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
             .addComponent(cmbVdc, 0, 0, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
@@ -192,7 +193,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         jPanel8.add(jPanel11);
 
-        jLabel12.setText("Moth/Luj Type");
+        jLabel12.setText(bundle.getString("SearchByMothAndPageNo.jLabel12.text")); // NOI18N
 
         cmbMothLujType.setEditable(true);
         cmbMothLujType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "L" }));
@@ -209,7 +210,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 9, Short.MAX_VALUE))
             .addComponent(cmbMothLujType, 0, 0, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
@@ -223,7 +224,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         jPanel8.add(jPanel17);
 
-        jLabel13.setText("Moth/Luj No");
+        jLabel13.setText(bundle.getString("SearchByMothAndPageNo.jLabel13.text")); // NOI18N
 
         cmbMothLujNo.setEditable(true);
 
@@ -245,7 +246,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
             .addComponent(cmbMothLujNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
@@ -259,7 +260,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         jPanel8.add(jPanel18);
 
-        jLabel14.setText("Pana No.");
+        jLabel14.setText(bundle.getString("SearchByMothAndPageNo.jLabel14.text")); // NOI18N
 
         cmbPanaNo.setEditable(true);
 
@@ -275,7 +276,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel14)
-                .addGap(0, 37, Short.MAX_VALUE))
+                .addGap(0, 34, Short.MAX_VALUE))
             .addComponent(cmbPanaNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
@@ -291,7 +292,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
 
         jPanel3.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persons", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("SearchByMothAndPageNo.jPanel1.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 102, 51))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parties}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblPersonDetails);
@@ -306,16 +307,16 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcels", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("SearchByMothAndPageNo.jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 102, 51))); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblParcelDetails1);
@@ -330,16 +331,16 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel2);
 
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("SearchByMothAndPageNo.btnSearch.text")); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);

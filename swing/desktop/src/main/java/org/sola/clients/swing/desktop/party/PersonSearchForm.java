@@ -83,11 +83,11 @@ public class PersonSearchForm extends javax.swing.JDialog {
         btnOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(660, 690));
 
         pnlContent.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnOK.setText("OK");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/party/Bundle"); // NOI18N
+        btnOK.setText(bundle.getString("PersonSearchForm.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);

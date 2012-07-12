@@ -88,7 +88,8 @@ public class InformationResultWindow extends javax.swing.JDialog {
 
         tabsResult = new javax.swing.JTabbedPane();
 
-        setTitle("Results");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        setTitle(bundle.getString("InformationResultWindow.title")); // NOI18N
         setAlwaysOnTop(true);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 

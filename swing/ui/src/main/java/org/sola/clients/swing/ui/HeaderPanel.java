@@ -31,6 +31,7 @@ package org.sola.clients.swing.ui;
 
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import org.sola.clients.swing.common.LafManager;
 
 /**
  * Used to display headers.
@@ -84,7 +85,7 @@ public class HeaderPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 153, 102));
 
-        lblHeaderTitle.setFont(new java.awt.Font("Tahoma", 1, 18));
+        lblHeaderTitle.setFont(LafManager.getInstance().getLabFontBoldModified());
         lblHeaderTitle.setForeground(new java.awt.Color(255, 255, 255));
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/Bundle"); // NOI18N
         lblHeaderTitle.setText(bundle.getString("HeaderPanel.lblHeaderTitle.text")); // NOI18N
@@ -159,7 +160,7 @@ public class HeaderPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblHeaderTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

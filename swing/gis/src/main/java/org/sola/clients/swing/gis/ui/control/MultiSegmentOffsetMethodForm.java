@@ -98,28 +98,29 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
 
         offsetOptions.add(optOffsetByDistance);
         optOffsetByDistance.setSelected(true);
-        optOffsetByDistance.setText("Offset By Distance");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        optOffsetByDistance.setText(bundle.getString("MultiSegmentOffsetMethodForm.optOffsetByDistance.text")); // NOI18N
         optOffsetByDistance.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 optOffsetByDistanceStateChanged(evt);
             }
         });
 
-        btnShowJoinPoint.setText("Show Join Point Form");
+        btnShowJoinPoint.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnShowJoinPoint.text")); // NOI18N
         btnShowJoinPoint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowJoinPointActionPerformed(evt);
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
             }
         });
 
-        btnCreateParcel.setText("Create Parcel");
+        btnCreateParcel.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnCreateParcel.text")); // NOI18N
         btnCreateParcel.setEnabled(false);
         btnCreateParcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,28 +129,28 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         });
 
         offsetOptions.add(optOffsetByArea);
-        optOffsetByArea.setText("Offset by Area");
+        optOffsetByArea.setText(bundle.getString("MultiSegmentOffsetMethodForm.optOffsetByArea.text")); // NOI18N
         optOffsetByArea.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 optOffsetByAreaStateChanged(evt);
             }
         });
 
-        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
-        btnCheckOffsetLine.setText("Check Offset Lines");
+        btnCheckOffsetLine.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnCheckOffsetLine.text")); // NOI18N
         btnCheckOffsetLine.setEnabled(false);
         btnCheckOffsetLine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +158,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnCheckSegments.setText("Check Segments");
+        btnCheckSegments.setText(bundle.getString("MultiSegmentOffsetMethodForm.btnCheckSegments.text")); // NOI18N
         btnCheckSegments.setEnabled(false);
         btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +166,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
-        lblOffsetValue.setText("Offset Distance (m):");
+        lblOffsetValue.setText(bundle.getString("MultiSegmentOffsetMethodForm.lblOffsetValue.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

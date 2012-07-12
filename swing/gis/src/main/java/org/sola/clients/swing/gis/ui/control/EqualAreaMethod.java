@@ -120,9 +120,10 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setText("Number of Area to be formed(count)");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jLabel7.setText(bundle.getString("EqualAreaMethod.jLabel7.text")); // NOI18N
 
-        btnNewPacel.setText("Create Parcel");
+        btnNewPacel.setText(bundle.getString("EqualAreaMethod.btnNewPacel.text")); // NOI18N
         btnNewPacel.setEnabled(false);
         btnNewPacel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,32 +131,32 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("EqualAreaMethod.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Maximum Area(m2):");
+        jLabel6.setText(bundle.getString("EqualAreaMethod.jLabel6.text")); // NOI18N
 
         txtMaxArea.setEnabled(false);
 
-        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.setText(bundle.getString("EqualAreaMethod.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("EqualAreaMethod.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
             }
         });
 
-        btnCheckSplitLines.setText("Check Split Lines");
+        btnCheckSplitLines.setText(bundle.getString("EqualAreaMethod.btnCheckSplitLines.text")); // NOI18N
         btnCheckSplitLines.setEnabled(false);
         btnCheckSplitLines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,7 +164,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        btnRedrawALL.setText("Redraw Map");
+        btnRedrawALL.setText(bundle.getString("EqualAreaMethod.btnRedrawALL.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

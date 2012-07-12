@@ -96,13 +96,14 @@ public class MothSrestaEntry extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Moth Management");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("MothSrestaEntry.headerPanel1.titleText")); // NOI18N
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         toolMnuParcelEntry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
-        toolMnuParcelEntry.setText("Pracel Entry");
+        toolMnuParcelEntry.setText(bundle.getString("MothSrestaEntry.toolMnuParcelEntry.text")); // NOI18N
         toolMnuParcelEntry.setFocusable(false);
         toolMnuParcelEntry.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolMnuParcelEntry.addActionListener(new java.awt.event.ActionListener() {
@@ -112,10 +113,10 @@ public class MothSrestaEntry extends ContentPanel {
         });
         jToolBar1.add(toolMnuParcelEntry);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose Moth according to VDC/MP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("MothSrestaEntry.jPanel4.border.title"))); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
-        jLabel7.setText("District");
+        jLabel7.setText(bundle.getString("MothSrestaEntry.jLabel7.text")); // NOI18N
 
         cmbDistrict.setEditable(true);
 
@@ -135,7 +136,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel7)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 65, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, 108, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
@@ -144,12 +145,12 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel9);
 
-        jLabel9.setText("VDC/MP");
+        jLabel9.setText(bundle.getString("MothSrestaEntry.jLabel9.text")); // NOI18N
 
         cmbVdc.setEditable(true);
 
@@ -169,7 +170,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel9)
-                .addContainerGap())
+                .addContainerGap(60, Short.MAX_VALUE))
             .addComponent(cmbVdc, 0, 108, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
@@ -178,12 +179,12 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbVdc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel11);
 
-        jLabel2.setText("Moth/Luj Type");
+        jLabel2.setText(bundle.getString("MothSrestaEntry.jLabel2.text")); // NOI18N
 
         cmbMothLuj2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "L" }));
         cmbMothLuj2.addItemListener(new java.awt.event.ItemListener() {
@@ -198,7 +199,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
             .addComponent(cmbMothLuj2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -207,12 +208,12 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMothLuj2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel2);
 
-        jLabel3.setText("Moth/Luj No");
+        jLabel3.setText(bundle.getString("MothSrestaEntry.jLabel3.text")); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, eLProperty, cmbMothLujNo);
@@ -226,7 +227,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
             .addComponent(cmbMothLujNo, 0, 108, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -235,7 +236,7 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMothLujNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel3);
@@ -244,7 +245,7 @@ public class MothSrestaEntry extends ContentPanel {
         jToolBar2.setRollover(true);
 
         toolMenuSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        toolMenuSave.setText("Save");
+        toolMenuSave.setText(bundle.getString("MothSrestaEntry.toolMenuSave.text")); // NOI18N
         toolMenuSave.setFocusable(false);
         toolMenuSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolMenuSave.addActionListener(new java.awt.event.ActionListener() {
@@ -254,10 +255,10 @@ public class MothSrestaEntry extends ContentPanel {
         });
         jToolBar2.add(toolMenuSave);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Moth or Luj", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Aharoni", 0, 18), new java.awt.Color(0, 102, 51))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("MothSrestaEntry.jPanel7.border.title"))); // NOI18N
         jPanel7.setLayout(new java.awt.GridLayout(1, 2, 40, 0));
 
-        jLabel8.setText("District");
+        jLabel8.setText(bundle.getString("MothSrestaEntry.jLabel8.text")); // NOI18N
 
         cmbDistrict1.setEditable(true);
 
@@ -277,8 +278,8 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel8)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(cmbDistrict1, 0, 89, Short.MAX_VALUE)
+                .addGap(0, 47, Short.MAX_VALUE))
+            .addComponent(cmbDistrict1, 0, 80, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,12 +287,12 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbDistrict1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGap(0, 37, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel10);
 
-        jLabel1.setText("VDC/MP");
+        jLabel1.setText(bundle.getString("MothSrestaEntry.jLabel1.text")); // NOI18N
 
         cmbVdc1.setEditable(true);
 
@@ -307,7 +308,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(37, 51, Short.MAX_VALUE))
+                .addGap(37, 42, Short.MAX_VALUE))
             .addComponent(cmbVdc1, 0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -316,7 +317,7 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbVdc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGap(0, 37, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel1);
@@ -326,7 +327,7 @@ public class MothSrestaEntry extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${mothLuj}"), cmbMothLuj, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel4.setText("Moth/Luj");
+        jLabel4.setText(bundle.getString("MothSrestaEntry.jLabel4.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -334,8 +335,8 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addContainerGap())
-            .addComponent(cmbMothLuj, 0, 89, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE))
+            .addComponent(cmbMothLuj, 0, 80, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,12 +344,12 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbMothLuj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel5);
 
-        jLabel5.setText("Moth/Luj No");
+        jLabel5.setText(bundle.getString("MothSrestaEntry.jLabel5.text")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothBean, org.jdesktop.beansbinding.ELProperty.create("${mothlujNumber}"), txtMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -359,7 +360,7 @@ public class MothSrestaEntry extends ContentPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
             .addComponent(txtMothLujNo)
         );
         jPanel6Layout.setVerticalGroup(
@@ -368,7 +369,7 @@ public class MothSrestaEntry extends ContentPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMothLujNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel6);

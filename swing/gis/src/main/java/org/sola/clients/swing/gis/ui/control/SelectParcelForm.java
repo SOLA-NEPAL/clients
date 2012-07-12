@@ -82,9 +82,10 @@ public class SelectParcelForm extends javax.swing.JDialog {
         jScrollPane1.setViewportView(lstParcelInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jLabel1.setText("Details of the selected Parcel:");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("SelectParcelForm.jLabel1.text")); // NOI18N
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("SelectParcelForm.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -93,7 +94,7 @@ public class SelectParcelForm extends javax.swing.JDialog {
 
         parcelSearchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        headerPanel1.setTitleText("Select Parcel");
+        headerPanel1.setTitleText(bundle.getString("SelectParcelForm.headerPanel1.titleText")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

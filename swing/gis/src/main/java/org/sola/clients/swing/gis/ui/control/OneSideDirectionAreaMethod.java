@@ -97,7 +97,8 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         optCounterClockWise = new javax.swing.JRadioButton();
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
 
-        jTextField1.setText("jTextField1");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jTextField1.setText(bundle.getString("OneSideDirectionAreaMethod.jTextField1.text")); // NOI18N
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -108,9 +109,9 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setText("Required Area(m2):");
+        jLabel7.setText(bundle.getString("OneSideDirectionAreaMethod.jLabel7.text")); // NOI18N
 
-        btnNewPacel.setText("Create Parcel");
+        btnNewPacel.setText(bundle.getString("OneSideDirectionAreaMethod.btnNewPacel.text")); // NOI18N
         btnNewPacel.setEnabled(false);
         btnNewPacel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,18 +119,18 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        jLabel6.setText("Maximum Area(m2):");
+        jLabel6.setText(bundle.getString("OneSideDirectionAreaMethod.jLabel6.text")); // NOI18N
 
         txtMaxArea.setEnabled(false);
 
-        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.setText(bundle.getString("OneSideDirectionAreaMethod.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("OneSideDirectionAreaMethod.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
@@ -137,16 +138,16 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Area Details:");
+        jLabel5.setText(bundle.getString("OneSideDirectionAreaMethod.jLabel5.text")); // NOI18N
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("OneSideDirectionAreaMethod.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
-        btnCheckSegments.setText("Check Segments");
+        btnCheckSegments.setText(bundle.getString("OneSideDirectionAreaMethod.btnCheckSegments.text")); // NOI18N
         btnCheckSegments.setEnabled(false);
         btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,10 +157,10 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
 
         buttonGroup1.add(optClockwise);
         optClockwise.setSelected(true);
-        optClockwise.setText("Clockwise Direction");
+        optClockwise.setText(bundle.getString("OneSideDirectionAreaMethod.optClockwise.text")); // NOI18N
 
         buttonGroup1.add(optCounterClockWise);
-        optCounterClockWise.setText("Counter-Clockwise Direction");
+        optCounterClockWise.setText(bundle.getString("OneSideDirectionAreaMethod.optCounterClockWise.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

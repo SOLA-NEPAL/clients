@@ -100,7 +100,6 @@ public class LodgementReportParamsForm extends javax.swing.JDialog {
         java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle"); // NOI18N
         labFrom.setText(bundle1.getString("ApplicationSearchPanel.labFrom.text")); // NOI18N
 
-        btnShowCalendarFrom.setIcon(new javax.swing.ImageIcon("C:\\Users\\rizzom\\Desktop\\GITSLAVE\\SOLA\\code\\clients\\swing\\desktop\\src\\main\\resources\\images\\common\\calendar.png")); // NOI18N
         btnShowCalendarFrom.setText(bundle1.getString("ApplicationSearchPanel.btnShowCalendarFrom.text")); // NOI18N
         btnShowCalendarFrom.setBorder(null);
         btnShowCalendarFrom.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +131,6 @@ public class LodgementReportParamsForm extends javax.swing.JDialog {
                 .addComponent(btnShowCalendarFrom))
         );
 
-        btnShowCalendarTo.setIcon(new javax.swing.ImageIcon("C:\\Users\\rizzom\\Desktop\\GITSLAVE\\SOLA\\code\\clients\\swing\\desktop\\src\\main\\resources\\images\\common\\calendar.png")); // NOI18N
         btnShowCalendarTo.setText(bundle1.getString("ApplicationSearchPanel.btnShowCalendarTo.text")); // NOI18N
         btnShowCalendarTo.setBorder(null);
         btnShowCalendarTo.addActionListener(new java.awt.event.ActionListener() {

@@ -95,7 +95,8 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         locatePointPanel = new org.sola.clients.swing.gis.ui.control.LocatePointPanel();
         jLabel5 = new javax.swing.JLabel();
 
-        jTextField1.setText("jTextField1");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jTextField1.setText(bundle.getString("OnePointAreaMethodForm.jTextField1.text")); // NOI18N
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -108,14 +109,14 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
 
         groupDirection.add(optClockwise);
         optClockwise.setSelected(true);
-        optClockwise.setText("Clockwise Direction");
+        optClockwise.setText(bundle.getString("OnePointAreaMethodForm.optClockwise.text")); // NOI18N
 
         groupDirection.add(optCounterClockWise);
-        optCounterClockWise.setText("Counter-Clockwise Direction");
+        optCounterClockWise.setText(bundle.getString("OnePointAreaMethodForm.optCounterClockWise.text")); // NOI18N
 
-        jLabel7.setText("Required Area(m2):");
+        jLabel7.setText(bundle.getString("OnePointAreaMethodForm.jLabel7.text")); // NOI18N
 
-        btnNewPacel.setText("Create Parcel");
+        btnNewPacel.setText(bundle.getString("OnePointAreaMethodForm.btnNewPacel.text")); // NOI18N
         btnNewPacel.setEnabled(false);
         btnNewPacel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,25 +124,25 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("OnePointAreaMethodForm.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Maximum Area(m2):");
+        jLabel6.setText(bundle.getString("OnePointAreaMethodForm.jLabel6.text")); // NOI18N
 
         txtMaxArea.setEnabled(false);
 
-        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.setText(bundle.getString("OnePointAreaMethodForm.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("OnePointAreaMethodForm.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
@@ -205,7 +206,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         );
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Area Details:");
+        jLabel5.setText(bundle.getString("OnePointAreaMethodForm.jLabel5.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

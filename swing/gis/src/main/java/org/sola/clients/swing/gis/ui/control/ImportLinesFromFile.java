@@ -97,7 +97,8 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
         btnCreatePolygon = new javax.swing.JButton();
         btnImportPoints = new javax.swing.JButton();
 
-        jButton1.setText("jButton1");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jButton1.setText(bundle.getString("ImportLinesFromFile.jButton1.text")); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -134,70 +135,70 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
             .addComponent(jScrollPane1)
         );
 
-        btnOpenShapeFile.setText("Import Shape File");
+        btnOpenShapeFile.setText(bundle.getString("ImportLinesFromFile.btnOpenShapeFile.text")); // NOI18N
         btnOpenShapeFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOpenShapeFileActionPerformed(evt);
             }
         });
 
-        btnSaveTextFile.setText("Save to Text File");
+        btnSaveTextFile.setText(bundle.getString("ImportLinesFromFile.btnSaveTextFile.text")); // NOI18N
         btnSaveTextFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveTextFileActionPerformed(evt);
             }
         });
 
-        btnUndoSplit.setText("Undo Split");
+        btnUndoSplit.setText(bundle.getString("ImportLinesFromFile.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUndoSplitActionPerformed(evt);
             }
         });
 
-        btnAddRow.setText("Add Row");
+        btnAddRow.setText(bundle.getString("ImportLinesFromFile.btnAddRow.text")); // NOI18N
         btnAddRow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddRowActionPerformed(evt);
             }
         });
 
-        btnImportLines.setText("Import Line File");
+        btnImportLines.setText(bundle.getString("ImportLinesFromFile.btnImportLines.text")); // NOI18N
         btnImportLines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImportLinesActionPerformed(evt);
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText(bundle.getString("ImportLinesFromFile.btnOK.text")); // NOI18N
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
-        btnDxfImport.setText("Import DXF file");
+        btnDxfImport.setText(bundle.getString("ImportLinesFromFile.btnDxfImport.text")); // NOI18N
         btnDxfImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDxfImportActionPerformed(evt);
             }
         });
 
-        btnRefreshMap.setText("Refresh Map");
+        btnRefreshMap.setText(bundle.getString("ImportLinesFromFile.btnRefreshMap.text")); // NOI18N
         btnRefreshMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshMapActionPerformed(evt);
             }
         });
 
-        btnShowInMap.setText("Show Lines in Map");
+        btnShowInMap.setText(bundle.getString("ImportLinesFromFile.btnShowInMap.text")); // NOI18N
         btnShowInMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowInMapActionPerformed(evt);
             }
         });
 
-        btnCreatePolygon.setText("Create Polygons");
+        btnCreatePolygon.setText(bundle.getString("ImportLinesFromFile.btnCreatePolygon.text")); // NOI18N
         btnCreatePolygon.setEnabled(false);
         btnCreatePolygon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +206,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
             }
         });
 
-        btnImportPoints.setText("Import Point File");
+        btnImportPoints.setText(bundle.getString("ImportLinesFromFile.btnImportPoints.text")); // NOI18N
         btnImportPoints.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImportPointsActionPerformed(evt);

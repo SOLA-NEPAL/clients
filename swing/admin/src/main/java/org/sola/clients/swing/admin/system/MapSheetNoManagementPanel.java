@@ -134,9 +134,10 @@ public class MapSheetNoManagementPanel extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        headerPanel1.setTitleText("Map Sheet No. Management");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/admin/system/Bundle"); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("MapSheetNoManagementPanel.headerPanel1.titleText")); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Map Sheet No."));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("MapSheetNoManagementPanel.jPanel1.border.title"))); // NOI18N
 
         jTable2.getTableHeader().setReorderingAllowed(false);
 
@@ -168,12 +169,12 @@ public class MapSheetNoManagementPanel extends ContentPanel {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("New Map Sheet No."));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("MapSheetNoManagementPanel.jPanel2.border.title"))); // NOI18N
         jPanel2.setLayout(new java.awt.GridLayout(3, 0, 0, 5));
 
-        jLabel3.setText("Office");
+        jLabel3.setText(bundle.getString("MapSheetNoManagementPanel.jLabel3.text")); // NOI18N
 
-        cmbOffice.setName("");
+        cmbOffice.setName(bundle.getString("MapSheetNoManagementPanel.cmbOffice.name")); // NOI18N
         cmbOffice.setOpaque(false);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${offices}");
@@ -208,10 +209,10 @@ public class MapSheetNoManagementPanel extends ContentPanel {
 
         jPanel2.add(jPanel6);
 
-        jLabel2.setText("Map Sheet Type");
+        jLabel2.setText(bundle.getString("MapSheetNoManagementPanel.jLabel2.text")); // NOI18N
 
         cmbMapSheetType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Control Sheet", "Free Sheet" }));
-        cmbMapSheetType.setName("");
+        cmbMapSheetType.setName(bundle.getString("MapSheetNoManagementPanel.cmbMapSheetType.name")); // NOI18N
         cmbMapSheetType.setOpaque(false);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${mapSheetBean.sheetTypeString}"), cmbMapSheetType, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
@@ -243,7 +244,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
 
         jPanel2.add(jPanel4);
 
-        jLabel1.setText("Map Sheet No");
+        jLabel1.setText(bundle.getString("MapSheetNoManagementPanel.jLabel1.text")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${mapSheetBean.mapNumber}"), txtMapSheetNo, org.jdesktop.beansbinding.BeanProperty.create("text"), "");
         bindingGroup.addBinding(binding);
@@ -276,7 +277,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
 
         jPanel5.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        btnSave.setText("Save");
+        btnSave.setText(bundle.getString("MapSheetNoManagementPanel.btnSave.text")); // NOI18N
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -288,8 +289,8 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         toolbarRefData.setRollover(true);
 
         btnAddRefData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/admin/referencedata/Bundle"); // NOI18N
-        btnAddRefData.setText(bundle.getString("ReferenceDataManagementPanel.btnAddRefData.text")); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("org/sola/clients/swing/admin/referencedata/Bundle"); // NOI18N
+        btnAddRefData.setText(bundle1.getString("ReferenceDataManagementPanel.btnAddRefData.text")); // NOI18N
         btnAddRefData.setFocusable(false);
         btnAddRefData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnAddRefData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -301,7 +302,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         toolbarRefData.add(btnAddRefData);
 
         btnEditRefData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
-        btnEditRefData.setText(bundle.getString("ReferenceDataManagementPanel.btnEditRefData.text")); // NOI18N
+        btnEditRefData.setText(bundle1.getString("ReferenceDataManagementPanel.btnEditRefData.text")); // NOI18N
         btnEditRefData.setFocusable(false);
         btnEditRefData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnEditRefData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -313,7 +314,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         toolbarRefData.add(btnEditRefData);
 
         btnRemoveRefData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
-        btnRemoveRefData.setText(bundle.getString("ReferenceDataManagementPanel.btnRemoveRefData.text")); // NOI18N
+        btnRemoveRefData.setText(bundle1.getString("ReferenceDataManagementPanel.btnRemoveRefData.text")); // NOI18N
         btnRemoveRefData.setFocusable(false);
         btnRemoveRefData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnRemoveRefData.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

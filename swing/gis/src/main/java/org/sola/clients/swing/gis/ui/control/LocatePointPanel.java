@@ -211,7 +211,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
         btnMakeEnable = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        jTextField1.setText("jTextField1");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jTextField1.setText(bundle.getString("LocatePointPanel.jTextField1.text")); // NOI18N
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -239,25 +240,25 @@ public class LocatePointPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Segment Details:");
+        jLabel1.setText(bundle.getString("LocatePointPanel.jLabel1.text")); // NOI18N
 
         buttonGroup1.add(optFirst);
         optFirst.setSelected(true);
-        optFirst.setText("Distance From First Vertex");
+        optFirst.setText(bundle.getString("LocatePointPanel.optFirst.text")); // NOI18N
 
         buttonGroup1.add(optSecond);
-        optSecond.setText("Distance From Second Vertex");
+        optSecond.setText(bundle.getString("LocatePointPanel.optSecond.text")); // NOI18N
 
-        jLabel3.setText("Distance:");
+        jLabel3.setText(bundle.getString("LocatePointPanel.jLabel3.text")); // NOI18N
 
-        jLabel4.setText("Total Length (m)");
+        jLabel4.setText(bundle.getString("LocatePointPanel.jLabel4.text")); // NOI18N
 
         txtTotalLength.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Point Location:");
+        jLabel2.setText(bundle.getString("LocatePointPanel.jLabel2.text")); // NOI18N
 
-        btnAddPoint.setText("Add Point in Map");
+        btnAddPoint.setText(bundle.getString("LocatePointPanel.btnAddPoint.text")); // NOI18N
         btnAddPoint.setEnabled(false);
         btnAddPoint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,14 +266,14 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
         });
 
-        btnShowInMap.setText("Show Selected Object in Map");
+        btnShowInMap.setText(bundle.getString("LocatePointPanel.btnShowInMap.text")); // NOI18N
         btnShowInMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowInMapActionPerformed(evt);
             }
         });
 
-        btnReload.setText("Reload Data");
+        btnReload.setText(bundle.getString("LocatePointPanel.btnReload.text")); // NOI18N
         btnReload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReloadActionPerformed(evt);
@@ -342,7 +343,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
                     .addComponent(btnReload)))
         );
 
-        btnClearSelection.setText("Clear Selection");
+        btnClearSelection.setText(bundle.getString("LocatePointPanel.btnClearSelection.text")); // NOI18N
         btnClearSelection.setEnabled(false);
         btnClearSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,7 +351,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
         });
 
-        btnMakeEnable.setText("Enable Table");
+        btnMakeEnable.setText(bundle.getString("LocatePointPanel.btnMakeEnable.text")); // NOI18N
         btnMakeEnable.setEnabled(false);
         btnMakeEnable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -358,7 +359,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
         });
 
-        btnDelete.setText("Delete Segment");
+        btnDelete.setText(bundle.getString("LocatePointPanel.btnDelete.text")); // NOI18N
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
