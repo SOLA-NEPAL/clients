@@ -27,7 +27,7 @@
  */
 package org.sola.clients.beans.administrative;
 
-import org.sola.clients.beans.AbstractTransactionedBean;
+import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.BaUnitTypeBean;
 import org.sola.webservices.transferobjects.administrative.BaUnitBasicTO;
@@ -37,7 +37,7 @@ import org.sola.webservices.transferobjects.administrative.BaUnitBasicTO;
  * Could be populated from the {@link BaUnitBasicTO} object.<br />
  * For more information see data dictionary <b>Administrative</b> schema.
  */
-public class BaUnitSummaryBean extends AbstractTransactionedBean {
+public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String BA_UNIT_TYPE_PROPERTY = "baUnitType";
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String NAME_PROPERTY = "name";
@@ -50,7 +50,6 @@ public class BaUnitSummaryBean extends AbstractTransactionedBean {
     //@NotEmpty(message = ClientMessage.CHECK_NOTNULL_FIRSTPART, payload=Localized.class)
     private String nameLastpart;
     private BaUnitTypeBean baUnitType;
-    private String officeCode;
     
     public BaUnitSummaryBean(){
         super();
@@ -113,13 +112,5 @@ public class BaUnitSummaryBean extends AbstractTransactionedBean {
             this.baUnitType = new BaUnitTypeBean();
         }
         this.setJointRefDataBean(this.baUnitType, baUnitType, BA_UNIT_TYPE_PROPERTY);
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        this.officeCode = officeCode;
     }
 }

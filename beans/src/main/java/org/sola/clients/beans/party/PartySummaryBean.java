@@ -28,7 +28,7 @@
 package org.sola.clients.beans.party;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -46,7 +46,7 @@ import org.sola.webservices.transferobjects.casemanagement.PartyTO;
  * For more information see data dictionary <b>Party</b> schema.
  * <br />This bean is used as a part of {@link ApplicationBean}.
  */
-public class PartySummaryBean extends AbstractIdBean {
+public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
 
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String NAME_PROPERTY = "name";

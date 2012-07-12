@@ -32,6 +32,7 @@ import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedBean;
+import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.SourceTypeBean;
 import org.sola.clients.beans.validation.Localized;
@@ -43,7 +44,7 @@ import org.sola.webservices.transferobjects.casemanagement.SourceSummaryTO;
  * Could be populated from the {@link SourceSummaryTO} object.<br />
  * For more information see data dictionary <b>Source</b> schema.
  */
-public class SourceSummaryBean extends AbstractTransactionedBean {
+public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
 
     public static final String ACCEPTANCE_PROPERTY = "acceptance";
     public static final String ARCHIVE_ID_PROPERTY = "archiveId";
@@ -54,7 +55,6 @@ public class SourceSummaryBean extends AbstractTransactionedBean {
     public static final String SUBMISSION_PROPERTY = "submission";
     public static final String SOURCE_TYPE_CODE_PROPERTY = "typeCode";
     public static final String SOURCE_TYPE_PROPERTY = "sourceType";
-    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     private Date acceptance;
     private String archiveId;
     private String archiveDocumentId;
@@ -66,7 +66,6 @@ public class SourceSummaryBean extends AbstractTransactionedBean {
     private Date submission;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_SOURCETYPE, payload=Localized.class)
     private SourceTypeBean sourceType;
-    private String officeCode;
 
     public SourceSummaryBean() {
         super();
@@ -181,15 +180,5 @@ public class SourceSummaryBean extends AbstractTransactionedBean {
         Date old = submission;
         submission = value;
         propertySupport.firePropertyChange(SUBMISSION_PROPERTY, old, value);
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 }

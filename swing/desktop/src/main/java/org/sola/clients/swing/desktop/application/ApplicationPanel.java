@@ -277,31 +277,31 @@ public class ApplicationPanel extends ContentPanel {
             btnValidate.setEnabled(false);
         }
 
-        menuApprove.setEnabled(appBean.canApprove()
+        menuApprove.setEnabled(appBean.canApprove() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_APPROVE));
-        menuCancel.setEnabled(appBean.canCancel()
+        menuCancel.setEnabled(appBean.canCancel() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_REJECT));
-        menuArchive.setEnabled(appBean.canArchive()
+        menuArchive.setEnabled(appBean.canArchive() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_ARCHIVE));
-        menuDispatch.setEnabled(appBean.canDespatch()
+        menuDispatch.setEnabled(appBean.canDespatch() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_DESPATCH));
         menuRequisition.setEnabled(appBean.canRequisition()
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_REQUISITE));
-        menuResubmit.setEnabled(appBean.canResubmit()
+        menuResubmit.setEnabled(appBean.canResubmit() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_RESUBMIT));
-        menuLapse.setEnabled(appBean.canLapse()
+        menuLapse.setEnabled(appBean.canLapse() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_WITHDRAW));
-        menuWithdraw.setEnabled(appBean.canWithdraw()
+        menuWithdraw.setEnabled(appBean.canWithdraw() 
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_WITHDRAW));
         btnPrintStatusReport.setEnabled(appBean.getRowVersion() > 0);
 
         if (btnValidate.isEnabled()) {
-            btnValidate.setEnabled(appBean.canValidate()
+            btnValidate.setEnabled(appBean.canValidate() 
                     && SecurityBean.isInRole(RolesConstants.APPLICATION_VALIDATE));
         }
 
         if (appBean.getStatusCode() != null) {
-            boolean editAllowed = appBean.isEditingAllowed()
+            boolean editAllowed = appBean.isEditingAllowed() 
                     && SecurityBean.isInRole(RolesConstants.APPLICATION_EDIT_APPS);
             btnSave.setEnabled(editAllowed);
             btnAddProperty.setEnabled(editAllowed);

@@ -15,6 +15,7 @@
  */
 package org.sola.clients.beans.cadastre;
 
+import java.util.List;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -46,6 +47,12 @@ public class MapSheetListBean extends AbstractBindingListBean {
         this.selectedMapSheet = selectedMapSheet;
         propertySupport.firePropertyChange(SELECTED_MAPSHEET, oldValue, this.selectedMapSheet);
     }
+    
+    public void updateSelectedMapSheet(MapSheetBean newMapSheet){
+        if(selectedMapSheet!=null && newMapSheet!=null && mapSheets.contains(selectedMapSheet)){
+            mapSheets.set(mapSheets.indexOf(selectedMapSheet), newMapSheet);
+        }
+    }
 
     public SolaObservableList<MapSheetBean> getMapSheets() {
         if (mapSheets == null) {
@@ -58,8 +65,12 @@ public class MapSheetListBean extends AbstractBindingListBean {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (SolaObservableList) mapSheets);
     }
     
-    public void loadMapSheetList(int mapSheetType) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (SolaObservableList) mapSheets);
+    public void loadMapSheetList(String officeCode,String language) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByOffice(officeCode, language), MapSheetBean.class, (List) mapSheets);
+    }
+    
+     public void loadMapSheetList(int mapSheetType) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (List) mapSheets);
     }
 
     /**
