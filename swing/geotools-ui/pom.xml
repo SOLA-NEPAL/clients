@@ -45,7 +45,7 @@
         </pluginRepository>
     </pluginRepositories>
     <properties>
-        <geotools.version>8.0-M4</geotools.version>
+        <geotools.version>8.0-RC2</geotools.version>
     </properties>
     <dependencies>
         <dependency>
@@ -99,6 +99,12 @@
                     <groupId>bouncycastle</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.sola.common</groupId>
+            <artifactId>sola-common</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

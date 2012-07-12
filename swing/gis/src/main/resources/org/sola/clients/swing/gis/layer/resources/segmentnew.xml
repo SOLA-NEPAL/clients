@@ -24,8 +24,7 @@
                     </LineSymbolizer>
                     <TextSymbolizer>
                         <Label>
-                            <ogc:PropertyName>sid</ogc:PropertyName>
-                            )<ogc:PropertyName>shape_length</ogc:PropertyName>m
+                            <ogc:PropertyName>sid</ogc:PropertyName>)<ogc:PropertyName>shape_length</ogc:PropertyName>m
                         </Label>
                         <Font>
                             <CssParameter name="font-family">Arial</CssParameter>

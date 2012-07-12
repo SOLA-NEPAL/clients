@@ -35,6 +35,7 @@ import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
+import org.sola.clients.beans.cadastre.ParcelTypeBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.RoleBean;
@@ -132,6 +133,8 @@ public final class CacheManager {
     public static final String RESTRICTION_RELEASE_REASON_KEY = RestrictionReleaseReasonBean.class.getName() + LIST_POSTFIX;
      /** Cache key of the {@link RestrictionOfficeBean} collection.*/
     public static final String RESTRICTION_OFFICE_KEY = RestrictionOfficeBean.class.getName() + LIST_POSTFIX;
+    /** Cache key of the {@link ParcelTypeBean} collection.*/
+    public static final String PARCEL_TYPES_KEY = ParcelTypeBean.class.getName() + LIST_POSTFIX;
     
     
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
@@ -165,6 +168,13 @@ public final class CacheManager {
     private static final String GET_OFFICES = "getOffices";
     private static final String GET_MAPSHEETS= "getMapSheets";
     private static final String GET_VDCS = "getVdcs";
+    private static final String GET_PARCEL_TYPES = "getParcelTypes";
+    
+    public static List<ParcelTypeBean> getParcelTypes() {
+        return getCachedBeanList(ParcelTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_PARCEL_TYPES, PARCEL_TYPES_KEY);
+    }
     
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result=new ArrayList<DepartmentBean>();

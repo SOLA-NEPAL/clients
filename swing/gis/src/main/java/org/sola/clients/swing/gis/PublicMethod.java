@@ -7,10 +7,12 @@ package org.sola.clients.swing.gis;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
 import com.vividsolutions.jts.operation.buffer.OffsetCurveBuilder;
+import java.awt.Component;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JToolBar;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.FeatureIterator;
@@ -461,6 +463,31 @@ public class PublicMethod {
         
         return polys.size();
     }
+    
+    public static boolean isGap_inBetween(SimpleFeatureCollection polys,String geomfld){
+        double dist=0.0005;//mm precision.
+        //get feature collection.
+        SimpleFeatureIterator polyIter=polys.features();
+        int i=0;
+        Geometry[] geoms=new Geometry[polys.size()];
+        while (polyIter.hasNext()){
+            SimpleFeature fea=polyIter.next();
+            geoms[i++]=(Geometry)fea.getAttribute(geomfld);
+        }
+        for (int k=0;k<geoms.length-1;k++){
+            boolean isTouched=false;
+            for (int j=k+1;j<geoms.length;j++){
+                if (geoms[k].isWithinDistance(geoms[j], dist)){
+                    isTouched=true;
+                    break;
+                }
+            }
+            if (!isTouched){
+                return true;
+            }
+        }
+        return false;
+    }
     //------------------------------------------------------
     
     //<editor-fold defaultstate="collapsed" desc="build segment list in their connection order.">
@@ -733,7 +760,7 @@ public class PublicMethod {
         targetParcelsLayer.getFeatureCollection().clear();
         try {
             targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
-            remove_All_newParcel(targetParcelsLayer);
+            //remove_All_newParcel(targetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -756,4 +783,15 @@ public class PublicMethod {
         }
     }
     //</editor-fold>
+    
+    public static void enable_disable_Select_Tool(
+            JToolBar sola_ctontrols,String control_name,boolean enable){
+        for (Component selectTool: sola_ctontrols.getComponents()){
+            if (selectTool.getName()==null) continue;
+            if (selectTool.getName().equals(control_name)){
+                selectTool.setEnabled(enable);
+                return;
+            }
+        }
+    }
 }

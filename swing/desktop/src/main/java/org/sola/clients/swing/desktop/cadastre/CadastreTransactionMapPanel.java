@@ -48,6 +48,7 @@ import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreRed
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForTransaction;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
+import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**
  * Used to produce cadastre changes.
@@ -97,9 +98,27 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         this.mapControl.setReadOnly(!this.applicationService.isManagementAllowed());
     }
 
+     private void zoom_to_Selected_Parcel(ApplicationPropertyBean property){
+        String strSearch= property.getNameFirstpart() + " " + 
+                property.getNameLastpart();
+        List<CadastreObjectSearchResultTO> parcel=
+              WSManager.getInstance().getSearchService().searchCadastreObjects(
+                "NUMBER", strSearch); //searching by number.
+        
+        //assuming combination of first part and last part as unique.
+        //the valued returned will be only one.
+        CadastreObjectSearchResultTO selected_parcel=null;
+        if (parcel!=null && parcel.size()>0){
+            selected_parcel= parcel.get(0);
+        }
+        this.mapControl.show_Selected_Parcel_onMap(selected_parcel);
+    }
+    
     private void addMapToForm() {
         this.mapPanel.setLayout(new BorderLayout());
         this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
+        //try to zoom at selected parcel.
+        zoom_to_Selected_Parcel(this.applicationProperty);
     }
 
     private void customizeForm() {

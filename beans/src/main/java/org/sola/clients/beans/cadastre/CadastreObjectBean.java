@@ -34,6 +34,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedBean;
+import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -47,7 +48,7 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * Contains properties and methods to manage <b>Cadastre</b> object of the
  * domain model. Could be populated from the {@link CadastreObjectTO} object.
  */
-public class CadastreObjectBean extends AbstractTransactionedBean {
+public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean {
 
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String APPROVAL_DATETIME_PROPERTY = "approvalDatetime";
@@ -59,6 +60,7 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public static final String GEOM_POLYGON_PROPERTY = "geomPolygon";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
+    public static final String PARCEL_TYPE_BEAN_PROPERTY = "parcelTypeBean";
     public static final String SPATIAL_VALUE_AREA_LIST_PROPERTY = "spatialValueAreaList";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
     public static final String PARCEL_NOTE_PROPERTY = "parcelNote";
@@ -67,7 +69,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     public static final String MAPSHEET_CODE_PROPERTY = "mapSheetCode";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String SPATIAL_VALUE_AREA_PROPERTY = "SpatialValueArea";
-    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     private Date approvalDatetime;
     private Date historicDatetime;
     private String sourceReference;
@@ -83,12 +84,23 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     private SolaObservableList<SpatialValueAreaBean> spatialValueAreaList;
     private int parcelno;
     private String parcelNote;
-    private int parcelType;
     private SolaObservableList<SpatialValueAreaBean> selectedSpatialValueArea;
+    
     private MapSheetBean mapSheet;
+    private ParcelTypeBean parceltypeBean;
     private String transactionId;
     private SpatialValueAreaBean SpatialValueArea;
-    private String officeCode;
+
+    public ParcelTypeBean getParceltypeBean() {
+        return parceltypeBean;
+    }
+
+    public void setParceltypeBean(ParcelTypeBean parceltypeBean) {
+        ParcelTypeBean oldValue = this.parceltypeBean;
+        this.parceltypeBean = parceltypeBean;
+        propertySupport.firePropertyChange(
+                PARCEL_TYPE_BEAN_PROPERTY, oldValue, this.mapSheet);
+    }
 
     public SpatialValueAreaBean getSpatialValueArea() {
         return SpatialValueArea;
@@ -127,7 +139,7 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
     
     public String getMapSheetCode() {
         if (getMapSheet() != null) {
-            return getMapSheet().getCode();
+            return getMapSheet().getId();
         } else {
             return null;
         }
@@ -143,7 +155,7 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
 //        propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
         String oldValue = null;
         if (mapSheet != null) {
-            oldValue = mapSheet.getCode();
+            oldValue = mapSheet.getId();
         }
         this.mapSheetCode = mapSheetCode;
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
@@ -160,15 +172,22 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
                 oldValue, this.parcelNote);
     }
 
-    public int getParcelType() {
-        return parcelType;
+    public String getParcelType() {
+        if (this.parceltypeBean==null){
+            return null;
+        }
+        else {
+            return parceltypeBean.getCode();
+        }
     }
 
-    public void setParcelType(int parcelType) {
-        int oldValue = this.parcelType;
-        this.parcelType = 0;//parcelType;
-        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY,
-                oldValue, this.parcelType);
+    public void setParcelType(String parcelType) {
+        String oldValue = null;
+        if(getParcelType()!=null){
+            oldValue = getParceltypeBean().getCode();
+        }
+        setParceltypeBean(CacheManager.getBeanByCode(CacheManager.getParcelTypes(), parcelType));
+        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelType);
     }
 
     public int getParcelno() {
@@ -321,16 +340,6 @@ public class CadastreObjectBean extends AbstractTransactionedBean {
         MapSheetBean oldValue = this.mapSheet;
         this.mapSheet = mapSheet;
         propertySupport.firePropertyChange(MAP_SHEET_PROPERTY, oldValue, this.mapSheet);
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 
     public List<SpatialValueAreaBean> getSpatialValueAreaList() {

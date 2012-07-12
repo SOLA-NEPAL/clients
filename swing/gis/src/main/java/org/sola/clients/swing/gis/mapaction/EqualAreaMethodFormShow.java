@@ -7,11 +7,13 @@ package org.sola.clients.swing.gis.mapaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 import org.sola.clients.swing.gis.ui.control.EqualAreaMethod;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -27,9 +29,10 @@ public class EqualAreaMethodFormShow extends ComponentShow{
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
+    private JToolBar jTool;
 
     public EqualAreaMethodFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
-                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,JToolBar jTool) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_CHANGE_EQUAL_AREA).getMessage(),
@@ -38,6 +41,7 @@ public class EqualAreaMethodFormShow extends ComponentShow{
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
         this.targetParcelsLayer=targetParcelsLayer;
+        this.jTool=jTool;
     }
     
     @Override
@@ -56,9 +60,13 @@ public class EqualAreaMethodFormShow extends ComponentShow{
         
         try {
             //Display segment list.
-            if (equalAreaForm==null)
-                equalAreaForm=new EqualAreaMethod(segmentLayer, targetParcelsLayer);
+            if (equalAreaForm==null){
+                equalAreaForm=new EqualAreaMethod(segmentLayer,
+                        targetParcelsLayer,jTool);
+            }
             equalAreaForm.setVisible(true);
+            PublicMethod.enable_disable_Select_Tool(jTool, 
+                            listSelectedCadastreObjects.NAME, false);
             equalAreaForm.getLocatePointPanel().reload_Data();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(EqualAreaMethodFormShow.class.getName()).log(Level.SEVERE, null, ex);

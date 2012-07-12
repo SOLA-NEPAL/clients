@@ -50,12 +50,11 @@ import java.awt.Color;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.*;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JToolBar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
 import org.geotools.geometry.jts.Geometries;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.Layer;
@@ -112,8 +111,18 @@ public class Map extends JMapPane {
     private double pixelResolution = 0;
     private Toc toc;
     private CursorTool activeTool = null;
+    
     //for zoom previous action storing draw extents.
     private List<ReferencedEnvelope> draw_Envelops=new ArrayList<ReferencedEnvelope>();
+    private JTextField txtScale;
+
+    public JTextField getTxtScale() {
+        return txtScale;
+    }
+
+    public void setTxtScale(JTextField txtScale) {
+        this.txtScale = txtScale;
+    }
 
     /**
      * This constructor is used only for the graphical designer. Use the other
@@ -614,10 +623,44 @@ public class Map extends JMapPane {
         } else {
             btn = new JButton(action);
         }
+
+        this.toolsGroup.add(btn);
+        inToolbar.add(btn);
+    }
+    
+    public void addMapAction(
+            AbstractAction action, boolean hasTool, JToolBar inToolbar,
+            boolean enabled, String buttonName) {
+        action.setEnabled(enabled);
+        AbstractButton btn = null;
+        if (hasTool) {
+            btn = new ExtendedToolItem(action);
+        } else {
+            btn = new JButton(action);
+        }
+        btn.setName(buttonName);
         this.toolsGroup.add(btn);
         inToolbar.add(btn);
     }
 
+    public void addMapTextBoxAction(
+            AbstractAction action, JToolBar inToolbar,
+            boolean enabled, String textBoxName) {
+        //Label box.
+        JLabel lbl = new JLabel();
+        lbl.setText(textBoxName + " 1:");
+        lbl.setSize(300, 50);
+        lbl.setEnabled(enabled);
+        inToolbar.add(lbl);
+        //Text box.
+        JTextField txt = new JTextField(textBoxName);
+        txt.setAction(action);
+        txt.setText("");
+        txt.setSize(300, 50);
+        txt.setEnabled(enabled);
+        this.setTxtScale(txt);
+        inToolbar.add(txt);
+    }
     /**
      * It adds a tool in the map. The tool adds also an action in the toolbar
      * which can activate the tool
@@ -628,6 +671,12 @@ public class Map extends JMapPane {
     public void addTool(ExtendedTool tool, JToolBar inToolbar, boolean enabled) {
         this.addMapAction(new ExtendedAction(this, tool), inToolbar, enabled);
     }
+    
+    public void addTool(ExtendedTool tool, JToolBar inToolbar, boolean enabled,
+            String buttonName) {
+        this.addMapAction(new ExtendedAction(this, tool), inToolbar,
+                enabled, buttonName);
+    }
 
     /**
      * Add an action of type ExtendedAction in a toolbar.
@@ -637,6 +686,12 @@ public class Map extends JMapPane {
      */
     public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled) {
         this.addMapAction(action, action.getAttachedTool() != null, inToolbar, enabled);
+    }
+    
+    public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled,
+            String buttonName) {
+        this.addMapAction(action, action.getAttachedTool() != null, inToolbar
+                , enabled,buttonName);
     }
 
     /**
@@ -727,8 +782,9 @@ public class Map extends JMapPane {
         this.drawLayers(false);
     }
 
+    //<editor-fold defaultstate="collapse" desc="By Kabindra">
      /**
-     * It refreshes the map, by Kabindra for checking purpose.
+     * It refreshes the map, for checking purpose.
      */
     public void refresh(boolean bln_redraw) {
         record_ZoomEnvelope();
@@ -736,7 +792,7 @@ public class Map extends JMapPane {
         this.drawLayers(bln_redraw);
     }
     
-    // <needed for zoom previous--addition by Kabindra>
+    // <needed for zoom previous--addition>
     //------------------------------------------------
     public void record_ZoomEnvelope() {
         if (draw_Envelops.size()>25){
@@ -757,7 +813,8 @@ public class Map extends JMapPane {
             draw_Envelops.remove(zoomwindow);
         }
     }
-    //---------------------------------------------------
+    //</editor-fold>
+    
     /**
      * Gets the current scale of the map.
      *
@@ -785,6 +842,14 @@ public class Map extends JMapPane {
     protected void drawLayers(boolean createNewImage) {
         clearLabelCache.set(true);
         super.drawLayers(createNewImage);
+        try {
+            if (this.getWidth()==0 || this.getHeight()==0) return;
+            DecimalFormat df = new DecimalFormat("#0");
+            String currentScale= df.format(this.getScale());
+            txtScale.setText(currentScale);
+        } catch (MapScaleException ex) {
+            Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

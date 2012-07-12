@@ -53,7 +53,7 @@ public class PersonSearchForm extends javax.swing.JDialog {
                 } else {
                     pnlContent.showPanel(MainContentPanel.CARD_SEARCH_PERSONS);
                 }
-                partySearchPanelForm.getPartySearchPanel().setBlnDisabledelete(true);
+                partySearchPanelForm.getPartySearchPanel().setShowRemoveButton(true);
                 return null;
             }
         };

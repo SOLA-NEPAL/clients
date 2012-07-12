@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
@@ -25,6 +26,7 @@ import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 
 /**
  *
@@ -39,12 +41,14 @@ public class EqualAreaMethod extends javax.swing.JDialog {
     //Store selected line and points.
     private String parcel_ID="";
     private List<LineString> selectedLines=new ArrayList<LineString>();
+    private JToolBar jTool;
     /**
      * Creates new form EqualAreaMethod
      */
     public EqualAreaMethod(
-            CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
-            throws InitializeLayerException {
+            CadastreTargetSegmentLayer segmentLayer,
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
+            JToolBar jTool) throws InitializeLayerException {
         initComponents();
 
         this.setAlwaysOnTop(true);
@@ -54,7 +58,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         
         this.segmentLayer = segmentLayer;
         this.targetParcelsLayer = targetParcelsLayer;
-
+        this.jTool=jTool;
         locatePointPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         locatePointPanel.initializeFormVariable(segmentLayer);
     }
@@ -369,6 +373,8 @@ public class EqualAreaMethod extends javax.swing.JDialog {
         //List<Layer> lays=mapObj.getMapContent().layers();
         Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
+        PublicMethod.enable_disable_Select_Tool(jTool, 
+                            listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

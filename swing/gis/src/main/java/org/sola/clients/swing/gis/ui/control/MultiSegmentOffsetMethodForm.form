@@ -80,14 +80,18 @@
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnShowJoinPoint" max="32767" attributes="0"/>
-                      <Component id="btnCheckOffsetLine" min="-2" pref="141" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnShowJoinPoint" max="32767" attributes="0"/>
+                          <Component id="btnCheckOffsetLine" min="-2" pref="141" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnCheckSegments" linkSize="1" max="32767" attributes="0"/>
                       <Component id="btnCreateParcel" linkSize="1" min="-2" pref="111" max="-2" attributes="0"/>
+                      <Component id="txtMaxArea" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -100,6 +104,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="optOffsetByDistance" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="optOffsetByArea" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMaxArea" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -240,6 +246,17 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="org/sola/clients/swing/gis/ui/control/Bundle.properties" key="MultiSegmentOffsetMethodForm.lblOffsetValue.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Maximum Area(m2):"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtMaxArea">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

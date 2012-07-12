@@ -93,7 +93,9 @@ public class PartyPanelForm extends ContentPanel {
         this.savePartyOnAction = savePartyOnAction;
         this.closeOnSave = closeOnSave;
         resourceBundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/party/Bundle");
-
+        if(!readOnly && partyBean!=null){
+            this.readOnly = !partyBean.checkAccessByOffice();
+        }
         initComponents();
         customizePanel();
         savePartyState();

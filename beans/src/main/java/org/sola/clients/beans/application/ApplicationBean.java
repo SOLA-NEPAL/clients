@@ -47,10 +47,7 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
-import org.sola.clients.beans.referencedata.ApplicationActionTypeBean;
-import org.sola.clients.beans.referencedata.ApplicationStatusTypeBean;
-import org.sola.clients.beans.referencedata.RequestTypeBean;
-import org.sola.clients.beans.referencedata.StatusConstants;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.ValidationResultBean;
@@ -87,7 +84,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String ASSIGNEE_ID_PROPERTY = "assigneeId";
     public static final String STATUS_TYPE_PROPERTY = "statusType";
     public static final String APPLICATION_PROPERTY = "application";
-    public static final String OFFICE_CODE_PROPERTY = "officeCode";
     
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
@@ -108,7 +104,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private PartySummaryBean agent;
     private String assigneeId;
     private ApplicationStatusTypeBean statusBean;
-    private String officeCode;
 
     /**
      * Default constructor to create application bean. Initializes the following
@@ -129,8 +124,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
     public boolean canArchive() {
         String appStatus = getStatusCode();
-        return StatusConstants.DEAD.equalsIgnoreCase(appStatus)
-                || StatusConstants.APPROVED.equalsIgnoreCase(appStatus);
+        return checkAccessByOffice() && (StatusConstants.DEAD.equalsIgnoreCase(appStatus)
+                || StatusConstants.APPROVED.equalsIgnoreCase(appStatus));
     }
 
     public boolean canDespatch() {
@@ -139,7 +134,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
     public boolean canResubmit() {
         String appStatus = getStatusCode();
-        return isAssigned() && (StatusConstants.REQUISITIONED.equalsIgnoreCase(appStatus));
+        return checkAccessByOffice() && isAssigned() && 
+                (StatusConstants.REQUISITIONED.equalsIgnoreCase(appStatus));
     }
 
     /**
@@ -149,7 +145,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      * @return
      */
     public boolean canApprove() {
-        if (!isAssigned() || !isLodged()) {
+        if (!isAssigned() || !isLodged() || !checkAccessByOffice()) {
             return false;
         }
         boolean servicesFinalized = true;
@@ -163,28 +159,27 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
         }
         return servicesFinalized;
-
     }
 
     public boolean canCancel() {
-        return isLodged();
+        return isLodged() && checkAccessByOffice();
     }
 
     public boolean canWithdraw() {
-        return isAssigned() && isLodged();
+        return checkAccessByOffice() && isAssigned() && isLodged();
     }
 
     public boolean canRequisition() {
-        return isAssigned() && isLodged();
+        return isAssigned() && isLodged() && checkAccessByOffice();
     }
 
     public boolean canLapse() {
-        return isAssigned() && isLodged();
+        return checkAccessByOffice() && isAssigned() && isLodged();
     }
 
     public boolean canValidate() {
         String appStatus = getStatusCode();
-        return !(isNew() || StatusConstants.DEAD.equalsIgnoreCase(appStatus)
+        return checkAccessByOffice() && !(isNew() || StatusConstants.DEAD.equalsIgnoreCase(appStatus)
                 || StatusConstants.COMPLETED.equalsIgnoreCase(appStatus));
     }
 
@@ -201,7 +196,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      * Indicates whether editing of application is allowed or not
      */
     public boolean isEditingAllowed() {
-        return isNew() || isLodged();
+        return checkAccessByOffice() && (isNew() || isLodged());
 //        boolean result = true;
 //        String appStatus = getStatusCode();
 //        if (appStatus != null && (appStatus.equals(StatusConstants.APPROVED)
@@ -212,13 +207,13 @@ public class ApplicationBean extends ApplicationSummaryBean {
 //        }
 //        return result;
     }
-
+    
     /**
      * Indicates whether application management is allowed or not
      */
     public boolean isManagementAllowed() {
         String appStatus = getStatusCode();
-        boolean result = true;
+        boolean result = checkAccessByOffice();
         if (appStatus == null || this.isNew()) {
             result = false;
         }
@@ -463,16 +458,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
         BigDecimal old = totalFee;
         totalFee = value;
         propertySupport.firePropertyChange(TOTAL_FEE_PROPERTY, old, value);
-    }
-
-    public String getOfficeCode() {
-        return officeCode;
-    }
-
-    public void setOfficeCode(String officeCode) {
-        String oldValue = this.officeCode;
-        this.officeCode = officeCode;
-        propertySupport.firePropertyChange(OFFICE_CODE_PROPERTY, oldValue, this.officeCode);
     }
 
     /**

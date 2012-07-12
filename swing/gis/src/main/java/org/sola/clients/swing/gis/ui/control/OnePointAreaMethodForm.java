@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
@@ -22,6 +23,7 @@ import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.TargetNeighbourParcelLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 
 /**
  *
@@ -37,14 +39,15 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
     private LineString lineSeg = null;
     private Point pointFixed = null;
     private String parcel_ID="";
+    private JToolBar jTool;
 
     public LocatePointPanel getLocatePointPanel() {
         return locatePointPanel;
     }
 
-    public OnePointAreaMethodForm(
-            CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
-            throws InitializeLayerException {
+    public OnePointAreaMethodForm(CadastreTargetSegmentLayer segmentLayer,
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
+            JToolBar jTool) throws InitializeLayerException {
         
         initComponents();
         this.setAlwaysOnTop(true);
@@ -56,7 +59,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         
         this.segmentLayer = segmentLayer;
         this.targetParcelsLayer = targetParcelsLayer;
-
+        this.jTool=jTool;
         locatePointPanel.initializeFormVariable(segmentLayer);
     }
     
@@ -237,6 +240,8 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         //List<Layer> lays=mapObj.getMapContent().layers();
         Map mapObj = targetParcelsLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
+        PublicMethod.enable_disable_Select_Tool(jTool, 
+                            listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
     //<<<<<<<<<<<<<<<<Section for location point based on the given area and already defined point.

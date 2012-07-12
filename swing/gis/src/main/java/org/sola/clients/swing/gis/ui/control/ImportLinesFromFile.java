@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -27,6 +28,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.*;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 /**
  *
  * @author ShresthaKabin
@@ -39,11 +41,13 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     
     private LocatePointPanel locatePointPanel;
+    private JToolBar jTool;
     /**
      * Creates new form DefinePointListForm
      */
-    public ImportLinesFromFile(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
-                    throws InitializeLayerException {
+    public ImportLinesFromFile(CadastreTargetSegmentLayer segmentLayer,
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer
+            ,JToolBar jTool) throws InitializeLayerException {
         initComponents();
         //set table dimesion.
         TableColumnModel cModel= tblPoints.getColumnModel();
@@ -51,6 +55,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
         tblPoints.setColumnModel(cModel);
         tblPoints.repaint();
         
+        this.jTool=jTool;
         otherInitializations(segmentLayer,targetParcelsLayer);
     }
 
@@ -467,6 +472,8 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Map mapObj=segmentLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
+        PublicMethod.enable_disable_Select_Tool(jTool,
+                    listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed

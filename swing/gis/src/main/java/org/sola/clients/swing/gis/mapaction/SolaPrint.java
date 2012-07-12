@@ -95,8 +95,8 @@ public class SolaPrint extends Print {
         if (this.applicationId != null){
             serviceBean.setApplicationId(this.applicationId);
         }
-        
-        serviceBean.saveInformationService();
+        //uncomment it for generic sola //commented by kabindra to test.
+        //serviceBean.saveInformationService();
         
         return printoutLocation;
     }

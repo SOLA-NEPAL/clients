@@ -19,7 +19,6 @@ import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
