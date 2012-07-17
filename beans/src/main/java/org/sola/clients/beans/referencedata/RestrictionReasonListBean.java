@@ -24,16 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class DistrictListBean extends AbstractBindingListBean {
+public class RestrictionReasonListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_DISTRICT_PROPERTY = "selectedDistrict";
-    DistrictBean selectedDistrict;
-    SolaCodeList<DistrictBean> districts;
+    public static final String SELECTED_RESTRICTION_REASONS_PROPERTY = "selectedRestrictionReasons";
+    private SolaCodeList<RestrictionReasonBean> restrictionReasons;
+    private RestrictionReasonBean selectedRestrictionReasons;
 
-    /**
-     * Default constructor.
-     */
-    public DistrictListBean() {
+    public RestrictionReasonListBean() {
         this(false);
     }
 
@@ -42,7 +39,7 @@ public class DistrictListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public DistrictListBean(boolean createDummy) {
+    public RestrictionReasonListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -52,37 +49,38 @@ public class DistrictListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public DistrictListBean(boolean createDummy, String... excludedCodes) {
+    public RestrictionReasonListBean(boolean createDummy, String... excludedCodes) {
         super();
-        districts = new SolaCodeList<DistrictBean>(excludedCodes);
+        restrictionReasons = new SolaCodeList<RestrictionReasonBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
-     * Loads list of {@link DistrictBean}.
+     * Loads list of {@link RestrictionReasonBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
+     * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(DistrictBean.class, districts, CacheManager.getDistricts(), createDummy);
-    }
-
-    public ObservableList<DistrictBean> getDistricts() {
-        return districts.getFilteredList();
+        loadCodeList(RestrictionReasonBean.class, restrictionReasons, CacheManager.getRestrictionReasons(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        districts.setExcludedCodes(codes);
+        restrictionReasons.setExcludedCodes(codes);
     }
 
-    public DistrictBean getSelectedDistrict() {
-        return selectedDistrict;
+    public RestrictionReasonBean getSelectedRestrictionReasons() {
+        return selectedRestrictionReasons;
     }
 
-    public void setSelectedDistrict(DistrictBean selectedDistrict) {
-        DistrictBean oldValue = this.selectedDistrict;
-        this.selectedDistrict = selectedDistrict;
-        propertySupport.firePropertyChange(SELECTED_DISTRICT_PROPERTY,
-                oldValue, this.selectedDistrict);
+    public void setSelectedRestrictionReasons(RestrictionReasonBean selectedRestrictionReasons) {
+        RestrictionReasonBean oldValue = this.selectedRestrictionReasons;
+        this.selectedRestrictionReasons = selectedRestrictionReasons;
+        propertySupport.firePropertyChange(SELECTED_RESTRICTION_REASONS_PROPERTY, oldValue, this.selectedRestrictionReasons);
+
+    }
+
+    public ObservableList<RestrictionReasonBean> getRestrictionReasons() {
+        return restrictionReasons.getFilteredList();
     }
 }

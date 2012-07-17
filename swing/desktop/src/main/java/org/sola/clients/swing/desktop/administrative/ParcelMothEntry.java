@@ -23,6 +23,7 @@ import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
+import org.sola.clients.swing.desktop.party.PersonSearchForm_temp;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -686,12 +687,16 @@ public class ParcelMothEntry extends ContentPanel {
             Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
-        partySearchForm.setSize(700, 800);
-        partySearchForm.setVisible(true);
-        partySearchForm.setTitle("Details of the applicant");
-        partySearchForm.setAlwaysOnTop(true);
+        displayPersonSearchForm(partySearchForm);      
+        
     }//GEN-LAST:event_btnAddNewOwnerActionPerformed
 
+    private void displayPersonSearchForm(PersonSearchForm partySearchForm) {
+        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_SEARCH_PERSONS)) {
+            getMainContentPanel().addPanel(partySearchForm, MainContentPanel.CARD_SEARCH_PERSONS);
+        }
+        getMainContentPanel().showPanel(MainContentPanel.CARD_SEARCH_PERSONS);
+    }
     private void btnRemove1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove1ActionPerformed
         // TODO add your handling code here:
         if(cadastreObjects.size()==0){

@@ -826,12 +826,19 @@ public class PropertyPanel extends ContentPanel {
         if (rrrCode.equals(RrrBean.CODE_MORTGAGE)) {
             panel = new MortgagePanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_MORTGAGE;
-        } else if (rrrCode.equalsIgnoreCase(RrrBean.CODE_OWNERSHIP)
+        } else if (rrrCode.equalsIgnoreCase(RrrBean.CODE_BYAPPLICATION)
+                || rrrCode.equalsIgnoreCase(RrrBean.CODE_BYLETTER)
+                || rrrCode.equalsIgnoreCase(RrrBean.CODE_LIKHATPARIT)
+                || rrrCode.equalsIgnoreCase(RrrBean.CODE_TENANCY)) {
+            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
+            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
+        }else if (rrrCode.equalsIgnoreCase(RrrBean.CODE_OWNERSHIP)
                 || rrrCode.equalsIgnoreCase(RrrBean.CODE_STATE_OWNERSHIP)
                 || rrrCode.equalsIgnoreCase(RrrBean.CODE_APARTMENT)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_OWNERSHIP;
-        } else {
+        }
+        else {
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
         }
 
@@ -1481,8 +1488,8 @@ public class PropertyPanel extends ContentPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jToolBar4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(documentsPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .add(documentsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabsMain.addTab(bundle.getString("PropertyPanel.jPanel7.TabConstraints.tabTitle"), jPanel7); // NOI18N
@@ -1592,7 +1599,7 @@ public class PropertyPanel extends ContentPanel {
                 .addContainerGap()
                 .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1749,7 +1756,7 @@ public class PropertyPanel extends ContentPanel {
                 .addContainerGap()
                 .add(jToolBar2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1800,7 +1807,7 @@ public class PropertyPanel extends ContentPanel {
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .add(jScrollPane5)
                 .addContainerGap())
         );
 
@@ -1908,7 +1915,7 @@ public class PropertyPanel extends ContentPanel {
                         .add(txtNotationText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(jLabel15)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2023,7 +2030,7 @@ public class PropertyPanel extends ContentPanel {
             .add(jPanel8Layout.createSequentialGroup()
                 .add(jToolBar6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
         );
 
         jPanel14.add(jPanel8);
@@ -2105,7 +2112,7 @@ public class PropertyPanel extends ContentPanel {
             .add(jPanel5Layout.createSequentialGroup()
                 .add(jToolBar7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
         );
 
         jPanel14.add(jPanel5);
@@ -2116,14 +2123,14 @@ public class PropertyPanel extends ContentPanel {
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlPriorPropertiesLayout.setVerticalGroup(
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2139,7 +2146,7 @@ public class PropertyPanel extends ContentPanel {
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 325, Short.MAX_VALUE)
+            .add(0, 449, Short.MAX_VALUE)
         );
 
         tabsMain.addTab(bundle.getString("PropertyPanel.mapPanel.TabConstraints.tabTitle"), mapPanel); // NOI18N
@@ -2167,7 +2174,7 @@ public class PropertyPanel extends ContentPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jToolBar5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2316,6 +2323,24 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         addNotation();
     }//GEN-LAST:event_btnAddNotationActionPerformed
 
+    private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
+        // TODO add your handling code here:
+        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
+        //Event delegate passing to the child JPanel.
+        Class[] cls = new Class[]{CadastreObjectTO.class};
+        Class workingForm = this.getClass();
+        Method taskCompletion = null;
+        try {
+            taskCompletion = workingForm.getMethod("refreshNewProperty", cls);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //parcelSearchForm.setSize(700, 800);
+        parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
+
+        displayForm(parcelSearchForm);
+    }//GEN-LAST:event_btnSelectParcelActionPerformed
+
      //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshNewProperty(CadastreObjectTO parcel){
         //do as required.
@@ -2324,23 +2349,6 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         baUnitBean1.getCadastreObjectList().addAsNew(coBean);
     }
     
-    private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
-        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
-        //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{CadastreObjectTO.class};
-        Class workingForm=this.getClass();
-        Method taskCompletion=null;
-        try {
-            taskCompletion = workingForm.getMethod("refreshNewProperty", cls);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //parcelSearchForm.setSize(700, 800);
-        parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
-        
-        displayForm(parcelSearchForm);
-    }//GEN-LAST:event_btnSelectParcelActionPerformed
-
     private void displayForm(Select_Parcel_Form parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
             getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);

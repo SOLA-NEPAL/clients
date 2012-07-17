@@ -216,6 +216,7 @@ public class OwnershipPanel extends ContentPanel {
         menuRemoveShare = new javax.swing.JMenuItem();
         menuChangeShare = new javax.swing.JMenuItem();
         menuViewShare = new javax.swing.JMenuItem();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         txtRegDatetime = new javax.swing.JFormattedTextField();
@@ -285,6 +286,9 @@ public class OwnershipPanel extends ContentPanel {
             }
         });
         popUpShares.add(menuViewShare);
+
+        jButton2.setText(bundle.getString("OwnershipPanel.jButton2.text")); // NOI18N
+        jButton2.setName(bundle.getString("OwnershipPanel.jButton2.name")); // NOI18N
 
         setHeaderPanel(headerPanel);
         setHelpTopic(bundle.getString("OwnershipPanel.helpTopic")); // NOI18N
@@ -619,6 +623,7 @@ public class OwnershipPanel extends ContentPanel {
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel2;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
