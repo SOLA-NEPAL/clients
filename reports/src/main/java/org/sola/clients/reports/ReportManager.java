@@ -27,6 +27,7 @@
  */
 package org.sola.clients.reports;
 
+import java.awt.Image;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,8 +40,6 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
-import org.sola.clients.beans.application.LodgementTimingBean;
-import org.sola.clients.beans.application.LodgementViewParamsBean;
 import org.sola.clients.beans.system.BrReportBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.system.BrListBean;
@@ -226,8 +225,6 @@ public class ReportManager {
             return null;
         }
     }
-
-    
     
      /** 
      * Generates and displays <b>BA Unit</b> report.
@@ -257,4 +254,26 @@ public class ReportManager {
         }
     }
     
+    /** 
+     * Generates and displays <b>Cadastre Map</b> report.
+     * @param print map, date, user name, scale to print and map source.
+     */
+//    public static JasperPrint getCadastreMapReport(Image img) {
+//        HashMap inputParameters = new HashMap();
+//        Date currentdate = new Date( System.currentTimeMillis());
+//        inputParameters.put("REPORT_LOCALE", Locale.getDefault());
+//        inputParameters.put("CURRENT_DATE", currentdate);
+//
+//        inputParameters.put("USER", SecurityBean.getCurrentUser().getFullUserName());
+//         
+//        try {
+//            return JasperFillManager.fillReport(
+//                    ReportManager.class.getResourceAsStream("/reports/mapReportA4.jasper"),
+//                    inputParameters);
+//        } catch (JRException ex) {
+//            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+//                    new Object[]{ex.getLocalizedMessage()});
+//            return null;
+//        }
+//    }
 }

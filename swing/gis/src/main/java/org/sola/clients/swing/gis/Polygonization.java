@@ -19,6 +19,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
@@ -27,7 +28,7 @@ import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 public class Polygonization {  
     
     public static void formPolygon(CadastreTargetSegmentLayer targetPointlayer,
-                    CadastreChangeTargetCadastreObjectLayer targetParcelsLayer){
+                    CadastreChangeTargetCadastreObjectLayer targetParcelsLayer, String parcel_id){
         //Find Features.
         SimpleFeatureCollection segs = targetPointlayer.getSegmentLayer().getFeatureCollection();
         String geomfld=PublicMethod.theGeomFieldName(segs);
@@ -49,16 +50,26 @@ public class Polygonization {
             Polygonizer polygons= new Polygonizer();
             polygons.add(segments);//Add segment collection to the polygonizer.
             Collection polys= polygons.getPolygons();
-
+            
+            int sn=1;
+            CadastreObjectTO parcel=null;
+            if (!parcel_id.equals("0")) 
+                parcel=PublicMethod.getTargetParcel(targetParcelsLayer, parcel_id);
+            
             for (Object poly:polys){
                 Geometry geom=(Geometry)poly;
                 //append new parcels in target parcels.
-                new_parcels.addFeature(Integer.toString(geom.hashCode()), geom, null,false);
+                if (parcel==null){
+                    new_parcels.addFeature(Integer.toString(geom.hashCode()), geom, null,false);
+                }
+                else {
+                    PublicMethod.assignAttributesFromTargetParcel(
+                            targetParcelsLayer,parcel_id,geom,sn++,parcel);
+                }
             }
             //clean leaf segments.
             remove_Leaf_Segment(targetPointlayer,polygons);
-            //rectify the topology other touching parcels.
-            //ununcomment it for modifying topoloy.
+            //rectify the topology other touching parcels. //ununcomment it for modifying topoloy.
             //PublicMethod.rectify_TouchingParcels(targetParcelsLayer.getNeighbour_parcels(), targetParcelsLayer);
         } catch (InitializeLayerException e) { }
     }

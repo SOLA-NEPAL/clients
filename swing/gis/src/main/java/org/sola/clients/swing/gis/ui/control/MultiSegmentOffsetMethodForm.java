@@ -149,7 +149,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -324,7 +324,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnUndoSplitActionPerformed
     
     private void btnCreateParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateParcelActionPerformed
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);
         targetParcelsLayer.getMapControl().refresh();
         btnCreateParcel.setEnabled(false);
         btnCheckSegments.setEnabled(false);

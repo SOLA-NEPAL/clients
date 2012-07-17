@@ -126,7 +126,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -365,7 +365,7 @@ public class OnePointAreaMethodForm extends javax.swing.JDialog {
         }
         
         createNewSegment(pts, pointFixed, i1, i2);
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);
 //<editor-fold defaultstate="collapsed" desc="uncomment to check nodes in affected parcel">
 //        try {
 //            displayPointsOnMap(targetParcelsLayer.getAffected_parcels());

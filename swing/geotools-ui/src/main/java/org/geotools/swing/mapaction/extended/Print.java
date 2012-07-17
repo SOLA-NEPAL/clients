@@ -89,6 +89,9 @@ public class Print extends ExtendedAction {
             String printLocation = this.print(
                     this.printForm.getPrintLayout(), this.printForm.getScale());
             this.showPrintableDocument(printLocation);
+//            MapReportViewerForm mapView= new MapReportViewerForm(
+//                    ReportManager.getCadastreMapReport(this.getMapImage()));
+//            mapView.setVisible(true);
         } catch (MapScaleException ex) {
             Messaging.getInstance().show(Messaging.Ids.PRINT_LAYOUT_GENERATION_ERROR.toString());
         }
@@ -131,6 +134,12 @@ public class Print extends ExtendedAction {
         return printoutGenerator.generate(layout, scale);
     }
 
+//    private Image getMapImage(){
+//        PrintoutGenerator printoutGenerator = new PrintoutGenerator(this.getMapControl());
+//        BufferedImage mapImage = printoutGenerator.getMapImageCopy(190,280, 100);
+//        
+//        return Toolkit.getDefaultToolkit().createImage(mapImage.getSource());
+//    }
     /**
      * Used to show a pdf file.
      * @param location The location file

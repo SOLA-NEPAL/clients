@@ -35,7 +35,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     //Store selected line and points.
     //private LineString lineSeg = null;
     //private Point pointFixed=null;
-    //private String parcel_ID="";
+    private String parcel_ID="0";
     private JToolBar jTool;
     
     /**
@@ -128,7 +128,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
 
         jLabel2.setText("To Point");
 
-        btnOK.setText("OK");
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -306,7 +306,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
 
     // create new polygon from the segment formed.
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
-        Polygonization.formPolygon(targetPointlayer, targetParcelsLayer);
+        Polygonization.formPolygon(targetPointlayer, targetParcelsLayer,parcel_ID);
         targetParcelsLayer.getMapControl().refresh();
         btnPolygonize.setEnabled(false);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
@@ -321,7 +321,7 @@ public class TwoPointMethodForm extends javax.swing.JDialog {
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
     public void refreshTable(Object lineSeg,Object pointFixed, String parID, boolean updateTable ){
         //this.lineSeg=(LineString)lineSeg;
-        //parcel_ID=parID;
+        parcel_ID=parID;
         
         if (updateTable){
             //this.pointFixed=(Point)pointFixed;

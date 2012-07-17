@@ -19,6 +19,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
@@ -97,6 +98,8 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         btnMergePolygon = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
         btnOK = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -138,19 +141,28 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText("OK");
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel1.setText("Select the parcel from which attributes is to be assigned to new parcel");
+
+        jLabel2.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel2.setText("Note:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -166,7 +178,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnRefreshMap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -176,6 +187,13 @@ public class ParcelMergeForm extends javax.swing.JDialog {
                 .addGap(7, 7, 7)
                 .addComponent(btnOK)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -208,6 +226,24 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
 
+    private String getSelectedFeatureID(SimpleFeatureCollection feacol){
+        SimpleFeatureIterator feaIter=feacol.features();
+        int i=tblParcels.getSelectedRow();
+        if (i<0) return "";
+        
+        String parcel_id= tblParcels.getValueAt(i, 1).toString();
+        
+        while (feaIter.hasNext()){
+            SimpleFeature fea=feaIter.next();
+            String feaid=fea.getID();
+             if (feaid.equals(parcel_id)){
+                return feaid;
+            }
+        }
+        
+        return "";
+    }
+    
     private void btnMergePolygonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMergePolygonActionPerformed
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
         String geomfld=PublicMethod.theGeomFieldName(feacol);
@@ -217,14 +253,13 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Some disjoint parcels exists, so please check it.");
             return;
         }
+        String parcel_id=getSelectedFeatureID(feacol);//store last parcel id.
         
         SimpleFeatureIterator feaIter=feacol.features();
         Geometry[] geom=new Geometry[feacol.size()];
-        String parcel_id="";//store last parcel id.
         int i=0;
         while (feaIter.hasNext()){
             SimpleFeature fea=feaIter.next();
-            parcel_id=fea.getID();
             geom[i++]=(Geometry)fea.getAttribute(geomfld);//first item always geometry.
         }
         feaIter.close();
@@ -247,7 +282,16 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         segmentLayer.getSegmentLayer().getFeatureCollection().clear();
         try {
             //re-entry the combined polygon and refresh the map.
-            targetParcelsLayer.getNew_parcels().addFeature(parcel_id, merged_geom, null);
+            CadastreObjectTO parcel=null;
+            if (!parcel_id.equals("0")) 
+                parcel=PublicMethod.getTargetParcel(targetParcelsLayer, parcel_id);
+            if (parcel!=null){
+                PublicMethod.assignAttributesFromTargetParcel(
+                            targetParcelsLayer,parcel_id,merged_geom,1,parcel);
+            }
+            else{
+                targetParcelsLayer.getNew_parcels().addFeature(parcel_id, merged_geom, null);
+            }
             //refresh point collection only.
             Coordinate[] cors=merged_geom.getCoordinates();
             if (cors==null || cors.length<1) return;
@@ -280,6 +324,8 @@ public class ParcelMergeForm extends javax.swing.JDialog {
     private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnUndoSplit;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblParcels;
     // End of variables declaration//GEN-END:variables
