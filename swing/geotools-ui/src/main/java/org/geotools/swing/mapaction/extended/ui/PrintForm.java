@@ -92,8 +92,19 @@ public class PrintForm extends javax.swing.JDialog {
     public void setPrintLayoutList(List<PrintLayout> printLayoutList) {
         this.printLayoutList = printLayoutList;
         this.cmdLayout.removeAllItems();
+        //add layout manually.
+        addLayoutItem("A4");
+        addLayoutItem("A3");
+        addLayoutItem("A2");
+        addLayoutItem("A1");
+    }
+    
+    private void addLayoutItem(String layoutTitle){
         for (PrintLayout layout : this.printLayoutList) {
-            this.cmdLayout.addItem(layout);
+            if (layout.getName().contains(layoutTitle)){
+                this.cmdLayout.addItem(layout);
+                return;
+            }
         }
     }
 

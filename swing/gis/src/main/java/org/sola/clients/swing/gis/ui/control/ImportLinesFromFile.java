@@ -175,7 +175,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText(bundle.getString("ImportLinesFromFile.btnOK.text")); // NOI18N
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -452,7 +452,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
         NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
         lineGenerator.generateNodedSegments();
         
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,"0");
         targetParcelsLayer.getMapControl().refresh();
         btnCreatePolygon.setEnabled(false);
     }//GEN-LAST:event_btnCreatePolygonActionPerformed

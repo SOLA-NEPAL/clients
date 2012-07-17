@@ -135,7 +135,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText(bundle.getString("EqualAreaMethod.btnOK.text")); // NOI18N
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -286,7 +286,7 @@ public class EqualAreaMethod extends javax.swing.JDialog {
     }
     
     private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
         targetParcelsLayer.getMapControl().refresh();

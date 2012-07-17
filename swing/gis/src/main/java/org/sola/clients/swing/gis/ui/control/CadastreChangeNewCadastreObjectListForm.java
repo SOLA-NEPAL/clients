@@ -69,6 +69,7 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog {
 
     private CadastreChangeNewCadastreObjectLayer layer;
+    private String transaction_id=null;
 
     /** Creates new form PointSurveyListForm */
     public CadastreChangeNewCadastreObjectListForm() {
@@ -88,9 +89,10 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
     }
 
     public CadastreChangeNewCadastreObjectListForm(
-            CadastreChangeNewCadastreObjectLayer cadastreObjectLayer) {
+            CadastreChangeNewCadastreObjectLayer cadastreObjectLayer,String transaction_id) {
         this();
         this.layer = cadastreObjectLayer;
+        this.transaction_id=transaction_id;
     }
 
     /**
@@ -219,9 +221,48 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     }
 }//GEN-LAST:event_cmdRemoveActionPerformed
 
+    private CadastreObjectBean getSelected_parcel(){
+        int r=table.getSelectedRow();
+        String firstpartname=table.getValueAt(r, 1).toString();
+        String lastpartname=table.getValueAt(r, 2).toString();
+        String unique_id= firstpartname + " " + lastpartname;
+        List<CadastreObjectTO> parcels=
+                WSManager.getInstance().getCadastreService()
+                            .getPendingParcelsByParts(unique_id);
+        //Assuming that part combination gives unique id, the list will have single parcel.
+        CadastreObjectBean parcel=null;
+        if (parcels==null || parcels.size()<1){
+            parcel = new CadastreObjectBean();
+            SimpleFeatureCollection sFeatures=this.layer.getFeatureCollection();
+            SimpleFeatureIterator feaIter=sFeatures.features();
+            while (feaIter.hasNext()){
+                SimpleFeature fea=feaIter.next();
+                String tfirstpartname=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString();
+                String tlastpartname=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
+                if (tfirstpartname.equals(firstpartname) && tlastpartname.equals(lastpartname)){
+                    //assign attribute to variable.
+                    parcel.setNameFirstpart(firstpartname);
+                    parcel.setNameLastpart(lastpartname);
+                    String mapsheetid=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString();
+                    String parceltype=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE).toString();
+                    parcel.setMapSheetCode(mapsheetid);
+                    parcel.setParcelType(parceltype);
+                    //parcel.setParcelno(0);
+                    parcel.setTransactionId(transaction_id);
+                }
+            }
+        }
+        else{
+            CadastreObjectTO tmp_parcel=parcels.get(0);
+            parcel=TypeConverters.TransferObjectToBean(
+                tmp_parcel, CadastreObjectBean.class, null);
+        }
+        return parcel;
+    }
+    
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-         CadastreObjectBean parcel=getSelected_parcel();
+        CadastreObjectBean parcel=getSelected_parcel();
         
         EditParcelAttributeForm editParcel=new EditParcelAttributeForm();
         //Event delegate passing to the child JPanel.
@@ -278,21 +319,21 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         this.layer.getMapControl().refresh(false);
     }//GEN-LAST:event_btnShowOnMapActionPerformed
 
-    private CadastreObjectBean getSelected_parcel(){
-        int r=table.getSelectedRow();
-        String unique_id= table.getValueAt(r, 1).toString() + " " +
-                                table.getValueAt(r, 2).toString();
-        List<CadastreObjectTO> parcels=
-                WSManager.getInstance().getCadastreService()
-                            .getPendingParcelsByParts(unique_id);
-        //Assuming that part combination gives unique id, the list will have single parcel.
-        if (parcels==null || parcels.size()<1) return null;
-        CadastreObjectTO tmp_parcel=parcels.get(0);
-        CadastreObjectBean parcel=TypeConverters.TransferObjectToBean(
-                tmp_parcel, CadastreObjectBean.class, null);
-        
-        return parcel;
-    }
+//    private CadastreObjectBean getSelected_parcel(){
+//        int r=table.getSelectedRow();
+//        String unique_id= table.getValueAt(r, 1).toString() + " " +
+//                                table.getValueAt(r, 2).toString();
+//        List<CadastreObjectTO> parcels=
+//                WSManager.getInstance().getCadastreService()
+//                            .getPendingParcelsByParts(unique_id);
+//        //Assuming that part combination gives unique id, the list will have single parcel.
+//        if (parcels==null || parcels.size()<1) return null;
+//        CadastreObjectTO tmp_parcel=parcels.get(0);
+//        CadastreObjectBean parcel=TypeConverters.TransferObjectToBean(
+//                tmp_parcel, CadastreObjectBean.class, null);
+//        
+//        return parcel;
+//    }
     
     private void updateFeatureCollection(SimpleFeature fea,int selected,String geomfld){
          //record attributes.

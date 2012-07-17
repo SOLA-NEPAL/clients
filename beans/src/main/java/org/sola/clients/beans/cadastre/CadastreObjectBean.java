@@ -146,18 +146,12 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     }
 
     public void setMapSheetCode(String mapSheetCode) {
-//        String oldValue=getMapSheetCode();
-//        MapSheetBean mapSheetBean=null;
-//       if(mapSheetCode!=null && !mapSheetCode.isEmpty()){
-//            mapSheetBean = CacheManager.getBeanByCode(CacheManager.getMapSheets(), mapSheetCode);
-//        }
-//        setMapSheet(mapSheetBean);
-//        propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
         String oldValue = null;
         if (mapSheet != null) {
             oldValue = mapSheet.getId();
         }
         this.mapSheetCode = mapSheetCode;
+        setMapSheet(CacheManager.getBeanById(CacheManager.getMapSheets(),mapSheetCode));
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
     }
 

@@ -68,11 +68,14 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
     public static final String LAYER_FIELD_LAST_PART = "last_part";
     public static final String LAYER_FIELD_OFFICIAL_AREA = "official_area";
     public static final String LAYER_NAME = "New Parcels";
+    public static final String LAYER_FIELD_MAP_SHEET = "map_sheet";
+    public static final String LAYER_FIELD_PARCEL_TYPE = "parcel_type";
     public static final String LAYER_FIELD_SELECTED = "is_selected";
     
     private static final String LAYER_STYLE_RESOURCE = "parcel_new.xml";
-    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:\"\",%s:0",
-            LAYER_FIELD_FIRST_PART, LAYER_FIELD_LAST_PART, LAYER_FIELD_OFFICIAL_AREA, LAYER_FIELD_SELECTED);
+    private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:\"\",%s:\"\",%s:\"\",%s:0",
+            LAYER_FIELD_FIRST_PART, LAYER_FIELD_LAST_PART, LAYER_FIELD_OFFICIAL_AREA,
+            LAYER_FIELD_MAP_SHEET,LAYER_FIELD_PARCEL_TYPE, LAYER_FIELD_SELECTED);
     private List<CadastreObjectBean> cadastreObjectList = new ArrayList<CadastreObjectBean>();
     private Integer firstPartGenerator = 1;
     private Integer fidGenerator = 1;
@@ -81,6 +84,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
     private DefaultTableModel tableModel = null;
     private Component hostForm = null;
     private boolean avoid_table_append=false;
+    private String transaction_id;
 
     public void setAvoid_table_append(boolean avoid_table_append) {
         this.avoid_table_append = avoid_table_append;
@@ -99,7 +103,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
         super(LAYER_NAME, Geometries.POLYGON,
                 LAYER_STYLE_RESOURCE, LAYER_ATTRIBUTE_DEFINITION);
         this.lastPart = String.format(LAST_PART_FORMAT, applicationNumber);
-        initializeFormHostingAndEvents(new CadastreChangeNewCadastreObjectListForm(this));
+        initializeFormHostingAndEvents(new CadastreChangeNewCadastreObjectListForm(this,transaction_id));
     }
     
     /**
@@ -115,7 +119,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
         });
         
         this.hostForm = (JDialog)hostForm;
-        this.tableModel = (DefaultTableModel) this.getHostForm().getTable().getModel();
+        this.tableModel = (DefaultTableModel) this.getHostForm(transaction_id).getTable().getModel();
         this.tableModel.addTableModelListener(new TableModelListener() {
 
             @Override
@@ -129,9 +133,10 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
      * Gets the form that is responsible with handling other attributes of features
      * @return 
      */
-    public CadastreChangeNewCadastreObjectListForm getHostForm() {
+    public CadastreChangeNewCadastreObjectListForm getHostForm(String transaction_id) {
+        this.transaction_id=transaction_id;
         if (this.hostForm == null){
-            this.hostForm = new CadastreChangeNewCadastreObjectListForm(this);
+            this.hostForm = new CadastreChangeNewCadastreObjectListForm(this,transaction_id);
         }
         return (CadastreChangeNewCadastreObjectListForm)this.hostForm;
     }
@@ -178,6 +183,10 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                             LAYER_FIELD_FIRST_PART,cadastreObjectBean.getNameFirstpart());
                     fieldsWithValues.put(
                             LAYER_FIELD_LAST_PART, cadastreObjectBean.getNameLastpart());
+                    fieldsWithValues.put(
+                            LAYER_FIELD_MAP_SHEET, cadastreObjectBean.getMapSheetCode());
+                    fieldsWithValues.put(
+                            LAYER_FIELD_PARCEL_TYPE, cadastreObjectBean.getParcelType());
                     if (cadastreObjectBean.getSpatialValueAreaList().size() > 0) {
                         for (SpatialValueAreaBean areaValueBean :
                                 cadastreObjectBean.getSpatialValueAreaList()) {
@@ -236,6 +245,9 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, 
                     this.lastPart);
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED,0);
+            fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET,0);
+            fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE,0);
+            
             fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA, 
                     df.format(geom.getArea()));
         }
@@ -361,6 +373,10 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString());
         targetBean.setNameLastpart(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString());
+        targetBean.setMapSheetCode(feature.getAttribute(
+                CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString());
+        targetBean.setParcelType(feature.getAttribute(
+                CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE).toString());
         SpatialValueAreaBean spatialValueBean;
         SpatialValueAreaBean calculatedAreaBean;
         if (targetBean.getSpatialValueAreaList().isEmpty()) {

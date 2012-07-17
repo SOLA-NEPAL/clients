@@ -33,7 +33,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.LocalizationManager;
 import org.sola.clients.swing.ui.DesktopClientExceptionHandler;
@@ -47,11 +51,11 @@ import org.sola.common.logging.LogUtility;
 public class DesktopApplication {
 
     private static MainForm mainForm;
-    
-    public static MainForm getMainForm(){
+
+    public static MainForm getMainForm() {
         return mainForm;
     }
-    
+
     /**
      * Main method to run the application.
      *
@@ -85,7 +89,11 @@ public class DesktopApplication {
 
                 Thread.setDefaultUncaughtExceptionHandler(new DesktopClientExceptionHandler());
                 LocalizationManager.loadLanguage(DesktopApplication.class);
-                LogUtility.initialize(DesktopApplication.class);
+//                LogUtility.initialize(DesktopApplication.class);
+//                try {
+//                    UIManager.setLookAndFeel(
+//                            UIManager.getSystemLookAndFeelClassName());
+//                } catch (Exception ex){ }
                 LafManager.getInstance().setProperties("green");
 
                 final LoginForm loginForm = new LoginForm(DesktopApplication.class);
