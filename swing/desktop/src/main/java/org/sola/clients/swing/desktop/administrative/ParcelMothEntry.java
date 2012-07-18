@@ -685,7 +685,7 @@ public class ParcelMothEntry extends ContentPanel {
         } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
+        //partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
         displayPersonSearchForm(partySearchForm);      
         
     }//GEN-LAST:event_btnAddNewOwnerActionPerformed

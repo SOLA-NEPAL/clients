@@ -29,10 +29,6 @@ package org.sola.clients.swing.desktop.party;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
@@ -47,9 +43,6 @@ import org.sola.common.messaging.MessageUtility;
  * Holds {@link PartySearchPanel} component.
  */
 public class PersonSearchForm extends ContentPanel {
-    //Modified by Kumar   
-    private Method taskCompleted_Triggering=null;
-    private Object method_holder_object=null;
     /**
      * Default constructor.
      */
@@ -106,11 +99,6 @@ public class PersonSearchForm extends ContentPanel {
         return this.getPartySearchPanel()
                         .getPartySearchResuls().getSelectedPartySearchResult();
     }
-
-    public void setTaskCompleted_Triggering(Method taskCompleted_Triggering,Object method_holder) {
-        this.taskCompleted_Triggering = taskCompleted_Triggering;
-        this.method_holder_object=method_holder;
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -118,7 +106,6 @@ public class PersonSearchForm extends ContentPanel {
 
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
         partySearchPanel = new org.sola.clients.swing.ui.party.PartySearchPanel();
-        btnOk = new javax.swing.JButton();
 
         setHeaderPanel(headerPanel);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/party/Bundle"); // NOI18N
@@ -130,14 +117,6 @@ public class PersonSearchForm extends ContentPanel {
         partySearchPanel.setName("partySearchPanel"); // NOI18N
         partySearchPanel.setShowSelectButton(false);
 
-        btnOk.setText(bundle.getString("PersonSearchForm.btnOk.text")); // NOI18N
-        btnOk.setName(bundle.getString("PersonSearchForm.btnOk.name")); // NOI18N
-        btnOk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOkActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,11 +124,7 @@ public class PersonSearchForm extends ContentPanel {
             .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(partySearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(partySearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,26 +132,12 @@ public class PersonSearchForm extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(partySearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btnOk)
+                .addComponent(partySearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        // TODO add your handling code here:         
-            try {
-                taskCompleted_Triggering.invoke(method_holder_object,new Object[]{this.getSelectedPartySearchResultBean()});
-                this.close();
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                Logger.getLogger(PersonSearchForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-    }//GEN-LAST:event_btnOkActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnOk;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
     private org.sola.clients.swing.ui.party.PartySearchPanel partySearchPanel;
     // End of variables declaration//GEN-END:variables

@@ -51,6 +51,7 @@ import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.transferobjects.administrative.LocTO;
+import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
 /**
@@ -88,6 +89,8 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String IS_PRIMARY_PROPERTY = "isPrimary";
     public static final String FIRST_RIGHTHOLDER_PROPERTY = "firstRightholder";
     public static final String SELECTED_PROPERTY = "selected";
+    public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
+    
     private String baUnitId;
     private String nr;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
@@ -112,6 +115,7 @@ public class RrrBean extends AbstractTransactionedBean {
     @Valid
     private SolaList<PartySummaryBean> rightHolderList;
     private transient boolean selected;
+    private transient PartySummaryBean selectedRightHolder;
 
     public RrrBean() {
         super();
@@ -308,15 +312,42 @@ public class RrrBean extends AbstractTransactionedBean {
         return rightHolderList;
     }
 
+    @NoDuplicates(message = ClientMessage.CHECK_NODUPLI_RIGHTHOLDERLIST, payload = Localized.class)
     @Size(min = 1, groups = {MortgageValidationGroup.class}, message = ClientMessage.CHECK_SIZE_RIGHTHOLDERLIST, payload = Localized.class)
     public ObservableList<PartySummaryBean> getFilteredRightHolderList() {
         return rightHolderList.getFilteredList();
     }
 
+    /** Returns read only string combining list of right holders.*/
+    public String getRightHoldersStringList() {
+        String result = "";
+        for (PartySummaryBean rightHolder : getFilteredRightHolderList()) {
+            if (result.length() > 0) {
+                result = result + "\r\n";
+            }
+            result = result + "- " + rightHolder.getName();
+            if (rightHolder.getLastName() != null && rightHolder.getLastName().length() > 0) {
+                result = result + " " + rightHolder.getLastName();
+            }
+            result = result + ";";
+        }
+        return result;
+    }
+    
     public void setRightHolderList(SolaList<PartySummaryBean> rightHolderList) {
         this.rightHolderList = rightHolderList;
     }
 
+    public PartySummaryBean getSelectedRightHolder() {
+        return selectedRightHolder;
+    }
+
+    public void setSelectedRightHolder(PartySummaryBean selectedRightHolder) {
+        PartySummaryBean oldValue = this.selectedRightHolder;
+        this.selectedRightHolder = selectedRightHolder;
+        propertySupport.firePropertyChange(SELECTED_RIGHTHOLDER_PROPERTY, oldValue, this.selectedRightHolder);
+    }
+    
     public boolean isSelected() {
         return selected;
     }
@@ -327,6 +358,22 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SELECTED_PROPERTY, oldValue, this.selected);
     }
 
+    public void removeSelectedRightHolder() {
+        if (selectedRightHolder != null && rightHolderList != null) {
+            rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
+        }
+    }
+    
+    public void addOrUpdateRightholder(PartySummaryBean rightholder) {
+        if (rightholder != null && rightHolderList != null) {
+            if (rightHolderList.contains(rightholder)) {
+                rightHolderList.set(rightHolderList.indexOf(rightholder), rightholder);
+            } else {
+                rightHolderList.addAsNew(rightholder);
+            }
+        }
+    }
+    
     public RrrBean makeCopyByAction(RRR_ACTION rrrAction) {
         RrrBean copy = this;
 

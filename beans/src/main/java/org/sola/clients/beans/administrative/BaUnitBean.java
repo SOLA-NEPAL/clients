@@ -110,7 +110,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private SolaList<CadastreObjectBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
-    private SolaObservableList<RrrShareWithStatus> rrrSharesList;
     private SolaList<RelatedBaUnitInfoBean> childBaUnits;
     private SolaList<RelatedBaUnitInfoBean> parentBaUnits;
     private transient RrrBean selectedRight;
@@ -127,8 +126,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
         parentBaUnits = new SolaList();
         sourceList = new SolaList();
         allBaUnitNotationList = new SolaObservableList<BaUnitNotationBean>();
-        rrrSharesList = new SolaObservableList<RrrShareWithStatus>();
-
         sourceList.setExcludedStatuses(new String[]{StatusConstants.HISTORIC});
         rrrList.setExcludedStatuses(new String[]{StatusConstants.HISTORIC, StatusConstants.PREVIOUS});
 
@@ -375,10 +372,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
             // If RRR is new
             rrrList.add(rrrBean);
         }
-    }
-
-    public ObservableList<RrrShareWithStatus> getRrrSharesList() {
-        return rrrSharesList;
     }
 
     public SolaList<SourceBean> getSourceList() {
