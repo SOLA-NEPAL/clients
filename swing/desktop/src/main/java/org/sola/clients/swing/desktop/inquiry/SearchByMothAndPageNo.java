@@ -143,7 +143,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 45, Short.MAX_VALUE))
+                .addGap(0, 48, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, 0, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
@@ -179,7 +179,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
             .addComponent(cmbVdc, 0, 0, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
@@ -210,7 +210,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
             .addComponent(cmbMothLujType, 0, 0, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
@@ -246,7 +246,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addGap(0, 23, Short.MAX_VALUE))
             .addComponent(cmbMothLujNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
@@ -276,7 +276,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel14)
-                .addGap(0, 34, Short.MAX_VALUE))
+                .addGap(0, 37, Short.MAX_VALUE))
             .addComponent(cmbPanaNo, 0, 0, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
@@ -307,7 +307,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +331,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,7 +375,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -458,12 +458,12 @@ public class SearchByMothAndPageNo extends ContentPanel {
     private void baUnitFinalOperation(BaUnitBean baUnitBean) {
         SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
         SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
-        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
-            cadObjLst.add(cadBean);
-        }
-        for (PartyBean partyBean : baUnitBean.getParties()) {
-            partyList.add(partyBean);
-        }
+//        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
+//            cadObjLst.add(cadBean);
+//        }
+//        for (PartyBean partyBean : baUnitBean.getParties()) {
+//            partyList.add(partyBean);
+//        }
         setCadastreObjects(cadObjLst);
         setParties(partyList);
     }
@@ -471,7 +471,7 @@ public class SearchByMothAndPageNo extends ContentPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         LocBean locBean = (LocBean) cmbPanaNo.getSelectedItem();
-        baUnitOperation(locBean.getBaUnits());
+        //baUnitOperation(locBean.getBaUnits());
     }//GEN-LAST:event_btnSearchActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;

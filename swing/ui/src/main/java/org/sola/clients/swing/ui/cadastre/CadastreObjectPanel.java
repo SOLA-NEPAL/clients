@@ -1023,7 +1023,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private void loadParcels() {
         if (cmbPanaNo.getSelectedItem() != null) {
             LocBean loc = (LocBean) cmbPanaNo.getSelectedItem();
-            baUnitOperation(loc.getBaUnits());
+            //baUnitOperation(loc.getBaUnits());
         }
     }
 
@@ -1037,9 +1037,9 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
 
     private void baUnitFinalOperation(BaUnitBean baUnitBean) {
         SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<CadastreObjectBean>();
-        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
-            cadObjLst.add(cadBean);
-        }
+//        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
+//            cadObjLst.add(cadBean);
+//        }
         cadastreObjectOperation(cadObjLst);
     }
 

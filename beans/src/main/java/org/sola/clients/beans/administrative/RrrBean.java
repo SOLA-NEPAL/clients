@@ -38,8 +38,6 @@ import javax.validation.constraints.Size;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.administrative.validation.MortgageValidationGroup;
-import org.sola.clients.beans.administrative.validation.OwnershipValidationGroup;
-import org.sola.clients.beans.administrative.validation.TotalShareSize;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
@@ -50,7 +48,7 @@ import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.webservices.transferobjects.EntityAction;
+import org.sola.services.boundary.transferobjects.administrative.LocTO;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
 /** 
@@ -63,6 +61,10 @@ public class RrrBean extends AbstractTransactionedBean {
 
         NEW, VARY, CANCEL, EDIT, VIEW;
     }
+    public static final String GROUP_TYPE_CODE_OWNERSHIP = "ownership";
+    public static final String GROUP_TYPE_CODE_RESPONSIBILITIES = "responsibilities";
+    public static final String GROUP_TYPE_CODE_RIGHTS = "rights";
+    public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_APARTMENT = "apartment";
     public static final String CODE_STATE_OWNERSHIP = "stateOwnership";
@@ -71,7 +73,6 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String RRR_TYPE_PROPERTY = "rrrType";
     public static final String EXPIRATION_DATE_PROPERTY = "expirationDate";
-    public static final String SHARE_PROPERTY = "share";
     public static final String MORTGAGE_AMOUNT_PROPERTY = "mortgageAmount";
     public static final String MORTGAGE_INTEREST_RATE_PROPERTY = "mortgageInterestRate";
     public static final String MORTGAGE_RANKING_PROPERTY = "mortgageRanking";
@@ -80,7 +81,6 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String NOTATION_PROPERTY = "notation";
     public static final String IS_PRIMARY_PROPERTY = "isPrimary";
     public static final String FIRST_RIGHTHOLDER_PROPERTY = "firstRightholder";
-    public static final String SELECTED_SHARE_PROPERTY = "selectedShare";
     public static final String SELECTED_PROPERTY = "selected";
     
     private String baUnitId;
@@ -98,24 +98,20 @@ public class RrrBean extends AbstractTransactionedBean {
     private MortgageTypeBean mortgageType;
     private BigDecimal mortgageInterestRate;
     private Integer mortgageRanking;
-    private Double share;
     private SolaList<SourceBean> sourceList;
-    @Valid
-    private SolaList<RrrShareBean> rrrShareList;
     private RrrTypeBean rrrType;
+    private LocTO loc;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
     @Valid
     private SolaList<PartySummaryBean> rightHolderList;
-    private transient RrrShareBean selectedShare;
     private transient boolean selected;
 
     public RrrBean() {
         super();
         registrationDate = Calendar.getInstance().getTime();
         sourceList = new SolaList();
-        rrrShareList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
     }
@@ -273,12 +269,12 @@ public class RrrBean extends AbstractTransactionedBean {
         this.registrationDate = registrationDate;
     }
 
-    public Double getShare() {
-        return share;
+    public LocTO getLoc() {
+        return loc;
     }
 
-    public void setShare(Double share) {
-        this.share = share;
+    public void setLoc(LocTO loc) {
+        this.loc = loc;
     }
 
     public String getTransactionId() {
@@ -303,27 +299,6 @@ public class RrrBean extends AbstractTransactionedBean {
         this.sourceList = sourceList;
     }
 
-    public SolaList<RrrShareBean> getRrrShareList() {
-        return rrrShareList;
-    }
-
-    @Valid
-    @Size(min = 1, message = ClientMessage.CHECK_SIZE_RRRSHARELIST, payload = Localized.class, groups = OwnershipValidationGroup.class)
-    @TotalShareSize(message = ClientMessage.CHECK_TOTALSHARE_RRRSHARELIST, payload = Localized.class)
-    public ObservableList<RrrShareBean> getFilteredRrrShareList() {
-        return rrrShareList.getFilteredList();
-    }
-
-    public void setRrrShareList(SolaList<RrrShareBean> rrrShareList) {
-        this.rrrShareList = rrrShareList;
-    }
-
-    public void removeSelectedRrrShare() {
-        if (selectedShare != null && rrrShareList != null) {
-            rrrShareList.safeRemove(selectedShare, EntityAction.DELETE);
-        }
-    }
-
     public SolaList<PartySummaryBean> getRightHolderList() {
         return rightHolderList;
     }
@@ -335,16 +310,6 @@ public class RrrBean extends AbstractTransactionedBean {
 
     public void setRightHolderList(SolaList<PartySummaryBean> rightHolderList) {
         this.rightHolderList = rightHolderList;
-    }
-
-    public RrrShareBean getSelectedShare() {
-        return selectedShare;
-    }
-
-    public void setSelectedShare(RrrShareBean selectedShare) {
-        RrrShareBean oldValue = this.selectedShare;
-        this.selectedShare = selectedShare;
-        propertySupport.firePropertyChange(SELECTED_SHARE_PROPERTY, oldValue, this.selectedShare);
     }
 
     public boolean isSelected() {
@@ -392,10 +357,6 @@ public class RrrBean extends AbstractTransactionedBean {
             setBaUnitId(null);
         }
         if (resetChildren) {
-            for (RrrShareBean shareBean : getRrrShareList()) {
-                shareBean.resetVersion();
-                shareBean.setRrrId(getId());
-            }
             getNotation().generateId();
             getNotation().resetVersion();
             if (removeBaUnitId) {
