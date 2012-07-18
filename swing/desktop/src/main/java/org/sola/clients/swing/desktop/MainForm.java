@@ -41,7 +41,10 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.beans.referencedata.VdcListBean;
 import org.sola.clients.beans.security.SecurityBean;
+import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.DefaultExceptionHandler;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.LocalizationManager;
@@ -51,6 +54,7 @@ import org.sola.clients.swing.desktop.administrative.BaUnitSearchPanel;
 import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
+import org.sola.clients.swing.desktop.administrative.SimpleRestrictionsPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
@@ -314,6 +318,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        vdcListBean1 = new org.sola.clients.beans.referencedata.VdcListBean();
         applicationsMain = new javax.swing.JToolBar();
         btnShowDashboard = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -361,6 +366,7 @@ public class MainForm extends javax.swing.JFrame {
         menuShowMap = new javax.swing.JMenuItem();
         menuReportsDesktop = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
+        menuCurrentUserRolesReport = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jmiContextHelp = new javax.swing.JMenuItem();
@@ -705,6 +711,14 @@ public class MainForm extends javax.swing.JFrame {
         menuReportsDesktop.add(menuLodgementReport);
         menuLodgementReport.getAccessibleContext().setAccessibleName(bundle.getString("MainForm.menuLodgementReport.AccessibleContext.accessibleName")); // NOI18N
 
+        menuCurrentUserRolesReport.setText(bundle.getString("MainForm.menuCurrentUserRolesReport.text")); // NOI18N
+        menuCurrentUserRolesReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCurrentUserRolesReportActionPerformed(evt);
+            }
+        });
+        menuReportsDesktop.add(menuCurrentUserRolesReport);
+
         menuBar.add(menuReportsDesktop);
 
         helpMenu.setText(bundle.getString("MainForm.helpMenu.text")); // NOI18N
@@ -869,6 +883,23 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         showSearchByParcelNo();
     }//GEN-LAST:event_mnuSearchByParcelNoActionPerformed
+
+    private void menuCurrentUserRolesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCurrentUserRolesReportActionPerformed
+        // TODO add your handling code here:       
+      // vdcListBean1.loadList(false, "25");
+       // showTestReport(ReportManager.getTestReportToDisplyListOfVdc(vdcListBean1.getVdcs())); 
+        showCurrentUserRolesReport(ReportManager.getCurrentUserWithRolesReport());
+    }//GEN-LAST:event_menuCurrentUserRolesReportActionPerformed
+     private void showCurrentUserRolesReport(JasperPrint report) {
+        ReportViewerForm form = new ReportViewerForm(report);
+        form.setVisible(true);
+        form.setAlwaysOnTop(true);
+    }
+     private void showVdcTestReport(JasperPrint report) {
+        ReportViewerForm form = new ReportViewerForm(report);
+        form.setVisible(true);
+        form.setAlwaysOnTop(true);
+    }
     private void showSearchByParcelNo() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO)) {
             SearchByParcelNo srchParcel = new SearchByParcelNo();
@@ -932,6 +963,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuApplications;
     private javax.swing.JMenuItem menuBaUnitSearch;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuCurrentUserRolesReport;
     private javax.swing.JMenu menuDataEntry;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
@@ -959,5 +991,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;
     private javax.swing.JLabel txtUserName;
+    private org.sola.clients.beans.referencedata.VdcListBean vdcListBean1;
     // End of variables declaration//GEN-END:variables
 }

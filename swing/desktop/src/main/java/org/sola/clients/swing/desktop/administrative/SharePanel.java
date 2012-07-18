@@ -31,14 +31,21 @@ package org.sola.clients.swing.desktop.administrative;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.administrative.RrrShareBean;
+import org.sola.clients.beans.party.PartyBean;
+import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
+import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.party.PartyPanelForm;
+import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.renderers.FormattersFactory;
@@ -134,6 +141,7 @@ public class SharePanel extends ContentPanel {
         final RightHolderFormListener listener = new RightHolderFormListener();
 
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSON));
@@ -191,6 +199,7 @@ public class SharePanel extends ContentPanel {
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
         groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
         jToolBar1 = new javax.swing.JToolBar();
+        btnSearch = new javax.swing.JButton();
         btnAddOwner = new javax.swing.JButton();
         btnEditOwner = new javax.swing.JButton();
         btnRemoveOwner = new javax.swing.JButton();
@@ -277,6 +286,18 @@ public class SharePanel extends ContentPanel {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        btnSearch.setText(bundle.getString("SharePanel.btnSearch.text")); // NOI18N
+        btnSearch.setFocusable(false);
+        btnSearch.setName(bundle.getString("SharePanel.btnSearch.name")); // NOI18N
+        btnSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSearch);
+
         btnAddOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
         btnAddOwner.setText(bundle.getString("SharePanel.btnAddOwner.text")); // NOI18N
         btnAddOwner.setName("btnAddOwner"); // NOI18N
@@ -362,14 +383,14 @@ public class SharePanel extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                    .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -378,7 +399,7 @@ public class SharePanel extends ContentPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDenominator, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 177, Short.MAX_VALUE)))
+                        .addGap(0, 246, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -398,7 +419,7 @@ public class SharePanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -441,6 +462,11 @@ public class SharePanel extends ContentPanel {
         viewOwner();
     }//GEN-LAST:event_menuViewOwnerActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        searchOwner();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
     private void viewOwner() {
         if (rrrShareBean.getSelectedRightHolder() != null) {
             openRightHolderForm(rrrShareBean.getSelectedRightHolder(), true);
@@ -452,6 +478,36 @@ public class SharePanel extends ContentPanel {
                 && MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
             rrrShareBean.removeSelectedRightHolder();
         }
+    }
+
+    private void searchOwner() {
+        PersonSearchForm partySearchForm = new PersonSearchForm();
+        Class[] cls = new Class[]{PartySearchResultBean.class};
+        Class workingForm = this.getClass();
+        Method taskCompletion = null;
+        try {
+            taskCompletion = workingForm.getMethod("refreshPartyDetails", cls);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
+        displayPersonSearchForm(partySearchForm);       
+    }
+
+    private void displayPersonSearchForm(PersonSearchForm partySearchForm) {
+        if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_SEARCH_PERSONS)) {
+            getMainContentPanel().addPanel(partySearchForm, MainContentPanel.CARD_SEARCH_PERSONS);
+        }
+        getMainContentPanel().showPanel(MainContentPanel.CARD_SEARCH_PERSONS);
+    }
+
+    public void refreshPartyDetails(PartySearchResultBean partySummary) {
+        //do as required.
+        if (partySummary == null) {
+            return;
+        }
+        rrrShareBean.addOrUpdateRightholder(partySummary);
+        tableOwners.clearSelection();
     }
 
     private void addOwner() {
@@ -468,6 +524,7 @@ public class SharePanel extends ContentPanel {
     private javax.swing.JButton btnEditOwner;
     private javax.swing.JButton btnRemoveOwner;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnViewOwner;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;

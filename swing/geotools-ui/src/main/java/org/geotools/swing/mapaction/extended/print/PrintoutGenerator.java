@@ -98,7 +98,8 @@ public class PrintoutGenerator {
                     new FileOutputStream(pathToResult));
             document.open();
             this.addImage(document, mapImage,
-                    layout.getMap().getX(), layout.getMap().getX(), layout.getMap().getWidth());
+                    layout.getMap().getX(), layout.getMap().getY(), layout.getMap().getWidth());//generic sola.
+            //this.addImage(document, mapImage,layout.getMap().getX(), layout.getMap().getY());
             this.addImage(document, scalebarImage,
                     layout.getScalebar().getX(), layout.getScalebar().getY(),
                     layout.getScalebar().getWidth());
@@ -134,6 +135,17 @@ public class PrintoutGenerator {
         }
         return result;
     }
+    
+//    public BufferedImage getMapImageCopy(int width, int height, double scale) {
+//        BufferedImage result = null;
+//         
+//        int mapWidth = (int) this.getDimesionInPoints(width);
+//        int mapHeight = (int) this.getDimesionInPoints(height);
+//        result = this.mapImageGenerator.getImage(
+//                mapWidth, mapHeight, scale, this.getDpi());
+//      
+//        return result;
+//    }
 
     private BufferedImage getScalebarImage(ImageLayout imageLayout, double scale) {
         BufferedImage result = null;
@@ -183,14 +195,25 @@ public class PrintoutGenerator {
     private void addImage(Document document, BufferedImage bImage, int x, int y, int width)
             throws BadElementException, IOException, DocumentException {
         Image img = Image.getInstance(bImage, null, false);
+        //String filename=FileUtility.createImageFile(bImage, "testImage.png");
+        //Image img =Image.getInstance(filename);
         this.addImage(document, img, x, y, width);
+        //this.addImage(document, img, x, y);
     }
 
+    //with correct scale.
     private void addImage(Document document, Image img, int x, int y, int width)
             throws BadElementException, IOException, DocumentException {
         img.setAbsolutePosition(this.getDimesionInPoints(x), this.getDimesionInPoints(y));
         float widthInPoints = this.getDimesionInPoints(width);
         img.scalePercent((widthInPoints / img.getWidth()) * 100);
+        document.add(img);
+    }
+    
+    //without scale like scale to fit.
+    private void addImage(Document document, Image img, int x, int y)
+            throws BadElementException, IOException, DocumentException {
+        img.setAbsolutePosition(this.getDimesionInPoints(x), this.getDimesionInPoints(y));
         document.add(img);
     }
 }

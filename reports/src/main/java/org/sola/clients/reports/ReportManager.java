@@ -29,21 +29,21 @@ package org.sola.clients.reports;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
-
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
-import org.sola.clients.beans.application.LodgementTimingBean;
-import org.sola.clients.beans.application.LodgementViewParamsBean;
-import org.sola.clients.beans.system.BrReportBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.security.SecurityBean;
+import org.sola.clients.beans.security.UserBean;
 import org.sola.clients.beans.system.BrListBean;
+import org.sola.clients.beans.system.BrReportBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 /**
@@ -226,8 +226,6 @@ public class ReportManager {
             return null;
         }
     }
-
-    
     
      /** 
      * Generates and displays <b>BA Unit</b> report.
@@ -257,4 +255,46 @@ public class ReportManager {
         }
     }
     
+    //<editor-fold defaultstate="collapsed" desc="Kumar">
+    public static JasperPrint getTestReportToDisplyListOfVdc(List<VdcBean> vdcBeans) {
+        HashMap inputParameters = new HashMap();
+        Date currentdate = new Date( System.currentTimeMillis());
+        inputParameters.put("REPORT_LOCALE", Locale.getDefault());
+        inputParameters.put("CURRENT_DATE", currentdate);
+        inputParameters.put("USER", SecurityBean.getCurrentUser().getFullUserName());
+        UserBean[] users = new UserBean[1];
+        users[0] = SecurityBean.getCurrentUser();
+        String userName = users[0].getFullUserName();
+        JRDataSource jds = new JRBeanArrayDataSource(users);
+        try {
+            return JasperFillManager.fillReport(
+                    ReportManager.class.getResourceAsStream("/reports/newReport3.jasper"),
+                    inputParameters, jds);
+        } catch (JRException ex) {
+            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+                    new Object[]{ex.getLocalizedMessage()});
+            return null;
+        }
+    }
+    
+    public static JasperPrint getCurrentUserWithRolesReport() {
+        HashMap inputParameters = new HashMap();
+        Date currentdate = new Date( System.currentTimeMillis());
+        inputParameters.put("REPORT_LOCALE", Locale.getDefault());
+        inputParameters.put("CURRENT_DATE", currentdate);
+        inputParameters.put("USER", SecurityBean.getCurrentUser().getFullUserName());
+        UserBean[] users = new UserBean[1];
+        users[0] = SecurityBean.getCurrentUser();
+        JRDataSource jds = new JRBeanArrayDataSource(users);
+        try {
+            return JasperFillManager.fillReport(
+                    ReportManager.class.getResourceAsStream("/reports/CurrentUserRolesReport.jasper"),
+                    inputParameters, jds);
+        } catch (JRException ex) {
+            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+                    new Object[]{ex.getLocalizedMessage()});
+            return null;
+        }
+    }
+    //</editor-fold>
 }

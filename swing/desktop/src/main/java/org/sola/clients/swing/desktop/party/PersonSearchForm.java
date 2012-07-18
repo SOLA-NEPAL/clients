@@ -1,67 +1,109 @@
-/*
- * Copyright 2012 Food and Agriculture Organization of the United Nations (FAO).
+/**
+ * ******************************************************************************************
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
+ * All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    1. Redistributions of source code must retain the above copyright notice,this list
+ *       of conditions and the following disclaimer.
+ *    2. Redistributions in binary form must reproduce the above copyright notice,this list
+ *       of conditions and the following disclaimer in the documentation and/or other
+ *       materials provided with the distribution.
+ *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
+ *       promote products derived from this software without specific prior written permission.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * *********************************************************************************************
  */
 package org.sola.clients.swing.desktop.party;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
+import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.party.PartySearchPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
- *
- * @author ShresthaKabin
+ * Holds {@link PartySearchPanel} component.
  */
-public class PersonSearchForm extends javax.swing.JDialog {
-    /**
-     * Creates new form PersonSearchForm
-     */
-    private PartySearchPanelForm partySearchPanelForm;
+public class PersonSearchForm extends ContentPanel {
+    //Modified by Kumar   
     private Method taskCompleted_Triggering=null;
     private Object method_holder_object=null;
-            
+    /**
+     * Default constructor.
+     */
     public PersonSearchForm() {
-        super();
         initComponents();
-        openSearchParties();
+        partySearchPanel.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals(PartySearchPanel.CREATE_NEW_PARTY_PROPERTY)
+                        || evt.getPropertyName().equals(PartySearchPanel.EDIT_PARTY_PROPERTY)
+                        || evt.getPropertyName().equals(PartySearchPanel.VIEW_PARTY_PROPERTY)) {
+                    handleSearchPanelEvents(evt);
+                }
+            }
+        });
     }
-    
-    private void openSearchParties() {
+
+    private void handleSearchPanelEvents(final PropertyChangeEvent evt) {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
-                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
-                if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_PERSONS)) {
-                    partySearchPanelForm = new PartySearchPanelForm();
-                    pnlContent.addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
-                } else {
-                    pnlContent.showPanel(MainContentPanel.CARD_SEARCH_PERSONS);
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSON));
+                PartyPanelForm panel = null;
+
+                if (evt.getPropertyName().equals(PartySearchPanel.CREATE_NEW_PARTY_PROPERTY)) {
+                    panel = new PartyPanelForm(true, null, false, false);
+                    panel.addPropertyChangeListener(new PropertyChangeListener() {
+
+                        @Override
+                        public void propertyChange(PropertyChangeEvent evt) {
+                            if (evt.getPropertyName().equals(PartyPanelForm.PARTY_SAVED)) {
+                                ((PartyPanelForm) evt.getSource()).setParty(null);
+                            }
+                        }
+                    });
+                } else if (evt.getPropertyName().equals(PartySearchPanel.EDIT_PARTY_PROPERTY)) {
+                    panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), false, true);
+                } else if (evt.getPropertyName().equals(PartySearchPanel.VIEW_PARTY_PROPERTY)) {
+                    panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), true, true);
                 }
-                partySearchPanelForm.getPartySearchPanel().setShowRemoveButton(true);
+
+                if (panel != null) {
+                    getMainContentPanel().addPanel(panel, MainContentPanel.CARD_PERSON, true);
+                }
                 return null;
             }
         };
         TaskManager.getInstance().runTask(t);
     }
-    
+
     public PartySearchResultBean getSelectedPartySearchResultBean(){
-        return partySearchPanelForm.getPartySearchPanel()
+        return this.getPartySearchPanel()
                         .getPartySearchResuls().getSelectedPartySearchResult();
     }
 
@@ -70,61 +112,76 @@ public class PersonSearchForm extends javax.swing.JDialog {
         this.method_holder_object=method_holder;
     }
     
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlContent = new org.sola.clients.swing.ui.MainContentPanel();
-        btnOK = new javax.swing.JButton();
+        headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
+        partySearchPanel = new org.sola.clients.swing.ui.party.PartySearchPanel();
+        btnOk = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        pnlContent.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
+        setHeaderPanel(headerPanel);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/party/Bundle"); // NOI18N
-        btnOK.setText(bundle.getString("PersonSearchForm.btnOK.text")); // NOI18N
-        btnOK.addActionListener(new java.awt.event.ActionListener() {
+        setHelpTopic(bundle.getString("PersonSearchForm.helpTopic")); // NOI18N
+
+        headerPanel.setName("headerPanel"); // NOI18N
+        headerPanel.setTitleText(bundle.getString("PersonSearchForm.headerPanel.titleText")); // NOI18N
+
+        partySearchPanel.setName("partySearchPanel"); // NOI18N
+        partySearchPanel.setShowSelectButton(false);
+
+        btnOk.setText(bundle.getString("PersonSearchForm.btnOk.text")); // NOI18N
+        btnOk.setName(bundle.getString("PersonSearchForm.btnOk.name")); // NOI18N
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOKActionPerformed(evt);
+                btnOkActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(partySearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOK)
+                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(partySearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnOk)
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        try {
-            taskCompleted_Triggering.invoke(method_holder_object,new Object[]{this.getSelectedPartySearchResultBean()});
-            this.dispose();
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        }
-    }//GEN-LAST:event_btnOKActionPerformed
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        // TODO add your handling code here:         
+            try {
+                taskCompleted_Triggering.invoke(method_holder_object,new Object[]{this.getSelectedPartySearchResultBean()});
+                this.close();
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(PersonSearchForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    }//GEN-LAST:event_btnOkActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnOK;
-    private org.sola.clients.swing.ui.MainContentPanel pnlContent;
+    private javax.swing.JButton btnOk;
+    private org.sola.clients.swing.ui.HeaderPanel headerPanel;
+    private org.sola.clients.swing.ui.party.PartySearchPanel partySearchPanel;
     // End of variables declaration//GEN-END:variables
+
+    public PartySearchPanel getPartySearchPanel() {
+        return partySearchPanel;
+    }
 }

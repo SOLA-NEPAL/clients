@@ -144,7 +144,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText(bundle.getString("OneSideDirectionAreaMethod.jLabel5.text")); // NOI18N
 
-        btnOK.setText(bundle.getString("OneSideDirectionAreaMethod.btnOK.text")); // NOI18N
+        btnOK.setText("Close");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOKActionPerformed(evt);
@@ -180,7 +180,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUndoSplit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                        .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(12, 12, 12)
                         .addComponent(btnNewPacel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -619,7 +619,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     }
     
     private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer);
+        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
         targetParcelsLayer.getMapControl().refresh();

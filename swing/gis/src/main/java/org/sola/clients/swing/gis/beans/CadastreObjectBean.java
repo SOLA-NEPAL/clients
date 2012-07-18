@@ -44,10 +44,28 @@ public class CadastreObjectBean implements Serializable {
     private String id = "";
     private String nameFirstpart = "";
     private String nameLastpart = "";
+    private String mapSheetCode;
+    private String parcelType;
     private String typeCode = "parcel";
     private byte[] geomPolygon;
     private List<SpatialValueAreaBean> spatialValueAreaList = new ArrayList<SpatialValueAreaBean>();
     private String officeCode;
+
+    public String getMapSheetCode() {
+        return mapSheetCode;
+    }
+
+    public void setMapSheetCode(String mapSheetCode) {
+        this.mapSheetCode = mapSheetCode;
+    }
+
+    public String getParcelType() {
+        return parcelType;
+    }
+
+    public void setParcelType(String parcelType) {
+        this.parcelType = parcelType;
+    }
     
     public String getOfficeCode() {
         return officeCode;

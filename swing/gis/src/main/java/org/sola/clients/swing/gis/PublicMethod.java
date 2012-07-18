@@ -21,10 +21,13 @@ import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.clients.swing.gis.layer.TargetNeighbourParcelLayer;
 import org.sola.clients.swing.gis.mapaction.DeselectALL;
+import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
@@ -793,5 +796,68 @@ public class PublicMethod {
                 return;
             }
         }
+    }
+    
+    public static CadastreObjectTO getTargetParcel(
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer, String parcel_id){
+
+        //find the parcel with given id.
+        SimpleFeatureCollection targetParcels= targetParcelsLayer.getFeatureCollection();
+        SimpleFeatureIterator feaIter=targetParcels.features();
+        while (feaIter.hasNext()){
+            SimpleFeature fea=feaIter.next();
+            String feaId=fea.getID();
+            if (parcel_id.equals(feaId)){
+                List<String> ids= new ArrayList<String>();
+                ids.add(parcel_id);
+                List<CadastreObjectTO> parcels=
+                        WSManager.getInstance().getCadastreService().getCadastreObjects(ids);
+                if (parcels==null || parcels.size()<1) return null;
+                return parcels.get(0); //assuming based on id, will get one object.
+            }
+        }
+        
+        return null;
+    }
+    
+    
+    public static void assignAttributesFromTargetParcel(
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
+                String parcel_id,Geometry geom,int sn,CadastreObjectTO target){
+
+        if (target==null) return;
+        
+        //read attributes.
+        String firstpartname=target.getNameFirstpart();
+        String lastpartname=target.getNameLastpart();
+        String mapsheetid=target.getMapSheetCode();
+        String parceltype=target.getParcelType();
+        //new parcels.
+        try {
+            CadastreChangeNewCadastreObjectLayer new_parcels=targetParcelsLayer.getNew_parcels();
+            updateNewParcel(firstpartname,lastpartname,mapsheetid,parceltype,
+                    geom,parcel_id,new_parcels, sn);
+        } catch (Exception e) {
+        }
+    }
+    
+    public static void updateNewParcel(String firstpartname,String lastpartname
+                ,String mapsheetid,String parceltype, Geometry geom,
+                String parcel_id,CadastreChangeNewCadastreObjectLayer new_parcels,
+                int sn){
+        HashMap<String, Object> fieldsWithValues= fieldsWithValues = new HashMap<String, Object>();
+        DecimalFormat df=new DecimalFormat("0.00");
+        
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART,
+                firstpartname);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, 
+                lastpartname + "-" + String.valueOf(sn));
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED,0);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET,mapsheetid);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE,parceltype);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA, 
+                df.format(geom.getArea()));
+        
+        new_parcels.addFeature(parcel_id + "-" + String.valueOf(sn), geom, fieldsWithValues);
     }
 }

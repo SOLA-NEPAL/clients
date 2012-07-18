@@ -24,16 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class DistrictListBean extends AbstractBindingListBean {
+public class RestrictionOfficeListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_DISTRICT_PROPERTY = "selectedDistrict";
-    DistrictBean selectedDistrict;
-    SolaCodeList<DistrictBean> districts;
+    public static final String SELECTED_RESTRICTION_OFFICES_PROPERTY = "selectedRestrictionOffices";
+    private SolaCodeList<RestrictionOfficeBean> restrictionOffices;
+    private RestrictionOfficeBean selectedRestrictionOffices;
 
-    /**
-     * Default constructor.
-     */
-    public DistrictListBean() {
+    public RestrictionOfficeListBean() {
         this(false);
     }
 
@@ -42,7 +39,7 @@ public class DistrictListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public DistrictListBean(boolean createDummy) {
+    public RestrictionOfficeListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -52,37 +49,37 @@ public class DistrictListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public DistrictListBean(boolean createDummy, String... excludedCodes) {
+    public RestrictionOfficeListBean(boolean createDummy, String... excludedCodes) {
         super();
-        districts = new SolaCodeList<DistrictBean>(excludedCodes);
+        restrictionOffices = new SolaCodeList<RestrictionOfficeBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
-     * Loads list of {@link DistrictBean}.
+     * Loads list of {@link RestrictionOfficeBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
+     * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(DistrictBean.class, districts, CacheManager.getDistricts(), createDummy);
-    }
-
-    public ObservableList<DistrictBean> getDistricts() {
-        return districts.getFilteredList();
+        loadCodeList(RestrictionOfficeBean.class, restrictionOffices, CacheManager.getRestrictionOffices(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        districts.setExcludedCodes(codes);
+        restrictionOffices.setExcludedCodes(codes);
     }
 
-    public DistrictBean getSelectedDistrict() {
-        return selectedDistrict;
+    public RestrictionOfficeBean getSelectedRestrictionOffices() {
+        return selectedRestrictionOffices;
     }
 
-    public void setSelectedDistrict(DistrictBean selectedDistrict) {
-        DistrictBean oldValue = this.selectedDistrict;
-        this.selectedDistrict = selectedDistrict;
-        propertySupport.firePropertyChange(SELECTED_DISTRICT_PROPERTY,
-                oldValue, this.selectedDistrict);
+    public void setSelectedRestrictionOffices(RestrictionOfficeBean selectedRestrictionOffices) {
+        RestrictionOfficeBean oldValue = this.selectedRestrictionOffices;
+        this.selectedRestrictionOffices = selectedRestrictionOffices;
+        propertySupport.firePropertyChange(SELECTED_RESTRICTION_OFFICES_PROPERTY, oldValue, this.selectedRestrictionOffices);
+    }
+
+    public ObservableList<RestrictionOfficeBean> getRestrictionOffices() {
+        return restrictionOffices.getFilteredList();
     }
 }

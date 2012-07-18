@@ -69,6 +69,7 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog {
 
     private CadastreChangeNewCadastreObjectLayer layer;
+    private String transaction_id=null;
 
     /** Creates new form PointSurveyListForm */
     public CadastreChangeNewCadastreObjectListForm() {
@@ -88,9 +89,10 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
     }
 
     public CadastreChangeNewCadastreObjectListForm(
-            CadastreChangeNewCadastreObjectLayer cadastreObjectLayer) {
+            CadastreChangeNewCadastreObjectLayer cadastreObjectLayer,String transaction_id) {
         this();
         this.layer = cadastreObjectLayer;
+        this.transaction_id=transaction_id;
     }
 
     /**
@@ -111,16 +113,19 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
     private void initComponents() {
 
         urbanRural = new javax.swing.ButtonGroup();
+        jButton1 = new javax.swing.JButton();
         cmdRemove = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        btnEdit = new javax.swing.JButton();
         btnShowOnMap = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        jButton1.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.jButton1.text")); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         cmdRemove.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.cmdRemove.text")); // NOI18N
         cmdRemove.setEnabled(false);
         cmdRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -157,17 +162,17 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
         table.getColumnModel().getColumn(0).setPreferredWidth(2);
         table.getColumnModel().getColumn(3).setResizable(false);
 
-        btnEdit.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.btnEdit.text")); // NOI18N
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
         btnShowOnMap.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.btnShowOnMap.text")); // NOI18N
         btnShowOnMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowOnMapActionPerformed(evt);
+            }
+        });
+
+        btnEdit.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.btnEdit.text")); // NOI18N
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -178,10 +183,10 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnShowOnMap)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cmdRemove)))
@@ -193,8 +198,8 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdRemove)
-                    .addComponent(btnEdit)
-                    .addComponent(btnShowOnMap))
+                    .addComponent(btnShowOnMap)
+                    .addComponent(btnEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addContainerGap())
@@ -218,21 +223,45 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
     private CadastreObjectBean getSelected_parcel(){
         int r=table.getSelectedRow();
-        String unique_id= table.getValueAt(r, 1).toString() + " " +
-                                table.getValueAt(r, 2).toString();
+        String firstpartname=table.getValueAt(r, 1).toString();
+        String lastpartname=table.getValueAt(r, 2).toString();
+        String unique_id= firstpartname + " " + lastpartname;
         List<CadastreObjectTO> parcels=
                 WSManager.getInstance().getCadastreService()
                             .getPendingParcelsByParts(unique_id);
         //Assuming that part combination gives unique id, the list will have single parcel.
-        if (parcels==null || parcels.size()<1) return null;
-        CadastreObjectTO tmp_parcel=parcels.get(0);
-        CadastreObjectBean parcel=TypeConverters.TransferObjectToBean(
+        CadastreObjectBean parcel=null;
+        if (parcels==null || parcels.size()<1){
+            parcel = new CadastreObjectBean();
+            SimpleFeatureCollection sFeatures=this.layer.getFeatureCollection();
+            SimpleFeatureIterator feaIter=sFeatures.features();
+            while (feaIter.hasNext()){
+                SimpleFeature fea=feaIter.next();
+                String tfirstpartname=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString();
+                String tlastpartname=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
+                if (tfirstpartname.equals(firstpartname) && tlastpartname.equals(lastpartname)){
+                    //assign attribute to variable.
+                    parcel.setNameFirstpart(firstpartname);
+                    parcel.setNameLastpart(lastpartname);
+                    String mapsheetid=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString();
+                    String parceltype=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE).toString();
+                    parcel.setMapSheetCode(mapsheetid);
+                    parcel.setParcelType(parceltype);
+                    //parcel.setParcelno(0);
+                    parcel.setTransactionId(transaction_id);
+                }
+            }
+        }
+        else{
+            CadastreObjectTO tmp_parcel=parcels.get(0);
+            parcel=TypeConverters.TransferObjectToBean(
                 tmp_parcel, CadastreObjectBean.class, null);
-        
+        }
         return parcel;
     }
     
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
         CadastreObjectBean parcel=getSelected_parcel();
         
         EditParcelAttributeForm editParcel=new EditParcelAttributeForm();
@@ -255,32 +284,8 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         editParcel.setAlwaysOnTop(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
-    private void updateFeatureCollection(SimpleFeature fea,int selected,String geomfld){
-         //record attributes.
-        Object fea_id=fea.getAttribute(
-            CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FID);
-        if (fea_id==null) fea_id=fea.hashCode();
-        
-        String firstpart= fea.getAttribute(
-             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString();
-        String lastpart=fea.getAttribute(
-             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
-        String officical_area=fea.getAttribute(
-             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA).toString();
-        
-        String id=String.valueOf(fea_id);
-        //prepare new params.
-        HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART, firstpart);
-        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, lastpart);
-        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED,selected);
-        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA,officical_area);
-        
-        Geometry geom=(Geometry)fea.getAttribute(geomfld);
-        this.layer.addFeature(id, geom,fieldsWithValues,false);
-    }
-    
     private void btnShowOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOnMapActionPerformed
+        // TODO add your handling code here:
         SimpleFeatureCollection featrs=this.layer.getFeatureCollection();
         SimpleFeatureIterator feaIter=featrs.features();
         //collect features first.
@@ -314,6 +319,47 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         this.layer.getMapControl().refresh(false);
     }//GEN-LAST:event_btnShowOnMapActionPerformed
 
+//    private CadastreObjectBean getSelected_parcel(){
+//        int r=table.getSelectedRow();
+//        String unique_id= table.getValueAt(r, 1).toString() + " " +
+//                                table.getValueAt(r, 2).toString();
+//        List<CadastreObjectTO> parcels=
+//                WSManager.getInstance().getCadastreService()
+//                            .getPendingParcelsByParts(unique_id);
+//        //Assuming that part combination gives unique id, the list will have single parcel.
+//        if (parcels==null || parcels.size()<1) return null;
+//        CadastreObjectTO tmp_parcel=parcels.get(0);
+//        CadastreObjectBean parcel=TypeConverters.TransferObjectToBean(
+//                tmp_parcel, CadastreObjectBean.class, null);
+//        
+//        return parcel;
+//    }
+    
+    private void updateFeatureCollection(SimpleFeature fea,int selected,String geomfld){
+         //record attributes.
+        Object fea_id=fea.getAttribute(
+            CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FID);
+        if (fea_id==null) fea_id=fea.hashCode();
+        
+        String firstpart= fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString();
+        String lastpart=fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
+        String officical_area=fea.getAttribute(
+             CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA).toString();
+        
+        String id=String.valueOf(fea_id);
+        //prepare new params.
+        HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART, firstpart);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART, lastpart);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED,selected);
+        fieldsWithValues.put(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_OFFICIAL_AREA,officical_area);
+        
+        Geometry geom=(Geometry)fea.getAttribute(geomfld);
+        this.layer.addFeature(id, geom,fieldsWithValues,false);
+    }
+    
     private int getFeature_SelectionStatus(SimpleFeature fea){
         int r= table.getSelectedRow();
         if (r<0) return 0;
@@ -344,6 +390,7 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnShowOnMap;
     private javax.swing.JButton cmdRemove;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     private javax.swing.ButtonGroup urbanRural;
