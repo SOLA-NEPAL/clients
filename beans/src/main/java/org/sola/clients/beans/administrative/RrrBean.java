@@ -52,6 +52,7 @@ import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
+import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -89,7 +90,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String SELECTED_SHARE_PROPERTY = "selectedShare";
     public static final String SELECTED_PROPERTY = "selected";
     private String baUnitId;
-    private String nr;
+    private String nr;   
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
     private String transactionId;
@@ -115,10 +116,10 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<PartySummaryBean> rightHolderList;
     private transient RrrShareBean selectedShare;
     private transient boolean selected;
-
+        
     public RrrBean() {
         super();
-        registrationDate = Calendar.getInstance().getTime();
+        registrationDate = Calendar.getInstance().getTime();       
         sourceList = new SolaList();
         rrrShareList = new SolaList();
         rightHolderList = new SolaList();

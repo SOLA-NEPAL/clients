@@ -262,9 +262,7 @@ public class MainForm extends javax.swing.JFrame {
     public static void saveBeanState(AbstractBindingBean bean) {
         try {
             bean.saveStateHash();
-        } catch (IOException ex) {
-            DefaultExceptionHandler.handleException(ex);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (IOException | NoSuchAlgorithmException ex) {
             DefaultExceptionHandler.handleException(ex);
         }
     }
@@ -278,10 +276,7 @@ public class MainForm extends javax.swing.JFrame {
     public static boolean checkBeanState(AbstractBindingBean bean) {
         try {
             return bean.hasChanges();
-        } catch (IOException ex) {
-            DefaultExceptionHandler.handleException(ex);
-            return true;
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (IOException | NoSuchAlgorithmException ex) {
             DefaultExceptionHandler.handleException(ex);
             return true;
         }

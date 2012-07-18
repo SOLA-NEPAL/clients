@@ -37,19 +37,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="577" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" pref="578" max="32767" attributes="0"/>
           <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtNotationText" max="32767" attributes="0"/>
+                  <Component id="groupPanel1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="documentsPanel" alignment="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="1" pref="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="groupPanel1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="documentsPanel" alignment="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -70,8 +70,8 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="groupPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="documentsPanel" pref="168" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="documentsPanel" min="-2" pref="208" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -100,6 +100,11 @@
       <Properties>
         <Property name="name" type="java.lang.String" value="txtNotationText" noResource="true"/>
       </Properties>
+      <BindingProperties>
+        <BindingProperty name="text" source="rrrBean" sourcePath="${notation.notationText}" target="txtNotationText" targetPath="text" updateStrategy="0" immediately="false">
+          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+        </BindingProperty>
+      </BindingProperties>
     </Component>
     <Component class="org.sola.clients.swing.ui.HeaderPanel" name="headerPanel">
       <Properties>
@@ -197,7 +202,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtRegDatetime" pref="175" max="32767" attributes="1"/>
+                  <Component id="txtRegDatetime" pref="176" max="32767" attributes="1"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel13" min="-2" pref="142" max="-2" attributes="1"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -252,7 +257,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel14" min="-2" pref="122" max="-2" attributes="1"/>
-                      <EmptySpace min="0" pref="53" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cmbRestrictionReason" max="32767" attributes="0"/>
               </Group>
@@ -307,7 +312,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel16" min="-2" pref="122" max="-2" attributes="1"/>
-                      <EmptySpace min="0" pref="53" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cmbRestrictionOffice" alignment="0" max="32767" attributes="0"/>
               </Group>
