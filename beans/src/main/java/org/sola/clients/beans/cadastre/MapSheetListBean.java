@@ -32,10 +32,10 @@ public class MapSheetListBean extends AbstractBindingListBean {
     SolaObservableList<MapSheetBean> mapSheets;
     private MapSheetBean selectedMapSheet;
     
-//    public MapSheetListBean()
-//    {
-//        mapSheets= ObservableCollections.observableList(new ArrayList<MapSheetBean>());
-//    }
+    public MapSheetListBean()
+    {
+        mapSheets= new SolaObservableList<MapSheetBean>();
+    }
             
 
     public MapSheetBean getSelectedMapSheet() {
@@ -55,9 +55,9 @@ public class MapSheetListBean extends AbstractBindingListBean {
     }
 
     public SolaObservableList<MapSheetBean> getMapSheets() {
-        if (mapSheets == null) {
-            mapSheets = new SolaObservableList<MapSheetBean>();
-        }
+//        if (mapSheets == null) {
+//            mapSheets = new SolaObservableList<MapSheetBean>();
+//        }
         return mapSheets;
     }
 

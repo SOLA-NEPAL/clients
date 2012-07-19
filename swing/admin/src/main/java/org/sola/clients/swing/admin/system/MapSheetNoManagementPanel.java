@@ -100,18 +100,20 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         menuEdit.setEnabled(enabled);
         menuRemove.setEnabled(enabled);
     }
-
+     
+    
 //    private void postInint() {
 //        cmbOfficeFilter.setSelectedIndex(-1);
 //        mapSheetListBean.getMapSheets().clear();
 //        officeListBean1.addPropertyChangeListener(new PropertyChangeListener() {
     private void initMapSheetList() {
-        if (officeListBean1.getSelectedOffice() != null) {
+       if (officeListBean1.getSelectedOffice() != null) {
             mapSheetListBean.loadMapSheetList(officeListBean1.getSelectedOffice().getCode(), null);
+           // mapSheetListBean.loadMapSheetList();
         }
     }
-
-    private void enableTable(boolean enabled) {
+ 
+   private void enableTable(boolean enabled) {
         btnAddRefData.setEnabled(enabled);
         menuAdd.setEnabled(enabled);
         if (enabled) {

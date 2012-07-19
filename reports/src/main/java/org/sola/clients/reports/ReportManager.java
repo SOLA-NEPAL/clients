@@ -39,8 +39,8 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
-import org.sola.clients.beans.application.LodgementTimingBean;
-import org.sola.clients.beans.application.LodgementViewParamsBean;
+import org.sola.clients.beans.cadastre.MapSheetBean;
+import org.sola.clients.beans.cadastre.MapSheetListBean;
 import org.sola.clients.beans.system.BrReportBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.system.BrListBean;
@@ -250,6 +250,28 @@ public class ReportManager {
             return JasperFillManager.fillReport(
                     ReportManager.class.getResourceAsStream("/reports/LodgementReport.jasper"),
                     inputParameters, jds);
+        } catch (JRException ex) {
+            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+                    new Object[]{ex.getLocalizedMessage()});
+            return null;
+        }
+    }
+    public static JasperPrint getMapSheetListReport (){
+        MapSheetListBean mapSheetList = new MapSheetListBean();
+        mapSheetList.loadMapSheetList();
+        //mapSheetList.loadMapSheetList("7-25-003-001", null);
+        
+        MapSheetBean[] beans = new MapSheetBean[mapSheetList.getMapSheets().size()];
+        for (int i=0;i<mapSheetList.getMapSheets().size();i++)
+        {
+            beans[i]= mapSheetList.getMapSheets().get(i);
+        }
+        
+        JRDataSource jds = new JRBeanArrayDataSource(beans);
+         try {
+            return JasperFillManager.fillReport(
+                    ReportManager.class.getResourceAsStream("/reports/newReport.jasper"),
+                    null, jds);
         } catch (JRException ex) {
             MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
                     new Object[]{ex.getLocalizedMessage()});
