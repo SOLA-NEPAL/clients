@@ -17,9 +17,7 @@ package org.sola.clients.swing.desktop.inquiry;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.sola.clients.beans.administrative.BaUnitAsPartyBean;
 import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.BaUnitContainsSpatialUnitBean;
 import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
@@ -532,27 +530,27 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void  getBaUnitContainsSpatialUnitList(CadastreObjectBean cadastreObjectBean){
-        List<BaUnitContainsSpatialUnitBean> baSpatialUnits=new ArrayList<>();
-           if(cadastreObjectBean!=null){
-               baSpatialUnits=BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
-           }
-           getParcelRelatedBaUnits(baSpatialUnits);
+//        List<BaUnitContainsSpatialUnitBean> baSpatialUnits=new ArrayList<>();
+//           if(cadastreObjectBean!=null){
+//               baSpatialUnits=BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
+//           }
+           //getParcelRelatedBaUnits(baSpatialUnits);
     }       
 
-    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits){
-        List<BaUnitBean> baUnitBeans=new ArrayList<>();
-         for(BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits){
-             BaUnitBean baUnitBean=BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
-             baUnitBeans.add(baUnitBean);
-         }     
-         getCadasterRelatedParties(baUnitBeans);
-    }
+//    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits){
+//        List<BaUnitBean> baUnitBeans=new ArrayList<>();
+//         for(BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits){
+//             BaUnitBean baUnitBean=BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
+//             baUnitBeans.add(baUnitBean);
+//         }     
+//         getCadasterRelatedParties(baUnitBeans);
+//    }
     
     private void getCadasterRelatedParties(List<BaUnitBean> baUnitBeans){
          List<PartyBean> partyList=new ArrayList<>();
-         for(BaUnitBean baUnitBean : baUnitBeans){
-             partyList.addAll(baUnitBean.getParties());
-         }
+//         for(BaUnitBean baUnitBean : baUnitBeans){
+//             partyList.addAll(baUnitBean.getParties());
+//         }
          setParties(partyList);          
      }
     private void cmbPanaNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPanaNoItemStateChanged
@@ -564,7 +562,7 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
     private void loadParcels() {
         if (cmbPanaNo.getSelectedItem() != null) {
             LocBean loc = (LocBean) cmbPanaNo.getSelectedItem();
-            parcelsOp(loc.getBaUnits());
+           // parcelsOp(loc.getBaUnits());
         }
     }
     
@@ -572,9 +570,9 @@ public class SearchByMothPanaParcelNo extends ContentPanel {
         if (baUnits.size() == 0) {
             return;
         }
-        for (CadastreObjectBean cadBean : baUnits.get(0).getCadastreObjectList()) {
-            cadastreObjects.add(cadBean);            
-        }
+//        for (CadastreObjectBean cadBean : baUnits.get(0).getCadastreObjectList()) {
+//            cadastreObjects.add(cadBean);            
+//        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;

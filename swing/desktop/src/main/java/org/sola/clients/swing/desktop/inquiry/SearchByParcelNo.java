@@ -18,7 +18,6 @@ package org.sola.clients.swing.desktop.inquiry;
 import java.util.ArrayList;
 import java.util.List;
 import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.BaUnitContainsSpatialUnitBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.party.PartyBean;
@@ -354,7 +353,7 @@ public class SearchByParcelNo extends ContentPanel {
                     Integer.parseInt(txtParcelNo.getText().toString()));
             cadastreDetails.clear();
             cadastreDetails.add(cadBean);
-            getBaUnitContainsSpatialUnitList(cadBean);
+           // getBaUnitContainsSpatialUnitList(cadBean);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -376,28 +375,28 @@ public class SearchByParcelNo extends ContentPanel {
         }
     }//GEN-LAST:event_cmbDistrictItemStateChanged
 
-    private void getBaUnitContainsSpatialUnitList(CadastreObjectBean cadastreObjectBean) {
-        List<BaUnitContainsSpatialUnitBean> baSpatialUnits = new ArrayList<>();
-        if (cadastreObjectBean != null) {
-            baSpatialUnits = BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
-        }
-        getParcelRelatedBaUnits(baSpatialUnits);
-    }
-
-    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits) {
-        List<BaUnitBean> baUnitBeans = new ArrayList<>();
-        for (BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits) {
-            BaUnitBean baUnitBean = BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
-            baUnitBeans.add(baUnitBean);
-        }
-        getCadasterRelatedParties(baUnitBeans);
-    }
+//    private void getBaUnitContainsSpatialUnitList(CadastreObjectBean cadastreObjectBean) {
+//        List<BaUnitContainsSpatialUnitBean> baSpatialUnits = new ArrayList<>();
+//        if (cadastreObjectBean != null) {
+//            baSpatialUnits = BaUnitContainsSpatialUnitBean.getBaUnitContainsSpatialUnitsList(cadastreObjectBean.getId());
+//        }
+//        getParcelRelatedBaUnits(baSpatialUnits);
+//    }
+//
+//    private void getParcelRelatedBaUnits(List<BaUnitContainsSpatialUnitBean> baSpatialUnits) {
+//        List<BaUnitBean> baUnitBeans = new ArrayList<>();
+//        for (BaUnitContainsSpatialUnitBean baUnitSPBean : baSpatialUnits) {
+//            BaUnitBean baUnitBean = BaUnitBean.getBaUnitsById(baUnitSPBean.getBaUnitId());
+//            baUnitBeans.add(baUnitBean);
+//        }
+//        getCadasterRelatedParties(baUnitBeans);
+//    }
 
     private void getCadasterRelatedParties(List<BaUnitBean> baUnitBeans) {
         List<PartyBean> partyList = new ArrayList<>();
-        for (BaUnitBean baUnitBean : baUnitBeans) {
-            partyList.addAll(baUnitBean.getParties());
-        }
+//        for (BaUnitBean baUnitBean : baUnitBeans) {
+//            partyList.addAll(baUnitBean.getParties());
+//        }
         parties.clear();
         setParties(partyList);
     }

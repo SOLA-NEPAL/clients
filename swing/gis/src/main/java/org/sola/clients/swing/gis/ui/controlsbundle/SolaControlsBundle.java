@@ -81,6 +81,10 @@ public abstract class SolaControlsBundle extends ControlsBundle {
         this.getMap().addMapTextBoxAction(new ZoomToScale(this.getMap()),this.getToolbar(),true,"scale");
         //-----------------------------------------------------------------
     }
+    
+    public void addMemoryLayers(){
+        
+    }
     /**
      * Sets up the bundle.
      * @param pojoDataAccess The data access library used to communicate with the server
@@ -99,13 +103,13 @@ public abstract class SolaControlsBundle extends ControlsBundle {
             this.getMap().addMapAction(this.solaPrint, this.getToolbar(), true);
             //test the lable and text box addition.
             setupForScaleBox();
-            
+            addMemoryLayers();
             this.getMap().setFullExtent(
                     mapDefinition.getEast(),
                     mapDefinition.getWest(),
                     mapDefinition.getNorth(),
                     mapDefinition.getSouth());
-
+            //Navigation Layers.
             for (ConfigMapLayerTO configMapLayer : mapDefinition.getLayers()) {
                 this.addLayerConfig(configMapLayer);
             }

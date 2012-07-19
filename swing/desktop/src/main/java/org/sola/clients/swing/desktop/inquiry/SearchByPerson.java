@@ -19,7 +19,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import org.sola.clients.beans.administrative.BaUnitAsPartyBean;
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.party.PartyBean;
@@ -94,7 +93,7 @@ public class SearchByPerson extends ContentPanel {
                     panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), true, true);
                 }else if (evt.getPropertyName().equals(PartySearchPanel.SELECT_PARTY_PROPERTY)) {                    
                     PartyBean partyBean = partySearchPanel.getParty();
-                    getPartyBaUnitAsPartyList(partyBean);//                   
+//                    getPartyBaUnitAsPartyList(partyBean);//                   
                 }
 
                 if (panel != null) {
@@ -110,28 +109,28 @@ public class SearchByPerson extends ContentPanel {
         return partySearchPanel;
     }
     
-    private void getPartyBaUnitAsPartyList(PartyBean partyBean) {
-        List<BaUnitAsPartyBean> baAsParty=new ArrayList<>();
-           if(partyBean!=null){
-               baAsParty=BaUnitAsPartyBean.getBaUnitAsPartyList(partyBean.getId());
-           }
-           getPartyRelatedBaUnits(baAsParty);
-           
-    }
-     private void getPartyRelatedBaUnits(List<BaUnitAsPartyBean> baUnitAsPartyBeans){
-         List<BaUnitBean> baUnitBeans=new ArrayList<>();
-         for(BaUnitAsPartyBean baUnitAsPartyBean1 : baUnitAsPartyBeans){
-             BaUnitBean baUnitBean=BaUnitBean.getBaUnitsById(baUnitAsPartyBean1.getBaUnitId());
-             baUnitBeans.add(baUnitBean);
-         }     
-         getPartyRelatedCadastres(baUnitBeans);
-     }
+//    private void getPartyBaUnitAsPartyList(PartyBean partyBean) {
+//        List<BaUnitAsPartyBean> baAsParty=new ArrayList<>();
+//           if(partyBean!=null){
+//               baAsParty=BaUnitAsPartyBean.getBaUnitAsPartyList(partyBean.getId());
+//           }
+//           getPartyRelatedBaUnits(baAsParty);
+//           
+//    }
+//     private void getPartyRelatedBaUnits(List<BaUnitAsPartyBean> baUnitAsPartyBeans){
+//         List<BaUnitBean> baUnitBeans=new ArrayList<>();
+//         for(BaUnitAsPartyBean baUnitAsPartyBean1 : baUnitAsPartyBeans){
+//             BaUnitBean baUnitBean=BaUnitBean.getBaUnitsById(baUnitAsPartyBean1.getBaUnitId());
+//             baUnitBeans.add(baUnitBean);
+//         }     
+//         getPartyRelatedCadastres(baUnitBeans);
+//     }
     
      private void getPartyRelatedCadastres(List<BaUnitBean> baUnitBeans){
          List<CadastreObjectBean> cadastreObjectBeans=new ArrayList<>();
-         for(BaUnitBean baUnitBean : baUnitBeans){
-             cadastreObjectBeans.addAll(baUnitBean.getCadastreObjectList());
-         }
+//         for(BaUnitBean baUnitBean : baUnitBeans){
+//             cadastreObjectBeans.addAll(baUnitBean.getCadastreObjectList());
+//         }
          setCadastreObjects(cadastreObjectBeans);          
      }
     /**

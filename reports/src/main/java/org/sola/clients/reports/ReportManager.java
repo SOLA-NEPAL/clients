@@ -226,8 +226,6 @@ public class ReportManager {
             return null;
         }
     }
-
-    
     
      /** 
      * Generates and displays <b>BA Unit</b> report.

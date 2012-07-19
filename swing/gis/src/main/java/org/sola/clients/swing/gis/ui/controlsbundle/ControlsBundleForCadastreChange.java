@@ -298,9 +298,8 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addTool(newParcelTool, this.getToolbar(), true);
 
         this.getMap().addMapAction(new CadastreChangeNewCadastreObjectListFormShow(
-                this.getMap(), this.newCadastreObjectLayer.getHostForm()),
-                this.getToolbar(),
-                true);
+                this.getMap(), this.newCadastreObjectLayer.getHostForm(this.getTransactionBean().getFromServiceId())),
+                this.getToolbar(), true);
 
         CadastreBoundarySelectTool cadastreBoundarySelectTool =
                 new CadastreBoundarySelectTool(

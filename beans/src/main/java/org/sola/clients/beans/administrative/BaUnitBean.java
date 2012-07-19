@@ -56,72 +56,6 @@ import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
  */
 public class BaUnitBean extends BaUnitSummaryBean {
 
-    private class RrrListListener implements ObservableListListener, Serializable {
-
-        @Override
-        public void listElementsAdded(ObservableList ol, int i, int i1) {
-            setEstateType();
-            RrrBean rrrBean = (RrrBean) ol.get(i);
-            for (RrrShareBean shareBean : getShares(rrrBean)) {
-                rrrSharesList.add(createShareWithStatus(shareBean, rrrBean));
-            }
-        }
-
-        @Override
-        public void listElementsRemoved(ObservableList ol, int i, List list) {
-            setEstateType();
-            for (Object bean : list) {
-                RrrBean rrrBean = (RrrBean) bean;
-                for (RrrShareBean shareBean : getShares(rrrBean)) {
-                    for (RrrShareWithStatus shareWithStatusBean : rrrSharesList) {
-                        if (shareWithStatusBean.getRrrShare().equals(shareBean)) {
-                            rrrSharesList.remove(shareWithStatusBean);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void listElementReplaced(ObservableList ol, int i, Object o) {
-            setEstateType();
-            refreshSharesList();
-        }
-
-        @Override
-        public void listElementPropertyChanged(ObservableList ol, int i) {
-            setEstateType();
-        }
-
-        private void refreshSharesList() {
-            rrrSharesList.clear();
-            for (RrrBean rrrBean : rrrList.getFilteredList()) {
-                for (RrrShareBean shareBean : getShares(rrrBean)) {
-                    rrrSharesList.add(createShareWithStatus(shareBean, rrrBean));
-                }
-            }
-        }
-
-        private RrrShareWithStatus createShareWithStatus(RrrShareBean shareBean, RrrBean rrrBean) {
-            RrrShareWithStatus shareWithStatusBean = new RrrShareWithStatus();
-            shareWithStatusBean.setRrrShare(shareBean);
-            if (rrrBean.getStatus() != null) {
-                shareWithStatusBean.setStatus(rrrBean.getStatus().getDisplayValue());
-            }
-            return shareWithStatusBean;
-        }
-
-        private List<RrrShareBean> getShares(RrrBean rrrBean) {
-            List<RrrShareBean> result = new LinkedList<RrrShareBean>();
-            if (rrrBean.getTypeCode().toLowerCase().contains("ownership")
-                    || rrrBean.getTypeCode().toLowerCase().contains("apartment")) {
-                result = rrrBean.getFilteredRrrShareList();
-            }
-            return result;
-        }
-    }
-
     private class AllBaUnitNotationsListUpdater implements ObservableListListener, Serializable {
 
         @Override
@@ -163,77 +97,43 @@ public class BaUnitBean extends BaUnitSummaryBean {
             return notationBean;
         }
     }
-    public static final String SELECTED_PARCEL_PROPERTY = "selectedParcel";
+    
     public static final String SELECTED_RIGHT_PROPERTY = "selectedRight";
     public static final String SELECTED_BA_UNIT_NOTATION_PROPERTY = "selectedBaUnitNotation";
     public static final String SELECTED_PARENT_BA_UNIT_PROPERTY = "selectedParentBaUnit";
     public static final String SELECTED_CHILD_BA_UNIT_PROPERTY = "selectedChildBaUnit";
-    public static final String ESTATE_TYPE_PROPERTY = "estateType";
     public static final String PENDING_ACTION_CODE_PROPERTY = "pendingActionCode";
     public static final String PENDING_ACTION_PROPERTY = "pendingTypeAction";
     private SolaList<RrrBean> rrrList;
     private SolaList<BaUnitNotationBean> baUnitNotationList;
-    private SolaList<CadastreObjectBean> cadastreObjectList;
+    private CadastreObjectBean cadastreObject;
     private SolaList<CadastreObjectBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
-    private SolaObservableList<RrrShareWithStatus> rrrSharesList;
     private SolaList<RelatedBaUnitInfoBean> childBaUnits;
     private SolaList<RelatedBaUnitInfoBean> parentBaUnits;
-    private transient CadastreObjectBean selectedParcel;
     private transient RrrBean selectedRight;
     private transient BaUnitNotationBean selectedBaUnitNotation;
     private transient RelatedBaUnitInfoBean selectedParentBaUnit;
     private transient RelatedBaUnitInfoBean selectedChildBaUnit;
-    private String estateType;
     private TypeActionBean pendingTypeAction;
-    private String locId;
-    private SolaList<PartyBean> parties;
-
-//    public void make_CadastreObject_ReadyOnly(){
-//        for (CadastreObjectBean cob:cadastreObjectList){
-//            cob.setEntityAction(EntityAction.READ_ONLY);
-//        }
-//    }
-    
-    public String getLocId() {
-        return locId;
-    }
-
-    public void setLocId(String locId) {
-        String oldValue = this.locId;
-        this.locId = locId;
-        propertySupport.firePropertyChange("locId", oldValue, this.locId);
-    }
-
-    public SolaList<PartyBean> getParties() {
-        return parties;
-    }
-    
-    public ObservableList<PartyBean> getPartiesFilteredList() {
-        return parties.getFilteredList();
-    }
 
     public BaUnitBean() {
         super();
         rrrList = new SolaList();
         baUnitNotationList = new SolaList();
-        cadastreObjectList = new SolaList();
-        parties=new SolaList();
         childBaUnits = new SolaList();
         parentBaUnits = new SolaList();
         sourceList = new SolaList();
         allBaUnitNotationList = new SolaObservableList<BaUnitNotationBean>();
-        rrrSharesList = new SolaObservableList<RrrShareWithStatus>();
-        rrrList.getFilteredList().addObservableListListener(new RrrListListener());
-
         sourceList.setExcludedStatuses(new String[]{StatusConstants.HISTORIC});
         rrrList.setExcludedStatuses(new String[]{StatusConstants.HISTORIC, StatusConstants.PREVIOUS});
 
         AllBaUnitNotationsListUpdater allBaUnitNotationsListener = new AllBaUnitNotationsListUpdater();
         rrrList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
         baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);    
-       
+        cadastreObject = new CadastreObjectBean();
+        cadastreObject.setEntityAction(EntityAction.DISASSOCIATE);
     }
 
     public void createPaperTitle(SourceBean source) {
@@ -271,12 +171,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
             }
         }
         return false;
-    }
-
-    public void removeSelectedParcel() {
-        if (selectedParcel != null && cadastreObjectList != null) {
-            cadastreObjectList.safeRemove(selectedParcel, EntityAction.DISASSOCIATE);
-        }
     }
 
     public void removeSelectedRight() {
@@ -338,16 +232,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
         this.selectedParentBaUnit = selectedParentBaUnit;
         propertySupport.firePropertyChange(SELECTED_PARENT_BA_UNIT_PROPERTY,
                 null, this.selectedParentBaUnit);
-    }
-
-    public CadastreObjectBean getSelectedParcel() {
-        return selectedParcel;
-    }
-
-    public void setSelectedParcel(CadastreObjectBean selectedParcel) {
-        this.selectedParcel = selectedParcel;
-        propertySupport.firePropertyChange(SELECTED_PARCEL_PROPERTY,
-                null, selectedParcel);
     }
 
     public RrrBean getSelectedRight() {
@@ -423,20 +307,9 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public ObservableList<CadastreObjectBean> getSelectedNewCadastreObjects() {
         ObservableList<CadastreObjectBean> selectedCadastreObjects =
                 ObservableCollections.observableList(new ArrayList<CadastreObjectBean>());
-        for (CadastreObjectBean cadastreObject : getNewCadastreObjectList()) {
-            if (cadastreObject.isSelected()) {
-                selectedCadastreObjects.add(cadastreObject);
-            }
-        }
-        return selectedCadastreObjects;
-    }
-
-    public ObservableList<CadastreObjectBean> getSelectedCadastreObjects() {
-        ObservableList<CadastreObjectBean> selectedCadastreObjects =
-                ObservableCollections.observableList(new ArrayList<CadastreObjectBean>());
-        for (CadastreObjectBean cadastreObject : getCadastreObjectFilteredList()) {
-            if (cadastreObject.isSelected()) {
-                selectedCadastreObjects.add(cadastreObject);
+        for (CadastreObjectBean cadastreObjectTmp : getNewCadastreObjectList()) {
+            if (cadastreObjectTmp.isSelected()) {
+                selectedCadastreObjects.add(cadastreObjectTmp);
             }
         }
         return selectedCadastreObjects;
@@ -466,12 +339,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return getNewCadastreObjectList().getFilteredList();
     }
 
-    public SolaList<CadastreObjectBean> getCadastreObjectList() {
-        return cadastreObjectList;
+    public CadastreObjectBean getCadastreObject() {
+        return cadastreObject;
     }
 
-    public ObservableList<CadastreObjectBean> getCadastreObjectFilteredList() {
-        return cadastreObjectList.getFilteredList();
+    public void setCadastreObject(CadastreObjectBean cadastreObject) {
+        this.cadastreObject = cadastreObject;
     }
 
     public SolaList<RrrBean> getRrrList() {
@@ -501,28 +374,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
         }
     }
 
-    public ObservableList<RrrShareWithStatus> getRrrSharesList() {
-        return rrrSharesList;
-    }
-
-    public String getEstateType() {
-        return estateType;
-    }
-
-    public void setEstateType() {
-        String oldValue = estateType;
-        estateType = "";
-
-        for (RrrBean rrrBean : rrrList.getFilteredList()) {
-            if (rrrBean.isPrimary()) {
-                estateType = rrrBean.getRrrType().getDisplayValue();
-                break;
-            }
-        }
-        propertySupport.firePropertyChange(ESTATE_TYPE_PROPERTY, oldValue, estateType);
-
-    }
-
     public SolaList<SourceBean> getSourceList() {
         return sourceList;
     }
@@ -541,6 +392,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
         }
     }
 
+    public void removeParcel(){
+        CadastreObjectBean emptyParcel = new CadastreObjectBean();
+        emptyParcel.setEntityAction(EntityAction.DISASSOCIATE);
+        setCadastreObject(emptyParcel);
+    }
+    
     public boolean createBaUnit(String serviceId) {
         BaUnitTO baUnit = TypeConverters.BeanToTrasferObject(this, BaUnitTO.class);
         baUnit = WSManager.getInstance().getAdministrative().CreateBaUnit(serviceId, baUnit);
@@ -585,7 +442,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
         sourceList.setIncludedStatuses(new String[]{StatusConstants.CURRENT});
         rrrList.setIncludedStatuses(new String[]{StatusConstants.CURRENT});
         baUnitNotationList.setIncludedStatuses(new String[]{StatusConstants.CURRENT});
-        cadastreObjectList.setIncludedStatuses(new String[]{StatusConstants.CURRENT});
     }
 
     /**

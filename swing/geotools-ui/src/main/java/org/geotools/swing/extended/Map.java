@@ -649,14 +649,14 @@ public class Map extends JMapPane {
         //Label box.
         JLabel lbl = new JLabel();
         lbl.setText(textBoxName + " 1:");
-        lbl.setSize(300, 50);
+        lbl.setSize(50, 25);
         lbl.setEnabled(enabled);
         inToolbar.add(lbl);
         //Text box.
         JTextField txt = new JTextField(textBoxName);
         txt.setAction(action);
         txt.setText("");
-        txt.setSize(300, 50);
+        txt.setSize(50, 25);
         txt.setEnabled(enabled);
         this.setTxtScale(txt);
         inToolbar.add(txt);

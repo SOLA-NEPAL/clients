@@ -256,8 +256,6 @@ public class PropertyPanel extends ContentPanel {
                     customizeRightsButtons((RrrBean) evt.getNewValue());
                 } else if (evt.getPropertyName().equals(BaUnitBean.SELECTED_BA_UNIT_NOTATION_PROPERTY)) {
                     customizeNotationButtons((BaUnitNotationBean) evt.getNewValue());
-                } else if (evt.getPropertyName().equals(BaUnitBean.SELECTED_PARCEL_PROPERTY)) {
-                    customizeParcelButtons((CadastreObjectBean) evt.getNewValue());
                 } else if (evt.getPropertyName().equals(BaUnitBean.ROW_VERSION_PROPERTY)) {
                     customizePrintButton();
                 } else if (evt.getPropertyName().equals(BaUnitBean.SELECTED_PARENT_BA_UNIT_PROPERTY)) {
@@ -418,18 +416,18 @@ public class PropertyPanel extends ContentPanel {
         }
 
         // Go througth the parcels and add them, avoiding duplications
-        for (CadastreObjectBean cadastreObject : selectedBaUnit.getSelectedCadastreObjects()) {
-            boolean exists = false;
-            for (CadastreObjectBean currentCadastreObject : baUnitBean1.getCadastreObjectList()) {
-                if (cadastreObject.getId().equals(currentCadastreObject.getId())) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) {
-                baUnitBean1.getCadastreObjectList().addAsNew(cadastreObject);
-            }
-        }
+//        for (CadastreObjectBean cadastreObject : selectedBaUnit.getSelectedCadastreObjects()) {
+//            boolean exists = false;
+//            for (CadastreObjectBean currentCadastreObject : baUnitBean1.getCadastreObjectList()) {
+//                if (cadastreObject.getId().equals(currentCadastreObject.getId())) {
+//                    exists = true;
+//                    break;
+//                }
+//            }
+//            if (!exists) {
+//                baUnitBean1.getCadastreObjectList().addAsNew(cadastreObject);
+//            }
+//        }
 
         // Create relation
         RelatedBaUnitInfoBean relatedBuUnit = new RelatedBaUnitInfoBean();
@@ -684,7 +682,7 @@ public class PropertyPanel extends ContentPanel {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getNewValue() != null) {
-                    baUnitBean1.getCadastreObjectList().addAsNew((CadastreObjectBean) e.getNewValue());
+                    baUnitBean1.setCadastreObject((CadastreObjectBean) e.getNewValue());
                 }
             }
         };
@@ -699,12 +697,11 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-     * Removes selected parcel from the list of parcels.
+     * Removes parcel from the BaUnit.
      */
     private void removeParcel() {
-        if (baUnitBean1.getSelectedParcel() != null
-                && MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
-            baUnitBean1.removeSelectedParcel();
+        if (MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
+            baUnitBean1.removeParcel();
         }
     }
 
@@ -808,8 +805,7 @@ public class PropertyPanel extends ContentPanel {
      * further form customization.
      */
     private void openRightForm(RrrBean rrrBean, RrrBean.RRR_ACTION action) {
-        if (action == RrrBean.RRR_ACTION.NEW
-                && rrrTypes.getSelectedRrrType() == null) {
+        if (action == RrrBean.RRR_ACTION.NEW && rrrTypes.getSelectedRrrType() == null) {
             return;
         }
 
@@ -820,25 +816,17 @@ public class PropertyPanel extends ContentPanel {
 
         RightFormListener rightFormListener = new RightFormListener();
         ContentPanel panel;
-        String cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
-        String rrrCode = rrrBean.getRrrType().getCode();
+        String cardName;
+        String rrrCode = rrrBean.getRrrType().getRrrGroupTypeCode();
 
-        if (rrrCode.equals(RrrBean.CODE_MORTGAGE)) {
+        if (rrrCode.equals(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS)) {
             panel = new MortgagePanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_MORTGAGE;
-        } else if (rrrCode.equalsIgnoreCase(RrrBean.CODE_BYAPPLICATION)
-                || rrrCode.equalsIgnoreCase(RrrBean.CODE_BYLETTER)
-                || rrrCode.equalsIgnoreCase(RrrBean.CODE_LIKHATPARIT)
-                || rrrCode.equalsIgnoreCase(RrrBean.CODE_TENANCY)) {
-            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
-            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
-        }else if (rrrCode.equalsIgnoreCase(RrrBean.CODE_OWNERSHIP)
-                || rrrCode.equalsIgnoreCase(RrrBean.CODE_STATE_OWNERSHIP)
-                || rrrCode.equalsIgnoreCase(RrrBean.CODE_APARTMENT)) {
+        } else if (rrrCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_OWNERSHIP;
-        }
-        else {
+        } else {
+            cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
         }
 
@@ -1017,9 +1005,6 @@ public class PropertyPanel extends ContentPanel {
         jPanel9 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtLastPart = new javax.swing.JTextField();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        txtEstateType = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtBaUnitStatus = new javax.swing.JTextField();
@@ -1469,7 +1454,7 @@ public class PropertyPanel extends ContentPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel12, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, groupPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jToolBar4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2323,13 +2308,20 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         addNotation();
     }//GEN-LAST:event_btnAddNotationActionPerformed
 
+     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
+    public void refreshNewProperty(CadastreObjectTO parcel){
+        //do as required.
+        CadastreObjectBean coBean= TypeConverters.TransferObjectToBean(
+                        parcel, CadastreObjectBean.class, null);
+        baUnitBean1.setCadastreObject(coBean);
+    }
+    
     private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
-        // TODO add your handling code here:
         Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
         //Event delegate passing to the child JPanel.
-        Class[] cls = new Class[]{CadastreObjectTO.class};
-        Class workingForm = this.getClass();
-        Method taskCompletion = null;
+        Class[] cls=new Class[]{CadastreObjectTO.class};
+        Class workingForm=this.getClass();
+        Method taskCompletion=null;
         try {
             taskCompletion = workingForm.getMethod("refreshNewProperty", cls);
         } catch (NoSuchMethodException | SecurityException ex) {
@@ -2337,18 +2329,10 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         }
         //parcelSearchForm.setSize(700, 800);
         parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
-
+        
         displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSelectParcelActionPerformed
 
-     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshNewProperty(CadastreObjectTO parcel){
-        //do as required.
-        CadastreObjectBean coBean= TypeConverters.TransferObjectToBean(
-                        parcel, CadastreObjectBean.class, null);
-        baUnitBean1.getCadastreObjectList().addAsNew(coBean);
-    }
-    
     private void displayForm(Select_Parcel_Form parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
             getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
@@ -2391,13 +2375,11 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -2456,7 +2438,6 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableRights;
     private javax.swing.JTabbedPane tabsMain;
     private javax.swing.JTextField txtBaUnitStatus;
-    private javax.swing.JTextField txtEstateType;
     private javax.swing.JTextField txtFirstPart;
     private javax.swing.JTextField txtLastPart;
     private javax.swing.JTextField txtName;

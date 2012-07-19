@@ -400,7 +400,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="documentsPanel1" alignment="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="documentsPanel1" alignment="0" pref="617" max="32767" attributes="0"/>
                               <Component id="jPanel12" alignment="0" max="32767" attributes="0"/>
                               <Component id="groupPanel1" alignment="0" pref="596" max="32767" attributes="0"/>
                               <Component id="jToolBar4" alignment="0" max="32767" attributes="0"/>

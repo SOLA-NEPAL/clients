@@ -30,53 +30,23 @@ public class LocBean extends AbstractIdBean {
     public static final String MOTH_ID_PROPERTY = "mothId";
     public static final String PANA_NO_PROPERTY = "panaNo";
     public static final String TEMP_PANA_NO_PROPERTY = "tmpPanaNo";
-    public static final String PROPERTY_TYPE_PROPERTY = "propertyType";
-    public static final String OSHP_TYPE_PROPERTY = "oshpType";
-    public static final String TRANSACTION_ID_PROPERTY = "transactionId";
-    public static final String BAUNIT_PROPERTY = "baUnits";
 
     private String mothId;
     private int panaNo;
     private int tmpPanaNo;
-    private int propertyType;
-    private int oshpType;
-    private String transactionId;
-    private SolaObservableList<BaUnitBean> baUnits;
     
     public LocBean() {
         super();
-        baUnits = new SolaObservableList<BaUnitBean>();
-    }
-
-    public SolaObservableList<BaUnitBean> getBaUnits() {
-        return baUnits;
-    }
-
-    public void setBaUnits(SolaObservableList<BaUnitBean> baUnits) {
-        SolaObservableList<BaUnitBean> oldValue = this.baUnits;
-        this.baUnits = baUnits;
-        propertySupport.firePropertyChange(BAUNIT_PROPERTY, oldValue, this.baUnits);
     }
 
     public String getMothId() {
         return mothId;
-
     }
 
     public void setMothId(String mothId) {
         String oldValue = this.mothId;
         this.mothId = mothId;
         propertySupport.firePropertyChange(MOTH_ID_PROPERTY, oldValue, this.mothId);
-    }
-
-    public int getOshpType() {
-        return oshpType;
-    }
-
-    public void setOshpType(int oshpType) {
-        int oldValue = this.oshpType;
-        this.oshpType = oshpType;
-        propertySupport.firePropertyChange(OSHP_TYPE_PROPERTY, oldValue, this.oshpType);
     }
 
     public int getPanaNo() {
@@ -89,16 +59,6 @@ public class LocBean extends AbstractIdBean {
         propertySupport.firePropertyChange(PANA_NO_PROPERTY, oldValue, this.panaNo);
     }
 
-    public int getPropertyType() {
-        return propertyType;
-    }
-
-    public void setPropertyType(int propertyType) {
-        int oldValue = this.propertyType;
-        this.propertyType = propertyType;
-        propertySupport.firePropertyChange(PROPERTY_TYPE_PROPERTY, oldValue, this.propertyType);
-    }
-
     public int getTmpPanaNo() {
         return tmpPanaNo;
     }
@@ -107,16 +67,6 @@ public class LocBean extends AbstractIdBean {
         int oldValue = this.tmpPanaNo;
         this.tmpPanaNo = tmpPanaNo;
         propertySupport.firePropertyChange(TEMP_PANA_NO_PROPERTY, oldValue, this.tmpPanaNo);
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        String oldValue = this.transactionId;
-        this.transactionId = transactionId;
-        propertySupport.firePropertyChange(TRANSACTION_ID_PROPERTY, oldValue, this.transactionId);
     }
 
     public boolean saveLoc() {

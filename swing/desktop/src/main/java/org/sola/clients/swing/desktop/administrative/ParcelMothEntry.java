@@ -461,7 +461,7 @@ public class ParcelMothEntry extends ContentPanel {
             }
         }
         //get the baUnits included in selected loc            
-        baUnitOperation(locBean.getBaUnits());
+       // baUnitOperation(locBean.getBaUnits());
     }
 
     private void refreshMoth(LocBean locBean) {
@@ -476,7 +476,7 @@ public class ParcelMothEntry extends ContentPanel {
         } else {
             //create baUnit
             baUnit = createBaUnit();
-            locBean.getBaUnits().add(baUnit);
+           // locBean.getBaUnits().add(baUnit);
             baUnitFinalOperation(baUnit);
         }
 
@@ -484,7 +484,6 @@ public class ParcelMothEntry extends ContentPanel {
 
     private BaUnitBean createBaUnit() {
         BaUnitBean baUnit = new BaUnitBean();
-        baUnit.setLocId(locBean.getId());
         baUnit.setTypeCode("administrativeUnit");
         baUnit.setName("TestBaunit");
         baUnit.setNameFirstpart("TestBaunit");
@@ -497,12 +496,12 @@ public class ParcelMothEntry extends ContentPanel {
     private void baUnitFinalOperation(BaUnitBean baUnitBean) {
         SolaObservableList<CadastreObjectBean> cadObjLst = new SolaObservableList<>();
         SolaObservableList<PartyBean> partyList = new SolaObservableList<>();
-        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
-            cadObjLst.add(cadBean);
-        }
-        for (PartyBean partyBean : baUnitBean.getParties()) {
-            partyList.add(partyBean);
-        }
+//        for (CadastreObjectBean cadBean : baUnitBean.getCadastreObjectList()) {
+//            cadObjLst.add(cadBean);
+//        }
+//        for (PartyBean partyBean : baUnitBean.getParties()) {
+//            partyList.add(partyBean);
+//        }
         cadastreObjectOperation(cadObjLst);
         partiesOperation(partyList);
     }
@@ -523,9 +522,9 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void refreshCadastresInLoc() {
         for (CadastreObjectBean cad : cadastreObjects) {
-            if (!locBean.getBaUnits().get(0).getCadastreObjectList().contains(cad)) {
-                locBean.getBaUnits().get(0).getCadastreObjectList().add(cad);
-            }
+//            if (!locBean.getBaUnits().get(0).getCadastreObjectList().contains(cad)) {
+//                locBean.getBaUnits().get(0).getCadastreObjectList().add(cad);
+//            }
         }
 
     }
@@ -546,9 +545,9 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void refreshPartiesInLoc() {
         for (PartyBean pty : parties) {
-            if (!locBean.getBaUnits().get(0).getParties().contains(pty)) {
-                locBean.getBaUnits().get(0).getParties().add(pty);
-            }
+//            if (!locBean.getBaUnits().get(0).getParties().contains(pty)) {
+//                locBean.getBaUnits().get(0).getParties().add(pty);
+//            }
         }
     }
 
@@ -686,7 +685,7 @@ public class ParcelMothEntry extends ContentPanel {
         } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(ApplicationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
+        //partySearchForm.setTaskCompleted_Triggering(taskCompletion, this);
         displayPersonSearchForm(partySearchForm);      
         
     }//GEN-LAST:event_btnAddNewOwnerActionPerformed
@@ -706,9 +705,9 @@ public class ParcelMothEntry extends ContentPanel {
         if (removeConfirmation()) {
             CadastreObjectBean cadBean = getSelectedCadastreObjectBean();
             cadastreObjects.remove(cadBean);
-            if (locBean.getBaUnits().get(0).getCadastreObjectList().size() > 0) {
-                locBean.getBaUnits().get(0).getCadastreObjectList().remove(cadBean);
-            }
+//            if (locBean.getBaUnits().get(0).getCadastreObjectList().size() > 0) {
+//                locBean.getBaUnits().get(0).getCadastreObjectList().remove(cadBean);
+//            }
         } else {
         }
     }//GEN-LAST:event_btnRemove1ActionPerformed
@@ -730,9 +729,9 @@ public class ParcelMothEntry extends ContentPanel {
         if (removeConfirmation()) {
             PartyBean selectedBean = getSelectedPartyBean();
             parties.remove(selectedBean);
-            if (locBean.getBaUnits().get(0).getParties().size() > 0) {
-                locBean.getBaUnits().get(0).getParties().remove(selectedBean);
-            }
+//            if (locBean.getBaUnits().get(0).getParties().size() > 0) {
+//                locBean.getBaUnits().get(0).getParties().remove(selectedBean);
+//            }
         } else {
         }
 
