@@ -898,7 +898,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuRestrictionOfficeActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        showReport(ReportManager.getMapSheetListReport());
+        //showReport(ReportManager.getMapSheetListReport());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
