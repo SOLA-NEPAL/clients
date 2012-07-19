@@ -108,7 +108,7 @@ public class RrrBean extends AbstractTransactionedBean {
     private Integer mortgageRanking;
     private SolaList<SourceBean> sourceList;
     private RrrTypeBean rrrType;
-    private LocTO loc;
+    private LocWithMothBean loc;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
@@ -278,11 +278,11 @@ public class RrrBean extends AbstractTransactionedBean {
         this.registrationDate = registrationDate;
     }
 
-    public LocTO getLoc() {
+    public LocWithMothBean getLoc() {
         return loc;
     }
 
-    public void setLoc(LocTO loc) {
+    public void setLoc(LocWithMothBean loc) {
         this.loc = loc;
     }
 
