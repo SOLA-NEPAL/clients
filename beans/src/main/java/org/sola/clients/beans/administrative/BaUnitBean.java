@@ -186,8 +186,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private transient RelatedBaUnitInfoBean selectedParentBaUnit;
     private transient RelatedBaUnitInfoBean selectedChildBaUnit;
     private String estateType;
-    private TypeActionBean pendingTypeAction;
-    private String locId;
+    private TypeActionBean pendingTypeAction;  
     private SolaList<PartyBean> parties;
 
 //    public void make_CadastreObject_ReadyOnly(){
@@ -195,17 +194,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
 //            cob.setEntityAction(EntityAction.READ_ONLY);
 //        }
 //    }
-    
-    public String getLocId() {
-        return locId;
-    }
-
-    public void setLocId(String locId) {
-        String oldValue = this.locId;
-        this.locId = locId;
-        propertySupport.firePropertyChange("locId", oldValue, this.locId);
-    }
-
     public SolaList<PartyBean> getParties() {
         return parties;
     }

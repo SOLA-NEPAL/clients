@@ -888,9 +888,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         //invoke method.
         try {
             VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(
-                    vdc.getCode(), txtWardNo.getText().toString(),
-                    Integer.parseInt(txtParcelNo.getText().toString()));
+            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString()));
             refresh_Parcel_Information();
         } catch (Exception e) {
         }

@@ -15,7 +15,7 @@
  */
 package org.sola.clients.beans.administrative;
 
-import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -25,7 +25,7 @@ import org.sola.webservices.transferobjects.administrative.LocTO;
  *
  * @author KumarKhadka
  */
-public class LocBean extends AbstractIdBean {
+public class LocBean extends AbstractCodeBean {
 
     public static final String MOTH_ID_PROPERTY = "mothId";
     public static final String PANA_NO_PROPERTY = "panaNo";
@@ -34,13 +34,11 @@ public class LocBean extends AbstractIdBean {
     public static final String OSHP_TYPE_PROPERTY = "oshpType";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String BAUNIT_PROPERTY = "baUnits";
-
     private String mothId;
     private int panaNo;
     private int tmpPanaNo;
     private int propertyType;
-    private int oshpType;
-    private String transactionId;
+    private int oshpType;    
     private SolaObservableList<BaUnitBean> baUnits;
     
     public LocBean() {
@@ -107,16 +105,6 @@ public class LocBean extends AbstractIdBean {
         int oldValue = this.tmpPanaNo;
         this.tmpPanaNo = tmpPanaNo;
         propertySupport.firePropertyChange(TEMP_PANA_NO_PROPERTY, oldValue, this.tmpPanaNo);
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        String oldValue = this.transactionId;
-        this.transactionId = transactionId;
-        propertySupport.firePropertyChange(TRANSACTION_ID_PROPERTY, oldValue, this.transactionId);
     }
 
     public boolean saveLoc() {

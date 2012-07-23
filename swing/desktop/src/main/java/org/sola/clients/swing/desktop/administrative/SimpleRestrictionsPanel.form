@@ -2,14 +2,14 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
+    <Component class="org.sola.clients.beans.referencedata.RestrictionOfficeListBean" name="restrictionOfficeListBean">
+    </Component>
+    <Component class="org.sola.clients.beans.referencedata.RestrictionReasonListBean" name="restrictionReasonListBean">
+    </Component>
     <Component class="org.sola.clients.beans.administrative.RrrBean" name="rrrBean">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="CreateRrrBean()"/>
       </AuxValues>
-    </Component>
-    <Component class="org.sola.clients.beans.referencedata.RestrictionOfficeListBean" name="restrictionOfficeListBean">
-    </Component>
-    <Component class="org.sola.clients.beans.referencedata.RestrictionReasonListBean" name="restrictionReasonListBean">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -37,7 +37,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="578" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" max="32767" attributes="0"/>
           <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -70,8 +70,8 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="groupPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="documentsPanel" min="-2" pref="208" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="documentsPanel" pref="203" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -202,10 +202,10 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtRegDatetime" pref="176" max="32767" attributes="1"/>
+                  <Component id="txtRegDatetime" pref="174" max="32767" attributes="1"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel13" min="-2" pref="142" max="-2" attributes="1"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -257,9 +257,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel14" min="-2" pref="122" max="-2" attributes="1"/>
-                      <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="52" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="cmbRestrictionReason" max="32767" attributes="0"/>
+                  <Component id="cmbRestrictionReason" pref="174" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -296,7 +296,11 @@
               </Properties>
               <BindingProperties>
                 <BindingProperty name="elements" source="restrictionReasonListBean" sourcePath="${restrictionReasons}" target="cmbRestrictionReason" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="rrrBean" sourcePath="${restrictionReasonBean}" target="cmbRestrictionReason" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbRestrictionReasonItemStateChanged"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -312,9 +316,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel16" min="-2" pref="122" max="-2" attributes="1"/>
-                      <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="52" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="cmbRestrictionOffice" alignment="0" max="32767" attributes="0"/>
+                  <Component id="cmbRestrictionOffice" alignment="0" pref="174" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -351,6 +355,7 @@
               </Properties>
               <BindingProperties>
                 <BindingProperty name="elements" source="restrictionOfficeListBean" sourcePath="${restrictionOffices}" target="cmbRestrictionOffice" targetPath="elements" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="rrrBean" sourcePath="${restrictionOfficeBean}" target="cmbRestrictionOffice" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
           </SubComponents>

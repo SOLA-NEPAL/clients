@@ -483,8 +483,7 @@ public class ParcelMothEntry extends ContentPanel {
     }
 
     private BaUnitBean createBaUnit() {
-        BaUnitBean baUnit = new BaUnitBean();
-        baUnit.setLocId(locBean.getId());
+        BaUnitBean baUnit = new BaUnitBean();        
         baUnit.setTypeCode("administrativeUnit");
         baUnit.setName("TestBaunit");
         baUnit.setNameFirstpart("TestBaunit");

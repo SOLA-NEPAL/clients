@@ -33,16 +33,16 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="704" max="32767" attributes="0"/>
-          <Component id="jToolBar1" alignment="0" pref="704" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" pref="655" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" pref="655" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtNotationText" alignment="0" pref="684" max="32767" attributes="0"/>
+                  <Component id="txtNotationText" alignment="0" pref="635" max="32767" attributes="0"/>
                   <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="groupPanel1" alignment="0" pref="684" max="32767" attributes="0"/>
-                  <Component id="documentsPanel" alignment="0" pref="684" max="32767" attributes="0"/>
+                  <Component id="groupPanel1" alignment="0" pref="635" max="32767" attributes="0"/>
+                  <Component id="documentsPanel" alignment="0" pref="635" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -185,7 +185,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel13" min="-2" max="-2" attributes="1"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtRegDatetime" pref="109" max="32767" attributes="1"/>
+                  <Component id="txtRegDatetime" pref="60" max="32767" attributes="1"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="cbxIsPrimary" min="-2" pref="117" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="308" max="-2" attributes="0"/>

@@ -45,14 +45,11 @@ import org.sola.clients.beans.administrative.validation.TotalShareSize;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
-import org.sola.clients.beans.referencedata.MortgageTypeBean;
-import org.sola.clients.beans.referencedata.RrrTypeBean;
-import org.sola.clients.beans.referencedata.StatusConstants;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -89,8 +86,13 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String FIRST_RIGHTHOLDER_PROPERTY = "firstRightholder";
     public static final String SELECTED_SHARE_PROPERTY = "selectedShare";
     public static final String SELECTED_PROPERTY = "selected";
+    public static final String LOC_BEAN_PROPERTY = "locBean";
+    public static final String RESTRICTION_REASON_BEAN_PROPERTY = "restrictionReasonBean";
+    public static final String RESTRICTION_OFFICE_BEAN_PROPERTY = "restrictionOfficeBean";
+    public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
+    public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     private String baUnitId;
-    private String nr;   
+    private String nr;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
     private String transactionId;
@@ -106,6 +108,10 @@ public class RrrBean extends AbstractTransactionedBean {
     private Integer mortgageRanking;
     private Double share;
     private SolaList<SourceBean> sourceList;
+    private LocBean locBean;
+    private RestrictionReasonBean restrictionReasonBean;
+    private RestrictionOfficeBean restrictionOfficeBean;
+    private boolean isTerminating;
     @Valid
     private SolaList<RrrShareBean> rrrShareList;
     private RrrTypeBean rrrType;
@@ -116,10 +122,10 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<PartySummaryBean> rightHolderList;
     private transient RrrShareBean selectedShare;
     private transient boolean selected;
-        
+
     public RrrBean() {
         super();
-        registrationDate = Calendar.getInstance().getTime();       
+        registrationDate = Calendar.getInstance().getTime();
         sourceList = new SolaList();
         rrrShareList = new SolaList();
         rightHolderList = new SolaList();
@@ -151,6 +157,54 @@ public class RrrBean extends AbstractTransactionedBean {
         boolean oldValue = this.primary;
         this.primary = primary;
         propertySupport.firePropertyChange(IS_PRIMARY_PROPERTY, oldValue, primary);
+    }
+
+    public boolean getIsTerminating() {
+        return isTerminating;
+    }
+
+    public void setIsTerminating(boolean isTerminating) {
+        boolean oldValue = this.isTerminating;
+        this.isTerminating = isTerminating;
+        propertySupport.firePropertyChange(IS_PRIMARY_PROPERTY, oldValue, isTerminating);
+    }
+
+    public String getRestrictionOfficeCode() {
+        if (restrictionOfficeBean != null) {
+            return restrictionOfficeBean.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionOfficeCode(String restrictionOfficeCode) {
+        String oldValue = null;
+        if (restrictionOfficeCode != null) {
+            oldValue = restrictionOfficeBean.getCode();
+        }
+        setRestrictionOfficeBean(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionOffices(), restrictionOfficeCode));
+        propertySupport.firePropertyChange(RESTRICTION_OFFICE_CODE_PROPERTY,
+                oldValue, restrictionOfficeCode);
+    }
+
+    public String getRestrictionReasonCode() {
+         if (restrictionReasonBean != null) {
+            return restrictionReasonBean.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionReasonCode(String restrictionReasonCode) {
+       String oldValue = null;
+        if (restrictionReasonCode != null) {
+            oldValue = restrictionReasonBean.getCode();
+        }
+        setRestrictionReasonBean(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionReasons(), restrictionReasonCode));
+        propertySupport.firePropertyChange(RESTRICTION_REASON_CODE_PROPERTY,
+                oldValue, restrictionReasonCode);
     }
 
     public BaUnitNotationBean getNotation() {
@@ -229,6 +283,39 @@ public class RrrBean extends AbstractTransactionedBean {
             this.rrrType = new RrrTypeBean();
         }
         this.setJointRefDataBean(this.rrrType, rrrType, RRR_TYPE_PROPERTY);
+    }
+
+    public LocBean getLocBean() {
+        return locBean;
+    }
+
+    public void setLocBean(LocBean locBean) {
+        if (this.locBean == null) {
+            this.locBean = new LocBean();
+        }
+        this.setJointRefDataBean(this.locBean, locBean, LOC_BEAN_PROPERTY);
+    }
+
+    public RestrictionOfficeBean getRestrictionOfficeBean() {
+        return restrictionOfficeBean;
+    }
+
+    public void setRestrictionOfficeBean(RestrictionOfficeBean restrictionOfficeBean) {
+        if (this.restrictionOfficeBean == null) {
+            this.restrictionOfficeBean = new RestrictionOfficeBean();
+        }
+        this.setJointRefDataBean(this.restrictionOfficeBean, restrictionOfficeBean, RESTRICTION_OFFICE_BEAN_PROPERTY);
+    }
+
+    public RestrictionReasonBean getRestrictionReasonBean() {
+        return restrictionReasonBean;
+    }
+
+    public void setRestrictionReasonBean(RestrictionReasonBean restrictionReasonBean) {
+        if (this.restrictionReasonBean == null) {
+            this.restrictionReasonBean = new RestrictionReasonBean();
+        }
+        this.setJointRefDataBean(this.restrictionReasonBean, restrictionReasonBean, RESTRICTION_REASON_BEAN_PROPERTY);
     }
 
     public Date getExpirationDate() {

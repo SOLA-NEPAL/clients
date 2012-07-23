@@ -22,7 +22,7 @@
               <Image iconType="3" name="/images/common/add.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.menuAddShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.menuAddShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="menuAddShare" noResource="true"/>
           </Properties>
@@ -36,7 +36,7 @@
               <Image iconType="3" name="/images/common/remove.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.menuRemoveShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.menuRemoveShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="menuRemoveShare" noResource="true"/>
           </Properties>
@@ -50,7 +50,7 @@
               <Image iconType="3" name="/images/common/change-share.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.menuChangeShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.menuChangeShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="menuChangeShare" noResource="true"/>
           </Properties>
@@ -64,7 +64,7 @@
               <Image iconType="3" name="/images/common/view.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.menuViewShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.menuViewShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="menuViewShare" noResource="true"/>
           </Properties>
@@ -77,10 +77,10 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.jButton2.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.jButton2.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.jButton2.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.jButton2.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -109,7 +109,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="567" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" max="32767" attributes="0"/>
           <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -136,7 +136,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtNotationText" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel4" pref="292" max="32767" attributes="0"/>
+              <Component id="jPanel4" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -181,10 +181,10 @@
               <Image iconType="3" name="/images/common/red_asterisk.gif"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.jLabel13.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.jLabel13.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.jLabel13.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.jLabel13.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jLabel13" noResource="true"/>
           </Properties>
@@ -203,10 +203,10 @@
         <Component class="javax.swing.JCheckBox" name="cbxIsPrimary">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.cbxIsPrimary.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.cbxIsPrimary.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.cbxIsPrimary.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.cbxIsPrimary.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="cbxIsPrimary" noResource="true"/>
@@ -221,7 +221,7 @@
       <Properties>
         <Property name="name" type="java.lang.String" value="headerPanel" noResource="true"/>
         <Property name="titleText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.headerPanel.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.headerPanel.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -240,7 +240,7 @@
               <Image iconType="3" name="/images/common/save.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.btnSave.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.btnSave.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="btnSave" noResource="true"/>
           </Properties>
@@ -273,7 +273,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.jLabel1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.jLabel1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
           </Properties>
@@ -297,7 +297,7 @@
           <Image iconType="3" name="/images/common/red_asterisk.gif"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.jLabel15.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.jLabel15.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
         <Property name="name" type="java.lang.String" value="jLabel15" noResource="true"/>
       </Properties>
@@ -364,7 +364,7 @@
                       <Image iconType="3" name="/images/common/add.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.btnAddShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.btnAddShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="btnAddShare" noResource="true"/>
                   </Properties>
@@ -378,7 +378,7 @@
                       <Image iconType="3" name="/images/common/remove.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.btnRemoveShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.btnRemoveShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="btnRemoveShare" noResource="true"/>
                   </Properties>
@@ -392,7 +392,7 @@
                       <Image iconType="3" name="/images/common/change-share.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.btnChangeShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.btnChangeShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="btnChangeShare" noResource="true"/>
                   </Properties>
@@ -406,7 +406,7 @@
                       <Image iconType="3" name="/images/common/view.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.btnViewShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.btnViewShare.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="2"/>
@@ -432,7 +432,7 @@
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.tableShares.columnModel.title0" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.tableShares.columnModel.title0" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                           </Title>
                           <Editor/>
                           <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -441,7 +441,7 @@
                         </Column>
                         <Column maxWidth="150" minWidth="150" prefWidth="150" resizable="true">
                           <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.tableShares.columnModel.title1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.tableShares.columnModel.title1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                           </Title>
                           <Editor/>
                           <Renderer/>
@@ -481,7 +481,7 @@
               <Properties>
                 <Property name="name" type="java.lang.String" value="groupPanel1" noResource="true"/>
                 <Property name="titleText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.groupPanel1.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.groupPanel1.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>
@@ -514,7 +514,7 @@
               <Properties>
                 <Property name="name" type="java.lang.String" value="groupPanel2" noResource="true"/>
                 <Property name="titleText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.groupPanel2.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="OwnershipPanel1.groupPanel2.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>
