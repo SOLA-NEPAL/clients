@@ -77,8 +77,8 @@ public final class ControlsBundleForBaUnit extends ControlsBundleForWorkingWithC
      * @param baUnitId 
      */
     public void setCadastreObjects(String baUnitId) {
-        List<CadastreObjectTO> cadastreObjects = 
-                this.getPojoDataAccess().getCadastreService().getCadastreObjectsByBaUnit(baUnitId);
-        this.addCadastreObjectsInLayer(layerForCadastreObjects, cadastreObjects);
+        CadastreObjectTO cadastreObject = this.getPojoDataAccess()
+                .getCadastreService().getCadastreObjectByBaUnit(baUnitId);
+        this.addCadastreObjectsInLayer(layerForCadastreObjects, cadastreObject);
     }
 }

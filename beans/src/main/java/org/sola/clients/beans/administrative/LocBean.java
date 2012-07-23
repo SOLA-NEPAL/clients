@@ -16,8 +16,8 @@
 package org.sola.clients.beans.administrative;
 
 import org.sola.clients.beans.AbstractIdBean;
-import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.referencedata.MothTypeBean;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.LocTO;
 
@@ -32,11 +32,24 @@ public class LocBean extends AbstractIdBean {
     public static final String TEMP_PANA_NO_PROPERTY = "tmpPanaNo";
 
     private String mothId;
-    private int panaNo;
-    private int tmpPanaNo;
+    private String panaNo;
+    private String tmpPanaNo;
     
     public LocBean() {
         super();
+    }
+    
+    public LocBean(MothBasicBean moth, String pageNumber) {
+        super();
+        if(moth==null || pageNumber==null || pageNumber.isEmpty()){
+            return;
+        }
+        mothId=moth.getId();
+        if(moth.getMothLuj().equalsIgnoreCase(MothTypeBean.CODE_MOTH_TYPE_MOTH)){
+            panaNo = pageNumber;
+        } else {
+            tmpPanaNo = pageNumber;
+        }
     }
 
     public String getMothId() {
@@ -49,22 +62,22 @@ public class LocBean extends AbstractIdBean {
         propertySupport.firePropertyChange(MOTH_ID_PROPERTY, oldValue, this.mothId);
     }
 
-    public int getPanaNo() {
+    public String getPanaNo() {
         return panaNo;
     }
 
-    public void setPanaNo(int panaNo) {
-        int oldValue = this.panaNo;
+    public void setPanaNo(String panaNo) {
+        String oldValue = this.panaNo;
         this.panaNo = panaNo;
         propertySupport.firePropertyChange(PANA_NO_PROPERTY, oldValue, this.panaNo);
     }
 
-    public int getTmpPanaNo() {
+    public String getTmpPanaNo() {
         return tmpPanaNo;
     }
 
-    public void setTmpPanaNo(int tmpPanaNo) {
-        int oldValue = this.tmpPanaNo;
+    public void setTmpPanaNo(String tmpPanaNo) {
+        String oldValue = this.tmpPanaNo;
         this.tmpPanaNo = tmpPanaNo;
         propertySupport.firePropertyChange(TEMP_PANA_NO_PROPERTY, oldValue, this.tmpPanaNo);
     }
@@ -76,8 +89,17 @@ public class LocBean extends AbstractIdBean {
         return true;
     }
     
+    /** Returns either page or temporary page number. */
+    public String getPageNumber(){
+        if(panaNo!=null && !panaNo.isEmpty()){
+            return panaNo;
+        } else {
+            return tmpPanaNo;
+        }
+    }
+
     @Override
     public String toString(){
-        return Integer.toString(panaNo);
+        return getPageNumber();
     }
 }

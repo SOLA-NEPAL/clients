@@ -88,6 +88,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String NOTATION_PROPERTY = "notation";
     public static final String IS_PRIMARY_PROPERTY = "isPrimary";
     public static final String FIRST_RIGHTHOLDER_PROPERTY = "firstRightholder";
+    public static final String LOC_PROPERTY = "loc";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
     
@@ -283,7 +284,9 @@ public class RrrBean extends AbstractTransactionedBean {
     }
 
     public void setLoc(LocWithMothBean loc) {
+        LocWithMothBean oldValue = this.loc;
         this.loc = loc;
+        propertySupport.firePropertyChange(LOC_PROPERTY, oldValue, this.loc);
     }
 
     public String getTransactionId() {

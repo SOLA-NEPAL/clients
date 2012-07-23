@@ -445,13 +445,13 @@ public class ParcelMothEntry extends ContentPanel {
             locBean = null;
             return;
         }
-        locBean = locListBean.getLoc(mothBean, Integer.parseInt(txtPageNo.getText().toString()));
+        locBean = locListBean.getLoc(mothBean, txtPageNo.getText().toString());
         //if pana no is not exist
         if (locBean == null) {
             if (newPanaCreation()) {
                 locBean = new LocBean();
                 locBean.setMothId(mothBean.getId());
-                locBean.setPanaNo(Integer.parseInt(txtPageNo.getText()));
+                locBean.setPanaNo(txtPageNo.getText());
                 if(locBean.saveLoc()){
                     JOptionPane.showMessageDialog(null, "Page Created");
                 }
@@ -599,7 +599,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSearchNewParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNewParcelActionPerformed
         // TODO add your handling code here:
-        if(locBean.getPanaNo()==0){
+        if(locBean.getPanaNo()==null || locBean.getPanaNo().isEmpty()){
             JOptionPane.showMessageDialog(null, "No Page is specified");
             return;
         }
@@ -640,7 +640,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(locBean.getPanaNo()==0){
+        if(locBean.getPanaNo()==null || locBean.getPanaNo().isEmpty()){
             JOptionPane.showMessageDialog(null, "No Page is specified");
             return;
         }
@@ -650,7 +650,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         // TODO add your handling code here:
-        if(locBean.getPanaNo()==0){
+        if(locBean.getPanaNo()==null || locBean.getPanaNo().isEmpty()){
             JOptionPane.showMessageDialog(null, "No Page is specified");
             return;
         }
@@ -671,7 +671,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void btnAddNewOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewOwnerActionPerformed
         // TODO add your handling code here:
-        if(locBean.getPanaNo()==0){
+        if(locBean.getPanaNo()==null || locBean.getPanaNo().isEmpty()){
             JOptionPane.showMessageDialog(null, "No Page is specified");
             return;
         }

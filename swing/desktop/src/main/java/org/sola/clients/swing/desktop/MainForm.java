@@ -55,6 +55,7 @@ import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.administrative.SimpleRestrictionsPanel;
+import org.sola.clients.swing.desktop.administrative.TestForm;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;

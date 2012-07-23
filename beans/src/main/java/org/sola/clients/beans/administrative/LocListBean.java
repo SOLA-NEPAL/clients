@@ -47,10 +47,10 @@ public class LocListBean extends AbstractBindingBean {
         return locs;
     }
 
-    public LocBean getLoc(MothBean mothBean, int panaNo) {
+    public LocBean getLoc(MothBean mothBean, String panaNo) {
         List<LocBean> locList = mothBean.getLocList();
         for (LocBean locBean : locList) {
-            if (locBean.getPanaNo() == panaNo) {
+            if (locBean.getPanaNo().equals(panaNo)) {
                 return locBean;
             }
         }

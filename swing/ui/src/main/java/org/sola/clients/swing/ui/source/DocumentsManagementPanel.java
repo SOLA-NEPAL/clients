@@ -140,6 +140,15 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
     public final void loadSourcesByIds(List<String> sourceIds){
         documentsPanel.loadSourcesByIds(sourceIds);
     }
+
+    public boolean isAllowEdit() {
+        return allowEdit;
+    }
+
+    public void setAllowEdit(boolean allowEdit) {
+        this.allowEdit = allowEdit;
+        customizeButtons(documentsPanel.getSourceListBean().getSelectedSource());
+    }
     
     /** 
      * Returns the list of sources IDs. 

@@ -318,9 +318,9 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
      * @param baUnitId
      */
     public void setTargetParcelsByBaUnit(String baUnitId) {
-        List<CadastreObjectTO> cadastreObjects =
-                this.getPojoDataAccess().getCadastreService().getCadastreObjectsByBaUnit(baUnitId);
-        this.addCadastreObjectsInLayer(targetParcelsLayer, cadastreObjects);
+        CadastreObjectTO cadastreObject =
+                this.getPojoDataAccess().getCadastreService().getCadastreObjectByBaUnit(baUnitId);
+        this.addCadastreObjectsInLayer(targetParcelsLayer, cadastreObject);
     }
 
     //uncomment all lines to restore default tools of generic sola.
