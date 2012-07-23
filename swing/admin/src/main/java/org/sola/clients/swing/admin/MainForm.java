@@ -169,6 +169,7 @@ public class MainForm extends javax.swing.JFrame {
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -687,6 +688,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuReports.add(menuTimeReport);
 
+        jMenuItem1.setText(bundle.getString("MainForm.jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName(bundle.getString("MainForm.jMenuItem1.name")); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuReports.add(jMenuItem1);
+
         mainMenu.add(menuReports);
 
         menuHelp.setText(bundle.getString("MainForm.menuHelp.text")); // NOI18N
@@ -887,6 +897,10 @@ public class MainForm extends javax.swing.JFrame {
         manageRestrictionOffice();
     }//GEN-LAST:event_menuRestrictionOfficeActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        //showReport(ReportManager.getMapSheetListReport());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * Opens roles management panel.
      */
@@ -1038,6 +1052,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;

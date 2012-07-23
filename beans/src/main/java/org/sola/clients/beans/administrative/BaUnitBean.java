@@ -1,37 +1,36 @@
 /**
- * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
- * (FAO). All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,this
- * list of conditions and the following disclaimer. 2. Redistributions in binary
- * form must reproduce the above copyright notice,this list of conditions and
- * the following disclaimer in the documentation and/or other materials provided
- * with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this
- * software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * *********************************************************************************************
- */
+* ******************************************************************************************
+* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+* (FAO). All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice,this
+* list of conditions and the following disclaimer. 2. Redistributions in binary
+* form must reproduce the above copyright notice,this list of conditions and
+* the following disclaimer in the documentation and/or other materials provided
+* with the distribution. 3. Neither the name of FAO nor the names of its
+* contributors may be used to endorse or promote products derived from this
+* software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+* *********************************************************************************************
+*/
 package org.sola.clients.beans.administrative;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
@@ -41,7 +40,6 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.referencedata.TypeActionBean;
 import org.sola.clients.beans.source.SourceBean;
@@ -51,9 +49,9 @@ import org.sola.webservices.transferobjects.administrative.BaUnitTO;
 import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**
- * Contains properties and methods to manage <b>BA Unit</b> object of the domain
- * model. Could be populated from the {@link BaUnitTO} object.
- */
+* Contains properties and methods to manage <b>BA Unit</b> object of the domain
+* model. Could be populated from the {@link BaUnitTO} object.
+*/
 public class BaUnitBean extends BaUnitSummaryBean {
 
     private class AllBaUnitNotationsListUpdater implements ObservableListListener, Serializable {
@@ -116,22 +114,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private transient BaUnitNotationBean selectedBaUnitNotation;
     private transient RelatedBaUnitInfoBean selectedParentBaUnit;
     private transient RelatedBaUnitInfoBean selectedChildBaUnit;
-    private String estateType;
-    private TypeActionBean pendingTypeAction;  
-    private SolaList<PartyBean> parties;
-
-//    public void make_CadastreObject_ReadyOnly(){
-//        for (CadastreObjectBean cob:cadastreObjectList){
-//            cob.setEntityAction(EntityAction.READ_ONLY);
-//        }
-//    }
-    public SolaList<PartyBean> getParties() {
-        return parties;
-    }
-    
-    public ObservableList<PartyBean> getPartiesFilteredList() {
-        return parties.getFilteredList();
-    }
+    private TypeActionBean pendingTypeAction;
 
     public BaUnitBean() {
         super();
@@ -146,7 +129,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
 
         AllBaUnitNotationsListUpdater allBaUnitNotationsListener = new AllBaUnitNotationsListUpdater();
         rrrList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
-        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);    
+        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
         cadastreObject = new CadastreObjectBean();
         cadastreObject.setEntityAction(EntityAction.DISASSOCIATE);
     }
@@ -331,11 +314,11 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Returns the list of selected rights.
-     *
-     * @param regenerateIds If true, will generate new IDs for all parent and
-     * child objects.
-     */
+* Returns the list of selected rights.
+*
+* @param regenerateIds If true, will generate new IDs for all parent and
+* child objects.
+*/
     public ObservableList<RrrBean> getSelectedRrrs(boolean regenerateIds) {
         ObservableList<RrrBean> selectedRrrs =
                 ObservableCollections.observableList(new ArrayList<RrrBean>());
@@ -428,9 +411,9 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Loads list of new parcels, created on the base of current BA unit parcels
-     * (e.g. result of subdivision).
-     */
+* Loads list of new parcels, created on the base of current BA unit parcels
+* (e.g. result of subdivision).
+*/
     private void loadNewParcels() {
         if (newCadastreObjectList == null) {
             newCadastreObjectList = new SolaList<CadastreObjectBean>();
@@ -451,8 +434,8 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Filters all child lists to keep only records with current status.
-     */
+* Filters all child lists to keep only records with current status.
+*/
     public void filterCurrentRecords() {
         sourceList.setIncludedStatuses(new String[]{StatusConstants.CURRENT});
         rrrList.setIncludedStatuses(new String[]{StatusConstants.CURRENT});
@@ -460,10 +443,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Returns BA Unit by ID.
-     *
-     * @param baUnitId The ID of BA Unit to return.
-     */
+* Returns BA Unit by ID.
+*
+* @param baUnitId The ID of BA Unit to return.
+*/
     public static BaUnitBean getBaUnitsById(String baUnitId) {
         return TypeConverters.TransferObjectToBean(
                 WSManager.getInstance().getAdministrative().GetBaUnitById(baUnitId),
@@ -471,10 +454,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Returns list of BA Units, created by the given service.
-     *
-     * @param serviceId The ID of service, used pick up BA Units.
-     */
+* Returns list of BA Units, created by the given service.
+*
+* @param serviceId The ID of service, used pick up BA Units.
+*/
     public static List<BaUnitBean> getBaUnitsByServiceId(String serviceId) {
         return TypeConverters.TransferObjectListToBeanList(
                 WSManager.getInstance().getAdministrative().getBaUnitsByServiceId(serviceId),
@@ -482,10 +465,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Terminates/Cancel BaUnit. Creates pending record for further action.
-     *
-     * @param serviceId ID of the service, which terminates BaUnit.
-     */
+* Terminates/Cancel BaUnit. Creates pending record for further action.
+*
+* @param serviceId ID of the service, which terminates BaUnit.
+*/
     public void terminateBaUnit(String serviceId) {
         BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().terminateBaUnit(this.getId(), serviceId);
         if (baUnitTO != null) {
@@ -495,8 +478,8 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Rolls back BaUnit termination/cancellation.
-     */
+* Rolls back BaUnit termination/cancellation.
+*/
     public void cancelBaUnitTermination() {
         BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().cancelBaUnitTermination(this.getId());
         if (baUnitTO != null) {
@@ -506,10 +489,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Returns collection of {@link BaUnitBean} objects. This method is used by
-     * Jasper report designer to extract properties of BA Unit bean to help
-     * design a report.
-     */
+* Returns collection of {@link BaUnitBean} objects. This method is used by
+* Jasper report designer to extract properties of BA Unit bean to help
+* design a report.
+*/
     public static java.util.Collection generateCollection() {
         java.util.Vector collection = new java.util.Vector();
         BaUnitBean bean = new BaUnitBean();

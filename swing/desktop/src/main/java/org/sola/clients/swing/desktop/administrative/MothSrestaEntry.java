@@ -516,8 +516,8 @@ public class MothSrestaEntry extends ContentPanel {
     
     private void parcelsEntry() {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_ENTRY)) {
-            ParcelMothEntry pclMoth = new ParcelMothEntry(mothListBean.getSelectedMoth());
-            getMainContentPanel().addPanel(pclMoth, MainContentPanel.CARD_PARCEL_ENTRY);
+            //ParcelMothEntry pclMoth = new ParcelMothEntry(mothListBean.getSelectedMoth());
+            //getMainContentPanel().addPanel(pclMoth, MainContentPanel.CARD_PARCEL_ENTRY);
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_ENTRY);
     }

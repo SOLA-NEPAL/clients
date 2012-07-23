@@ -20,19 +20,15 @@ import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
-/**
- *
- * @author KumarKhadka
- */
 public class MothListBean extends AbstractBindingBean {
 
     public static final String SELECTED_MOTH = "selectedMoth";
-    private MothBean selectedMoth;
-    SolaObservableList<MothBean> moths;
+    private MothBasicBean selectedMoth;
+    SolaObservableList<MothBasicBean> moths;
 
-    public SolaObservableList<MothBean> getMoths() {
+    public SolaObservableList<MothBasicBean> getMoths() {
         if (moths == null) {
-            moths = new SolaObservableList<MothBean>();//ObservableCollections.observableList(new ArrayList<MothBean>());
+            moths = new SolaObservableList<MothBasicBean>();
         }
         return moths;
     }
@@ -41,12 +37,12 @@ public class MothListBean extends AbstractBindingBean {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getMoths(vdcCode, mothLuj), MothBean.class, (SolaObservableList) moths);
     }
 
-    public MothBean getSelectedMoth() {
+    public MothBasicBean getSelectedMoth() {
         return selectedMoth;
     }
 
-    public void setSelectedMoth(MothBean selectedMoth) {
-        MothBean oldValue = this.selectedMoth;
+    public void setSelectedMoth(MothBasicBean selectedMoth) {
+        MothBasicBean oldValue = this.selectedMoth;
         this.selectedMoth = selectedMoth;
         propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
     }
