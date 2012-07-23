@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.cadastre.ParcelTypeBean;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -58,7 +59,8 @@ public final class CacheManager {
      */
     public static final String REQUEST_TYPES_KEY = RequestTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link RequestTypeBean} collection.
+     * Cache key of the code/displayValue map based on {@link RequestTypeBean}
+     * collection.
      */
     public static final String REQUEST_TYPES_MAP_KEY = RequestTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -66,7 +68,8 @@ public final class CacheManager {
      */
     public static final String COMMUNICATION_TYPES_KEY = CommunicationTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link CommunicationTypeBean} collection.
+     * Cache key of the code/displayValue map based on {@link CommunicationTypeBean}
+     * collection.
      */
     public static final String COMMUNICATION_TYPES_MAP_KEY = CommunicationTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -74,7 +77,8 @@ public final class CacheManager {
      */
     public static final String GENDER_TYPES_KEY = GenderTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link GenderTypeBean} collection.
+     * Cache key of the code/displayValue map based on {@link GenderTypeBean}
+     * collection.
      */
     public static final String GENDER_TYPES_MAP_KEY = GenderTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -82,7 +86,8 @@ public final class CacheManager {
      */
     public static final String SOURCE_TYPES_KEY = SourceTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link SourceTypeBean} collection.
+     * Cache key of the code/displayValue map based on {@link SourceTypeBean}
+     * collection.
      */
     public static final String SOURCE_TYPES_MAP_KEY = SourceTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -90,7 +95,8 @@ public final class CacheManager {
      */
     public static final String APP_STATUS_TYPE_CODES_KEY = ApplicationStatusTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link ApplicationStatusTypeBean} collection.
+     * Cache key of the code/displayValue map based on {@link ApplicationStatusTypeBean}
+     * collection.
      */
     public static final String APP_STATUS_TYPE_CODES_MAP_KEY = ApplicationStatusTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -673,9 +679,16 @@ public final class CacheManager {
                 WSManager.getInstance().getReferenceDataService(),
                 GET_RESTRICTION_OFFICES, RESTRICTION_OFFICE_KEY);
     }
+
     public static List<RestrictionReasonBean> getRestrictionReasons() {
         return getCachedBeanList(RestrictionReasonBean.class,
                 WSManager.getInstance().getReferenceDataService(),
+                GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
+    }
+
+    public static List<LocBean> getLocs() {
+        return getCachedBeanList(LocBean.class,
+                WSManager.getInstance().getAdministrative(),
                 GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
     }
     //*************************************************************************************************************

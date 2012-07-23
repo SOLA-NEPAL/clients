@@ -40,17 +40,16 @@ import javax.validation.constraints.Size;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.administrative.validation.MortgageValidationGroup;
+import org.sola.clients.beans.administrative.validation.OwnershipValidationGroup;
+import org.sola.clients.beans.administrative.validation.TotalShareSize;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
-import org.sola.clients.beans.referencedata.MortgageTypeBean;
-import org.sola.clients.beans.referencedata.RrrTypeBean;
-import org.sola.clients.beans.referencedata.StatusConstants;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.services.boundary.transferobjects.administrative.LocTO;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -64,10 +63,6 @@ public class RrrBean extends AbstractTransactionedBean {
 
         NEW, VARY, CANCEL, EDIT, VIEW;
     }
-    public static final String GROUP_TYPE_CODE_OWNERSHIP = "ownership";
-    public static final String GROUP_TYPE_CODE_RESPONSIBILITIES = "responsibilities";
-    public static final String GROUP_TYPE_CODE_RIGHTS = "rights";
-    public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_TENANCY = "tenancy";
     public static final String CODE_BYAPPLICATION = "byApplication";
@@ -80,6 +75,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String RRR_TYPE_PROPERTY = "rrrType";
     public static final String EXPIRATION_DATE_PROPERTY = "expirationDate";
+    public static final String SHARE_PROPERTY = "share";
     public static final String MORTGAGE_AMOUNT_PROPERTY = "mortgageAmount";
     public static final String MORTGAGE_INTEREST_RATE_PROPERTY = "mortgageInterestRate";
     public static final String MORTGAGE_RANKING_PROPERTY = "mortgageRanking";
@@ -88,11 +84,15 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String NOTATION_PROPERTY = "notation";
     public static final String IS_PRIMARY_PROPERTY = "isPrimary";
     public static final String FIRST_RIGHTHOLDER_PROPERTY = "firstRightholder";
+    public static final String SELECTED_SHARE_PROPERTY = "selectedShare";
     public static final String SELECTED_PROPERTY = "selected";
-    public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
-    
+    public static final String LOC_BEAN_PROPERTY = "locBean";
+    public static final String RESTRICTION_REASON_BEAN_PROPERTY = "restrictionReasonBean";
+    public static final String RESTRICTION_OFFICE_BEAN_PROPERTY = "restrictionOfficeBean";
+    public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
+    public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     private String baUnitId;
-    private String nr;   
+    private String nr;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
     private String transactionId;
@@ -106,21 +106,28 @@ public class RrrBean extends AbstractTransactionedBean {
     private MortgageTypeBean mortgageType;
     private BigDecimal mortgageInterestRate;
     private Integer mortgageRanking;
+    private Double share;
     private SolaList<SourceBean> sourceList;
+    private LocBean locBean;
+    private RestrictionReasonBean restrictionReasonBean;
+    private RestrictionOfficeBean restrictionOfficeBean;
+    private boolean isTerminating;
+    @Valid
+    private SolaList<RrrShareBean> rrrShareList;
     private RrrTypeBean rrrType;
-    private LocTO loc;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
     @Valid
     private SolaList<PartySummaryBean> rightHolderList;
+    private transient RrrShareBean selectedShare;
     private transient boolean selected;
-    private transient PartySummaryBean selectedRightHolder;
 
     public RrrBean() {
         super();
-        registrationDate = Calendar.getInstance().getTime();       
+        registrationDate = Calendar.getInstance().getTime();
         sourceList = new SolaList();
+        rrrShareList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
     }
@@ -150,6 +157,54 @@ public class RrrBean extends AbstractTransactionedBean {
         boolean oldValue = this.primary;
         this.primary = primary;
         propertySupport.firePropertyChange(IS_PRIMARY_PROPERTY, oldValue, primary);
+    }
+
+    public boolean getIsTerminating() {
+        return isTerminating;
+    }
+
+    public void setIsTerminating(boolean isTerminating) {
+        boolean oldValue = this.isTerminating;
+        this.isTerminating = isTerminating;
+        propertySupport.firePropertyChange(IS_PRIMARY_PROPERTY, oldValue, isTerminating);
+    }
+
+    public String getRestrictionOfficeCode() {
+        if (restrictionOfficeBean != null) {
+            return restrictionOfficeBean.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionOfficeCode(String restrictionOfficeCode) {
+        String oldValue = null;
+        if (restrictionOfficeCode != null) {
+            oldValue = restrictionOfficeBean.getCode();
+        }
+        setRestrictionOfficeBean(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionOffices(), restrictionOfficeCode));
+        propertySupport.firePropertyChange(RESTRICTION_OFFICE_CODE_PROPERTY,
+                oldValue, restrictionOfficeCode);
+    }
+
+    public String getRestrictionReasonCode() {
+         if (restrictionReasonBean != null) {
+            return restrictionReasonBean.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionReasonCode(String restrictionReasonCode) {
+       String oldValue = null;
+        if (restrictionReasonCode != null) {
+            oldValue = restrictionReasonBean.getCode();
+        }
+        setRestrictionReasonBean(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionReasons(), restrictionReasonCode));
+        propertySupport.firePropertyChange(RESTRICTION_REASON_CODE_PROPERTY,
+                oldValue, restrictionReasonCode);
     }
 
     public BaUnitNotationBean getNotation() {
@@ -230,6 +285,39 @@ public class RrrBean extends AbstractTransactionedBean {
         this.setJointRefDataBean(this.rrrType, rrrType, RRR_TYPE_PROPERTY);
     }
 
+    public LocBean getLocBean() {
+        return locBean;
+    }
+
+    public void setLocBean(LocBean locBean) {
+        if (this.locBean == null) {
+            this.locBean = new LocBean();
+        }
+        this.setJointRefDataBean(this.locBean, locBean, LOC_BEAN_PROPERTY);
+    }
+
+    public RestrictionOfficeBean getRestrictionOfficeBean() {
+        return restrictionOfficeBean;
+    }
+
+    public void setRestrictionOfficeBean(RestrictionOfficeBean restrictionOfficeBean) {
+        if (this.restrictionOfficeBean == null) {
+            this.restrictionOfficeBean = new RestrictionOfficeBean();
+        }
+        this.setJointRefDataBean(this.restrictionOfficeBean, restrictionOfficeBean, RESTRICTION_OFFICE_BEAN_PROPERTY);
+    }
+
+    public RestrictionReasonBean getRestrictionReasonBean() {
+        return restrictionReasonBean;
+    }
+
+    public void setRestrictionReasonBean(RestrictionReasonBean restrictionReasonBean) {
+        if (this.restrictionReasonBean == null) {
+            this.restrictionReasonBean = new RestrictionReasonBean();
+        }
+        this.setJointRefDataBean(this.restrictionReasonBean, restrictionReasonBean, RESTRICTION_REASON_BEAN_PROPERTY);
+    }
+
     public Date getExpirationDate() {
         return expirationDate;
     }
@@ -278,12 +366,12 @@ public class RrrBean extends AbstractTransactionedBean {
         this.registrationDate = registrationDate;
     }
 
-    public LocTO getLoc() {
-        return loc;
+    public Double getShare() {
+        return share;
     }
 
-    public void setLoc(LocTO loc) {
-        this.loc = loc;
+    public void setShare(Double share) {
+        this.share = share;
     }
 
     public String getTransactionId() {
@@ -308,46 +396,50 @@ public class RrrBean extends AbstractTransactionedBean {
         this.sourceList = sourceList;
     }
 
+    public SolaList<RrrShareBean> getRrrShareList() {
+        return rrrShareList;
+    }
+
+    @Valid
+    @Size(min = 1, message = ClientMessage.CHECK_SIZE_RRRSHARELIST, payload = Localized.class, groups = OwnershipValidationGroup.class)
+    @TotalShareSize(message = ClientMessage.CHECK_TOTALSHARE_RRRSHARELIST, payload = Localized.class)
+    public ObservableList<RrrShareBean> getFilteredRrrShareList() {
+        return rrrShareList.getFilteredList();
+    }
+
+    public void setRrrShareList(SolaList<RrrShareBean> rrrShareList) {
+        this.rrrShareList = rrrShareList;
+    }
+
+    public void removeSelectedRrrShare() {
+        if (selectedShare != null && rrrShareList != null) {
+            rrrShareList.safeRemove(selectedShare, EntityAction.DELETE);
+        }
+    }
+
     public SolaList<PartySummaryBean> getRightHolderList() {
         return rightHolderList;
     }
 
-    @NoDuplicates(message = ClientMessage.CHECK_NODUPLI_RIGHTHOLDERLIST, payload = Localized.class)
     @Size(min = 1, groups = {MortgageValidationGroup.class}, message = ClientMessage.CHECK_SIZE_RIGHTHOLDERLIST, payload = Localized.class)
     public ObservableList<PartySummaryBean> getFilteredRightHolderList() {
         return rightHolderList.getFilteredList();
     }
 
-    /** Returns read only string combining list of right holders.*/
-    public String getRightHoldersStringList() {
-        String result = "";
-        for (PartySummaryBean rightHolder : getFilteredRightHolderList()) {
-            if (result.length() > 0) {
-                result = result + "\r\n";
-            }
-            result = result + "- " + rightHolder.getName();
-            if (rightHolder.getLastName() != null && rightHolder.getLastName().length() > 0) {
-                result = result + " " + rightHolder.getLastName();
-            }
-            result = result + ";";
-        }
-        return result;
-    }
-    
     public void setRightHolderList(SolaList<PartySummaryBean> rightHolderList) {
         this.rightHolderList = rightHolderList;
     }
 
-    public PartySummaryBean getSelectedRightHolder() {
-        return selectedRightHolder;
+    public RrrShareBean getSelectedShare() {
+        return selectedShare;
     }
 
-    public void setSelectedRightHolder(PartySummaryBean selectedRightHolder) {
-        PartySummaryBean oldValue = this.selectedRightHolder;
-        this.selectedRightHolder = selectedRightHolder;
-        propertySupport.firePropertyChange(SELECTED_RIGHTHOLDER_PROPERTY, oldValue, this.selectedRightHolder);
+    public void setSelectedShare(RrrShareBean selectedShare) {
+        RrrShareBean oldValue = this.selectedShare;
+        this.selectedShare = selectedShare;
+        propertySupport.firePropertyChange(SELECTED_SHARE_PROPERTY, oldValue, this.selectedShare);
     }
-    
+
     public boolean isSelected() {
         return selected;
     }
@@ -358,22 +450,6 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SELECTED_PROPERTY, oldValue, this.selected);
     }
 
-    public void removeSelectedRightHolder() {
-        if (selectedRightHolder != null && rightHolderList != null) {
-            rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
-        }
-    }
-    
-    public void addOrUpdateRightholder(PartySummaryBean rightholder) {
-        if (rightholder != null && rightHolderList != null) {
-            if (rightHolderList.contains(rightholder)) {
-                rightHolderList.set(rightHolderList.indexOf(rightholder), rightholder);
-            } else {
-                rightHolderList.addAsNew(rightholder);
-            }
-        }
-    }
-    
     public RrrBean makeCopyByAction(RRR_ACTION rrrAction) {
         RrrBean copy = this;
 
@@ -412,6 +488,10 @@ public class RrrBean extends AbstractTransactionedBean {
             setBaUnitId(null);
         }
         if (resetChildren) {
+            for (RrrShareBean shareBean : getRrrShareList()) {
+                shareBean.resetVersion();
+                shareBean.setRrrId(getId());
+            }
             getNotation().generateId();
             getNotation().resetVersion();
             if (removeBaUnitId) {

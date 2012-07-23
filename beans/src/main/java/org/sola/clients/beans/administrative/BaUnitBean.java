@@ -116,7 +116,22 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private transient BaUnitNotationBean selectedBaUnitNotation;
     private transient RelatedBaUnitInfoBean selectedParentBaUnit;
     private transient RelatedBaUnitInfoBean selectedChildBaUnit;
-    private TypeActionBean pendingTypeAction;
+    private String estateType;
+    private TypeActionBean pendingTypeAction;  
+    private SolaList<PartyBean> parties;
+
+//    public void make_CadastreObject_ReadyOnly(){
+//        for (CadastreObjectBean cob:cadastreObjectList){
+//            cob.setEntityAction(EntityAction.READ_ONLY);
+//        }
+//    }
+    public SolaList<PartyBean> getParties() {
+        return parties;
+    }
+    
+    public ObservableList<PartyBean> getPartiesFilteredList() {
+        return parties.getFilteredList();
+    }
 
     public BaUnitBean() {
         super();
