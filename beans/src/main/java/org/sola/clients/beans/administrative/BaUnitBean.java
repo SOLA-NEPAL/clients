@@ -42,6 +42,7 @@ import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.PartyBean;
+import org.sola.clients.beans.referencedata.RrrGroupTypeBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.referencedata.TypeActionBean;
 import org.sola.clients.beans.source.SourceBean;
@@ -398,6 +399,18 @@ public class BaUnitBean extends BaUnitSummaryBean {
         setCadastreObject(emptyParcel);
     }
 
+    /** Returns true if there is ownership right on the list. */
+    public boolean hasPendingOwnership(){
+        for(RrrBean rrr : getRrrList()){
+            if(rrr.getStatusCode() !=null && rrr.getStatusCode().equals(StatusConstants.PENDING)
+                    && rrr.getRrrType() !=null && rrr.getRrrType().getRrrGroupTypeCode() !=null 
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_OWNERSHIP)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean saveBaUnit(String serviceId) {
         BaUnitTO baUnit = TypeConverters.BeanToTrasferObject(this, BaUnitTO.class);
         baUnit = WSManager.getInstance().getAdministrative().SaveBaUnit(serviceId, baUnit);

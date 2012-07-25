@@ -70,19 +70,18 @@ public class OwnershipPanel extends ContentPanel {
             }
         }
     }
-    
+
     private class PersonSearchFormListener implements PropertyChangeListener {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals(PartySearchPanel.SELECT_PARTY_PROPERTY)) {
                 getMainContentPanel().closePanel(MainContentPanel.CARD_SEARCH_PERSONS);
-                rrrBean.addOrUpdateRightholder((PartySummaryBean)evt.getNewValue());
+                rrrBean.addOrUpdateRightholder((PartySummaryBean) evt.getNewValue());
                 tableRightholders.clearSelection();
             }
         }
     }
-    
     private ApplicationBean applicationBean;
     private ApplicationServiceBean appService;
     private RrrBean.RRR_ACTION rrrAction;
@@ -141,8 +140,9 @@ public class OwnershipPanel extends ContentPanel {
 
     private void customizeOwnersButtons() {
         PartySummaryBean partyBean = rrrBean.getSelectedRightHolder();
-        boolean isReadOnly = rrrAction == RrrBean.RRR_ACTION.VIEW || rrrBean.getLoc() == null;
-        
+        boolean isReadOnly = rrrAction == RrrBean.RRR_ACTION.VIEW
+                || rrrBean.getLoc() == null || rrrBean.isTerminating();
+
         btnAddOwner.setEnabled(!isReadOnly);
         btnEditOwner.setEnabled(partyBean != null && !isReadOnly);
         btnRemoveOwner.setEnabled(partyBean != null && !isReadOnly);
@@ -154,11 +154,12 @@ public class OwnershipPanel extends ContentPanel {
         menuViewOwner.setEnabled(btnViewOwner.isEnabled());
     }
 
-    private void customizeDocumentsPanel(){
-        boolean isReadOnly = rrrAction == RrrBean.RRR_ACTION.VIEW || rrrBean.getLoc() == null;
+    private void customizeDocumentsPanel() {
+        boolean isReadOnly = rrrAction == RrrBean.RRR_ACTION.VIEW
+                || rrrBean.getLoc() == null || rrrBean.isTerminating();
         documentsPanel.setAllowEdit(!isReadOnly);
     }
-    
+
     private void customizeForm() {
         if (rrrAction == RrrBean.RRR_ACTION.NEW) {
             btnSave.setText(MessageUtility.getLocalizedMessage(
@@ -175,14 +176,16 @@ public class OwnershipPanel extends ContentPanel {
             txtNotationText.setText(appService.getRequestType().getNotationTemplate());
         }
 
-        if (rrrAction == RrrBean.RRR_ACTION.VIEW) {
-            btnSave.setEnabled(false);
-            cbxRrrTypes.setEnabled(false);
-            txtNotationText.setEnabled(false);
-            txtRegDatetime.setEditable(false);
-            txtNotationText.setEditable(false);
-            btnEditLoc.setEnabled(false);
-        }
+        boolean readOnly = rrrAction == RrrBean.RRR_ACTION.VIEW;
+
+        btnSave.setEnabled(!readOnly);
+        txtNotationText.setEnabled(!readOnly);
+
+        boolean isTerminating = readOnly || rrrBean.isTerminating();
+        
+        cbxRrrTypes.setEnabled(!isTerminating);
+        txtRegDatetime.setEditable(!isTerminating);
+        btnEditLoc.setEnabled(!isTerminating);
 
         rrrBean.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -193,15 +196,15 @@ public class OwnershipPanel extends ContentPanel {
                 }
             }
         });
-        
+
         locSearchCreatePanel.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(LocSearchCreatePanel.LOC_FOUND)){
-                    changeOwnersByLoc((LocWithMothBean)evt.getNewValue());
+                if (evt.getPropertyName().equals(LocSearchCreatePanel.LOC_FOUND)) {
+                    changeOwnersByLoc((LocWithMothBean) evt.getNewValue());
                 }
-                if(evt.getPropertyName().equals(LocSearchCreatePanel.CLOSE_PANEL)){
+                if (evt.getPropertyName().equals(LocSearchCreatePanel.CLOSE_PANEL)) {
                     showLocSearch(false);
                 }
             }
@@ -212,7 +215,7 @@ public class OwnershipPanel extends ContentPanel {
     }
 
     private void openRightHolderForm(final PartySummaryBean partySummaryBean, final boolean isReadOnly) {
-        
+
 
         SolaTask t = new SolaTask<Void, Void>() {
 
@@ -233,15 +236,15 @@ public class OwnershipPanel extends ContentPanel {
         };
         TaskManager.getInstance().runTask(t);
     }
-    
-    private void changeOwnersByLoc(LocWithMothBean loc){
+
+    private void changeOwnersByLoc(LocWithMothBean loc) {
         rrrBean.changeLoc(loc);
         showLocSearch(false);
         customizeOwnersButtons();
         customizeDocumentsPanel();
     }
-    
-    private void showLocSearch(boolean show){
+
+    private void showLocSearch(boolean show) {
         pnlLocDetails.setVisible(!show);
         pnlLocSearch.setVisible(show);
     }
@@ -943,7 +946,7 @@ public class OwnershipPanel extends ContentPanel {
     }//GEN-LAST:event_btnAddOwnerActionPerformed
 
     private void btnRemoveOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveOwnerActionPerformed
-       removeOwner();
+        removeOwner();
     }//GEN-LAST:event_btnRemoveOwnerActionPerformed
 
     private void btnEditOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOwnerActionPerformed
@@ -973,7 +976,6 @@ public class OwnershipPanel extends ContentPanel {
     private void btnEditLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditLocActionPerformed
         showLocSearch(true);
     }//GEN-LAST:event_btnEditLocActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddOwner;
     private javax.swing.JButton btnEditLoc;

@@ -118,7 +118,8 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<PartySummaryBean> rightHolderList;
     private transient boolean selected;
     private transient PartySummaryBean selectedRightHolder;
-
+    private boolean terminating;
+    
     public RrrBean() {
         super();
         registrationDate = Calendar.getInstance().getTime();
@@ -379,6 +380,14 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SELECTED_PROPERTY, oldValue, this.selected);
     }
 
+    public boolean isTerminating() {
+        return terminating;
+    }
+
+    public void setTerminating(boolean terminating) {
+        this.terminating = terminating;
+    }
+
     public void removeSelectedRightHolder() {
         if (selectedRightHolder != null && rightHolderList != null) {
             rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
@@ -405,6 +414,7 @@ public class RrrBean extends AbstractTransactionedBean {
         if (rrrAction == RRR_ACTION.VARY || rrrAction == RRR_ACTION.CANCEL) {
             // Make a copy of current bean with new ID
             copy = this.copy();
+            copy.setTerminating(true);
             copy.resetIdAndVerion(true, false);
         }
 
@@ -440,7 +450,7 @@ public class RrrBean extends AbstractTransactionedBean {
             }
         }
     }
-
+    
     public void changeLoc(LocWithMothBean loc) {
         RrrLocListBean rrrLocs = new RrrLocListBean();
         rrrLocs.loadRrrLocs(loc.getId());
