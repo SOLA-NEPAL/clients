@@ -96,7 +96,6 @@ public class PropertyPanel extends ContentPanel {
     }
     private ApplicationBean applicationBean;
     private ApplicationServiceBean applicationService;
-    private String baUnitID;
     private String nameFirstPart;
     private String nameLastPart;
     private ControlsBundleForBaUnit mapControl = null;
@@ -114,9 +113,6 @@ public class PropertyPanel extends ContentPanel {
             if (nameFirstPart != null && nameLastPart != null) {
                 // Get BA Unit
                 baUnitBean = getBaUnit(nameFirstPart, nameLastPart);
-                if (baUnitBean != null) {
-                    baUnitID = baUnitBean.getId();
-                }
             }
             if (baUnitBean == null) {
                 baUnitBean = new BaUnitBean();
@@ -209,29 +205,26 @@ public class PropertyPanel extends ContentPanel {
         hideUncessaryTabs();
     }
 
-     private void hideUncessaryTabs(){
-        for (Component jp:tabsMain.getComponents()){
-            String panel_name=jp.getName();
-            if (is_UnnecessaryTab(panel_name)){
+    private void hideUncessaryTabs() {
+        for (Component jp : tabsMain.getComponents()) {
+            String panel_name = jp.getName();
+            if (is_UnnecessaryTab(panel_name)) {
                 //jp.setVisible(false);
                 tabsMain.remove(jp);
             }
         }
         btnAddParcel.setVisible(false);
     }
-     
+
     private boolean is_UnnecessaryTab(String panel_name) {
-        switch (panel_name){
-            case "pnlPriorProperties":
-                return true;
-//            case "tabNotation":
-//                return true;
+        switch (panel_name) {
             case "mapPanel":
                 return true;
         }
-        
+
         return false;
     }
+
     /**
      * Makes post initialization tasks.
      */
@@ -844,11 +837,7 @@ public class PropertyPanel extends ContentPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
-                if (baUnitID != null && !baUnitID.equals("")) {
-                    baUnitBean1.saveBaUnit(applicationService.getId());
-                } else {
-                    baUnitBean1.createBaUnit(applicationService.getId());
-                }
+                baUnitBean1.saveBaUnit(applicationService.getId());
                 if (closeOnSave) {
                     close();
                 }
@@ -866,29 +855,16 @@ public class PropertyPanel extends ContentPanel {
         TaskManager.getInstance().runTask(t);
     }
 
-    private void saveBaUnit() {
-        if (baUnitBean1.validate(true).size() > 0) {
-            return;
-        }
-
-        if (baUnitID != null && !baUnitID.equals("")) {
-            baUnitBean1.saveBaUnit(applicationService.getId());
-        } else {
-            baUnitBean1.createBaUnit(applicationService.getId());
-        }
-        saveBaUnitState();
-    }
-
-    private void terminateBaUnit(){
+    private void terminateBaUnit() {
         if (baUnitBean1.getPendingActionCode() != null && baUnitBean1.getPendingActionCode().equals(TypeActionBean.CODE_CANCEL)) {
-            saveBaUnit();
+            saveBaUnit(true, false);
             baUnitBean1.cancelBaUnitTermination();
             MessageUtility.displayMessage(ClientMessage.BAUNIT_TERMINATION_CANCELED);
             customizeForm();
             saveBaUnitState();
         } else {
             if (MessageUtility.displayMessage(ClientMessage.BAUNIT_CONFIRM_TERMINATION) == MessageUtility.BUTTON_ONE) {
-                saveBaUnit();
+                saveBaUnit(true, false);
                 baUnitBean1.terminateBaUnit(applicationService.getId());
                 MessageUtility.displayMessage(ClientMessage.BAUNIT_TERMINATED);
                 customizeForm();
@@ -896,7 +872,7 @@ public class PropertyPanel extends ContentPanel {
             }
         }
     }
-    
+
     /**
      * Opens form to select or create document to be used as a paper title
      * document.
@@ -2231,20 +2207,20 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         addNotation();
     }//GEN-LAST:event_btnAddNotationActionPerformed
 
-     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshNewProperty(CadastreObjectTO parcel){
+    //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
+    public void refreshNewProperty(CadastreObjectTO parcel) {
         //do as required.
-        CadastreObjectBean coBean= TypeConverters.TransferObjectToBean(
-                        parcel, CadastreObjectBean.class, null);
+        CadastreObjectBean coBean = TypeConverters.TransferObjectToBean(
+                parcel, CadastreObjectBean.class, null);
         baUnitBean1.setCadastreObject(coBean);
     }
-    
+
     private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
         Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
         //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{CadastreObjectTO.class};
-        Class workingForm=this.getClass();
-        Method taskCompletion=null;
+        Class[] cls = new Class[]{CadastreObjectTO.class};
+        Class workingForm = this.getClass();
+        Method taskCompletion = null;
         try {
             taskCompletion = workingForm.getMethod("refreshNewProperty", cls);
         } catch (NoSuchMethodException | SecurityException ex) {
@@ -2252,7 +2228,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         }
         //parcelSearchForm.setSize(700, 800);
         parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
-        
+
         displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSelectParcelActionPerformed
 
@@ -2262,7 +2238,6 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.administrative.BaUnitBean baUnitBean1;
     private org.sola.clients.beans.referencedata.RrrTypeListBean baUnitRrrTypes;

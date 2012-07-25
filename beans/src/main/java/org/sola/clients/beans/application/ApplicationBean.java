@@ -44,7 +44,6 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.*;
@@ -57,6 +56,7 @@ import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.ActionedApplicationTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
+import org.sola.webservices.transferobjects.digitalarchive.DocumentBinaryTO;
 import org.sola.webservices.transferobjects.digitalarchive.DocumentTO;
 import org.sola.webservices.transferobjects.search.PropertyVerifierTO;
 
@@ -838,7 +838,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
                 getDocumentExisting(app.getContactPerson().getSignatureDoc()));
     }
     
-    public DocumentTO getDocumentExisting(DocumentTO doc){
+    public DocumentBinaryTO getDocumentExisting(DocumentBinaryTO doc){
         if (doc==null) return null;
         
         String desc=doc.getDescription();

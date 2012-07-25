@@ -397,13 +397,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
         emptyParcel.setEntityAction(EntityAction.DISASSOCIATE);
         setCadastreObject(emptyParcel);
     }
-    
-    public boolean createBaUnit(String serviceId) {
-        BaUnitTO baUnit = TypeConverters.BeanToTrasferObject(this, BaUnitTO.class);
-        baUnit = WSManager.getInstance().getAdministrative().CreateBaUnit(serviceId, baUnit);
-        TypeConverters.TransferObjectToBean(baUnit, BaUnitBean.class, this);
-        return true;
-    }
 
     public boolean saveBaUnit(String serviceId) {
         BaUnitTO baUnit = TypeConverters.BeanToTrasferObject(this, BaUnitTO.class);
@@ -501,12 +494,4 @@ public class BaUnitBean extends BaUnitSummaryBean {
         collection.add(bean);
         return collection;
     }
-    
-    //<editor-fold defaultstate="collapsed" desc="By Kumar">
-    public void saveBaUnitTest() {
-        BaUnitTO buTO = TypeConverters.BeanToTrasferObject(this, BaUnitTO.class);
-        buTO = WSManager.getInstance().getAdministrative().saveBaUnitTest(buTO);
-        TypeConverters.TransferObjectToBean(buTO, BaUnitBean.class, this);
-    }
-    //</editor-fold>
 }
