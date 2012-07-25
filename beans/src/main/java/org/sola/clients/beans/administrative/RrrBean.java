@@ -32,6 +32,8 @@ package org.sola.clients.beans.administrative;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -50,7 +52,6 @@ import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.services.boundary.transferobjects.administrative.LocTO;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -109,6 +110,7 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<SourceBean> sourceList;
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
+    private String officeCode;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
@@ -287,6 +289,21 @@ public class RrrBean extends AbstractTransactionedBean {
         this.loc = loc;
         propertySupport.firePropertyChange(LOC_PROPERTY, oldValue, this.loc);
     }
+    
+    public String getLocId() {
+        if(loc==null){
+            return null;
+        }
+        return loc.getId();
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
     public String getTransactionId() {
         return transactionId;
@@ -422,5 +439,57 @@ public class RrrBean extends AbstractTransactionedBean {
                 getNotation().setBaUnitId(null);
             }
         }
+    }
+
+    public void changeLoc(LocWithMothBean loc) {
+        RrrLocListBean rrrLocs = new RrrLocListBean();
+        rrrLocs.loadRrrLocs(loc.getId());
+
+        Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
+        while (iteratorRightholders.hasNext()) {
+            PartySummaryBean partySummaryBean = iteratorRightholders.next();
+            if(getRightHolderList().isNewlyAdded(partySummaryBean)){
+                iteratorRightholders.remove();
+            } else {
+                getRightHolderList().safeRemove(partySummaryBean, EntityAction.DISASSOCIATE);
+            }
+        }
+        
+        Iterator<SourceBean> iteratorSources = getSourceList().iterator();
+        while (iteratorSources.hasNext()) {
+            SourceBean source = iteratorSources.next();
+            if(getSourceList().isNewlyAdded(source)){
+                iteratorSources.remove();
+            } else {
+                getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
+            }
+        }
+
+        if (rrrLocs.getRrrLocs() != null) {
+
+            List<PartySummaryBean> newRightholders = null;
+            List<SourceBean> newSources = null;
+
+            if (rrrLocs.getPendingRrr() != null) {
+                newRightholders = rrrLocs.getPendingRrr().getRightHolderList();
+                newSources = rrrLocs.getPendingRrr().getSourceList();
+            } else if (rrrLocs.getCurrentRrr() != null) {
+                newRightholders = rrrLocs.getCurrentRrr().getRightHolderList();
+                newSources = rrrLocs.getCurrentRrr().getSourceList();
+            }
+            
+            if(newRightholders!=null){
+                for(PartySummaryBean party : newRightholders){
+                    getRightHolderList().addAsNew(party);
+                }
+            }
+            
+            if(newSources!=null){
+                for(SourceBean source : newSources){
+                    getSourceList().addAsNew(source);
+                }
+            }
+        }
+        setLoc(loc);
     }
 }

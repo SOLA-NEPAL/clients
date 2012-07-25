@@ -76,6 +76,7 @@ public class OwnershipPanel extends ContentPanel {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals(PartySearchPanel.SELECT_PARTY_PROPERTY)) {
+                getMainContentPanel().closePanel(MainContentPanel.CARD_SEARCH_PERSONS);
                 rrrBean.addOrUpdateRightholder((PartySummaryBean)evt.getNewValue());
                 tableRightholders.clearSelection();
             }
@@ -234,7 +235,7 @@ public class OwnershipPanel extends ContentPanel {
     }
     
     private void changeOwnersByLoc(LocWithMothBean loc){
-        rrrBean.setLoc(loc);
+        rrrBean.changeLoc(loc);
         showLocSearch(false);
         customizeOwnersButtons();
         customizeDocumentsPanel();
@@ -260,7 +261,8 @@ public class OwnershipPanel extends ContentPanel {
 
     private void addOwner() {
         PersonSearchForm partySearchForm = new PersonSearchForm();
-        partySearchForm.addPropertyChangeListener(personSearchFormListener);
+        partySearchForm.getPartySearchPanel().setShowSelectButton(true);
+        partySearchForm.getPartySearchPanel().addPropertyChangeListener(personSearchFormListener);
         getMainContentPanel().addPanel(partySearchForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
     }
 
@@ -398,6 +400,7 @@ public class OwnershipPanel extends ContentPanel {
         });
         popUpOwners.add(menuViewOwner);
 
+        setHeaderPanel(headerPanel);
         setHelpTopic(bundle.getString("OwnershipPanel.helpTopic")); // NOI18N
         setName("Form"); // NOI18N
 
@@ -822,7 +825,7 @@ public class OwnershipPanel extends ContentPanel {
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${selectedShare}"), tableRightholders, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${selectedRightHolder}"), tableRightholders, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
 
         tableRightholders.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -832,7 +835,7 @@ public class OwnershipPanel extends ContentPanel {
         });
         jScrollPane1.setViewportView(tableRightholders);
         tableRightholders.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("OwnershipPanel.tableRightholders.columnModel.title0")); // NOI18N
-        tableRightholders.getColumnModel().getColumn(0).setCellRenderer(new TableCellListRenderer("getName", "getLastName"));
+        tableRightholders.getColumnModel().getColumn(0).setCellRenderer(null);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
