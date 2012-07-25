@@ -1,32 +1,32 @@
 /**
-* ******************************************************************************************
-* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
-* (FAO). All rights reserved.
-*
+ * ******************************************************************************************
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
+ * 
 * Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
+ * modification, are permitted provided that the following conditions are met:
+ * 
 * 1. Redistributions of source code must retain the above copyright notice,this
-* list of conditions and the following disclaimer. 2. Redistributions in binary
-* form must reproduce the above copyright notice,this list of conditions and
-* the following disclaimer in the documentation and/or other materials provided
-* with the distribution. 3. Neither the name of FAO nor the names of its
-* contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
-*
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ * 
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-* *********************************************************************************************
-*/
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ * *********************************************************************************************
+ */
 package org.sola.clients.swing.desktop.administrative;
 
 import java.awt.BorderLayout;
@@ -64,7 +64,6 @@ import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.application.ApplicationDocumentsForm;
 import org.sola.clients.swing.ui.renderers.LockCellRenderer;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
-import org.sola.clients.swing.ui.renderers.TableCellListRenderer;
 import org.sola.clients.swing.ui.source.DocumentsPanel;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
@@ -74,15 +73,15 @@ import org.sola.webservices.transferobjects.administrative.BaUnitTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
-* This form is used to manage property object ({@codeBaUnit}).
-* {@link BaUnitBean} is used to bind data on the form.
-*/
+ * This form is used to manage property object ({@codeBaUnit}).
+ * {@link BaUnitBean} is used to bind data on the form.
+ */
 public class PropertyPanel extends ContentPanel {
 
     /**
-* Listens for events of different right forms, to add created right into
-* the list of rights or update existing one.
-*/
+     * Listens for events of different right forms, to add created right into
+     * the list of rights or update existing one.
+     */
     private class RightFormListener implements PropertyChangeListener {
 
         @Override
@@ -105,8 +104,8 @@ public class PropertyPanel extends ContentPanel {
     private PropertyChangeListener newPropertyWizardListener;
 
     /**
-* Creates {@link BaUnitBean} used to bind form components.
-*/
+     * Creates {@link BaUnitBean} used to bind form components.
+     */
     private BaUnitBean createBaUnitBean() {
         if (baUnitBean1 == null) {
             BaUnitBean baUnitBean = null;
@@ -131,8 +130,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Creates documents table to show paper title documents.
-*/
+     * Creates documents table to show paper title documents.
+     */
     private DocumentsPanel createDocumentsPanel() {
         DocumentsPanel panel;
         if (baUnitBean1 != null) {
@@ -144,26 +143,26 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Form constructor. Creates and open form in read only mode.
-*
+     * Form constructor. Creates and open form in read only mode.
+     *     
 * @param nameFirstPart First part of the property code.
-* @param nameLastPart Last part of the property code.
-*/
+     * @param nameLastPart Last part of the property code.
+     */
     public PropertyPanel(String nameFirstPart, String nameLastPart) {
         this(null, null, nameFirstPart, nameLastPart, true);
     }
 
     /**
-* Form constructor.
-*
+     * Form constructor.
+     *     
 * @param applicationBean {@link ApplicationBean} instance, used to get data
-* on BaUnit and provide list of documents.
-* @param applicationService {@link ApplicationServiceBean} instance, used
-* to determine what actions should be taken on this form.
-* @param nameFirstPart First part of the property code.
-* @param nameLastPart Last part of the property code.
-* @param readOnly If true, opens form in read only mode.
-*/
+     * on BaUnit and provide list of documents.
+     * @param applicationService {@link ApplicationServiceBean} instance, used
+     * to determine what actions should be taken on this form.
+     * @param nameFirstPart First part of the property code.
+     * @param nameLastPart Last part of the property code.
+     * @param readOnly If true, opens form in read only mode.
+     */
     public PropertyPanel(ApplicationBean applicationBean,
             ApplicationServiceBean applicationService,
             String nameFirstPart, String nameLastPart, boolean readOnly) {
@@ -178,16 +177,16 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Form constructor.
-*
+     * Form constructor.
+     *     
 * @param applicationBean {@link ApplicationBean} instance, used to get list
-* of documents.
-* @param applicationService {@link ApplicationServiceBean} instance, used
-* to determine what actions should be taken on this form.
-* @param BaUnitBean Instance of {@link BaUnitBean}, used to bind data on
-* the form.
-* @param readOnly If true, opens form in read only mode.
-*/
+     * of documents.
+     * @param applicationService {@link ApplicationServiceBean} instance, used
+     * to determine what actions should be taken on this form.
+     * @param BaUnitBean Instance of {@link BaUnitBean}, used to bind data on
+     * the form.
+     * @param readOnly If true, opens form in read only mode.
+     */
     public PropertyPanel(ApplicationBean applicationBean,
             ApplicationServiceBean applicationService,
             BaUnitBean baUnitBean, boolean readOnly) {
@@ -226,8 +225,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Makes post initialization tasks.
-*/
+     * Makes post initialization tasks.
+     */
     private void portInit() {
         customizeForm();
 
@@ -274,9 +273,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Runs form customization, to restrict certain actions, bind listeners on
-* the {@link BaUnitBean} and other components.
-*/
+     * Runs form customization, to restrict certain actions, bind listeners on
+     * the {@link BaUnitBean} and other components.
+     */
     private void customizeForm() {
 
         if (nameFirstPart != null && nameLastPart != null) {
@@ -308,8 +307,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Shows {@link NewPropertyWizardPanel} to select parent property.
-*/
+     * Shows {@link NewPropertyWizardPanel} to select parent property.
+     */
     private void showNewTitleWizard(boolean showMessage) {
         if (baUnitBean1 == null || (baUnitBean1.getStatusCode() != null
                 && !baUnitBean1.getStatusCode().equals(StatusConstants.PENDING))) {
@@ -362,13 +361,13 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Populates rights, parcels and parent Properties lists from provided
-* result object.
-*
+     * Populates rights, parcels and parent Properties lists from provided
+     * result object.
+     *     
 * @param selectedResult Array of selected result from the wizard form.
-* First item of array contains selected {@link BaUnitBean}, second item
-* contains {@link BaUnitRelTypeBean}.
-*/
+     * First item of array contains selected {@link BaUnitBean}, second item
+     * contains {@link BaUnitRelTypeBean}.
+     */
     private boolean addParentProperty(Object[] selectedResult) {
         if (selectedResult == null) {
             return false;
@@ -435,9 +434,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables "open", "add" and "remove" buttons for the parent
-* Properties list.
-*/
+     * Enables or disables "open", "add" and "remove" buttons for the parent
+     * Properties list.
+     */
     private void customizeParentPropertyButtons() {
         boolean enabled = !readOnly;
         if (baUnitBean1 == null || (baUnitBean1.getStatusCode() != null
@@ -455,24 +454,24 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables "open" button for the child Properties list.
-*/
+     * Enables or disables "open" button for the child Properties list.
+     */
     private void customizeChildPropertyButtons() {
         btnOpenChild.setEnabled(baUnitBean1.getSelectedChildBaUnit() != null);
         menuOpenChildBaUnit.setEnabled(btnOpenChild.isEnabled());
     }
 
     /**
-* Enables or disables print button if row version of {@link BaUnitBean} > 0
-* .
-*/
+     * Enables or disables print button if row version of {@link BaUnitBean} > 0
+     * .
+     */
     private void customizePrintButton() {
         btnPrintBaUnit.setEnabled(baUnitBean1.getRowVersion() > 0);
     }
 
     /**
-* Enables or disables paper title buttons, depending on the form state.
-*/
+     * Enables or disables paper title buttons, depending on the form state.
+     */
     private void customizePaperTitleButtons(SourceBean source) {
         if (source != null && source.getArchiveDocument() != null) {
             btnViewPaperTitle.setEnabled(true);
@@ -483,8 +482,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables notation buttons, depending on the form state.
-*/
+     * Enables or disables notation buttons, depending on the form state.
+     */
     private void customizeNotationButtons(BaUnitNotationBean notation) {
         if (notation == null || !notation.getStatusCode().equals(StatusConstants.PENDING)
                 || notation.getBaUnitId() == null
@@ -499,8 +498,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables termination button, depending on the form state.
-*/
+     * Enables or disables termination button, depending on the form state.
+     */
     private void customizeTerminationButton() {
         boolean enabled = !readOnly;
 
@@ -530,9 +529,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables parcel buttons, depending on the form state and
-* selection in the list of parcel.
-*/
+     * Enables or disables parcel buttons, depending on the form state and
+     * selection in the list of parcel.
+     */
     private void customizeParcelButtons(CadastreObjectBean cadastreBean) {
         if (cadastreBean == null || cadastreBean.isLocked() || readOnly) {
             btnRemoveParcel.setEnabled(false);
@@ -545,9 +544,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables combobox list of right types, depending on the form
-* state.
-*/
+     * Enables or disables combobox list of right types, depending on the form
+     * state.
+     */
     private void customizeRightTypesList() {
         cbxRightType.setSelectedIndex(-1);
         rrrTypes.setSelectedRrrType(null);
@@ -570,9 +569,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables button for creating new right, depending on the form
-* state.
-*/
+     * Enables or disables button for creating new right, depending on the form
+     * state.
+     */
     private void customizeCreateRightButton(RrrTypeBean rrrTypeBean) {
         if (rrrTypeBean != null && rrrTypeBean.getCode() != null
                 && !readOnly && isActionAllowed(RrrTypeActionConstants.NEW)) {
@@ -583,9 +582,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Enables or disables buttons for managing list of rights, depending on the
-* form state, selected right and it's state.
-*/
+     * Enables or disables buttons for managing list of rights, depending on the
+     * form state, selected right and it's state.
+     */
     private void customizeRightsButtons(RrrBean rrrBean) {
         btnEditRight.setEnabled(false);
         btnRemoveRight.setEnabled(false);
@@ -624,8 +623,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Checks if certain action is allowed on the form.
-*/
+     * Checks if certain action is allowed on the form.
+     */
     private boolean isActionAllowed(String action) {
         boolean result = true;
         if (applicationService != null && applicationService.getRequestType() != null
@@ -636,8 +635,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Checks what type of rights are allowed to create/manage on the form.
-*/
+     * Checks what type of rights are allowed to create/manage on the form.
+     */
     private boolean isRightTypeAllowed(String rrrTypeCode) {
         boolean result = true;
         if (rrrTypeCode != null && applicationService != null
@@ -649,16 +648,16 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Returns {@link BaUnitBean} by first and last name part.
-*/
+     * Returns {@link BaUnitBean} by first and last name part.
+     */
     private BaUnitBean getBaUnit(String nameFirstPart, String nameLastPart) {
         BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().GetBaUnitByCode(nameFirstPart, nameLastPart);
         return TypeConverters.TransferObjectToBean(baUnitTO, BaUnitBean.class, null);
     }
 
     /**
-* Opens {@link ReportViewerForm} to display report.
-*/
+     * Opens {@link ReportViewerForm} to display report.
+     */
     private void showReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setLocationRelativeTo(this);
@@ -666,8 +665,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Open form to add new parcel.
-*/
+     * Open form to add new parcel.
+     */
     private void addParcel() {
 
         PropertyChangeListener listener = new PropertyChangeListener() {
@@ -690,8 +689,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Removes parcel from the BaUnit.
-*/
+     * Removes parcel from the BaUnit.
+     */
     private void removeParcel() {
         if (MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
             baUnitBean1.removeParcel();
@@ -699,8 +698,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Removes selected right from the list of rights.
-*/
+     * Removes selected right from the list of rights.
+     */
     private void removeRight() {
         if (baUnitBean1.getSelectedRight() != null
                 && MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
@@ -709,8 +708,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Opens appropriate right form for editing.
-*/
+     * Opens appropriate right form for editing.
+     */
     private void editRight() {
 
         if (baUnitBean1.getSelectedRight() != null) {
@@ -719,8 +718,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Opens appropriate right form to extinguish selected right.
-*/
+     * Opens appropriate right form to extinguish selected right.
+     */
     private void extinguishRight() {
 
         if (baUnitBean1.getSelectedRight() != null) {
@@ -729,15 +728,15 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Opens appropriate right form to create new right.
-*/
+     * Opens appropriate right form to create new right.
+     */
     private void createRight() {
         openRightForm(null, RrrBean.RRR_ACTION.NEW);
     }
 
     /**
-* Opens appropriate right form to vary selected right.
-*/
+     * Opens appropriate right form to vary selected right.
+     */
     private void varyRight() {
         if (baUnitBean1.getSelectedRight() != null) {
             openRightForm(baUnitBean1.getSelectedRight(), RrrBean.RRR_ACTION.VARY);
@@ -745,8 +744,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Adds new notation on the BaUnit.
-*/
+     * Adds new notation on the BaUnit.
+     */
     private void addNotation() {
         if (baUnitBean1.addBaUnitNotation(txtNotationText.getText())) {
             txtNotationText.setText(null);
@@ -754,8 +753,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Removes selected notation.
-*/
+     * Removes selected notation.
+     */
     private void removeNotation() {
         if (MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
             baUnitBean1.removeSelectedBaUnitNotation();
@@ -763,8 +762,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Opens paper title attachment.
-*/
+     * Opens paper title attachment.
+     */
     private void viewDocument() {
 
         if (documentsPanel1.getSourceListBean().getSelectedSource() != null) {
@@ -773,8 +772,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Prints BA unit certificate.
-*/
+     * Prints BA unit certificate.
+     */
     private void print() {
         if (ApplicationServiceBean.saveInformationService(RequestTypeBean.CODE_TITLE_SERACH)) {
             showReport(ReportManager.getBaUnitReport(getBaUnit(
@@ -783,20 +782,20 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Links document as a paper title on the BaUnit object.
-*/
+     * Links document as a paper title on the BaUnit object.
+     */
     private void linkDocument() {
         openDocumentsForm();
     }
 
     /**
-* Opens right form, depending on given {@link RrrBean} and action.
-*
+     * Opens right form, depending on given {@link RrrBean} and action.
+     *     
 * @param rrrBean {@link RrrBean} instance to figure out what form to open
-* and pass this bean as a parameter.
-* @param action {@link RrrBean#RRR_ACTION} is passed to the right form for
-* further form customization.
-*/
+     * and pass this bean as a parameter.
+     * @param action {@link RrrBean#RRR_ACTION} is passed to the right form for
+     * further form customization.
+     */
     private void openRightForm(RrrBean rrrBean, RrrBean.RRR_ACTION action) {
         if (action == RrrBean.RRR_ACTION.NEW && rrrTypes.getSelectedRrrType() == null) {
             return;
@@ -813,11 +812,17 @@ public class PropertyPanel extends ContentPanel {
         String rrrCode = rrrBean.getRrrType().getRrrGroupTypeCode();
 
         if (rrrCode.equals(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS)) {
-            panel = new MortgagePanel(rrrBean, applicationBean, applicationService, action);
+            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_MORTGAGE;
         } else if (rrrCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_OWNERSHIP;
+        } else if (rrrCode.equalsIgnoreCase(RrrBean.CODE_UNKNOWN)
+                || rrrCode.equalsIgnoreCase(RrrBean.CODE_LIKHATPARIT)
+                || rrrCode.equalsIgnoreCase(RrrBean.CODE_BYAPPLICATION)
+                || rrrCode.equalsIgnoreCase(RrrBean.CODE_BYLETTER)) {
+            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
+            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
         } else {
             cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
@@ -855,6 +860,7 @@ public class PropertyPanel extends ContentPanel {
         TaskManager.getInstance().runTask(t);
     }
 
+
     private void terminateBaUnit() {
         if (baUnitBean1.getPendingActionCode() != null && baUnitBean1.getPendingActionCode().equals(TypeActionBean.CODE_CANCEL)) {
             saveBaUnit(true, false);
@@ -874,9 +880,9 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Opens form to select or create document to be used as a paper title
-* document.
-*/
+     * Opens form to select or create document to be used as a paper title
+     * document.
+     */
     private void openDocumentsForm() {
         if (applicationDocumentsForm != null) {
             applicationDocumentsForm.dispose();
@@ -905,8 +911,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-* Opens property form in read only mode for a given BaUnit.
-*/
+     * Opens property form in read only mode for a given BaUnit.
+     */
     private void openPropertyForm(final RelatedBaUnitInfoBean relatedBaUnit) {
         if (relatedBaUnit != null && relatedBaUnit.getRelatedBaUnit() != null) {
             SolaTask t = new SolaTask<Void, Void>() {
@@ -1259,8 +1265,8 @@ public class PropertyPanel extends ContentPanel {
             jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel10Layout.createSequentialGroup()
                 .add(jLabel1)
-                .addContainerGap(147, Short.MAX_VALUE))
-            .add(txtFirstPart, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addContainerGap(140, Short.MAX_VALUE))
+            .add(txtFirstPart, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1290,8 +1296,8 @@ public class PropertyPanel extends ContentPanel {
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel9Layout.createSequentialGroup()
                 .add(jLabel2)
-                .addContainerGap(148, Short.MAX_VALUE))
-            .add(txtLastPart, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addContainerGap(141, Short.MAX_VALUE))
+            .add(txtLastPart, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1321,8 +1327,8 @@ public class PropertyPanel extends ContentPanel {
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel6Layout.createSequentialGroup()
                 .add(jLabel7)
-                .addContainerGap(164, Short.MAX_VALUE))
-            .add(txtBaUnitStatus, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addContainerGap(157, Short.MAX_VALUE))
+            .add(txtBaUnitStatus, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1399,7 +1405,7 @@ public class PropertyPanel extends ContentPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel12, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, groupPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jToolBar4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1418,8 +1424,8 @@ public class PropertyPanel extends ContentPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jToolBar4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(documentsPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .add(documentsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabsMain.addTab(bundle.getString("PropertyPanel.jPanel7.TabConstraints.tabTitle"), jPanel7); // NOI18N
@@ -1489,10 +1495,10 @@ public class PropertyPanel extends ContentPanel {
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                         .addContainerGap())
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+                        .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
                         .add(20, 20, 20))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1501,7 +1507,7 @@ public class PropertyPanel extends ContentPanel {
                 .addContainerGap()
                 .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1648,8 +1654,8 @@ public class PropertyPanel extends ContentPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jToolBar2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jToolBar2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -1658,7 +1664,7 @@ public class PropertyPanel extends ContentPanel {
                 .addContainerGap()
                 .add(jToolBar2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1685,14 +1691,14 @@ public class PropertyPanel extends ContentPanel {
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1781,11 +1787,11 @@ public class PropertyPanel extends ContentPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, tabNotationLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                     .add(tabNotationLayout.createSequentialGroup()
                         .add(jLabel15)
                         .add(9, 9, 9)
-                        .add(txtNotationText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                        .add(txtNotationText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jToolBar3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1800,7 +1806,7 @@ public class PropertyPanel extends ContentPanel {
                         .add(txtNotationText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(jLabel15)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1907,15 +1913,15 @@ public class PropertyPanel extends ContentPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel8Layout.createSequentialGroup()
                 .add(jToolBar6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
         );
 
         jPanel14.add(jPanel8);
@@ -1989,15 +1995,15 @@ public class PropertyPanel extends ContentPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-            .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel5Layout.createSequentialGroup()
                 .add(jToolBar7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
         );
 
         jPanel14.add(jPanel5);
@@ -2008,14 +2014,14 @@ public class PropertyPanel extends ContentPanel {
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlPriorPropertiesLayout.setVerticalGroup(
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2027,11 +2033,11 @@ public class PropertyPanel extends ContentPanel {
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 637, Short.MAX_VALUE)
+            .add(0, 615, Short.MAX_VALUE)
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 449, Short.MAX_VALUE)
+            .add(0, 394, Short.MAX_VALUE)
         );
 
         tabsMain.addTab(bundle.getString("PropertyPanel.mapPanel.TabConstraints.tabTitle"), mapPanel); // NOI18N
@@ -2045,11 +2051,11 @@ public class PropertyPanel extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(headerPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
-            .add(jToolBar5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .add(headerPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .add(jToolBar5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -2059,7 +2065,7 @@ public class PropertyPanel extends ContentPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jToolBar5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

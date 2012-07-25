@@ -685,12 +685,6 @@ public final class CacheManager {
                 WSManager.getInstance().getReferenceDataService(),
                 GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
     }
-
-    public static List<LocBean> getLocs() {
-        return getCachedBeanList(LocBean.class,
-                WSManager.getInstance().getAdministrative(),
-                GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
-    }
     //*************************************************************************************************************
     //</editor-fold>
 }

@@ -101,7 +101,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="579" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" pref="741" max="32767" attributes="0"/>
           <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -522,7 +522,7 @@
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtDistrict" pref="99" max="32767" attributes="0"/>
+                          <Component id="txtDistrict" pref="132" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -574,7 +574,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="53" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txtVdc" max="32767" attributes="0"/>
                       </Group>
@@ -630,7 +630,7 @@
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtMothtype" pref="99" max="32767" attributes="0"/>
+                          <Component id="txtMothtype" pref="132" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -684,7 +684,7 @@
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtMothNumber" pref="99" max="32767" attributes="0"/>
+                          <Component id="txtMothNumber" pref="132" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -738,7 +738,7 @@
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtPageNumber" pref="99" max="32767" attributes="0"/>
+                          <Component id="txtPageNumber" pref="132" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
