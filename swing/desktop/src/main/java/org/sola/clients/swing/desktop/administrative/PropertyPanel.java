@@ -64,6 +64,7 @@ import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.application.ApplicationDocumentsForm;
 import org.sola.clients.swing.ui.renderers.LockCellRenderer;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
+import org.sola.clients.swing.ui.renderers.TerminatingCellRenderer;
 import org.sola.clients.swing.ui.source.DocumentsPanel;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
@@ -575,7 +576,13 @@ public class PropertyPanel extends ContentPanel {
     private void customizeCreateRightButton(RrrTypeBean rrrTypeBean) {
         if (rrrTypeBean != null && rrrTypeBean.getCode() != null
                 && !readOnly && isActionAllowed(RrrTypeActionConstants.NEW)) {
-            btnCreateRight.setEnabled(true);
+            if (rrrTypeBean.getRrrGroupTypeCode() != null
+                    && rrrTypeBean.getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_OWNERSHIP)
+                    && baUnitBean1.hasPendingOwnership()) {
+                btnCreateRight.setEnabled(false);
+            } else {
+                btnCreateRight.setEnabled(true);
+            }
         } else {
             btnCreateRight.setEnabled(false);
         }
@@ -1534,6 +1541,10 @@ public class PropertyPanel extends ContentPanel {
         columnBinding.setColumnName("Status.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${terminating}"));
+        columnBinding.setColumnName("Terminating");
+        columnBinding.setColumnClass(Boolean.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${locked}"));
         columnBinding.setColumnName("Locked");
         columnBinding.setColumnClass(Boolean.class);
@@ -1551,10 +1562,14 @@ public class PropertyPanel extends ContentPanel {
         tableRights.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PropertyPanel.tableRights.columnModel.title0")); // NOI18N
         tableRights.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PropertyPanel.tableRights.columnModel.title1")); // NOI18N
         tableRights.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PropertyPanel.tableRights.columnModel.title2")); // NOI18N
-        tableRights.getColumnModel().getColumn(3).setPreferredWidth(40);
-        tableRights.getColumnModel().getColumn(3).setMaxWidth(40);
-        tableRights.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertyPanel.tableRights.columnModel.title3")); // NOI18N
-        tableRights.getColumnModel().getColumn(3).setCellRenderer(new LockCellRenderer());
+        tableRights.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tableRights.getColumnModel().getColumn(3).setMaxWidth(70);
+        tableRights.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertyPanel.tableRights.columnModel.title4")); // NOI18N
+        tableRights.getColumnModel().getColumn(3).setCellRenderer(new TerminatingCellRenderer());
+        tableRights.getColumnModel().getColumn(4).setPreferredWidth(40);
+        tableRights.getColumnModel().getColumn(4).setMaxWidth(40);
+        tableRights.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("PropertyPanel.tableRights.columnModel.title3")); // NOI18N
+        tableRights.getColumnModel().getColumn(4).setCellRenderer(new LockCellRenderer());
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
@@ -2079,7 +2094,13 @@ private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
     private void tableRightsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRightsMouseClicked
         if (evt.getClickCount() > 1 && baUnitBean1.getSelectedRight() != null) {
-            openRightForm(baUnitBean1.getSelectedRight(), RrrBean.RRR_ACTION.VIEW);
+            RrrBean.RRR_ACTION action;
+            if(btnEditRight.isEnabled()){
+                action = RrrBean.RRR_ACTION.EDIT;
+            } else {
+                action = RrrBean.RRR_ACTION.VIEW;
+            }
+            openRightForm(baUnitBean1.getSelectedRight(), action);
         }
     }//GEN-LAST:event_tableRightsMouseClicked
 
