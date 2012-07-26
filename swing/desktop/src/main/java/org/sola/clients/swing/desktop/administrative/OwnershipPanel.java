@@ -49,7 +49,6 @@ import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.administrative.LocSearchCreatePanel;
 import org.sola.clients.swing.ui.party.PartySearchPanel;
-import org.sola.clients.swing.ui.renderers.TableCellListRenderer;
 import org.sola.clients.swing.ui.source.DocumentsManagementPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
