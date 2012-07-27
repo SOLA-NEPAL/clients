@@ -32,7 +32,6 @@ public class JTextBoxWithAutoLocalizationOfNumber extends JTextField {
         return new DoubleDocument();
     }
 
-    //This class makes sure that only number are displayed in the text field
     static class DoubleDocument extends PlainDocument {
         //insertString Method uses the information from the text field to know what is in it and whethor not to except it
 
