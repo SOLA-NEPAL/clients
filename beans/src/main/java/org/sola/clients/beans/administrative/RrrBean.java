@@ -2,19 +2,19 @@
  * ******************************************************************************************
  * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
  * (FAO). All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
+ * 
+* Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,this
+ * 
+* 1. Redistributions of source code must retain the above copyright notice,this
  * list of conditions and the following disclaimer. 2. Redistributions in binary
  * form must reproduce the above copyright notice,this list of conditions and
  * the following disclaimer in the documentation and/or other materials provided
  * with the distribution. 3. Neither the name of FAO nor the names of its
  * contributors may be used to endorse or promote products derived from this
  * software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * 
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
@@ -32,6 +32,8 @@ package org.sola.clients.beans.administrative;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -39,18 +41,16 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractTransactionedBean;
+import org.sola.clients.beans.administrative.RrrBean.RRR_ACTION;
 import org.sola.clients.beans.administrative.validation.MortgageValidationGroup;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
-import org.sola.clients.beans.referencedata.MortgageTypeBean;
-import org.sola.clients.beans.referencedata.RrrTypeBean;
-import org.sola.clients.beans.referencedata.StatusConstants;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.services.boundary.transferobjects.administrative.LocTO;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -70,6 +70,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_TENANCY = "tenancy";
+    public static final String CODE_UNKNOWN = "unknown";
     public static final String CODE_BYAPPLICATION = "byApplication";
     public static final String CODE_BYLETTER = "byLetter";
     public static final String CODE_LIKHATPARIT = "byLikhatParit";
@@ -88,9 +89,13 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String NOTATION_PROPERTY = "notation";
     public static final String IS_PRIMARY_PROPERTY = "isPrimary";
     public static final String FIRST_RIGHTHOLDER_PROPERTY = "firstRightholder";
+    public static final String LOC_PROPERTY = "loc";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
-    
+    public static final String RESTRICTION_REASON_PROPERTY = "restrictionReason";
+    public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
+    public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
+    public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     private String baUnitId;
     private String nr;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
@@ -109,6 +114,9 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<SourceBean> sourceList;
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
+    private String officeCode;
+    private RestrictionReasonBean restrictionReason;
+    private RestrictionOfficeBean restrictionOffice;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
@@ -116,13 +124,74 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<PartySummaryBean> rightHolderList;
     private transient boolean selected;
     private transient PartySummaryBean selectedRightHolder;
-
+    private boolean terminating;
+    
     public RrrBean() {
         super();
         registrationDate = Calendar.getInstance().getTime();
         sourceList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
+    }
+
+    public String getRestrictionOfficeCode() {
+        if (restrictionOffice != null) {
+            return restrictionOffice.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionOfficeCode(String restrictionOfficeCode) {
+        String oldValue = null;
+        if (restrictionOfficeCode != null) {
+            oldValue = restrictionOffice.getCode();
+        }
+        setRestrictionOffice(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionOffices(), restrictionOfficeCode));
+        propertySupport.firePropertyChange(RESTRICTION_OFFICE_CODE_PROPERTY,
+                oldValue, restrictionOfficeCode);
+    }
+
+    public String getRestrictionReasonCode() {
+        if (restrictionReason != null) {
+            return restrictionReason.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionReasonCode(String restrictionReasonCode) {
+        String oldValue = null;
+        if (restrictionReasonCode != null) {
+            oldValue = restrictionReason.getCode();
+        }
+        setRestrictionReason(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionReasons(), restrictionReasonCode));
+        propertySupport.firePropertyChange(RESTRICTION_REASON_CODE_PROPERTY,
+                oldValue, restrictionReasonCode);
+    }
+
+    public RestrictionOfficeBean getRestrictionOffice() {
+        return restrictionOffice;
+    }
+
+    public void setRestrictionOffice(RestrictionOfficeBean restrictionOffice) {
+        if (this.restrictionOffice == null) {
+            this.restrictionOffice = new RestrictionOfficeBean();
+        }
+        this.setJointRefDataBean(this.restrictionOffice, restrictionOffice, RESTRICTION_OFFICE_PROPERTY);
+    }
+
+    public RestrictionReasonBean getRestrictionReason() {
+        return restrictionReason;
+    }
+
+    public void setRestrictionReason(RestrictionReasonBean restrictionReason) {
+        if (this.restrictionReason == null) {
+            this.restrictionReason = new RestrictionReasonBean();
+        }
+        this.setJointRefDataBean(this.restrictionReason, restrictionReason, RESTRICTION_REASON_PROPERTY);
     }
 
     public void setFirstRightholder(PartySummaryBean rightholder) {
@@ -283,7 +352,24 @@ public class RrrBean extends AbstractTransactionedBean {
     }
 
     public void setLoc(LocWithMothBean loc) {
+        LocWithMothBean oldValue = this.loc;
         this.loc = loc;
+        propertySupport.firePropertyChange(LOC_PROPERTY, oldValue, this.loc);
+    }
+
+    public String getLocId() {
+        if (loc == null) {
+            return null;
+        }
+        return loc.getId();
+    }
+
+    public String getOfficeCode() {
+        return officeCode;
+    }
+
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
     }
 
     public String getTransactionId() {
@@ -318,7 +404,9 @@ public class RrrBean extends AbstractTransactionedBean {
         return rightHolderList.getFilteredList();
     }
 
-    /** Returns read only string combining list of right holders.*/
+    /**
+     * Returns read only string combining list of right holders.
+     */
     public String getRightHoldersStringList() {
         String result = "";
         for (PartySummaryBean rightHolder : getFilteredRightHolderList()) {
@@ -333,7 +421,7 @@ public class RrrBean extends AbstractTransactionedBean {
         }
         return result;
     }
-    
+
     public void setRightHolderList(SolaList<PartySummaryBean> rightHolderList) {
         this.rightHolderList = rightHolderList;
     }
@@ -347,7 +435,7 @@ public class RrrBean extends AbstractTransactionedBean {
         this.selectedRightHolder = selectedRightHolder;
         propertySupport.firePropertyChange(SELECTED_RIGHTHOLDER_PROPERTY, oldValue, this.selectedRightHolder);
     }
-    
+
     public boolean isSelected() {
         return selected;
     }
@@ -358,12 +446,20 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SELECTED_PROPERTY, oldValue, this.selected);
     }
 
+    public boolean isTerminating() {
+        return terminating;
+    }
+
+    public void setTerminating(boolean terminating) {
+        this.terminating = terminating;
+    }
+
     public void removeSelectedRightHolder() {
         if (selectedRightHolder != null && rightHolderList != null) {
             rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
         }
     }
-    
+
     public void addOrUpdateRightholder(PartySummaryBean rightholder) {
         if (rightholder != null && rightHolderList != null) {
             if (rightHolderList.contains(rightholder)) {
@@ -373,7 +469,7 @@ public class RrrBean extends AbstractTransactionedBean {
             }
         }
     }
-    
+
     public RrrBean makeCopyByAction(RRR_ACTION rrrAction) {
         RrrBean copy = this;
 
@@ -384,6 +480,7 @@ public class RrrBean extends AbstractTransactionedBean {
         if (rrrAction == RRR_ACTION.VARY || rrrAction == RRR_ACTION.CANCEL) {
             // Make a copy of current bean with new ID
             copy = this.copy();
+            copy.setTerminating(true);
             copy.resetIdAndVerion(true, false);
         }
 
@@ -397,8 +494,8 @@ public class RrrBean extends AbstractTransactionedBean {
 
     /**
      * Generates new ID, RowVerion and RowID.
-     *
-     * @param resetChildren If true, will change ID fields also for child
+     *     
+* @param resetChildren If true, will change ID fields also for child
      * objects.
      * @param removeBaUnitId If true, will set
      * <code>BaUnitId</code> to null.
@@ -418,5 +515,57 @@ public class RrrBean extends AbstractTransactionedBean {
                 getNotation().setBaUnitId(null);
             }
         }
+    }
+    
+    public void changeLoc(LocWithMothBean loc) {
+        RrrLocListBean rrrLocs = new RrrLocListBean();
+        rrrLocs.loadRrrLocs(loc.getId());
+
+        Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
+        while (iteratorRightholders.hasNext()) {
+            PartySummaryBean partySummaryBean = iteratorRightholders.next();
+            if (getRightHolderList().isNewlyAdded(partySummaryBean)) {
+                iteratorRightholders.remove();
+            } else {
+                getRightHolderList().safeRemove(partySummaryBean, EntityAction.DISASSOCIATE);
+            }
+        }
+
+        Iterator<SourceBean> iteratorSources = getSourceList().iterator();
+        while (iteratorSources.hasNext()) {
+            SourceBean source = iteratorSources.next();
+            if (getSourceList().isNewlyAdded(source)) {
+                iteratorSources.remove();
+            } else {
+                getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
+            }
+        }
+
+        if (rrrLocs.getRrrLocs() != null) {
+
+            List<PartySummaryBean> newRightholders = null;
+            List<SourceBean> newSources = null;
+
+            if (rrrLocs.getPendingRrr() != null) {
+                newRightholders = rrrLocs.getPendingRrr().getRightHolderList();
+                newSources = rrrLocs.getPendingRrr().getSourceList();
+            } else if (rrrLocs.getCurrentRrr() != null) {
+                newRightholders = rrrLocs.getCurrentRrr().getRightHolderList();
+                newSources = rrrLocs.getCurrentRrr().getSourceList();
+            }
+
+            if (newRightholders != null) {
+                for (PartySummaryBean party : newRightholders) {
+                    getRightHolderList().addAsNew(party);
+                }
+            }
+
+            if (newSources != null) {
+                for (SourceBean source : newSources) {
+                    getSourceList().addAsNew(source);
+                }
+            }
+        }
+        setLoc(loc);
     }
 }

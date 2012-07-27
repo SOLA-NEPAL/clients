@@ -16,6 +16,7 @@
 package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
+import org.sola.clients.beans.cache.CacheManager;
 /**
  *
  * @author KumarKhadka
@@ -23,8 +24,10 @@ import org.sola.clients.beans.AbstractCodeBean;
 public class VdcBean extends AbstractCodeBean {
 
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
+    public static final String DISTRICT_PROPERTY = "district";
 
     private String districtCode;  
+    private DistrictBean district;
     
     public VdcBean(){
         super();
@@ -35,8 +38,21 @@ public class VdcBean extends AbstractCodeBean {
     }
 
     public void setDistrictCode(String districtCode) {
-        String oldValue = this.districtCode;
-        this.districtCode = districtCode;
-        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, this.districtCode);
+        String oldValue = null;
+        if(getDistrict()!=null){
+            oldValue = getDistrict().getCode();
+        }
+        setDistrict(CacheManager.getBeanByCode(CacheManager.getDistricts(), districtCode));
+        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, districtCode);
+    }
+
+    public DistrictBean getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(DistrictBean district) {
+        DistrictBean oldValue = this.district;
+        this.district = district;
+        propertySupport.firePropertyChange(DISTRICT_PROPERTY, oldValue, this.district);
     }
 }

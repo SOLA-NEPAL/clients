@@ -37,6 +37,11 @@ import org.sola.webservices.transferobjects.referencedata.RrrGroupTypeTO;
  */
 public class RrrGroupTypeBean extends AbstractCodeBean {
 
+    public static final String CODE_OWNERSHIP = "ownership";
+    public static final String CODE_RESTRICTIONS = "restrictions";
+    public static final String CODE_RESPONSIBILITIES = "responsibilities";
+    public static final String CODE_RIGHTS = "rights";
+    
     public RrrGroupTypeBean() {
         super();
     }

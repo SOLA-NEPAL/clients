@@ -42,6 +42,7 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.digitalarchive.DocumentBean;
+import org.sola.clients.beans.digitalarchive.DocumentBinaryBean;
 import org.sola.clients.beans.party.validation.PartyIdTypeCheck;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
@@ -108,30 +109,24 @@ public class PartyBean extends PartySummaryBean {
     private OfficeBean officeBean;
     private Date idIssueDate;
     //variable to store image field.
-    private DocumentBean photoDoc;
-    private DocumentBean leftFingerDoc;
-    private DocumentBean rightFingerDoc;
-    private DocumentBean signatureDoc;
+    private DocumentBinaryBean photoDoc;
+    private DocumentBinaryBean leftFingerDoc;
+    private DocumentBinaryBean rightFingerDoc;
+    private DocumentBinaryBean signatureDoc;
 
-    public DocumentBean getLeftFingerDoc() {
-//        if (this.leftFingerDoc==null){
-//            this.leftFingerDoc=new DocumentBean();
-//        }
+    public DocumentBinaryBean getLeftFingerDoc() {
         return leftFingerDoc;
     }
 
-    public void setLeftFingerDoc(DocumentBean leftFingerDoc) {
+    public void setLeftFingerDoc(DocumentBinaryBean leftFingerDoc) {
         this.leftFingerDoc = leftFingerDoc;
     }
 
-    public DocumentBean getPhotoDoc() {
-//        if (this.photoDoc==null){
-//            this.photoDoc=new DocumentBean();
-//        }
+    public DocumentBinaryBean getPhotoDoc() {
         return photoDoc;
     }
 
-    public void setPhotoDoc(DocumentBean photoDoc) {
+    public void setPhotoDoc(DocumentBinaryBean photoDoc) {
         this.photoDoc = photoDoc;
     }
 
@@ -167,25 +162,19 @@ public class PartyBean extends PartySummaryBean {
         return FileUtility.getIcon(getLeftFingerDoc().getBody());
     }
 
-    public DocumentBean getRightFingerDoc() {
-//        if (this.rightFingerDoc==null){
-//            this.rightFingerDoc=new DocumentBean();
-//        }
+    public DocumentBinaryBean getRightFingerDoc() {
         return rightFingerDoc;
     }
 
-    public void setRightFingerDoc(DocumentBean rightFingerDoc) {
+    public void setRightFingerDoc(DocumentBinaryBean rightFingerDoc) {
         this.rightFingerDoc = rightFingerDoc;
     }
 
-    public DocumentBean getSignatureDoc() {
-//        if (this.signatureDoc==null){
-//            this.signatureDoc=new DocumentBean();
-//        }
+    public DocumentBinaryBean getSignatureDoc() {
         return signatureDoc;
     }
 
-    public void setSignatureDoc(DocumentBean signatureDoc) {
+    public void setSignatureDoc(DocumentBinaryBean signatureDoc) {
         this.signatureDoc = signatureDoc;
     }
 
@@ -290,10 +279,10 @@ public class PartyBean extends PartySummaryBean {
         this.setType(new PartyTypeBean());
         this.setAddress(new AddressBean());
         //additional field.
-        this.setPhotoDoc(new DocumentBean());
-        this.setLeftFingerDoc(new DocumentBean());
-        this.setRightFingerDoc(new DocumentBean());
-        this.setSignatureDoc(new DocumentBean());
+        this.setPhotoDoc(new DocumentBinaryBean());
+        this.setLeftFingerDoc(new DocumentBinaryBean());
+        this.setRightFingerDoc(new DocumentBinaryBean());
+        this.setSignatureDoc(new DocumentBinaryBean());
         roleList.clear();
         this.setSelectedRole(null);
     }
@@ -537,7 +526,7 @@ public class PartyBean extends PartySummaryBean {
         return true;
     }
 
-    public static boolean isDocumentExist(DocumentBean doc) {
+    public static boolean isDocumentExist(DocumentBinaryBean doc) {
         if (doc == null) {
             return false;
         }
@@ -591,7 +580,7 @@ public class PartyBean extends PartySummaryBean {
         assignImage(file, width, height, getLeftFingerDoc(), LEFT_FINGERPRINT_PROPERTY);
     }
     
-    public void assignImage(File file, int width, int height, DocumentBean document, String propertyString) {
+    public void assignImage(File file, int width, int height, DocumentBinaryBean document, String propertyString) {
         byte[] imageBinary = FileUtility.getFileBinary(
                 FileUtility.createImageThumbnail(file, width, height));
         
@@ -600,7 +589,7 @@ public class PartyBean extends PartySummaryBean {
         }
 
         if (document == null) {
-            document = new DocumentBean();
+            document = new DocumentBinaryBean();
             if(propertyString.equals(RIGHT_FINGERPRINT_PROPERTY)){
                 setRightFingerDoc(document);
             }

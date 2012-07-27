@@ -55,18 +55,9 @@ public class DocumentBean extends AbstractIdBean {
     private String description;
     private String extension;
     private String nr;
-    private byte[] body;
     
     private String officeCode;
     
-    public byte[] getBody() {
-        return body;
-    }
-
-    public void setBody(byte[] body) {
-        this.body = body;
-    }
-  
     public DocumentBean() {
         super();
         this.addPropertyChangeListener(new PropertyChangeListener() {

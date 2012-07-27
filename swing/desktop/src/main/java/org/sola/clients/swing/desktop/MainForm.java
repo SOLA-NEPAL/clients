@@ -55,6 +55,7 @@ import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.administrative.SimpleRestrictionsPanel;
+import org.sola.clients.swing.desktop.administrative.TestForm;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
@@ -262,9 +263,7 @@ public class MainForm extends javax.swing.JFrame {
     public static void saveBeanState(AbstractBindingBean bean) {
         try {
             bean.saveStateHash();
-        } catch (IOException ex) {
-            DefaultExceptionHandler.handleException(ex);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (IOException | NoSuchAlgorithmException ex) {
             DefaultExceptionHandler.handleException(ex);
         }
     }
@@ -278,10 +277,7 @@ public class MainForm extends javax.swing.JFrame {
     public static boolean checkBeanState(AbstractBindingBean bean) {
         try {
             return bean.hasChanges();
-        } catch (IOException ex) {
-            DefaultExceptionHandler.handleException(ex);
-            return true;
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (IOException | NoSuchAlgorithmException ex) {
             DefaultExceptionHandler.handleException(ex);
             return true;
         }

@@ -247,9 +247,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         //call save method.
         CadastreObjectTO cadTO=TypeConverters.BeanToTrasferObject(
                 parcel, CadastreObjectTO.class);
-        for (SpatialValueAreaTO svArea:cadTO.getSpatialValueAreaList()){
-            svArea.setEntityAction(EntityAction.READ_ONLY);
-        }
+
         cadTO= WSManager.getInstance().getCadastreService()
                 .saveCadastreObject(cadTO);
         //converting back to bean again.
