@@ -248,9 +248,22 @@ public class OwnershipPanel extends ContentPanel {
     }
     
     private void revertLocToCurrentState(){
-        if(!rrrBean.revertLocToCurrentState()){
-            MessageUtility.displayMessage(ClientMessage.BAUNIT_LOC_CURRENT_STATE_NOT_FOUND);
-        }
+        SolaTask<Boolean, Void> t = new SolaTask<Boolean, Void>() {
+
+            @Override
+            public Boolean doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_REVERT_LOC));
+                return rrrBean.revertLocToCurrentState();
+            }
+
+            @Override
+            public void taskDone() {
+                if (get() == false) {
+                    MessageUtility.displayMessage(ClientMessage.BAUNIT_LOC_CURRENT_STATE_NOT_FOUND);
+                }
+            }
+        };
+        TaskManager.getInstance().runTask(t);
     }
 
     private void showLocSearch(boolean show) {
