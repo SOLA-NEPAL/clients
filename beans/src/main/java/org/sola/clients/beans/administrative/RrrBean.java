@@ -2,19 +2,19 @@
  * ******************************************************************************************
  * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
  * (FAO). All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
+ * 
+* Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,this
+ * 
+* 1. Redistributions of source code must retain the above copyright notice,this
  * list of conditions and the following disclaimer. 2. Redistributions in binary
  * form must reproduce the above copyright notice,this list of conditions and
  * the following disclaimer in the documentation and/or other materials provided
  * with the distribution. 3. Neither the name of FAO nor the names of its
  * contributors may be used to endorse or promote products derived from this
  * software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * 
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
@@ -38,13 +38,12 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractTransactionedBean;
+import org.sola.clients.beans.administrative.RrrBean.RRR_ACTION;
 import org.sola.clients.beans.administrative.validation.MortgageValidationGroup;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
-import org.sola.clients.beans.referencedata.MortgageTypeBean;
-import org.sola.clients.beans.referencedata.RrrTypeBean;
-import org.sola.clients.beans.referencedata.StatusConstants;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
@@ -68,6 +67,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_TENANCY = "tenancy";
+    public static final String CODE_UNKNOWN = "unknown";
     public static final String CODE_BYAPPLICATION = "byApplication";
     public static final String CODE_BYLETTER = "byLetter";
     public static final String CODE_LIKHATPARIT = "byLikhatParit";
@@ -89,6 +89,10 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String LOC_PROPERTY = "loc";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
+    public static final String RESTRICTION_REASON_PROPERTY = "restrictionReason";
+    public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
+    public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
+    public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     private String baUnitId;
     private String nr;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
@@ -108,6 +112,8 @@ public class RrrBean extends AbstractTransactionedBean {
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
     private String officeCode;
+    private RestrictionReasonBean restrictionReason;
+    private RestrictionOfficeBean restrictionOffice;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
@@ -123,6 +129,66 @@ public class RrrBean extends AbstractTransactionedBean {
         sourceList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
+    }
+
+    public String getRestrictionOfficeCode() {
+        if (restrictionOffice != null) {
+            return restrictionOffice.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionOfficeCode(String restrictionOfficeCode) {
+        String oldValue = null;
+        if (restrictionOfficeCode != null) {
+            oldValue = restrictionOffice.getCode();
+        }
+        setRestrictionOffice(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionOffices(), restrictionOfficeCode));
+        propertySupport.firePropertyChange(RESTRICTION_OFFICE_CODE_PROPERTY,
+                oldValue, restrictionOfficeCode);
+    }
+
+    public String getRestrictionReasonCode() {
+        if (restrictionReason != null) {
+            return restrictionReason.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionReasonCode(String restrictionReasonCode) {
+        String oldValue = null;
+        if (restrictionReasonCode != null) {
+            oldValue = restrictionReason.getCode();
+        }
+        setRestrictionReason(CacheManager.getBeanByCode(
+                CacheManager.getRestrictionReasons(), restrictionReasonCode));
+        propertySupport.firePropertyChange(RESTRICTION_REASON_CODE_PROPERTY,
+                oldValue, restrictionReasonCode);
+    }
+
+    public RestrictionOfficeBean getRestrictionOffice() {
+        return restrictionOffice;
+    }
+
+    public void setRestrictionOffice(RestrictionOfficeBean restrictionOffice) {
+        if (this.restrictionOffice == null) {
+            this.restrictionOffice = new RestrictionOfficeBean();
+        }
+        this.setJointRefDataBean(this.restrictionOffice, restrictionOffice, RESTRICTION_OFFICE_PROPERTY);
+    }
+
+    public RestrictionReasonBean getRestrictionReason() {
+        return restrictionReason;
+    }
+
+    public void setRestrictionReason(RestrictionReasonBean restrictionReason) {
+        if (this.restrictionReason == null) {
+            this.restrictionReason = new RestrictionReasonBean();
+        }
+        this.setJointRefDataBean(this.restrictionReason, restrictionReason, RESTRICTION_REASON_PROPERTY);
     }
 
     public void setFirstRightholder(PartySummaryBean rightholder) {
@@ -444,8 +510,8 @@ public class RrrBean extends AbstractTransactionedBean {
 
     /**
      * Generates new ID, RowVerion and RowID.
-     *
-     * @param resetChildren If true, will change ID fields also for child
+     *     
+* @param resetChildren If true, will change ID fields also for child
      * objects.
      * @param removeBaUnitId If true, will set
      * <code>BaUnitId</code> to null.
