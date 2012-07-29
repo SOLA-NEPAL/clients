@@ -196,7 +196,18 @@ public class DocumentsPanel extends javax.swing.JPanel {
      * Adds new source into the list.
      */
     public void addDocument(SourceBean document) {
-        sourceListBean.getSourceBeanList().addAsNew(document);
+        boolean found = false;
+        for (SourceBean source : sourceListBean.getSourceBeanList()) {
+            if (source.getId().equals(document.getId())) {
+                sourceListBean.getSourceBeanList().set(
+                        sourceListBean.getSourceBeanList().indexOf(source), document);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            sourceListBean.getSourceBeanList().addAsNew(document);
+        }
     }
 
     /**

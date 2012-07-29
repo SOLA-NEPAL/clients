@@ -47,6 +47,7 @@ public class BaUnitNotationBean extends AbstractTransactionedBean {
     
     private String baUnitId;
     private String transactionId;
+    private String rrrId;
     
     @NotEmpty(message= ClientMessage.CHECK_NOTNULL_NOTATION, payload=Localized.class)
     private String notationText;
@@ -79,6 +80,14 @@ public class BaUnitNotationBean extends AbstractTransactionedBean {
 
     public String getTransactionId() {
         return transactionId;
+    }
+
+    public String getRrrId() {
+        return rrrId;
+    }
+
+    public void setRrrId(String rrrId) {
+        this.rrrId = rrrId;
     }
 
     public void setTransactionId(String transactionId) {

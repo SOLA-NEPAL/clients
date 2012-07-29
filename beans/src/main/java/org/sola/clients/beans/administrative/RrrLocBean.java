@@ -33,11 +33,13 @@ public class RrrLocBean extends AbstractBindingBean {
     public static final String STATUS_CODE_PROPERTY = "statusCode";
     public static final String RRR_TYPE_PROPERTY = "rrrType";
     public static final String REGISTRATION_STATUS_PROPERTY = "registrationStatus";
+    public static final String NOTATION_TEXT_PROPERTY = "notationText";
     
     private String locId;
     private RrrTypeBean rrrType;
     private Date registrationDate;
     private RegistrationStatusTypeBean registrationStatus;
+    private String notationText;
     
     private SolaList<SourceBean> sourceList;
     private SolaList<PartySummaryBean> rightHolderList;
@@ -54,6 +56,16 @@ public class RrrLocBean extends AbstractBindingBean {
         String oldValue = this.locId;
         this.locId = locId;
         propertySupport.firePropertyChange(LOC_ID_PROPERTY, oldValue, this.locId);
+    }
+
+    public String getNotationText() {
+        return notationText;
+    }
+
+    public void setNotationText(String notationText) {
+        String oldValue = this.notationText;
+        this.notationText = notationText;
+        propertySupport.firePropertyChange(NOTATION_TEXT_PROPERTY, oldValue, this.locId);
     }
 
     public Date getRegistrationDate() {
