@@ -49,7 +49,7 @@ public class CreateParcelForm extends javax.swing.JDialog {
     private void initComponents() {
 
         groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
-        parcelPanel = new org.sola.clients.swing.ui.cadastre.ParcelPanel();
+        parcelPanel = new org.sola.clients.swing.ui.cadastre.ParcelViewPanel();
         btnCreate = new javax.swing.JButton();
         groupPanel2 = new org.sola.clients.swing.ui.GroupPanel();
         cadastreObjectSearch1 = new org.sola.clients.swing.ui.cadastre.CadastreObjectSearch();
@@ -148,6 +148,6 @@ private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private org.sola.clients.swing.ui.cadastre.CadastreObjectSearch cadastreObjectSearch1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel2;
-    private org.sola.clients.swing.ui.cadastre.ParcelPanel parcelPanel;
+    private org.sola.clients.swing.ui.cadastre.ParcelViewPanel parcelPanel;
     // End of variables declaration//GEN-END:variables
 }
