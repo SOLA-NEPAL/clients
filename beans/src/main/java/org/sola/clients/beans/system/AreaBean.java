@@ -16,6 +16,7 @@
 package org.sola.clients.beans.system;
 
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.referencedata.AreaTypeBean;
 import org.sola.common.AreaConversion;
 
 /**
@@ -27,7 +28,7 @@ public class AreaBean extends AbstractBindingBean {
     public static final String AREA_IN_LOCAL_UNIT = "areaInLocalUnit";
     public static final String AREA_IN_SQMT = "areaInSqMt";
     public static final String LOCAL_UNIT = "localUnit";
-    private String localUnit;
+    private AreaTypeBean localUnit;
     private String areaInLocalUnit;
     private double areaInSqMt = 0;
 
@@ -37,8 +38,12 @@ public class AreaBean extends AbstractBindingBean {
 
     public void setAreaInLocalUnit(String areaInLocalUnit) {
         String oldValue = this.areaInLocalUnit;
-        if (getLocalUnit().equals("Bigha-Katha-dhur")) {
+        if (localUnit.getAreaTypeCode() == null ? AreaTypeBean.CODE_AREA_TYPE_BIGHA_KATHA_DHUR == null : localUnit.getAreaTypeCode().equals(AreaTypeBean.CODE_AREA_TYPE_BIGHA_KATHA_DHUR)) {
             if (areaInLocalUnit.split("-").length > 3) {
+                return;
+            }
+        } else if (localUnit.getAreaTypeCode() == null ? AreaTypeBean.CODE_AREA_TYPE_ROPANI_ANA_PAISA_DAM == null : localUnit.getAreaTypeCode().equals(AreaTypeBean.CODE_AREA_TYPE_ROPANI_ANA_PAISA_DAM)) {
+            if (areaInLocalUnit.split("-").length > 4) {
                 return;
             }
         }
@@ -58,28 +63,28 @@ public class AreaBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(AREA_IN_SQMT, oldValue, this.areaInSqMt);
     }
 
-    public String getLocalUnit() {
+    public AreaTypeBean getLocalUnit() {
         return localUnit;
     }
 
-    public void setLocalUnit(String localUnit) {
-        String oldValue = this.localUnit;
+    public void setLocalUnit(AreaTypeBean localUnit) {
+        AreaTypeBean oldValue = this.localUnit;
         this.localUnit = localUnit;
         propertySupport.firePropertyChange(LOCAL_UNIT, oldValue, this.localUnit);
     }
 
     private void CalculateAreaInLocalUnit() {
         if (getLocalUnit() != null) {
-            this.areaInLocalUnit = AreaConversion.getAreaInLocalUnit(getLocalUnit(), this.areaInSqMt);
+            String oldValue = this.areaInLocalUnit;
+            this.areaInLocalUnit = AreaConversion.getAreaInLocalUnit(getLocalUnit().getAreaTypeCode(), this.areaInSqMt);
+            propertySupport.firePropertyChange(AREA_IN_LOCAL_UNIT, oldValue, this.areaInLocalUnit);
         }
-
     }
 
     private void CalculateAreaSqMt() {
         if (getLocalUnit() != null && getAreaInLocalUnit() != null) {
             double oldValue = this.areaInSqMt;
-            this.areaInSqMt = AreaConversion.getAreaInSqMt(localUnit, this.areaInLocalUnit);
-
+            this.areaInSqMt = AreaConversion.getAreaInSqMt(localUnit.getAreaTypeCode(), this.areaInLocalUnit);
             propertySupport.firePropertyChange(AREA_IN_SQMT, oldValue, this.areaInSqMt);
         }
     }
