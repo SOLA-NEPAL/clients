@@ -4,9 +4,6 @@
  */
 package org.sola.clients.swing.ui;
 
-import java.util.ArrayList;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.system.AreaBean;
 
 /**
@@ -48,6 +45,7 @@ public class AreaControl extends ContentPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        areaTypeListBean = new org.sola.clients.beans.referencedata.AreaTypeListBean();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cmbLocalUnit = new javax.swing.JComboBox();
@@ -62,8 +60,8 @@ public class AreaControl extends ContentPanel {
 
         jLabel1.setText("Local Unit");
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${units}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, cmbLocalUnit);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${areaTypes}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, areaTypeListBean, eLProperty, cmbLocalUnit);
         bindingGroup.addBinding(jComboBoxBinding);
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${area.localUnit}"), cmbLocalUnit, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
@@ -141,6 +139,7 @@ public class AreaControl extends ContentPanel {
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.sola.clients.beans.referencedata.AreaTypeListBean areaTypeListBean;
     private javax.swing.JComboBox cmbLocalUnit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
