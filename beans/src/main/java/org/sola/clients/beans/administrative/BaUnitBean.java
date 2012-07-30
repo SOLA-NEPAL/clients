@@ -105,9 +105,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public static final String SELECTED_CHILD_BA_UNIT_PROPERTY = "selectedChildBaUnit";
     public static final String PENDING_ACTION_CODE_PROPERTY = "pendingActionCode";
     public static final String PENDING_ACTION_PROPERTY = "pendingTypeAction";
+    public static final String CADASTRE_OBJECT_PROPERTY = "cadastreObject";
+            
     private SolaList<RrrBean> rrrList;
     private SolaList<BaUnitNotationBean> baUnitNotationList;
     private CadastreObjectBean cadastreObject;
+    private String cadastreObjectId;
     private SolaList<CadastreObjectBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
@@ -387,7 +390,17 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     public void setCadastreObject(CadastreObjectBean cadastreObject) {
+        CadastreObjectBean oldValue = this.cadastreObject;
         this.cadastreObject = cadastreObject;
+        propertySupport.firePropertyChange(CADASTRE_OBJECT_PROPERTY, oldValue, this.cadastreObject);
+    }
+
+    public String getCadastreObjectId() {
+        if(getCadastreObject() == null ){
+            return null;
+        } else {
+            return getCadastreObject().getId();
+        }
     }
 
     public SolaList<RrrBean> getRrrList() {

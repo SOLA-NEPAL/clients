@@ -211,13 +211,12 @@ public class PropertyPanel extends ContentPanel {
      * Makes post initialization tasks.
      */
     private void portInit() {
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings
-                .createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, 
-                baUnitBean, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject}"), 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+                baUnitBean, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject}"),
                 pnlParcelView, org.jdesktop.beansbinding.BeanProperty.create("cadastreObject"));
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
-        
+
         customizeForm();
 
         rrrTypes.addPropertyChangeListener(new PropertyChangeListener() {
@@ -238,6 +237,9 @@ public class PropertyPanel extends ContentPanel {
                     customizeRightsButtons((RrrBean) evt.getNewValue());
                 } else if (evt.getPropertyName().equals(BaUnitBean.SELECTED_HISTORIC_RIGHT_PROPERTY)) {
                     customizeHistoricRightsViewButton();
+                } else if (evt.getPropertyName().equals(BaUnitBean.NAME_FIRSTPART_PROPERTY) ||
+                        evt.getPropertyName().equals(BaUnitBean.NAME_LASTPART_PROPERTY)) {
+                    customizeHeaderCaption();
                 }else if (evt.getPropertyName().equals(BaUnitBean.SELECTED_BA_UNIT_NOTATION_PROPERTY)) {
                     customizeNotationButtons((BaUnitNotationBean) evt.getNewValue());
                 } else if (evt.getPropertyName().equals(BaUnitBean.ROW_VERSION_PROPERTY)) {
@@ -259,7 +261,26 @@ public class PropertyPanel extends ContentPanel {
      * the {@link BaUnitBean} and other components.
      */
     private void customizeForm() {
+        btnSave.setEnabled(!readOnly);
+        txtName.setEditable(!readOnly);
+        customizeHeaderCaption();
+        customizeRightsButtons(null);
+        customizeNotationButtons(null);
+        customizeRightTypesList();
+        customizeParcelButtons();
+        customizePrintButton();
+        customizeParentPropertyButtons();
+        customizeChildPropertyButtons();
+        customizeTerminationButton();
+        customizeHistoricRightsViewButton();
+    }
 
+    private void customizeHeaderCaption() {
+        if (baUnitBean.getNameFirstpart() != null && baUnitBean.getNameLastpart() != null) {
+            nameFirstPart=baUnitBean.getNameFirstpart();
+            nameLastPart = baUnitBean.getNameLastpart();
+        }
+        
         if (nameFirstPart != null && nameLastPart != null) {
             headerPanel.setTitleText(String.format(
                     resourceBundle.getString("PropertyPanel.existingProperty.Text"),
@@ -274,18 +295,6 @@ public class PropertyPanel extends ContentPanel {
                     String.format(resourceBundle.getString("PropertyPanel.applicationInfo.Text"),
                     applicationService.getRequestType().getDisplayValue(), applicationBean.getNr())));
         }
-
-        btnSave.setEnabled(!readOnly);
-        txtName.setEditable(!readOnly);
-        customizeRightsButtons(null);
-        customizeNotationButtons(null);
-        customizeRightTypesList();
-        customizeParcelButtons();
-        customizePrintButton();
-        customizeParentPropertyButtons();
-        customizeChildPropertyButtons();
-        customizeTerminationButton();
-        customizeHistoricRightsViewButton();
     }
 
     /**
@@ -306,9 +315,9 @@ public class PropertyPanel extends ContentPanel {
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(NewPropertyWizardPanel.SELECTED_RESULT_PROPERTY)) {
-                                if (addParentProperty((Object[]) evt.getNewValue())) {
-// && MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECT_EXISTING_PROPERTY_AGAIN) == MessageUtility.BUTTON_ONE) {
-// showNewTitleWizard(false);
+                                if (addParentProperty((Object[]) evt.getNewValue())
+                                        && MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECT_EXISTING_PROPERTY_AGAIN) == MessageUtility.BUTTON_ONE) {
+                                    showNewTitleWizard(false);
                                 }
                             }
                         }
@@ -385,8 +394,23 @@ public class PropertyPanel extends ContentPanel {
                 }
             }
             if (!exists) {
-                baUnitBean.getRrrList().addAsNew(rrr);
+                // Check if RRR is ownership and there is no existing RRR of ownership with pending state
+                if (rrr.getRrrType() != null || rrr.getRrrType().getRrrGroupTypeCode() != null
+                        && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)
+                        && baUnitBean.hasPendingOwnership()) {
+                    MessageUtility.displayMessage(ClientMessage.BAUNIT_ALREADY_HAS_PENDING_OWNERSHIP);
+                } else {
+                    baUnitBean.getRrrList().addAsNew(rrr);
+                }
             }
+        }
+
+        // Put parcel
+        if (selectedBaUnit.getCadastreObject() != null) {
+            baUnitBean.setCadastreObject(selectedBaUnit.getCadastreObject());
+            // Change first/last name parts.
+            baUnitBean.setNameFirstpart(baUnitBean.getCadastreObject().getNameFirstpart());
+            baUnitBean.setNameLastpart(baUnitBean.getCadastreObject().getNameLastpart());
         }
 
         // Create relation
@@ -437,10 +461,10 @@ public class PropertyPanel extends ContentPanel {
         btnPrintBaUnit.setEnabled(baUnitBean.getRowVersion() > 0);
     }
 
-    private void customizeHistoricRightsViewButton(){
-        btnViewHistoricRight.setEnabled(baUnitBean.getSelectedHistoricRight()!=null);
+    private void customizeHistoricRightsViewButton() {
+        btnViewHistoricRight.setEnabled(baUnitBean.getSelectedHistoricRight() != null);
     }
-            
+
     /**
      * Enables or disables notation buttons, depending on the form state.
      */
@@ -720,7 +744,7 @@ public class PropertyPanel extends ContentPanel {
         String cardName;
         String rrrGroupCode = rrrBean.getRrrType().getRrrGroupTypeCode();
         String rrrTypeCode = rrrBean.getTypeCode();
-        
+
         if (rrrGroupCode.equals(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS)) {
             panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_MORTGAGE;
