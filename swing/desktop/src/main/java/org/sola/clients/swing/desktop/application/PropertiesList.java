@@ -29,11 +29,20 @@ package org.sola.clients.swing.desktop.application;
 
 import java.awt.ComponentOrientation;
 import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JList;
+import javax.swing.ListModel;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.application.ApplicationPropertyBean;
+import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.controls.SolaList;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  * Popup window to select property object from the list.
@@ -55,6 +64,8 @@ public class PropertiesList extends javax.swing.JDialog {
         this.propertyList = propertyList;
         initComponents();
         this.setIconImage(new ImageIcon(PropertiesList.class.getResource("/images/sola/logo_icon.jpg")).getImage());
+        
+        showSelectedParcelMapSheet();
     }
     
     public ObservableList<ApplicationPropertyBean> getPropertyList() {
@@ -68,6 +79,31 @@ public class PropertiesList extends javax.swing.JDialog {
     public void setSelectedProperty(ApplicationPropertyBean selectedProperty) {
         this.selectedProperty = selectedProperty;
     }
+    
+    private void AppendItemInListBox(JList dest,MapSheetBean mapsheet) {
+        //append to destination list box.
+        DefaultListModel defDisplay=new DefaultListModel();
+        defDisplay.addElement(mapsheet.getMapNumber());
+        dest.setModel(defDisplay);
+    }
+    
+    private void showSelectedParcelMapSheet(){
+        tabPropertyDetails.addRowSelectionInterval(0, 0);
+        
+        ApplicationPropertyBean property=this.getSelectedProperty();
+        String firstpart= property.getNameFirstpart();
+        String lastpart= property.getNameLastpart();
+        List<CadastreObjectTO> parcel=
+              WSManager.getInstance().getCadastreService().getCadastreObjectByExactParts(firstpart, lastpart); //searching by number.
+        //the valued returned will be only one.
+        if (parcel!=null && parcel.size()>0){
+            CadastreObjectTO selected_parcel= parcel.get(0);
+            MapSheetBean mapsht= TypeConverters.TransferObjectToBean(
+                    selected_parcel.getMapSheet(),MapSheetBean.class,null);
+            
+            AppendItemInListBox(lstMapDisplay,mapsht);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -76,13 +112,17 @@ public class PropertiesList extends javax.swing.JDialog {
 
         scrollPropertyDetails = new javax.swing.JScrollPane();
         tabPropertyDetails = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstMapDisplay = new javax.swing.JList();
+        btnDisplayMap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle"); // NOI18N
         setTitle(bundle.getString("PropertiesList.title")); // NOI18N
         setName("Form"); // NOI18N
 
-        scrollPropertyDetails.setFont(new java.awt.Font("Tahoma 12 12", 0, 12));
+        scrollPropertyDetails.setFont(new java.awt.Font("Tahoma 12 12", 0, 12)); // NOI18N
         scrollPropertyDetails.setName("scrollPropertyDetails"); // NOI18N
         scrollPropertyDetails.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
 
@@ -123,15 +163,47 @@ public class PropertiesList extends javax.swing.JDialog {
         tabPropertyDetails.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title2")); // NOI18N
         tabPropertyDetails.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title3")); // NOI18N
 
+        jLabel2.setText(bundle.getString("PropertiesList.jLabel2.text")); // NOI18N
+        jLabel2.setName(bundle.getString("PropertiesList.jLabel2.name")); // NOI18N
+
+        jScrollPane2.setName(bundle.getString("PropertiesList.jScrollPane2.name")); // NOI18N
+
+        lstMapDisplay.setName(bundle.getString("PropertiesList.lstMapDisplay.name")); // NOI18N
+        jScrollPane2.setViewportView(lstMapDisplay);
+
+        btnDisplayMap.setText(bundle.getString("PropertiesList.btnDisplayMap.text")); // NOI18N
+        btnDisplayMap.setName(bundle.getString("PropertiesList.btnDisplayMap.name")); // NOI18N
+        btnDisplayMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisplayMapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+            .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDisplayMap))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDisplayMap))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -140,12 +212,31 @@ public class PropertiesList extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablePropertiesMouseCliecked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePropertiesMouseCliecked
+        showSelectedParcelMapSheet();
+    }//GEN-LAST:event_tablePropertiesMouseCliecked
+
+    private void btnDisplayMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayMapActionPerformed
         if(selectedProperty!=null){
             firePropertyChange(SELECTED_PROPERTY, null, selectedProperty);
         }
-    }//GEN-LAST:event_tablePropertiesMouseCliecked
+    }//GEN-LAST:event_btnDisplayMapActionPerformed
+    
+    public List<String> getMapSheets(){
+        List<String> mapsheets=new ArrayList<>();
+        ListModel model=lstMapDisplay.getModel();
+        for (int i=0; i<model.getSize();i++){
+            String sheet=model.getElementAt(i).toString();
+            mapsheets.add(sheet);
+        }
+        
+        return mapsheets;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDisplayMap;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList lstMapDisplay;
     private javax.swing.JScrollPane scrollPropertyDetails;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tabPropertyDetails;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

@@ -52,7 +52,6 @@ import org.sola.clients.swing.gis.mapaction.*;
 import org.sola.clients.swing.gis.tool.*;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
-import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**
  * A control bundle that is used for cadastre change process. The necessary
@@ -91,8 +90,11 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
             String applicationNumber,
             TransactionCadastreChangeBean transactionBean,
             String baUnitId,
-            byte[] applicationLocation) {
-        super();
+            byte[] applicationLocation,List<String> mapsheets) {
+        
+        this.setMapsheets(mapsheets);
+        //super();
+        
         this.applicationNumber = applicationNumber;
         this.transactionBean = transactionBean;
         if (this.transactionBean == null) {
@@ -101,7 +103,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.applicationLocation=applicationLocation;
         //this.trSegmentBean= new TransactionSegmentBean();
         this.Setup(PojoDataAccess.getInstance()); 
-
+        
         if (!this.transactionIsStarted()) {
             this.setTargetParcelsByBaUnit(baUnitId);
         }
@@ -237,7 +239,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
     }
     
     @Override
-    public void show_Selected_Parcel_onMap(CadastreObjectSearchResultTO selected_parcel){
+    public void show_Selected_Parcel_onMap(CadastreObjectTO selected_parcel){
         if (selected_parcel==null) {
             this.zoomToInterestingArea(null, applicationLocation);
             return;
