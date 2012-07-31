@@ -48,7 +48,7 @@ import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreRed
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForTransaction;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
-import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  * Used to produce cadastre changes.
@@ -63,27 +63,29 @@ public class CadastreTransactionMapPanel extends ContentPanel {
     public CadastreTransactionMapPanel(
             ApplicationBean applicationBean,
             ApplicationServiceBean applicationService,
-            ApplicationPropertyBean applicationProperty) {
+            ApplicationPropertyBean applicationProperty,
+            List<String> mapsheets) {
 
         this.applicationBean = applicationBean;
         this.applicationService = applicationService;
         this.applicationProperty = applicationProperty;
-        this.initializeMap();
+        this.initializeMap(mapsheets);
 
         initComponents();
         customizeForm();
         this.addMapToForm();
     }
 
-    private void initializeMap() {
+    private void initializeMap(List<String> mapsheets) {
         if (applicationService.getRequestType().getCode().equals(
                 RequestTypeBean.CODE_CADASTRE_CHANGE)) {
+            
             TransactionCadastreChangeBean transactionBean =
                     PojoDataAccess.getInstance().getTransactionCadastreChange(
                     this.applicationService.getId());
             this.mapControl = new ControlsBundleForCadastreChange(
                     this.applicationBean.getNr(), transactionBean, this.getBaUnitId(),
-                    this.applicationBean.getLocation());
+                    this.applicationBean.getLocation(),mapsheets);
             //this.mapControl.setParentPanel((Object)this);
         } else if (applicationService.getRequestType().getCode().equals(
                 RequestTypeBean.CODE_CADASTRE_REDEFINITION)) {
@@ -99,15 +101,14 @@ public class CadastreTransactionMapPanel extends ContentPanel {
     }
 
      private void zoom_to_Selected_Parcel(ApplicationPropertyBean property){
-        String strSearch= property.getNameFirstpart() + " " + 
-                property.getNameLastpart();
-        List<CadastreObjectSearchResultTO> parcel=
-              WSManager.getInstance().getSearchService().searchCadastreObjects(
-                "NUMBER", strSearch); //searching by number.
+        String firstpart= property.getNameFirstpart();
+        String lastpart= property.getNameLastpart();
+        List<CadastreObjectTO> parcel=
+              WSManager.getInstance().getCadastreService().getCadastreObjectByExactParts(firstpart, lastpart); //searching by number.
         
         //assuming combination of first part and last part as unique.
         //the valued returned will be only one.
-        CadastreObjectSearchResultTO selected_parcel=null;
+        CadastreObjectTO selected_parcel=null;
         if (parcel!=null && parcel.size()>0){
             selected_parcel= parcel.get(0);
         }

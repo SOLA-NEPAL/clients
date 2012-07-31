@@ -21,13 +21,11 @@ import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
-import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
-import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
-import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.layer.TargetNeighbourParcelLayer;
+import org.sola.clients.swing.gis.layer.*;
 import org.sola.clients.swing.gis.mapaction.DeselectALL;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.webservices.transferobjects.cadastre.ConstructionObjectTO;
 
 /**
  *
@@ -44,7 +42,7 @@ public class PublicMethod {
             //pending word is from database--> system.config_map_layer
             if (layerName.contains("Target") 
                     || layerName.contains("New")
-                        || layerName.contains("pending")) {
+                        || layerName.toLowerCase().contains("parcel")) {
                 continue;
             }
 
@@ -859,5 +857,28 @@ public class PublicMethod {
                 df.format(geom.getArea()));
         
         new_parcels.addFeature(parcel_id + "-" + String.valueOf(sn), geom, fieldsWithValues);
+    }
+    
+    public static void getParcelData(CadastreObjectLayer parcelLayer,List<String> mapsheets){
+        List<CadastreObjectTO> parcels= 
+                WSManager.getInstance().getCadastreService().getCadastreObjectListMem(mapsheets);
+        
+        parcelLayer.getFeatureCollection().clear();
+        for (CadastreObjectTO parcel:parcels){
+            parcelLayer.addFeature(parcel);
+        }
+    }
+    
+    public static void getConstructionData(ConstructionObjectLayer consLayer,List<String> mapsheets){
+        List<ConstructionObjectTO> constrs= 
+                WSManager.getInstance().getCadastreService().getConstructionObjectListMem(mapsheets);
+        
+        consLayer.getFeatureCollection().clear();
+        for (ConstructionObjectTO con:constrs){
+            if (con.getGeomPolygon()==null || con.getGeomPolygon().length<1){
+                continue;
+            }
+            consLayer.addFeature(con);
+        }
     }
 }

@@ -183,7 +183,7 @@ public class PrintoutGenerator {
     }
 
     private int getDpi() {
-        return (int) com.lowagie.text.Utilities.inchesToPoints(1);
+        return (int)300;// com.lowagie.text.Utilities.inchesToPoints(1);
     }
 
     private void addImage(Document document, URL url, int x, int y, int width)

@@ -31,7 +31,6 @@ import java.awt.Component;
 import java.util.HashMap;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.sola.clients.swing.gis.TestCadastreTransactionChange;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForApplicationLocation;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKBWriter;
@@ -128,7 +127,7 @@ public class Development {
         TransactionCadastreChangeBean cadastreChangeBean =
                 PojoDataAccess.getInstance().getTransactionCadastreChange("4001");
         ControlsBundleForCadastreChange ctrl =
-                new ControlsBundleForCadastreChange("333", cadastreChangeBean, "3068323", null);
+                new ControlsBundleForCadastreChange("333", cadastreChangeBean, "3068323", null,null);
         ctrl.getMap().addMapAction(new TestCadastreTransactionChange(ctrl), ctrl.getToolbar(), true);
         
        // ctrl.setReadOnly(true);

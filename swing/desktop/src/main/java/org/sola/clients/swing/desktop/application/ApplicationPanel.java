@@ -78,7 +78,6 @@ import org.sola.clients.swing.desktop.administrative.PropertyPanel;
 import org.sola.clients.swing.desktop.cadastre.CadastreTransactionMapPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
-import org.sola.clients.swing.desktop.party.PersonSearchForm_temp;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
 import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
@@ -649,28 +648,28 @@ public class ApplicationPanel extends ContentPanel {
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_CHANGE)
                     || requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_REDEFINITION)) {
 
-                if (appBean.getPropertyList().getFilteredList().size() == 1) {
-                    SolaTask t = new SolaTask<Void, Void>() {
-
-                        @Override
-                        public Void doTask() {
-                            setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
-                            CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                                    appBean,
-                                    appBean.getSelectedService(),
-                                    appBean.getPropertyList().getFilteredList().get(0));
-                            getMainContentPanel().addPanel(form, MainContentPanel.CARD_CADASTRECHANGE, true);
-                            return null;
-                        }
-                    };
-                    TaskManager.getInstance().runTask(t);
-
-                } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
-                    PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
+//                if (appBean.getPropertyList().getFilteredList().size() == 1) {
+//                    SolaTask t = new SolaTask<Void, Void>() {
+//
+//                        @Override
+//                        public Void doTask() {
+//                            setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
+//                            CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
+//                                    appBean,
+//                                    appBean.getSelectedService(),
+//                                    appBean.getPropertyList().getFilteredList().get(0));
+//                            getMainContentPanel().addPanel(form, MainContentPanel.CARD_CADASTRECHANGE, true);
+//                            return null;
+//                        }
+//                    };
+//                    TaskManager.getInstance().runTask(t);
+//
+//               } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
+                if (appBean.getPropertyList().getFilteredList().size() > 0) {
+                    final PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
                     propertyListForm.setLocationRelativeTo(this);
 
                     propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
-
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
@@ -683,10 +682,12 @@ public class ApplicationPanel extends ContentPanel {
 
                                     @Override
                                     public Void doTask() {
+                                        List<String> mapsheets=propertyListForm.getMapSheets();   
                                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
+                                        
                                         CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
                                                 appBean,
-                                                appBean.getSelectedService(), property);
+                                                appBean.getSelectedService(), property,mapsheets);
                                         getMainContentPanel().addPanel(
                                                 form, MainContentPanel.CARD_CADASTRECHANGE, true);
                                         return null;
@@ -700,7 +701,7 @@ public class ApplicationPanel extends ContentPanel {
 
                 } else {
                     CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                            appBean, appBean.getSelectedService(), null);
+                            appBean, appBean.getSelectedService(), null,null);
                     getMainContentPanel().addPanel(
                             form, MainContentPanel.CARD_CADASTRECHANGE, true);
                 }
@@ -3205,13 +3206,13 @@ public class ApplicationPanel extends ContentPanel {
      * Initializes map control to display application location.
      */
     private void formComponentShown(java.awt.event.ComponentEvent evt) {
-        if (this.mapControl == null) {
-            this.mapControl = new ControlsBundleForApplicationLocation();
-            this.mapControl.setApplicationLocation(appBean.getLocation());
-            this.mapControl.setApplicationId(appBean.getId());
-            this.mapPanel.setLayout(new BorderLayout());
-            this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
-        }
+//        if (this.mapControl == null) {
+//            this.mapControl = new ControlsBundleForApplicationLocation();
+//            this.mapControl.setApplicationLocation(appBean.getLocation());
+//            this.mapControl.setApplicationId(appBean.getId());
+//            this.mapPanel.setLayout(new BorderLayout());
+//            this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
+//        }
         hideUncessaryTabs();
     }
 

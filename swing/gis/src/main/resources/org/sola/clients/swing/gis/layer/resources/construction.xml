@@ -17,7 +17,7 @@
                             <CssParameter name="stroke-width">2</CssParameter>
                         </Stroke>
                     </PolygonSymbolizer>
-                    <TextSymbolizer>
+                    <!--TextSymbolizer>
                         <Label>
                             <ogc:PropertyName>label</ogc:PropertyName>
                         </Label>
@@ -38,7 +38,7 @@
                         <Fill>
                             <CssParameter name="fill">#000000</CssParameter>
                         </Fill>
-                    </TextSymbolizer>
+                    </TextSymbolizer-->
                 </Rule>
                 <Rule>
                     <Name>Scale 50000 - 625000</Name>
