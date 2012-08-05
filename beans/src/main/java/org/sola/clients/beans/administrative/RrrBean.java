@@ -96,6 +96,10 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
     public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
     public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
+    public static final String OWNERSHIP_TYPE_PROPERTY = "ownershipType";
+    public static final String SHARE_TYPE_PROPERTY = "shareType";
+    public static final String OWNERSHIP_TYPE_CODE_PROPERTY = "ownershipTypeCode";
+    public static final String SHARE_TYPE_CODE_PROPERTY = "shareTypeCode";
     private String baUnitId;
     private String nr;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
@@ -117,6 +121,8 @@ public class RrrBean extends AbstractTransactionedBean {
     private String officeCode;
     private RestrictionReasonBean restrictionReason;
     private RestrictionOfficeBean restrictionOffice;
+    private OwnershipTypeBean ownershipType;
+    private ShareTypeBean shareType;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
@@ -131,6 +137,66 @@ public class RrrBean extends AbstractTransactionedBean {
         sourceList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
+    }
+
+    public String getOwnershipTypeCode() {
+        if (ownershipType != null) {
+            return ownershipType.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setOwnershipTypeCode(String ownershipTypeCode) {
+        String oldValue = null;
+        if (ownershipTypeCode != null) {
+            oldValue = ownershipType.getCode();
+        }
+        setOwnershipType(CacheManager.getBeanByCode(
+                CacheManager.getOwnerShipTypes(), ownershipTypeCode));
+        propertySupport.firePropertyChange(OWNERSHIP_TYPE_CODE_PROPERTY,
+                oldValue, ownershipTypeCode);
+    }
+
+    public String getShareTypeCode() {
+        if (shareType != null) {
+            return shareType.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setShareTypeCode(String shareTypeCode) {
+        String oldValue = null;
+        if (shareTypeCode != null) {
+            oldValue = shareType.getCode();
+        }
+        setShareType(CacheManager.getBeanByCode(
+                CacheManager.getShareTypes(), shareTypeCode));
+        propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY,
+                oldValue, shareTypeCode);
+    }
+
+    public OwnershipTypeBean getOwnershipType() {
+        return ownershipType;
+    }
+
+    public void setOwnershipType(OwnershipTypeBean ownershipType) {
+        if (this.ownershipType == null) {
+            this.ownershipType = new OwnershipTypeBean();
+        }
+        this.setJointRefDataBean(this.ownershipType, ownershipType, OWNERSHIP_TYPE_PROPERTY);
+    }
+
+    public ShareTypeBean getShareType() {
+        return shareType;
+    }
+
+    public void setShareType(ShareTypeBean shareType) {
+        if (this.shareType == null) {
+            this.shareType = new ShareTypeBean();
+        }
+        this.setJointRefDataBean(this.shareType, shareType, SHARE_TYPE_PROPERTY);
     }
 
     public String getRestrictionOfficeCode() {

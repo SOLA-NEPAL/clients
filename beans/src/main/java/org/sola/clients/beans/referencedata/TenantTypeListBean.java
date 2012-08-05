@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright 2012 Food and Agriculture Organization of the United Nations (FAO).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,13 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class RestrictionReasonListBean extends AbstractBindingListBean {
+public class TenantTypeListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_RESTRICTION_REASONS_PROPERTY = "selectedRestrictionReasons";
-    private SolaCodeList<RestrictionReasonBean> restrictionReasons;
-    private RestrictionReasonBean selectedRestrictionReasons;
+    public static final String SELECTED_TENANT_TYPES_PROPERTY = "selectedTenantType";
+    private SolaCodeList<TenantTypeBean> tenantTypes;
+    private TenantTypeBean selectedTenantType;
 
-    public RestrictionReasonListBean() {
+    public TenantTypeListBean() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class RestrictionReasonListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public RestrictionReasonListBean(boolean createDummy) {
+    public TenantTypeListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,38 +49,37 @@ public class RestrictionReasonListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public RestrictionReasonListBean(boolean createDummy, String... excludedCodes) {
+    public TenantTypeListBean(boolean createDummy, String... excludedCodes) {
         super();
-        restrictionReasons = new SolaCodeList<RestrictionReasonBean>(excludedCodes);
-        loadList(createDummy);        
+        tenantTypes = new SolaCodeList<TenantTypeBean>(excludedCodes);
+        loadList(createDummy);
     }
 
     /**
-     * Loads list of {@link RestrictionReasonBean}.
+     * Loads list of {@link TenantTypeBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(RestrictionReasonBean.class, restrictionReasons, CacheManager.getRestrictionReasons(), createDummy);
+        loadCodeList(TenantTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        restrictionReasons.setExcludedCodes(codes);
+        tenantTypes.setExcludedCodes(codes);
     }
 
-    public RestrictionReasonBean getSelectedRestrictionReasons() {
-        return selectedRestrictionReasons;
+    public TenantTypeBean getSelectedTenantType() {
+        return selectedTenantType;
     }
 
-    public void setSelectedRestrictionReasons(RestrictionReasonBean selectedRestrictionReasons) {
-        RestrictionReasonBean oldValue = this.selectedRestrictionReasons;
-        this.selectedRestrictionReasons = selectedRestrictionReasons;
-        propertySupport.firePropertyChange(SELECTED_RESTRICTION_REASONS_PROPERTY, oldValue, this.selectedRestrictionReasons);
-
+    public void setSelectedTenantType(TenantTypeBean selectedTenantType) {
+        TenantTypeBean oldValue = this.selectedTenantType;
+        this.selectedTenantType = selectedTenantType;
+        propertySupport.firePropertyChange(SELECTED_TENANT_TYPES_PROPERTY, oldValue, this.selectedTenantType);
     }
 
-    public ObservableList<RestrictionReasonBean> getRestrictionReasons() {
-        return restrictionReasons.getFilteredList();
+    public ObservableList<TenantTypeBean> getTenantTypes() {
+        return tenantTypes.getFilteredList();
     }
 }

@@ -227,6 +227,18 @@ public final class CacheManager {
      * Cache key of the {@link ParcelTypeBean} collection.
      */
     public static final String PARCEL_TYPES_KEY = ParcelTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link TenantTypeBean} collection.
+     */
+    public static final String TENANT_TYPE_KEY = TenantTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link OwnershipTypeBean} collection.
+     */
+    public static final String OWNERSHIP_TYPE_KEY = OwnershipTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link ShareTypeBean} collection.
+     */
+    public static final String SHARE_TYPE_KEY = ShareTypeBean.class.getName() + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
     private static final String GET_COMMUNICATION_TYPES = "getCommunicationTypes";
@@ -261,6 +273,9 @@ public final class CacheManager {
     private static final String GET_PARCEL_TYPES = "getParcelTypes";
     private static final String GET_RESTRICTION_REASONS = "getRestrictionReasons";
     private static final String GET_RESTRICTION_OFFICES = "getRestrictionOffices";
+    private static final String GET_OWNERSHIP_TYPES = "getOwnerShipTypes";
+    private static final String GET_SHARE_TYPES = "getShareTypes";
+    private static final String GET_TENANT_TYPES = "getTenantTypes";
 
     public static List<ParcelTypeBean> getParcelTypes() {
         return getCachedBeanList(ParcelTypeBean.class,
@@ -684,6 +699,24 @@ public final class CacheManager {
         return getCachedBeanList(RestrictionReasonBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
+    }
+
+    public static List<OwnershipTypeBean> getOwnerShipTypes() {
+        return getCachedBeanList(OwnershipTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_OWNERSHIP_TYPES, OWNERSHIP_TYPE_KEY);
+    }
+
+    public static List<ShareTypeBean> getShareTypes() {
+        return getCachedBeanList(ShareTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_SHARE_TYPES, SHARE_TYPE_KEY);
+    }
+
+    public static List<TenantTypeBean> getTenantTypes() {
+        return getCachedBeanList(TenantTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_TENANT_TYPES, TENANT_TYPE_KEY);
     }
     //*************************************************************************************************************
     //</editor-fold>

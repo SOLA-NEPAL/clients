@@ -166,6 +166,9 @@ public class MainForm extends javax.swing.JFrame {
         menuRestrictionReason = new javax.swing.JMenuItem();
         menuRestrictionReleaseReason = new javax.swing.JMenuItem();
         menuRestrictionOffice = new javax.swing.JMenuItem();
+        menuOwnerTypes = new javax.swing.JMenuItem();
+        menuShareTypes = new javax.swing.JMenuItem();
+        menuTenantTypes = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -663,6 +666,33 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenu1.add(menuRestrictionRelease);
 
+        menuOwnerTypes.setText(bundle.getString("MainForm.menuOwnerTypes.text")); // NOI18N
+        menuOwnerTypes.setName(bundle.getString("MainForm.menuOwnerTypes.name")); // NOI18N
+        menuOwnerTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOwnerTypesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuOwnerTypes);
+
+        menuShareTypes.setText(bundle.getString("MainForm.menuShareTypes.text")); // NOI18N
+        menuShareTypes.setName(bundle.getString("MainForm.menuShareTypes.name")); // NOI18N
+        menuShareTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuShareTypesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuShareTypes);
+
+        menuTenantTypes.setText(bundle.getString("MainForm.menuTenantTypes.text")); // NOI18N
+        menuTenantTypes.setName(bundle.getString("MainForm.menuTenantTypes.name")); // NOI18N
+        menuTenantTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTenantTypesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuTenantTypes);
+
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -901,6 +931,21 @@ public class MainForm extends javax.swing.JFrame {
         //showReport(ReportManager.getMapSheetListReport());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void menuOwnerTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOwnerTypesActionPerformed
+        // TODO add your handling code here:
+        manageOwnershipTpes();
+    }//GEN-LAST:event_menuOwnerTypesActionPerformed
+
+    private void menuShareTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuShareTypesActionPerformed
+        // TODO add your handling code here:
+        manageShareTypes();
+    }//GEN-LAST:event_menuShareTypesActionPerformed
+
+    private void menuTenantTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTenantTypesActionPerformed
+        // TODO add your handling code here:
+        manageTenantTypes();
+    }//GEN-LAST:event_menuTenantTypesActionPerformed
+
     /**
      * Opens roles management panel.
      */
@@ -1044,6 +1089,34 @@ public class MainForm extends javax.swing.JFrame {
             mainContentPanel.addPanel(panel, MainContentPanel.CARD_ADMIN_BR_MANAGE, true);
         }
     }
+
+    private void manageRestrictionType() {
+        openReferenceDataPanel(RestrictionTypeBean.class, menuRestrictionType.getText());
+    }
+
+    private void manageRestrictionReason() {
+        openReferenceDataPanel(RestrictionReasonBean.class, menuRestrictionReason.getText());
+    }
+
+    private void manageRestrictionReleaseType() {
+        openReferenceDataPanel(RestrictionReleaseReasonBean.class, menuRestrictionReleaseReason.getText());
+    }
+
+    private void manageRestrictionOffice() {
+        openReferenceDataPanel(RestrictionOfficeBean.class, menuRestrictionOffice.getText());
+    }
+
+    private void manageOwnershipTpes() {
+        openReferenceDataPanel(OwnershipTypeBean.class, menuOwnerTypes.getText());
+    }
+
+    private void manageShareTypes() {
+        openReferenceDataPanel(ShareTypeBean.class, menuShareTypes.getText());
+    }
+
+    private void manageTenantTypes() {
+        openReferenceDataPanel(TenantTypeBean.class, menuTenantTypes.getText());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
     private javax.swing.JButton btnCalendar;
@@ -1080,6 +1153,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuMapsheet;
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
+    private javax.swing.JMenuItem menuOwnerTypes;
     private javax.swing.JMenu menuParty;
     private javax.swing.JMenuItem menuPartyRoleType;
     private javax.swing.JMenuItem menuPartyType;
@@ -1099,9 +1173,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuSecurity;
     private javax.swing.JMenuItem menuServiceActionTypes;
     private javax.swing.JMenuItem menuServiceStatusTypes;
+    private javax.swing.JMenuItem menuShareTypes;
     private javax.swing.JMenuItem menuSourceTypes;
     private javax.swing.JMenu menuSources;
     private javax.swing.JMenu menuSystem;
+    private javax.swing.JMenuItem menuTenantTypes;
     private javax.swing.JMenuItem menuTimeReport;
     private javax.swing.JMenu menuTransaction;
     private javax.swing.JMenuItem menuTypeActions;
@@ -1110,20 +1186,4 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;
     // End of variables declaration//GEN-END:variables
-
-    private void manageRestrictionType() {
-        openReferenceDataPanel(RestrictionTypeBean.class, menuRestrictionType.getText());
-    }
-
-    private void manageRestrictionReason() {
-        openReferenceDataPanel(RestrictionReasonBean.class, menuRestrictionReason.getText());
-    }
-
-    private void manageRestrictionReleaseType() {
-        openReferenceDataPanel(RestrictionReleaseReasonBean.class, menuRestrictionReleaseReason.getText());
-    }
-
-    private void manageRestrictionOffice() {
-        openReferenceDataPanel(RestrictionOfficeBean.class, menuRestrictionOffice.getText());
-    }
 }
