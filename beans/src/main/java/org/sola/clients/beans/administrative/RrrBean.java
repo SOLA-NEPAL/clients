@@ -33,7 +33,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -130,6 +129,7 @@ public class RrrBean extends AbstractTransactionedBean {
     private SolaList<PartySummaryBean> rightHolderList;
     private transient boolean selected;
     private transient PartySummaryBean selectedRightHolder;
+    private boolean terminating;
 
     public RrrBean() {
         super();
@@ -358,10 +358,13 @@ public class RrrBean extends AbstractTransactionedBean {
     }
 
     public void setRrrType(RrrTypeBean rrrType) {
+        RrrTypeBean oldValue = this.rrrType;
         if (this.rrrType == null) {
             this.rrrType = new RrrTypeBean();
         }
-        this.setJointRefDataBean(this.rrrType, rrrType, RRR_TYPE_PROPERTY);
+        this.rrrType = rrrType;
+        propertySupport.firePropertyChange(RRR_TYPE_PROPERTY, oldValue, this.rrrType);
+        //this.setJointRefDataBean(this.rrrType, rrrType, RRR_TYPE_PROPERTY);
     }
 
     public Date getExpirationDate() {
@@ -511,6 +514,14 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SELECTED_PROPERTY, oldValue, this.selected);
     }
 
+    public boolean isTerminating() {
+        return terminating;
+    }
+
+    public void setTerminating(boolean terminating) {
+        this.terminating = terminating;
+    }
+
     public void removeSelectedRightHolder() {
         if (selectedRightHolder != null && rightHolderList != null) {
             rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
@@ -520,9 +531,21 @@ public class RrrBean extends AbstractTransactionedBean {
     public void addOrUpdateRightholder(PartySummaryBean rightholder) {
         if (rightholder != null && rightHolderList != null) {
             if (rightHolderList.contains(rightholder)) {
+                rightholder.setEntityAction(null);
                 rightHolderList.set(rightHolderList.indexOf(rightholder), rightholder);
             } else {
                 rightHolderList.addAsNew(rightholder);
+            }
+        }
+    }
+
+    public void addOrUpdateSource(SourceBean source) {
+        if (source != null && sourceList != null) {
+            if (sourceList.contains(source)) {
+                source.setEntityAction(null);
+                sourceList.set(sourceList.indexOf(source), source);
+            } else {
+                sourceList.addAsNew(source);
             }
         }
     }
@@ -538,6 +561,11 @@ public class RrrBean extends AbstractTransactionedBean {
             // Make a copy of current bean with new ID
             copy = this.copy();
             copy.resetIdAndVerion(true, false);
+        }
+
+        if (rrrAction == RRR_ACTION.CANCEL) {
+            // Make a copy of current bean with new ID
+            copy.setTerminating(true);
         }
 
         if (rrrAction == RRR_ACTION.EDIT) {
@@ -573,55 +601,186 @@ public class RrrBean extends AbstractTransactionedBean {
         }
     }
 
+    /**
+     * Brings current state for the LOC on this bean.
+     */
+    public boolean revertLocToCurrentState() {
+        if (getLoc() == null || getLocId() == null) {
+            return false;
+        }
+
+        RrrLocListBean rrrLocs = new RrrLocListBean();
+        rrrLocs.loadRrrLocs(getLocId());
+
+        if (rrrLocs.getRrrLocs() != null && rrrLocs.getRrrLocs().size() > 0) {
+            RrrLocBean rrrLoc = rrrLocs.getCurrentRrr();
+            if (rrrLoc != null) {
+                updateRrrByRrrLoc(rrrLoc);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Changes ownership accordingly to provided LOC.
+     */
     public void changeLoc(LocWithMothBean loc) {
         RrrLocListBean rrrLocs = new RrrLocListBean();
         rrrLocs.loadRrrLocs(loc.getId());
 
-        Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
-        while (iteratorRightholders.hasNext()) {
-            PartySummaryBean partySummaryBean = iteratorRightholders.next();
-            if (getRightHolderList().isNewlyAdded(partySummaryBean)) {
-                iteratorRightholders.remove();
-            } else {
-                getRightHolderList().safeRemove(partySummaryBean, EntityAction.DISASSOCIATE);
+        RrrLocBean rrrLoc = null;
+
+        if (rrrLocs.getRrrLocs() != null && rrrLocs.getRrrLocs().size() > 0) {
+            rrrLoc = rrrLocs.getPendingRrr();
+            if (rrrLoc == null) {
+                rrrLoc = rrrLocs.getCurrentRrr();
             }
         }
 
-        Iterator<SourceBean> iteratorSources = getSourceList().iterator();
-        while (iteratorSources.hasNext()) {
-            SourceBean source = iteratorSources.next();
-            if (getSourceList().isNewlyAdded(source)) {
-                iteratorSources.remove();
-            } else {
-                getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
-            }
-        }
-
-        if (rrrLocs.getRrrLocs() != null) {
-
-            List<PartySummaryBean> newRightholders = null;
-            List<SourceBean> newSources = null;
-
-            if (rrrLocs.getPendingRrr() != null) {
-                newRightholders = rrrLocs.getPendingRrr().getRightHolderList();
-                newSources = rrrLocs.getPendingRrr().getSourceList();
-            } else if (rrrLocs.getCurrentRrr() != null) {
-                newRightholders = rrrLocs.getCurrentRrr().getRightHolderList();
-                newSources = rrrLocs.getCurrentRrr().getSourceList();
-            }
-
-            if (newRightholders != null) {
-                for (PartySummaryBean party : newRightholders) {
-                    getRightHolderList().addAsNew(party);
-                }
-            }
-
-            if (newSources != null) {
-                for (SourceBean source : newSources) {
-                    getSourceList().addAsNew(source);
-                }
-            }
-        }
+        updateRrrByRrrLoc(rrrLoc);
         setLoc(loc);
+    }
+
+    private void updateRrrByRrrLoc(RrrLocBean rrrLoc) {
+
+        if (rrrLoc == null) {
+            // Clear all values if rrrLoc is null
+
+            getNotation().setNotationText(null);
+            setRegistrationDate(null);
+            setTypeCode(null);
+
+            Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
+            while (iteratorRightholders.hasNext()) {
+                PartySummaryBean party = iteratorRightholders.next();
+                if (getRightHolderList().isNewlyAdded(party)) {
+                    iteratorRightholders.remove();
+                } else {
+                    getRightHolderList().safeRemove(party, EntityAction.DISASSOCIATE);
+                }
+            }
+
+            Iterator<SourceBean> iteratorSources = getSourceList().iterator();
+            while (iteratorSources.hasNext()) {
+                SourceBean source = iteratorSources.next();
+                if (getSourceList().isNewlyAdded(source)) {
+                    iteratorSources.remove();
+                } else {
+                    getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
+                }
+            }
+            return;
+        }
+
+        setRegistrationDate(rrrLoc.getRegistrationDate());
+        setTypeCode(rrrLoc.getTypeCode());
+
+        if (getNotation() != null) {
+            getNotation().setNotationText(rrrLoc.getNotationText());
+        } else {
+            BaUnitNotationBean tmpNotation = new BaUnitNotationBean();
+            tmpNotation.setNotationText(rrrLoc.getNotationText());
+            setNotation(tmpNotation);
+        }
+
+        // Update rightholders
+        if (rrrLoc.getRightHolderList() == null) {
+            Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
+            while (iteratorRightholders.hasNext()) {
+                PartySummaryBean partySummaryBean = iteratorRightholders.next();
+                if (getRightHolderList().isNewlyAdded(partySummaryBean)) {
+                    iteratorRightholders.remove();
+                } else {
+                    getRightHolderList().safeRemove(partySummaryBean, EntityAction.DISASSOCIATE);
+                }
+            }
+        } else {
+            if (getRightHolderList() == null) {
+                setRightHolderList(new SolaList<PartySummaryBean>());
+            }
+            // Remove if not in rrrLoc list
+            Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
+            while (iteratorRightholders.hasNext()) {
+                PartySummaryBean party = iteratorRightholders.next();
+                boolean found = false;
+                for (PartySummaryBean party2 : rrrLoc.getRightHolderList()) {
+                    if (party.getId().equals(party2.getId())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    if (getRightHolderList().isNewlyAdded(party)) {
+                        iteratorRightholders.remove();
+                    } else {
+                        getRightHolderList().safeRemove(party, EntityAction.DISASSOCIATE);
+                    }
+                }
+            }
+            // Add new parties on rrr from rrrLoc
+            for (PartySummaryBean party : rrrLoc.getRightHolderList()) {
+                boolean found = false;
+                for (PartySummaryBean party2 : getRightHolderList()) {
+                    if (party.getId().equals(party2.getId())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    addOrUpdateRightholder(party);
+                }
+            }
+        }
+
+        // Update sources
+        if (rrrLoc.getSourceList() == null) {
+            Iterator<SourceBean> iteratorSources = getSourceList().iterator();
+            while (iteratorSources.hasNext()) {
+                SourceBean sourceBean = iteratorSources.next();
+                if (getSourceList().isNewlyAdded(sourceBean)) {
+                    iteratorSources.remove();
+                } else {
+                    getSourceList().safeRemove(sourceBean, EntityAction.DISASSOCIATE);
+                }
+            }
+        } else {
+            if (getSourceList() == null) {
+                setSourceList(new SolaList<SourceBean>());
+            }
+            // Remove if not in rrrLoc list
+            Iterator<SourceBean> iteratorSources = getSourceList().iterator();
+            while (iteratorSources.hasNext()) {
+                SourceBean source = iteratorSources.next();
+                boolean found = false;
+                for (SourceBean source2 : rrrLoc.getSourceList()) {
+                    if (source.getId().equals(source2.getId())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    if (getSourceList().isNewlyAdded(source)) {
+                        iteratorSources.remove();
+                    } else {
+                        getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
+                    }
+                }
+            }
+            // Add new sources on rrr from rrrLoc
+            for (SourceBean source : rrrLoc.getSourceList()) {
+                boolean found = false;
+                for (SourceBean source2 : getSourceList()) {
+                    if (source.getId().equals(source2.getId())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    addOrUpdateSource(source);
+                }
+            }
+        }
     }
 }

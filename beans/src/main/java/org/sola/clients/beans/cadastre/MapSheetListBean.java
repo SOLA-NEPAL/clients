@@ -69,6 +69,14 @@ public class MapSheetListBean extends AbstractBindingListBean {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByOffice(officeCode, language), MapSheetBean.class, (List) mapSheets);
     }
     
+    public void loadMapSheetList(String officeCode) {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByOffice(officeCode), MapSheetBean.class, (List) mapSheets);
+    }
+    
+    public void loadMapSheetListByDefaultOffice() {
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByDefaultOffice(), MapSheetBean.class, (List) mapSheets);
+    }
+    
      public void loadMapSheetList(int mapSheetType) {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (List) mapSheets);
     }

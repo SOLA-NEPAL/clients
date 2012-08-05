@@ -31,7 +31,7 @@ package org.sola.clients.beans.administrative;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
@@ -41,10 +41,11 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.party.PartyBean;
+import org.sola.clients.beans.referencedata.RrrGroupTypeBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.referencedata.TypeActionBean;
 import org.sola.clients.beans.source.SourceBean;
+import org.sola.clients.beans.utils.RrrComparatorByRegistrationDate;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
@@ -97,22 +98,27 @@ public class BaUnitBean extends BaUnitSummaryBean {
             return notationBean;
         }
     }
-    
     public static final String SELECTED_RIGHT_PROPERTY = "selectedRight";
+    public static final String SELECTED_HISTORIC_RIGHT_PROPERTY = "selectedHistoricRight";
     public static final String SELECTED_BA_UNIT_NOTATION_PROPERTY = "selectedBaUnitNotation";
     public static final String SELECTED_PARENT_BA_UNIT_PROPERTY = "selectedParentBaUnit";
     public static final String SELECTED_CHILD_BA_UNIT_PROPERTY = "selectedChildBaUnit";
     public static final String PENDING_ACTION_CODE_PROPERTY = "pendingActionCode";
     public static final String PENDING_ACTION_PROPERTY = "pendingTypeAction";
+    public static final String CADASTRE_OBJECT_PROPERTY = "cadastreObject";
+            
     private SolaList<RrrBean> rrrList;
     private SolaList<BaUnitNotationBean> baUnitNotationList;
     private CadastreObjectBean cadastreObject;
+    private String cadastreObjectId;
     private SolaList<CadastreObjectBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
     private SolaList<RelatedBaUnitInfoBean> childBaUnits;
     private SolaList<RelatedBaUnitInfoBean> parentBaUnits;
+    private transient SolaList<RrrBean> rrrHistoricList;
     private transient RrrBean selectedRight;
+    private transient RrrBean selectedHistoricRight;
     private transient BaUnitNotationBean selectedBaUnitNotation;
     private transient RelatedBaUnitInfoBean selectedParentBaUnit;
     private transient RelatedBaUnitInfoBean selectedChildBaUnit;
@@ -121,6 +127,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public BaUnitBean() {
         super();
         rrrList = new SolaList();
+        rrrHistoricList = new SolaList<RrrBean>();
         baUnitNotationList = new SolaList();
         childBaUnits = new SolaList();
         parentBaUnits = new SolaList();
@@ -128,12 +135,41 @@ public class BaUnitBean extends BaUnitSummaryBean {
         allBaUnitNotationList = new SolaObservableList<BaUnitNotationBean>();
         sourceList.setExcludedStatuses(new String[]{StatusConstants.HISTORIC});
         rrrList.setExcludedStatuses(new String[]{StatusConstants.HISTORIC, StatusConstants.PREVIOUS});
+        rrrHistoricList.setExcludedStatuses(new String[]{StatusConstants.CURRENT, StatusConstants.PENDING});
 
         AllBaUnitNotationsListUpdater allBaUnitNotationsListener = new AllBaUnitNotationsListUpdater();
         rrrList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
-        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);    
+        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
         cadastreObject = new CadastreObjectBean();
         cadastreObject.setEntityAction(EntityAction.DISASSOCIATE);
+        rrrList.addObservableListListener(new ObservableListListener() {
+            
+            RrrComparatorByRegistrationDate sorter = new RrrComparatorByRegistrationDate();
+            
+            @Override
+            public void listElementsAdded(ObservableList list, int index, int length) {
+                for (int i = index; i < length + index; i++) {
+                    rrrHistoricList.add((RrrBean) list.get(i));
+                }
+                Collections.sort(rrrHistoricList.getFilteredList(), sorter);
+            }
+
+            @Override
+            public void listElementsRemoved(ObservableList list, int index, List oldElements) {
+                rrrHistoricList.removeAll(oldElements);
+                Collections.sort(rrrHistoricList.getFilteredList(), sorter);
+            }
+
+            @Override
+            public void listElementReplaced(ObservableList list, int index, Object oldElement) {
+                rrrHistoricList.set(rrrHistoricList.indexOf(oldElement), (RrrBean)oldElement);
+                Collections.sort(rrrHistoricList.getFilteredList(), sorter);
+            }
+
+            @Override
+            public void listElementPropertyChanged(ObservableList list, int index) {
+            }
+        });
     }
 
     public void createPaperTitle(SourceBean source) {
@@ -244,6 +280,16 @@ public class BaUnitBean extends BaUnitSummaryBean {
                 null, selectedRight);
     }
 
+    public RrrBean getSelectedHistoricRight() {
+        return selectedHistoricRight;
+    }
+
+    public void setSelectedHistoricRight(RrrBean selectedHistoricRight) {
+        this.selectedHistoricRight = selectedHistoricRight;
+        propertySupport.firePropertyChange(SELECTED_HISTORIC_RIGHT_PROPERTY,
+                null, selectedHistoricRight);
+    }
+
     public SolaList<BaUnitNotationBean> getBaUnitNotationList() {
         return baUnitNotationList;
     }
@@ -344,7 +390,17 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     public void setCadastreObject(CadastreObjectBean cadastreObject) {
+        CadastreObjectBean oldValue = this.cadastreObject;
         this.cadastreObject = cadastreObject;
+        propertySupport.firePropertyChange(CADASTRE_OBJECT_PROPERTY, oldValue, this.cadastreObject);
+    }
+
+    public String getCadastreObjectId() {
+        if(getCadastreObject() == null ){
+            return null;
+        } else {
+            return getCadastreObject().getId();
+        }
     }
 
     public SolaList<RrrBean> getRrrList() {
@@ -353,6 +409,28 @@ public class BaUnitBean extends BaUnitSummaryBean {
 
     public ObservableList<RrrBean> getRrrFilteredList() {
         return rrrList.getFilteredList();
+    }
+
+    public ObservableList<RrrBean> getRrrHistoricList() {
+        return rrrHistoricList.getFilteredList();
+    }
+
+    /**
+     * Returns ownership rights with pending or current status.
+     */
+    public ArrayList<RrrBean> getOwnershipList() {
+        ArrayList<RrrBean> result = new ArrayList<RrrBean>();
+        for (RrrBean rrr : getRrrFilteredList()) {
+            if (rrr.getStatusCode() != null && rrr.getRrrType() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(
+                    RrrGroupTypeBean.CODE_OWNERSHIP)
+                    && (rrr.getStatusCode().equals(StatusConstants.PENDING)
+                    || rrr.getStatusCode().equals(StatusConstants.CURRENT))) {
+                result.add(rrr);
+            }
+        }
+        return result;
     }
 
     public void addRrr(RrrBean rrrBean) {
@@ -392,10 +470,24 @@ public class BaUnitBean extends BaUnitSummaryBean {
         }
     }
 
-    public void removeParcel(){
+    public void removeParcel() {
         CadastreObjectBean emptyParcel = new CadastreObjectBean();
         emptyParcel.setEntityAction(EntityAction.DISASSOCIATE);
         setCadastreObject(emptyParcel);
+    }
+
+    /**
+     * Returns true if there is ownership right on the list.
+     */
+    public boolean hasPendingOwnership() {
+        for (RrrBean rrr : getRrrList()) {
+            if (rrr.getStatusCode() != null && rrr.getStatusCode().equals(StatusConstants.PENDING)
+                    && rrr.getRrrType() != null && rrr.getRrrType().getRrrGroupTypeCode() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_OWNERSHIP)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean saveBaUnit(String serviceId) {

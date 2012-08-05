@@ -1,32 +1,32 @@
 /**
- * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
- * (FAO). All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,this
- * list of conditions and the following disclaimer. 2. Redistributions in binary
- * form must reproduce the above copyright notice,this list of conditions and
- * the following disclaimer in the documentation and/or other materials provided
- * with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this
- * software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- * *********************************************************************************************
- */
+* ******************************************************************************************
+* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+* (FAO). All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice,this
+* list of conditions and the following disclaimer. 2. Redistributions in binary
+* form must reproduce the above copyright notice,this list of conditions and
+* the following disclaimer in the documentation and/or other materials provided
+* with the distribution. 3. Neither the name of FAO nor the names of its
+* contributors may be used to endorse or promote products derived from this
+* software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+* *********************************************************************************************
+*/
 package org.sola.clients.swing.desktop.application;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -78,7 +78,6 @@ import org.sola.clients.swing.desktop.administrative.PropertyPanel;
 import org.sola.clients.swing.desktop.cadastre.CadastreTransactionMapPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.Select_Parcel_Form;
-import org.sola.clients.swing.desktop.party.PersonSearchForm_temp;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
 import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
@@ -99,12 +98,12 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 
 /**
- * This form is used to create new application or edit existing one. <p>The
- * following list of beans is used to bind the data on the form:<br />
- * {@link ApplicationBean}, <br />{@link RequestTypeListBean}, <br />
- * {@link PartySummaryListBean}, <br />{@link CommunicationTypeListBean}, <br />
- * {@link SourceTypeListBean}, <br />{@link ApplicationDocumentsHelperBean}</p>
- */
+* This form is used to create new application or edit existing one. <p>The
+* following list of beans is used to bind the data on the form:<br />
+* {@link ApplicationBean}, <br />{@link RequestTypeListBean}, <br />
+* {@link PartySummaryListBean}, <br />{@link CommunicationTypeListBean}, <br />
+* {@link SourceTypeListBean}, <br />{@link ApplicationDocumentsHelperBean}</p>
+*/
 public class ApplicationPanel extends ContentPanel {
 
     private class PersonSearchFormListener implements PropertyChangeListener {
@@ -127,13 +126,13 @@ public class ApplicationPanel extends ContentPanel {
     private String applicationID;
 
     /**
-     * This method is used by the form designer to create {@link ApplicationBean}.
-     * It uses
-     * <code>applicationId</code> parameter passed to the form constructor.<br
-     * />
-     * <code>applicationId</code> should be initialized before
-     * {@link ApplicationForm#initComponents} method call.
-     */
+* This method is used by the form designer to create {@link ApplicationBean}.
+* It uses
+* <code>applicationId</code> parameter passed to the form constructor.<br
+* />
+* <code>applicationId</code> should be initialized before
+* {@link ApplicationForm#initComponents} method call.
+*/
     private ApplicationBean getApplicationBean() {
         ApplicationBean applicationBean = new ApplicationBean();
 
@@ -168,17 +167,17 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Default constructor to create new application.
-     */
+* Default constructor to create new application.
+*/
     public ApplicationPanel() {
         this(null);
     }
 
     /**
-     * This constructor is used to open existing application for editing.
-     *
-     * @param applicationId ID of application to open.
-     */
+* This constructor is used to open existing application for editing.
+*
+* @param applicationId ID of application to open.
+*/
     public ApplicationPanel(String applicationId) {
         this.applicationID = applicationId;
         initComponents();
@@ -186,8 +185,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Runs post initialization actions to customize form elements.
-     */
+* Runs post initialization actions to customize form elements.
+*/
     private void postInit() {
 
         addDocumentPanel.addPropertyChangeListener(new PropertyChangeListener() {
@@ -271,8 +270,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Applies customization of form, based on Application status.
-     */
+* Applies customization of form, based on Application status.
+*/
     private void customizeApplicationForm() {
         if (appBean != null && !appBean.isNew()) {
             java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle");
@@ -356,8 +355,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Disables or enables buttons, related to the services list management.
-     */
+* Disables or enables buttons, related to the services list management.
+*/
     private void customizeServicesButtons() {
         ApplicationServiceBean selectedService = appBean.getSelectedService();
         boolean servicesManagementAllowed = appBean.isManagementAllowed();
@@ -440,8 +439,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Disables or enables buttons, related to the property list management.
-     */
+* Disables or enables buttons, related to the property list management.
+*/
     private void customizePropertyButtons() {
         boolean enable = false;
         if (appBean.isEditingAllowed() && appBean.getSelectedProperty() != null) {
@@ -452,8 +451,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Disables or enables buttons, related to the documents list management.
-     */
+* Disables or enables buttons, related to the documents list management.
+*/
     private void customizeDocumentsButtons() {
         SourceBean selectedDocument = appBean.getSelectedSource();
         boolean enablePropertyButtons = appBean.isEditingAllowed();
@@ -472,8 +471,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * This method is used by the form designer to create the list of agents.
-     */
+* This method is used by the form designer to create the list of agents.
+*/
     private PartySummaryListBean createPartySummaryList() {
         PartySummaryListBean agentsList = new PartySummaryListBean();
         agentsList.FillAgents(true);
@@ -505,28 +504,28 @@ public class ApplicationPanel extends ContentPanel {
         }
     }
 
-//    private void openPropertyForm(final ApplicationPropertyBean applicationProperty, final boolean readOnly) {
-//        if (applicationProperty != null) {
-//            SolaTask t = new SolaTask<Void, Void>() {
+// private void openPropertyForm(final ApplicationPropertyBean applicationProperty, final boolean readOnly) {
+// if (applicationProperty != null) {
+// SolaTask t = new SolaTask<Void, Void>() {
 //
-//                @Override
-//                public Void doTask() {
-//                    setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
-//                    ApplicationBean applicationBean = appBean.copy();
-//                    PropertyPanel propertyPnl = new PropertyPanel(applicationBean,
-//                            applicationBean.getSelectedService(), applicationProperty.getNameFirstpart(),
-//                            applicationProperty.getNameLastpart(), readOnly);
-//                    getMainContentPanel().addPanel(propertyPnl, MainContentPanel.CARD_PROPERTY_PANEL, true);
-//                    return null;
-//                }
-//            };
-//            TaskManager.getInstance().runTask(t);
-//        }
-//    }
+// @Override
+// public Void doTask() {
+// setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
+// ApplicationBean applicationBean = appBean.copy();
+// PropertyPanel propertyPnl = new PropertyPanel(applicationBean,
+// applicationBean.getSelectedService(), applicationProperty.getNameFirstpart(),
+// applicationProperty.getNameLastpart(), readOnly);
+// getMainContentPanel().addPanel(propertyPnl, MainContentPanel.CARD_PROPERTY_PANEL, true);
+// return null;
+// }
+// };
+// TaskManager.getInstance().runTask(t);
+// }
+// }
     /**
-     * Opens dialog form to display status change result for application or
-     * service.
-     */
+* Opens dialog form to display status change result for application or
+* service.
+*/
     private void openValidationResultForm(List<ValidationResultBean> validationResultList,
             boolean isSuccess, String message) {
         ValidationResultForm resultForm = new ValidationResultForm(
@@ -536,9 +535,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Checks if there are any changes on the form before proceeding with
-     * action.
-     */
+* Checks if there are any changes on the form before proceeding with
+* action.
+*/
     private boolean checkSaveBeforeAction() {
         if (MainForm.checkBeanState(appBean)) {
             if (MessageUtility.displayMessage(ClientMessage.APPLICATION_SAVE_BEFORE_ACTION)
@@ -556,8 +555,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Validates application
-     */
+* Validates application
+*/
     private void validateApplication() {
         if (!checkSaveBeforeAction()) {
             return;
@@ -649,28 +648,28 @@ public class ApplicationPanel extends ContentPanel {
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_CHANGE)
                     || requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_REDEFINITION)) {
 
-                if (appBean.getPropertyList().getFilteredList().size() == 1) {
-                    SolaTask t = new SolaTask<Void, Void>() {
-
-                        @Override
-                        public Void doTask() {
-                            setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
-                            CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                                    appBean,
-                                    appBean.getSelectedService(),
-                                    appBean.getPropertyList().getFilteredList().get(0));
-                            getMainContentPanel().addPanel(form, MainContentPanel.CARD_CADASTRECHANGE, true);
-                            return null;
-                        }
-                    };
-                    TaskManager.getInstance().runTask(t);
-
-                } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
-                    PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
+// if (appBean.getPropertyList().getFilteredList().size() == 1) {
+// SolaTask t = new SolaTask<Void, Void>() {
+//
+// @Override
+// public Void doTask() {
+// setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
+// CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
+// appBean,
+// appBean.getSelectedService(),
+// appBean.getPropertyList().getFilteredList().get(0));
+// getMainContentPanel().addPanel(form, MainContentPanel.CARD_CADASTRECHANGE, true);
+// return null;
+// }
+// };
+// TaskManager.getInstance().runTask(t);
+//
+// } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
+                if (appBean.getPropertyList().getFilteredList().size() > 0) {
+                    final PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
                     propertyListForm.setLocationRelativeTo(this);
 
                     propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
-
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
@@ -683,10 +682,12 @@ public class ApplicationPanel extends ContentPanel {
 
                                     @Override
                                     public Void doTask() {
+                                        List<String> mapsheets=propertyListForm.getMapSheets();
                                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
+                                        
                                         CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
                                                 appBean,
-                                                appBean.getSelectedService(), property);
+                                                appBean.getSelectedService(), property,mapsheets);
                                         getMainContentPanel().addPanel(
                                                 form, MainContentPanel.CARD_CADASTRECHANGE, true);
                                         return null;
@@ -700,7 +701,7 @@ public class ApplicationPanel extends ContentPanel {
 
                 } else {
                     CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                            appBean, appBean.getSelectedService(), null);
+                            appBean, appBean.getSelectedService(), null,null);
                     getMainContentPanel().addPanel(
                             form, MainContentPanel.CARD_CADASTRECHANGE, true);
                 }
@@ -733,41 +734,41 @@ public class ApplicationPanel extends ContentPanel {
                 } else {
                     //New ownership overwritten by custom nepal service.
                     // Open property form for new title registration
-//                    if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_APARTMENT)
-//                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_FREEHOLD)
-//                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_OWNERSHIP)
-//                            || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_STATE)) {
+// if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_APARTMENT)
+// || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_FREEHOLD)
+// || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_OWNERSHIP)
+// || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_STATE)) {
                     if (!readOnly) {
                         // Open empty property form
                         openPropertyForm(new BaUnitBean(), readOnly);
                     }
-//                    } else {
+// } else {
 //
-//                        // Open property form for existing title changes
-//                        if (appBean.getPropertyList().getFilteredList().size() == 1) {
-//                            openPropertyForm(appBean.getPropertyList().getFilteredList().get(0), readOnly);
-//                        } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
-//                            PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
-//                            propertyListForm.setLocationRelativeTo(this);
+// // Open property form for existing title changes
+// if (appBean.getPropertyList().getFilteredList().size() == 1) {
+// openPropertyForm(appBean.getPropertyList().getFilteredList().get(0), readOnly);
+// } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
+// PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
+// propertyListForm.setLocationRelativeTo(this);
 //
-//                            propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
+// propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
 //
-//                                @Override
-//                                public void propertyChange(PropertyChangeEvent evt) {
-//                                    if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
-//                                            && evt.getNewValue() != null) {
-//                                        ApplicationPropertyBean property = (ApplicationPropertyBean) evt.getNewValue();
-//                                        ((JDialog) evt.getSource()).dispose();
-//                                        openPropertyForm(property, readOnly);
-//                                    }
-//                                }
-//                            });
+// @Override
+// public void propertyChange(PropertyChangeEvent evt) {
+// if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
+// && evt.getNewValue() != null) {
+// ApplicationPropertyBean property = (ApplicationPropertyBean) evt.getNewValue();
+// ((JDialog) evt.getSource()).dispose();
+// openPropertyForm(property, readOnly);
+// }
+// }
+// });
 //
-//                            propertyListForm.setVisible(true);
-//                        } else {
-//                            MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_LIST_EMPTY);
-//                        }
-//                    }
+// propertyListForm.setVisible(true);
+// } else {
+// MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_LIST_EMPTY);
+// }
+// }
                 }
             }
 
@@ -798,7 +799,7 @@ public class ApplicationPanel extends ContentPanel {
             }
         }
 
-        // Check how many properties needed 
+        // Check how many properties needed
         int nrPropRequired = 0;
 
         for (Iterator<ApplicationServiceBean> it = appBean.getServiceList().iterator(); it.hasNext();) {
@@ -814,12 +815,12 @@ public class ApplicationPanel extends ContentPanel {
             }
         }
         //Commented by Kabindra for nepal_custom.
-//        String[] params = {"" + nrPropRequired};
-//        if (appBean.getPropertyList().size() < nrPropRequired) {
-//            if (MessageUtility.displayMessage(ClientMessage.APPLICATION_ATLEAST_PROPERTY_REQUIRED, params) == MessageUtility.BUTTON_TWO) {
-//                return false;
-//            }
-//        }
+// String[] params = {"" + nrPropRequired};
+// if (appBean.getPropertyList().size() < nrPropRequired) {
+// if (MessageUtility.displayMessage(ClientMessage.APPLICATION_ATLEAST_PROPERTY_REQUIRED, params) == MessageUtility.BUTTON_TWO) {
+// return false;
+// }
+// }
         return true;
     }
 
@@ -874,8 +875,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Designer generated code
-     */
+* Designer generated code
+*/
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
@@ -1352,8 +1353,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(labName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
-            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addContainerGap(202, Short.MAX_VALUE))
+            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1390,8 +1391,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(labLastName)
-                .addContainerGap(245, Short.MAX_VALUE))
-            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addContainerGap(249, Short.MAX_VALUE))
+            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1470,8 +1471,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(labPhone)
-                .addContainerGap(275, Short.MAX_VALUE))
-            .addComponent(txtPhone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addContainerGap(279, Short.MAX_VALUE))
+            .addComponent(txtPhone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1509,7 +1510,7 @@ public class ApplicationPanel extends ContentPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtFax, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+            .addComponent(txtFax, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(labFax)
                 .addContainerGap())
@@ -1552,8 +1553,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(labEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
-            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addContainerGap(173, Short.MAX_VALUE))
+            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1592,8 +1593,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(labPreferredWay)
-                .addContainerGap(150, Short.MAX_VALUE))
-            .addComponent(cbxCommunicationWay, 0, 309, Short.MAX_VALUE)
+                .addContainerGap(154, Short.MAX_VALUE))
+            .addComponent(cbxCommunicationWay, 0, 313, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1654,10 +1655,10 @@ public class ApplicationPanel extends ContentPanel {
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbxAgents, 0, 309, Short.MAX_VALUE)
+            .addComponent(cbxAgents, 0, 313, Short.MAX_VALUE)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(labAgents)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addContainerGap(280, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1689,10 +1690,10 @@ public class ApplicationPanel extends ContentPanel {
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+            .addComponent(txtStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(labStatus)
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1725,8 +1726,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(134, Short.MAX_VALUE))
-            .addComponent(txtAppNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addContainerGap(136, Short.MAX_VALUE))
+            .addComponent(txtAppNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1759,10 +1760,10 @@ public class ApplicationPanel extends ContentPanel {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+            .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(labDate)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1793,8 +1794,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap(137, Short.MAX_VALUE))
-            .addComponent(txtCompleteBy, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addContainerGap(139, Short.MAX_VALUE))
+            .addComponent(txtCompleteBy, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1823,7 +1824,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addContainerGap()
                 .addGroup(contactPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                    .addComponent(jPanel25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
                     .addComponent(jPanel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(groupPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(contactPanelLayout.createSequentialGroup()
@@ -1844,7 +1845,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.contactPanel.TabConstraints.tabTitle"), contactPanel); // NOI18N
@@ -2009,8 +2010,8 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, servicesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(servicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
-                    .addComponent(tbServices, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
+                    .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
+                    .addComponent(tbServices, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE))
                 .addContainerGap())
         );
         servicesPanelLayout.setVerticalGroup(
@@ -2019,7 +2020,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addContainerGap()
                 .addComponent(tbServices, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2129,8 +2130,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(labFirstPart)
-                .addContainerGap(66, Short.MAX_VALUE))
-            .addComponent(txtFirstPart, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                .addContainerGap(67, Short.MAX_VALUE))
+            .addComponent(txtFirstPart, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2160,8 +2161,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(labLastPart)
-                .addContainerGap(67, Short.MAX_VALUE))
-            .addComponent(txtLastPart, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                .addContainerGap(68, Short.MAX_VALUE))
+            .addComponent(txtLastPart, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2191,8 +2192,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(labArea)
-                .addContainerGap(62, Short.MAX_VALUE))
-            .addComponent(txtArea, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                .addContainerGap(63, Short.MAX_VALUE))
+            .addComponent(txtArea, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2222,8 +2223,8 @@ public class ApplicationPanel extends ContentPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(labValue)
-                .addContainerGap(84, Short.MAX_VALUE))
-            .addComponent(txtValue, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                .addContainerGap(85, Short.MAX_VALUE))
+            .addComponent(txtValue, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2278,7 +2279,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addContainerGap()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(propertypartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                        .addComponent(propertypartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel20Layout.createSequentialGroup()
@@ -2304,7 +2305,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, propertyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(propertyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                    .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
                     .addComponent(tbPropertyDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -2317,7 +2318,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tbPropertyDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -2440,7 +2441,7 @@ public class ApplicationPanel extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addDocumentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addComponent(addDocumentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -2495,8 +2496,8 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(documentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(documentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                    .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(documentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -2512,13 +2513,13 @@ public class ApplicationPanel extends ContentPanel {
                     .addGroup(documentPanelLayout.createSequentialGroup()
                         .addComponent(labDocRequired, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollDocRequired, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+                        .addComponent(scrollDocRequired, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE))
                     .addGroup(documentPanelLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
+                        .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -2530,11 +2531,11 @@ public class ApplicationPanel extends ContentPanel {
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
+            .addGap(0, 661, Short.MAX_VALUE)
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 445, Short.MAX_VALUE)
+            .addGap(0, 408, Short.MAX_VALUE)
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.mapPanel.TabConstraints.tabTitle"), mapPanel); // NOI18N
@@ -2728,7 +2729,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(feesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(feesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollFeeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                    .addComponent(scrollFeeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -2736,7 +2737,7 @@ public class ApplicationPanel extends ContentPanel {
             feesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, feesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollFeeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                .addComponent(scrollFeeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -2788,14 +2789,14 @@ public class ApplicationPanel extends ContentPanel {
             validationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(validationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
                 .addContainerGap())
         );
         validationPanelLayout.setVerticalGroup(
             validationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(validationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2850,14 +2851,14 @@ public class ApplicationPanel extends ContentPanel {
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
                 .addContainerGap())
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2867,11 +2868,11 @@ public class ApplicationPanel extends ContentPanel {
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+            .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+            .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel22);
@@ -2880,11 +2881,11 @@ public class ApplicationPanel extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -2894,7 +2895,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2902,8 +2903,8 @@ public class ApplicationPanel extends ContentPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Validates user's data input and calls save operation on the {@link ApplicationBean}.
-     */
+* Validates user's data input and calls save operation on the {@link ApplicationBean}.
+*/
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveApplication(false);
 }//GEN-LAST:event_btnSaveActionPerformed
@@ -2934,9 +2935,9 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_btnAddPropertyActionPerformed
 
     /**
-     * Opens {@link FileBrowserForm} to select digital copy of the document and
-     * get it attached.
-     */
+* Opens {@link FileBrowserForm} to select digital copy of the document and
+* get it attached.
+*/
     private void tabDocumentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabDocumentsMouseClicked
         if (evt.getClickCount() == 2) {
             openAttachment();
@@ -2944,8 +2945,8 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_tabDocumentsMouseClicked
 
     /**
-     * Removes attached digital copy from selected document.
-     */
+* Removes attached digital copy from selected document.
+*/
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
         // Verify the email address is valid
         if (appBean.getContactPerson().getEmail() == null
@@ -3183,8 +3184,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Opens attached digital copy of the selected document
-     */
+* Opens attached digital copy of the selected document
+*/
     private void openAttachment() {
         if (appBean.getSelectedSource() != null
                 && appBean.getSelectedSource().getArchiveDocument() != null) {
@@ -3202,16 +3203,16 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Initializes map control to display application location.
-     */
+* Initializes map control to display application location.
+*/
     private void formComponentShown(java.awt.event.ComponentEvent evt) {
-        if (this.mapControl == null) {
-            this.mapControl = new ControlsBundleForApplicationLocation();
-            this.mapControl.setApplicationLocation(appBean.getLocation());
-            this.mapControl.setApplicationId(appBean.getId());
-            this.mapPanel.setLayout(new BorderLayout());
-            this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
-        }
+// if (this.mapControl == null) {
+// this.mapControl = new ControlsBundleForApplicationLocation();
+// this.mapControl.setApplicationLocation(appBean.getLocation());
+// this.mapControl.setApplicationId(appBean.getId());
+// this.mapPanel.setLayout(new BorderLayout());
+// this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
+// }
         hideUncessaryTabs();
     }
 
@@ -3229,21 +3230,21 @@ public class ApplicationPanel extends ContentPanel {
         switch (panel_name) {
             case "historyPanel":
                 return true;
-//            case "validationPanel":
-//                return true;
+// case "validationPanel":
+// return true;
             case "mapPanel":
                 return true;
-//            case "propertyPanel":
-//                return true; 
+// case "propertyPanel":
+// return true;
         }
 
         return false;
     }
 
     /**
-     * Clears fields on the <b>Properties</b> tab, after the new property is
-     * added into the list.
-     */
+* Clears fields on the <b>Properties</b> tab, after the new property is
+* added into the list.
+*/
     private void clearPropertyFields() {
         txtFirstPart.setText(null);
         txtLastPart.setText(null);
@@ -3252,8 +3253,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Opens {@link ReportViewerForm} to display report.
-     */
+* Opens {@link ReportViewerForm} to display report.
+*/
     private void showReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setLocationRelativeTo(this);
@@ -3337,8 +3338,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Removes selected service from the services list.
-     */
+* Removes selected service from the services list.
+*/
     private void removeService() {
         if (appBean.getSelectedService() != null) {
             appBean.removeSelectedService();
@@ -3347,8 +3348,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Moves selected service up in the list of services.
-     */
+* Moves selected service up in the list of services.
+*/
     private void moveServiceUp() {
         ApplicationServiceBean asb = appBean.getSelectedService();
         if (asb != null) {
@@ -3365,13 +3366,13 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Moves selected application service down in the services list. Calls {@link ApplicationBean#moveServiceDown()}
-     */
+* Moves selected application service down in the services list. Calls {@link ApplicationBean#moveServiceDown()}
+*/
     private void moveServiceDown() {
         ApplicationServiceBean asb = appBean.getSelectedService();
         if (asb != null) {
             Integer order = (Integer) (tabServices.getValueAt(tabServices.getSelectedRow(), 0));
-            //            lstSelectedServices.setSelectedIndex(lstSelectedServices.getSelectedIndex() - 1);
+            // lstSelectedServices.setSelectedIndex(lstSelectedServices.getSelectedIndex() - 1);
             if (appBean.moveServiceDown()) {
                 tabServices.setValueAt(order + 1, tabServices.getSelectedRow() + 1, 0);
                 tabServices.setValueAt(order, tabServices.getSelectedRow(), 0);
@@ -3383,15 +3384,15 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Launches selected service.
-     */
+* Launches selected service.
+*/
     private void startService() {
         launchService(false);
     }
 
     /**
-     * Calls "complete method for the selected service. "
-     */
+* Calls "complete method for the selected service. "
+*/
     private void completeService() {
         final ApplicationServiceBean selectedService = appBean.getSelectedService();
 
@@ -3525,15 +3526,15 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Removes selected property object from the properties list. Calls {@link ApplicationBean#removeSelectedProperty()}
-     */
+* Removes selected property object from the properties list. Calls {@link ApplicationBean#removeSelectedProperty()}
+*/
     private void removeSelectedProperty() {
         appBean.removeSelectedProperty();
     }
 
     /**
-     * Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
-     */
+* Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
+*/
     private void verifySelectedProperty() {
         if (appBean.getSelectedProperty() == null) {
             MessageUtility.displayMessage(ClientMessage.APPLICATION_SELECT_PROPERTY_TOVERIFY);
@@ -3590,8 +3591,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Calculates fee for the application. Calls {@link ApplicationBean#calculateFee()}
-     */
+* Calculates fee for the application. Calls {@link ApplicationBean#calculateFee()}
+*/
     private void calculateFee() {
         SolaTask t = new SolaTask<Void, Void>() {
 
@@ -3607,8 +3608,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Prints payment receipt.
-     */
+* Prints payment receipt.
+*/
     private void printReceipt() {
         if (applicationID == null || applicationID.equals("")) {
             if (MessageUtility.displayMessage(ClientMessage.CHECK_NOT_LODGED_RECEIPT) == MessageUtility.BUTTON_TWO) {
@@ -3619,8 +3620,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Allows to overview service.
-     */
+* Allows to overview service.
+*/
     private void viewService() {
         launchService(true);
     }

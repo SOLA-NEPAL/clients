@@ -31,7 +31,7 @@
  */
 package org.sola.clients.swing.gis.to;
 
-import org.sola.common.MappingManager;
+import org.sola.common.mapping.MappingManager;
 import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**

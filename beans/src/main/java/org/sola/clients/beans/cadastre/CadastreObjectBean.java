@@ -33,7 +33,6 @@ import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
@@ -99,7 +98,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
         ParcelTypeBean oldValue = this.parceltypeBean;
         this.parceltypeBean = parceltypeBean;
         propertySupport.firePropertyChange(
-                PARCEL_TYPE_BEAN_PROPERTY, oldValue, this.mapSheet);
+                PARCEL_TYPE_BEAN_PROPERTY, oldValue, this.parceltypeBean);
     }
 
     public SpatialValueAreaBean getSpatialValueArea() {

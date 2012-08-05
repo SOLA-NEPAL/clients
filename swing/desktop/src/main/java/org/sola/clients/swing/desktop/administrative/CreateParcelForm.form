@@ -73,7 +73,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="org.sola.clients.swing.ui.cadastre.ParcelPanel" name="parcelPanel">
+    <Component class="org.sola.clients.swing.ui.cadastre.ParcelViewPanel" name="parcelPanel">
       <Properties>
         <Property name="name" type="java.lang.String" value="parcelPanel" noResource="true"/>
       </Properties>

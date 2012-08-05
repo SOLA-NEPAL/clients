@@ -32,19 +32,24 @@
 package org.sola.clients.swing.gis.ui.controlsbundle;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.geotools.feature.SchemaException;
 import org.geotools.map.extended.layer.ExtendedFeatureLayer;
 import org.geotools.map.extended.layer.ExtendedLayer;
 import org.geotools.swing.extended.ControlsBundle;
 import org.geotools.swing.extended.exception.InitializeLayerException;
-import org.geotools.swing.extended.exception.InitializeMapException;
 import org.sola.clients.swing.gis.Messaging;
+import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
+import org.sola.clients.swing.gis.layer.CadastreObjectLayer;
+import org.sola.clients.swing.gis.layer.ConstructionObjectLayer;
 import org.sola.clients.swing.gis.layer.PojoLayer;
 import org.sola.clients.swing.gis.mapaction.BlankTool;
+import org.sola.clients.swing.gis.mapaction.MapOptionShow;
 import org.sola.clients.swing.gis.mapaction.SolaPrint;
 import org.sola.clients.swing.gis.mapaction.ZoomToScale;
 import org.sola.clients.swing.gis.tool.InformationTool;
+import org.sola.clients.swing.gis.ui.control.MapDisplayOptionForm;
 import org.sola.clients.swing.gis.ui.control.SearchPanel;
 import org.sola.common.messaging.GisMessage;
 import org.sola.webservices.spatial.ConfigMapLayerTO;
@@ -65,7 +70,18 @@ public abstract class SolaControlsBundle extends ControlsBundle {
     private PojoDataAccess pojoDataAccess = null;
     
     private SolaPrint solaPrint = null;
+    private CadastreObjectLayer parcelLayer=null;
+    private List<String> mapsheets=null;
+    private ConstructionObjectLayer consLayer=null;
 
+    public List<String> getMapsheets() {
+        return mapsheets;
+    }
+
+    public void setMapsheets(List<String> mapsheets) {
+        this.mapsheets = mapsheets;
+    }
+    
     public SolaControlsBundle() {
         super();
         if (!gisInitialized) {
@@ -83,7 +99,19 @@ public abstract class SolaControlsBundle extends ControlsBundle {
     }
     
     public void addMemoryLayers(){
+        //for parcel layer in memory.
+        try {
+            this.parcelLayer=new CadastreObjectLayer();
+            this.getMap().addLayer(this.parcelLayer);
+            
+            this.consLayer=new ConstructionObjectLayer();
+            this.getMap().addLayer(this.consLayer);
         
+            this.getMap().addMapAction(new MapOptionShow(this.getMap(),
+                    this.parcelLayer,this.consLayer,mapsheets)
+                    , this.getToolbar(), true);
+        } catch (Exception e) {
+        }
     }
     /**
      * Sets up the bundle.
@@ -113,17 +141,16 @@ public abstract class SolaControlsBundle extends ControlsBundle {
             for (ConfigMapLayerTO configMapLayer : mapDefinition.getLayers()) {
                 this.addLayerConfig(configMapLayer);
             }
+            PublicMethod.getParcelData(parcelLayer, mapsheets);
+            PublicMethod.getConstructionData(consLayer, mapsheets);
             this.getMap().initializeSelectionLayer();
             this.getMap().zoomToFullExtent();
-        } catch (InitializeLayerException ex) {
-            Messaging.getInstance().show(GisMessage.GENERAL_CONTROLBUNDLE_ERROR);
-            org.sola.common.logging.LogUtility.log(
-                    GisMessage.GENERAL_CONTROLBUNDLE_ERROR, ex);
-        } catch (InitializeMapException ex) {
-            Messaging.getInstance().show(GisMessage.GENERAL_CONTROLBUNDLE_ERROR);
-            org.sola.common.logging.LogUtility.log(
-                    GisMessage.GENERAL_CONTROLBUNDLE_ERROR, ex);
-        } catch (SchemaException ex) {
+            if (mapsheets==null || mapsheets.size()<1){
+                MapDisplayOptionForm mapDisplayForm=new MapDisplayOptionForm(
+                        this.getMap(),parcelLayer,consLayer,mapsheets);
+                mapDisplayForm.setVisible(true);
+            }
+        } catch (Exception ex) {
             Messaging.getInstance().show(GisMessage.GENERAL_CONTROLBUNDLE_ERROR);
             org.sola.common.logging.LogUtility.log(
                     GisMessage.GENERAL_CONTROLBUNDLE_ERROR, ex);
