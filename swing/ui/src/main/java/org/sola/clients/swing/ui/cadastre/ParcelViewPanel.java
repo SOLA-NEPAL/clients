@@ -110,7 +110,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel4.setText(bundle.getString("ParcelViewPanel.jLabel4.text")); // NOI18N
         jLabel4.setName(bundle.getString("ParcelViewPanel.jLabel4.name")); // NOI18N
 
-        txtParcelNameFirstPart.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelNameFirstPart.setEditable(false);
         txtParcelNameFirstPart.setName(bundle.getString("ParcelViewPanel.txtParcelNameFirstPart.name")); // NOI18N
 
@@ -142,7 +141,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel8.setText(bundle.getString("ParcelViewPanel.jLabel8.text")); // NOI18N
         jLabel8.setName(bundle.getString("ParcelViewPanel.jLabel8.name")); // NOI18N
 
-        txtParcelNameLastPart.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelNameLastPart.setEditable(false);
         txtParcelNameLastPart.setName(bundle.getString("ParcelViewPanel.txtParcelNameLastPart.name")); // NOI18N
 
@@ -174,7 +172,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel9.setText(bundle.getString("ParcelViewPanel.jLabel9.text")); // NOI18N
         jLabel9.setName(bundle.getString("ParcelViewPanel.jLabel9.name")); // NOI18N
 
-        txtParcelVdc.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelVdc.setEditable(false);
         txtParcelVdc.setText(bundle.getString("ParcelViewPanel.txtParcelVdc.text")); // NOI18N
         txtParcelVdc.setName(bundle.getString("ParcelViewPanel.txtParcelVdc.name")); // NOI18N
@@ -204,7 +201,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel10.setText(bundle.getString("ParcelViewPanel.jLabel10.text")); // NOI18N
         jLabel10.setName(bundle.getString("ParcelViewPanel.jLabel10.name")); // NOI18N
 
-        txtParcelWardNumber.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelWardNumber.setEditable(false);
         txtParcelWardNumber.setText(bundle.getString("ParcelViewPanel.txtParcelWardNumber.text")); // NOI18N
         txtParcelWardNumber.setName(bundle.getString("ParcelViewPanel.txtParcelWardNumber.name")); // NOI18N
@@ -234,7 +230,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel11.setText(bundle.getString("ParcelViewPanel.jLabel11.text")); // NOI18N
         jLabel11.setName(bundle.getString("ParcelViewPanel.jLabel11.name")); // NOI18N
 
-        txtParcelMapSheet.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelMapSheet.setEditable(false);
         txtParcelMapSheet.setText(bundle.getString("ParcelViewPanel.txtParcelMapSheet.text")); // NOI18N
         txtParcelMapSheet.setName(bundle.getString("ParcelViewPanel.txtParcelMapSheet.name")); // NOI18N
@@ -264,7 +259,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel13.setText(bundle.getString("ParcelViewPanel.jLabel13.text")); // NOI18N
         jLabel13.setName(bundle.getString("ParcelViewPanel.jLabel13.name")); // NOI18N
 
-        txtParcelLandType.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelLandType.setEditable(false);
         txtParcelLandType.setText(bundle.getString("ParcelViewPanel.txtParcelLandType.text")); // NOI18N
         txtParcelLandType.setName(bundle.getString("ParcelViewPanel.txtParcelLandType.name")); // NOI18N
@@ -294,7 +288,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel14.setText(bundle.getString("ParcelViewPanel.jLabel14.text")); // NOI18N
         jLabel14.setName(bundle.getString("ParcelViewPanel.jLabel14.name")); // NOI18N
 
-        txtLandClass.setBackground(new java.awt.Color(255, 255, 255));
         txtLandClass.setEditable(false);
         txtLandClass.setText(bundle.getString("ParcelViewPanel.txtLandClass.text")); // NOI18N
         txtLandClass.setName(bundle.getString("ParcelViewPanel.txtLandClass.name")); // NOI18N
@@ -324,7 +317,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel17.setText(bundle.getString("ParcelViewPanel.jLabel17.text")); // NOI18N
         jLabel17.setName(bundle.getString("ParcelViewPanel.jLabel17.name")); // NOI18N
 
-        txtLandUse.setBackground(new java.awt.Color(255, 255, 255));
         txtLandUse.setEditable(false);
         txtLandUse.setText(bundle.getString("ParcelViewPanel.txtLandUse.text")); // NOI18N
         txtLandUse.setName(bundle.getString("ParcelViewPanel.txtLandUse.name")); // NOI18N
@@ -354,7 +346,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel12.setText(bundle.getString("ParcelViewPanel.jLabel12.text")); // NOI18N
         jLabel12.setName(bundle.getString("ParcelViewPanel.jLabel12.name")); // NOI18N
 
-        txtParcelArea.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelArea.setEditable(false);
         txtParcelArea.setText(bundle.getString("ParcelViewPanel.txtParcelArea.text")); // NOI18N
         txtParcelArea.setName(bundle.getString("ParcelViewPanel.txtParcelArea.name")); // NOI18N
@@ -384,7 +375,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel18.setText(bundle.getString("ParcelViewPanel.jLabel18.text")); // NOI18N
         jLabel18.setName(bundle.getString("ParcelViewPanel.jLabel18.name")); // NOI18N
 
-        txtParcelGuthiNum.setBackground(new java.awt.Color(255, 255, 255));
         txtParcelGuthiNum.setEditable(false);
         txtParcelGuthiNum.setText(bundle.getString("ParcelViewPanel.txtParcelGuthiNum.text")); // NOI18N
         txtParcelGuthiNum.setName(bundle.getString("ParcelViewPanel.txtParcelGuthiNum.name")); // NOI18N

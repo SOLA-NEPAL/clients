@@ -67,8 +67,8 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel12" max="32767" attributes="0"/>
-                      <Component id="jPanel7" alignment="1" pref="590" max="32767" attributes="0"/>
+                      <Component id="jPanel12" pref="0" max="32767" attributes="0"/>
+                      <Component id="jPanel7" alignment="1" pref="739" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="rdbSearchByBoundary" min="-2" pref="329" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -85,24 +85,19 @@
                       </Group>
                   </Group>
               </Group>
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel12" max="32767" attributes="0"/>
-                              <Component id="jPanel7" alignment="1" pref="590" max="32767" attributes="0"/>
-                              <Component id="jPanel21" alignment="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="rdbSearchByMothPana" min="-2" pref="329" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                          <Component id="btnSearch3" min="-2" pref="80" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <Component id="rdbSearchByMothPana" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnSearch3" min="-2" pref="98" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanel21" alignment="1" pref="0" max="32767" attributes="0"/>
+                      <Component id="jPanel12" pref="0" max="32767" attributes="0"/>
+                      <Component id="jPanel7" alignment="1" pref="739" max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -114,24 +109,24 @@
                       <Component id="rdbSearchByBoundary" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSearch1" alignment="3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="rdbSearchByMapSheet" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rdbControSheet" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSearch2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rdbFreeSheet" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel7" min="-2" pref="62" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnSearch3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rdbSearchByMothPana" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnSearch3" alignment="3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanel21" min="-2" pref="66" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel21" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -206,7 +201,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="61" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="90" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbMapNo1" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -231,10 +226,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMapNo1">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="mapSheetListBean1" sourcePath="${mapSheets}" target="cmbMapNo1" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
@@ -248,7 +239,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="61" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="90" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbMapNo2" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -273,10 +264,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMapNo2">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="mapSheetListBean2" sourcePath="${mapSheets}" target="cmbMapNo2" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
@@ -290,7 +277,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="61" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="90" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbMapNo3" alignment="1" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -315,10 +302,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMapNo3">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="mapSheetListBean3" sourcePath="${mapSheets}" target="cmbMapNo3" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
@@ -332,7 +315,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="61" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="90" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbMapNo4" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -357,10 +340,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMapNo4">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="mapSheetListBean4" sourcePath="${mapSheets}" target="cmbMapNo4" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
@@ -374,7 +353,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="57" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="86" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbParcelNo1" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -400,11 +379,9 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbParcelNo1">
                   <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -413,35 +390,10 @@
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel12">
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      <Component id="jPanel2" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="jPanel1" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+            <Property name="columns" type="int" value="4"/>
+            <Property name="horizontalGap" type="int" value="15"/>
+            <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="jPanel2">
@@ -451,7 +403,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="140" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbDistrict" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -469,10 +421,6 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JComboBox" name="cmbDistrict">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="districtListBean" sourcePath="${districts}" target="cmbDistrict" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="districtListBean" sourcePath="${selectedDistrict}" target="cmbDistrict" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
@@ -495,7 +443,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel2" max="32767" attributes="0"/>
+                      <Component id="jLabel2" pref="173" max="32767" attributes="0"/>
                       <Component id="cmbVdc" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
@@ -519,10 +467,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbVdc">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdcs}" target="cmbVdc" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="vdcListBean" sourcePath="${selectedVdc}" target="cmbVdc" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
@@ -537,7 +481,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="48" max="32767" attributes="0"/>
+                          <EmptySpace pref="107" max="32767" attributes="0"/>
                       </Group>
                       <Component id="txtWardNo" max="32767" attributes="0"/>
                   </Group>
@@ -548,7 +492,7 @@
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="txtWardNo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -563,7 +507,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtWardNo">
                   <Properties>
-                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -575,7 +519,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="65" max="32767" attributes="0"/>
+                          <EmptySpace pref="124" max="32767" attributes="0"/>
                       </Group>
                       <Component id="txtParcelNo" max="32767" attributes="0"/>
                   </Group>
@@ -601,7 +545,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtParcelNo">
                   <Properties>
-                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -647,9 +591,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="51" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="77" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="cmbDistrict1" pref="79" max="32767" attributes="0"/>
+                      <Component id="cmbDistrict1" pref="110" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -672,10 +616,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbDistrict1">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="districtListBean1" sourcePath="${districts}" target="cmbDistrict1" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="districtListBean1" sourcePath="${selectedDistrict}" target="cmbDistrict1" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
@@ -693,7 +633,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbVdc1" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -718,10 +658,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbVdc1">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="vdcListBean1" sourcePath="${vdcs}" target="cmbVdc1" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="vdcListBean1" sourcePath="${selectedVdc}" target="cmbVdc1" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
@@ -739,7 +675,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbMothLujType" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -765,7 +701,6 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMothLujType">
                   <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="2">
                         <StringItem index="0" value="M"/>
@@ -773,7 +708,6 @@
                       </StringArray>
                     </Property>
                     <Property name="selectedIndex" type="int" value="-1"/>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbMothLujTypeItemStateChanged"/>
@@ -788,7 +722,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="52" max="32767" attributes="0"/>
                       </Group>
                       <Component id="cmbMothLujNo" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -813,10 +747,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMothLujNo">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="mothListBean" sourcePath="${moths}" target="cmbMothLujNo" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="mothListBean" sourcePath="${selectedMoth}" target="cmbMothLujNo" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
@@ -834,9 +764,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="66" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="cmbPanaNo" alignment="0" pref="79" max="32767" attributes="0"/>
+                      <Component id="cmbPanaNo" alignment="0" pref="110" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -859,10 +789,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbPanaNo">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="locListBean" sourcePath="${locs}" target="cmbPanaNo" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="locListBean" sourcePath="${selectedLoc}" target="cmbPanaNo" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
@@ -880,9 +806,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="39" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="65" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="cmbCadastreList" alignment="0" pref="79" max="32767" attributes="0"/>
+                      <Component id="cmbCadastreList" alignment="0" pref="110" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -905,10 +831,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbCadastreList">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="true"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="Form" sourcePath="${cadastreObjects}" target="cmbCadastreList" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
@@ -928,6 +850,7 @@
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rdbSearchByMothPanaItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbSearchByMothPanaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSearch3">
