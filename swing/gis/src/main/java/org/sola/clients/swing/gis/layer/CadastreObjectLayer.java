@@ -22,24 +22,26 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  *
  * @author ShresthaKabin
  */
-public class CadastreObjectLayer extends ExtendedLayerGraphics{
-     //For point data.
+public class CadastreObjectLayer extends ExtendedLayerGraphics {
+    //For point data.
+
     public static final String LAYER_FIELD_FID = "fid";
-    public static final String  LAYER_FIELD_FIRST_PART = "first_part";
-    public static final String  LAYER_FIELD_LAST_PART = "last_part";
+    public static final String LAYER_FIELD_FIRST_PART = "first_part";
+    public static final String LAYER_FIELD_LAST_PART = "last_part";
     public static final String LAYER_FIELD_MAP_SHEET = "map_sheet";
     public static final String LAYER_FIELD_PARCEL_TYPE = "parcel_type";
     public static final String LAYER_FIELD_OFFICIAL_AREA = "official_area";
-    
     private static final String LAYER_NAME = "Parcels";
     private static final String LAYER_STYLE_RESOURCE = "parcel.xml";
-
     private static final String LAYER_ATTRIBUTE_DEFINITION = String.format("%s:\"\",%s:\"\",%s:\"\",%s:\"\",%s:\"\"",
             LAYER_FIELD_FIRST_PART, LAYER_FIELD_LAST_PART, LAYER_FIELD_OFFICIAL_AREA,
-            LAYER_FIELD_MAP_SHEET,LAYER_FIELD_PARCEL_TYPE);
+            LAYER_FIELD_MAP_SHEET, LAYER_FIELD_PARCEL_TYPE);
+
     /**
-     * Gets the form that is responsible with handling other attributes of features
-     * @return 
+     * Gets the form that is responsible with handling other attributes of
+     * features
+     *
+     * @return
      */
     public CadastreObjectLayer() throws InitializeLayerException {
         //create Target point layer.
@@ -53,11 +55,12 @@ public class CadastreObjectLayer extends ExtendedLayerGraphics{
     public void clearSelection() {
         this.removeFeatures();
     }
-    
+
     /**
      * Gets the field index in the table of a certain field
+     *
      * @param fieldName
-     * @return 
+     * @return
      */
     public int getFieldIndex(String fieldName) {
         if (fieldName.equals(LAYER_FIELD_FID)) {
@@ -65,37 +68,38 @@ public class CadastreObjectLayer extends ExtendedLayerGraphics{
         }
         return -1;
     }
-    
+
     /**
      * Gets a reference to the data access
-     * @return 
+     *
+     * @return
      */
     public PojoDataAccess getDataAccess() {
         return PojoDataAccess.getInstance();
     }
-    
-    public SimpleFeature addFeature(CadastreObjectTO parcel){
+
+    public SimpleFeature addFeature(CadastreObjectTO parcel) {
         HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
         fieldsWithValues.put(
-                LAYER_FIELD_FIRST_PART,parcel.getNameFirstpart());
+                LAYER_FIELD_FIRST_PART, parcel.getNameFirstpart());
         fieldsWithValues.put(
                 LAYER_FIELD_LAST_PART, parcel.getNameLastpart());
         fieldsWithValues.put(
                 LAYER_FIELD_MAP_SHEET, parcel.getMapSheetCode());
         fieldsWithValues.put(
-                LAYER_FIELD_PARCEL_TYPE, parcel.getParcelType());
+                LAYER_FIELD_PARCEL_TYPE, parcel.getParcelTypeCode());
 
-        DecimalFormat df=new DecimalFormat("#0.00");
+        DecimalFormat df = new DecimalFormat("#0.00");
         WKBReader wkb_reader = new WKBReader();
-        Geometry geom_poly=null;
+        Geometry geom_poly = null;
         try {
             geom_poly = wkb_reader.read(parcel.getGeomPolygon());
             fieldsWithValues.put(
-                LAYER_FIELD_OFFICIAL_AREA, df.format(geom_poly.getArea()));
+                    LAYER_FIELD_OFFICIAL_AREA, df.format(geom_poly.getArea()));
         } catch (ParseException ex) {
             Logger.getLogger(CadastreObjectLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return this.addFeature(parcel.getId(), geom_poly, fieldsWithValues);
     }
 }

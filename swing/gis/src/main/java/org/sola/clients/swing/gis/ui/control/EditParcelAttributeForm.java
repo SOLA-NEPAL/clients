@@ -56,7 +56,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
 
         jComboBox1 = new javax.swing.JComboBox();
         mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
-        parcelTypeBeanList = new org.sola.clients.beans.cadastre.ParcelTypeBeanList();
+        parcelTypeBeanList = new org.sola.clients.beans.referencedata.ParcelTypeBeanList();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cboMapSheets = new javax.swing.JComboBox();
@@ -283,7 +283,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
-    private org.sola.clients.beans.cadastre.ParcelTypeBeanList parcelTypeBeanList;
+    private org.sola.clients.beans.referencedata.ParcelTypeBeanList parcelTypeBeanList;
     private javax.swing.JTextField txtFirstPartName;
     private javax.swing.JTextField txtParcelNumber;
     private javax.swing.JTextField txtSecondPartName;

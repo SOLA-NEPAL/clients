@@ -74,6 +74,7 @@ import org.sola.clients.swing.desktop.ReportViewerForm;
 import org.sola.clients.swing.desktop.administrative.PropertyPanel;
 import org.sola.clients.swing.desktop.cadastre.CadastreTransactionMapPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
+import org.sola.clients.swing.desktop.cadastre.Parcel_Selection_Form;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
 import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
@@ -3138,7 +3139,7 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_btnSelectPersonActionPerformed
 
     private void btnBrowseParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseParcelActionPerformed
-        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
+        Parcel_Selection_Form parcelSearchForm = new Parcel_Selection_Form();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{CadastreObjectTO.class};
         Class workingForm = this.getClass();
@@ -3153,7 +3154,7 @@ public class ApplicationPanel extends ContentPanel {
         displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnBrowseParcelActionPerformed
 
-    private void displayForm(Select_Parcel_Form parcelSearchForm) {
+    private void displayForm(Parcel_Selection_Form parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
             getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
         }

@@ -38,6 +38,7 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.CadastreObjectTypeBean;
+import org.sola.clients.beans.referencedata.ParcelTypeBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -84,7 +85,6 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     private int parcelno;
     private String parcelNote;
     private SolaObservableList<SpatialValueAreaBean> selectedSpatialValueArea;
-    
     private MapSheetBean mapSheet;
     private ParcelTypeBean parceltypeBean;
     private String transactionId;
@@ -135,7 +135,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
         this.selectedSpatialValueArea = selectedSpatialValueArea;
         propertySupport.firePropertyChange(SELECTED_SPATIAL_VALUE_AREA_PROPERTY, oldValue, this.selectedSpatialValueArea);
     }
-    
+
     public String getMapSheetCode() {
         if (getMapSheet() != null) {
             return getMapSheet().getId();
@@ -150,7 +150,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
             oldValue = mapSheet.getId();
         }
         this.mapSheetCode = mapSheetCode;
-        setMapSheet(CacheManager.getBeanById(CacheManager.getMapSheets(),mapSheetCode));
+        setMapSheet(CacheManager.getBeanById(CacheManager.getMapSheets(), mapSheetCode));
         propertySupport.firePropertyChange(MAPSHEET_CODE_PROPERTY, oldValue, this.mapSheetCode);
     }
 
@@ -165,24 +165,40 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
                 oldValue, this.parcelNote);
     }
 
-    public String getParcelType() {
-        if (this.parceltypeBean==null){
+    public String getParcelTypeCode() {
+        if (this.parceltypeBean == null) {
             return null;
-        }
-        else {
+        } else {
             return parceltypeBean.getCode();
         }
     }
 
-    public void setParcelType(String parcelType) {
+    public void setParcelTypeCode(String parcelTypeCode) {
         String oldValue = null;
-        if(getParcelType()!=null){
+        if (getParcelTypeCode() != null) {
             oldValue = getParceltypeBean().getCode();
         }
-        setParceltypeBean(CacheManager.getBeanByCode(CacheManager.getParcelTypes(), parcelType));
-        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelType);
+        setParceltypeBean(CacheManager.getBeanByCode(CacheManager.getParcelTypes(), parcelTypeCode));
+        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelTypeCode);
     }
 
+//    
+//    public String getParcelType() {
+//        if (this.parceltypeBean == null) {
+//            return null;
+//        } else {
+//            return parceltypeBean.getCode();
+//        }
+//    }
+//
+//    public void setParcelType(String parcelType) {
+//        String oldValue = null;
+//        if (getParcelType() != null) {
+//            oldValue = getParceltypeBean().getCode();
+//        }
+//        setParceltypeBean(CacheManager.getBeanByCode(CacheManager.getParcelTypes(), parcelType));
+//        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelType);
+//    }
     public int getParcelno() {
         return parcelno;
     }
@@ -353,11 +369,11 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
 
     public static CadastreObjectBean getCadastreObjectByVdcWardParcel(String vdcCode, String wardNo, int parcelNo) {
 
-      return  TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByVdcWardParcel(vdcCode, wardNo, parcelNo), CadastreObjectBean.class, null);
+        return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByVdcWardParcel(vdcCode, wardNo, parcelNo), CadastreObjectBean.class, null);
     }
 
     public static CadastreObjectBean getCadastreObjectByMapAndParcelNo(String mapSheetCode, int parcelNo) {
 
-       return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByMapSheetParcel(mapSheetCode, parcelNo), CadastreObjectBean.class, null);
-    }   
+        return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByMapSheetParcel(mapSheetCode, parcelNo), CadastreObjectBean.class, null);
+    }
 }

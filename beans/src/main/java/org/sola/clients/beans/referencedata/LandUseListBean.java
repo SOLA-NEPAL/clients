@@ -24,13 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class TenantTypeListBean extends AbstractBindingListBean {
+public class LandUseListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_TENANT_TYPES_PROPERTY = "selectedTenantType";
-    private SolaCodeList<TenantTypeBean> tenantTypes;
-    private TenantTypeBean selectedTenantType;
- 
-    public TenantTypeListBean() {
+    public static final String SELECTED_LAND_USES_PROPERTY = "selectedLandUse";
+    private SolaCodeList<LandUseBean> landUses;
+    private LandUseBean selectedLandUse;
+
+    public LandUseListBean() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public TenantTypeListBean(boolean createDummy) {
+    public LandUseListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,37 +49,37 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public TenantTypeListBean(boolean createDummy, String... excludedCodes) {
+    public LandUseListBean(boolean createDummy, String... excludedCodes) {
         super();
-        tenantTypes = new SolaCodeList<TenantTypeBean>(excludedCodes);
+        landUses = new SolaCodeList<LandUseBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
-     * Loads list of {@link TenantTypeBean}.
+     * Loads list of {@link LandUseBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(TenantTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
+        loadCodeList(LandUseBean.class, landUses, CacheManager.getLandUses(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        tenantTypes.setExcludedCodes(codes);
+        landUses.setExcludedCodes(codes);
     }
 
-    public TenantTypeBean getSelectedTenantType() {
-        return selectedTenantType;
+    public LandUseBean getSelectedLandUse() {
+        return selectedLandUse;
     }
 
-    public void setSelectedTenantType(TenantTypeBean selectedTenantType) {
-        TenantTypeBean oldValue = this.selectedTenantType;
-        this.selectedTenantType = selectedTenantType;
-        propertySupport.firePropertyChange(SELECTED_TENANT_TYPES_PROPERTY, oldValue, this.selectedTenantType);
+    public void setSelectedLandUse(LandUseBean selectedLandUse) {
+        LandUseBean oldValue = this.selectedLandUse;
+        this.selectedLandUse = selectedLandUse;
+        propertySupport.firePropertyChange(SELECTED_LAND_USES_PROPERTY, oldValue, this.selectedLandUse);
     }
 
-    public ObservableList<TenantTypeBean> getTenantTypes() {
-        return tenantTypes.getFilteredList();
+    public ObservableList<LandUseBean> getTenantTypes() {
+        return landUses.getFilteredList();
     }
 }

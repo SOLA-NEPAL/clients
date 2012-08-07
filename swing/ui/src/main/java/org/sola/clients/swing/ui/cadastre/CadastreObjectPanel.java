@@ -374,8 +374,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
 
         jLabel3.setText(bundle.getString("CadastreObjectPanel.jLabel3.text")); // NOI18N
 
-        txtWardNo.setEditable(false);
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -397,8 +395,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel12.add(jPanel4);
 
         jLabel4.setText(bundle.getString("CadastreObjectPanel.jLabel4.text")); // NOI18N
-
-        txtParcelNo.setEditable(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);

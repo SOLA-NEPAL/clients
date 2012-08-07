@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.beans.cadastre;
+package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
 
@@ -21,6 +21,13 @@ import org.sola.clients.beans.AbstractCodeBean;
  *
  * @author ShresthaKabin
  */
-public class ParcelTypeBean extends AbstractCodeBean{
+public class ParcelTypeBean extends AbstractCodeBean {
 
+    public static final String CODE_CANCEL = "cancel";
+    public static final String CODE_NEW = "new";
+    public static final String CODE_VARY = "vary";
+
+    public ParcelTypeBean() {
+        super();
+    }
 }

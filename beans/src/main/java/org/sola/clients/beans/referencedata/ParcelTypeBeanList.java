@@ -22,15 +22,15 @@ import org.sola.clients.beans.controls.SolaCodeList;
 
 /**
  *
- * @author KumarKhadka
+ * @author ShresthaKabin
  */
-public class TenantTypeListBean extends AbstractBindingListBean {
+public class ParcelTypeBeanList extends AbstractBindingListBean {
 
-    public static final String SELECTED_TENANT_TYPES_PROPERTY = "selectedTenantType";
-    private SolaCodeList<TenantTypeBean> tenantTypes;
-    private TenantTypeBean selectedTenantType;
- 
-    public TenantTypeListBean() {
+    public static final String SELECTED_PARCEL_TYPE_PROPERTY = "selectedParcelType";
+    public SolaCodeList<ParcelTypeBean> parcelTypes;
+    private ParcelTypeBean selectedParcelType;
+
+    public ParcelTypeBeanList() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public TenantTypeListBean(boolean createDummy) {
+    public ParcelTypeBeanList(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,37 +49,39 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public TenantTypeListBean(boolean createDummy, String... excludedCodes) {
+    public ParcelTypeBeanList(boolean createDummy, String... excludedCodes) {
         super();
-        tenantTypes = new SolaCodeList<TenantTypeBean>(excludedCodes);
+        parcelTypes = new SolaCodeList<ParcelTypeBean>(excludedCodes);
         loadList(createDummy);
+
     }
 
     /**
-     * Loads list of {@link TenantTypeBean}.
+     * Loads list of {@link ParcelTypeBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(TenantTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
+        loadCodeList(ParcelTypeBean.class, parcelTypes, CacheManager.getParcelTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        tenantTypes.setExcludedCodes(codes);
+        parcelTypes.setExcludedCodes(codes);
     }
 
-    public TenantTypeBean getSelectedTenantType() {
-        return selectedTenantType;
+    public ParcelTypeBean getSelectedParcelType() {
+        return selectedParcelType;
     }
 
-    public void setSelectedTenantType(TenantTypeBean selectedTenantType) {
-        TenantTypeBean oldValue = this.selectedTenantType;
-        this.selectedTenantType = selectedTenantType;
-        propertySupport.firePropertyChange(SELECTED_TENANT_TYPES_PROPERTY, oldValue, this.selectedTenantType);
+    public void setSelectedParcelType(ParcelTypeBean selectedParcelType) {
+        ParcelTypeBean oldValue = this.selectedParcelType;
+        this.selectedParcelType = selectedParcelType;
+        propertySupport.firePropertyChange(
+                SELECTED_PARCEL_TYPE_PROPERTY, oldValue, this.selectedParcelType);
     }
 
-    public ObservableList<TenantTypeBean> getTenantTypes() {
-        return tenantTypes.getFilteredList();
+    public ObservableList<ParcelTypeBean> getParcelTypes() {
+        return parcelTypes.getFilteredList();
     }
 }

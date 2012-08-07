@@ -24,13 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class TenantTypeListBean extends AbstractBindingListBean {
+public class GuthiNameListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_TENANT_TYPES_PROPERTY = "selectedTenantType";
-    private SolaCodeList<TenantTypeBean> tenantTypes;
-    private TenantTypeBean selectedTenantType;
- 
-    public TenantTypeListBean() {
+    public static final String SELECTED_GUTHI_NAMES_PROPERTY = "selectedGuthiName";
+    private SolaCodeList<GuthiNameBean> guthiNames;
+    private GuthiNameBean selectedGuthiName;
+
+    public GuthiNameListBean() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public TenantTypeListBean(boolean createDummy) {
+    public GuthiNameListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,37 +49,37 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public TenantTypeListBean(boolean createDummy, String... excludedCodes) {
+    public GuthiNameListBean(boolean createDummy, String... excludedCodes) {
         super();
-        tenantTypes = new SolaCodeList<TenantTypeBean>(excludedCodes);
+        guthiNames = new SolaCodeList<GuthiNameBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
-     * Loads list of {@link TenantTypeBean}.
+     * Loads list of {@link GuthiNameBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(TenantTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
+        loadCodeList(GuthiNameBean.class, guthiNames, CacheManager.getGuthiNames(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        tenantTypes.setExcludedCodes(codes);
+        guthiNames.setExcludedCodes(codes);
     }
 
-    public TenantTypeBean getSelectedTenantType() {
-        return selectedTenantType;
+    public GuthiNameBean getSelectedGuthiName() {
+        return selectedGuthiName;
     }
 
-    public void setSelectedTenantType(TenantTypeBean selectedTenantType) {
-        TenantTypeBean oldValue = this.selectedTenantType;
-        this.selectedTenantType = selectedTenantType;
-        propertySupport.firePropertyChange(SELECTED_TENANT_TYPES_PROPERTY, oldValue, this.selectedTenantType);
+    public void setSelectedGuthiName(GuthiNameBean selectedGuthiName) {
+        GuthiNameBean oldValue = this.selectedGuthiName;
+        this.selectedGuthiName = selectedGuthiName;
+        propertySupport.firePropertyChange(SELECTED_GUTHI_NAMES_PROPERTY, oldValue, this.selectedGuthiName);
     }
 
-    public ObservableList<TenantTypeBean> getTenantTypes() {
-        return tenantTypes.getFilteredList();
+    public ObservableList<GuthiNameBean> getGuthiNames() {
+        return guthiNames.getFilteredList();
     }
 }

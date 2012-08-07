@@ -21,6 +21,7 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
+import org.sola.clients.swing.desktop.cadastre.Parcel_Selection_Form;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -601,7 +602,7 @@ public class ParcelMothEntry extends ContentPanel {
             JOptionPane.showMessageDialog(null, "No Page is specified");
             return;
         }
-        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
+        Parcel_Selection_Form parcelSearchForm = new Parcel_Selection_Form();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{CadastreObjectTO.class};
         Class workingForm = this.getClass();
@@ -615,7 +616,7 @@ public class ParcelMothEntry extends ContentPanel {
         displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSearchNewParcelActionPerformed
 
-    private void displayForm(Select_Parcel_Form parcelSearchForm) {
+    private void displayForm(Parcel_Selection_Form parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
             getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
         }

@@ -57,7 +57,7 @@ public class CreateNewProperty extends javax.swing.JPanel {
         vdcList = new org.sola.clients.beans.referencedata.VdcListBean();
         districtListBean = new org.sola.clients.beans.referencedata.DistrictListBean();
         baUnitTypeListBean = new org.sola.clients.beans.referencedata.BaUnitTypeListBean();
-        parcelTypeBeanList = new org.sola.clients.beans.cadastre.ParcelTypeBeanList();
+        parcelTypeBeanList = new org.sola.clients.beans.referencedata.ParcelTypeBeanList();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnCreate = new javax.swing.JButton();
@@ -308,7 +308,7 @@ public class CreateNewProperty extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
-    private org.sola.clients.beans.cadastre.ParcelTypeBeanList parcelTypeBeanList;
+    private org.sola.clients.beans.referencedata.ParcelTypeBeanList parcelTypeBeanList;
     private org.sola.clients.beans.referencedata.VdcListBean vdcList;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
