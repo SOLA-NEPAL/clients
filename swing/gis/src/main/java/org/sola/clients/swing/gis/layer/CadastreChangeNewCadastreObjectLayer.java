@@ -47,12 +47,12 @@ import javax.swing.table.DefaultTableModel;
 import org.geotools.feature.CollectionEvent;
 import org.geotools.feature.CollectionListener;
 import org.geotools.geometry.jts.Geometries;
+import org.geotools.map.extended.layer.ExtendedLayerEditor;
+import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.beans.CadastreObjectBean;
 import org.sola.clients.swing.gis.beans.SpatialValueAreaBean;
-import org.geotools.map.extended.layer.ExtendedLayerEditor;
-import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.ui.control.CadastreChangeNewCadastreObjectListForm;
 import org.sola.common.messaging.GisMessage;
 
@@ -69,7 +69,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
     public static final String LAYER_FIELD_OFFICIAL_AREA = "official_area";
     public static final String LAYER_NAME = "New Parcels";
     public static final String LAYER_FIELD_MAP_SHEET = "map_sheet";
-    public static final String LAYER_FIELD_PARCEL_TYPE = "parcel_type";
+    public static final String LAYER_FIELD_PARCEL_TYPE = "parcel_typecode";
     public static final String LAYER_FIELD_SELECTED = "is_selected";
     
     private static final String LAYER_STYLE_RESOURCE = "parcel_new.xml";

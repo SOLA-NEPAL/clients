@@ -506,9 +506,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtWardNo">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -544,9 +541,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtParcelNo">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

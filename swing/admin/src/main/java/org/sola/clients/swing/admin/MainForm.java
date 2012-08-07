@@ -169,6 +169,10 @@ public class MainForm extends javax.swing.JFrame {
         menuOwnerTypes = new javax.swing.JMenuItem();
         menuShareTypes = new javax.swing.JMenuItem();
         menuTenantTypes = new javax.swing.JMenuItem();
+        menuParcelTypes = new javax.swing.JMenuItem();
+        menuLandClass = new javax.swing.JMenuItem();
+        menuLandUses = new javax.swing.JMenuItem();
+        menuGuthiNames = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -693,6 +697,42 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuTenantTypes);
 
+        menuParcelTypes.setText(bundle.getString("MainForm.menuParcelTypes.text")); // NOI18N
+        menuParcelTypes.setName(bundle.getString("MainForm.menuParcelTypes.name")); // NOI18N
+        menuParcelTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuParcelTypesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuParcelTypes);
+
+        menuLandClass.setText(bundle.getString("MainForm.menuLandClass.text")); // NOI18N
+        menuLandClass.setName(bundle.getString("MainForm.menuLandClass.name")); // NOI18N
+        menuLandClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLandClassActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuLandClass);
+
+        menuLandUses.setText(bundle.getString("MainForm.menuLandUses.text")); // NOI18N
+        menuLandUses.setName(bundle.getString("MainForm.menuLandUses.name")); // NOI18N
+        menuLandUses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLandUsesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuLandUses);
+
+        menuGuthiNames.setText(bundle.getString("MainForm.menuGuthiNames.text")); // NOI18N
+        menuGuthiNames.setName(bundle.getString("MainForm.menuGuthiNames.name")); // NOI18N
+        menuGuthiNames.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGuthiNamesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuGuthiNames);
+
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -946,6 +986,26 @@ public class MainForm extends javax.swing.JFrame {
         manageTenantTypes();
     }//GEN-LAST:event_menuTenantTypesActionPerformed
 
+    private void menuParcelTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuParcelTypesActionPerformed
+        // TODO add your handling code here:
+        manageParcelTypes();
+    }//GEN-LAST:event_menuParcelTypesActionPerformed
+
+    private void menuLandClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLandClassActionPerformed
+        // TODO add your handling code here:
+        manageLandClasses();
+    }//GEN-LAST:event_menuLandClassActionPerformed
+
+    private void menuLandUsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLandUsesActionPerformed
+        // TODO add your handling code here:
+        manageLandUses();
+    }//GEN-LAST:event_menuLandUsesActionPerformed
+
+    private void menuGuthiNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuthiNamesActionPerformed
+        // TODO add your handling code here:
+        manageGuthiNames();
+    }//GEN-LAST:event_menuGuthiNamesActionPerformed
+
     /**
      * Opens roles management panel.
      */
@@ -1117,6 +1177,22 @@ public class MainForm extends javax.swing.JFrame {
     private void manageTenantTypes() {
         openReferenceDataPanel(TenantTypeBean.class, menuTenantTypes.getText());
     }
+
+    private void manageParcelTypes() {
+        openReferenceDataPanel(ParcelTypeBean.class, menuParcelTypes.getText());
+    }
+
+    private void manageLandClasses() {
+        openReferenceDataPanel(LandClassBean.class, menuLandClass.getText());
+    }
+
+    private void manageLandUses() {
+        openReferenceDataPanel(LandUseBean.class, menuLandUses.getText());
+    }
+
+    private void manageGuthiNames() {
+        openReferenceDataPanel(GuthiNameBean.class, menuGuthiNames.getText());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
     private javax.swing.JButton btnCalendar;
@@ -1147,13 +1223,17 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuGenders;
     private javax.swing.JMenuItem menuGroups;
+    private javax.swing.JMenuItem menuGuthiNames;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuIdTypes;
+    private javax.swing.JMenuItem menuLandClass;
+    private javax.swing.JMenuItem menuLandUses;
     private javax.swing.JMenuItem menuLodgementReport;
     private javax.swing.JMenuItem menuMapsheet;
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenuItem menuOwnerTypes;
+    private javax.swing.JMenuItem menuParcelTypes;
     private javax.swing.JMenu menuParty;
     private javax.swing.JMenuItem menuPartyRoleType;
     private javax.swing.JMenuItem menuPartyType;

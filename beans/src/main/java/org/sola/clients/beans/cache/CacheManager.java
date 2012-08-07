@@ -38,7 +38,7 @@ import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.administrative.LocBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
-import org.sola.clients.beans.cadastre.ParcelTypeBean;
+import org.sola.clients.beans.referencedata.ParcelTypeBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.RoleBean;
@@ -239,6 +239,18 @@ public final class CacheManager {
      * Cache key of the {@link ShareTypeBean} collection.
      */
     public static final String SHARE_TYPE_KEY = ShareTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link LandUseBean} collection.
+     */
+    public static final String LAND_USE_KEY = LandUseBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link LandClassBean} collection.
+     */
+    public static final String LAND_CLASS_KEY = LandClassBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link GuthiNameBean} collection.
+     */
+    public static final String GUTHI_NAME_KEY = GuthiNameBean.class.getName() + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
     private static final String GET_COMMUNICATION_TYPES = "getCommunicationTypes";
@@ -276,12 +288,9 @@ public final class CacheManager {
     private static final String GET_OWNERSHIP_TYPES = "getOwnerShipTypes";
     private static final String GET_SHARE_TYPES = "getShareTypes";
     private static final String GET_TENANT_TYPES = "getTenantTypes";
-
-    public static List<ParcelTypeBean> getParcelTypes() {
-        return getCachedBeanList(ParcelTypeBean.class,
-                WSManager.getInstance().getReferenceDataService(),
-                GET_PARCEL_TYPES, PARCEL_TYPES_KEY);
-    }
+    private static final String GET_LAND_USES = "getLandUses";
+    private static final String GET_LAND_CLASSES = "getLandClasses";
+    private static final String GET_GUTHI_NAMES = "getGuthiNames";
 
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result = new ArrayList<DepartmentBean>();
@@ -717,6 +726,30 @@ public final class CacheManager {
         return getCachedBeanList(TenantTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_TENANT_TYPES, TENANT_TYPE_KEY);
+    }
+
+    public static List<LandClassBean> getLandClasses() {
+        return getCachedBeanList(LandClassBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_LAND_CLASSES, LAND_CLASS_KEY);
+    }
+
+    public static List<LandUseBean> getLandUses() {
+        return getCachedBeanList(LandUseBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_LAND_USES, LAND_USE_KEY);
+    }
+
+    public static List<GuthiNameBean> getGuthiNames() {
+        return getCachedBeanList(GuthiNameBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_GUTHI_NAMES, GUTHI_NAME_KEY);
+    }
+
+    public static List<ParcelTypeBean> getParcelTypes() {
+        return getCachedBeanList(ParcelTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_PARCEL_TYPES, PARCEL_TYPES_KEY);
     }
     //*************************************************************************************************************
     //</editor-fold>

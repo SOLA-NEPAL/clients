@@ -386,8 +386,27 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     TenantTypeBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.TENANT_TYPE_KEY);
             refDataTOClass = TenantTypeTO.class;
+        } else if (refDataClass == LandUseBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getLandUses(null),
+                    LandUseBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.LAND_USE_KEY);
+            refDataTOClass = LandUseTO.class;
+        } else if (refDataClass == LandClassBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getLandClasses(null),
+                    LandClassBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.LAND_CLASS_KEY);
+            refDataTOClass = LandClassTO.class;
+        } else if (refDataClass == GuthiNameBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getGuthiNames(null),
+                    GuthiNameBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.GUTHI_NAME_KEY);
+            refDataTOClass = GuthiNameTO.class;
+        } else if (refDataClass == ParcelTypeBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getParcelTypes(null),
+                    ParcelTypeBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.PARCEL_TYPES_KEY);
+            refDataTOClass = ParcelTypeTO.class;
         }
-
     }
 
     /**

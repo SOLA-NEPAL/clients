@@ -246,7 +246,7 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                     String mapsheetid=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString();
                     String parceltype=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE).toString();
                     parcel.setMapSheetCode(mapsheetid);
-                    parcel.setParcelType(parceltype);
+                    parcel.setParcelTypeCode(parceltype);
                     //parcel.setParcelno(0);
                     parcel.setTransactionId(transaction_id);
                 }

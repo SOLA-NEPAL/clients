@@ -55,6 +55,7 @@ import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.ReportViewerForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
+import org.sola.clients.swing.desktop.cadastre.Parcel_Selection_Form;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForBaUnit;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -1269,6 +1270,11 @@ public class PropertyPanel extends ContentPanel {
         btnEditParcel.setFocusable(false);
         btnEditParcel.setName(bundle.getString("PropertyPanel.btnEditParcel.name")); // NOI18N
         btnEditParcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEditParcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditParcelActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnEditParcel);
 
         pnlParcelView.setName(bundle.getString("PropertyPanel.pnlParcelView.name")); // NOI18N
@@ -1556,7 +1562,7 @@ public class PropertyPanel extends ContentPanel {
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1937,7 +1943,7 @@ public class PropertyPanel extends ContentPanel {
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2120,7 +2126,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     }
 
     private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
-        Select_Parcel_Form parcelSearchForm = new Select_Parcel_Form();
+        Parcel_Selection_Form parcelSearchForm = new Parcel_Selection_Form();
         //Event delegate passing to the child JPanel.
         Class[] cls = new Class[]{CadastreObjectTO.class};
         Class workingForm = this.getClass();
@@ -2148,7 +2154,11 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
         }
     }//GEN-LAST:event_tableRightsHistoryMouseClicked
 
-    private void displayForm(Select_Parcel_Form parcelSearchForm) {
+    private void btnEditParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditParcelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditParcelActionPerformed
+
+    private void displayForm(Parcel_Selection_Form parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
             getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
         }
