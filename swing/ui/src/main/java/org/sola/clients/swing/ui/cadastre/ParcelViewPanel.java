@@ -1,33 +1,37 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.ui.cadastre;
 
+import org.sola.clients.beans.address.AddressBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
+import org.sola.clients.beans.cadastre.SpatialUnitAddressBean;
 
 /**
  * Allows to display parcel details.
@@ -35,30 +39,54 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 public class ParcelViewPanel extends javax.swing.JPanel {
 
     private CadastreObjectBean cadastreObject;
-       
+    private AddressBean address;
+    
+
     public ParcelViewPanel() {
         setupCadastreObject(null);
         initComponents();
     }
 
-    private void setupCadastreObject(CadastreObjectBean cadastreObjectBean){
+    private void setupCadastreObject(CadastreObjectBean cadastreObjectBean) {
         CadastreObjectBean oldValue = this.cadastreObject;
-        if(this.cadastreObject == null){
+        if (this.cadastreObject == null) {
             this.cadastreObject = new CadastreObjectBean();
         } else {
             this.cadastreObject = cadastreObjectBean;
         }
         firePropertyChange("cadastreObject", oldValue, this.cadastreObject);
     }
-    
+
     public CadastreObjectBean getCadastreObject() {
         return cadastreObject;
     }
 
+    public AddressBean getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressBean address) {
+         AddressBean oldValue = this.address;
+        if (this.address == null) {
+            this.address = new AddressBean();
+        } else {
+            this.address = getParcelAddress();
+        }
+        firePropertyChange("address", oldValue, this.address);    
+    }   
+
     public void setCadastreObject(CadastreObjectBean cadastreObjectBean) {
         setupCadastreObject(cadastreObjectBean);
     }
+
+    public SpatialUnitAddressBean  getSpatialUnitAddress(){
+        return SpatialUnitAddressBean.getSpatialUnitAddressBean(cadastreObject.getId());
+    }
     
+    public AddressBean getParcelAddress(){
+        SpatialUnitAddressBean sadd=getSpatialUnitAddress();
+        return AddressBean.getAddress(sadd.getAddressId());
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -173,8 +201,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel9.setName(bundle.getString("ParcelViewPanel.jLabel9.name")); // NOI18N
 
         txtParcelVdc.setEditable(false);
-        txtParcelVdc.setText(bundle.getString("ParcelViewPanel.txtParcelVdc.text")); // NOI18N
         txtParcelVdc.setName(bundle.getString("ParcelViewPanel.txtParcelVdc.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${address.vdcBean.displayValue}"), txtParcelVdc, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel15Layout = new org.jdesktop.layout.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -202,8 +232,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel10.setName(bundle.getString("ParcelViewPanel.jLabel10.name")); // NOI18N
 
         txtParcelWardNumber.setEditable(false);
-        txtParcelWardNumber.setText(bundle.getString("ParcelViewPanel.txtParcelWardNumber.text")); // NOI18N
         txtParcelWardNumber.setName(bundle.getString("ParcelViewPanel.txtParcelWardNumber.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${address.wardNo}"), txtParcelWardNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel16Layout = new org.jdesktop.layout.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -433,7 +465,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .add(jPanel23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -442,7 +474,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -64,7 +64,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     public static final String SPATIAL_VALUE_AREA_LIST_PROPERTY = "spatialValueAreaList";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
     public static final String PARCEL_NOTE_PROPERTY = "parcelNote";
-    public static final String PARCEL_TYPE_PROPERTY = "parcelType";
+    public static final String PARCEL_TYPE_PROPERTY = "parcelTypeCode";
     public static final String SELECTED_SPATIAL_VALUE_AREA_PROPERTY = "selectedSpatialValueArea";
     public static final String MAPSHEET_CODE_PROPERTY = "mapSheetCode";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";

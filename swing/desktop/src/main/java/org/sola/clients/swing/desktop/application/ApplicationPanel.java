@@ -1,32 +1,32 @@
 /**
-* ******************************************************************************************
-* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
-* (FAO). All rights reserved.
-*
+ * ******************************************************************************************
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
+ * 
 * Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
+ * modification, are permitted provided that the following conditions are met:
+ * 
 * 1. Redistributions of source code must retain the above copyright notice,this
-* list of conditions and the following disclaimer. 2. Redistributions in binary
-* form must reproduce the above copyright notice,this list of conditions and
-* the following disclaimer in the documentation and/or other materials provided
-* with the distribution. 3. Neither the name of FAO nor the names of its
-* contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
-*
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ * 
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-* *********************************************************************************************
-*/
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ * *********************************************************************************************
+ */
 package org.sola.clients.swing.desktop.application;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -95,12 +95,12 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 
 /**
-* This form is used to create new application or edit existing one. <p>The
-* following list of beans is used to bind the data on the form:<br />
-* {@link ApplicationBean}, <br />{@link RequestTypeListBean}, <br />
-* {@link PartySummaryListBean}, <br />{@link CommunicationTypeListBean}, <br />
-* {@link SourceTypeListBean}, <br />{@link ApplicationDocumentsHelperBean}</p>
-*/
+ * This form is used to create new application or edit existing one. <p>The
+ * following list of beans is used to bind the data on the form:<br />
+ * {@link ApplicationBean}, <br />{@link RequestTypeListBean}, <br />
+ * {@link PartySummaryListBean}, <br />{@link CommunicationTypeListBean}, <br />
+ * {@link SourceTypeListBean}, <br />{@link ApplicationDocumentsHelperBean}</p>
+ */
 public class ApplicationPanel extends ContentPanel {
 
     private class PersonSearchFormListener implements PropertyChangeListener {
@@ -116,20 +116,19 @@ public class ApplicationPanel extends ContentPanel {
             }
         }
     }
-    
     private PersonSearchFormListener personSearchFormListener = new PersonSearchFormListener();
     private ControlsBundleForApplicationLocation mapControl = null;
     public static final String APPLICATION_SAVED_PROPERTY = "applicationSaved";
     private String applicationID;
 
     /**
-* This method is used by the form designer to create {@link ApplicationBean}.
-* It uses
-* <code>applicationId</code> parameter passed to the form constructor.<br
-* />
-* <code>applicationId</code> should be initialized before
-* {@link ApplicationForm#initComponents} method call.
-*/
+     * This method is used by the form designer to create {@link ApplicationBean}.
+     * It uses
+     * <code>applicationId</code> parameter passed to the form constructor.<br
+     * />
+     * <code>applicationId</code> should be initialized before
+     * {@link ApplicationForm#initComponents} method call.
+     */
     private ApplicationBean getApplicationBean() {
         ApplicationBean applicationBean = new ApplicationBean();
 
@@ -164,17 +163,17 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Default constructor to create new application.
-*/
+     * Default constructor to create new application.
+     */
     public ApplicationPanel() {
         this(null);
     }
 
     /**
-* This constructor is used to open existing application for editing.
-*
+     * This constructor is used to open existing application for editing.
+     *     
 * @param applicationId ID of application to open.
-*/
+     */
     public ApplicationPanel(String applicationId) {
         this.applicationID = applicationId;
         initComponents();
@@ -182,8 +181,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Runs post initialization actions to customize form elements.
-*/
+     * Runs post initialization actions to customize form elements.
+     */
     private void postInit() {
 
         addDocumentPanel.addPropertyChangeListener(new PropertyChangeListener() {
@@ -267,8 +266,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Applies customization of form, based on Application status.
-*/
+     * Applies customization of form, based on Application status.
+     */
     private void customizeApplicationForm() {
         if (appBean != null && !appBean.isNew()) {
             java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle");
@@ -352,8 +351,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Disables or enables buttons, related to the services list management.
-*/
+     * Disables or enables buttons, related to the services list management.
+     */
     private void customizeServicesButtons() {
         ApplicationServiceBean selectedService = appBean.getSelectedService();
         boolean servicesManagementAllowed = appBean.isManagementAllowed();
@@ -436,8 +435,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Disables or enables buttons, related to the property list management.
-*/
+     * Disables or enables buttons, related to the property list management.
+     */
     private void customizePropertyButtons() {
         boolean enable = false;
         if (appBean.isEditingAllowed() && appBean.getSelectedProperty() != null) {
@@ -448,8 +447,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Disables or enables buttons, related to the documents list management.
-*/
+     * Disables or enables buttons, related to the documents list management.
+     */
     private void customizeDocumentsButtons() {
         SourceBean selectedDocument = appBean.getSelectedSource();
         boolean enablePropertyButtons = appBean.isEditingAllowed();
@@ -468,8 +467,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* This method is used by the form designer to create the list of agents.
-*/
+     * This method is used by the form designer to create the list of agents.
+     */
     private PartySummaryListBean createPartySummaryList() {
         PartySummaryListBean agentsList = new PartySummaryListBean();
         agentsList.FillAgents(true);
@@ -520,9 +519,9 @@ public class ApplicationPanel extends ContentPanel {
 // }
 // }
     /**
-* Opens dialog form to display status change result for application or
-* service.
-*/
+     * Opens dialog form to display status change result for application or
+     * service.
+     */
     private void openValidationResultForm(List<ValidationResultBean> validationResultList,
             boolean isSuccess, String message) {
         ValidationResultForm resultForm = new ValidationResultForm(
@@ -532,9 +531,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Checks if there are any changes on the form before proceeding with
-* action.
-*/
+     * Checks if there are any changes on the form before proceeding with
+     * action.
+     */
     private boolean checkSaveBeforeAction() {
         if (MainForm.checkBeanState(appBean)) {
             if (MessageUtility.displayMessage(ClientMessage.APPLICATION_SAVE_BEFORE_ACTION)
@@ -552,8 +551,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Validates application
-*/
+     * Validates application
+     */
     private void validateApplication() {
         if (!checkSaveBeforeAction()) {
             return;
@@ -667,6 +666,7 @@ public class ApplicationPanel extends ContentPanel {
                     propertyListForm.setLocationRelativeTo(this);
 
                     propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
+
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
@@ -679,12 +679,12 @@ public class ApplicationPanel extends ContentPanel {
 
                                     @Override
                                     public Void doTask() {
-                                        List<String> mapsheets=propertyListForm.getMapSheets();
+                                        List<String> mapsheets = propertyListForm.getMapSheets();
                                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
-                                        
+
                                         CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
                                                 appBean,
-                                                appBean.getSelectedService(), property,mapsheets);
+                                                appBean.getSelectedService(), property, mapsheets);
                                         getMainContentPanel().addPanel(
                                                 form, MainContentPanel.CARD_CADASTRECHANGE, true);
                                         return null;
@@ -698,7 +698,7 @@ public class ApplicationPanel extends ContentPanel {
 
                 } else {
                     CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                            appBean, appBean.getSelectedService(), null,null);
+                            appBean, appBean.getSelectedService(), null, null);
                     getMainContentPanel().addPanel(
                             form, MainContentPanel.CARD_CADASTRECHANGE, true);
                 }
@@ -872,8 +872,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Designer generated code
-*/
+     * Designer generated code
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
@@ -2900,8 +2900,8 @@ public class ApplicationPanel extends ContentPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-* Validates user's data input and calls save operation on the {@link ApplicationBean}.
-*/
+     * Validates user's data input and calls save operation on the {@link ApplicationBean}.
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveApplication(false);
 }//GEN-LAST:event_btnSaveActionPerformed
@@ -2932,9 +2932,9 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_btnAddPropertyActionPerformed
 
     /**
-* Opens {@link FileBrowserForm} to select digital copy of the document and
-* get it attached.
-*/
+     * Opens {@link FileBrowserForm} to select digital copy of the document and
+     * get it attached.
+     */
     private void tabDocumentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabDocumentsMouseClicked
         if (evt.getClickCount() == 2) {
             openAttachment();
@@ -2942,8 +2942,8 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_tabDocumentsMouseClicked
 
     /**
-* Removes attached digital copy from selected document.
-*/
+     * Removes attached digital copy from selected document.
+     */
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
         // Verify the email address is valid
         if (appBean.getContactPerson().getEmail() == null
@@ -3181,8 +3181,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Opens attached digital copy of the selected document
-*/
+     * Opens attached digital copy of the selected document
+     */
     private void openAttachment() {
         if (appBean.getSelectedSource() != null
                 && appBean.getSelectedSource().getArchiveDocument() != null) {
@@ -3200,8 +3200,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Initializes map control to display application location.
-*/
+     * Initializes map control to display application location.
+     */
     private void formComponentShown(java.awt.event.ComponentEvent evt) {
 // if (this.mapControl == null) {
 // this.mapControl = new ControlsBundleForApplicationLocation();
@@ -3239,9 +3239,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Clears fields on the <b>Properties</b> tab, after the new property is
-* added into the list.
-*/
+     * Clears fields on the <b>Properties</b> tab, after the new property is
+     * added into the list.
+     */
     private void clearPropertyFields() {
         txtFirstPart.setText(null);
         txtLastPart.setText(null);
@@ -3250,8 +3250,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Opens {@link ReportViewerForm} to display report.
-*/
+     * Opens {@link ReportViewerForm} to display report.
+     */
     private void showReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setLocationRelativeTo(this);
@@ -3335,8 +3335,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Removes selected service from the services list.
-*/
+     * Removes selected service from the services list.
+     */
     private void removeService() {
         if (appBean.getSelectedService() != null) {
             appBean.removeSelectedService();
@@ -3345,8 +3345,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Moves selected service up in the list of services.
-*/
+     * Moves selected service up in the list of services.
+     */
     private void moveServiceUp() {
         ApplicationServiceBean asb = appBean.getSelectedService();
         if (asb != null) {
@@ -3363,8 +3363,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Moves selected application service down in the services list. Calls {@link ApplicationBean#moveServiceDown()}
-*/
+     * Moves selected application service down in the services list. Calls {@link ApplicationBean#moveServiceDown()}
+     */
     private void moveServiceDown() {
         ApplicationServiceBean asb = appBean.getSelectedService();
         if (asb != null) {
@@ -3381,15 +3381,15 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Launches selected service.
-*/
+     * Launches selected service.
+     */
     private void startService() {
         launchService(false);
     }
 
     /**
-* Calls "complete method for the selected service. "
-*/
+     * Calls "complete method for the selected service. "
+     */
     private void completeService() {
         final ApplicationServiceBean selectedService = appBean.getSelectedService();
 
@@ -3523,15 +3523,15 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Removes selected property object from the properties list. Calls {@link ApplicationBean#removeSelectedProperty()}
-*/
+     * Removes selected property object from the properties list. Calls {@link ApplicationBean#removeSelectedProperty()}
+     */
     private void removeSelectedProperty() {
         appBean.removeSelectedProperty();
     }
 
     /**
-* Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
-*/
+     * Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
+     */
     private void verifySelectedProperty() {
         if (appBean.getSelectedProperty() == null) {
             MessageUtility.displayMessage(ClientMessage.APPLICATION_SELECT_PROPERTY_TOVERIFY);
@@ -3588,8 +3588,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Calculates fee for the application. Calls {@link ApplicationBean#calculateFee()}
-*/
+     * Calculates fee for the application. Calls {@link ApplicationBean#calculateFee()}
+     */
     private void calculateFee() {
         SolaTask t = new SolaTask<Void, Void>() {
 
@@ -3605,8 +3605,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Prints payment receipt.
-*/
+     * Prints payment receipt.
+     */
     private void printReceipt() {
         if (applicationID == null || applicationID.equals("")) {
             if (MessageUtility.displayMessage(ClientMessage.CHECK_NOT_LODGED_RECEIPT) == MessageUtility.BUTTON_TWO) {
@@ -3617,8 +3617,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Allows to overview service.
-*/
+     * Allows to overview service.
+     */
     private void viewService() {
         launchService(true);
     }
