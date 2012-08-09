@@ -77,7 +77,7 @@ public class GroupPanel extends javax.swing.JPanel {
 
         lblGroupTitle = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 153, 0));
+        setBackground(new java.awt.Color(102, 102, 102));
 
         lblGroupTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblGroupTitle.setForeground(new java.awt.Color(255, 255, 255));
