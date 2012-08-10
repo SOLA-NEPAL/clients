@@ -42,6 +42,7 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.administrative.RrrBean.RRR_ACTION;
 import org.sola.clients.beans.administrative.validation.MortgageValidationGroup;
+import org.sola.clients.beans.administrative.validation.OwnershipValidationGroup;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
@@ -95,9 +96,9 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
     public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
     public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
-    public static final String OWNERSHIP_TYPE_PROPERTY = "ownershipType";
+    public static final String OWNER_TYPE_PROPERTY = "ownerType";
     public static final String SHARE_TYPE_PROPERTY = "shareType";
-    public static final String OWNERSHIP_TYPE_CODE_PROPERTY = "ownershipTypeCode";
+    public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";
     public static final String SHARE_TYPE_CODE_PROPERTY = "shareTypeCode";
     private String baUnitId;
     private String nr;
@@ -115,12 +116,15 @@ public class RrrBean extends AbstractTransactionedBean {
     private BigDecimal mortgageInterestRate;
     private Integer mortgageRanking;
     private SolaList<SourceBean> sourceList;
+    @NotNull(message= ClientMessage.CHECK_SELECT_RIGHT_TYPE, payload=Localized.class)
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
     private String officeCode;
     private RestrictionReasonBean restrictionReason;
     private RestrictionOfficeBean restrictionOffice;
-    private OwnershipTypeBean ownershipType;
+    @NotNull(message= ClientMessage.CHECK_SELECT_OWNER_TYPE, payload=Localized.class, groups={OwnershipValidationGroup.class})
+    private OwnerTypeBean ownerType;
+    @NotNull(message= ClientMessage.CHECK_SELECT_SHARE_TYPE, payload=Localized.class, groups={OwnershipValidationGroup.class})
     private ShareTypeBean shareType;
     @Valid
     private BaUnitNotationBean notation;
@@ -139,23 +143,21 @@ public class RrrBean extends AbstractTransactionedBean {
         notation = new BaUnitNotationBean();
     }
 
-    public String getOwnershipTypeCode() {
-        if (ownershipType != null) {
-            return ownershipType.getCode();
+    public String getOwnerTypeCode() {
+        if (ownerType != null) {
+            return ownerType.getCode();
         } else {
             return null;
         }
     }
 
-    public void setOwnershipTypeCode(String ownershipTypeCode) {
+    public void setOwnerTypeCode(String ownerTypeCode) {
         String oldValue = null;
-        if (ownershipTypeCode != null) {
-            oldValue = ownershipType.getCode();
+        if (ownerType != null) {
+            oldValue = ownerType.getCode();
         }
-        setOwnershipType(CacheManager.getBeanByCode(
-                CacheManager.getOwnerShipTypes(), ownershipTypeCode));
-        propertySupport.firePropertyChange(OWNERSHIP_TYPE_CODE_PROPERTY,
-                oldValue, ownershipTypeCode);
+        setOwnerType(CacheManager.getBeanByCode(CacheManager.getOwnerTypes(), ownerTypeCode));
+        propertySupport.firePropertyChange(OWNER_TYPE_CODE_PROPERTY, oldValue, ownerTypeCode);
     }
 
     public String getShareTypeCode() {
@@ -168,24 +170,21 @@ public class RrrBean extends AbstractTransactionedBean {
 
     public void setShareTypeCode(String shareTypeCode) {
         String oldValue = null;
-        if (shareTypeCode != null) {
+        if (shareType != null) {
             oldValue = shareType.getCode();
         }
-        setShareType(CacheManager.getBeanByCode(
-                CacheManager.getShareTypes(), shareTypeCode));
-        propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY,
-                oldValue, shareTypeCode);
+        setShareType(CacheManager.getBeanByCode(CacheManager.getShareTypes(), shareTypeCode));
+        propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY, oldValue, shareTypeCode);
     }
 
-    public OwnershipTypeBean getOwnershipType() {
-        return ownershipType;
+    public OwnerTypeBean getOwnerType() {
+        return ownerType;
     }
 
-    public void setOwnershipType(OwnershipTypeBean ownershipType) {
-        if (this.ownershipType == null) {
-            this.ownershipType = new OwnershipTypeBean();
-        }
-        this.setJointRefDataBean(this.ownershipType, ownershipType, OWNERSHIP_TYPE_PROPERTY);
+    public void setOwnerType(OwnerTypeBean ownerType) {
+        OwnerTypeBean oldValue = this.ownerType;
+        this.ownerType = ownerType;
+        propertySupport.firePropertyChange(OWNER_TYPE_PROPERTY, oldValue, this.ownerType);
     }
 
     public ShareTypeBean getShareType() {
@@ -193,10 +192,9 @@ public class RrrBean extends AbstractTransactionedBean {
     }
 
     public void setShareType(ShareTypeBean shareType) {
-        if (this.shareType == null) {
-            this.shareType = new ShareTypeBean();
-        }
-        this.setJointRefDataBean(this.shareType, shareType, SHARE_TYPE_PROPERTY);
+        ShareTypeBean oldValue = this.shareType;
+        this.shareType = shareType;
+        propertySupport.firePropertyChange(SHARE_TYPE_PROPERTY, oldValue, this.shareType);
     }
 
     public String getRestrictionOfficeCode() {
@@ -359,12 +357,8 @@ public class RrrBean extends AbstractTransactionedBean {
 
     public void setRrrType(RrrTypeBean rrrType) {
         RrrTypeBean oldValue = this.rrrType;
-        if (this.rrrType == null) {
-            this.rrrType = new RrrTypeBean();
-        }
         this.rrrType = rrrType;
         propertySupport.firePropertyChange(RRR_TYPE_PROPERTY, oldValue, this.rrrType);
-        //this.setJointRefDataBean(this.rrrType, rrrType, RRR_TYPE_PROPERTY);
     }
 
     public Date getExpirationDate() {
@@ -649,8 +643,10 @@ public class RrrBean extends AbstractTransactionedBean {
             // Clear all values if rrrLoc is null
 
             getNotation().setNotationText(null);
-            setRegistrationDate(null);
+            setRegistrationDate(Calendar.getInstance().getTime());
             setTypeCode(null);
+            setOwnerTypeCode(null);
+            setShareTypeCode(null);
 
             Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
             while (iteratorRightholders.hasNext()) {
@@ -674,8 +670,14 @@ public class RrrBean extends AbstractTransactionedBean {
             return;
         }
 
-        setRegistrationDate(rrrLoc.getRegistrationDate());
+        if(rrrLoc.getRegistrationDate()==null){
+            setRegistrationDate(Calendar.getInstance().getTime());
+        } else {
+            setRegistrationDate(rrrLoc.getRegistrationDate());
+        }
         setTypeCode(rrrLoc.getTypeCode());
+        setOwnerTypeCode(rrrLoc.getOwnerTypeCode());
+        setShareTypeCode(rrrLoc.getShareTypeCode());
 
         if (getNotation() != null) {
             getNotation().setNotationText(rrrLoc.getNotationText());

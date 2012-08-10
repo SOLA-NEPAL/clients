@@ -21,16 +21,15 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
 
 /**
- *
- * @author KumarKhadka
+ * Holds the list of {@link OwnerTypeBean} objects.
  */
-public class OwnershipTypeListBean extends AbstractBindingListBean {
+public class OwnerTypeListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_OWNERSHIP_TYPES_PROPERTY = "selectedOwnership";
-    private SolaCodeList<OwnershipTypeBean> ownershipTypes;
-    private OwnershipTypeBean selectedOwnership;
+    public static final String SELECTED_OWNER_TYPE_PROPERTY = "selectedOwnerType";
+    private SolaCodeList<OwnerTypeBean> ownerTypes;
+    private OwnerTypeBean selectedOwnerType;
 
-    public OwnershipTypeListBean() {
+    public OwnerTypeListBean() {
         this(false);
     }
 
@@ -39,7 +38,7 @@ public class OwnershipTypeListBean extends AbstractBindingListBean {
      *
      * @param createDummy indicates whether to add empty object on the list.
      */
-    public OwnershipTypeListBean(boolean createDummy) {
+    public OwnerTypeListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,38 +48,38 @@ public class OwnershipTypeListBean extends AbstractBindingListBean {
      * @param createDummy indicates whether to add empty object on the list.
      * @param excludedCodes codes, which should be skipped while filtering.
      */
-    public OwnershipTypeListBean(boolean createDummy, String... excludedCodes) {
+    public OwnerTypeListBean(boolean createDummy, String... excludedCodes) {
         super();
-        ownershipTypes = new SolaCodeList<OwnershipTypeBean>(excludedCodes);
+        ownerTypes = new SolaCodeList<OwnerTypeBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
      * *
-     * Loads list of {@link OwnershipTypeBean}.
+     * Loads list of {@link OwnerTypeBean}.
      *
      * @param createDummy indicates whether to add empty object on the list.
      *
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(OwnershipTypeBean.class, ownershipTypes, CacheManager.getOwnerShipTypes(), createDummy);
+        loadCodeList(OwnerTypeBean.class, ownerTypes, CacheManager.getOwnerTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        ownershipTypes.setExcludedCodes(codes);
+        ownerTypes.setExcludedCodes(codes);
     }
 
-    public OwnershipTypeBean getSelectedOwnership() {
-        return selectedOwnership;
+    public OwnerTypeBean getSelectedOwnerType() {
+        return selectedOwnerType;
     }
 
-    public void setSelectedOwnership(OwnershipTypeBean selectedOwnership) {
-        OwnershipTypeBean oldValue = this.selectedOwnership;
-        this.selectedOwnership = selectedOwnership;
-        propertySupport.firePropertyChange(SELECTED_OWNERSHIP_TYPES_PROPERTY, oldValue, this.selectedOwnership);
+    public void setSelectedOwnerType(OwnerTypeBean selectedOwnership) {
+        OwnerTypeBean oldValue = this.selectedOwnerType;
+        this.selectedOwnerType = selectedOwnership;
+        propertySupport.firePropertyChange(SELECTED_OWNER_TYPE_PROPERTY, oldValue, this.selectedOwnerType);
     }
 
-    public ObservableList<OwnershipTypeBean> getOwnershipTypes() {
-        return ownershipTypes.getFilteredList();
+    public ObservableList<OwnerTypeBean> getOwnerTypes() {
+        return ownerTypes.getFilteredList();
     }
 }

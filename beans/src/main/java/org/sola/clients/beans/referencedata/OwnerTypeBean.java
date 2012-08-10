@@ -17,17 +17,9 @@ package org.sola.clients.beans.referencedata;
 
 import org.sola.clients.beans.AbstractCodeBean;
 
-/**
- *
- * @author KumarKhadka
- */
-public class OwnershipTypeBean extends AbstractCodeBean {
+public class OwnerTypeBean extends AbstractCodeBean {
 
-    public static final String CODE_CANCEL = "cancel";
-    public static final String CODE_NEW = "new";
-    public static final String CODE_VARY = "vary";
-
-    public OwnershipTypeBean() {
+    public OwnerTypeBean() {
         super();
     }
 }

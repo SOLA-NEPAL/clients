@@ -197,6 +197,7 @@ public class OwnershipPanel extends ContentPanel {
                 }
             }
         });
+        rrrTypes.filterByOwnerShip();
         showLocSearch(false);
         customizeDocumentsPanel();
         customizeOwnersButtons();
@@ -210,7 +211,9 @@ public class OwnershipPanel extends ContentPanel {
         boolean isLocReadOnly = readOnly || rrrBean.isTerminating() || rrrBean.getLocId() == null;
 
         txtNotationText.setEnabled(!(readOnly || rrrBean.getLocId() == null));
+        cbxOwnerType.setEnabled(!isLocReadOnly);
         cbxRrrTypes.setEnabled(!isLocReadOnly);
+        cbxShareType.setEnabled(!isLocReadOnly);
         txtRegDatetime.setEditable(!isLocReadOnly);
         btnEditLoc.setEnabled(!(readOnly || rrrBean.isTerminating()));
         btnRevertLocToCurrentState.setEnabled(!isLocReadOnly);
@@ -330,7 +333,7 @@ public class OwnershipPanel extends ContentPanel {
         menuViewOwner = new javax.swing.JMenuItem();
         rrrTypes = new org.sola.clients.beans.referencedata.RrrTypeListBean();
         shareTypeListBean = new org.sola.clients.beans.referencedata.ShareTypeListBean();
-        ownershipTypeListBean = new org.sola.clients.beans.referencedata.OwnershipTypeListBean();
+        ownerTypeListBean = new org.sola.clients.beans.referencedata.OwnerTypeListBean();
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar2 = new javax.swing.JToolBar();
         btnSave = new javax.swing.JButton();
@@ -379,15 +382,15 @@ public class OwnershipPanel extends ContentPanel {
         txtRegDatetime = new javax.swing.JFormattedTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        cbxRrrTypes = new javax.swing.JComboBox();
+        cbxOwnerType = new javax.swing.JComboBox();
         jPanel7 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtNotationText = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox();
+        cbxRrrTypes = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbxShareType = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
 
         popUpOwners.setName("popUpOwners"); // NOI18N
@@ -848,12 +851,12 @@ public class OwnershipPanel extends ContentPanel {
         jLabel2.setText(bundle.getString("OwnershipPanel.jLabel2.text")); // NOI18N
         jLabel2.setName(bundle.getString("OwnershipPanel.jLabel2.name")); // NOI18N
 
-        cbxRrrTypes.setName(bundle.getString("OwnershipPanel.cbxRrrTypes.name")); // NOI18N
+        cbxOwnerType.setName(bundle.getString("OwnershipPanel.cbxOwnerType.name")); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${ownershipTypes}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, ownershipTypeListBean, eLProperty, cbxRrrTypes);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${ownerTypes}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, ownerTypeListBean, eLProperty, cbxOwnerType);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${ownershipType}"), cbxRrrTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${ownerType}"), cbxOwnerType, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -863,14 +866,14 @@ public class OwnershipPanel extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(0, 40, Short.MAX_VALUE))
-            .addComponent(cbxRrrTypes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cbxOwnerType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxRrrTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxOwnerType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -905,12 +908,12 @@ public class OwnershipPanel extends ContentPanel {
 
         jPanel9.setName(bundle.getString("OwnershipPanel.jPanel9.name")); // NOI18N
 
-        jComboBox2.setName(bundle.getString("OwnershipPanel.jComboBox2.name")); // NOI18N
+        cbxRrrTypes.setName(bundle.getString("OwnershipPanel.cbxRrrTypes.name")); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${rrrTypeBeanList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrTypes, eLProperty, jComboBox2);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrTypes, eLProperty, cbxRrrTypes);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${rrrType}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${rrrType}"), cbxRrrTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
@@ -921,28 +924,28 @@ public class OwnershipPanel extends ContentPanel {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cbxRrrTypes, 0, 123, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel10)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxRrrTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel4.setName(bundle.getString("OwnershipPanel.jPanel4.name")); // NOI18N
 
-        jComboBox1.setName(bundle.getString("OwnershipPanel.jComboBox1.name_1")); // NOI18N
+        cbxShareType.setName(bundle.getString("OwnershipPanel.cbxShareType.name_1")); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${shareTypes}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, shareTypeListBean, eLProperty, jComboBox1);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, shareTypeListBean, eLProperty, cbxShareType);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${shareType}"), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${shareType}"), cbxShareType, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
@@ -953,17 +956,17 @@ public class OwnershipPanel extends ContentPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cbxShareType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel9)
+                .addGap(0, 41, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxShareType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1100,14 +1103,14 @@ public class OwnershipPanel extends ContentPanel {
     private javax.swing.JButton btnRevertLocToCurrentState;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnViewOwner;
+    private javax.swing.JComboBox cbxOwnerType;
     private javax.swing.JComboBox cbxRrrTypes;
+    private javax.swing.JComboBox cbxShareType;
     private org.sola.clients.swing.ui.source.DocumentsManagementPanel documentsPanel;
     private javax.swing.Box.Filler filler1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel2;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
@@ -1145,7 +1148,7 @@ public class OwnershipPanel extends ContentPanel {
     private javax.swing.JMenuItem menuEditOwner;
     private javax.swing.JMenuItem menuRemoveOwner;
     private javax.swing.JMenuItem menuViewOwner;
-    private org.sola.clients.beans.referencedata.OwnershipTypeListBean ownershipTypeListBean;
+    private org.sola.clients.beans.referencedata.OwnerTypeListBean ownerTypeListBean;
     private javax.swing.JPanel pnlLocDetails;
     private javax.swing.JPanel pnlLocSearch;
     private javax.swing.JPopupMenu popUpOwners;

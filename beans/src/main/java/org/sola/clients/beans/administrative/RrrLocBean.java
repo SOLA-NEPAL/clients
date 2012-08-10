@@ -21,8 +21,10 @@ import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
+import org.sola.clients.beans.referencedata.OwnerTypeBean;
 import org.sola.clients.beans.referencedata.RegistrationStatusTypeBean;
 import org.sola.clients.beans.referencedata.RrrTypeBean;
+import org.sola.clients.beans.referencedata.ShareTypeBean;
 import org.sola.clients.beans.source.SourceBean;
 
 /** Represents LOC object with related documents and persons. */
@@ -32,11 +34,17 @@ public class RrrLocBean extends AbstractBindingBean {
     public static final String REGISTRATION_DATE_PROPERTY = "registrationDate";
     public static final String STATUS_CODE_PROPERTY = "statusCode";
     public static final String RRR_TYPE_PROPERTY = "rrrType";
+    public static final String OWNER_TYPE_PROPERTY = "ownerType";
+    public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";
+    public static final String SHARE_TYPE_PROPERTY = "shareType";
+    public static final String SHARE_TYPE_CODE_PROPERTY = "shareTypeCode";
     public static final String REGISTRATION_STATUS_PROPERTY = "registrationStatus";
     public static final String NOTATION_TEXT_PROPERTY = "notationText";
     
     private String locId;
     private RrrTypeBean rrrType;
+    private OwnerTypeBean ownerType;
+    private ShareTypeBean shareType;
     private Date registrationDate;
     private RegistrationStatusTypeBean registrationStatus;
     private String notationText;
@@ -152,5 +160,59 @@ public class RrrLocBean extends AbstractBindingBean {
         RrrTypeBean oldValue = this.rrrType;
         this.rrrType = rrrType;
         propertySupport.firePropertyChange(RRR_TYPE_PROPERTY, oldValue, this.rrrType);
+    }
+    
+    public String getOwnerTypeCode() {
+        if (ownerType != null) {
+            return ownerType.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setOwnerTypeCode(String ownerTypeCode) {
+        String oldValue = null;
+        if (ownerType != null) {
+            oldValue = ownerType.getCode();
+        }
+        setOwnerType(CacheManager.getBeanByCode(CacheManager.getOwnerTypes(), ownerTypeCode));
+        propertySupport.firePropertyChange(OWNER_TYPE_CODE_PROPERTY, oldValue, ownerTypeCode);
+    }
+    
+    public OwnerTypeBean getOwnerType() {
+        return ownerType;
+    }
+
+    public void setOwnerType(OwnerTypeBean ownerType) {
+        OwnerTypeBean oldValue = this.ownerType;
+        this.ownerType = ownerType;
+        propertySupport.firePropertyChange(OWNER_TYPE_PROPERTY, oldValue, this.ownerType);
+    }
+    
+    public String getShareTypeCode() {
+        if (shareType != null) {
+            return shareType.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setShareTypeCode(String shareTypeCode) {
+        String oldValue = null;
+        if (shareType != null) {
+            oldValue = shareType.getCode();
+        }
+        setShareType(CacheManager.getBeanByCode(CacheManager.getShareTypes(), shareTypeCode));
+        propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY, oldValue, shareTypeCode);
+    }
+    
+    public ShareTypeBean getShareType() {
+        return shareType;
+    }
+
+    public void setShareType(ShareTypeBean shareType) {
+        ShareTypeBean oldValue = this.shareType;
+        this.shareType = shareType;
+        propertySupport.firePropertyChange(SHARE_TYPE_PROPERTY, oldValue, this.shareType);
     }
 }

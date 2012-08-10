@@ -172,7 +172,6 @@ public class MainForm extends javax.swing.JFrame {
         menuParcelTypes = new javax.swing.JMenuItem();
         menuLandClass = new javax.swing.JMenuItem();
         menuLandUses = new javax.swing.JMenuItem();
-        menuGuthiNames = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
@@ -724,15 +723,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuLandUses);
 
-        menuGuthiNames.setText(bundle.getString("MainForm.menuGuthiNames.text")); // NOI18N
-        menuGuthiNames.setName(bundle.getString("MainForm.menuGuthiNames.name")); // NOI18N
-        menuGuthiNames.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuGuthiNamesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuGuthiNames);
-
         menuRefData.add(jMenu1);
 
         mainMenu.add(menuRefData);
@@ -1001,11 +991,6 @@ public class MainForm extends javax.swing.JFrame {
         manageLandUses();
     }//GEN-LAST:event_menuLandUsesActionPerformed
 
-    private void menuGuthiNamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuthiNamesActionPerformed
-        // TODO add your handling code here:
-        manageGuthiNames();
-    }//GEN-LAST:event_menuGuthiNamesActionPerformed
-
     /**
      * Opens roles management panel.
      */
@@ -1167,7 +1152,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void manageOwnershipTpes() {
-        openReferenceDataPanel(OwnershipTypeBean.class, menuOwnerTypes.getText());
+        openReferenceDataPanel(OwnerTypeBean.class, menuOwnerTypes.getText());
     }
 
     private void manageShareTypes() {
@@ -1190,9 +1175,6 @@ public class MainForm extends javax.swing.JFrame {
         openReferenceDataPanel(LandUseBean.class, menuLandUses.getText());
     }
 
-    private void manageGuthiNames() {
-        openReferenceDataPanel(GuthiNameBean.class, menuGuthiNames.getText());
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
     private javax.swing.JButton btnCalendar;
@@ -1223,7 +1205,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuGenders;
     private javax.swing.JMenuItem menuGroups;
-    private javax.swing.JMenuItem menuGuthiNames;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuIdTypes;
     private javax.swing.JMenuItem menuLandClass;

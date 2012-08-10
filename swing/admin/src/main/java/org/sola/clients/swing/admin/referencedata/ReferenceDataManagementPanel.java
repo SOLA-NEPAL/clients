@@ -351,11 +351,6 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     DistrictBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.DISTRICT_KEY);
             refDataTOClass = DistrictTO.class;
-        } else if (refDataClass == RestrictionTypeBean.class) {
-            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getRestrictionTypes(null),
-                    RestrictionTypeBean.class, (List) refDataList);
-            CacheManager.remove(CacheManager.RESTRICTION_TYPE_KEY);
-            refDataTOClass = RestrictionTypeTO.class;
         } else if (refDataClass == RestrictionReasonBean.class) {
             TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getRestrictionReasons(null),
                     RestrictionReasonBean.class, (List) refDataList);
@@ -371,11 +366,11 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     RestrictionOfficeBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.RESTRICTION_OFFICE_KEY);
             refDataTOClass = RestrictionOfficeTO.class;
-        } else if (refDataClass == OwnershipTypeBean.class) {
-            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getOwnerShipTypes(null),
-                    OwnershipTypeBean.class, (List) refDataList);
-            CacheManager.remove(CacheManager.OWNERSHIP_TYPE_KEY);
-            refDataTOClass = OwnershipTypeTO.class;
+        } else if (refDataClass == OwnerTypeBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getOwnerTypes(null),
+                    OwnerTypeBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.OWNER_TYPE_KEY);
+            refDataTOClass = OwnerTypeTO.class;
         } else if (refDataClass == ShareTypeBean.class) {
             TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getShareTypes(null),
                     ShareTypeBean.class, (List) refDataList);
@@ -396,11 +391,6 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     LandClassBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.LAND_CLASS_KEY);
             refDataTOClass = LandClassTO.class;
-        } else if (refDataClass == GuthiNameBean.class) {
-            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getGuthiNames(null),
-                    GuthiNameBean.class, (List) refDataList);
-            CacheManager.remove(CacheManager.GUTHI_NAME_KEY);
-            refDataTOClass = GuthiNameTO.class;
         } else if (refDataClass == ParcelTypeBean.class) {
             TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getParcelTypes(null),
                     ParcelTypeBean.class, (List) refDataList);

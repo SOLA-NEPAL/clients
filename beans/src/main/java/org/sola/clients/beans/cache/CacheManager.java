@@ -234,7 +234,7 @@ public final class CacheManager {
     /**
      * Cache key of the {@link OwnershipTypeBean} collection.
      */
-    public static final String OWNERSHIP_TYPE_KEY = OwnershipTypeBean.class.getName() + LIST_POSTFIX;
+    public static final String OWNER_TYPE_KEY = OwnerTypeBean.class.getName() + LIST_POSTFIX;
     /**
      * Cache key of the {@link ShareTypeBean} collection.
      */
@@ -285,7 +285,7 @@ public final class CacheManager {
     private static final String GET_PARCEL_TYPES = "getParcelTypes";
     private static final String GET_RESTRICTION_REASONS = "getRestrictionReasons";
     private static final String GET_RESTRICTION_OFFICES = "getRestrictionOffices";
-    private static final String GET_OWNERSHIP_TYPES = "getOwnerShipTypes";
+    private static final String GET_OWNER_TYPES = "getOwnerTypes";
     private static final String GET_SHARE_TYPES = "getShareTypes";
     private static final String GET_TENANT_TYPES = "getTenantTypes";
     private static final String GET_LAND_USES = "getLandUses";
@@ -710,10 +710,10 @@ public final class CacheManager {
                 GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
     }
 
-    public static List<OwnershipTypeBean> getOwnerShipTypes() {
-        return getCachedBeanList(OwnershipTypeBean.class,
+    public static List<OwnerTypeBean> getOwnerTypes() {
+        return getCachedBeanList(OwnerTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
-                GET_OWNERSHIP_TYPES, OWNERSHIP_TYPE_KEY);
+                GET_OWNER_TYPES, OWNER_TYPE_KEY);
     }
 
     public static List<ShareTypeBean> getShareTypes() {

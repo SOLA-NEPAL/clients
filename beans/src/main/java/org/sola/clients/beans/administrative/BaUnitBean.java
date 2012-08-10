@@ -140,8 +140,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
         AllBaUnitNotationsListUpdater allBaUnitNotationsListener = new AllBaUnitNotationsListUpdater();
         rrrList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
         baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
-        cadastreObject = new CadastreObjectBean();
-        cadastreObject.setEntityAction(EntityAction.DISASSOCIATE);
         rrrList.addObservableListListener(new ObservableListListener() {
             
             RrrComparatorByRegistrationDate sorter = new RrrComparatorByRegistrationDate();

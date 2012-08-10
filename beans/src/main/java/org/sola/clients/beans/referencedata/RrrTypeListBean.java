@@ -29,7 +29,9 @@ package org.sola.clients.beans.referencedata;
 
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.controls.ExtendedListFilter;
 import org.sola.clients.beans.controls.SolaCodeList;
 
 /**
@@ -91,6 +93,41 @@ public class RrrTypeListBean extends AbstractBindingListBean {
 
     public ObservableList<RrrTypeBean> getRrrTypeBeanList() {
         return rrrTypeBeanList.getFilteredList();
+    }
+    
+    /** Filters list by Ownership Rrr group code */
+    public void filterByOwnerShip(){
+        setFilterByRrrGroup(RrrBean.GROUP_TYPE_CODE_OWNERSHIP);
+    }
+    
+    /** Filters list by Restriction Rrr group code */
+    public void filterByRestrictionsOwnerShip(){
+        setFilterByRrrGroup(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS);
+    }
+    
+    /** Filters list by Rights Rrr group code */
+    public void filterByOtherRights(){
+        setFilterByRrrGroup(RrrBean.GROUP_TYPE_CODE_RIGHTS);
+    }
+    
+    /** 
+     * Sets filter by Rrr group code. 
+     * @param groupCode The code of the Rrr group to filter by.
+     */
+    public void setFilterByRrrGroup(String groupCode){
+        rrrTypeBeanList.setFilter(new ExtendedListFilter() {
+
+            @Override
+            public boolean isAllowedByFilter(Object element) {
+                RrrTypeBean rrrType = (RrrTypeBean)element;
+                if(rrrType!=null && rrrType.getRrrGroupTypeCode()!=null && 
+                        rrrType.getRrrGroupTypeCode().equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)){
+                    return true;
+                }
+                return false;
+            }
+        });
+        rrrTypeBeanList.filter();
     }
 
     public void setSelectedRightByCode(String rrrTypeCode) {
