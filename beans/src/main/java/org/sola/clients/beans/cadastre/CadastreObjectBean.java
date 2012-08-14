@@ -34,10 +34,13 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
+import org.sola.clients.beans.address.AddressBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.CadastreObjectTypeBean;
+import org.sola.clients.beans.referencedata.LandClassBean;
+import org.sola.clients.beans.referencedata.LandUseBean;
 import org.sola.clients.beans.referencedata.ParcelTypeBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
@@ -61,12 +64,18 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     public static final String SELECTED_PROPERTY = "selected";
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
     public static final String PARCEL_TYPE_BEAN_PROPERTY = "parcelTypeBean";
+    public static final String LAND_USE_BEAN_PROPERTY = "landUseBean";
+    public static final String LAND_CLASS_BEAN_PROPERTY = "landClassBean";
+    public static final String ADDRESS_BEAN_PROPERTY = "adressBean";
     public static final String SPATIAL_VALUE_AREA_LIST_PROPERTY = "spatialValueAreaList";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
     public static final String PARCEL_NOTE_PROPERTY = "parcelNote";
     public static final String PARCEL_TYPE_PROPERTY = "parcelTypeCode";
+    public static final String LAND_USE_CODE_PROPERTY = "landUseCode";
+    public static final String LAND_CLASS_CODE_PROPERTY = "landClassCode";
     public static final String SELECTED_SPATIAL_VALUE_AREA_PROPERTY = "selectedSpatialValueArea";
     public static final String MAPSHEET_CODE_PROPERTY = "mapSheetCode";
+    public static final String ADDRESS_ID_PROPERTY = "addressId";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String SPATIAL_VALUE_AREA_PROPERTY = "SpatialValueArea";
     private Date approvalDatetime;
@@ -87,8 +96,42 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     private SolaObservableList<SpatialValueAreaBean> selectedSpatialValueArea;
     private MapSheetBean mapSheet;
     private ParcelTypeBean parceltypeBean;
+    private LandClassBean landClassBean;
+    private LandUseBean landUseBean;
+    private AddressBean addressBean;
     private String transactionId;
+    //  private String addressId;
     private SpatialValueAreaBean SpatialValueArea;
+
+    public AddressBean getAddressBean() {
+        return addressBean;
+    }
+
+    public void setAddressBean(AddressBean addressBean) {
+        AddressBean oldValue = this.addressBean;
+        this.addressBean = addressBean;
+        propertySupport.firePropertyChange(ADDRESS_BEAN_PROPERTY, oldValue, this.addressBean);
+    }
+
+    public LandClassBean getLandClassBean() {
+        return landClassBean;
+    }
+
+    public void setLandClassBean(LandClassBean landClassBean) {
+        LandClassBean oldValue = this.landClassBean;
+        this.landClassBean = landClassBean;
+        propertySupport.firePropertyChange(LAND_CLASS_BEAN_PROPERTY, oldValue, this.landClassBean);
+    }
+
+    public LandUseBean getLandUseBean() {
+        return landUseBean;
+    }
+
+    public void setLandUseBean(LandUseBean landUseBean) {
+        LandUseBean oldValue = this.landUseBean;
+        this.landUseBean = landUseBean;
+        propertySupport.firePropertyChange(LAND_USE_BEAN_PROPERTY, oldValue, this.landUseBean);
+    }
 
     public ParcelTypeBean getParceltypeBean() {
         return parceltypeBean;
@@ -182,23 +225,57 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
         propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelTypeCode);
     }
 
-//    
-//    public String getParcelType() {
-//        if (this.parceltypeBean == null) {
-//            return null;
-//        } else {
-//            return parceltypeBean.getCode();
-//        }
-//    }
-//
-//    public void setParcelType(String parcelType) {
-//        String oldValue = null;
-//        if (getParcelType() != null) {
-//            oldValue = getParceltypeBean().getCode();
-//        }
-//        setParceltypeBean(CacheManager.getBeanByCode(CacheManager.getParcelTypes(), parcelType));
-//        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelType);
-//    }
+    public String getLandClassCode() {
+        if (this.landClassBean == null) {
+            return null;
+        } else {
+            return landClassBean.getCode();
+        }
+    }
+
+    public void setLandClassCode(String landClassCode) {
+        String oldValue = null;
+        if (getLandClassCode() != null) {
+            oldValue = getLandClassBean().getCode();
+        }
+        setLandClassBean(CacheManager.getBeanByCode(CacheManager.getLandClasses(), landClassCode));
+        propertySupport.firePropertyChange(LAND_CLASS_CODE_PROPERTY, oldValue, landClassCode);
+    }
+
+    public String getLandUseCode() {
+        if (this.landUseBean == null) {
+            return null;
+        } else {
+            return landUseBean.getCode();
+        }
+    }
+
+    public void setLandUseCode(String landUseCode) {
+        String oldValue = null;
+        if (getLandUseCode() != null) {
+            oldValue = getLandUseBean().getCode();
+        }
+        setLandUseBean(CacheManager.getBeanByCode(CacheManager.getLandUses(), landUseCode));
+        propertySupport.firePropertyChange(LAND_USE_CODE_PROPERTY, oldValue, landUseCode);
+    }
+
+    public String getAddressId() {
+        if (getAddressBean() != null) {
+            return getAddressBean().getId();
+        } else {
+            return null;
+        }
+    }
+
+    public void setAddressId(String addressId) {
+        String oldValue = null;
+        if (addressBean != null) {
+            oldValue = addressBean.getId();
+        }
+        setAddressBean(TypeConverters.TransferObjectToBean(WSManager.getInstance().getCaseManagementService().getAddress(addressId), AddressBean.class, null));
+        propertySupport.firePropertyChange(ADDRESS_ID_PROPERTY, oldValue, addressId);
+    }
+
     public int getParcelno() {
         return parcelno;
     }

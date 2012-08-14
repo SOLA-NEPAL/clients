@@ -297,10 +297,10 @@ public class MainForm extends javax.swing.JFrame {
         return hasChanges;
     }
 
-    public MainContentPanel getMainContentPanel(){
+    public MainContentPanel getMainContentPanel() {
         return pnlContent;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -845,7 +845,6 @@ public class MainForm extends javax.swing.JFrame {
 //        showReport(ReportManager.getLodgementReport(lodgementBean1, ));  
     }//GEN-LAST:event_menuLodgementReportActionPerformed
 
-
     private void menuPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPersonsActionPerformed
         openSearchParties();
     }//GEN-LAST:event_menuPersonsActionPerformed
@@ -877,20 +876,22 @@ public class MainForm extends javax.swing.JFrame {
 
     private void menuCurrentUserRolesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCurrentUserRolesReportActionPerformed
         // TODO add your handling code here:       
-      // vdcListBean1.loadList(false, "25");
-       // showTestReport(ReportManager.getTestReportToDisplyListOfVdc(vdcListBean1.getVdcs())); 
+        // vdcListBean1.loadList(false, "25");
+        // showTestReport(ReportManager.getTestReportToDisplyListOfVdc(vdcListBean1.getVdcs())); 
         showCurrentUserRolesReport(ReportManager.getCurrentUserWithRolesReport());
     }//GEN-LAST:event_menuCurrentUserRolesReportActionPerformed
-     private void showCurrentUserRolesReport(JasperPrint report) {
+    private void showCurrentUserRolesReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
         form.setAlwaysOnTop(true);
     }
-     private void showVdcTestReport(JasperPrint report) {
+
+    private void showVdcTestReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
         form.setAlwaysOnTop(true);
     }
+
     private void showSearchByParcelNo() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO)) {
             SearchByParcelNo srchParcel = new SearchByParcelNo();
@@ -898,6 +899,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
     }
+
     private void showSearchByMothPanaAndParcelNo() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL)) {
             SearchByMothPanaParcelNo srchMohPanaParcel = new SearchByMothPanaParcelNo();
@@ -905,6 +907,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
     }
+
     private void showSearchByMothPana() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA)) {
             SearchByMothAndPageNo srchMohPana = new SearchByMothAndPageNo();
@@ -912,23 +915,22 @@ public class MainForm extends javax.swing.JFrame {
         }
         pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA);
     }
-     private void showSearchPerson() {
+
+    private void showSearchPerson() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
             SearchByPerson srchLndOwner = new SearchByPerson();
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
         }
         pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
     }
-     private void mothShrestaEntry() {
+
+    private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY)) {
-            MothSrestaEntry srchLndOwner = new MothSrestaEntry();           
+            MothSrestaEntry srchLndOwner = new MothSrestaEntry();
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
     }
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar applicationsMain;
     private javax.swing.JButton btnDocumentSearch;
