@@ -84,7 +84,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String ASSIGNEE_ID_PROPERTY = "assigneeId";
     public static final String STATUS_TYPE_PROPERTY = "statusType";
     public static final String APPLICATION_PROPERTY = "application";
-    
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
     private SolaList<ApplicationPropertyBean> propertyList;
@@ -134,8 +133,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
     public boolean canResubmit() {
         String appStatus = getStatusCode();
-        return checkAccessByOffice() && isAssigned() && 
-                (StatusConstants.REQUISITIONED.equalsIgnoreCase(appStatus));
+        return checkAccessByOffice() && isAssigned()
+                && (StatusConstants.REQUISITIONED.equalsIgnoreCase(appStatus));
     }
 
     /**
@@ -207,7 +206,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
 //        }
 //        return result;
     }
-    
+
     /**
      * Indicates whether application management is allowed or not
      */
@@ -590,6 +589,17 @@ public class ApplicationBean extends ApplicationSummaryBean {
         }
     }
 
+    public boolean VerificationTest(String first, String last) {
+        PropertyVerifierTO verifier = WSManager.getInstance().getSearchService().verifyApplicationProperty(
+                this.getNr(), first, last);
+        if (verifier != null) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     /**
      * Verifies selected property object. Checks if object exists in the
      * database and on the map. Checks for the list of incomplete applications,
@@ -800,8 +810,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
             List<ApplicationSearchResultBean> applicationSearchResults, String userId) {
         transferApplicationBulk(convertSaerchResultsToActioned(applicationSearchResults), userId);
     }
-    
-     /**
+
+    /**
      * Bulk transfer of applications to the user.
      *
      * @param actionedApplications Actioned application list
@@ -811,7 +821,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
         WSManager.getInstance().getCaseManagementService().applicationActionTransferBulk(
                 actionedApplications, userId);
     }
-    
+
     /**
      * Creates new application in the database.
      *
@@ -827,7 +837,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     }
 
     //rectify the appBean to check document bean status.
-    private void checkDocuments(ApplicationTO app){
+    private void checkDocuments(ApplicationTO app) {
         app.getContactPerson().setPhotoDoc(
                 getDocumentExisting(app.getContactPerson().getPhotoDoc()));
         app.getContactPerson().setRightFingerDoc(
@@ -837,18 +847,20 @@ public class ApplicationBean extends ApplicationSummaryBean {
         app.getContactPerson().setSignatureDoc(
                 getDocumentExisting(app.getContactPerson().getSignatureDoc()));
     }
-    
-    public DocumentBinaryTO getDocumentExisting(DocumentBinaryTO doc){
-        if (doc==null) return null;
-        
-        String desc=doc.getDescription();
-        if (desc==null || desc.isEmpty() || doc.getBody()==null){
+
+    public DocumentBinaryTO getDocumentExisting(DocumentBinaryTO doc) {
+        if (doc == null) {
             return null;
         }
-        
+
+        String desc = doc.getDescription();
+        if (desc == null || desc.isEmpty() || doc.getBody() == null) {
+            return null;
+        }
+
         return doc;
     }
-    
+
     /**
      * Saves application into the database.
      *

@@ -74,7 +74,7 @@ public class Parcel_Selection_Form extends ContentPanel {
         parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        btnOK = new javax.swing.JButton();
+        btnSelect = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -91,14 +91,14 @@ public class Parcel_Selection_Form extends ContentPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        btnOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/select.png"))); // NOI18N
-        btnOK.setText(bundle.getString("Select_Parcel_Form.btnOK.text")); // NOI18N
-        btnOK.addActionListener(new java.awt.event.ActionListener() {
+        btnSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/select.png"))); // NOI18N
+        btnSelect.setText(bundle.getString("Select_Parcel_Form.btnOK.text")); // NOI18N
+        btnSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOKActionPerformed(evt);
+                btnSelectActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnOK);
+        jToolBar1.add(btnSelect);
 
         jLabel1.setText(bundle.getString("Parcel_Selection_Form.jLabel1.text")); // NOI18N
 
@@ -186,7 +186,7 @@ public class Parcel_Selection_Form extends ContentPanel {
         lstParcelInfo.setModel(def_model);
     }
 
-    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         //By Kabindra
         try {
             search_Completed_Trigger.invoke(method_holder_object, new Object[]{cadastreObject});
@@ -194,9 +194,9 @@ public class Parcel_Selection_Form extends ContentPanel {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_btnOKActionPerformed
+    }//GEN-LAST:event_btnSelectActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JButton btnOK;
+    javax.swing.JButton btnSelect;
     org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel2;

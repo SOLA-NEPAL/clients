@@ -16,6 +16,8 @@
 package org.sola.clients.beans.cadastre;
 
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *
@@ -40,5 +42,9 @@ public class SpatialUnitAddressBean extends AbstractIdBean {
 
     public void setSpatialUnitId(String spatialUnitId) {
         this.spatialUnitId = spatialUnitId;
+    }
+
+    public static SpatialUnitAddressBean getSpatialUnitAddressBean(String parcelId) {
+        return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getSpatialUnitAddress(parcelId), SpatialUnitAddressBean.class, null);
     }
 }

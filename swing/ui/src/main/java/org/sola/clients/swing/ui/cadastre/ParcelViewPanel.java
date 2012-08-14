@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.ui.cadastre;
@@ -35,22 +37,22 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 public class ParcelViewPanel extends javax.swing.JPanel {
 
     private CadastreObjectBean cadastreObject;
-       
+
     public ParcelViewPanel() {
         setupCadastreObject(null);
         initComponents();
     }
 
-    private void setupCadastreObject(CadastreObjectBean cadastreObjectBean){
+    private void setupCadastreObject(CadastreObjectBean cadastreObjectBean) {
         CadastreObjectBean oldValue = this.cadastreObject;
-        if(this.cadastreObject == null){
+        if (this.cadastreObject == null) {
             this.cadastreObject = new CadastreObjectBean();
         } else {
             this.cadastreObject = cadastreObjectBean;
         }
         firePropertyChange("cadastreObject", oldValue, this.cadastreObject);
     }
-    
+
     public CadastreObjectBean getCadastreObject() {
         return cadastreObject;
     }
@@ -58,7 +60,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
     public void setCadastreObject(CadastreObjectBean cadastreObjectBean) {
         setupCadastreObject(cadastreObjectBean);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +124,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel4Layout.createSequentialGroup()
                 .add(jLabel4)
-                .add(0, 91, Short.MAX_VALUE))
+                .add(0, 84, Short.MAX_VALUE))
             .add(txtParcelNameFirstPart)
         );
         jPanel4Layout.setVerticalGroup(
@@ -153,7 +155,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel11Layout.createSequentialGroup()
                 .add(jLabel8)
-                .add(0, 92, Short.MAX_VALUE))
+                .add(0, 85, Short.MAX_VALUE))
             .add(txtParcelNameLastPart)
         );
         jPanel11Layout.setVerticalGroup(
@@ -173,8 +175,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel9.setName(bundle.getString("ParcelViewPanel.jLabel9.name")); // NOI18N
 
         txtParcelVdc.setEditable(false);
-        txtParcelVdc.setText(bundle.getString("ParcelViewPanel.txtParcelVdc.text")); // NOI18N
         txtParcelVdc.setName(bundle.getString("ParcelViewPanel.txtParcelVdc.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.addressBean.vdcBean.displayValue}"), txtParcelVdc, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel15Layout = new org.jdesktop.layout.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -182,7 +186,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel15Layout.createSequentialGroup()
                 .add(jLabel9)
-                .add(0, 56, Short.MAX_VALUE))
+                .add(0, 49, Short.MAX_VALUE))
             .add(txtParcelVdc)
         );
         jPanel15Layout.setVerticalGroup(
@@ -202,8 +206,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel10.setName(bundle.getString("ParcelViewPanel.jLabel10.name")); // NOI18N
 
         txtParcelWardNumber.setEditable(false);
-        txtParcelWardNumber.setText(bundle.getString("ParcelViewPanel.txtParcelWardNumber.text")); // NOI18N
         txtParcelWardNumber.setName(bundle.getString("ParcelViewPanel.txtParcelWardNumber.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.addressBean.wardNo}"), txtParcelWardNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel16Layout = new org.jdesktop.layout.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -211,7 +217,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel16Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel16Layout.createSequentialGroup()
                 .add(jLabel10)
-                .add(0, 109, Short.MAX_VALUE))
+                .add(0, 102, Short.MAX_VALUE))
             .add(txtParcelWardNumber)
         );
         jPanel16Layout.setVerticalGroup(
@@ -231,8 +237,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel11.setName(bundle.getString("ParcelViewPanel.jLabel11.name")); // NOI18N
 
         txtParcelMapSheet.setEditable(false);
-        txtParcelMapSheet.setText(bundle.getString("ParcelViewPanel.txtParcelMapSheet.text")); // NOI18N
         txtParcelMapSheet.setName(bundle.getString("ParcelViewPanel.txtParcelMapSheet.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.mapSheet.mapNumber}"), txtParcelMapSheet, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel17Layout = new org.jdesktop.layout.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -240,7 +248,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel17Layout.createSequentialGroup()
                 .add(jLabel11)
-                .add(0, 85, Short.MAX_VALUE))
+                .add(0, 78, Short.MAX_VALUE))
             .add(txtParcelMapSheet)
         );
         jPanel17Layout.setVerticalGroup(
@@ -260,8 +268,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel13.setName(bundle.getString("ParcelViewPanel.jLabel13.name")); // NOI18N
 
         txtParcelLandType.setEditable(false);
-        txtParcelLandType.setText(bundle.getString("ParcelViewPanel.txtParcelLandType.text")); // NOI18N
         txtParcelLandType.setName(bundle.getString("ParcelViewPanel.txtParcelLandType.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.parceltypeBean.displayValue}"), txtParcelLandType, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel19Layout = new org.jdesktop.layout.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -269,7 +279,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel19Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel19Layout.createSequentialGroup()
                 .add(jLabel13)
-                .add(0, 87, Short.MAX_VALUE))
+                .add(0, 80, Short.MAX_VALUE))
             .add(txtParcelLandType)
         );
         jPanel19Layout.setVerticalGroup(
@@ -289,8 +299,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel14.setName(bundle.getString("ParcelViewPanel.jLabel14.name")); // NOI18N
 
         txtLandClass.setEditable(false);
-        txtLandClass.setText(bundle.getString("ParcelViewPanel.txtLandClass.text")); // NOI18N
         txtLandClass.setName(bundle.getString("ParcelViewPanel.txtLandClass.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.landClassBean.displayValue}"), txtLandClass, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel20Layout = new org.jdesktop.layout.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -298,7 +310,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel20Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel20Layout.createSequentialGroup()
                 .add(jLabel14)
-                .add(0, 86, Short.MAX_VALUE))
+                .add(0, 79, Short.MAX_VALUE))
             .add(txtLandClass)
         );
         jPanel20Layout.setVerticalGroup(
@@ -318,8 +330,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel17.setName(bundle.getString("ParcelViewPanel.jLabel17.name")); // NOI18N
 
         txtLandUse.setEditable(false);
-        txtLandUse.setText(bundle.getString("ParcelViewPanel.txtLandUse.text")); // NOI18N
         txtLandUse.setName(bundle.getString("ParcelViewPanel.txtLandUse.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.landUseBean.displayValue}"), txtLandUse, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel21Layout = new org.jdesktop.layout.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -327,7 +341,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel21Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel21Layout.createSequentialGroup()
                 .add(jLabel17)
-                .add(0, 92, Short.MAX_VALUE))
+                .add(0, 85, Short.MAX_VALUE))
             .add(txtLandUse)
         );
         jPanel21Layout.setVerticalGroup(
@@ -347,8 +361,10 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         jLabel12.setName(bundle.getString("ParcelViewPanel.jLabel12.name")); // NOI18N
 
         txtParcelArea.setEditable(false);
-        txtParcelArea.setText(bundle.getString("ParcelViewPanel.txtParcelArea.text")); // NOI18N
         txtParcelArea.setName(bundle.getString("ParcelViewPanel.txtParcelArea.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.spatialValueArea.size}"), txtParcelArea, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel18Layout = new org.jdesktop.layout.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -356,7 +372,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel18Layout.createSequentialGroup()
                 .add(jLabel12)
-                .add(0, 112, Short.MAX_VALUE))
+                .add(0, 105, Short.MAX_VALUE))
             .add(txtParcelArea)
         );
         jPanel18Layout.setVerticalGroup(
@@ -385,7 +401,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel22Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel22Layout.createSequentialGroup()
                 .add(jLabel18)
-                .add(0, 80, Short.MAX_VALUE))
+                .add(0, 73, Short.MAX_VALUE))
             .add(txtParcelGuthiNum)
         );
         jPanel22Layout.setVerticalGroup(
@@ -415,7 +431,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jLabel1)
-                .add(0, 104, Short.MAX_VALUE))
+                .add(0, 97, Short.MAX_VALUE))
             .add(txtStatus)
         );
         jPanel1Layout.setVerticalGroup(
@@ -433,7 +449,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .add(jPanel23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -442,7 +458,6 @@ public class ParcelViewPanel extends javax.swing.JPanel {
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

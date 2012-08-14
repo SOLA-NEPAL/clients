@@ -19,7 +19,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel23" alignment="0" pref="585" max="32767" attributes="0"/>
+          <Component id="jPanel23" alignment="0" pref="560" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -55,7 +55,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="91" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelNameFirstPart" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -109,7 +109,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="92" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="85" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelNameLastPart" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -163,7 +163,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelVdc" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -193,13 +193,15 @@
             <Component class="javax.swing.JTextField" name="txtParcelVdc">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelVdc.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelVdc.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.addressBean.vdcBean.displayValue}" target="txtParcelVdc" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -215,7 +217,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="109" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="102" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelWardNumber" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -245,13 +247,15 @@
             <Component class="javax.swing.JTextField" name="txtParcelWardNumber">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelWardNumber.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelWardNumber.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.addressBean.wardNo}" target="txtParcelWardNumber" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -267,7 +271,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="85" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="78" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelMapSheet" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -297,13 +301,15 @@
             <Component class="javax.swing.JTextField" name="txtParcelMapSheet">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelMapSheet.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelMapSheet.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.mapSheet.mapNumber}" target="txtParcelMapSheet" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -319,7 +325,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="87" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="80" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelLandType" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -349,13 +355,15 @@
             <Component class="javax.swing.JTextField" name="txtParcelLandType">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelLandType.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelLandType.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.parceltypeBean.displayValue}" target="txtParcelLandType" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -371,7 +379,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="86" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="79" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtLandClass" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -401,13 +409,15 @@
             <Component class="javax.swing.JTextField" name="txtLandClass">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtLandClass.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtLandClass.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.landClassBean.displayValue}" target="txtLandClass" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -423,7 +433,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="92" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="85" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtLandUse" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -453,13 +463,15 @@
             <Component class="javax.swing.JTextField" name="txtLandUse">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtLandUse.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtLandUse.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.landUseBean.displayValue}" target="txtLandUse" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -475,7 +487,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="112" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="105" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelArea" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -505,13 +517,15 @@
             <Component class="javax.swing.JTextField" name="txtParcelArea">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelArea.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
                 <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelViewPanel.txtParcelArea.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.spatialValueArea.size}" target="txtParcelArea" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -527,7 +541,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="80" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="73" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtParcelGuthiNum" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -579,7 +593,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="104" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="97" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtStatus" max="32767" attributes="0"/>
               </Group>
