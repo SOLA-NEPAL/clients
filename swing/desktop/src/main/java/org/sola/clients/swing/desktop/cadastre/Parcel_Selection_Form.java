@@ -7,16 +7,16 @@ package org.sola.clients.swing.desktop.cadastre;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKBReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.swing.ui.ContentPanel;
+import org.sola.clients.swing.ui.cadastre.CadastreObjectPanel;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -26,38 +26,25 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class Parcel_Selection_Form extends ContentPanel {
     //temporary variable.
 
+    public static final String SELECT_CADASTRE_OBJECT_PROPERTY = "cadasterObjectSelect";
     private CadastreObjectTO cadastreObject = null;
     private Geometry the_Polygon = null;
-    private Method search_Completed_Trigger = null;
-    private Object method_holder_object = null;
-
-    public void set_SearchCompletedTriggers(Method search_completed, Object method_holder) {
-        this.search_Completed_Trigger = search_completed;
-        this.method_holder_object = method_holder;
-    }
-
+    
     /**
      * Creates new form SelectParcelForm
      */
     public Parcel_Selection_Form() {
         super();
         initComponents();
-        //initialize variables.
-        set_SearchCompletionTrigger();
-    }
+        parcelSearchPanel.addPropertyChangeListener(new PropertyChangeListener() {
 
-    private void set_SearchCompletionTrigger() {
-        Class[] cls = new Class[]{CadastreObjectBean.class,
-            String.class, String.class, String.class};
-        Class workingForm = this.getClass();
-        Method taskCompletion = null;
-        try {
-            taskCompletion = workingForm.getMethod("refresh_Cadastre_Object_Searching", cls);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            Logger.getLogger(Parcel_Selection_Form.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        parcelSearchPanel.set_SearchCompletedTriggers(taskCompletion, this);
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(CadastreObjectPanel.SELECT_CADASTRE_OBJECT_PROPERTY)){
+                    refresh_Cadastre_Object_Searching((CadastreObjectBean)evt.getNewValue());
+                }
+            }
+        });
     }
 
     /**
@@ -159,8 +146,7 @@ public class Parcel_Selection_Form extends ContentPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void refresh_Cadastre_Object_Searching(CadastreObjectBean parcel,
-            String ddc, String vdc, String wardno) {
+    public void refresh_Cadastre_Object_Searching(CadastreObjectBean parcel) {
         if (parcel == null) {
             return;
         }
@@ -169,9 +155,9 @@ public class Parcel_Selection_Form extends ContentPanel {
         DefaultListModel def_model = new DefaultListModel();
         def_model.clear();
         def_model.addElement("Parcel Number: " + String.valueOf(parcel.getParcelno()));
-        def_model.addElement("District: " + ddc);
-        def_model.addElement("VDC: " + vdc);
-        def_model.addElement("Ward Number: " + wardno);
+        def_model.addElement("District: " + parcel.getAddressBean().getDistrictBean().getDisplayValue());
+        def_model.addElement("VDC: " + parcel.getAddressBean().getVdcBean().getDisplayValue());
+        def_model.addElement("Ward Number: " + parcel.getAddressBean().getWardNo());
         //get the geometry object.
         WKBReader wkb_reader = new WKBReader();
         DecimalFormat df = new DecimalFormat("0.000");
@@ -187,12 +173,9 @@ public class Parcel_Selection_Form extends ContentPanel {
     }
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-        //By Kabindra
-        try {
-            search_Completed_Trigger.invoke(method_holder_object, new Object[]{cadastreObject});
+        if(cadastreObject!=null){
+            firePropertyChange(SELECT_CADASTRE_OBJECT_PROPERTY, null, cadastreObject);
             this.close();
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnSelectActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

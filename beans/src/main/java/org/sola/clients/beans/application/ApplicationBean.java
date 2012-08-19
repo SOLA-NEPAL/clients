@@ -569,7 +569,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      * @param area The area of parcel.
      * @param value The value of parcel.
      */
-    public void addProperty(String firstPart, String lastPart, BigDecimal area, BigDecimal value) {
+    public ApplicationPropertyBean addProperty(String firstPart, String lastPart, BigDecimal area, BigDecimal value) {
         if (propertyList != null) {
             ApplicationPropertyBean newProperty = new ApplicationPropertyBean();
             newProperty.setArea(area);
@@ -577,7 +577,9 @@ public class ApplicationBean extends ApplicationSummaryBean {
             newProperty.setNameLastpart(lastPart);
             newProperty.setTotalValue(value);
             propertyList.addAsNew(newProperty);
+            return newProperty;
         }
+        return null;
     }
 
     /**
@@ -589,50 +591,43 @@ public class ApplicationBean extends ApplicationSummaryBean {
         }
     }
 
-    public boolean VerificationTest(String first, String last) {
-        PropertyVerifierTO verifier = WSManager.getInstance().getSearchService().verifyApplicationProperty(
-                this.getNr(), first, last);
-        if (verifier != null) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
     /**
      * Verifies selected property object. Checks if object exists in the
      * database and on the map. Checks for the list of incomplete applications,
      * related to the selected property object.
      */
-    public boolean verifyProperty() {
-        if (selectedProperty != null) {
+    public boolean verifyProperty(ApplicationPropertyBean applicationProperty) {
+        if (applicationProperty != null) {
             PropertyVerifierTO verifier = WSManager.getInstance().getSearchService().verifyApplicationProperty(
-                    this.getNr(), selectedProperty.getNameFirstpart(), selectedProperty.getNameLastpart());
+                    this.getNr(), applicationProperty.getNameFirstpart(), applicationProperty.getNameLastpart());
             if (verifier != null) {
-                selectedProperty.setBaUnitId(verifier.getId());
-                selectedProperty.setVerifiedLocation(verifier.isHasLocation());
+                applicationProperty.setBaUnitId(verifier.getId());
+                applicationProperty.setVerifiedLocation(verifier.isHasLocation());
 
                 if (verifier.getId() != null && !verifier.getId().equals("")) {
-                    selectedProperty.setVerifiedExists(true);
+                    applicationProperty.setVerifiedExists(true);
                 } else {
-                    selectedProperty.setVerifiedExists(false);
+                    applicationProperty.setVerifiedExists(false);
                 }
 
-                selectedProperty.setVerifiedApplications(true);
+                applicationProperty.setVerifiedApplications(true);
 
                 if (verifier.getApplicationsWhereFound() != null
                         && !verifier.getApplicationsWhereFound().equals("")) {
                     MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_HAS_INCOMPLETE_APPLICATIONS,
-                            new Object[]{selectedProperty.getNameFirstpart() + selectedProperty.getNameLastpart(),
+                            new Object[]{applicationProperty.getNameFirstpart() + applicationProperty.getNameLastpart(),
                                 verifier.getApplicationsWhereFound()});
+
                 }
+                //added       
+                return true;
             } else {
-                selectedProperty.setVerifiedExists(false);
-                selectedProperty.setVerifiedApplications(false);
-                selectedProperty.setVerifiedLocation(false);
+                applicationProperty.setVerifiedExists(false);
+                applicationProperty.setVerifiedApplications(false);
+                applicationProperty.setVerifiedLocation(false);
+                return false;
             }
-            return true;
+            //return true;
         }
         return false;
     }

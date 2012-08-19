@@ -18,6 +18,7 @@ package org.sola.clients.swing.desktop.administrative;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
+import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.administrative.CreatePropertyCodeBean;
 import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.DistrictListBean;
@@ -27,13 +28,13 @@ import org.sola.clients.beans.referencedata.VdcBean;
  *
  * @author KumarKhadka
  */
-public class CreatePropertyCode extends javax.swing.JDialog {
+public class CreatePropertyCodeForm extends javax.swing.JDialog {
 
     /**
-     * Creates new form CreatePropertyCode
+     * Creates new form CreatePropertyCodeForm
      */
-    private CreatePropertyCodeBean createPropertyCodeBean;
-    public CreatePropertyCode() {
+    private BaUnitBean baUnitBean;
+    public CreatePropertyCodeForm() {
         initComponents();
     }
 
@@ -219,10 +220,10 @@ public class CreatePropertyCode extends javax.swing.JDialog {
         createPropertyCode();
     }//GEN-LAST:event_btnCreateActionPerformed
 
-    public CreatePropertyCode(CreatePropertyCodeBean createPropertyCodeBean) {
-        this.createPropertyCodeBean = createPropertyCodeBean;
+    public CreatePropertyCodeForm(BaUnitBean baUnitBean) {
+        this.baUnitBean = baUnitBean;
         initComponents();
-        this.setIconImage(new ImageIcon(CreatePropertyCode.class.getResource("/images/sola/logo_icon.jpg")).getImage());
+        this.setIconImage(new ImageIcon(CreatePropertyCodeForm.class.getResource("/images/sola/logo_icon.jpg")).getImage());
         postInit();
     }
 
@@ -254,8 +255,8 @@ public class CreatePropertyCode extends javax.swing.JDialog {
         VdcBean vdc = (VdcBean) cbxVdcs.getSelectedItem();
         String firstPart=dist.getCode() + "-" + vdc.getCode() + "-" + txtWardNo.getText();
         String lastPart=txtParcelNo.getText();
-        createPropertyCodeBean.setFirstPart(firstPart);
-        createPropertyCodeBean.setLastPart(lastPart);
+        baUnitBean.setNameFirstpart(firstPart);
+        baUnitBean.setNameLastpart(lastPart);
         this.setVisible(false);
     }    
    

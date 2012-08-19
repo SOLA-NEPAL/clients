@@ -26,20 +26,7 @@ import org.sola.clients.beans.referencedata.VdcBean;
 public class CadastreObjectPanel extends javax.swing.JPanel {
 
     private SolaObservableList<CadastreObjectBean> cadastreObjects;
-    private CadastreObjectBean newCadastreObjectBean = null;
-    /**
-     * Creates new form CadastreObjectPanel
-     */
-    //By Kabindra
-    //--------------------------------------------
-    private Method search_Completed_Trigger = null;
-    private Object method_holder_object = null;
-
-    public void set_SearchCompletedTriggers(Method search_completed, Object method_holder) {
-        this.search_Completed_Trigger = search_completed;
-        this.method_holder_object = method_holder;
-    }
-    //------------------------------------------
+    public static final String SELECT_CADASTRE_OBJECT_PROPERTY = "cadasterObjectSelect";
 
     public CadastreObjectPanel() {
         initComponents();
@@ -814,44 +801,27 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbDistrictItemStateChanged
 
-    private void refresh_Parcel_Information()
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        //By Kabindra
-        if (newCadastreObjectBean==null){
+    private void fireParcelSelect(CadastreObjectBean cadastreObject) {
+        if (cadastreObject==null){
             JOptionPane.showMessageDialog(this, "Could not find the specified parcel.");
             return;
         }
-        search_Completed_Trigger.invoke(method_holder_object,
-                new Object[]{newCadastreObjectBean,
-                    cmbDistrict.getSelectedItem().toString(),
-                    cmbVdc.getSelectedItem().toString(),
-                    txtWardNo.getText()});
+        firePropertyChange(SELECT_CADASTRE_OBJECT_PROPERTY, null, cadastreObject);
     }
     
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
         //invoke method.
         try {
             VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString()));
-            refresh_Parcel_Information();
+            fireParcelSelect(CadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString())));
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnSearch1ActionPerformed
-
-    private void checkSearchedObject() throws InvocationTargetException, IllegalAccessException, HeadlessException, IllegalArgumentException {
-        if (newCadastreObjectBean!=null){
-            refresh_Parcel_Information();
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Couldn't find any parcel.");
-        }
-    }
     
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         try {
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getId().toString(), Integer.parseInt(cmbParcelNo1.getSelectedItem().toString()));
-            refresh_Parcel_Information();
+            fireParcelSelect(CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getId().toString(), Integer.parseInt(cmbParcelNo1.getSelectedItem().toString())));
         } catch (Exception ex) {
             Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -891,8 +861,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private void btnSearch3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch3ActionPerformed
         // TODO add your handling code here:
         try {
-            newCadastreObjectBean = (CadastreObjectBean) cmbCadastreList.getSelectedItem();
-            refresh_Parcel_Information();
+            fireParcelSelect((CadastreObjectBean) cmbCadastreList.getSelectedItem());
         } catch (Exception ex) {
             Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
