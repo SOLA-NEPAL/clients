@@ -21,17 +21,14 @@ import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
  *
  * @author Kumar
  */
-public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean{
-    
-    public static final String IS_SELECTED_PROPERTY = "isSelected";
-    public static final String MAPSHEET_ID="mapsheetId";
-    public static final String FIRST_NAME="firstName";
-    public static final String LAST_NAME="lastName";
-    
+public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean {
+
+    public static final String MAPSHEET_ID = "mapsheetId";
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
     private String mapsheetId;
     private String firstName;
     private String lastName;
-    private boolean isSelected;
 
     public ParcelSummaryBean() {
         super();
@@ -42,7 +39,9 @@ public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean{
     }
 
     public void setMapsheetId(String mapsheetId) {
+        String oldValue = this.mapsheetId;
         this.mapsheetId = mapsheetId;
+        propertySupport.firePropertyChange(MAPSHEET_ID, oldValue, mapsheetId);
     }
 
     public String getFirstName() {
@@ -50,7 +49,9 @@ public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean{
     }
 
     public void setFirstName(String firstName) {
+        String oldValue = this.firstName;
         this.firstName = firstName;
+        propertySupport.firePropertyChange(FIRST_NAME, oldValue, firstName);
     }
 
     public String getLastName() {
@@ -58,16 +59,8 @@ public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean{
     }
 
     public void setLastName(String lastName) {
+        String oldValue = this.lastName;
         this.lastName = lastName;
-    }
-
-    public boolean isIsSelected() {
-        return isSelected;
-    }
-
-    public void setIsSelected(boolean isSelected) {
-        boolean oldValue = this.isSelected;
-        this.isSelected = isSelected;
-        propertySupport.firePropertyChange(IS_SELECTED_PROPERTY, oldValue, this.isSelected);
+        propertySupport.firePropertyChange(LAST_NAME, oldValue, lastName);
     }
 }

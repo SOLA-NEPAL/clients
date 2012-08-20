@@ -15,190 +15,52 @@
  */
 package org.sola.clients.beans.cadastre;
 
-import org.sola.clients.beans.AbstractBindingBean;
+import java.util.List;
+import org.jdesktop.observablecollections.ObservableList;
+import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.controls.SolaObservableList;
+import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *
  * @author Kumar
  */
-public class ParcelSearchResultListBean extends AbstractBindingBean{
-//     public static final String SELECTED_APPLICATION_PROPERTY = "selectedApplication";
-//    public static final String CHECKED_APPLICATION_PROPERTY = "checkedApplication";
-//    private SolaObservableList<ApplicationSearchResultBean> applicationSearchResultsList;
-//    private SolaObservableList<ApplicationSearchResultBean> applicationSearchResultsListUnfiltered;
-//    private ApplicationSearchResultBean selectedApplication;
-//    private PropertyChangeListener searchResultListener;
-//    private boolean applicationChecked;
-//
-//    /**
-//     * Creates object's instance and populates collection of {@link ApplicationSearchResultBean}.
-//     */
-//    public ApplicationSearchResultsListBean(List<ApplicationSearchResultBean> searchList) {
-//        this();
-//        if (searchList != null) {
-//            for (ApplicationSearchResultBean searchResult : searchList) {
-//                applicationSearchResultsList.add(searchResult);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Creates object's instance and initializes collection of {@link ApplicationSearchResultBean}.
-//     */
-//    public ApplicationSearchResultsListBean() {
-//        applicationSearchResultsList = new SolaObservableList<ApplicationSearchResultBean>();
-//        applicationSearchResultsListUnfiltered = new SolaObservableList<ApplicationSearchResultBean>();
-//        searchResultListener = new PropertyChangeListener() {
-//
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                if (evt.getPropertyName().equals(ApplicationSearchResultBean.IS_SELECTED_PROPERTY)) {
-//                    checkSearchResultChecked();
-//                }
-//            }
-//        };
-//
-//        applicationSearchResultsList.addObservableListListener(new ObservableListListener() {
-//
-//            @Override
-//            public void listElementsAdded(ObservableList list, int index, int length) {
-//                addSearchResultListener(index, length);
-//            }
-//
-//            @Override
-//            public void listElementsRemoved(ObservableList list, int index, List oldElements) {
-//                removeSearchResultListener(oldElements);
-//            }
-//
-//            @Override
-//            public void listElementReplaced(ObservableList list, int index, Object oldElement) {
-//            }
-//
-//            @Override
-//            public void listElementPropertyChanged(ObservableList list, int index) {
-//            }
-//        });
-//    }
-//
-//    private void checkSearchResultChecked() {
-//        for (ApplicationSearchResultBean searchResult : applicationSearchResultsList) {
-//            if (searchResult.isChecked() && applicationChecked) {
-//                return;
-//            } else if (searchResult.isChecked() && !applicationChecked) {
-//                setApplicationChecked(true);
-//                return;
-//            }
-//        }
-//        if (applicationChecked) {
-//            setApplicationChecked(false);
-//        }
-//    }
-//
-//    private void addSearchResultListener(int index, int length) {
-//        for (int i = index; i <= index + length - 1; i++) {
-//            applicationSearchResultsList.get(i).addPropertyChangeListener(searchResultListener);
-//        }
-//        checkSearchResultChecked();
-//    }
-//
-//    private void removeSearchResultListener(List<ApplicationSearchResultBean> oldElements) {
-//        for (ApplicationSearchResultBean searchResult : oldElements) {
-//            searchResult.removePropertyChangeListener(searchResultListener);
-//        }
-//        checkSearchResultChecked();
-//    }
-//
-//    /**
-//     * Returns checked list of search results
-//     */
-//    public SolaObservableList<ApplicationSearchResultBean> getCheckedApplications() {
-//        SolaObservableList<ApplicationSearchResultBean> checkedApplications =
-//                new SolaObservableList<ApplicationSearchResultBean>();
-//        for (ApplicationSearchResultBean searchResult : applicationSearchResultsList) {
-//            if (searchResult.isChecked()) {
-//                checkedApplications.add(searchResult);
-//            }
-//        }
-//        return checkedApplications;
-//    }
-//
-//    /**
-//     * Fills application search result list with assigned applications.
-//     */
-//    public void FillAssigned(boolean showOnlyMy) {
-//        applicationSearchResultsList.clear();
-//        applicationSearchResultsListUnfiltered.clear();
-//        List<ApplicationSearchResultTO> assignedApplicationsTO =
-//                WSManager.getInstance().getSearchService().getAssignedApplications();
-//
-//        TypeConverters.TransferObjectListToBeanList(assignedApplicationsTO,
-//                ApplicationSearchResultBean.class, (List) getApplicationSearchResultsList());
-//        for (ApplicationSearchResultBean searchResult : getApplicationSearchResultsList()) {
-//            applicationSearchResultsListUnfiltered.add(searchResult);
-//        }
-//        showOnlyMyApplications(showOnlyMy);
-//    }
-//
-//    public void showOnlyMyApplications(boolean showOnlyMy) {
-//        if (showOnlyMy) {
-//            String currentUserId = SecurityBean.getCurrentUser().getId();
-//            Iterator it = applicationSearchResultsList.listIterator();
-//            while(it.hasNext()){
-//                ApplicationSearchResultBean searchResult = (ApplicationSearchResultBean)it.next();
-//                if (!searchResult.getAssigneeId().equals(currentUserId)) {
-//                    it.remove();
-//                }
-//            }
-//        } else {
-//            if (applicationSearchResultsListUnfiltered.size() > applicationSearchResultsList.size()) {
-//                applicationSearchResultsList.clear();
-//                for (ApplicationSearchResultBean searchResult : applicationSearchResultsListUnfiltered) {
-//                    applicationSearchResultsList.add(searchResult);
-//                }
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Runs application search with a given search criteria.
-//     */
-//    public void searchApplications(ApplicationSearchParamsBean params) {
-//        applicationSearchResultsList.clear();
-//        ApplicationSearchParamsTO paramsTO = TypeConverters.BeanToTrasferObject(params,
-//                ApplicationSearchParamsTO.class);
-//
-//        List<ApplicationSearchResultTO> searchApplicationsTO =
-//                WSManager.getInstance().getSearchService().searchApplications(paramsTO);
-//        TypeConverters.TransferObjectListToBeanList(searchApplicationsTO,
-//                ApplicationSearchResultBean.class, (List) getApplicationSearchResultsList());
-//    }
-//
-//    public ObservableList<ApplicationSearchResultBean> getApplicationSearchResultsList() {
-//        return applicationSearchResultsList;
-//    }
-//
-//    public ApplicationSearchResultBean getSelectedApplication() {
-//        return selectedApplication;
-//    }
-//
-//    public void setSelectedApplication(ApplicationSearchResultBean applicationSearchResultBean) {
-//        selectedApplication = applicationSearchResultBean;
-//        propertySupport.firePropertyChange(SELECTED_APPLICATION_PROPERTY, null, selectedApplication);
-//    }
-//
-//    public boolean isApplicationChecked() {
-//        return applicationChecked;
-//    }
-//
-//    private void setApplicationChecked(boolean applicationChecked) {
-//        boolean oldValue = this.applicationChecked;
-//        this.applicationChecked = applicationChecked;
-//        propertySupport.firePropertyChange(CHECKED_APPLICATION_PROPERTY, oldValue, this.applicationChecked);
-//    }
-//
-//    public void removeSelectedResultFromList() {
-//        if (selectedApplication != null) {
-//            applicationSearchResultsList.remove(selectedApplication);
-//        }
-//    }
+public class ParcelSearchResultListBean extends AbstractBindingListBean{
+public static final String SELECTED_PARCEL_SEARCH_RESULT = "selectedParcelSearchResult";
+    private SolaObservableList<ParcelSearchResultBean> parcelSearchResults;
+    private ParcelSearchResultBean selectedParcelSearchResult;
+    
+    public ParcelSearchResultListBean(){
+        super();
+    }
+
+    public ObservableList<ParcelSearchResultBean> getParcelSearchResults() {
+        if(parcelSearchResults == null){
+            parcelSearchResults = new SolaObservableList<ParcelSearchResultBean>();
+        }
+        return parcelSearchResults;
+    }
+
+    public ParcelSearchResultBean getSelectedParcelSearchResult() {
+        return selectedParcelSearchResult;
+    }
+
+    public void setSelectedParcelSearchResult(ParcelSearchResultBean selectedParcelSearchResult) {
+        this.selectedParcelSearchResult = selectedParcelSearchResult;
+        propertySupport.firePropertyChange(SELECTED_PARCEL_SEARCH_RESULT, null, this.selectedParcelSearchResult);
+    }
+    
+    /** Searches parties with given criteria. */
+    public void search(ParcelSearchParamsBean searchParams){
+        if(searchParams == null){
+            return;
+        }
+        
+//        getParcelSearchResults().clear();
+//        //ParcelSearchParamsTO searchParamsTO = TypeConverters.BeanToTrasferObject(searchParams, ParcelSearchParamsTO.class);
+//        TypeConverters.TransferObjectListToBeanList(
+//                WSManager.getInstance().getSearchService().searchParcels(searchParamsTO),
+//                ParcelSearchResultBean.class, (List)getParcelSearchResults());
+    }
 }

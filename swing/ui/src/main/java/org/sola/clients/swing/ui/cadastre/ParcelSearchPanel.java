@@ -125,19 +125,19 @@ public class ParcelSearchPanel extends JPanel {
         menuRemove.setVisible(isVisible);
     }
 
-    private PartyTypeListBean createPartyTypes() {
-        if (partyTypes == null) {
-            partyTypes = new PartyTypeListBean(true);
-        }
-        return partyTypes;
-    }
-
-    private PartyRoleTypeListBean createPartyRoleTypes() {
-        if (partyRoleTyps == null) {
-            partyRoleTyps = new PartyRoleTypeListBean(true);
-        }
-        return partyRoleTyps;
-    }
+//    private PartyTypeListBean createPartyTypes() {
+//        if (partyTypes == null) {
+//            partyTypes = new PartyTypeListBean(true);
+//        }
+//        return partyTypes;
+//    }
+//
+//    private PartyRoleTypeListBean createPartyRoleTypes() {
+//        if (partyRoleTyps == null) {
+//            partyRoleTyps = new PartyRoleTypeListBean(true);
+//        }
+//        return partyRoleTyps;
+//    }
 
     /**
 * Enables or disables Parcel management buttons, based on security rights.
@@ -176,7 +176,7 @@ public class ParcelSearchPanel extends JPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_PERSON_SEARCHING));
-                partySearchResuls.search(partySearchParams);
+              //  partySearchResuls.search(partySearchParams);
                 return null;
             }
 
@@ -225,7 +225,6 @@ public class ParcelSearchPanel extends JPanel {
         menuAdd = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenuItem();
         menuRemove = new javax.swing.JMenuItem();
-        partySearchParams = new org.sola.clients.beans.party.PartySearchParamsBean();
         partySearchResuls = new org.sola.clients.beans.party.PartySearchResultListBean();
         districtListBean = new org.sola.clients.beans.referencedata.DistrictListBean();
         vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
@@ -755,7 +754,6 @@ public class ParcelSearchPanel extends JPanel {
     private javax.swing.JMenuItem menuSelect;
     private javax.swing.JMenuItem menuView;
     private org.sola.clients.beans.cadastre.ParcelSearchParamsBean parcelSearchParamsBean;
-    private org.sola.clients.beans.party.PartySearchParamsBean partySearchParams;
     private org.sola.clients.beans.party.PartySearchResultListBean partySearchResuls;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JPopupMenu popupParties;

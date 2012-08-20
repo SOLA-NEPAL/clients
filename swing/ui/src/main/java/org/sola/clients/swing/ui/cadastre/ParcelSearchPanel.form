@@ -83,8 +83,6 @@
         </MenuItem>
       </SubComponents>
     </Container>
-    <Component class="org.sola.clients.beans.party.PartySearchParamsBean" name="partySearchParams">
-    </Component>
     <Component class="org.sola.clients.beans.party.PartySearchResultListBean" name="partySearchResuls">
     </Component>
     <Component class="org.sola.clients.beans.referencedata.DistrictListBean" name="districtListBean">
