@@ -83,19 +83,15 @@
         </MenuItem>
       </SubComponents>
     </Container>
-    <Component class="org.sola.clients.beans.referencedata.PartyTypeListBean" name="partyTypes">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createPartyTypes()"/>
-      </AuxValues>
-    </Component>
-    <Component class="org.sola.clients.beans.referencedata.PartyRoleTypeListBean" name="partyRoleTyps">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createPartyRoleTypes()"/>
-      </AuxValues>
-    </Component>
     <Component class="org.sola.clients.beans.party.PartySearchParamsBean" name="partySearchParams">
     </Component>
     <Component class="org.sola.clients.beans.party.PartySearchResultListBean" name="partySearchResuls">
+    </Component>
+    <Component class="org.sola.clients.beans.referencedata.DistrictListBean" name="districtListBean">
+    </Component>
+    <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean">
+    </Component>
+    <Component class="org.sola.clients.beans.cadastre.ParcelSearchParamsBean" name="parcelSearchParamsBean">
     </Component>
   </NonVisualComponents>
   <AuxValues>
@@ -171,7 +167,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jToolBar1" alignment="1" max="32767" attributes="2"/>
-                      <Component id="jScrollPane1" alignment="0" pref="525" max="32767" attributes="2"/>
+                      <Component id="jScrollPane1" alignment="0" max="32767" attributes="2"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -195,7 +191,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="org.sola.clients.swing.common.controls.JTableWithDefaultStyles" name="tableSearchResults">
+                    <Component class="org.sola.clients.swing.common.controls.JTableWithDefaultStyles" name="tableParcelSearchResults">
                       <Properties>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
@@ -225,13 +221,13 @@
                         <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
                           <ComponentRef name="popupParties"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="tableSearchResults" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="tableParcelSearchResults" noResource="true"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="elements" source="partySearchResuls" sourcePath="${partySearchResults}" target="tableSearchResults" targetPath="elements" updateStrategy="0" immediately="true">
+                        <BindingProperty name="elements" source="partySearchResuls" sourcePath="${partySearchResults}" target="tableParcelSearchResults" targetPath="elements" updateStrategy="0" immediately="true">
                           <Subbinding sourcePath="${fullName}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
@@ -245,12 +241,12 @@
                             <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
                         </BindingProperty>
-                        <BindingProperty name="selectedElement" source="partySearchResuls" sourcePath="${selectedPartySearchResult}" target="tableSearchResults" targetPath="selectedElement" updateStrategy="0" immediately="false">
+                        <BindingProperty name="selectedElement" source="partySearchResuls" sourcePath="${selectedPartySearchResult}" target="tableParcelSearchResults" targetPath="selectedElement" updateStrategy="0" immediately="false">
                           <BindingParameter name="IGNORE_ADJUSTING" value="N"/>
                         </BindingProperty>
                       </BindingProperties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableSearchResultsMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableParcelSearchResultsMouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -404,7 +400,7 @@
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="57" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="cbxPartyTypes" alignment="0" pref="94" max="32767" attributes="0"/>
+                              <Component id="cbxDistrict" alignment="0" pref="94" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -412,7 +408,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cbxPartyTypes" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbxDistrict" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="14" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -427,13 +423,13 @@
                             <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="cbxPartyTypes">
+                        <Component class="javax.swing.JComboBox" name="cbxDistrict">
                           <Properties>
-                            <Property name="name" type="java.lang.String" value="cbxPartyTypes" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="cbxDistrict" noResource="true"/>
                           </Properties>
                           <BindingProperties>
-                            <BindingProperty name="elements" source="partyTypes" sourcePath="${partyTypes}" target="cbxPartyTypes" targetPath="elements" updateStrategy="0" immediately="false"/>
-                            <BindingProperty name="selectedItem" source="partySearchParams" sourcePath="${partyType}" target="cbxPartyTypes" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                            <BindingProperty name="elements" source="districtListBean" sourcePath="${districts}" target="cbxDistrict" targetPath="elements" updateStrategy="0" immediately="false"/>
+                            <BindingProperty name="selectedItem" source="parcelSearchParamsBean" sourcePath="${district}" target="cbxDistrict" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
                           </BindingProperties>
                         </Component>
                       </SubComponents>
@@ -450,7 +446,7 @@
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="14" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="cbxRoles" alignment="0" pref="94" max="32767" attributes="0"/>
+                              <Component id="cbxVdc" alignment="0" pref="94" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -458,7 +454,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cbxRoles" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbxVdc" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="14" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -473,13 +469,13 @@
                             <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="cbxRoles">
+                        <Component class="javax.swing.JComboBox" name="cbxVdc">
                           <Properties>
-                            <Property name="name" type="java.lang.String" value="cbxRoles" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="cbxVdc" noResource="true"/>
                           </Properties>
                           <BindingProperties>
-                            <BindingProperty name="elements" source="partyRoleTyps" sourcePath="${partyRoleTypeList}" target="cbxRoles" targetPath="elements" updateStrategy="0" immediately="false"/>
-                            <BindingProperty name="selectedItem" source="partySearchParams" sourcePath="${roleType}" target="cbxRoles" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                            <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdcs}" target="cbxVdc" targetPath="elements" updateStrategy="0" immediately="false"/>
+                            <BindingProperty name="selectedItem" source="parcelSearchParamsBean" sourcePath="${vdc}" target="cbxVdc" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
                           </BindingProperties>
                         </Component>
                       </SubComponents>
@@ -496,7 +492,7 @@
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="48" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="txtName1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtWardNo" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -504,7 +500,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtName1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtWardNo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="14" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -519,10 +515,15 @@
                             <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtName1">
+                        <Component class="javax.swing.JTextField" name="txtWardNo">
                           <Properties>
-                            <Property name="name" type="java.lang.String" value="txtName1" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="txtWardNo" noResource="true"/>
                           </Properties>
+                          <BindingProperties>
+                            <BindingProperty name="text" source="parcelSearchParamsBean" sourcePath="${wardNo}" target="txtWardNo" targetPath="text" updateStrategy="0" immediately="false">
+                              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                            </BindingProperty>
+                          </BindingProperties>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -538,7 +539,7 @@
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="45" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="txtName" alignment="0" pref="94" max="32767" attributes="0"/>
+                              <Component id="txtParcelNo" alignment="0" pref="94" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -546,7 +547,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtName" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtParcelNo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="14" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -561,12 +562,12 @@
                             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtName">
+                        <Component class="javax.swing.JTextField" name="txtParcelNo">
                           <Properties>
-                            <Property name="name" type="java.lang.String" value="txtName" noResource="true"/>
+                            <Property name="name" type="java.lang.String" value="txtParcelNo" noResource="true"/>
                           </Properties>
                           <BindingProperties>
-                            <BindingProperty name="text" source="partySearchParams" sourcePath="${name}" target="txtName" targetPath="text" updateStrategy="0" immediately="false">
+                            <BindingProperty name="text" source="parcelSearchParamsBean" sourcePath="${parcelNo}" target="txtParcelNo" targetPath="text" updateStrategy="0" immediately="false">
                               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                             </BindingProperty>
                           </BindingProperties>

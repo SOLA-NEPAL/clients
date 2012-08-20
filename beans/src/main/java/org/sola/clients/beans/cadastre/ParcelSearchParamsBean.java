@@ -47,7 +47,7 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
 
     public void setDistrictCode(String districtCode) {
         String oldValue = getDistrict().getCode();
-        setDistric(CacheManager.getBeanByCode(CacheManager.getDistricts(), districtCode));
+        setDistrict(CacheManager.getBeanByCode(CacheManager.getDistricts(), districtCode));
         propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, districtCode);
     }
 
@@ -79,7 +79,7 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
         return district;
     }
 
-    public void setDistric(DistrictBean value) {
+    public void setDistrict(DistrictBean value) {
         this.setJointRefDataBean(getDistrict(), value, DISTRICT_PROPERTY);
     }
 
