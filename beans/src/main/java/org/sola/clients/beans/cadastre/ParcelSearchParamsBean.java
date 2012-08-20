@@ -21,8 +21,7 @@ import org.sola.clients.beans.AbstractBindingBean;
  *
  * @author Kumar
  */
-public class ParcelSearchParamBean extends AbstractBindingBean {
-
+public class ParcelSearchParamsBean extends AbstractBindingBean{
     public static final String DISTRICT_NAME_PROPERTY = "districtName";
     public static final String VDC_NAME_PROPERTY = "vdcName";
     public static final String WARD_NO_PROPERTY = "wardNo";
@@ -32,7 +31,7 @@ public class ParcelSearchParamBean extends AbstractBindingBean {
     private String wardNo;
     private String parcelNo;
 
-    public ParcelSearchParamBean() {
+    public ParcelSearchParamsBean() {
         super();
     }
 
