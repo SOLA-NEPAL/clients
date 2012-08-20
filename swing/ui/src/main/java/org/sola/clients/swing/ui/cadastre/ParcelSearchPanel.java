@@ -27,7 +27,7 @@
 * POSSIBILITY OF SUCH DAMAGE.
 * *********************************************************************************************
 */
-package org.sola.clients.swing.ui.party;
+package org.sola.clients.swing.ui.cadastre;
 
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -45,9 +45,9 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
-* Allows to search parties and manage them.
+* Allows to search parcels and manage them.
 */
-public class PartySearchPanel extends JPanel {
+public class ParcelSearchPanel extends JPanel {
 
     public static final String CREATE_NEW_PARTY_PROPERTY = "createNewParty";
     public static final String EDIT_PARTY_PROPERTY = "editParty";
@@ -58,9 +58,9 @@ public class PartySearchPanel extends JPanel {
     private PartyBean party;
 
     /**
-* Creates new form PartySearchPanel
+* Creates new form ParcelSearchPanel
 */
-    public PartySearchPanel() {
+    public ParcelSearchPanel() {
         initComponents();
 
         partySearchResuls.addPropertyChangeListener(new PropertyChangeListener() {
@@ -101,10 +101,7 @@ public class PartySearchPanel extends JPanel {
         }
     }
 
-    public boolean isShowAddButton() {
-        return btnAddParty.isVisible();
-    }
-
+   
     public void setShowAddButton(boolean isVisible) {
         btnAddParty.setVisible(isVisible);
         menuAdd.setVisible(isVisible);
@@ -128,22 +125,22 @@ public class PartySearchPanel extends JPanel {
         menuRemove.setVisible(isVisible);
     }
 
-    private PartyTypeListBean createPartyTypes() {
-        if (partyTypes == null) {
-            partyTypes = new PartyTypeListBean(true);
-        }
-        return partyTypes;
-    }
-
-    private PartyRoleTypeListBean createPartyRoleTypes() {
-        if (partyRoleTyps == null) {
-            partyRoleTyps = new PartyRoleTypeListBean(true);
-        }
-        return partyRoleTyps;
-    }
+//    private PartyTypeListBean createPartyTypes() {
+//        if (partyTypes == null) {
+//            partyTypes = new PartyTypeListBean(true);
+//        }
+//        return partyTypes;
+//    }
+//
+//    private PartyRoleTypeListBean createPartyRoleTypes() {
+//        if (partyRoleTyps == null) {
+//            partyRoleTyps = new PartyRoleTypeListBean(true);
+//        }
+//        return partyRoleTyps;
+//    }
 
     /**
-* Enables or disables Party management buttons, based on security rights.
+* Enables or disables Parcel management buttons, based on security rights.
 */
     private void customizePartyButtons() {
         boolean hasPartySaveRole = SecurityBean.isInRole(RolesConstants.PARTY_SAVE);
@@ -171,7 +168,7 @@ public class PartySearchPanel extends JPanel {
     }
 
     /**
-* Searches parties with given criteria.
+* Searches Parcels with given criteria.
 */
     private void search() {
         SolaTask t = new SolaTask<Void, Void>() {
@@ -179,7 +176,7 @@ public class PartySearchPanel extends JPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_PERSON_SEARCHING));
-                partySearchResuls.search(partySearchParams);
+              //  partySearchResuls.search(partySearchParams);
                 return null;
             }
 
@@ -228,15 +225,15 @@ public class PartySearchPanel extends JPanel {
         menuAdd = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenuItem();
         menuRemove = new javax.swing.JMenuItem();
-        partyTypes = createPartyTypes();
-        partyRoleTyps = createPartyRoleTypes();
-        partySearchParams = new org.sola.clients.beans.party.PartySearchParamsBean();
         partySearchResuls = new org.sola.clients.beans.party.PartySearchResultListBean();
+        districtListBean = new org.sola.clients.beans.referencedata.DistrictListBean();
+        vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
+        parcelSearchParamsBean = new org.sola.clients.beans.cadastre.ParcelSearchParamsBean();
         scrlSearchPanel = new javax.swing.JScrollPane();
         pnlSearch = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableSearchResults = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        tableParcelSearchResults = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar1 = new javax.swing.JToolBar();
         btnView = new javax.swing.JButton();
         btnSelect = new javax.swing.JButton();
@@ -246,15 +243,18 @@ public class PartySearchPanel extends JPanel {
         btnRemoveParty = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        cbxPartyTypes = new javax.swing.JComboBox();
+        cbxDistrict = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        cbxRoles = new javax.swing.JComboBox();
+        cbxVdc = new javax.swing.JComboBox();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtWardNo = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtParcelNo = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
@@ -323,11 +323,11 @@ public class PartySearchPanel extends JPanel {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        tableSearchResults.setComponentPopupMenu(popupParties);
-        tableSearchResults.setName("tableSearchResults"); // NOI18N
+        tableParcelSearchResults.setComponentPopupMenu(popupParties);
+        tableParcelSearchResults.setName("tableParcelSearchResults"); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partySearchResults}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchResuls, eLProperty, tableSearchResults);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchResuls, eLProperty, tableParcelSearchResults);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fullName}"));
         columnBinding.setColumnName("Full Name");
         columnBinding.setColumnClass(String.class);
@@ -341,20 +341,20 @@ public class PartySearchPanel extends JPanel {
         columnBinding.setColumnClass(Boolean.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchResuls, org.jdesktop.beansbinding.ELProperty.create("${selectedPartySearchResult}"), tableSearchResults, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchResuls, org.jdesktop.beansbinding.ELProperty.create("${selectedPartySearchResult}"), tableParcelSearchResults, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
 
-        tableSearchResults.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableParcelSearchResults.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableSearchResultsMouseClicked(evt);
+                tableParcelSearchResultsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableSearchResults);
-        tableSearchResults.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PartySearchPanel.tableSearchResults.columnModel.title0_1")); // NOI18N
-        tableSearchResults.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PartySearchPanel.tableSearchResults.columnModel.title1_1")); // NOI18N
-        tableSearchResults.getColumnModel().getColumn(2).setPreferredWidth(120);
-        tableSearchResults.getColumnModel().getColumn(2).setMaxWidth(150);
-        tableSearchResults.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PartySearchPanel.tableSearchResults.columnModel.title2_1")); // NOI18N
+        jScrollPane1.setViewportView(tableParcelSearchResults);
+        tableParcelSearchResults.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PartySearchPanel.tableSearchResults.columnModel.title0_1")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PartySearchPanel.tableSearchResults.columnModel.title1_1")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(2).setPreferredWidth(120);
+        tableParcelSearchResults.getColumnModel().getColumn(2).setMaxWidth(150);
+        tableParcelSearchResults.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PartySearchPanel.tableSearchResults.columnModel.title2_1")); // NOI18N
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -448,47 +448,17 @@ public class PartySearchPanel extends JPanel {
         jPanel4.setName("jPanel4"); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        jLabel1.setText(bundle.getString("PartySearchPanel.jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        txtName.setName("txtName"); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchParams, org.jdesktop.beansbinding.ELProperty.create("${name}"), txtName, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addContainerGap(119, Short.MAX_VALUE))
-            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(jPanel1);
-
         jPanel2.setName("jPanel2"); // NOI18N
 
         jLabel2.setText(bundle.getString("PartySearchPanel.jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        cbxPartyTypes.setName("cbxPartyTypes"); // NOI18N
+        cbxDistrict.setName("cbxDistrict"); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyTypes}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partyTypes, eLProperty, cbxPartyTypes);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cbxDistrict);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchParams, org.jdesktop.beansbinding.ELProperty.create("${partyType}"), cbxPartyTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${district}"), cbxDistrict, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -497,15 +467,15 @@ public class PartySearchPanel extends JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap(122, Short.MAX_VALUE))
-            .addComponent(cbxPartyTypes, 0, 150, Short.MAX_VALUE)
+                .addContainerGap(57, Short.MAX_VALUE))
+            .addComponent(cbxDistrict, 0, 94, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxPartyTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -516,12 +486,12 @@ public class PartySearchPanel extends JPanel {
         jLabel3.setText(bundle.getString("PartySearchPanel.jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        cbxRoles.setName("cbxRoles"); // NOI18N
+        cbxVdc.setName("cbxVdc"); // NOI18N
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyRoleTypeList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partyRoleTyps, eLProperty, cbxRoles);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cbxVdc);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchParams, org.jdesktop.beansbinding.ELProperty.create("${roleType}"), cbxRoles, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cbxVdc, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -530,19 +500,80 @@ public class PartySearchPanel extends JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(125, Short.MAX_VALUE))
-            .addComponent(cbxRoles, 0, 150, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE))
+            .addComponent(cbxVdc, 0, 94, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxVdc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel3);
+
+        jPanel6.setName("jPanel6"); // NOI18N
+
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/cadastre/Bundle"); // NOI18N
+        jLabel5.setText(bundle1.getString("ParcelSearchPanel.jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        txtWardNo.setName("txtWardNo"); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${wardNo}"), txtWardNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addContainerGap(48, Short.MAX_VALUE))
+            .addComponent(txtWardNo)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel6);
+
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        jLabel1.setText(bundle.getString("PartySearchPanel.jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        txtParcelNo.setName("txtParcelNo"); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"), txtParcelNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addContainerGap(45, Short.MAX_VALUE))
+            .addComponent(txtParcelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel1);
 
         jPanel5.setName("jPanel5"); // NOI18N
 
@@ -580,14 +611,14 @@ public class PartySearchPanel extends JPanel {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlSearchLayout = new javax.swing.GroupLayout(pnlSearch);
@@ -611,7 +642,7 @@ public class PartySearchPanel extends JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrlSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .addComponent(scrlSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -625,10 +656,6 @@ public class PartySearchPanel extends JPanel {
         search();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        viewParty();
-    }//GEN-LAST:event_btnViewActionPerformed
-
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         selectParty();
     }//GEN-LAST:event_btnSelectActionPerformed
@@ -641,35 +668,39 @@ public class PartySearchPanel extends JPanel {
         selectParty();
     }//GEN-LAST:event_menuSelectActionPerformed
 
-    private void btnAddPartyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPartyActionPerformed
-        addParty();
-    }//GEN-LAST:event_btnAddPartyActionPerformed
-
     private void menuAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddActionPerformed
         addParty();
     }//GEN-LAST:event_menuAddActionPerformed
-
-    private void btnEditPartyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPartyActionPerformed
-        editParty();
-    }//GEN-LAST:event_btnEditPartyActionPerformed
 
     private void menuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditActionPerformed
         editParty();
     }//GEN-LAST:event_menuEditActionPerformed
 
-    private void btnRemovePartyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemovePartyActionPerformed
-        removeParty();
-    }//GEN-LAST:event_btnRemovePartyActionPerformed
-
     private void menuRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveActionPerformed
         removeParty();
     }//GEN-LAST:event_menuRemoveActionPerformed
 
-    private void tableSearchResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSearchResultsMouseClicked
+    private void tableParcelSearchResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableParcelSearchResultsMouseClicked
         if(evt.getClickCount() > 1 && evt.getButton() == MouseEvent.BUTTON1){
             viewParty();
         }
-    }//GEN-LAST:event_tableSearchResultsMouseClicked
+    }//GEN-LAST:event_tableParcelSearchResultsMouseClicked
+
+    private void btnRemovePartyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemovePartyActionPerformed
+        removeParty();
+    }//GEN-LAST:event_btnRemovePartyActionPerformed
+
+    private void btnEditPartyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPartyActionPerformed
+        editParty();
+    }//GEN-LAST:event_btnEditPartyActionPerformed
+
+    private void btnAddPartyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPartyActionPerformed
+        addParty();
+    }//GEN-LAST:event_btnAddPartyActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        viewParty();
+    }//GEN-LAST:event_btnViewActionPerformed
 
     private void addParty() {
         firePropertyChange(CREATE_NEW_PARTY_PROPERTY, false, true);
@@ -699,17 +730,20 @@ public class PartySearchPanel extends JPanel {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSelect;
     private javax.swing.JButton btnView;
-    private javax.swing.JComboBox cbxPartyTypes;
-    private javax.swing.JComboBox cbxRoles;
+    private javax.swing.JComboBox cbxDistrict;
+    private javax.swing.JComboBox cbxVdc;
+    private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
@@ -719,16 +753,16 @@ public class PartySearchPanel extends JPanel {
     private javax.swing.JMenuItem menuRemove;
     private javax.swing.JMenuItem menuSelect;
     private javax.swing.JMenuItem menuView;
-    private org.sola.clients.beans.referencedata.PartyRoleTypeListBean partyRoleTyps;
-    private org.sola.clients.beans.party.PartySearchParamsBean partySearchParams;
+    private org.sola.clients.beans.cadastre.ParcelSearchParamsBean parcelSearchParamsBean;
     private org.sola.clients.beans.party.PartySearchResultListBean partySearchResuls;
-    private org.sola.clients.beans.referencedata.PartyTypeListBean partyTypes;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JPopupMenu popupParties;
     private javax.swing.JScrollPane scrlSearchPanel;
     private javax.swing.JToolBar.Separator separator1;
-    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableSearchResults;
-    private javax.swing.JTextField txtName;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableParcelSearchResults;
+    private javax.swing.JTextField txtParcelNo;
+    private javax.swing.JTextField txtWardNo;
+    private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

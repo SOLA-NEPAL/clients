@@ -37,11 +37,11 @@ import org.sola.webservices.transferobjects.search.ApplicationSearchParamsTO;
  */
 public class ApplicationSearchParamsBean extends AbstractBindingBean {
     
-    public static final String NR_PROPERTY = "nr";
-    public static final String FROM_DATE_PROPERTY = "fromDate";
-    public static final String TO_DATE_PROPERTY = "toDate";
-    public static final String AGENT_PROPERTY = "agent";
-    public static final String CONTACT_PERSON_PROPERTY = "contactPerson";
+public static final String NR_PROPERTY = "nr";
+public static final String FROM_DATE_PROPERTY = "fromDate";
+public static final String TO_DATE_PROPERTY = "toDate";
+public static final String AGENT_PROPERTY = "agent";
+public static final String CONTACT_PERSON_PROPERTY = "contactPerson";
     
     private String nr;
     private Date fromDate;

@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
-package org.sola.clients.swing.desktop.application;
+package org.sola.clients.swing.desktop.cadastre;
 
 import java.awt.ComponentOrientation;
 import java.beans.PropertyChangeEvent;
@@ -44,6 +44,7 @@ import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.controls.CalendarForm;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
+import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.renderers.BooleanCellRenderer;
@@ -56,12 +57,12 @@ import org.sola.common.messaging.MessageUtility;
  * following list of beans is used to bind the data on the form:<br />
  * {@link ApplicationSearchResultsListBean},<br />{@link ApplicationSearchParamsBean}</p>
  */
-public class ApplicationSearchPanel extends ContentPanel {
+public class ParcelSearchPanelForm extends ContentPanel {
 
     /**
      * Default constructor to create form and initialize parameters.
      */
-    public ApplicationSearchPanel() {
+    public ParcelSearchPanelForm() {
         initComponents();
         setHeaderPanel(headerPanel1);
         appList.addPropertyChangeListener(new PropertyChangeListener() {
@@ -96,7 +97,7 @@ public class ApplicationSearchPanel extends ContentPanel {
         searchParams = new org.sola.clients.beans.application.ApplicationSearchParamsBean();
         popupSearchResults = new javax.swing.JPopupMenu();
         menuOpenApplication = new javax.swing.JMenuItem();
-        appListPanel = new javax.swing.JScrollPane();
+        parcelListPanel = new javax.swing.JScrollPane();
         tbAppList = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar1 = new javax.swing.JToolBar();
         btnOpenApplication = new javax.swing.JButton();
@@ -110,23 +111,23 @@ public class ApplicationSearchPanel extends ContentPanel {
         labFrom = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnShowCalendarFrom = new javax.swing.JButton();
-        txtFromDate = new javax.swing.JFormattedTextField();
+        txtDistrictName = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnShowCalendarTo = new javax.swing.JButton();
-        txtToDate = new javax.swing.JFormattedTextField();
+        txtParcelNo = new javax.swing.JFormattedTextField();
         labTo = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         labAgentName = new javax.swing.JLabel();
-        txtAgentName = new javax.swing.JTextField();
+        txtWardNo = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         labAppNumber = new javax.swing.JLabel();
-        txtAppNumber = new javax.swing.JTextField();
+        txtVdcName = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         labContactPerson = new javax.swing.JLabel();
-        txtContactPerson = new javax.swing.JTextField();
+        txtMapNo1 = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         btnClear = new javax.swing.JButton();
@@ -152,10 +153,10 @@ public class ApplicationSearchPanel extends ContentPanel {
         setMinimumSize(new java.awt.Dimension(512, 351));
         setName("Form"); // NOI18N
 
-        appListPanel.setBorder(null);
-        appListPanel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        appListPanel.setName("appListPanel"); // NOI18N
-        appListPanel.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
+        parcelListPanel.setBorder(null);
+        parcelListPanel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        parcelListPanel.setName("parcelListPanel"); // NOI18N
+        parcelListPanel.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
 
         tbAppList.setComponentPopupMenu(popupSearchResults);
         tbAppList.setName("tbAppList"); // NOI18N
@@ -200,7 +201,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 tbAppListMouseClicked(evt);
             }
         });
-        appListPanel.setViewportView(tbAppList);
+        parcelListPanel.setViewportView(tbAppList);
         tbAppList.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("ApplicationSearchPanel.tbAppList.columnModel.title0_1")); // NOI18N
         tbAppList.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("ApplicationSearchPanel.tbAppList.columnModel.title1_1")); // NOI18N
         tbAppList.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("ApplicationSearchPanel.tbAppList.columnModel.title2_1")); // NOI18N
@@ -267,22 +268,22 @@ public class ApplicationSearchPanel extends ContentPanel {
             }
         });
 
-        txtFromDate.setFont(new java.awt.Font("Tahoma", 0, 12));
-        txtFromDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtFromDate.setName("txtFromDate"); // NOI18N
+        txtDistrictName.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtDistrictName.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtDistrictName.setName("txtDistrictName"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${fromDate}"), txtFromDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${fromDate}"), txtDistrictName, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        txtFromDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtFromDate.setHorizontalAlignment(JTextField.LEADING);
+        txtDistrictName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
+        txtDistrictName.setHorizontalAlignment(JTextField.LEADING);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDistrictName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnShowCalendarFrom)
                 .addGap(2, 2, 2))
@@ -290,7 +291,7 @@ public class ApplicationSearchPanel extends ContentPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDistrictName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(btnShowCalendarFrom))
         );
 
@@ -326,22 +327,22 @@ public class ApplicationSearchPanel extends ContentPanel {
             }
         });
 
-        txtToDate.setFont(new java.awt.Font("Tahoma", 0, 12));
-        txtToDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtToDate.setName("txtToDate"); // NOI18N
+        txtParcelNo.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtParcelNo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtParcelNo.setName("txtParcelNo"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${toDate}"), txtToDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${toDate}"), txtParcelNo, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        txtToDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtToDate.setHorizontalAlignment(JTextField.LEADING);
+        txtParcelNo.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
+        txtParcelNo.setHorizontalAlignment(JTextField.LEADING);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnShowCalendarTo))
         );
@@ -349,7 +350,7 @@ public class ApplicationSearchPanel extends ContentPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                 .addComponent(btnShowCalendarTo)
-                .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtParcelNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         labTo.setText(bundle.getString("ApplicationSearchPanel.labTo.text")); // NOI18N
@@ -387,13 +388,13 @@ public class ApplicationSearchPanel extends ContentPanel {
         labAgentName.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         labAgentName.setName("labAgentName"); // NOI18N
 
-        txtAgentName.setName("txtAgentName"); // NOI18N
+        txtWardNo.setName("txtWardNo"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${agent}"), txtAgentName, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${agent}"), txtWardNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txtAgentName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtAgentName.setHorizontalAlignment(JTextField.LEADING);
+        txtWardNo.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
+        txtWardNo.setHorizontalAlignment(JTextField.LEADING);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -401,15 +402,15 @@ public class ApplicationSearchPanel extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labAgentName)
-                .addContainerGap(230, Short.MAX_VALUE))
-            .addComponent(txtAgentName, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                .addContainerGap(71, Short.MAX_VALUE))
+            .addComponent(txtWardNo, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labAgentName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAgentName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtWardNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -418,13 +419,13 @@ public class ApplicationSearchPanel extends ContentPanel {
         labAppNumber.setText(bundle.getString("ApplicationSearchPanel.labAppNumber.text")); // NOI18N
         labAppNumber.setName("labAppNumber"); // NOI18N
 
-        txtAppNumber.setName("txtAppNumber"); // NOI18N
+        txtVdcName.setName("txtVdcName"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${nr}"), txtAppNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${nr}"), txtVdcName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txtAppNumber.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtAppNumber.setHorizontalAlignment(JTextField.LEADING);
+        txtVdcName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
+        txtVdcName.setHorizontalAlignment(JTextField.LEADING);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -433,14 +434,14 @@ public class ApplicationSearchPanel extends ContentPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(labAppNumber)
                 .addContainerGap(56, Short.MAX_VALUE))
-            .addComponent(txtAppNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+            .addComponent(txtVdcName, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(labAppNumber)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAppNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtVdcName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -469,13 +470,9 @@ public class ApplicationSearchPanel extends ContentPanel {
         labContactPerson.setText(bundle.getString("ApplicationSearchPanel.labContactPerson.text")); // NOI18N
         labContactPerson.setName("labContactPerson"); // NOI18N
 
-        txtContactPerson.setName("txtContactPerson"); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${contactPerson}"), txtContactPerson, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        txtContactPerson.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtContactPerson.setHorizontalAlignment(JTextField.LEADING);
+        txtMapNo1.setName("txtMapNo1"); // NOI18N
+        txtMapNo1.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
+        txtMapNo1.setHorizontalAlignment(JTextField.LEADING);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -483,15 +480,15 @@ public class ApplicationSearchPanel extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(labContactPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(335, Short.MAX_VALUE))
-            .addComponent(txtContactPerson, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addContainerGap(199, Short.MAX_VALUE))
+            .addComponent(txtMapNo1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(labContactPerson)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContactPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMapNo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -576,7 +573,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -602,7 +599,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(appListPanel))))
+                            .addComponent(parcelListPanel))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -614,7 +611,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(appListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                .addComponent(parcelListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -628,11 +625,11 @@ public class ApplicationSearchPanel extends ContentPanel {
     }//GEN-LAST:event_tbAppListMouseClicked
 
     private void btnShowCalendarFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowCalendarFromActionPerformed
-        showCalendar(txtFromDate);
+        showCalendar(txtDistrictName);
     }//GEN-LAST:event_btnShowCalendarFromActionPerformed
 
     private void btnShowCalendarToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowCalendarToActionPerformed
-        showCalendar(txtToDate);
+        showCalendar(txtParcelNo);
     }//GEN-LAST:event_btnShowCalendarToActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
@@ -657,21 +654,21 @@ public class ApplicationSearchPanel extends ContentPanel {
                 }
                 labResults.setText(String.format("(%s)", appList.getApplicationSearchResultsList().size()));
                 tbAppList.setVisible(true);
-                txtAppNumber.requestFocus();
+                txtVdcName.requestFocus();
             }
         };
         TaskManager.getInstance().runTask(t);
     }//GEN-LAST:event_btnFindActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        txtAppNumber.setText(null);
-        txtAgentName.setText(null);
-        txtFromDate.setValue(null);
-        txtToDate.setValue(null);
-        txtContactPerson.setText(null);
+        txtVdcName.setText(null);
+        txtWardNo.setText(null);
+        txtDistrictName.setValue(null);
+        txtParcelNo.setValue(null);
+        txtMapNo1.setText(null);
         labResults.setText(null);
         tbAppList.setVisible(false);
-        txtAppNumber.requestFocus();
+        txtVdcName.requestFocus();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnOpenApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenApplicationActionPerformed
@@ -697,7 +694,7 @@ public class ApplicationSearchPanel extends ContentPanel {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APP));
                 if (getMainContentPanel() != null) {
-                    ApplicationPanel applicationPanel = new ApplicationPanel(
+                   ApplicationPanel applicationPanel = new ApplicationPanel(
                             appList.getSelectedApplication().getId());
                     getMainContentPanel().addPanel(applicationPanel, MainContentPanel.CARD_APPLICATION, true);
                 }
@@ -708,7 +705,6 @@ public class ApplicationSearchPanel extends ContentPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.application.ApplicationSearchResultsListBean appList;
-    private javax.swing.JScrollPane appListPanel;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnOpenApplication;
@@ -741,14 +737,15 @@ public class ApplicationSearchPanel extends ContentPanel {
     private javax.swing.JLabel labTo;
     private javax.swing.JLabel lblSearchResults;
     private javax.swing.JMenuItem menuOpenApplication;
+    private javax.swing.JScrollPane parcelListPanel;
     private javax.swing.JPopupMenu popupSearchResults;
     private org.sola.clients.beans.application.ApplicationSearchParamsBean searchParams;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tbAppList;
-    private javax.swing.JTextField txtAgentName;
-    private javax.swing.JTextField txtAppNumber;
-    private javax.swing.JTextField txtContactPerson;
-    private javax.swing.JFormattedTextField txtFromDate;
-    private javax.swing.JFormattedTextField txtToDate;
+    private javax.swing.JFormattedTextField txtDistrictName;
+    private javax.swing.JTextField txtMapNo1;
+    private javax.swing.JFormattedTextField txtParcelNo;
+    private javax.swing.JTextField txtVdcName;
+    private javax.swing.JTextField txtWardNo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

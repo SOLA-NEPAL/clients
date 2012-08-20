@@ -612,7 +612,7 @@ public class ParcelMothEntry extends ContentPanel {
         } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(CadastreObjectTO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
+        //parcelSearchForm.set_SearchCompletedTriggers(taskCompletion, this);
         displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSearchNewParcelActionPerformed
 

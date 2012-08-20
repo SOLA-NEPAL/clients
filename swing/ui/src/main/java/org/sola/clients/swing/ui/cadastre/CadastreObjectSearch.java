@@ -30,14 +30,14 @@
  */
 package org.sola.clients.swing.ui.cadastre;
 
-import org.sola.clients.swing.common.controls.FreeTextSearch;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.swing.common.controls.FreeTextSearch;
 import org.sola.services.boundary.wsclients.CadastreClient;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *

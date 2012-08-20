@@ -65,7 +65,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jToolBar1" alignment="0" max="32767" attributes="1"/>
-                          <Component id="appListPanel" alignment="0" max="32767" attributes="3"/>
+                          <Component id="parcelListPanel" alignment="0" max="32767" attributes="3"/>
                       </Group>
                   </Group>
               </Group>
@@ -82,14 +82,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="appListPanel" pref="237" max="32767" attributes="0"/>
+              <Component id="parcelListPanel" pref="237" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="appListPanel">
+    <Container class="javax.swing.JScrollPane" name="parcelListPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
@@ -97,10 +97,10 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="0"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="appListPanel" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="parcelListPanel" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="appListPanel.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="parcelListPanel.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -289,7 +289,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel8" min="-2" pref="179" max="-2" attributes="1"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jPanel9" pref="425" max="32767" attributes="0"/>
+                  <Component id="jPanel9" pref="0" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jPanel11" min="-2" pref="91" max="-2" attributes="0"/>
               </Group>
@@ -360,7 +360,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtFromDate" min="-2" pref="153" max="-2" attributes="2"/>
+                              <Component id="txtDistrictName" min="-2" pref="153" max="-2" attributes="2"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnShowCalendarFrom" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
@@ -370,7 +370,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="txtFromDate" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDistrictName" alignment="2" min="-2" max="-2" attributes="0"/>
                               <Component id="btnShowCalendarFrom" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -394,19 +394,19 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowCalendarFromActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="txtFromDate">
+                    <Component class="javax.swing.JFormattedTextField" name="txtDistrictName">
                       <Properties>
                         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                           <Format subtype="1" type="1"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="txtFromDate" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="txtDistrictName" noResource="true"/>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="value" source="searchParams" sourcePath="${fromDate}" target="txtFromDate" targetPath="value" updateStrategy="0" immediately="false"/>
+                        <BindingProperty name="value" source="searchParams" sourcePath="${fromDate}" target="txtDistrictName" targetPath="value" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtFromDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtFromDate.setHorizontalAlignment(JTextField.LEADING);"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtFromDate.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 12));"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtDistrictName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtDistrictName.setHorizontalAlignment(JTextField.LEADING);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtDistrictName.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 12));"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -451,7 +451,7 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="txtToDate" min="-2" pref="153" max="-2" attributes="2"/>
+                              <Component id="txtParcelNo" min="-2" pref="153" max="-2" attributes="2"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnShowCalendarTo" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -461,7 +461,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="2" attributes="0">
                               <Component id="btnShowCalendarTo" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtToDate" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtParcelNo" alignment="2" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -484,19 +484,19 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowCalendarToActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="txtToDate">
+                    <Component class="javax.swing.JFormattedTextField" name="txtParcelNo">
                       <Properties>
                         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                           <Format subtype="1" type="1"/>
                         </Property>
-                        <Property name="name" type="java.lang.String" value="txtToDate" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="txtParcelNo" noResource="true"/>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="value" source="searchParams" sourcePath="${toDate}" target="txtToDate" targetPath="value" updateStrategy="0" immediately="false"/>
+                        <BindingProperty name="value" source="searchParams" sourcePath="${toDate}" target="txtParcelNo" targetPath="value" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtToDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtToDate.setHorizontalAlignment(JTextField.LEADING);"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtToDate.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 12));"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtParcelNo.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtParcelNo.setHorizontalAlignment(JTextField.LEADING);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtParcelNo.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 12));"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -561,9 +561,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labAgentName" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="230" max="32767" attributes="0"/>
+                              <EmptySpace pref="71" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtAgentName" alignment="0" pref="263" max="32767" attributes="0"/>
+                          <Component id="txtWardNo" alignment="0" pref="117" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -571,7 +571,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labAgentName" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtAgentName" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtWardNo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -587,17 +587,17 @@
                         <Property name="name" type="java.lang.String" value="labAgentName" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAgentName">
+                    <Component class="javax.swing.JTextField" name="txtWardNo">
                       <Properties>
-                        <Property name="name" type="java.lang.String" value="txtAgentName" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="txtWardNo" noResource="true"/>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="text" source="searchParams" sourcePath="${agent}" target="txtAgentName" targetPath="text" updateStrategy="0" immediately="false">
+                        <BindingProperty name="text" source="searchParams" sourcePath="${agent}" target="txtWardNo" targetPath="text" updateStrategy="0" immediately="false">
                           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                         </BindingProperty>
                       </BindingProperties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtAgentName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtAgentName.setHorizontalAlignment(JTextField.LEADING);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtWardNo.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtWardNo.setHorizontalAlignment(JTextField.LEADING);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -614,7 +614,7 @@
                               <Component id="labAppNumber" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="56" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtAppNumber" alignment="0" pref="152" max="32767" attributes="3"/>
+                          <Component id="txtVdcName" alignment="0" pref="162" max="32767" attributes="3"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -622,7 +622,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labAppNumber" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtAppNumber" min="-2" max="-2" attributes="3"/>
+                              <Component id="txtVdcName" min="-2" max="-2" attributes="3"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -637,17 +637,17 @@
                         <Property name="name" type="java.lang.String" value="labAppNumber" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtAppNumber">
+                    <Component class="javax.swing.JTextField" name="txtVdcName">
                       <Properties>
-                        <Property name="name" type="java.lang.String" value="txtAppNumber" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="txtVdcName" noResource="true"/>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="text" source="searchParams" sourcePath="${nr}" target="txtAppNumber" targetPath="text" updateStrategy="0" immediately="false">
+                        <BindingProperty name="text" source="searchParams" sourcePath="${nr}" target="txtVdcName" targetPath="text" updateStrategy="0" immediately="false">
                           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                         </BindingProperty>
                       </BindingProperties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtAppNumber.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtAppNumber.setHorizontalAlignment(JTextField.LEADING);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtVdcName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtVdcName.setHorizontalAlignment(JTextField.LEADING);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -664,9 +664,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labContactPerson" min="-2" pref="90" max="-2" attributes="0"/>
-                          <EmptySpace pref="335" max="32767" attributes="0"/>
+                          <EmptySpace pref="199" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="txtContactPerson" alignment="0" pref="425" max="32767" attributes="1"/>
+                      <Component id="txtMapNo1" alignment="0" pref="289" max="32767" attributes="1"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -674,7 +674,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labContactPerson" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtContactPerson" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMapNo1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -689,17 +689,12 @@
                     <Property name="name" type="java.lang.String" value="labContactPerson" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtContactPerson">
+                <Component class="javax.swing.JTextField" name="txtMapNo1">
                   <Properties>
-                    <Property name="name" type="java.lang.String" value="txtContactPerson" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="txtMapNo1" noResource="true"/>
                   </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="text" source="searchParams" sourcePath="${contactPerson}" target="txtContactPerson" targetPath="text" updateStrategy="0" immediately="false">
-                      <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                    </BindingProperty>
-                  </BindingProperties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtContactPerson.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtContactPerson.setHorizontalAlignment(JTextField.LEADING);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtMapNo1.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtMapNo1.setHorizontalAlignment(JTextField.LEADING);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

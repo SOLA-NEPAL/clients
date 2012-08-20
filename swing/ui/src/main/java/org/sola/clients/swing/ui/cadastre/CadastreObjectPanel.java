@@ -4,15 +4,10 @@
  */
 package org.sola.clients.swing.ui.cadastre;
 
-import java.awt.HeadlessException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.LocBean;
-import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.controls.SolaObservableList;
@@ -26,26 +21,10 @@ import org.sola.clients.beans.referencedata.VdcBean;
 public class CadastreObjectPanel extends javax.swing.JPanel {
 
     private SolaObservableList<CadastreObjectBean> cadastreObjects;
-    private CadastreObjectBean newCadastreObjectBean = null;
-    /**
-     * Creates new form CadastreObjectPanel
-     */
-    //By Kabindra
-    //--------------------------------------------
-    private Method search_Completed_Trigger = null;
-    private Object method_holder_object = null;
-
-    public void set_SearchCompletedTriggers(Method search_completed, Object method_holder) {
-        this.search_Completed_Trigger = search_completed;
-        this.method_holder_object = method_holder;
-    }
-    //------------------------------------------
+    public static final String SELECT_CADASTRE_OBJECT_PROPERTY = "cadasterObjectSelect";
 
     public CadastreObjectPanel() {
         initComponents();
-//        mapSheetListBean2.loadMapSheetList(1);
-//        mapSheetListBean3.loadMapSheetList(1);
-//        mapSheetListBean4.loadMapSheetList(1);
         rdbSearchByBoundaryItemStateChanged(null);
     }
 
@@ -125,27 +104,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         txtParcelNo = new javax.swing.JTextField();
         rdbSearchByBoundary = new javax.swing.JRadioButton();
         btnSearch1 = new javax.swing.JButton();
-        jPanel21 = new javax.swing.JPanel();
-        jPanel22 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        cmbDistrict1 = new javax.swing.JComboBox();
-        jPanel23 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        cmbVdc1 = new javax.swing.JComboBox();
-        jPanel24 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        cmbMothLujType = new javax.swing.JComboBox();
-        jPanel18 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        cmbMothLujNo = new javax.swing.JComboBox();
-        jPanel19 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        cmbPanaNo = new javax.swing.JComboBox();
-        jPanel20 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        cmbCadastreList = new javax.swing.JComboBox();
-        rdbSearchByMothPana = new javax.swing.JRadioButton();
-        btnSearch3 = new javax.swing.JButton();
 
         buttonGroup2.add(rdbFreeSheet);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/cadastre/Bundle"); // NOI18N
@@ -312,6 +270,9 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
 
         jPanel12.setLayout(new java.awt.GridLayout(1, 4, 15, 0));
 
+        cmbDistrict.setEditable(true);
+        cmbDistrict.setEnabled(false);
+
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cmbDistrict);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -347,6 +308,9 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         jPanel12.add(jPanel2);
 
         jLabel2.setText(bundle.getString("CadastreObjectPanel.jLabel2.text")); // NOI18N
+
+        cmbVdc.setEditable(true);
+        cmbVdc.setEnabled(false);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cmbVdc);
@@ -432,221 +396,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             }
         });
 
-        jPanel21.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
-
-        jLabel10.setText(bundle.getString("CadastreObjectPanel.jLabel10.text")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean1, eLProperty, cmbDistrict1);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean1, org.jdesktop.beansbinding.ELProperty.create("${selectedDistrict}"), cmbDistrict1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        cmbDistrict1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbDistrict1ItemStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
-        jPanel22.setLayout(jPanel22Layout);
-        jPanel22Layout.setHorizontalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel22Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addGap(0, 77, Short.MAX_VALUE))
-            .addComponent(cmbDistrict1, 0, 110, Short.MAX_VALUE)
-        );
-        jPanel22Layout.setVerticalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel22Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbDistrict1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
-
-        jPanel21.add(jPanel22);
-
-        jLabel11.setText(bundle.getString("CadastreObjectPanel.jLabel11.text")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean1, eLProperty, cmbVdc1);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean1, org.jdesktop.beansbinding.ELProperty.create("${selectedVdc}"), cmbVdc1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        cmbVdc1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbVdc1ItemStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
-        jPanel23.setLayout(jPanel23Layout);
-        jPanel23Layout.setHorizontalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addComponent(jLabel11)
-                .addGap(0, 34, Short.MAX_VALUE))
-            .addComponent(cmbVdc1, 0, 0, Short.MAX_VALUE)
-        );
-        jPanel23Layout.setVerticalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbVdc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
-
-        jPanel21.add(jPanel23);
-
-        jLabel12.setText(bundle.getString("CadastreObjectPanel.jLabel12.text")); // NOI18N
-
-        cmbMothLujType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "L" }));
-        cmbMothLujType.setSelectedIndex(-1);
-        cmbMothLujType.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbMothLujTypeItemStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
-        jPanel24.setLayout(jPanel24Layout);
-        jPanel24Layout.setHorizontalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addComponent(jLabel12)
-                .addGap(0, 41, Short.MAX_VALUE))
-            .addComponent(cmbMothLujType, 0, 0, Short.MAX_VALUE)
-        );
-        jPanel24Layout.setVerticalGroup(
-            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel24Layout.createSequentialGroup()
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbMothLujType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
-
-        jPanel21.add(jPanel24);
-
-        jLabel13.setText(bundle.getString("CadastreObjectPanel.jLabel13.text")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, eLProperty, cmbMothLujNo);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedMoth}"), cmbMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        cmbMothLujNo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbMothLujNoItemStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addComponent(jLabel13)
-                .addGap(0, 52, Short.MAX_VALUE))
-            .addComponent(cmbMothLujNo, 0, 0, Short.MAX_VALUE)
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbMothLujNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
-
-        jPanel21.add(jPanel18);
-
-        jLabel14.setText(bundle.getString("CadastreObjectPanel.jLabel14.text")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${locs}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, locListBean, eLProperty, cmbPanaNo);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, locListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedLoc}"), cmbPanaNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        cmbPanaNo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbPanaNoItemStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addComponent(jLabel14)
-                .addGap(0, 66, Short.MAX_VALUE))
-            .addComponent(cmbPanaNo, 0, 110, Short.MAX_VALUE)
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbPanaNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
-
-        jPanel21.add(jPanel19);
-
-        jLabel15.setText(bundle.getString("CadastreObjectPanel.jLabel15.text")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjects}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, cmbCadastreList);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addComponent(jLabel15)
-                .addGap(0, 65, Short.MAX_VALUE))
-            .addComponent(cmbCadastreList, 0, 110, Short.MAX_VALUE)
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbCadastreList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
-        );
-
-        jPanel21.add(jPanel20);
-
-        buttonGroup1.add(rdbSearchByMothPana);
-        rdbSearchByMothPana.setText(bundle.getString("CadastreObjectPanel.rdbSearchByMothPana.text")); // NOI18N
-        rdbSearchByMothPana.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rdbSearchByMothPanaItemStateChanged(evt);
-            }
-        });
-        rdbSearchByMothPana.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbSearchByMothPanaActionPerformed(evt);
-            }
-        });
-
-        btnSearch3.setText(bundle.getString("CadastreObjectPanel.btnSearch3.text")); // NOI18N
-        btnSearch3.setEnabled(false);
-        btnSearch3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearch3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -668,17 +417,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                         .addComponent(rdbControSheet)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(rdbSearchByMothPana)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSearch3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -696,14 +434,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
                     .addComponent(btnSearch2)
                     .addComponent(rdbFreeSheet))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSearch3)
-                    .addComponent(rdbSearchByMothPana))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -749,7 +480,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             txtWardNo.setEnabled(true);
             txtParcelNo.setEnabled(true);
             btnSearch1.setEnabled(true);
-
             rdbFreeSheet.setSelected(false);
             rdbControSheet.setSelected(false);
             rdbFreeSheet.setEnabled(false);
@@ -760,14 +490,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             cmbMapNo4.setEnabled(false);
             cmbParcelNo1.setEnabled(false);
             btnSearch2.setEnabled(false);
-
-            cmbDistrict1.setEnabled(false);
-            cmbVdc1.setEnabled(false);
-            cmbMothLujType.setEnabled(false);
-            cmbMothLujNo.setEnabled(false);
-            cmbPanaNo.setEnabled(false);
-            cmbCadastreList.setEnabled(false);
-            btnSearch3.setEnabled(false);
         }
 
     }//GEN-LAST:event_rdbSearchByBoundaryItemStateChanged
@@ -786,14 +508,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             rdbFreeSheet.setEnabled(true);
             rdbControSheet.setEnabled(true);
             btnSearch2.setEnabled(true);
-
-            cmbDistrict1.setEnabled(false);
-            cmbVdc1.setEnabled(false);
-            cmbMothLujType.setEnabled(false);
-            cmbMothLujNo.setEnabled(false);
-            cmbPanaNo.setEnabled(false);
-            cmbCadastreList.setEnabled(false);
-            btnSearch3.setEnabled(false);
         }
     }//GEN-LAST:event_rdbSearchByMapSheetItemStateChanged
 
@@ -814,132 +528,31 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbDistrictItemStateChanged
 
-    private void refresh_Parcel_Information()
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        //By Kabindra
-        if (newCadastreObjectBean==null){
+    private void fireParcelSelect(CadastreObjectBean cadastreObject) {
+        if (cadastreObject == null) {
             JOptionPane.showMessageDialog(this, "Could not find the specified parcel.");
             return;
         }
-        search_Completed_Trigger.invoke(method_holder_object,
-                new Object[]{newCadastreObjectBean,
-                    cmbDistrict.getSelectedItem().toString(),
-                    cmbVdc.getSelectedItem().toString(),
-                    txtWardNo.getText()});
+        firePropertyChange(SELECT_CADASTRE_OBJECT_PROPERTY, null, cadastreObject);
     }
-    
+
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
         //invoke method.
         try {
             VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString()));
-            refresh_Parcel_Information();
+            fireParcelSelect(CadastreObjectBean.getCadastreObjectByVdcWardParcel(vdc.getCode(), txtWardNo.getText().toString(), Integer.parseInt(txtParcelNo.getText().toString())));
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnSearch1ActionPerformed
 
-    private void checkSearchedObject() throws InvocationTargetException, IllegalAccessException, HeadlessException, IllegalArgumentException {
-        if (newCadastreObjectBean!=null){
-            refresh_Parcel_Information();
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Couldn't find any parcel.");
-        }
-    }
-    
     private void btnSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch2ActionPerformed
         try {
             MapSheetBean map = (MapSheetBean) cmbMapNo1.getSelectedItem();
-            newCadastreObjectBean = CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getId().toString(), Integer.parseInt(cmbParcelNo1.getSelectedItem().toString()));
-            refresh_Parcel_Information();
+            fireParcelSelect(CadastreObjectBean.getCadastreObjectByMapAndParcelNo(map.getId().toString(), Integer.parseInt(cmbParcelNo1.getSelectedItem().toString())));
         } catch (Exception ex) {
             Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSearch2ActionPerformed
-
-    private void rdbSearchByMothPanaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbSearchByMothPanaItemStateChanged
-        // TODO add your handling code here:
-        if (rdbSearchByMothPana.isSelected()) {
-
-            btnSearch3.setEnabled(true);
-            cmbDistrict1.setEnabled(true);
-            cmbVdc1.setEnabled(true);
-            cmbMothLujNo.setEnabled(true);
-            cmbMothLujType.setEnabled(true);
-            cmbPanaNo.setEnabled(true);
-            cmbCadastreList.setEnabled(true);
-
-            cmbDistrict.setEnabled(false);
-            cmbVdc.setEnabled(false);
-            txtWardNo.setEnabled(false);
-            txtParcelNo.setEnabled(false);
-            btnSearch1.setEnabled(false);
-
-            rdbFreeSheet.setSelected(false);
-            rdbControSheet.setSelected(false);
-            rdbFreeSheet.setEnabled(false);
-            rdbControSheet.setEnabled(false);
-            cmbMapNo1.setEnabled(false);
-            cmbMapNo2.setEnabled(false);
-            cmbMapNo3.setEnabled(false);
-            cmbMapNo4.setEnabled(false);
-            cmbParcelNo1.setEnabled(false);
-            btnSearch2.setEnabled(false);
-        }
-    }//GEN-LAST:event_rdbSearchByMothPanaItemStateChanged
-
-    private void btnSearch3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch3ActionPerformed
-        // TODO add your handling code here:
-        try {
-            newCadastreObjectBean = (CadastreObjectBean) cmbCadastreList.getSelectedItem();
-            refresh_Parcel_Information();
-        } catch (Exception ex) {
-            Logger.getLogger(CadastreObjectPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_btnSearch3ActionPerformed
-
-    private void cmbDistrict1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDistrict1ItemStateChanged
-        // TODO add your handling code here:
-        try {
-            if (cmbDistrict1.getSelectedItem() == null) {
-                return;
-            }
-
-            DistrictBean district = (DistrictBean) cmbDistrict1.getSelectedItem();
-            if (district != null) {
-                String districCode = district.getCode();
-                vdcListBean1.loadList(false, districCode);
-                cmbVdc1.setSelectedIndex(-1);
-            }
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_cmbDistrict1ItemStateChanged
-
-    private void cmbVdc1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbVdc1ItemStateChanged
-        // TODO add your handling code here:               
-
-        listofMoths();
-        cmbMothLujType.setSelectedIndex(-1);
-    }//GEN-LAST:event_cmbVdc1ItemStateChanged
-
-    private void cmbMothLujTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMothLujTypeItemStateChanged
-        // TODO add your handling code here:
-        listofMoths();
-        cmbMothLujNo.setSelectedIndex(-1);
-    }//GEN-LAST:event_cmbMothLujTypeItemStateChanged
-
-    private void cmbPanaNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPanaNoItemStateChanged
-        // TODO add your handling code here:
-        loadParcels();
-        cmbCadastreList.setSelectedIndex(-1);
-    }//GEN-LAST:event_cmbPanaNoItemStateChanged
-
-    private void cmbMothLujNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMothLujNoItemStateChanged
-        // TODO add your handling code here:
-        listofLocs();
-        cmbPanaNo.setSelectedIndex(-1);
-    }//GEN-LAST:event_cmbMothLujNoItemStateChanged
 
     private void rdbControSheetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdbControSheetItemStateChanged
         // TODO add your handling code here:
@@ -953,25 +566,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
             loadControlSheet();
         }
     }//GEN-LAST:event_rdbControSheetItemStateChanged
-
-    private void rdbSearchByMothPanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbSearchByMothPanaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdbSearchByMothPanaActionPerformed
-
-    private void listofLocs() {
-        if (cmbMothLujNo.getSelectedItem() == null) {
-            return;
-        }
-        MothBean moth = (MothBean) cmbMothLujNo.getSelectedItem();
-        locListBean.loadLocList(moth.getId());
-    }
-
-    private void loadParcels() {
-        if (cmbPanaNo.getSelectedItem() != null) {
-            LocBean loc = (LocBean) cmbPanaNo.getSelectedItem();
-            //baUnitOperation(loc.getBaUnits());
-        }
-    }
 
     private void baUnitOperation(SolaObservableList<BaUnitBean> baUnits) {
         BaUnitBean baUnit;
@@ -994,43 +588,23 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
         setCadastreObjects(cadastreObjectBeans);
     }
 
-    private void listofMoths() {
-        if (cmbMothLujType.getSelectedItem() == null || cmbVdc1.getSelectedItem() == null) {
-            return;
-        }
-        VdcBean vdc = (VdcBean) cmbVdc1.getSelectedItem();
-        mothListBean.loadMothList(vdc.getCode(), cmbMothLujType.getSelectedItem().toString());
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch1;
     private javax.swing.JButton btnSearch2;
-    private javax.swing.JButton btnSearch3;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private org.sola.clients.beans.cadastre.CadastreObjectBean cadastreObjectBean;
     private org.sola.clients.beans.cadastre.CadastreObjectListBean cadastreObjectListBean;
-    private javax.swing.JComboBox cmbCadastreList;
     private javax.swing.JComboBox cmbDistrict;
-    private javax.swing.JComboBox cmbDistrict1;
     private javax.swing.JComboBox cmbMapNo1;
     private javax.swing.JComboBox cmbMapNo2;
     private javax.swing.JComboBox cmbMapNo3;
     private javax.swing.JComboBox cmbMapNo4;
-    private javax.swing.JComboBox cmbMothLujNo;
-    private javax.swing.JComboBox cmbMothLujType;
-    private javax.swing.JComboBox cmbPanaNo;
     private javax.swing.JComboBox cmbParcelNo1;
     private javax.swing.JComboBox cmbVdc;
-    private javax.swing.JComboBox cmbVdc1;
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1043,14 +617,7 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
-    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1068,7 +635,6 @@ public class CadastreObjectPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdbFreeSheet;
     private javax.swing.JRadioButton rdbSearchByBoundary;
     private javax.swing.JRadioButton rdbSearchByMapSheet;
-    private javax.swing.JRadioButton rdbSearchByMothPana;
     private javax.swing.JTextField txtParcelNo;
     private javax.swing.JTextField txtWardNo;
     private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;

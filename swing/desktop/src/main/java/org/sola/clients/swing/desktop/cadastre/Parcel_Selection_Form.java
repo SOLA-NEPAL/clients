@@ -7,16 +7,16 @@ package org.sola.clients.swing.desktop.cadastre;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKBReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.swing.ui.ContentPanel;
+import org.sola.clients.swing.ui.cadastre.CadastreObjectPanel;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -26,38 +26,25 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class Parcel_Selection_Form extends ContentPanel {
     //temporary variable.
 
+    public static final String SELECT_CADASTRE_OBJECT_PROPERTY = "cadasterObjectSelect";
     private CadastreObjectTO cadastreObject = null;
     private Geometry the_Polygon = null;
-    private Method search_Completed_Trigger = null;
-    private Object method_holder_object = null;
-
-    public void set_SearchCompletedTriggers(Method search_completed, Object method_holder) {
-        this.search_Completed_Trigger = search_completed;
-        this.method_holder_object = method_holder;
-    }
-
+    
     /**
      * Creates new form SelectParcelForm
      */
     public Parcel_Selection_Form() {
         super();
         initComponents();
-        //initialize variables.
-        set_SearchCompletionTrigger();
-    }
+        cadastreObjectPanel.addPropertyChangeListener(new PropertyChangeListener() {
 
-    private void set_SearchCompletionTrigger() {
-        Class[] cls = new Class[]{CadastreObjectBean.class,
-            String.class, String.class, String.class};
-        Class workingForm = this.getClass();
-        Method taskCompletion = null;
-        try {
-            taskCompletion = workingForm.getMethod("refresh_Cadastre_Object_Searching", cls);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            Logger.getLogger(Parcel_Selection_Form.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        parcelSearchPanel.set_SearchCompletedTriggers(taskCompletion, this);
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(CadastreObjectPanel.SELECT_CADASTRE_OBJECT_PROPERTY)){
+                    refresh_Cadastre_Object_Searching((CadastreObjectBean)evt.getNewValue());
+                }
+            }
+        });
     }
 
     /**
@@ -71,19 +58,17 @@ public class Parcel_Selection_Form extends ContentPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         lstParcelInfo = new javax.swing.JList();
-        parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnSelect = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        cadastreObjectPanel = new org.sola.clients.swing.ui.cadastre.CadastreObjectPanel();
 
         setHeaderPanel(headerPanel1);
 
         jScrollPane1.setViewportView(lstParcelInfo);
-
-        parcelSearchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/cadastre/Bundle"); // NOI18N
         headerPanel1.setTitleText(bundle.getString("Select_Parcel_Form.headerPanel1.titleText")); // NOI18N
@@ -110,42 +95,44 @@ public class Parcel_Selection_Form extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 304, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
+            .addGap(0, 102, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(parcelSearchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                    .addComponent(cadastreObjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cadastreObjectPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -153,14 +140,13 @@ public class Parcel_Selection_Form extends ContentPanel {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void refresh_Cadastre_Object_Searching(CadastreObjectBean parcel,
-            String ddc, String vdc, String wardno) {
+    public void refresh_Cadastre_Object_Searching(CadastreObjectBean parcel) {
         if (parcel == null) {
             return;
         }
@@ -169,9 +155,9 @@ public class Parcel_Selection_Form extends ContentPanel {
         DefaultListModel def_model = new DefaultListModel();
         def_model.clear();
         def_model.addElement("Parcel Number: " + String.valueOf(parcel.getParcelno()));
-        def_model.addElement("District: " + ddc);
-        def_model.addElement("VDC: " + vdc);
-        def_model.addElement("Ward Number: " + wardno);
+        def_model.addElement("District: " + parcel.getAddressBean().getDistrictBean().getDisplayValue());
+        def_model.addElement("VDC: " + parcel.getAddressBean().getVdcBean().getDisplayValue());
+        def_model.addElement("Ward Number: " + parcel.getAddressBean().getWardNo());
         //get the geometry object.
         WKBReader wkb_reader = new WKBReader();
         DecimalFormat df = new DecimalFormat("0.000");
@@ -187,16 +173,14 @@ public class Parcel_Selection_Form extends ContentPanel {
     }
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-        //By Kabindra
-        try {
-            search_Completed_Trigger.invoke(method_holder_object, new Object[]{cadastreObject});
+        if(cadastreObject!=null){
+            firePropertyChange(SELECT_CADASTRE_OBJECT_PROPERTY, null, cadastreObject);
             this.close();
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnSelectActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton btnSelect;
+    org.sola.clients.swing.ui.cadastre.CadastreObjectPanel cadastreObjectPanel;
     org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel2;
@@ -204,6 +188,5 @@ public class Parcel_Selection_Form extends ContentPanel {
     javax.swing.JScrollPane jScrollPane1;
     javax.swing.JToolBar jToolBar1;
     javax.swing.JList lstParcelInfo;
-    org.sola.clients.swing.ui.cadastre.CadastreObjectPanel parcelSearchPanel;
     // End of variables declaration//GEN-END:variables
 }

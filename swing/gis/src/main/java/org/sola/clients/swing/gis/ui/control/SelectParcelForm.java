@@ -59,7 +59,7 @@ public class SelectParcelForm extends javax.swing.JDialog {
             Logger.getLogger(SelectParcelForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        parcelSearchPanel.set_SearchCompletedTriggers(taskCompletion, this);
+      //  parcelSearchPanel.set_SearchCompletedTriggers(taskCompletion, this);
     }
     /**
      * This method is called from within the constructor to initialize the form.
