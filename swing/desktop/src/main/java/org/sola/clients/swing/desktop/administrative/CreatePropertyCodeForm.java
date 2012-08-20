@@ -19,7 +19,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.CreatePropertyCodeBean;
 import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.DistrictListBean;
 import org.sola.clients.beans.referencedata.VdcBean;

@@ -28,7 +28,6 @@
 package org.sola.clients.beans.application;
 
 import java.util.Date;
-import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationSummaryTO;
 

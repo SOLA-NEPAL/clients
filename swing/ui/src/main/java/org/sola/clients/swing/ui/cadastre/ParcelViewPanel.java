@@ -45,7 +45,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
 
     private void setupCadastreObject(CadastreObjectBean cadastreObjectBean) {
         CadastreObjectBean oldValue = this.cadastreObject;
-        if (this.cadastreObject == null) {
+        if (cadastreObjectBean == null) {
             this.cadastreObject = new CadastreObjectBean();
         } else {
             this.cadastreObject = cadastreObjectBean;
