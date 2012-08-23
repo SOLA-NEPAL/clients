@@ -38,6 +38,7 @@ import org.sola.clients.beans.address.AddressBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.referencedata.CadastreObjectTypeBean;
 import org.sola.clients.beans.referencedata.LandClassBean;
 import org.sola.clients.beans.referencedata.LandUseBean;
@@ -46,6 +47,7 @@ import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.webservices.transferobjects.casemanagement.PartyTO;
 
 /**
  * Contains properties and methods to manage <b>Cadastre</b> object of the
@@ -452,5 +454,18 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     public static CadastreObjectBean getCadastreObjectByMapAndParcelNo(String mapSheetCode, int parcelNo) {
 
         return TypeConverters.TransferObjectToBean(WSManager.getInstance().getCadastreService().getCadastreObjectByMapSheetParcel(mapSheetCode, parcelNo), CadastreObjectBean.class, null);
+    }
+    
+    /**
+     * Returns parcel by ID.
+     */
+    public static CadastreObjectBean getParcel(String parcelId) {
+        if (parcelId == null || parcelId.length() < 1) {
+            return null;
+        }
+        CadastreObjectTO parcelTO = WSManager.getInstance().getCadastreService().getCadastreObject(parcelId);
+        CadastreObjectBean prclBean = TypeConverters.TransferObjectToBean(parcelTO, CadastreObjectBean.class, null);
+
+        return prclBean;
     }
 }

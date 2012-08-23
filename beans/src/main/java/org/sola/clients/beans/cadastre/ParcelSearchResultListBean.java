@@ -21,22 +21,24 @@ import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.search.ParcelSearchParamsTO;
 
 /**
  *
  * @author Kumar
  */
-public class ParcelSearchResultListBean extends AbstractBindingListBean{
-public static final String SELECTED_PARCEL_SEARCH_RESULT = "selectedParcelSearchResult";
+public class ParcelSearchResultListBean extends AbstractBindingListBean {
+
+    public static final String SELECTED_PARCEL_SEARCH_RESULT = "selectedParcelSearchResult";
     private SolaObservableList<ParcelSearchResultBean> parcelSearchResults;
     private ParcelSearchResultBean selectedParcelSearchResult;
-    
-    public ParcelSearchResultListBean(){
+
+    public ParcelSearchResultListBean() {
         super();
     }
 
     public ObservableList<ParcelSearchResultBean> getParcelSearchResults() {
-        if(parcelSearchResults == null){
+        if (parcelSearchResults == null) {
             parcelSearchResults = new SolaObservableList<ParcelSearchResultBean>();
         }
         return parcelSearchResults;
@@ -50,17 +52,19 @@ public static final String SELECTED_PARCEL_SEARCH_RESULT = "selectedParcelSearch
         this.selectedParcelSearchResult = selectedParcelSearchResult;
         propertySupport.firePropertyChange(SELECTED_PARCEL_SEARCH_RESULT, null, this.selectedParcelSearchResult);
     }
-    
-    /** Searches parties with given criteria. */
-    public void search(ParcelSearchParamsBean searchParams){
-        if(searchParams == null){
+
+    /**
+     * Searches parcels with given criteria.
+     */
+    public void search(ParcelSearchParamsBean searchParams) {
+        if (searchParams == null) {
             return;
         }
-        
-//        getParcelSearchResults().clear();
-//        //ParcelSearchParamsTO searchParamsTO = TypeConverters.BeanToTrasferObject(searchParams, ParcelSearchParamsTO.class);
-//        TypeConverters.TransferObjectListToBeanList(
-//                WSManager.getInstance().getSearchService().searchParcels(searchParamsTO),
-//                ParcelSearchResultBean.class, (List)getParcelSearchResults());
+
+        getParcelSearchResults().clear();
+        ParcelSearchParamsTO searchParamsTO = TypeConverters.BeanToTrasferObject(searchParams, ParcelSearchParamsTO.class);
+        TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getSearchService().searchParcels(searchParamsTO),
+                ParcelSearchResultBean.class, (List) getParcelSearchResults());
     }
 }

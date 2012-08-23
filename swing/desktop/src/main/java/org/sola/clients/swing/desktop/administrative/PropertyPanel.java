@@ -33,9 +33,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.administrative.BaUnitBean;
@@ -54,11 +51,11 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.ReportViewerForm;
-import org.sola.clients.swing.desktop.application.ApplicationPanel;
-import org.sola.clients.swing.desktop.cadastre.Parcel_Selection_Form;
+import org.sola.clients.swing.desktop.cadastre.ParcelSearchPanelForm;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForBaUnit;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.cadastre.ParcelSearchPanel;
 import org.sola.clients.swing.ui.renderers.LockCellRenderer;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.clients.swing.ui.renderers.TerminatingCellRenderer;
@@ -67,11 +64,11 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
- * This form is used to manage property object ({@codeBaUnit}).
- * {@link BaUnitBean} is used to bind data on the form.
+ * This form is used to manage property object ({
+ *
+ * @codeBaUnit}). {@link BaUnitBean} is used to bind data on the form.
  */
 public class PropertyPanel extends ContentPanel {
 
@@ -79,6 +76,18 @@ public class PropertyPanel extends ContentPanel {
      * Listens for events of different right forms, to add created right into
      * the list of rights or update existing one.
      */
+    private class ParcelSearchFormListener implements PropertyChangeListener {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(ParcelSearchPanel.SELECT_PARCEL_PROPERTY)) {
+                refreshNewProperty((CadastreObjectBean) (evt.getNewValue()));
+                getMainContentPanel().closePanel(MainContentPanel.CARD_PARCEL_SEARCH);
+            }
+        }
+    }
+    private ParcelSearchFormListener parcelSearchFormListener = new ParcelSearchFormListener();
+
     private class RightFormListener implements PropertyChangeListener {
 
         @Override
@@ -218,7 +227,6 @@ public class PropertyPanel extends ContentPanel {
         customizeForm();
 
         rrrTypes.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(RrrTypeListBean.SELECTED_RRR_TYPE_PROPERTY)) {
@@ -228,7 +236,6 @@ public class PropertyPanel extends ContentPanel {
         });
 
         baUnitBean.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(BaUnitBean.SELECTED_RIGHT_PROPERTY)) {
@@ -309,7 +316,6 @@ public class PropertyPanel extends ContentPanel {
             if (getMainContentPanel() != null) {
                 if (newPropertyWizardListener == null) {
                     newPropertyWizardListener = new PropertyChangeListener() {
-
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(NewPropertyWizardPanel.SELECTED_RESULT_PROPERTY)) {
@@ -323,7 +329,6 @@ public class PropertyPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYLINK));
@@ -770,7 +775,6 @@ public class PropertyPanel extends ContentPanel {
         }
 
         SolaTask<Void, Void> t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
@@ -816,7 +820,6 @@ public class PropertyPanel extends ContentPanel {
     private void openPropertyForm(final RelatedBaUnitInfoBean relatedBaUnit) {
         if (relatedBaUnit != null && relatedBaUnit.getRelatedBaUnit() != null) {
             SolaTask t = new SolaTask<Void, Void>() {
-
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
@@ -2169,26 +2172,29 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private void btnAddNotationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNotationActionPerformed
         addNotation();
     }//GEN-LAST:event_btnAddNotationActionPerformed
+//Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
 
-    //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshNewProperty(CadastreObjectTO parcel) {
+    public void refreshNewProperty(CadastreObjectBean parcel) {
         //do as required.
-        CadastreObjectBean coBean = TypeConverters.TransferObjectToBean(
-                parcel, CadastreObjectBean.class, null);
-        baUnitBean.setCadastreObject(coBean);
+//        CadastreObjectBean coBean = TypeConverters.TransferObjectToBean(
+//                parcel, CadastreObjectBean.class, null);
+        baUnitBean.setCadastreObject(parcel);
     }
-
     private void btnSelectParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectParcelActionPerformed
-        Parcel_Selection_Form parcelSearchForm = new Parcel_Selection_Form();
-        parcelSearchForm.addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(Parcel_Selection_Form.SELECT_CADASTRE_OBJECT_PROPERTY)){
-                    refreshNewProperty((CadastreObjectTO)evt.getNewValue());
-                }
-            }
-        });
+        //Parcel_Selection_Form parcelSearchForm = new Parcel_Selection_Form();
+        ParcelSearchPanelForm parcelSearchForm = new ParcelSearchPanelForm();
+        parcelSearchForm.getParcelSearchPanel().addPropertyChangeListener(parcelSearchFormListener);
+//        parcelSearchForm.getParcelSearchPanel().addPropertyChangeListener(new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//
+//
+//                if (evt.getPropertyName().equals(ParcelSearchPanel.SELECT_PARCEL_PROPERTY)) {
+//                    refreshNewProperty((CadastreObjectBean) evt.getNewValue());
+//                    getMainContentPanel().closePanel(MainContentPanel.CARD_PARCEL_SEARCH);
+//                }
+//            }
+//        });
         displayForm(parcelSearchForm);
     }//GEN-LAST:event_btnSelectParcelActionPerformed
 
@@ -2215,7 +2221,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
 
     }//GEN-LAST:event_btnPropertyCodeActionPerformed
 
-    private void displayForm(Parcel_Selection_Form parcelSearchForm) {
+    private void displayForm(ParcelSearchPanelForm parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
             getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
         }

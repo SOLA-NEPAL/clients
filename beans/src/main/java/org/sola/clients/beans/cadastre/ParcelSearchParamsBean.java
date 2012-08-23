@@ -17,7 +17,6 @@ package org.sola.clients.beans.cadastre;
 
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
-import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 
 /**
@@ -26,13 +25,11 @@ import org.sola.clients.beans.referencedata.VdcBean;
  */
 public class ParcelSearchParamsBean extends AbstractBindingBean {
 
-    public static final String DISTRICT_PROPERTY = "district";
     public static final String VDC_PROPERTY = "vdc";
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String PARCEL_NO_PROPERTY = "parcelNo";
-    private DistrictBean district;
     private VdcBean vdc;
     private String wardNo;
     private String parcelNo;
@@ -41,18 +38,8 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
         super();
     }
 
-    public String getDistrictCode() {
-        return getDistrict().getCode();
-    }
-
-    public void setDistrictCode(String districtCode) {
-        String oldValue = getDistrict().getCode();
-        setDistrict(CacheManager.getBeanByCode(CacheManager.getDistricts(), districtCode));
-        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, districtCode);
-    }
-
-    public String getVCode() {
-        return getVdc().getCode();
+    public String getVdcCode() {
+        return vdc.getCode();
     }
 
     public void setVdcCode(String vdcCode) {
@@ -62,25 +49,14 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
     }
 
     public VdcBean getVdc() {
-        if (vdc == null) {
-            vdc = new VdcBean();
-        }
         return vdc;
     }
 
     public void setVdc(VdcBean value) {
-        this.setJointRefDataBean(getVdc(), value, VDC_PROPERTY);
-    }
-
-    public DistrictBean getDistrict() {
-        if (district == null) {
-            district = new DistrictBean();
+        if (this.vdc == null) {
+            this.vdc = new VdcBean();
         }
-        return district;
-    }
-
-    public void setDistrict(DistrictBean value) {
-        this.setJointRefDataBean(getDistrict(), value, DISTRICT_PROPERTY);
+        this.setJointRefDataBean(this.vdc, value, VDC_PROPERTY);
     }
 
     public String getWardNo() {

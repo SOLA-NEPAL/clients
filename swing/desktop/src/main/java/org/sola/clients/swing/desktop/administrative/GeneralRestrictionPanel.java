@@ -13,34 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.swing.desktop.cadastre;
+package org.sola.clients.swing.desktop.administrative;
 
-import org.sola.clients.beans.cadastre.ParcelSearchResultBean;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.cadastre.ParcelSearchPanel;
 
 /**
  *
  * @author Kumar
  */
-public class ParcelSearchPanelForm extends ContentPanel {
-
-    public static final String SELECT_PARCEL_PROPERTY = "selectParcel";
+public class GeneralRestrictionPanel extends ContentPanel {
 
     /**
-     * Creates new form ParcelSearchPanelForm
+     * Creates new form GeneralRestrictionPanel
      */
-    public ParcelSearchPanelForm() {
+    public GeneralRestrictionPanel() {
         initComponents();
-    }
-
-    public ParcelSearchResultBean getSelectedParcelSearchResultBean() {
-        return this.getParcelSearchPanel()
-                .getParcelSearchResuls().getSelectedParcelSearchResult();
-    }
-
-    public ParcelSearchPanel getParcelSearchPanel() {
-        return parcelSearchPanel;
     }
 
     /**
@@ -53,33 +40,21 @@ public class ParcelSearchPanelForm extends ContentPanel {
     private void initComponents() {
 
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
-        parcelSearchPanel = new org.sola.clients.swing.ui.cadastre.ParcelSearchPanel();
-
-        setHeaderPanel(headerPanel1);
-
-        headerPanel1.setTitleText("Parcel Search");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(parcelSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 459, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
-    private org.sola.clients.swing.ui.cadastre.ParcelSearchPanel parcelSearchPanel;
     // End of variables declaration//GEN-END:variables
 }
