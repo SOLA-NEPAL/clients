@@ -59,14 +59,6 @@ public class ApplicationValidator implements ConstraintValidator<ApplicationChec
                     MessageUtility.getLocalizedMessageText(
                     ClientMessage.CHECK_APP_CONTACT_PERSON_NULL)).addConstraintViolation();
         } else {
-            if (appBean.getContactPerson().getAddress() == null || 
-                    appBean.getContactPerson().getAddress().getDescription() == null ||
-                    appBean.getContactPerson().getAddress().getDescription().isEmpty()) {
-                result = false;
-                constraintContext.buildConstraintViolationWithTemplate(
-                        MessageUtility.getLocalizedMessageText(
-                        ClientMessage.CHECK_APP_CONTACT_PERSON_ADDRESS)).addConstraintViolation();
-            }
             if (appBean.getContactPerson().getName() == null || appBean.getContactPerson().getName().isEmpty()) {
                 result = false;
                 constraintContext.buildConstraintViolationWithTemplate(

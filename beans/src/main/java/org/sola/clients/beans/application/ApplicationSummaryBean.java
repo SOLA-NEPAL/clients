@@ -45,6 +45,7 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String AGENT_ID_PROPERTY = "agentId";
     public static final String CONTACT_PERSON_ID_PROPERTY = "contactPersonId";
     public static final String FEE_PAID_PROPERTY = "feePaid";
+    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
         
     private String nr;
     private Date lodgingDatetime;
@@ -53,7 +54,8 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
     private String agentId;
     private String contactPersonId;
     private boolean feePaid;
-
+    private String fiscalYearCode;
+    
     public ApplicationSummaryBean() {
         super();
     }
@@ -124,5 +126,15 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
         String old = this.nr;
         this.nr = nr;
         propertySupport.firePropertyChange(NR_PROPERTY, old, this.nr);
+    }
+
+    public String getFiscalYearCode() {
+        return fiscalYearCode;
+    }
+
+    public void setFiscalYearCode(String fiscalYearCode) {
+        String old = this.fiscalYearCode;
+        this.fiscalYearCode = fiscalYearCode;
+        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
 }

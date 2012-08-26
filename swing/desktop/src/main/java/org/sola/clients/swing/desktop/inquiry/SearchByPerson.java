@@ -92,8 +92,7 @@ public class SearchByPerson extends ContentPanel {
                 } else if (evt.getPropertyName().equals(PartySearchPanel.VIEW_PARTY_PROPERTY)) {
                     panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), true, true);
                 }else if (evt.getPropertyName().equals(PartySearchPanel.SELECT_PARTY_PROPERTY)) {                    
-                    PartyBean partyBean = partySearchPanel.getParty();
-//                    getPartyBaUnitAsPartyList(partyBean);//                   
+                    
                 }
 
                 if (panel != null) {

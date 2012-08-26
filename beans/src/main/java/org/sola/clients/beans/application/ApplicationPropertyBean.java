@@ -50,6 +50,8 @@ public class ApplicationPropertyBean extends AbstractIdBean {
     public static final String IS_VERIFIED_LOCATIONS_PROPERTY = "verifiedLocation";
     public static final String IS_VERIFIED_APPLICATIONS_PROPERTY = "verifiedHasOwners";
     public static final String BA_UNIT_ID_PROPERTY = "baUnitId";
+    public static final String MOTH_NO_PROPERTY = "mothNo";
+    public static final String PAGE_NO_PROPERTY = "pageNo";
     
     private String applicationId;
     private BigDecimal area;
@@ -62,6 +64,8 @@ public class ApplicationPropertyBean extends AbstractIdBean {
     private boolean verifiedExists;
     private boolean verifiedLocation;
     private boolean verifiedApplications;
+    private String mothNo;
+    private String pageNo;
     
     public ApplicationPropertyBean() {
         super();
@@ -155,6 +159,26 @@ public class ApplicationPropertyBean extends AbstractIdBean {
         BigDecimal old = totalValue;
         totalValue = val;
         propertySupport.firePropertyChange(TOTAL_VALUE_PROPERTY, old, val);
+    }
+
+    public String getMothNo() {
+        return mothNo;
+    }
+
+    public void setMothNo(String mothNo) {
+        String oldValue = this.mothNo;
+        this.mothNo = mothNo;
+        propertySupport.firePropertyChange(MOTH_NO_PROPERTY, oldValue, this.mothNo);
+    }
+
+    public String getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(String pageNo) {
+        String oldValue = this.pageNo;
+        this.pageNo = pageNo;
+        propertySupport.firePropertyChange(PAGE_NO_PROPERTY, oldValue, this.pageNo);
     }
 
 }

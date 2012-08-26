@@ -68,24 +68,26 @@ public class PersonSearchForm extends ContentPanel {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSON));
                 PartyPanelForm panel = null;
+                switch (evt.getPropertyName()) {
+                    case PartySearchPanel.CREATE_NEW_PARTY_PROPERTY:
+                        panel = new PartyPanelForm(true, null, false, false);
+                        panel.addPropertyChangeListener(new PropertyChangeListener() {
 
-                if (evt.getPropertyName().equals(PartySearchPanel.CREATE_NEW_PARTY_PROPERTY)) {
-                    panel = new PartyPanelForm(true, null, false, false);
-                    panel.addPropertyChangeListener(new PropertyChangeListener() {
-
-                        @Override
-                        public void propertyChange(PropertyChangeEvent evt) {
-                            if (evt.getPropertyName().equals(PartyPanelForm.PARTY_SAVED)) {
-                                ((PartyPanelForm) evt.getSource()).setParty(null);
+                            @Override
+                            public void propertyChange(PropertyChangeEvent evt) {
+                                if (evt.getPropertyName().equals(PartyPanelForm.PARTY_SAVED)) {
+                                    ((PartyPanelForm) evt.getSource()).setParty(null);
+                                }
                             }
-                        }
-                    });
-                } else if (evt.getPropertyName().equals(PartySearchPanel.EDIT_PARTY_PROPERTY)) {
-                    panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), false, true);
-                } else if (evt.getPropertyName().equals(PartySearchPanel.VIEW_PARTY_PROPERTY)) {
-                    panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), true, true);
+                        });
+                        break;
+                    case PartySearchPanel.EDIT_PARTY_PROPERTY:
+                        panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), false, true);
+                        break;
+                    case PartySearchPanel.VIEW_PARTY_PROPERTY:
+                        panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), true, true);
+                        break;
                 }
-
                 if (panel != null) {
                     getMainContentPanel().addPanel(panel, MainContentPanel.CARD_PERSON, true);
                 }
@@ -98,6 +100,10 @@ public class PersonSearchForm extends ContentPanel {
     public PartySearchResultBean getSelectedPartySearchResultBean(){
         return this.getPartySearchPanel()
                         .getPartySearchResuls().getSelectedPartySearchResult();
+    }
+    
+    public PartySearchPanel getPartySeachPanel(){
+        return partySearchPanel;
     }
     
     @SuppressWarnings("unchecked")
@@ -115,7 +121,6 @@ public class PersonSearchForm extends ContentPanel {
         headerPanel.setTitleText(bundle.getString("PersonSearchForm.headerPanel.titleText")); // NOI18N
 
         partySearchPanel.setName("partySearchPanel"); // NOI18N
-        partySearchPanel.setShowSelectButton(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -132,7 +137,7 @@ public class PersonSearchForm extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(partySearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                .addComponent(partySearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

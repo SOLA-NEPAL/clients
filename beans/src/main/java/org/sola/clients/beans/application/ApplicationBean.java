@@ -52,12 +52,11 @@ import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.ValidationResultBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
+import org.sola.services.boundary.transferobjects.digitalarchive.DocumentBinaryTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.ActionedApplicationTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
-import org.sola.webservices.transferobjects.digitalarchive.DocumentBinaryTO;
-import org.sola.webservices.transferobjects.digitalarchive.DocumentTO;
 import org.sola.webservices.transferobjects.search.PropertyVerifierTO;
 
 /**
@@ -71,7 +70,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String ACTION_CODE_PROPERTY = "actionCode";
     public static final String ACTION_PROPERTY = "action";
     public static final String ACTION_NOTES_PROPERTY = "actionNotes";
-    public static final String LOCATION_PROPERTY = "location";
     public static final String SERVICES_FEE_PROPERTY = "servicesFee";
     public static final String TAX_PROPERTY = "tax";
     public static final String TOTAL_AMOUNT_PAID_PROPERTY = "totalAmountPaid";
@@ -87,8 +85,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
     private SolaList<ApplicationPropertyBean> propertyList;
-    private PartyBean contactPerson;
-    private byte[] location;
     private BigDecimal servicesFee;
     private BigDecimal tax;
     private BigDecimal totalAmountPaid;
@@ -100,6 +96,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private transient ApplicationServiceBean selectedService;
     private transient ApplicationPropertyBean selectedProperty;
     private transient SourceBean selectedSource;
+    private PartySummaryBean contactPerson;
     private PartySummaryBean agent;
     private String assigneeId;
     private ApplicationStatusTypeBean statusBean;
@@ -115,7 +112,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
         actionBean = new ApplicationActionTypeBean();
         statusBean = new ApplicationStatusTypeBean();
         propertyList = new SolaList();
-        contactPerson = new PartyBean();
         serviceList = new SolaObservableList<ApplicationServiceBean>();
         sourceList = new SolaList();
         appLogList = new SolaObservableList<ApplicationLogBean>();
@@ -282,15 +278,13 @@ public class ApplicationBean extends ApplicationSummaryBean {
     }
 
     public PartySummaryBean getAgent() {
-//        if(agent==null){
-//            agent = new PartySummaryBean();
-//        }
         return agent;
     }
 
     public void setAgent(PartySummaryBean value) {
-        agent = value;
-        propertySupport.firePropertyChange(AGENT_PROPERTY, null, value);
+        PartySummaryBean oldValue = agent;
+        agent=value;
+        propertySupport.firePropertyChange(AGENT_PROPERTY, oldValue, this.agent);
     }
 
     public String getActionCode() {
@@ -340,23 +334,14 @@ public class ApplicationBean extends ApplicationSummaryBean {
         return propertyList.getFilteredList();
     }
 
-    public PartyBean getContactPerson() {
+    public PartySummaryBean getContactPerson() {
         return contactPerson;
     }
 
-    public void setContactPerson(PartyBean value) {
+    public void setContactPerson(PartySummaryBean value) {
+        PartySummaryBean oldValue = contactPerson;
         contactPerson = value;
-        propertySupport.firePropertyChange(CONTACT_PERSON_PROPERTY, null, value);
-    }
-
-    public byte[] getLocation() {
-        return location;
-    }
-
-    public void setLocation(byte[] value) {
-        byte[] old = location;
-        location = value;
-        propertySupport.firePropertyChange(LOCATION_PROPERTY, old, value);
+        propertySupport.firePropertyChange(CONTACT_PERSON_PROPERTY, oldValue, this.contactPerson);
     }
 
     public ApplicationPropertyBean getSelectedProperty() {
@@ -564,22 +549,12 @@ public class ApplicationBean extends ApplicationSummaryBean {
      * Adds new property object ({@link ApplicationPropertyBean}) into the list
      * of application properties.
      *
-     * @param firstPart First part of the property's identification code.
-     * @param lastPart Second part of the property's identification code.
-     * @param area The area of parcel.
-     * @param value The value of parcel.
+     * @param appProperty {@link ApplicationPropertyBean} to add into the list.
      */
-    public ApplicationPropertyBean addProperty(String firstPart, String lastPart, BigDecimal area, BigDecimal value) {
-        if (propertyList != null) {
-            ApplicationPropertyBean newProperty = new ApplicationPropertyBean();
-            newProperty.setArea(area);
-            newProperty.setNameFirstpart(firstPart);
-            newProperty.setNameLastpart(lastPart);
-            newProperty.setTotalValue(value);
-            propertyList.addAsNew(newProperty);
-            return newProperty;
+    public void addProperty(ApplicationPropertyBean appProperty) {
+        if (propertyList != null && !propertyList.contains(appProperty)) {
+            propertyList.addAsNew(appProperty);
         }
-        return null;
     }
 
     /**
@@ -824,23 +799,10 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public boolean lodgeApplication() {
         ApplicationTO app = TypeConverters.BeanToTrasferObject(this, ApplicationTO.class);
-        checkDocuments(app);
         app = WSManager.getInstance().getCaseManagementService().createApplication(app);
         TypeConverters.TransferObjectToBean(app, ApplicationBean.class, this);
         propertySupport.firePropertyChange(APPLICATION_PROPERTY, null, this);
         return true;
-    }
-
-    //rectify the appBean to check document bean status.
-    private void checkDocuments(ApplicationTO app) {
-        app.getContactPerson().setPhotoDoc(
-                getDocumentExisting(app.getContactPerson().getPhotoDoc()));
-        app.getContactPerson().setRightFingerDoc(
-                getDocumentExisting(app.getContactPerson().getRightFingerDoc()));
-        app.getContactPerson().setLeftFingerDoc(
-                getDocumentExisting(app.getContactPerson().getLeftFingerDoc()));
-        app.getContactPerson().setSignatureDoc(
-                getDocumentExisting(app.getContactPerson().getSignatureDoc()));
     }
 
     public DocumentBinaryTO getDocumentExisting(DocumentBinaryTO doc) {
@@ -863,7 +825,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public boolean saveApplication() {
         ApplicationTO app = TypeConverters.BeanToTrasferObject(this, ApplicationTO.class);
-        checkDocuments(app);
         app = WSManager.getInstance().getCaseManagementService().saveApplication(app);
         TypeConverters.TransferObjectToBean(app, ApplicationBean.class, this);
         propertySupport.firePropertyChange(APPLICATION_PROPERTY, null, this);

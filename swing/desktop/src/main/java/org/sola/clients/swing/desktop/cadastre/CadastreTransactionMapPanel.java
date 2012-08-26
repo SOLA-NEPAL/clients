@@ -85,7 +85,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
                     this.applicationService.getId());
             this.mapControl = new ControlsBundleForCadastreChange(
                     this.applicationBean.getNr(), transactionBean, this.getBaUnitId(),
-                    this.applicationBean.getLocation(),mapsheets);
+                    null,mapsheets);
             //this.mapControl.setParentPanel((Object)this);
         } else if (applicationService.getRequestType().getCode().equals(
                 RequestTypeBean.CODE_CADASTRE_REDEFINITION)) {
@@ -94,7 +94,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
                     this.applicationService.getId());
             this.mapControl = new ControlsBundleForCadastreRedefinition(
                     transactionBean, this.getBaUnitId(),
-                    this.applicationBean.getLocation());
+                    null);
         }
         this.mapControl.setApplicationId(this.applicationBean.getId());
         this.mapControl.setReadOnly(!this.applicationService.isManagementAllowed());

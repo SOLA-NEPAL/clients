@@ -55,6 +55,7 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String TYPE_PROPERTY = "type";
     public static final String IS_RIGHTHOLDER_PROPERTY = "rightHolder";
     public static final String ROLE_CODE_PROPERTY = "roleCode";
+    public static final String  FULL_NAME_PROPERTY = "fullName";
     
     @NotEmpty(message= ClientMessage.CHECK_NOTNULL_NAME, payload=Localized.class)
     private String name;
@@ -87,6 +88,7 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         String oldValue = lastName;
         lastName = value;
         propertySupport.firePropertyChange(LASTNAME_PROPERTY, oldValue, value);
+        propertySupport.firePropertyChange(FULL_NAME_PROPERTY, null, getFullName());
     }
 
     public String getName() {
@@ -97,6 +99,7 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         String oldValue = name;
         name = value;
         propertySupport.firePropertyChange(NAME_PROPERTY, oldValue, value);
+        propertySupport.firePropertyChange(FULL_NAME_PROPERTY, null, getFullName());
     }
 
     public String getFullName(){

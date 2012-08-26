@@ -15,13 +15,14 @@
  */
 package org.sola.clients.beans.administrative;
 
+import java.util.Date;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
 import org.sola.clients.beans.referencedata.MothTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 
 public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
 
-    public static final String FINANCIAL_YEAR_PROPERTY = "financialYear";
+    public static final String CREATION_DATE_PROPERTY = "creationDate";
     public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
@@ -33,7 +34,7 @@ public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
     private String mothlujNumber;
     private String vdcCode;
     private MothTypeBean mothType;
-    private String financialYear;
+    private Date creationDate;
     private VdcBean vdc;
 
     public MothBasicBean() {
@@ -67,14 +68,14 @@ public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
         propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
     }
 
-    public String getFinancialYear() {
-        return financialYear;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setFinancialYear(String financialYear) {
-        String oldValue = this.financialYear;
-        this.financialYear = financialYear;
-        propertySupport.firePropertyChange(FINANCIAL_YEAR_PROPERTY, oldValue, this.financialYear);
+    public void setCreationDate(Date creationDate) {
+        Date oldValue = this.creationDate;
+        this.creationDate = creationDate;
+        propertySupport.firePropertyChange(CREATION_DATE_PROPERTY, oldValue, this.creationDate);
     }
 
     public String getMothLuj() {

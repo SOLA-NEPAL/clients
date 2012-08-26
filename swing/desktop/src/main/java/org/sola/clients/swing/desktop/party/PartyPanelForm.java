@@ -202,7 +202,7 @@ public class PartyPanelForm extends ContentPanel {
                 public void taskDone() {
                     if (get() != null && get()) {
                         customizePanel();
-                        firePropertyChange(PARTY_SAVED, false, true);
+                        firePropertyChange(PARTY_SAVED, null, partyPanel.getPartyBean());
                         if (closeOnSave || allowClose) {
                             close();
                         } else {
@@ -216,7 +216,7 @@ public class PartyPanelForm extends ContentPanel {
         } else {
             if (partyPanel.validateParty(true)) {
                 customizePanel();
-                firePropertyChange(PARTY_SAVED, false, true);
+                firePropertyChange(PARTY_SAVED, null, partyPanel.getPartyBean());
                 if (closeOnSave && allowClose) {
                     close();
                 }
@@ -282,9 +282,9 @@ public class PartyPanelForm extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,7 +293,7 @@ public class PartyPanelForm extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
