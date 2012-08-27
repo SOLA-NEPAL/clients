@@ -42,6 +42,7 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     public static final String STATUS_CODE_PROPERTY = "statusCode";
     public static final String REGISTRATION_STATUS_PROPERTY = "registrationStatus";
     public static final String RIGHTHOLDERS_PROPERTY = "rightholders";
+    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     
     private String id;
     private String name;
@@ -50,6 +51,7 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private RegistrationStatusTypeBean registrationStatus;
     private String rightholders;
     private String officeCode;
+    private String fiscalYearCode;
     
     public BaUnitSearchResultBean(){
         super();
@@ -132,5 +134,15 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
 
     public void setOfficeCode(String officeCode) {
         this.officeCode = officeCode;
+    }
+    
+    public String getFiscalYearCode() {
+        return fiscalYearCode;
+    }
+
+    public void setFiscalYearCode(String fiscalYearCode) {
+        String old = this.fiscalYearCode;
+        this.fiscalYearCode = fiscalYearCode;
+        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
 }

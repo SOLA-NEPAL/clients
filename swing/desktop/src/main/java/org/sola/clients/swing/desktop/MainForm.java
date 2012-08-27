@@ -31,6 +31,7 @@ package org.sola.clients.swing.desktop;
 
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -57,7 +58,7 @@ import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByPerson;
-import org.sola.clients.swing.desktop.party.PartySearchPanelForm;
+import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.reports.LodgementReportParamsForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -81,7 +82,7 @@ public class MainForm extends javax.swing.JFrame {
 
         initComponents();
         HelpUtility.getInstance().registerHelpMenu(jmiContextHelp, "overview");
-
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
 
             @Override
@@ -214,18 +215,18 @@ public class MainForm extends javax.swing.JFrame {
         TaskManager.getInstance().runTask(t);
     }
 
-    private void openSearchParties() {
+    /**
+     * Opens {@link PartySearchPanelForm} to search parties.
+     */
+    public void openSearchParties(final boolean showSelectButton) {
         SolaTask t = new SolaTask<Void, Void>() {
 
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
-                if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_PERSONS)) {
-                    PartySearchPanelForm partySearchPanelForm = new PartySearchPanelForm();
-                    pnlContent.addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
-                } else {
-                    pnlContent.showPanel(MainContentPanel.CARD_SEARCH_PERSONS);
-                }
+                PersonSearchForm partySearchPanelForm = new PersonSearchForm();
+                partySearchPanelForm.getPartySeachPanel().setShowSelectButton(showSelectButton);
+                pnlContent.addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
             }
         };
@@ -808,7 +809,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDocumentSearchActionPerformed
 
     private void btnManagePartiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagePartiesActionPerformed
-        openSearchParties();
+        openSearchParties(false);
     }//GEN-LAST:event_btnManagePartiesActionPerformed
 
     private void btnOpenMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenMapActionPerformed
@@ -846,7 +847,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuLodgementReportActionPerformed
 
     private void menuPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPersonsActionPerformed
-        openSearchParties();
+        openSearchParties(false);
     }//GEN-LAST:event_menuPersonsActionPerformed
 
     private void menuMothStrestaEnryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMothStrestaEnryActionPerformed

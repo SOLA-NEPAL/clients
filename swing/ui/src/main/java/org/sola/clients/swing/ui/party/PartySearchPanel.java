@@ -1,32 +1,32 @@
 /**
-* ******************************************************************************************
-* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
-* (FAO). All rights reserved.
-*
+ * ******************************************************************************************
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
+ * 
 * Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
+ * modification, are permitted provided that the following conditions are met:
+ * 
 * 1. Redistributions of source code must retain the above copyright notice,this
-* list of conditions and the following disclaimer. 2. Redistributions in binary
-* form must reproduce the above copyright notice,this list of conditions and
-* the following disclaimer in the documentation and/or other materials provided
-* with the distribution. 3. Neither the name of FAO nor the names of its
-* contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
-*
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ * 
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-* *********************************************************************************************
-*/
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ * *********************************************************************************************
+ */
 package org.sola.clients.swing.ui.party;
 
 import java.awt.event.MouseEvent;
@@ -45,8 +45,8 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
-* Allows to search parties and manage them.
-*/
+ * Allows to search parties and manage them.
+ */
 public class PartySearchPanel extends JPanel {
 
     public static final String CREATE_NEW_PARTY_PROPERTY = "createNewParty";
@@ -54,12 +54,10 @@ public class PartySearchPanel extends JPanel {
     public static final String REMOVE_PARTY_PROPERTY = "removeParty";
     public static final String SELECT_PARTY_PROPERTY = "selectParty";
     public static final String VIEW_PARTY_PROPERTY = "viewParty";
-    
-    private PartyBean party;
 
     /**
-* Creates new form PartySearchPanel
-*/
+     * Creates new form PartySearchPanel
+     */
     public PartySearchPanel() {
         initComponents();
 
@@ -143,11 +141,11 @@ public class PartySearchPanel extends JPanel {
     }
 
     /**
-* Enables or disables Party management buttons, based on security rights.
-*/
+     * Enables or disables Party management buttons, based on security rights.
+     */
     private void customizePartyButtons() {
         boolean hasPartySaveRole = SecurityBean.isInRole(RolesConstants.PARTY_SAVE);
-        boolean selected = partySearchResuls.getSelectedPartySearchResult()!=null;
+        boolean selected = partySearchResuls.getSelectedPartySearchResult() != null;
         boolean enabled = selected == true
                 && partySearchResuls.getSelectedPartySearchResult().checkAccessByOffice();
 
@@ -171,8 +169,8 @@ public class PartySearchPanel extends JPanel {
     }
 
     /**
-* Searches parties with given criteria.
-*/
+     * Searches parties with given criteria.
+     */
     private void search() {
         SolaTask t = new SolaTask<Void, Void>() {
 
@@ -197,16 +195,10 @@ public class PartySearchPanel extends JPanel {
 
     private void firePartyEvent(String propertyName) {
         if (partySearchResuls.getSelectedPartySearchResult() != null) {
-            firePropertyChange(propertyName, null,
-                    party=PartyBean.getParty(partySearchResuls.getSelectedPartySearchResult().getId()));
+            firePropertyChange(propertyName, null, partySearchResuls.getSelectedPartySearchResult());
         }
     }
 
-    public PartyBean getParty() {
-        return party;
-    }
-
-    
     private void selectParty() {
         firePartyEvent(SELECT_PARTY_PROPERTY);
     }
@@ -215,8 +207,6 @@ public class PartySearchPanel extends JPanel {
         firePartyEvent(VIEW_PARTY_PROPERTY);
     }
 
-   
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -666,7 +656,7 @@ public class PartySearchPanel extends JPanel {
     }//GEN-LAST:event_menuRemoveActionPerformed
 
     private void tableSearchResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSearchResultsMouseClicked
-        if(evt.getClickCount() > 1 && evt.getButton() == MouseEvent.BUTTON1){
+        if (evt.getClickCount() > 1 && evt.getButton() == MouseEvent.BUTTON1) {
             viewParty();
         }
     }//GEN-LAST:event_tableSearchResultsMouseClicked
@@ -691,7 +681,6 @@ public class PartySearchPanel extends JPanel {
     public PartySearchResultListBean getPartySearchResuls() {
         return partySearchResuls;
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddParty;
     private javax.swing.JButton btnEditParty;

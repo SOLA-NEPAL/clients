@@ -101,7 +101,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_DEPARTMENT = "department";
     public final static String CARD_VDC = "vdc";
     public final static String CARD_VDCS = "vdcs";
-    private HashMap<String, Component> cards;
+    private HashMap<String, ContentPanel> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;
 
@@ -110,7 +110,7 @@ public class MainContentPanel extends javax.swing.JPanel {
      */
     public MainContentPanel() {
         cardsIndex = new ArrayList<String>();
-        cards = new HashMap<String, Component>();
+        cards = new HashMap<String, ContentPanel>();
         panelListener = new PropertyChangeListener() {
 
             @Override
@@ -133,9 +133,9 @@ public class MainContentPanel extends javax.swing.JPanel {
     private void handleKeyPress(KeyEvent e) {
         // Catch F1 key press
         if (e.getID() == KeyEvent.KEY_RELEASED && e.getKeyCode() == KeyEvent.VK_F1) {
-            Component panel = getTopCard();
-            if (panel != null && ContentPanel.class.isAssignableFrom(panel.getClass())) {
-                ((ContentPanel) panel).showHelp();
+            ContentPanel panel = getTopCard();
+            if (panel != null) {
+                panel.showHelp();
             }
         }
         getTopCard();
@@ -146,7 +146,7 @@ public class MainContentPanel extends javax.swing.JPanel {
      */
     private void handlePanelPropertyChanges(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(HeaderPanel.CLOSE_BUTTON_CLICKED)) {
-            closePanel((JPanel) evt.getSource());
+            closePanel((ContentPanel) evt.getSource());
         }
     }
 
@@ -166,7 +166,7 @@ public class MainContentPanel extends javax.swing.JPanel {
      * @param cardName Name of the card to assign to the added panel.
      * @param showPanel Indicates whether to show added panel.
      */
-    public void addPanel(Component panel, String cardName, boolean showPanel) {
+    public void addPanel(ContentPanel panel, String cardName, boolean showPanel) {
         if (isPanelOpened(cardName)) {
             getPanel(cardName).removePropertyChangeListener(panelListener);
             closePanel(cardName);
@@ -176,17 +176,15 @@ public class MainContentPanel extends javax.swing.JPanel {
 
         panel.addPropertyChangeListener(panelListener);
         pnlContent.add(panel, cardName);
-        if (ContentPanel.class.isAssignableFrom(panel.getClass())) {
-            ((ContentPanel) panel).setMainContentPanel(this);
-            ((ContentPanel) panel).panelAdded();
-        }
+        panel.setMainContentPanel(this);
+        panel.panelAdded();
 
         if (showPanel) {
             showPanel(cardName);
         }
     }
 
-    private void addCard(Component panel, String cardName) {
+    private void addCard(ContentPanel panel, String cardName) {
         cards.put(cardName, panel);
         if (!cardsIndex.contains(cardName)) {
             cardsIndex.add(cardName);
@@ -199,7 +197,7 @@ public class MainContentPanel extends javax.swing.JPanel {
      * @param panel Panel object to add into the cards collection.
      * @param cardName Name of the card to assign to the added panel.
      */
-    public void addPanel(Component panel, String cardName) {
+    public void addPanel(ContentPanel panel, String cardName) {
         addPanel(panel, cardName, false);
     }
 
@@ -217,11 +215,11 @@ public class MainContentPanel extends javax.swing.JPanel {
      *
      * @param panel Panel object to remove from the cards collection.
      */
-    public void closePanel(Component panel) {
+    public void closePanel(ContentPanel panel) {
         if (cards.containsValue(panel)) {
-            Set<Entry<String, Component>> tab = cards.entrySet();
-            for (Iterator<Entry<String, Component>> it = tab.iterator(); it.hasNext();) {
-                Entry<String, Component> entry = it.next();
+            Set<Entry<String, ContentPanel>> tab = cards.entrySet();
+            for (Iterator<Entry<String, ContentPanel>> it = tab.iterator(); it.hasNext();) {
+                Entry<String, ContentPanel> entry = it.next();
                 if (entry.getValue().equals(panel)) {
                     closePanel(entry.getKey());
                     break;
@@ -245,11 +243,11 @@ public class MainContentPanel extends javax.swing.JPanel {
     }
 
     private void closeAutoCollapsiblePanels() {
-        Iterator<Entry<String, Component>> it = cards.entrySet().iterator();
+        Iterator<Entry<String, ContentPanel>> it = cards.entrySet().iterator();
         ArrayList<String> keys = new ArrayList<String>();
 
         while (it.hasNext()) {
-            Entry<String, Component> entry = it.next();
+            Entry<String, ContentPanel> entry = it.next();
             if (ContentPanel.class.isAssignableFrom(entry.getValue().getClass())) {
                 if (((ContentPanel) entry.getValue()).isCloseOnHide() && !entry.getValue().isVisible()) {
                     keys.add(entry.getKey());
@@ -262,7 +260,7 @@ public class MainContentPanel extends javax.swing.JPanel {
         }
     }
 
-    private Component getTopCard() {
+    private ContentPanel getTopCard() {
         if (cardsIndex.size() > 0) {
             return cards.get(cardsIndex.get(cardsIndex.size() - 1));
         }
@@ -290,9 +288,8 @@ public class MainContentPanel extends javax.swing.JPanel {
         // move panel on top
         int cardIndx = cardsIndex.indexOf(cardName);
         if (cardIndx < cardsIndex.size() - 1) {
-            String lastCardName = cardsIndex.get(cardsIndex.size() - 1);
-            cardsIndex.set(cardsIndex.size() - 1, cardName);
-            cardsIndex.set(cardIndx, lastCardName);
+            cardsIndex.remove(cardIndx);
+            cardsIndex.add(0, cardName);
         }
 
         // close autoclosable panels

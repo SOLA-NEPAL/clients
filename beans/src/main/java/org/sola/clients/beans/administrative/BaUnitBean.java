@@ -138,8 +138,8 @@ public class BaUnitBean extends BaUnitSummaryBean {
         rrrHistoricList.setExcludedStatuses(new String[]{StatusConstants.CURRENT, StatusConstants.PENDING});
 
         AllBaUnitNotationsListUpdater allBaUnitNotationsListener = new AllBaUnitNotationsListUpdater();
-        rrrList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
-        baUnitNotationList.getFilteredList().addObservableListListener(allBaUnitNotationsListener);
+        rrrList.addObservableListListener(allBaUnitNotationsListener);
+        baUnitNotationList.addObservableListListener(allBaUnitNotationsListener);
         rrrList.addObservableListListener(new ObservableListListener() {
             
             RrrComparatorByRegistrationDate sorter = new RrrComparatorByRegistrationDate();

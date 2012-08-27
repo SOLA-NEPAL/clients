@@ -80,6 +80,8 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     public static final String ADDRESS_ID_PROPERTY = "addressId";
     public static final String TRANSACTION_ID_PROPERTY = "transactionId";
     public static final String SPATIAL_VALUE_AREA_PROPERTY = "SpatialValueArea";
+    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
+    
     private Date approvalDatetime;
     private Date historicDatetime;
     private String sourceReference;
@@ -104,6 +106,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     private String transactionId;
     //  private String addressId;
     private SpatialValueAreaBean SpatialValueArea;
+    private String fiscalYearCode;
 
     public AddressBean getAddressBean() {
         return addressBean;
@@ -430,6 +433,16 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
         propertySupport.firePropertyChange(MAP_SHEET_PROPERTY, oldValue, this.mapSheet);
     }
 
+    public String getFiscalYearCode() {
+        return fiscalYearCode;
+    }
+
+    public void setFiscalYearCode(String fiscalYearCode) {
+        String old = this.fiscalYearCode;
+        this.fiscalYearCode = fiscalYearCode;
+        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
+    }
+    
     public List<SpatialValueAreaBean> getSpatialValueAreaList() {
         return spatialValueAreaList;
     }

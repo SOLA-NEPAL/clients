@@ -43,6 +43,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String NAME_PROPERTY = "name";
     public static final String NAME_FIRSTPART_PROPERTY = "nameFirstpart";
     public static final String NAME_LASTPART_PROPERTY = "nameLastpart";
+    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     
     private String name;
     //@NotEmpty(message = ClientMessage.CHECK_NOTNULL_FIRSTPART, payload=Localized.class)
@@ -50,6 +51,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     //@NotEmpty(message = ClientMessage.CHECK_NOTNULL_FIRSTPART, payload=Localized.class)
     private String nameLastpart;
     private BaUnitTypeBean baUnitType;
+    private String fiscalYearCode;
     
     public BaUnitSummaryBean(){
         super();
@@ -112,5 +114,15 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
             this.baUnitType = new BaUnitTypeBean();
         }
         this.setJointRefDataBean(this.baUnitType, baUnitType, BA_UNIT_TYPE_PROPERTY);
+    }
+    
+    public String getFiscalYearCode() {
+        return fiscalYearCode;
+    }
+
+    public void setFiscalYearCode(String fiscalYearCode) {
+        String old = this.fiscalYearCode;
+        this.fiscalYearCode = fiscalYearCode;
+        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
 }

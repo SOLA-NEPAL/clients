@@ -49,6 +49,7 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
         jButton5 = new javax.swing.JButton();
+        btnAddToTransaction = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -64,19 +65,16 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
         jButton1.setText(bundle.getString("OwnershipTransactionForm.jButton1.text")); // NOI18N
         jButton1.setFocusable(false);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
         jButton2.setText(bundle.getString("OwnershipTransactionForm.jButton2.text")); // NOI18N
         jButton2.setFocusable(false);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/change-share.png"))); // NOI18N
         jButton3.setText(bundle.getString("OwnershipTransactionForm.jButton3.text")); // NOI18N
         jButton3.setFocusable(false);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
 
         jTableWithDefaultStyles1.setModel(new javax.swing.table.DefaultTableModel(
@@ -125,24 +123,26 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/view.png"))); // NOI18N
         jButton5.setText(bundle.getString("OwnershipTransactionForm.jButton5.text")); // NOI18N
         jButton5.setFocusable(false);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(jButton5);
+
+        btnAddToTransaction.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        btnAddToTransaction.setText(bundle.getString("OwnershipTransactionForm.btnAddToTransaction.text")); // NOI18N
+        btnAddToTransaction.setFocusable(false);
+        jToolBar2.add(btnAddToTransaction);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/pencil.png"))); // NOI18N
         jButton4.setText(bundle.getString("OwnershipTransactionForm.jButton4.text")); // NOI18N
         jButton4.setFocusable(false);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(jButton4);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
         jButton6.setText(bundle.getString("OwnershipTransactionForm.jButton6.text")); // NOI18N
         jButton6.setFocusable(false);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(jButton6);
 
         jTableWithDefaultStyles2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1-03-01", "342", "1003", "234", "Pending", "Ownership change"},
+                {"1-03-01", "342", "1003", "234", "Pending", "New property"},
                 {"2-44-12", "234", "2344", "111", "Current", "Rights change"},
                 {"4-05-12", "456", "1233", "43", "Pending", "Termination"}
             },
@@ -159,6 +159,12 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(jTableWithDefaultStyles2);
+        jTableWithDefaultStyles2.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("OwnershipTransactionForm.jTableWithDefaultStyles2.columnModel.title0")); // NOI18N
+        jTableWithDefaultStyles2.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("OwnershipTransactionForm.jTableWithDefaultStyles2.columnModel.title1")); // NOI18N
+        jTableWithDefaultStyles2.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("OwnershipTransactionForm.jTableWithDefaultStyles2.columnModel.title2")); // NOI18N
+        jTableWithDefaultStyles2.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("OwnershipTransactionForm.jTableWithDefaultStyles2.columnModel.title3")); // NOI18N
+        jTableWithDefaultStyles2.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("OwnershipTransactionForm.jTableWithDefaultStyles2.columnModel.title4")); // NOI18N
+        jTableWithDefaultStyles2.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("OwnershipTransactionForm.jTableWithDefaultStyles2.columnModel.title5")); // NOI18N
 
         groupPanel2.setTitleText(bundle.getString("OwnershipTransactionForm.groupPanel2.titleText")); // NOI18N
 
@@ -204,6 +210,7 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddToTransaction;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel2;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;

@@ -109,7 +109,8 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String RESTRICTION_OFFICES_ADDRESS = "restrictionOfficeAddress";
     public static final String BUNDLE_PAGE_NO_PROPERTY = "bundlePageNo";
     public static final String BUNDLE_NUMBER_PROPERTY = "bundleNumber";
-    public static final String SN_PROPERTY = "sn";
+    public static final String SN_PROPERTY = "sn";    
+    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     private String baUnitId;
     private String nr;
     private String sn;
@@ -152,7 +153,8 @@ public class RrrBean extends AbstractTransactionedBean {
     private transient boolean selected;
     private transient PartySummaryBean selectedRightHolder;
     private boolean terminating;
-
+    private String fiscalYearCode;
+    
     public RrrBean() {
         super();
         registrationDate = Calendar.getInstance().getTime();
@@ -647,6 +649,16 @@ public class RrrBean extends AbstractTransactionedBean {
         this.terminating = terminating;
     }
 
+    public String getFiscalYearCode() {
+        return fiscalYearCode;
+    }
+
+    public void setFiscalYearCode(String fiscalYearCode) {
+        String old = this.fiscalYearCode;
+        this.fiscalYearCode = fiscalYearCode;
+        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
+    }
+    
     public void removeSelectedRightHolder() {
         if (selectedRightHolder != null && rightHolderList != null) {
             rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
