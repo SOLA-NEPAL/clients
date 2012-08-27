@@ -116,15 +116,15 @@ public class RrrBean extends AbstractTransactionedBean {
     private BigDecimal mortgageInterestRate;
     private Integer mortgageRanking;
     private SolaList<SourceBean> sourceList;
-    @NotNull(message= ClientMessage.CHECK_SELECT_RIGHT_TYPE, payload=Localized.class)
+    @NotNull(message = ClientMessage.CHECK_SELECT_RIGHT_TYPE, payload = Localized.class)
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
     private String officeCode;
     private RestrictionReasonBean restrictionReason;
     private RestrictionOfficeBean restrictionOffice;
-    @NotNull(message= ClientMessage.CHECK_SELECT_OWNER_TYPE, payload=Localized.class, groups={OwnershipValidationGroup.class})
+    @NotNull(message = ClientMessage.CHECK_SELECT_OWNER_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private OwnerTypeBean ownerType;
-    @NotNull(message= ClientMessage.CHECK_SELECT_SHARE_TYPE, payload=Localized.class, groups={OwnershipValidationGroup.class})
+    @NotNull(message = ClientMessage.CHECK_SELECT_SHARE_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private ShareTypeBean shareType;
     @Valid
     private BaUnitNotationBean notation;
@@ -575,8 +575,7 @@ public class RrrBean extends AbstractTransactionedBean {
      *     
 * @param resetChildren If true, will change ID fields also for child
      * objects.
-     * @param removeBaUnitId If true, will set
-     * <code>BaUnitId</code> to null.
+     * @param removeBaUnitId If true, will set <code>BaUnitId</code> to null.
      */
     public void resetIdAndVerion(boolean resetChildren, boolean removeBaUnitId) {
         generateId();
@@ -670,7 +669,7 @@ public class RrrBean extends AbstractTransactionedBean {
             return;
         }
 
-        if(rrrLoc.getRegistrationDate()==null){
+        if (rrrLoc.getRegistrationDate() == null) {
             setRegistrationDate(Calendar.getInstance().getTime());
         } else {
             setRegistrationDate(rrrLoc.getRegistrationDate());

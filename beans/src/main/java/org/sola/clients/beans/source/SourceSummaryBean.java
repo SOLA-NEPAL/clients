@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.beans.source;
@@ -31,7 +33,6 @@ import java.util.Date;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.SourceTypeBean;
@@ -39,10 +40,10 @@ import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.webservices.transferobjects.casemanagement.SourceSummaryTO;
 
-/** 
- * Represents summary version of the <b>source</b> object in the domain model. 
- * Could be populated from the {@link SourceSummaryTO} object.<br />
- * For more information see data dictionary <b>Source</b> schema.
+/**
+ * Represents summary version of the <b>source</b> object in the domain model.
+ * Could be populated from the {@link SourceSummaryTO} object.<br /> For more
+ * information see data dictionary <b>Source</b> schema.
  */
 public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
 
@@ -58,13 +59,14 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     private Date acceptance;
     private String archiveId;
     private String archiveDocumentId;
+    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCELANR, payload = Localized.class)
     private String laNr;
-    @NotNull(message = ClientMessage.CHECK_NOTNULL_RECORDATION, payload=Localized.class)
+    @NotNull(message = ClientMessage.CHECK_NOTNULL_RECORDATION, payload = Localized.class)
     private Date recordation;
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCENR, payload=Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCENR, payload = Localized.class)
     private String referenceNr;
     private Date submission;
-    @NotNull(message = ClientMessage.CHECK_NOTNULL_SOURCETYPE, payload=Localized.class)
+    @NotNull(message = ClientMessage.CHECK_NOTNULL_SOURCETYPE, payload = Localized.class)
     private SourceTypeBean sourceType;
 
     public SourceSummaryBean() {
@@ -89,9 +91,10 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
         return sourceType.getCode();
     }
 
-    /** 
-     * Sets source type code and retrieves {@link SourceTypeBean} 
-     * from the cache. 
+    /**
+     * Sets source type code and retrieves {@link SourceTypeBean} from the
+     * cache.
+     *
      * @param value Source type code.
      */
     public void setTypeCode(String typeCode) {
