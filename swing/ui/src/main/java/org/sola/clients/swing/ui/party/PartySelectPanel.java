@@ -1,5 +1,7 @@
 package org.sola.clients.swing.ui.party;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.security.SecurityBean;
@@ -8,6 +10,7 @@ import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  * Shows provided {@link PartySummaryBean} data and allows to trigger search, edit, view and remove events.
@@ -20,8 +23,24 @@ public class PartySelectPanel extends javax.swing.JPanel {
     public static final String REMOVE_PARTY = "removeParty";
     public static final String ADD_PARTY = "addParty";
     private PartySummaryBean partySummary;
+    private PartySummaryBean displayPartySummary;
+    private PartySummaryListener partySummaryListener;
     private boolean readOnly = false;
 
+    /** Listens to partySummary events to update bound displayPartySummary. */
+    private class PartySummaryListener implements PropertyChangeListener {
+        public PartySummaryListener(){
+        }
+        
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if(evt.getPropertyName().equals(PartySummaryBean.ENTITY_ACTION_PROPERTY)){
+                setupDisplayParty();
+            }
+        }
+        
+    }
+    
     /**
      * Default panel constructor
      */
@@ -33,18 +52,21 @@ public class PartySelectPanel extends javax.swing.JPanel {
      * Panel constructor with initial {@link PartySummaryBean} parameter.
      */
     public PartySelectPanel(PartySummaryBean partySummary) {
-        this.partySummary = partySummary;
-//        if (partySummary == null) {
-//            this.partySummary = new PartySummaryBean();
-//        } else {
-//            this.partySummary = partySummary;
-//        }
+        if (partySummary == null) {
+            this.partySummary = new PartySummaryBean();
+            this.partySummary.setEntityAction(EntityAction.DISASSOCIATE);
+        } else {
+            this.partySummary = partySummary;
+        }
+        partySummaryListener = new PartySummaryListener();
+        this.partySummary.addPropertyChangeListener(partySummaryListener);
+        displayPartySummary = this.partySummary;
         initComponents();
         customizeButtons();
     }
 
     private void customizeButtons(){
-        boolean enabled = partySummary!=null;
+        boolean enabled = partySummary!=null && partySummary.getEntityAction() != EntityAction.DISASSOCIATE;
         boolean hasPartySaveRole = SecurityBean.isInRole(RolesConstants.PARTY_SAVE);
         btnEdit.setEnabled(enabled && !readOnly && hasPartySaveRole);
         btnView.setEnabled(enabled);
@@ -52,23 +74,39 @@ public class PartySelectPanel extends javax.swing.JPanel {
         btnSearch.setEnabled(!readOnly);
         btnAdd.setEnabled(!readOnly && hasPartySaveRole);
     }
+
+    public PartySummaryBean getDisplayPartySummary() {
+        return displayPartySummary;
+    }
     
     public PartySummaryBean getPartySummary() {
         return partySummary;
     }
 
     public void setPartySummary(PartySummaryBean partySummary) {
-        PartySummaryBean oldValue = this.partySummary;
-        this.partySummary = partySummary;
-//        if (partySummary == null) {
-//            this.partySummary = new PartySummaryBean();
-//        } else {
-//            this.partySummary = partySummary;
-//        }
-        customizeButtons();
-        firePropertyChange("partySummary", oldValue, this.partySummary);
+        if (partySummary == null) {
+            this.partySummary = new PartySummaryBean();
+            this.partySummary.setEntityAction(EntityAction.DISASSOCIATE);
+            this.partySummary.addPropertyChangeListener(partySummaryListener);
+        } else {
+            this.partySummary.removePropertyChangeListener(partySummaryListener);
+            this.partySummary = partySummary;
+            this.partySummary.addPropertyChangeListener(partySummaryListener);
+        }
+        setupDisplayParty();
+        firePropertyChange("partySummary", null, this.partySummary);
     }
 
+    private void setupDisplayParty(){
+        if(partySummary == null || partySummary.getEntityAction() == EntityAction.DISASSOCIATE){
+            displayPartySummary = new PartySummaryBean();
+        } else {
+            displayPartySummary = partySummary;
+        }
+        firePropertyChange("displayPartySummary", null, this.displayPartySummary);
+        customizeButtons();
+    }
+    
     public boolean isShowSearchButton() {
         return btnSearch.isVisible();
     }
@@ -210,9 +248,10 @@ public class PartySelectPanel extends javax.swing.JPanel {
 
         jLabel1.setText(bundle.getString("PartySelectPanel.jLabel1.text")); // NOI18N
 
+        txtFullName.setBackground(new java.awt.Color(255, 255, 255));
         txtFullName.setEditable(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partySummary.fullName}"), txtFullName, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${displayPartySummary.fullName}"), txtFullName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

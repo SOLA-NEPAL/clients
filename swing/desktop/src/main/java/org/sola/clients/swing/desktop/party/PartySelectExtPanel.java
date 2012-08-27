@@ -27,6 +27,7 @@ import org.sola.clients.swing.ui.party.PartySearchPanel;
 import org.sola.clients.swing.ui.party.PartySelectPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  * Extends {@link PartySelectPanel} to handle its events and show appropriate
@@ -51,7 +52,7 @@ public class PartySelectExtPanel extends PartySelectPanel {
                         openCreateEdit((PartyBean) evt.getNewValue());
                         break;
                     case PartySelectPanel.REMOVE_PARTY:
-                        setPartySummary(null);
+                        getPartySummary().setEntityAction(EntityAction.DISASSOCIATE);
                         break;
                     case PartySelectPanel.ADD_PARTY:
                         openCreateEdit(null);
@@ -67,19 +68,19 @@ public class PartySelectExtPanel extends PartySelectPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
-                final PersonSearchForm partySearchPanelForm = new PersonSearchForm();
-                partySearchPanelForm.getPartySeachPanel().setShowSelectButton(true);
-                partySearchPanelForm.getPartySeachPanel().addPropertyChangeListener(new PropertyChangeListener() {
+                final PersonSearchForm form = new PersonSearchForm();
+                form.getPartySeachPanel().setShowSelectButton(true);
+                form.getPartySeachPanel().addPropertyChangeListener(new PropertyChangeListener() {
 
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
                         if (evt.getPropertyName().equals(PartySearchPanel.SELECT_PARTY_PROPERTY)) {
                             setPartySummary((PartySummaryBean) evt.getNewValue());
-                            partySearchPanelForm.close();
+                            form.close();
                         }
                     }
                 });
-                DesktopApplication.getMainForm().getMainContentPanel().addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
+                DesktopApplication.getMainForm().getMainContentPanel().addPanel(form, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
             }
         };
