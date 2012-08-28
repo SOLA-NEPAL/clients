@@ -1,32 +1,32 @@
 /**
-* ******************************************************************************************
-* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
-* (FAO). All rights reserved.
-*
+ * ******************************************************************************************
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
+ * 
 * Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
+ * modification, are permitted provided that the following conditions are met:
+ * 
 * 1. Redistributions of source code must retain the above copyright notice,this
-* list of conditions and the following disclaimer. 2. Redistributions in binary
-* form must reproduce the above copyright notice,this list of conditions and
-* the following disclaimer in the documentation and/or other materials provided
-* with the distribution. 3. Neither the name of FAO nor the names of its
-* contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
-*
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ * 
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-* *********************************************************************************************
-*/
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ * *********************************************************************************************
+ */
 package org.sola.clients.swing.desktop.application;
 
 import java.awt.Component;
@@ -82,12 +82,12 @@ import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 
 /**
-* This form is used to create new application or edit existing one. <p>The
-* following list of beans is used to bind the data on the form:<br />
-* {@link ApplicationBean}, <br />{@link RequestTypeListBean}, <br />
-* {@link PartySummaryListBean}, <br />{@link CommunicationTypeListBean}, <br />
-* {@link SourceTypeListBean}, <br />{@link ApplicationDocumentsHelperBean}</p>
-*/
+ * This form is used to create new application or edit existing one. <p>The
+ * following list of beans is used to bind the data on the form:<br />
+ * {@link ApplicationBean}, <br />{@link RequestTypeListBean}, <br />
+ * {@link PartySummaryListBean}, <br />{@link CommunicationTypeListBean}, <br />
+ * {@link SourceTypeListBean}, <br />{@link ApplicationDocumentsHelperBean}</p>
+ */
 public class ApplicationPanel extends ContentPanel {
 
     public static final String APPLICATION_SAVED_PROPERTY = "applicationSaved";
@@ -95,13 +95,13 @@ public class ApplicationPanel extends ContentPanel {
     private ApplicationPropertyBean applicationProperty;
 
     /**
-* This method is used by the form designer to create {@link ApplicationBean}.
-* It uses
-* <code>applicationId</code> parameter passed to the form constructor.<br
-* />
-* <code>applicationId</code> should be initialized before
-* {@link ApplicationForm#initComponents} method call.
-*/
+     * This method is used by the form designer to create
+     * {@link ApplicationBean}. It uses
+     * <code>applicationId</code> parameter passed to the form constructor.<br
+     * />
+     * <code>applicationId</code> should be initialized before
+     * {@link ApplicationForm#initComponents} method call.
+     */
     private ApplicationBean getApplicationBean() {
         ApplicationBean applicationBean = new ApplicationBean();
 
@@ -111,7 +111,6 @@ public class ApplicationPanel extends ContentPanel {
         }
 
         applicationBean.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(ApplicationBean.APPLICATION_PROPERTY)) {
@@ -123,17 +122,17 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Default constructor to create new application.
-*/
+     * Default constructor to create new application.
+     */
     public ApplicationPanel() {
         this(null);
     }
 
     /**
-* This constructor is used to open existing application for editing.
-*
+     * This constructor is used to open existing application for editing.
+     *     
 * @param applicationId ID of application to open.
-*/
+     */
     public ApplicationPanel(String applicationId) {
         this.applicationID = applicationId;
         initComponents();
@@ -141,8 +140,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Runs post initialization actions to customize form elements.
-*/
+     * Runs post initialization actions to customize form elements.
+     */
     private void postInit() {
 
         Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE,
@@ -154,9 +153,8 @@ public class ApplicationPanel extends ContentPanel {
                 agentSelectPanel, BeanProperty.create("partySummary"));
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
-        
-        addDocumentPanel.addPropertyChangeListener(new PropertyChangeListener() {
 
+        addDocumentPanel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(DocumentPanel.UPDATED_SOURCE)
@@ -167,7 +165,6 @@ public class ApplicationPanel extends ContentPanel {
         });
 
         appBean.getSourceFilteredList().addObservableListListener(new ObservableListListener() {
-
             @Override
             public void listElementsAdded(ObservableList ol, int i, int i1) {
                 applicationDocumentsHelper.verifyCheckList(appBean.getSourceList().getFilteredList());
@@ -188,7 +185,6 @@ public class ApplicationPanel extends ContentPanel {
         });
 
         appBean.getServiceList().addObservableListListener(new ObservableListListener() {
-
             @Override
             public void listElementsAdded(ObservableList ol, int i, int i1) {
                 applicationDocumentsHelper.updateCheckList(appBean.getServiceList(), appBean.getSourceList());
@@ -211,7 +207,6 @@ public class ApplicationPanel extends ContentPanel {
         });
 
         appBean.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 switch (evt.getPropertyName()) {
@@ -241,7 +236,7 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     public ApplicationPropertyBean getApplicationProperty() {
-        if(applicationProperty == null){
+        if (applicationProperty == null) {
             applicationProperty = new ApplicationPropertyBean();
         }
         return applicationProperty;
@@ -249,7 +244,7 @@ public class ApplicationPanel extends ContentPanel {
 
     public void setApplicationProperty(ApplicationPropertyBean applicationProperty) {
         ApplicationPropertyBean oldValue = this.applicationProperty;
-        if(applicationProperty==null){
+        if (applicationProperty == null) {
             this.applicationProperty = new ApplicationPropertyBean();
         } else {
             this.applicationProperty = applicationProperty;
@@ -258,8 +253,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Applies customization of form, based on Application status.
-*/
+     * Applies customization of form, based on Application status.
+     */
     private void customizeApplicationForm() {
         if (appBean != null && !appBean.isNew()) {
             java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle");
@@ -325,8 +320,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Disables or enables buttons, related to the services list management.
-*/
+     * Disables or enables buttons, related to the services list management.
+     */
     private void customizeServicesButtons() {
         ApplicationServiceBean selectedService = appBean.getSelectedService();
         boolean servicesManagementAllowed = appBean.isManagementAllowed();
@@ -409,8 +404,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Disables or enables buttons, related to the property list management.
-*/
+     * Disables or enables buttons, related to the property list management.
+     */
     private void customizePropertyButtons() {
         boolean enable = false;
         if (appBean.isEditingAllowed() && appBean.getSelectedProperty() != null) {
@@ -420,8 +415,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Disables or enables buttons, related to the documents list management.
-*/
+     * Disables or enables buttons, related to the documents list management.
+     */
     private void customizeDocumentsButtons() {
         SourceBean selectedDocument = appBean.getSelectedSource();
         boolean enablePropertyButtons = appBean.isEditingAllowed();
@@ -442,7 +437,6 @@ public class ApplicationPanel extends ContentPanel {
     private void openPropertyForm(final BaUnitBean baUnitBean, final boolean readOnly) {
         if (baUnitBean != null) {
             SolaTask t = new SolaTask<Void, Void>() {
-
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
@@ -465,9 +459,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Opens dialog form to display status change result for application or
-* service.
-*/
+     * Opens dialog form to display status change result for application or
+     * service.
+     */
     private void openValidationResultForm(List<ValidationResultBean> validationResultList,
             boolean isSuccess, String message) {
         ValidationResultForm resultForm = new ValidationResultForm(
@@ -477,9 +471,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Checks if there are any changes on the form before proceeding with
-* action.
-*/
+     * Checks if there are any changes on the form before proceeding with
+     * action.
+     */
     private boolean checkSaveBeforeAction() {
         if (MainForm.checkBeanState(appBean)) {
             if (MessageUtility.displayMessage(ClientMessage.APPLICATION_SAVE_BEFORE_ACTION)
@@ -497,8 +491,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Validates application
-*/
+     * Validates application
+     */
     private void validateApplication() {
         if (!checkSaveBeforeAction()) {
             return;
@@ -506,7 +500,6 @@ public class ApplicationPanel extends ContentPanel {
 
         if (appBean.getId() != null) {
             SolaTask t = new SolaTask() {
-
                 @Override
                 public Boolean doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_APP_VALIDATING));
@@ -527,7 +520,6 @@ public class ApplicationPanel extends ContentPanel {
                     || requestType.equalsIgnoreCase(RequestTypeBean.CODE_REG_STANDARD_DOCUMENT)) {
                 // Run registration/cancelation Power of attorney
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
@@ -541,7 +533,6 @@ public class ApplicationPanel extends ContentPanel {
             } // Document copy request
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_DOCUMENT_COPY)) {
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
@@ -557,7 +548,6 @@ public class ApplicationPanel extends ContentPanel {
             } // Cadastre print
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_PRINT)) {
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_MAP));
@@ -573,7 +563,6 @@ public class ApplicationPanel extends ContentPanel {
             } // Service enquiry (application status report)
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_SERVICE_ENQUIRY)) {
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APPSEARCH));
@@ -612,7 +601,6 @@ public class ApplicationPanel extends ContentPanel {
                     propertyListForm.setLocationRelativeTo(this);
 
                     propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
-
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
@@ -622,7 +610,6 @@ public class ApplicationPanel extends ContentPanel {
                                 ((JDialog) evt.getSource()).dispose();
 
                                 SolaTask t = new SolaTask<Void, Void>() {
-
                                     @Override
                                     public Void doTask() {
                                         List<String> mapsheets = propertyListForm.getMapSheets();
@@ -659,7 +646,6 @@ public class ApplicationPanel extends ContentPanel {
                         // Show BA Unit Selection Form
                         BaUnitsListPanel baUnitListPanel = new BaUnitsListPanel(baUnitsList);
                         baUnitListPanel.addPropertyChangeListener(new PropertyChangeListener() {
-
                             @Override
                             public void propertyChange(PropertyChangeEvent evt) {
                                 if (evt.getPropertyName().equals(BaUnitsListPanel.SELECTED_BAUNIT_PROPERTY)
@@ -771,7 +757,6 @@ public class ApplicationPanel extends ContentPanel {
         }
 
         SolaTask<Void, Void> t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
@@ -801,7 +786,6 @@ public class ApplicationPanel extends ContentPanel {
     private void openSeachDocuments() {
         DocumentSearchDialog form = new DocumentSearchDialog(null, true);
         form.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(org.sola.clients.swing.ui.source.DocumentSearchPanel.SELECT_SOURCE)) {
@@ -815,8 +799,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Designer generated code
-*/
+     * Designer generated code
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
@@ -1631,7 +1615,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.contactPanel.TabConstraints.tabTitle"), contactPanel); // NOI18N
@@ -1815,7 +1799,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addComponent(tbServices, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.servicesPanel.TabConstraints.tabTitle"), servicesPanel); // NOI18N
@@ -2111,7 +2095,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tbPropertyDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2288,13 +2272,13 @@ public class ApplicationPanel extends ContentPanel {
                     .addGroup(documentPanelLayout.createSequentialGroup()
                         .addComponent(labDocRequired, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollDocRequired, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                        .addComponent(scrollDocRequired, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
                     .addGroup(documentPanelLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))
+                        .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -2350,7 +2334,7 @@ public class ApplicationPanel extends ContentPanel {
             validationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(validationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2409,7 +2393,7 @@ public class ApplicationPanel extends ContentPanel {
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2433,7 +2417,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2441,8 +2425,9 @@ public class ApplicationPanel extends ContentPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-* Validates user's data input and calls save operation on the {@link ApplicationBean}.
-*/
+     * Validates user's data input and calls save operation on the
+     * {@link ApplicationBean}.
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveApplication(false);
 }//GEN-LAST:event_btnSaveActionPerformed
@@ -2546,9 +2531,9 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_btnAddExistingDocumentActionPerformed
 
     /**
-* Opens {@link FileBrowserForm} to select digital copy of the document and
-* get it attached.
-*/
+     * Opens {@link FileBrowserForm} to select digital copy of the document and
+     * get it attached.
+     */
     private void tabDocumentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabDocumentsMouseClicked
         if (evt.getClickCount() == 2) {
             openAttachment();
@@ -2623,13 +2608,12 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Opens attached digital copy of the selected document
-*/
+     * Opens attached digital copy of the selected document
+     */
     private void openAttachment() {
         if (appBean.getSelectedSource() != null
                 && appBean.getSelectedSource().getArchiveDocument() != null) {
             SolaTask t = new SolaTask<Void, Void>() {
-
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_OPENING));
@@ -2642,8 +2626,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Initializes map control to display application location.
-*/
+     * Initializes map control to display application location.
+     */
     private void formComponentShown(java.awt.event.ComponentEvent evt) {
 // if (this.mapControl == null) {
 // this.mapControl = new ControlsBundleForApplicationLocation();
@@ -2681,9 +2665,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Clears fields on the <b>Properties</b> tab, after the new property is
-* added into the list.
-*/
+     * Clears fields on the <b>Properties</b> tab, after the new property is
+     * added into the list.
+     */
     private void clearPropertyFields() {
         txtFirstPart.setText(null);
         txtLastPart.setText(null);
@@ -2692,8 +2676,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Opens {@link ReportViewerForm} to display report.
-*/
+     * Opens {@link ReportViewerForm} to display report.
+     */
     private void showReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setLocationRelativeTo(this);
@@ -2719,7 +2703,6 @@ public class ApplicationPanel extends ContentPanel {
 
             SolaTask<List<ValidationResultBean>, List<ValidationResultBean>> t =
                     new SolaTask<List<ValidationResultBean>, List<ValidationResultBean>>() {
-
                         @Override
                         public List<ValidationResultBean> doTask() {
                             setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_APP_TAKE_ACTION));
@@ -2776,8 +2759,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Removes selected service from the services list.
-*/
+     * Removes selected service from the services list.
+     */
     private void removeService() {
         if (appBean.getSelectedService() != null) {
             appBean.removeSelectedService();
@@ -2786,8 +2769,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Moves selected service up in the list of services.
-*/
+     * Moves selected service up in the list of services.
+     */
     private void moveServiceUp() {
         ApplicationServiceBean asb = appBean.getSelectedService();
         if (asb != null) {
@@ -2804,8 +2787,9 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Moves selected application service down in the services list. Calls {@link ApplicationBean#moveServiceDown()}
-*/
+     * Moves selected application service down in the services list. Calls
+     * {@link ApplicationBean#moveServiceDown()}
+     */
     private void moveServiceDown() {
         ApplicationServiceBean asb = appBean.getSelectedService();
         if (asb != null) {
@@ -2822,15 +2806,15 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Launches selected service.
-*/
+     * Launches selected service.
+     */
     private void startService() {
         launchService(false);
     }
 
     /**
-* Calls "complete method for the selected service. "
-*/
+     * Calls "complete method for the selected service. "
+     */
     private void completeService() {
         final ApplicationServiceBean selectedService = appBean.getSelectedService();
 
@@ -2846,7 +2830,6 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     List<ValidationResultBean> result;
 
                     @Override
@@ -2890,7 +2873,6 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     List<ValidationResultBean> result;
 
                     @Override
@@ -2933,7 +2915,6 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
-
                     List<ValidationResultBean> result;
 
                     @Override
@@ -2964,15 +2945,17 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Removes selected property object from the properties list. Calls {@link ApplicationBean#removeSelectedProperty()}
-*/
+     * Removes selected property object from the properties list. Calls
+     * {@link ApplicationBean#removeSelectedProperty()}
+     */
     private void removeSelectedProperty() {
         appBean.removeSelectedProperty();
     }
 
     /**
-* Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
-*/
+     * Verifies selected property object to check existence. Calls
+     * {@link ApplicationBean#verifyProperty()}
+     */
 // private void verifySelectedProperty() {
 // if (appBean.getSelectedProperty() == null) {
 // MessageUtility.displayMessage(ClientMessage.APPLICATION_SELECT_PROPERTY_TOVERIFY);
@@ -3028,8 +3011,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Prints payment receipt.
-*/
+     * Prints payment receipt.
+     */
     private void printReceipt() {
         if (applicationID == null || applicationID.equals("")) {
             if (MessageUtility.displayMessage(ClientMessage.CHECK_NOT_LODGED_RECEIPT) == MessageUtility.BUTTON_TWO) {
@@ -3040,8 +3023,8 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-* Allows to overview service.
-*/
+     * Allows to overview service.
+     */
     private void viewService() {
         launchService(true);
     }

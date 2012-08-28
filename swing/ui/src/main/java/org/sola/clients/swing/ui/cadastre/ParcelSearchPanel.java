@@ -94,7 +94,7 @@ public class ParcelSearchPanel extends JPanel {
         SolaTask t = new SolaTask<Void, Void>() {
             @Override
             public Void doTask() {
-                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_PARCEL_SEARCHING));
+               // setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_PARCEL_SEARCHING));
                 parcelSearchResultListBean.search(parcelSearchParamsBean);
                 return null;
             }

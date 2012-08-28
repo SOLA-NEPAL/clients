@@ -109,8 +109,11 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String RESTRICTION_OFFICES_ADDRESS = "restrictionOfficeAddress";
     public static final String BUNDLE_PAGE_NO_PROPERTY = "bundlePageNo";
     public static final String BUNDLE_NUMBER_PROPERTY = "bundleNumber";
-    public static final String SN_PROPERTY = "sn";    
+    public static final String SN_PROPERTY = "sn";
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
+    public static final String TAX_AMOUNT_PROPERTY = "taxAmount";
+    public static final String VALUATION_AMOUNT_PROPERTY = "valuationAmount";
+    public static final String REGISTRATION_NUMBER_PROPERTY = "registrationNumber;";
     private String baUnitId;
     private String nr;
     private String sn;
@@ -154,7 +157,10 @@ public class RrrBean extends AbstractTransactionedBean {
     private transient PartySummaryBean selectedRightHolder;
     private boolean terminating;
     private String fiscalYearCode;
-    
+    private String registrationNumber;
+    private double valuationAmount;
+    private double taxAmount;
+
     public RrrBean() {
         super();
         registrationDate = Calendar.getInstance().getTime();
@@ -348,6 +354,36 @@ public class RrrBean extends AbstractTransactionedBean {
         String oldValue = this.bundlePageNo;
         this.bundlePageNo = bundlePageNo;
         propertySupport.firePropertyChange(BUNDLE_PAGE_NO_PROPERTY, oldValue, this.bundlePageNo);
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        String oldValue = this.registrationNumber;
+        this.registrationNumber = registrationNumber;
+        propertySupport.firePropertyChange(REGISTRATION_NUMBER_PROPERTY, oldValue, this.registrationNumber);
+    }
+
+    public double getValuationAmount() {
+        return valuationAmount;
+    }
+
+    public void setValuationAmount(double valuationAmount) {
+        double oldValue = this.valuationAmount;
+        this.valuationAmount = valuationAmount;
+        propertySupport.firePropertyChange(VALUATION_AMOUNT_PROPERTY, oldValue, this.valuationAmount);
+    }
+
+    public double getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(double taxAmount) {
+        double oldValue = this.taxAmount;
+        this.taxAmount = taxAmount;
+        propertySupport.firePropertyChange(TAX_AMOUNT_PROPERTY, oldValue, this.taxAmount);
     }
 
     //can be needed for further enhancement,for now it is disabled
@@ -658,7 +694,7 @@ public class RrrBean extends AbstractTransactionedBean {
         this.fiscalYearCode = fiscalYearCode;
         propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
-    
+
     public void removeSelectedRightHolder() {
         if (selectedRightHolder != null && rightHolderList != null) {
             rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);

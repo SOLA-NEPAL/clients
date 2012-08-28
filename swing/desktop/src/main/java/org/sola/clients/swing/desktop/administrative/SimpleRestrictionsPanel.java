@@ -202,12 +202,9 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         cmbRestrictionReason = new javax.swing.JComboBox();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        cmbRestrictionOffice = new javax.swing.JComboBox();
         jPanel12 = new javax.swing.JPanel();
-        txtPrice = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
 
         setCloseOnHide(true);
@@ -300,7 +297,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(txtRegDatetime)
-            .add(jLabel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+            .add(jLabel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -328,7 +325,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel6Layout.createSequentialGroup()
                 .add(jLabel24)
-                .add(0, 66, Short.MAX_VALUE))
+                .add(0, 124, Short.MAX_VALUE))
             .add(txtRegistrationNo)
         );
         jPanel6Layout.setVerticalGroup(
@@ -357,7 +354,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel7Layout.createSequentialGroup()
                 .add(jLabel22)
-                .add(0, 92, Short.MAX_VALUE))
+                .add(0, 150, Short.MAX_VALUE))
             .add(txtBundleNo)
         );
         jPanel7Layout.setVerticalGroup(
@@ -387,7 +384,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             .add(txtPanaNo)
             .add(jPanel8Layout.createSequentialGroup()
                 .add(jLabel23)
-                .add(0, 65, Short.MAX_VALUE))
+                .add(0, 123, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -425,7 +422,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cmbRestrictionReason, 0, 158, Short.MAX_VALUE)
+            .add(cmbRestrictionReason, 0, 216, Short.MAX_VALUE)
             .add(jPanel3Layout.createSequentialGroup()
                 .add(jLabel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -441,49 +438,14 @@ public class SimpleRestrictionsPanel extends ContentPanel {
 
         jPanel1.add(jPanel3);
 
-        jPanel4.setName(bundle.getString("SimpleRestrictionsPanel.jPanel4.name")); // NOI18N
-
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
-        jLabel16.setText(bundle.getString("SimpleRestrictionsPanel.jLabel16.text")); // NOI18N
-        jLabel16.setName(bundle.getString("SimpleRestrictionsPanel.jLabel16.name")); // NOI18N
-
-        cmbRestrictionOffice.setEditable(true);
-        cmbRestrictionOffice.setName(bundle.getString("SimpleRestrictionsPanel.cmbRestrictionOffice.name")); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${restrictionOffices}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, restrictionOfficeListBean, eLProperty, cmbRestrictionOffice);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${restrictionOffice}"), cmbRestrictionOffice, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cmbRestrictionOffice, 0, 158, Short.MAX_VALUE)
-            .add(jPanel4Layout.createSequentialGroup()
-                .add(jLabel16, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel4Layout.createSequentialGroup()
-                .add(jLabel16)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(cmbRestrictionOffice, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel4);
-
         jPanel12.setName(bundle.getString("SimpleRestrictionsPanel.jPanel12.name")); // NOI18N
-
-        txtPrice.setText(bundle.getString("SimpleRestrictionsPanel.txtPrice.text")); // NOI18N
-        txtPrice.setName(bundle.getString("SimpleRestrictionsPanel.txtPrice.name")); // NOI18N
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel20.setText(bundle.getString("SimpleRestrictionsPanel.jLabel20.text")); // NOI18N
         jLabel20.setName(bundle.getString("SimpleRestrictionsPanel.jLabel20.name")); // NOI18N
+
+        jTextField1.setText(bundle.getString("SimpleRestrictionsPanel.jTextField1.text")); // NOI18N
+        jTextField1.setName("jTextField1"); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel12Layout = new org.jdesktop.layout.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -491,15 +453,15 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel12Layout.createSequentialGroup()
                 .add(jLabel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 123, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-            .add(txtPrice)
+                .addContainerGap(93, Short.MAX_VALUE))
+            .add(jTextField1)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel12Layout.createSequentialGroup()
                 .add(jLabel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(txtPrice, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -561,7 +523,6 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     }//GEN-LAST:event_txtRegDatetimeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cmbRestrictionOffice;
     private javax.swing.JComboBox cmbRestrictionReason;
     private org.sola.clients.swing.ui.source.DocumentsManagementPanel documentsPanel;
     private javax.swing.Box.Filler filler1;
@@ -571,7 +532,6 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
@@ -581,12 +541,12 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton printRegistrationLetter;
     private org.sola.clients.beans.referencedata.RestrictionOfficeListBean restrictionOfficeListBean;
@@ -595,7 +555,6 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     private javax.swing.JTextField txtBundleNo;
     private javax.swing.JTextField txtNotationText;
     private javax.swing.JTextField txtPanaNo;
-    private javax.swing.JTextField txtPrice;
     private javax.swing.JFormattedTextField txtRegDatetime;
     private javax.swing.JTextField txtRegistrationNo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
