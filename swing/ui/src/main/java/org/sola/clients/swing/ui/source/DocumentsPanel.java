@@ -112,11 +112,11 @@ public class DocumentsPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Makes post initialization tasks to bind listener on {@link SourceListBean}.
+     * Makes post initialization tasks to bind listener on
+     * {@link SourceListBean}.
      */
     private void postInit() {
         sourceListBean.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(SourceListBean.SELECTED_SOURCE_PROPERTY)) {
@@ -168,7 +168,6 @@ public class DocumentsPanel extends javax.swing.JPanel {
                 && sourceListBean.getSelectedSource().getArchiveDocument() != null) {
             // Try to open attached file
             SolaTask t = new SolaTask<Void, Void>() {
-
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_OPENING));
