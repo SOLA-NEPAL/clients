@@ -1160,7 +1160,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void manageTenantTypes() {
-        openReferenceDataPanel(TenantTypeBean.class, menuTenantTypes.getText());
+        openReferenceDataPanel(TenancyTypeBean.class, menuTenantTypes.getText());
     }
 
     private void manageParcelTypes() {

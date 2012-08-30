@@ -92,18 +92,31 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String LOC_PROPERTY = "loc";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
-    public static final String RESTRICTION_REASON_PROPERTY = "restrictionReason";
-    public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
-    public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
-    public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
+    // public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
+    // public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     public static final String OWNER_TYPE_PROPERTY = "ownerType";
     public static final String SHARE_TYPE_PROPERTY = "shareType";
     public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";
     public static final String SHARE_TYPE_CODE_PROPERTY = "shareTypeCode";
+    public static final String TENANCY_TYPE_PROPERTY = "tenancyType";
+    public static final String TENANCY_CODE_PROPERTY = "tenancyTypeCode";
+    public static final String RESTRICTION_REASON_PROPERTY = "restrictionReason";
+    public static final String RESTRICTION_REASON_CODE_PROPERTY = "restrictionReasonCode";
+    public static final String RESTRICTION_RELEASE_REASON_PROPERTY = "restrictionReleaseReason";
+    public static final String RESTRICTION_RELEASE_REASON_CODE_PROPERTY = "restrictionReleaseReasonCode";
+    public static final String RESTRICTION_OFFICE_NAME_PROPERTY = "restrictionOfficeName";
+    public static final String RESTRICTION_RELEASE_OFFICE_NAME_PROPERTY = "restrictionReleaseOfficeName";
+    public static final String RESTRICTION_OFFICES_ADDRESS = "restrictionOfficeAddress";
+    public static final String BUNDLE_PAGE_NO_PROPERTY = "bundlePageNo";
+    public static final String BUNDLE_NUMBER_PROPERTY = "bundleNumber";
+    public static final String SN_PROPERTY = "sn";
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
-    
+    public static final String TAX_AMOUNT_PROPERTY = "taxAmount";
+    public static final String VALUATION_AMOUNT_PROPERTY = "valuationAmount";
+    public static final String REGISTRATION_NUMBER_PROPERTY = "registrationNumber;";
     private String baUnitId;
     private String nr;
+    private String sn;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
     private String transactionId;
@@ -118,16 +131,23 @@ public class RrrBean extends AbstractTransactionedBean {
     private BigDecimal mortgageInterestRate;
     private Integer mortgageRanking;
     private SolaList<SourceBean> sourceList;
-    @NotNull(message= ClientMessage.CHECK_SELECT_RIGHT_TYPE, payload=Localized.class)
+    @NotNull(message = ClientMessage.CHECK_SELECT_RIGHT_TYPE, payload = Localized.class)
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
     private String officeCode;
     private RestrictionReasonBean restrictionReason;
-    private RestrictionOfficeBean restrictionOffice;
-    @NotNull(message= ClientMessage.CHECK_SELECT_OWNER_TYPE, payload=Localized.class, groups={OwnershipValidationGroup.class})
+    //private RestrictionOfficeBean restrictionOffice; //can be needed for further modification
+    @NotNull(message = ClientMessage.CHECK_SELECT_OWNER_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private OwnerTypeBean ownerType;
-    @NotNull(message= ClientMessage.CHECK_SELECT_SHARE_TYPE, payload=Localized.class, groups={OwnershipValidationGroup.class})
+    @NotNull(message = ClientMessage.CHECK_SELECT_SHARE_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private ShareTypeBean shareType;
+    private TenancyTypeBean tenancyType;
+    private String restrictionOfficeName;
+    private String restrictionReleaseOfficeName;
+    private String restrictionOfficeAddress;
+    private String bundleNumber;
+    private String bundlePageNo;
+    private RestrictionReleaseReasonBean restrictionReleaseReason;
     @Valid
     private BaUnitNotationBean notation;
     private boolean primary = false;
@@ -137,7 +157,10 @@ public class RrrBean extends AbstractTransactionedBean {
     private transient PartySummaryBean selectedRightHolder;
     private boolean terminating;
     private String fiscalYearCode;
-    
+    private String registrationNumber;
+    private double valuationAmount;
+    private double taxAmount;
+
     public RrrBean() {
         super();
         registrationDate = Calendar.getInstance().getTime();
@@ -163,6 +186,16 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(OWNER_TYPE_CODE_PROPERTY, oldValue, ownerTypeCode);
     }
 
+    public OwnerTypeBean getOwnerType() {
+        return ownerType;
+    }
+
+    public void setOwnerType(OwnerTypeBean ownerType) {
+        OwnerTypeBean oldValue = this.ownerType;
+        this.ownerType = ownerType;
+        propertySupport.firePropertyChange(OWNER_TYPE_PROPERTY, oldValue, this.ownerType);
+    }
+
     public String getShareTypeCode() {
         if (shareType != null) {
             return shareType.getCode();
@@ -180,16 +213,6 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY, oldValue, shareTypeCode);
     }
 
-    public OwnerTypeBean getOwnerType() {
-        return ownerType;
-    }
-
-    public void setOwnerType(OwnerTypeBean ownerType) {
-        OwnerTypeBean oldValue = this.ownerType;
-        this.ownerType = ownerType;
-        propertySupport.firePropertyChange(OWNER_TYPE_PROPERTY, oldValue, this.ownerType);
-    }
-
     public ShareTypeBean getShareType() {
         return shareType;
     }
@@ -200,23 +223,31 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SHARE_TYPE_PROPERTY, oldValue, this.shareType);
     }
 
-    public String getRestrictionOfficeCode() {
-        if (restrictionOffice != null) {
-            return restrictionOffice.getCode();
+    public String getTenancyTypeCode() {
+        if (tenancyType != null) {
+            return tenancyType.getCode();
         } else {
             return null;
         }
     }
 
-    public void setRestrictionOfficeCode(String restrictionOfficeCode) {
+    public void setTenancyTypeCode(String tenancyTypeCode) {
         String oldValue = null;
-        if (restrictionOfficeCode != null) {
-            oldValue = restrictionOffice.getCode();
+        if (tenancyType != null) {
+            oldValue = tenancyType.getCode();
         }
-        setRestrictionOffice(CacheManager.getBeanByCode(
-                CacheManager.getRestrictionOffices(), restrictionOfficeCode));
-        propertySupport.firePropertyChange(RESTRICTION_OFFICE_CODE_PROPERTY,
-                oldValue, restrictionOfficeCode);
+        setTenancyType(CacheManager.getBeanByCode(CacheManager.getTenantTypes(), tenancyTypeCode));
+        propertySupport.firePropertyChange(TENANCY_CODE_PROPERTY, oldValue, tenancyTypeCode);
+    }
+
+    public TenancyTypeBean getTenancyType() {
+        return tenancyType;
+    }
+
+    public void setTenancyType(TenancyTypeBean tenancyType) {
+        TenancyTypeBean oldValue = this.tenancyType;
+        this.tenancyType = tenancyType;
+        propertySupport.firePropertyChange(TENANCY_TYPE_PROPERTY, oldValue, this.tenancyType);
     }
 
     public String getRestrictionReasonCode() {
@@ -238,28 +269,153 @@ public class RrrBean extends AbstractTransactionedBean {
                 oldValue, restrictionReasonCode);
     }
 
-    public RestrictionOfficeBean getRestrictionOffice() {
-        return restrictionOffice;
-    }
-
-    public void setRestrictionOffice(RestrictionOfficeBean restrictionOffice) {
-        if (this.restrictionOffice == null) {
-            this.restrictionOffice = new RestrictionOfficeBean();
-        }
-        this.setJointRefDataBean(this.restrictionOffice, restrictionOffice, RESTRICTION_OFFICE_PROPERTY);
-    }
-
     public RestrictionReasonBean getRestrictionReason() {
         return restrictionReason;
     }
 
     public void setRestrictionReason(RestrictionReasonBean restrictionReason) {
-        if (this.restrictionReason == null) {
-            this.restrictionReason = new RestrictionReasonBean();
-        }
-        this.setJointRefDataBean(this.restrictionReason, restrictionReason, RESTRICTION_REASON_PROPERTY);
+        RestrictionReasonBean oldValue = this.restrictionReason;
+        this.restrictionReason = restrictionReason;
+        propertySupport.firePropertyChange(RESTRICTION_REASON_PROPERTY, oldValue, this.restrictionReason);
     }
 
+    public String getRestrictionReleaseReasonCode() {
+        if (restrictionReleaseReason != null) {
+            return restrictionReleaseReason.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionReleaseReasonCode(String restrictionReleaseReasonCode) {
+        String oldValue = null;
+        if (restrictionReleaseReason != null) {
+            oldValue = restrictionReleaseReason.getCode();
+        }
+        setRestrictionReleaseReason(CacheManager.getBeanByCode(CacheManager.getRestrictionReleaseReasons(), restrictionReleaseReasonCode));
+        propertySupport.firePropertyChange(RESTRICTION_RELEASE_REASON_CODE_PROPERTY, oldValue, restrictionReleaseReasonCode);
+    }
+
+    public RestrictionReleaseReasonBean getRestrictionReleaseReason() {
+        return restrictionReleaseReason;
+    }
+
+    public void setRestrictionReleaseReason(RestrictionReleaseReasonBean restrictionReleaseReason) {
+        RestrictionReleaseReasonBean oldValue = this.restrictionReleaseReason;
+        this.restrictionReleaseReason = restrictionReleaseReason;
+        propertySupport.firePropertyChange(RESTRICTION_RELEASE_REASON_PROPERTY, oldValue, this.restrictionReleaseReason);
+    }
+
+    public String getRestrictionOfficeName() {
+        return restrictionOfficeName;
+    }
+
+    public void setRestrictionOfficeName(String restrictionOfficeName) {
+        String oldValue = this.restrictionOfficeName;
+        this.restrictionOfficeName = restrictionOfficeName;
+        propertySupport.firePropertyChange(RESTRICTION_OFFICE_NAME_PROPERTY, oldValue, this.restrictionOfficeName);
+    }
+
+    public String getRestrictionReleaseOfficeName() {
+        return restrictionReleaseOfficeName;
+    }
+
+    public void setRestrictionReleaseOfficeName(String restrictionReleaseOfficeName) {
+        String oldValue = this.restrictionReleaseOfficeName;
+        this.restrictionReleaseOfficeName = restrictionReleaseOfficeName;
+        propertySupport.firePropertyChange(RESTRICTION_RELEASE_OFFICE_NAME_PROPERTY, oldValue, this.restrictionReleaseOfficeName);
+    }
+
+    public String getRestrictionOfficeAddress() {
+        return restrictionOfficeAddress;
+    }
+
+    public void setRestrictionOfficeAddress(String restrictionOfficeAddress) {
+        String oldValue = this.restrictionOfficeAddress;
+        this.restrictionOfficeAddress = restrictionOfficeAddress;
+        propertySupport.firePropertyChange(RESTRICTION_OFFICES_ADDRESS, oldValue, this.restrictionOfficeAddress);
+    }
+
+    public String getBundleNumber() {
+        return bundleNumber;
+    }
+
+    public void setBundleNumber(String bundleNumber) {
+        String oldValue = this.bundleNumber;
+        this.bundleNumber = bundleNumber;
+        propertySupport.firePropertyChange(BUNDLE_NUMBER_PROPERTY, oldValue, this.bundleNumber);
+    }
+
+    public String getBundlePageNo() {
+        return bundlePageNo;
+    }
+
+    public void setBundlePageNo(String bundlePageNo) {
+        String oldValue = this.bundlePageNo;
+        this.bundlePageNo = bundlePageNo;
+        propertySupport.firePropertyChange(BUNDLE_PAGE_NO_PROPERTY, oldValue, this.bundlePageNo);
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        String oldValue = this.registrationNumber;
+        this.registrationNumber = registrationNumber;
+        propertySupport.firePropertyChange(REGISTRATION_NUMBER_PROPERTY, oldValue, this.registrationNumber);
+    }
+
+    public double getValuationAmount() {
+        return valuationAmount;
+    }
+
+    public void setValuationAmount(double valuationAmount) {
+        double oldValue = this.valuationAmount;
+        this.valuationAmount = valuationAmount;
+        propertySupport.firePropertyChange(VALUATION_AMOUNT_PROPERTY, oldValue, this.valuationAmount);
+    }
+
+    public double getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(double taxAmount) {
+        double oldValue = this.taxAmount;
+        this.taxAmount = taxAmount;
+        propertySupport.firePropertyChange(TAX_AMOUNT_PROPERTY, oldValue, this.taxAmount);
+    }
+
+    //can be needed for further enhancement,for now it is disabled
+//    public RestrictionOfficeBean getRestrictionOffice() {
+//        return restrictionOffice;
+//    }
+//
+//    public void setRestrictionOffice(RestrictionOfficeBean restrictionOffice) {
+//        if (this.restrictionOffice == null) {
+//            this.restrictionOffice = new RestrictionOfficeBean();
+//        }
+//        this.setJointRefDataBean(this.restrictionOffice, restrictionOffice, RESTRICTION_OFFICE_PROPERTY);
+//    }
+//
+//    public String getRestrictionOfficeCode() {
+//        if (restrictionOffice != null) {
+//            return restrictionOffice.getCode();
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    public void setRestrictionOfficeCode(String restrictionOfficeCode) {
+//        String oldValue = null;
+//        if (restrictionOfficeCode != null) {
+//            oldValue = restrictionOffice.getCode();
+//        }
+//        setRestrictionOffice(CacheManager.getBeanByCode(
+//                CacheManager.getRestrictionOffices(), restrictionOfficeCode));
+//        propertySupport.firePropertyChange(RESTRICTION_OFFICE_CODE_PROPERTY,
+//                oldValue, restrictionOfficeCode);
+//    }
     public void setFirstRightholder(PartySummaryBean rightholder) {
         if (rightHolderList.size() > 0) {
             rightHolderList.set(0, rightholder);
@@ -404,6 +560,16 @@ public class RrrBean extends AbstractTransactionedBean {
         this.nr = nr;
     }
 
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        String oldValue = this.sn;
+        this.sn = sn;
+        propertySupport.firePropertyChange(SN_PROPERTY, oldValue, this.sn);
+    }
+
     public Date getRegistrationDate() {
         return registrationDate;
     }
@@ -528,7 +694,7 @@ public class RrrBean extends AbstractTransactionedBean {
         this.fiscalYearCode = fiscalYearCode;
         propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
-    
+
     public void removeSelectedRightHolder() {
         if (selectedRightHolder != null && rightHolderList != null) {
             rightHolderList.safeRemove(selectedRightHolder, EntityAction.DISASSOCIATE);
@@ -588,8 +754,7 @@ public class RrrBean extends AbstractTransactionedBean {
      *     
 * @param resetChildren If true, will change ID fields also for child
      * objects.
-     * @param removeBaUnitId If true, will set
-     * <code>BaUnitId</code> to null.
+     * @param removeBaUnitId If true, will set <code>BaUnitId</code> to null.
      */
     public void resetIdAndVerion(boolean resetChildren, boolean removeBaUnitId) {
         generateId();
@@ -683,7 +848,7 @@ public class RrrBean extends AbstractTransactionedBean {
             return;
         }
 
-        if(rrrLoc.getRegistrationDate()==null){
+        if (rrrLoc.getRegistrationDate() == null) {
             setRegistrationDate(Calendar.getInstance().getTime());
         } else {
             setRegistrationDate(rrrLoc.getRegistrationDate());

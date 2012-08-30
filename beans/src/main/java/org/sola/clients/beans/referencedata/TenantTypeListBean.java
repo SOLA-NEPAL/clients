@@ -27,8 +27,8 @@ import org.sola.clients.beans.controls.SolaCodeList;
 public class TenantTypeListBean extends AbstractBindingListBean {
 
     public static final String SELECTED_TENANT_TYPES_PROPERTY = "selectedTenantType";
-    private SolaCodeList<TenantTypeBean> tenantTypes;
-    private TenantTypeBean selectedTenantType;
+    private SolaCodeList<TenancyTypeBean> tenantTypes;
+    private TenancyTypeBean selectedTenantType;
  
     public TenantTypeListBean() {
         this(false);
@@ -51,35 +51,35 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      */
     public TenantTypeListBean(boolean createDummy, String... excludedCodes) {
         super();
-        tenantTypes = new SolaCodeList<TenantTypeBean>(excludedCodes);
+        tenantTypes = new SolaCodeList<TenancyTypeBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
-     * Loads list of {@link TenantTypeBean}.
+     * Loads list of {@link TenancyTypeBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(TenantTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
+        loadCodeList(TenancyTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
         tenantTypes.setExcludedCodes(codes);
     }
 
-    public TenantTypeBean getSelectedTenantType() {
+    public TenancyTypeBean getSelectedTenantType() {
         return selectedTenantType;
     }
 
-    public void setSelectedTenantType(TenantTypeBean selectedTenantType) {
-        TenantTypeBean oldValue = this.selectedTenantType;
+    public void setSelectedTenantType(TenancyTypeBean selectedTenantType) {
+        TenancyTypeBean oldValue = this.selectedTenantType;
         this.selectedTenantType = selectedTenantType;
         propertySupport.firePropertyChange(SELECTED_TENANT_TYPES_PROPERTY, oldValue, this.selectedTenantType);
     }
 
-    public ObservableList<TenantTypeBean> getTenantTypes() {
+    public ObservableList<TenancyTypeBean> getTenantTypes() {
         return tenantTypes.getFilteredList();
     }
 }

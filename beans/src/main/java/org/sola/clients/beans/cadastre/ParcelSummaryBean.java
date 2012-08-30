@@ -26,9 +26,11 @@ public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String MAPSHEET_ID = "mapsheetId";
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
+    public static final String PARCEL_NO = "parcelno";
     private String mapsheetId;
     private String firstName;
     private String lastName;
+    private int parcelno;
 
     public ParcelSummaryBean() {
         super();
@@ -62,5 +64,15 @@ public class ParcelSummaryBean extends AbstractIdWithOfficeCodeBean {
         String oldValue = this.lastName;
         this.lastName = lastName;
         propertySupport.firePropertyChange(LAST_NAME, oldValue, lastName);
+    }
+
+    public int getParcelno() {
+        return parcelno;
+    }
+
+    public void setParcelno(int parcelno) {
+        int oldValue = this.parcelno;
+        this.parcelno = parcelno;
+        propertySupport.firePropertyChange(PARCEL_NO, oldValue, parcelno);
     }
 }

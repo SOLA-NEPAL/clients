@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.ui.source;
@@ -30,15 +32,16 @@ package org.sola.clients.swing.ui.source;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import org.sola.clients.swing.ui.application.ApplicationDocumentsForm;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.source.SourceListBean;
+import org.sola.clients.swing.ui.application.ApplicationDocumentsForm;
 
-/** 
+/**
  * Displays documents list. This panel could be used on different forms, where
- * documents list should be displayed and managed. <p/> 
+ * documents list should be displayed and managed.
+ * <p/>
  * {@link DoumentsPanel} is used to display list of documents.
  */
 public class DocumentsManagementPanel extends javax.swing.JPanel {
@@ -47,8 +50,10 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
     private ApplicationDocumentsForm applicationDocumentsForm;
     private SolaList<SourceBean> sourceList;
     private boolean allowEdit = true;
-    
-    /** Creates new instance of {@link DocumentsPanel}. */
+
+    /**
+     * Creates new instance of {@link DocumentsPanel}.
+     */
     private DocumentsPanel createDocumentsPanel() {
         DocumentsPanel panel;
         if (sourceList != null) {
@@ -56,31 +61,36 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
         } else {
             panel = new DocumentsPanel();
         }
-        
+
         panel.getSourceListBean().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(SourceListBean.SELECTED_SOURCE_PROPERTY)){
-                    customizeButtons((SourceBean)evt.getNewValue());
+                if (evt.getPropertyName().equals(SourceListBean.SELECTED_SOURCE_PROPERTY)) {
+                    customizeButtons((SourceBean) evt.getNewValue());
                 }
             }
         });
-        
+
         return panel;
     }
-    
-    /** Default constructor */
+
+    /**
+     * Default constructor
+     */
     public DocumentsManagementPanel() {
         initComponents();
         customizeButtons(null);
     }
 
-    /** 
-     * This constructor is called to display predefined list of {@link SourceBean}.
+    /**
+     * This constructor is called to display predefined list of
+     * {@link SourceBean}.
+     *
      * @param sourceList The list of {@link SourceBean} to display.
      * @param applicationBean {ApplicationBean} is used to attach documents from
      * the application.
-     * @param allowEdit Indicates whether it is allowed to do changes on the list.
+     * @param allowEdit Indicates whether it is allowed to do changes on the
+     * list.
      */
     public DocumentsManagementPanel(SolaList<SourceBean> sourceList,
             ApplicationBean applicationBean, boolean allowEdit) {
@@ -90,15 +100,17 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
         initComponents();
         customizeButtons(null);
     }
-    
-    /** 
-     * This constructor is called to load list of {@link SourceBean} by the 
+
+    /**
+     * This constructor is called to load list of {@link SourceBean} by the
      * given list of IDs.
-     * @param sourceIds The list of source ID to use for loading relative 
+     *
+     * @param sourceIds The list of source ID to use for loading relative
      * {@link SourceBean} list.
      * @param applicationBean {ApplicationBean} is used to attach documents from
      * the application.
-     * @param allowEdit Indicates whether it is allowed to do changes on the list.
+     * @param allowEdit Indicates whether it is allowed to do changes on the
+     * list.
      */
     public DocumentsManagementPanel(List<String> sourceIds,
             ApplicationBean applicationBean, boolean allowEdit) {
@@ -108,16 +120,18 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
         loadSourcesByIds(sourceIds);
         customizeButtons(null);
     }
-    
-    /** Enables or disables buttons, depending on the selection in the list. */
-    private void customizeButtons(SourceBean selectedSource){
+
+    /**
+     * Enables or disables buttons, depending on the selection in the list.
+     */
+    private void customizeButtons(SourceBean selectedSource) {
         btnAdd.setEnabled(allowEdit);
         btnRemove.setEnabled(false);
         btnView.setEnabled(false);
-        
-        if(selectedSource!=null){
+
+        if (selectedSource != null) {
             btnRemove.setEnabled(allowEdit);
-            if(selectedSource.getArchiveDocumentId()!=null && selectedSource.getArchiveDocumentId().length()>0){
+            if (selectedSource.getArchiveDocumentId() != null && selectedSource.getArchiveDocumentId().length() > 0) {
                 btnView.setEnabled(true);
             }
         }
@@ -125,8 +139,10 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
         menuRemove.setEnabled(btnRemove.isEnabled());
         menuView.setEnabled(btnView.isEnabled());
     }
-    
-    /** Attach file to the selected source. */
+
+    /**
+     * Attach file to the selected source.
+     */
     private void attachDocument(PropertyChangeEvent e) {
         SourceBean document = null;
         if (e.getPropertyName().equals(ApplicationDocumentsForm.SELECTED_SOURCE)
@@ -136,8 +152,10 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
         }
     }
 
-    /** Loads sources by the given list of IDs. */
-    public final void loadSourcesByIds(List<String> sourceIds){
+    /**
+     * Loads sources by the given list of IDs.
+     */
+    public final void loadSourcesByIds(List<String> sourceIds) {
         documentsPanel.loadSourcesByIds(sourceIds);
     }
 
@@ -149,16 +167,17 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
         this.allowEdit = allowEdit;
         customizeButtons(documentsPanel.getSourceListBean().getSelectedSource());
     }
-    
-    /** 
-     * Returns the list of sources IDs. 
-     @param onlyFiltered Indicates whether to return IDs only from the filtered 
-     * list. If {@code false}, returns all IDs.
+
+    /**
+     * Returns the list of sources IDs.
+     *
+     * @param onlyFiltered Indicates whether to return IDs only from the
+     * filtered list. If {@code false}, returns all IDs.
      */
-    public final List<String> getSourceIds(boolean onlyFiltered){
+    public final List<String> getSourceIds(boolean onlyFiltered) {
         return documentsPanel.getSourceIds(onlyFiltered);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -291,7 +310,6 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
     private void menuViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuViewActionPerformed
         viewAttachment();
     }//GEN-LAST:event_menuViewActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnRemove;
@@ -304,24 +322,29 @@ public class DocumentsManagementPanel extends javax.swing.JPanel {
     private javax.swing.JMenuItem menuView;
     // End of variables declaration//GEN-END:variables
 
-    /** Opens file attached to the selected source.*/
+    /**
+     * Opens file attached to the selected source.
+     */
     private void viewAttachment() {
         documentsPanel.openAttachment();
     }
 
-    /** Removes selected document. */
+    /**
+     * Removes selected document.
+     */
     private void removeDocument() {
         documentsPanel.removeSelectedDocument();
     }
 
-    /** Adds new source into the list. */
+    /**
+     * Adds new source into the list.
+     */
     private void addDocument() {
         if (applicationDocumentsForm != null) {
             applicationDocumentsForm.dispose();
         }
 
         PropertyChangeListener listener = new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 attachDocument(e);

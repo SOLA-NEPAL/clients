@@ -66,8 +66,8 @@ public final class CacheManager {
      */
     public static final String COMMUNICATION_TYPES_KEY = CommunicationTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link CommunicationTypeBean}
-     * collection.
+     * Cache key of the code/displayValue map based on
+     * {@link CommunicationTypeBean} collection.
      */
     public static final String COMMUNICATION_TYPES_MAP_KEY = CommunicationTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -93,8 +93,8 @@ public final class CacheManager {
      */
     public static final String APP_STATUS_TYPE_CODES_KEY = ApplicationStatusTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the code/displayValue map based on {@link ApplicationStatusTypeBean}
-     * collection.
+     * Cache key of the code/displayValue map based on
+     * {@link ApplicationStatusTypeBean} collection.
      */
     public static final String APP_STATUS_TYPE_CODES_MAP_KEY = ApplicationStatusTypeBean.class.getName() + MAP_POSTFIX;
     /**
@@ -226,9 +226,9 @@ public final class CacheManager {
      */
     public static final String PARCEL_TYPES_KEY = ParcelTypeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the {@link TenantTypeBean} collection.
+     * Cache key of the {@link TenancyTypeBean} collection.
      */
-    public static final String TENANT_TYPE_KEY = TenantTypeBean.class.getName() + LIST_POSTFIX;
+    public static final String TENANT_TYPE_KEY = TenancyTypeBean.class.getName() + LIST_POSTFIX;
     /**
      * Cache key of the {@link OwnershipTypeBean} collection.
      */
@@ -282,6 +282,7 @@ public final class CacheManager {
     private static final String GET_VDCS = "getVdcs";
     private static final String GET_PARCEL_TYPES = "getParcelTypes";
     private static final String GET_RESTRICTION_REASONS = "getRestrictionReasons";
+    private static final String GET_RESTRICTION_RELEASE_REASONS = "getRestrictionReleaseReasons";
     private static final String GET_RESTRICTION_OFFICES = "getRestrictionOffices";
     private static final String GET_OWNER_TYPES = "getOwnerTypes";
     private static final String GET_SHARE_TYPES = "getShareTypes";
@@ -708,6 +709,12 @@ public final class CacheManager {
                 GET_RESTRICTION_REASONS, RESTRICTION_REASON_KEY);
     }
 
+    public static List<RestrictionReleaseReasonBean> getRestrictionReleaseReasons() {
+        return getCachedBeanList(RestrictionReleaseReasonBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_RESTRICTION_RELEASE_REASONS, RESTRICTION_RELEASE_REASON_KEY);
+    }
+
     public static List<OwnerTypeBean> getOwnerTypes() {
         return getCachedBeanList(OwnerTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
@@ -720,8 +727,8 @@ public final class CacheManager {
                 GET_SHARE_TYPES, SHARE_TYPE_KEY);
     }
 
-    public static List<TenantTypeBean> getTenantTypes() {
-        return getCachedBeanList(TenantTypeBean.class,
+    public static List<TenancyTypeBean> getTenantTypes() {
+        return getCachedBeanList(TenancyTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_TENANT_TYPES, TENANT_TYPE_KEY);
     }
