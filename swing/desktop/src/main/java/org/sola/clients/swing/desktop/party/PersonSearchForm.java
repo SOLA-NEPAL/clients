@@ -89,7 +89,7 @@ public class PersonSearchForm extends ContentPanel {
                         break;
                 }
                 if (panel != null) {
-                    getMainContentPanel().addPanel(panel, MainContentPanel.CARD_PERSON, true);
+                    openPersonPanel(panel);
                 }
                 return null;
             }
@@ -97,6 +97,10 @@ public class PersonSearchForm extends ContentPanel {
         TaskManager.getInstance().runTask(t);
     }
 
+    private void openPersonPanel(PartyPanelForm panel){
+        getMainContentPanel().addPanel(panel, this.getId(), panel.getId(), true);
+    }
+    
     public PartySearchResultBean getSelectedPartySearchResultBean(){
         return this.getPartySearchPanel()
                         .getPartySearchResuls().getSelectedPartySearchResult();

@@ -29,6 +29,7 @@ package org.sola.clients.swing.ui;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.UUID;
 import javax.swing.JPanel;
 import org.sola.common.help.HelpUtility;
 
@@ -42,6 +43,8 @@ public class ContentPanel extends JPanel {
     private PropertyChangeListener headerPanelListener;
     private boolean closeOnHide = false;
     private String helpTopic;
+    private String id;
+    private String parentId;
     
     public ContentPanel() {
         super();
@@ -97,6 +100,29 @@ public class ContentPanel extends JPanel {
 
     public void setCloseOnHide(boolean closeOnHide) {
         this.closeOnHide = closeOnHide;
+    }
+
+    /** Returns unique ID of the panel. */
+    public String getId() {
+        if(id==null){
+            id = UUID.randomUUID().toString();
+        }
+        return id;
+    }
+
+    /** Sets unique ID of the panel. */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /** Returns parent panel ID. */
+    public String getParentId() {
+        return parentId;
+    }
+
+    /** Sets parent panel ID. */
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     // METHODS

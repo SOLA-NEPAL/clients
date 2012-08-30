@@ -99,11 +99,11 @@ public class MainForm extends javax.swing.JFrame {
      */
     private void postInit() {
         // Set center screen location 
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = ((dim.width) / 2);
-        int y = ((dim.height) / 2);
-
-        this.setLocation(x - (this.getWidth() / 2), y - (this.getHeight() / 2));
+//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//        int x = ((dim.width) / 2);
+//        int y = ((dim.height) / 2);
+//
+//        this.setLocation(x - (this.getWidth() / 2), y - (this.getHeight() / 2));
 
         // Customize buttons
         btnNewApplication.setEnabled(SecurityBean.isInRole(RolesConstants.APPLICATION_CREATE_APPS));
