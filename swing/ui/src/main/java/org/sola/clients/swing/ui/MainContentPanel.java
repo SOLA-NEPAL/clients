@@ -55,7 +55,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_SEARCH_BY_MOTH_PANA_PARCEL = "searchByMothPanaParcel";
     public final static String CARD_SEARCH_BY_PARCEL_NO = "searchByParcelNo";
     public final static String CARD_MOTH_SHRESTA_ENTRY = "mothShrestaEntry";
-    public final static String CARD_OWNER_ENTRY= "landOwnerEntry";
+    public final static String CARD_OWNER_ENTRY = "landOwnerEntry";
     public final static String CARD_PARCEL_SEARCH = "parcelSearch";
     public final static String CARD_PARCEL_ENTRY = "parcelsEntry";
     public final static String CARD_ADD_NEW_OWNER = "addNewOwner";
@@ -163,15 +163,57 @@ public class MainContentPanel extends javax.swing.JPanel {
      * Adds panel into cards panels collection.
      *
      * @param panel Panel object to add into the cards collection.
+     * @param caller Component called addPanel method. It is used to search for
+     * the parent {@link ContentPanel}. If caller itself is {@link ContentPanel}
+     * instance, than parentId will be picked up.
+     * @param cardName Name of the card to assign to the added panel.
+     * @param showPanel Indicates whether to show added panel.
+     */
+    public void addPanel(ContentPanel panel, Component caller, String cardName, boolean showPanel) {
+        String parentId = panel.getParentId();
+        if (caller != null) {
+            if (ContentPanel.class.isAssignableFrom(caller.getClass())) {
+                parentId = ((ContentPanel) caller).getParentId();
+            } else {
+                while (caller.getParent() != null) {
+                    caller = caller.getParent();
+                    if (ContentPanel.class.isAssignableFrom(caller.getClass())) {
+                        parentId = ((ContentPanel) caller).getId();
+                        break;
+                    }
+                }
+            }
+        }
+        addPanel(panel, parentId, cardName, showPanel);
+    }
+
+    /**
+     * Adds panel into cards panels collection.
+     *
+     * @param panel Panel object to add into the cards collection.
      * @param cardName Name of the card to assign to the added panel.
      * @param showPanel Indicates whether to show added panel.
      */
     public void addPanel(ContentPanel panel, String cardName, boolean showPanel) {
+        addPanel(panel, panel.getParentId(), cardName, showPanel);
+    }
+
+    /**
+     * Adds panel into cards panels collection.
+     *
+     * @param panel Panel object to add into the cards collection.
+     * @param parentId Parent panel ID. It will be assigned to the panel and
+     * used for closing.
+     * @param cardName Name of the card to assign to the added panel.
+     * @param showPanel Indicates whether to show added panel.
+     */
+    public void addPanel(ContentPanel panel, String parentId, String cardName, boolean showPanel) {
         if (isPanelOpened(cardName)) {
             getPanel(cardName).removePropertyChangeListener(panelListener);
             closePanel(cardName);
         }
 
+        panel.setParentId(parentId);
         addCard(panel, cardName);
 
         panel.addPropertyChangeListener(panelListener);
@@ -206,7 +248,7 @@ public class MainContentPanel extends javax.swing.JPanel {
      *
      * @param cardName Name of the card to search by.
      */
-    public Component getPanel(String cardName) {
+    public ContentPanel getPanel(String cardName) {
         return cards.get(cardName);
     }
 
@@ -235,13 +277,52 @@ public class MainContentPanel extends javax.swing.JPanel {
      */
     public void closePanel(String cardName) {
         if (cards.containsKey(cardName)) {
-            pnlContent.remove(cards.get(cardName));
-            cards.remove(cardName);
-            cardsIndex.remove(cardName);
+
+            // Check for child panels and close them
+            ArrayList<String> cardNames = new ArrayList<String>();
+            findChildPanelNames(cardNames, cardName);
+
+            Set<Entry<String, ContentPanel>> tab = cards.entrySet();
+            Iterator<Entry<String, ContentPanel>> it = tab.iterator();
+            while (it.hasNext()) {
+                Entry<String, ContentPanel> entry = it.next();
+                for (String tmpCardName : cardNames) {
+                    if (entry.getKey().equals(tmpCardName)) {
+                        pnlContent.remove(entry.getValue());
+                        it.remove();
+                        cardsIndex.remove(tmpCardName);
+                        break;
+                    }
+                }
+            }
             showLastCard();
         }
     }
 
+    /**
+     * Populates Array of strings with child panel card names.
+     */
+    private void findChildPanelNames(ArrayList<String> cardNames, String cardName) {
+        if (cards.containsKey(cardName)) {
+            ContentPanel panel = cards.get(cardName);
+
+            Set<Entry<String, ContentPanel>> tab = cards.entrySet();
+            Iterator<Entry<String, ContentPanel>> it = tab.iterator();
+            while (it.hasNext()) {
+                Entry<String, ContentPanel> entry = it.next();
+                if (entry.getValue().getParentId() != null
+                        && !entry.getValue().getId().equals(panel.getId())
+                        && entry.getValue().getParentId().equals(panel.getId())) {
+                    findChildPanelNames(cardNames, entry.getKey());
+                }
+            }
+            cardNames.add(cardName);
+        }
+    }
+
+    /**
+     * Obsoleted function. Might be removed from the future release.
+     */
     private void closeAutoCollapsiblePanels() {
         Iterator<Entry<String, ContentPanel>> it = cards.entrySet().iterator();
         ArrayList<String> keys = new ArrayList<String>();
@@ -257,6 +338,30 @@ public class MainContentPanel extends javax.swing.JPanel {
 
         for (String key : keys) {
             closePanel(key);
+        }
+    }
+
+    /**
+     * Closes child panels.
+     */
+    private void closeChildPanels(String cardName) {
+        if (cards.containsKey(cardName)) {
+            ContentPanel panel = cards.get(cardName);
+            Iterator<Entry<String, ContentPanel>> it = cards.entrySet().iterator();
+            ArrayList<String> cardNames = new ArrayList<String>();
+
+            while (it.hasNext()) {
+                Entry<String, ContentPanel> entry = it.next();
+                if (entry.getValue().getParentId() != null
+                        && !entry.getValue().getId().equals(panel.getId())
+                        && entry.getValue().getParentId().equals(panel.getId())) {
+                    cardNames.add(entry.getKey());
+                }
+            }
+
+            for (String key : cardNames) {
+                closePanel(key);
+            }
         }
     }
 
@@ -288,6 +393,7 @@ public class MainContentPanel extends javax.swing.JPanel {
         // move panel on top
         int cardIndx = cardsIndex.indexOf(cardName);
         if (cardIndx < cardsIndex.size() - 1) {
+            closeChildPanels(cardName);
             cardsIndex.remove(cardIndx);
             cardsIndex.add(0, cardName);
         }

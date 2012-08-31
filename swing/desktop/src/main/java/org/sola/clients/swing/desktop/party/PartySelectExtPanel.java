@@ -22,7 +22,7 @@ import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.DesktopApplication;
-import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.party.PartySearchPanel;
 import org.sola.clients.swing.ui.party.PartySelectPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -80,15 +80,19 @@ public class PartySelectExtPanel extends PartySelectPanel {
                         }
                     }
                 });
-                DesktopApplication.getMainForm().getMainContentPanel().addPanel(form, MainContentPanel.CARD_SEARCH_PERSONS, true);
+                openContentPanel(form);
                 return null;
             }
         };
         TaskManager.getInstance().runTask(t);
     }
 
+    private void openContentPanel(ContentPanel form){
+        DesktopApplication.getMainForm().getMainContentPanel().addPanel(form, this, form.getId(), true);
+    }
+    
     private void openView(PartyBean party) {
-        DesktopApplication.getMainForm().getMainContentPanel().addPanel(new PartyPanelForm(false, party, true, true), MainContentPanel.CARD_PERSON, true);
+        openContentPanel(new PartyPanelForm(false, party, true, true));
     }
 
     private void openCreateEdit(PartyBean party) {
@@ -102,6 +106,6 @@ public class PartySelectExtPanel extends PartySelectPanel {
                 }
             }
         });
-        DesktopApplication.getMainForm().getMainContentPanel().addPanel(form, MainContentPanel.CARD_PERSON, true);
+        openContentPanel(form);
     }
 }

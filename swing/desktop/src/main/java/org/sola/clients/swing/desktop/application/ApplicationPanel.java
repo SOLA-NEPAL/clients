@@ -95,8 +95,8 @@ public class ApplicationPanel extends ContentPanel {
     private ApplicationPropertyBean applicationProperty;
 
     /**
-     * This method is used by the form designer to create
-     * {@link ApplicationBean}. It uses
+     * This method is used by the form designer to create {@link ApplicationBean}.
+     * It uses
      * <code>applicationId</code> parameter passed to the form constructor.<br
      * />
      * <code>applicationId</code> should be initialized before
@@ -111,6 +111,7 @@ public class ApplicationPanel extends ContentPanel {
         }
 
         applicationBean.addPropertyChangeListener(new PropertyChangeListener() {
+
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(ApplicationBean.APPLICATION_PROPERTY)) {
@@ -145,7 +146,7 @@ public class ApplicationPanel extends ContentPanel {
     private void postInit() {
 
         Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE,
-                appBean, ELProperty.create("${contactPerson}"),
+                appBean, ELProperty.create("${contactPerson}"), 
                 applicantSelectPanel, BeanProperty.create("partySummary"));
         bindingGroup.addBinding(binding);
         binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE,
@@ -153,8 +154,9 @@ public class ApplicationPanel extends ContentPanel {
                 agentSelectPanel, BeanProperty.create("partySummary"));
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
-
+        
         addDocumentPanel.addPropertyChangeListener(new PropertyChangeListener() {
+
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(DocumentPanel.UPDATED_SOURCE)
@@ -165,6 +167,7 @@ public class ApplicationPanel extends ContentPanel {
         });
 
         appBean.getSourceFilteredList().addObservableListListener(new ObservableListListener() {
+
             @Override
             public void listElementsAdded(ObservableList ol, int i, int i1) {
                 applicationDocumentsHelper.verifyCheckList(appBean.getSourceList().getFilteredList());
@@ -185,6 +188,7 @@ public class ApplicationPanel extends ContentPanel {
         });
 
         appBean.getServiceList().addObservableListListener(new ObservableListListener() {
+
             @Override
             public void listElementsAdded(ObservableList ol, int i, int i1) {
                 applicationDocumentsHelper.updateCheckList(appBean.getServiceList(), appBean.getSourceList());
@@ -207,6 +211,7 @@ public class ApplicationPanel extends ContentPanel {
         });
 
         appBean.addPropertyChangeListener(new PropertyChangeListener() {
+
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 switch (evt.getPropertyName()) {
@@ -236,7 +241,7 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     public ApplicationPropertyBean getApplicationProperty() {
-        if (applicationProperty == null) {
+        if(applicationProperty == null){
             applicationProperty = new ApplicationPropertyBean();
         }
         return applicationProperty;
@@ -244,7 +249,7 @@ public class ApplicationPanel extends ContentPanel {
 
     public void setApplicationProperty(ApplicationPropertyBean applicationProperty) {
         ApplicationPropertyBean oldValue = this.applicationProperty;
-        if (applicationProperty == null) {
+        if(applicationProperty==null){
             this.applicationProperty = new ApplicationPropertyBean();
         } else {
             this.applicationProperty = applicationProperty;
@@ -437,6 +442,7 @@ public class ApplicationPanel extends ContentPanel {
     private void openPropertyForm(final BaUnitBean baUnitBean, final boolean readOnly) {
         if (baUnitBean != null) {
             SolaTask t = new SolaTask<Void, Void>() {
+
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
@@ -500,6 +506,7 @@ public class ApplicationPanel extends ContentPanel {
 
         if (appBean.getId() != null) {
             SolaTask t = new SolaTask() {
+
                 @Override
                 public Boolean doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_APP_VALIDATING));
@@ -520,6 +527,7 @@ public class ApplicationPanel extends ContentPanel {
                     || requestType.equalsIgnoreCase(RequestTypeBean.CODE_REG_STANDARD_DOCUMENT)) {
                 // Run registration/cancelation Power of attorney
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
@@ -533,6 +541,7 @@ public class ApplicationPanel extends ContentPanel {
             } // Document copy request
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_DOCUMENT_COPY)) {
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
@@ -548,6 +557,7 @@ public class ApplicationPanel extends ContentPanel {
             } // Cadastre print
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_PRINT)) {
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_MAP));
@@ -563,6 +573,7 @@ public class ApplicationPanel extends ContentPanel {
             } // Service enquiry (application status report)
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_SERVICE_ENQUIRY)) {
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APPSEARCH));
@@ -601,6 +612,7 @@ public class ApplicationPanel extends ContentPanel {
                     propertyListForm.setLocationRelativeTo(this);
 
                     propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
+
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
@@ -610,6 +622,7 @@ public class ApplicationPanel extends ContentPanel {
                                 ((JDialog) evt.getSource()).dispose();
 
                                 SolaTask t = new SolaTask<Void, Void>() {
+
                                     @Override
                                     public Void doTask() {
                                         List<String> mapsheets = propertyListForm.getMapSheets();
@@ -646,6 +659,7 @@ public class ApplicationPanel extends ContentPanel {
                         // Show BA Unit Selection Form
                         BaUnitsListPanel baUnitListPanel = new BaUnitsListPanel(baUnitsList);
                         baUnitListPanel.addPropertyChangeListener(new PropertyChangeListener() {
+
                             @Override
                             public void propertyChange(PropertyChangeEvent evt) {
                                 if (evt.getPropertyName().equals(BaUnitsListPanel.SELECTED_BAUNIT_PROPERTY)
@@ -757,6 +771,7 @@ public class ApplicationPanel extends ContentPanel {
         }
 
         SolaTask<Void, Void> t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
@@ -786,6 +801,7 @@ public class ApplicationPanel extends ContentPanel {
     private void openSeachDocuments() {
         DocumentSearchDialog form = new DocumentSearchDialog(null, true);
         form.addPropertyChangeListener(new PropertyChangeListener() {
+
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(org.sola.clients.swing.ui.source.DocumentSearchPanel.SELECT_SOURCE)) {
@@ -846,10 +862,10 @@ public class ApplicationPanel extends ContentPanel {
         txtAppNumber = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         labDate = new javax.swing.JLabel();
-        txtDate = new javax.swing.JTextField();
+        txtDate = new javax.swing.JFormattedTextField();
         jPanel26 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtCompleteBy = new javax.swing.JTextField();
+        txtCompleteBy = new javax.swing.JFormattedTextField();
         jPanel15 = new javax.swing.JPanel();
         labStatus = new javax.swing.JLabel();
         txtStatus = new javax.swing.JTextField();
@@ -1243,22 +1259,21 @@ public class ApplicationPanel extends ContentPanel {
         labDate.setName("labDate"); // NOI18N
 
         txtDate.setEditable(false);
-        txtDate.setName("txtDate"); // NOI18N
+        txtDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtDate.setText(bundle.getString("ApplicationPanel.txtDate.text")); // NOI18N
+        txtDate.setName(bundle.getString("ApplicationPanel.txtDate.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${lodgingDatetime}"), txtDate, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${lodgingDatetime}"), txtDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-
-        txtDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtDate.setHorizontalAlignment(JTextField.LEADING);
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(labDate)
                 .addContainerGap(60, Short.MAX_VALUE))
+            .addComponent(txtDate)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1277,9 +1292,11 @@ public class ApplicationPanel extends ContentPanel {
         jLabel2.setName("jLabel2"); // NOI18N
 
         txtCompleteBy.setEditable(false);
-        txtCompleteBy.setName("txtCompleteBy"); // NOI18N
+        txtCompleteBy.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtCompleteBy.setText(bundle.getString("ApplicationPanel.txtCompleteBy.text")); // NOI18N
+        txtCompleteBy.setName(bundle.getString("ApplicationPanel.txtCompleteBy.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionDate}"), txtCompleteBy, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionDate}"), txtCompleteBy, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
@@ -1289,7 +1306,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addContainerGap(78, Short.MAX_VALUE))
-            .addComponent(txtCompleteBy, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+            .addComponent(txtCompleteBy)
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1615,7 +1632,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.contactPanel.TabConstraints.tabTitle"), contactPanel); // NOI18N
@@ -1799,7 +1816,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addComponent(tbServices, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.servicesPanel.TabConstraints.tabTitle"), servicesPanel); // NOI18N
@@ -2095,7 +2112,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tbPropertyDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2278,7 +2295,7 @@ public class ApplicationPanel extends ContentPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)))
+                        .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -2334,7 +2351,7 @@ public class ApplicationPanel extends ContentPanel {
             validationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(validationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2393,7 +2410,7 @@ public class ApplicationPanel extends ContentPanel {
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addComponent(actionLogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2417,7 +2434,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2425,8 +2442,7 @@ public class ApplicationPanel extends ContentPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Validates user's data input and calls save operation on the
-     * {@link ApplicationBean}.
+     * Validates user's data input and calls save operation on the {@link ApplicationBean}.
      */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveApplication(false);
@@ -2614,6 +2630,7 @@ public class ApplicationPanel extends ContentPanel {
         if (appBean.getSelectedSource() != null
                 && appBean.getSelectedSource().getArchiveDocument() != null) {
             SolaTask t = new SolaTask<Void, Void>() {
+
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_OPENING));
@@ -2703,6 +2720,7 @@ public class ApplicationPanel extends ContentPanel {
 
             SolaTask<List<ValidationResultBean>, List<ValidationResultBean>> t =
                     new SolaTask<List<ValidationResultBean>, List<ValidationResultBean>>() {
+
                         @Override
                         public List<ValidationResultBean> doTask() {
                             setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_APP_TAKE_ACTION));
@@ -2787,8 +2805,7 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Moves selected application service down in the services list. Calls
-     * {@link ApplicationBean#moveServiceDown()}
+     * Moves selected application service down in the services list. Calls {@link ApplicationBean#moveServiceDown()}
      */
     private void moveServiceDown() {
         ApplicationServiceBean asb = appBean.getSelectedService();
@@ -2830,6 +2847,7 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     List<ValidationResultBean> result;
 
                     @Override
@@ -2873,6 +2891,7 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     List<ValidationResultBean> result;
 
                     @Override
@@ -2915,6 +2934,7 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
                 SolaTask t = new SolaTask<Void, Void>() {
+
                     List<ValidationResultBean> result;
 
                     @Override
@@ -2945,27 +2965,25 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Removes selected property object from the properties list. Calls
-     * {@link ApplicationBean#removeSelectedProperty()}
+     * Removes selected property object from the properties list. Calls {@link ApplicationBean#removeSelectedProperty()}
      */
     private void removeSelectedProperty() {
         appBean.removeSelectedProperty();
     }
 
     /**
-     * Verifies selected property object to check existence. Calls
-     * {@link ApplicationBean#verifyProperty()}
+     * Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
      */
-// private void verifySelectedProperty() {
-// if (appBean.getSelectedProperty() == null) {
-// MessageUtility.displayMessage(ClientMessage.APPLICATION_SELECT_PROPERTY_TOVERIFY);
-// return;
-// }
+//    private void verifySelectedProperty() {
+//        if (appBean.getSelectedProperty() == null) {
+//            MessageUtility.displayMessage(ClientMessage.APPLICATION_SELECT_PROPERTY_TOVERIFY);
+//            return;
+//        }
 //
-// if (appBean.verifyProperty()) {
-// MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_VERIFIED);
-// }
-// }
+//        if (appBean.verifyProperty()) {
+//            MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_VERIFIED);
+//        }
+//    }
     private void removeSelectedSource() {
         if (appBean.getSelectedSource() != null) {
             //if (MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
@@ -3163,8 +3181,8 @@ public class ApplicationPanel extends ContentPanel {
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblDocTypesHelper;
     private javax.swing.JTextField txtAppNumber;
     private javax.swing.JFormattedTextField txtArea;
-    private javax.swing.JTextField txtCompleteBy;
-    private javax.swing.JTextField txtDate;
+    private javax.swing.JFormattedTextField txtCompleteBy;
+    private javax.swing.JFormattedTextField txtDate;
     private javax.swing.JTextField txtFirstPart;
     private javax.swing.JTextField txtLastPart;
     private javax.swing.JTextField txtStatus;

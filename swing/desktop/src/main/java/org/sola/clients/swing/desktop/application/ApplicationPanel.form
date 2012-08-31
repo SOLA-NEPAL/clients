@@ -320,7 +320,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jToolBar3" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabbedControlMain" pref="411" max="32767" attributes="0"/>
+              <Component id="tabbedControlMain" pref="399" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -501,7 +501,7 @@
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -574,11 +574,11 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtDate" alignment="0" pref="142" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="labDate" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="60" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="txtDate" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -602,19 +602,22 @@
                         <Property name="name" type="java.lang.String" value="labDate" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtDate">
+                    <Component class="javax.swing.JFormattedTextField" name="txtDate">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
-                        <Property name="name" type="java.lang.String" value="txtDate" noResource="true"/>
+                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                          <Format subtype="0" type="1"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationPanel.txtDate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationPanel.txtDate.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="text" source="appBean" sourcePath="${lodgingDatetime}" target="txtDate" targetPath="text" updateStrategy="0" immediately="false">
-                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                        </BindingProperty>
+                        <BindingProperty name="value" source="appBean" sourcePath="${lodgingDatetime}" target="txtDate" targetPath="value" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtDate.setHorizontalAlignment(JTextField.LEADING);"/>
-                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -630,7 +633,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="78" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtCompleteBy" alignment="0" pref="142" max="32767" attributes="0"/>
+                          <Component id="txtCompleteBy" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -653,15 +656,21 @@
                         <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtCompleteBy">
+                    <Component class="javax.swing.JFormattedTextField" name="txtCompleteBy">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
-                        <Property name="name" type="java.lang.String" value="txtCompleteBy" noResource="true"/>
+                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                          <Format subtype="0" type="1"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationPanel.txtCompleteBy.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationPanel.txtCompleteBy.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="text" source="appBean" sourcePath="${expectedCompletionDate}" target="txtCompleteBy" targetPath="text" updateStrategy="0" immediately="false">
-                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                        </BindingProperty>
+                        <BindingProperty name="value" source="appBean" sourcePath="${expectedCompletionDate}" target="txtCompleteBy" targetPath="value" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
                   </SubComponents>
@@ -1183,7 +1192,7 @@
                       <Component id="tbServices" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="scrollFeeDetails1" min="-2" pref="112" max="-2" attributes="0"/>
-                      <EmptySpace pref="229" max="32767" attributes="0"/>
+                      <EmptySpace pref="217" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1485,7 +1494,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tbPropertyDetails" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="scrollPropertyDetails" pref="238" max="32767" attributes="1"/>
+                      <Component id="scrollPropertyDetails" pref="226" max="32767" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -2010,7 +2019,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="scrollDocuments" pref="187" max="32767" attributes="0"/>
+                              <Component id="scrollDocuments" pref="175" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -2331,7 +2340,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="validationsPanel" pref="361" max="32767" attributes="0"/>
+                      <Component id="validationsPanel" pref="349" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -2445,7 +2454,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="actionLogPanel" pref="361" max="32767" attributes="0"/>
+                      <Component id="actionLogPanel" pref="349" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
