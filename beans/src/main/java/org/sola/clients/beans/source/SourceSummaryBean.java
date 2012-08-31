@@ -59,7 +59,7 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     private Date acceptance;
     private String archiveId;
     private String archiveDocumentId;
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCELANR, payload = Localized.class)
+   // @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCELANR, payload = Localized.class)
     private String laNr;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_RECORDATION, payload = Localized.class)
     private Date recordation;
