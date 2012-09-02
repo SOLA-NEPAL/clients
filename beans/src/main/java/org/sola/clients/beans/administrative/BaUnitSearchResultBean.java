@@ -30,6 +30,7 @@ package org.sola.clients.beans.administrative;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.RegistrationStatusTypeBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 
 /**
  * Represents BA unit search result.
@@ -43,6 +44,8 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     public static final String REGISTRATION_STATUS_PROPERTY = "registrationStatus";
     public static final String RIGHTHOLDERS_PROPERTY = "rightholders";
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
+    public static final String VDC_CODE_PROPERTY = "vdcCode";
+    public static final String VDC_PROPERTY = "vdc";
     
     private String id;
     private String name;
@@ -52,6 +55,15 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String rightholders;
     private String officeCode;
     private String fiscalYearCode;
+    private boolean locId;
+    private boolean mothId;
+    private boolean panaNo;
+    private boolean mothNo;
+    private String wardNo;
+    private VdcBean vdc;
+    private String parcelNo;
+    private String mapNumber;
+    private String mapSheetId;
     
     public BaUnitSearchResultBean(){
         super();
@@ -144,5 +156,100 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         String old = this.fiscalYearCode;
         this.fiscalYearCode = fiscalYearCode;
         propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
+    }
+
+    public boolean isLocId() {
+        return locId;
+    }
+
+    public void setLocId(boolean locId) {
+        this.locId = locId;
+    }
+
+    public String getMapNumber() {
+        return mapNumber;
+    }
+
+    public void setMapNumber(String mapNumber) {
+        this.mapNumber = mapNumber;
+    }
+
+    public String getMapSheetId() {
+        return mapSheetId;
+    }
+
+    public void setMapSheetId(String mapSheetId) {
+        this.mapSheetId = mapSheetId;
+    }
+
+    public boolean isMothId() {
+        return mothId;
+    }
+
+    public void setMothId(boolean mothId) {
+        this.mothId = mothId;
+    }
+
+    public boolean isMothNo() {
+        return mothNo;
+    }
+
+    public void setMothNo(boolean mothNo) {
+        this.mothNo = mothNo;
+    }
+
+    public boolean isPanaNo() {
+        return panaNo;
+    }
+
+    public void setPanaNo(boolean panaNo) {
+        this.panaNo = panaNo;
+    }
+
+    public String getParcelNo() {
+        return parcelNo;
+    }
+
+    public void setParcelNo(String parcelNo) {
+        this.parcelNo = parcelNo;
+    }
+
+    public String getVdcCode() {
+        if(getVdc()!=null){
+            return getVdc().getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setVdcCode(String vdcCode) {
+        String oldValue = null;
+        if(getVdc()!=null){
+            oldValue = getVdc().getCode();
+        }
+        setVdc(CacheManager.getVdc(vdcCode));
+        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, vdcCode);
+    }
+
+    public VdcBean getVdc() {
+        return vdc;
+    }
+
+    public void setVdc(VdcBean vdc) {
+        VdcBean oldValue = this.vdc;
+        this.vdc = vdc;
+        propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
+    }
+
+    public String getWardNo() {
+        return wardNo;
+    }
+
+    public void setWardNo(String wardNo) {
+        this.wardNo = wardNo;
+    }
+    
+    public String getPropertyIdCode(){
+        return BaUnitSummaryBean.getPropertyIdCode(getNameFirstPart(), getNameLastPart());
     }
 }

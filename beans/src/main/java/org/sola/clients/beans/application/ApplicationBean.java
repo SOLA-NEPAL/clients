@@ -30,34 +30,29 @@
 package org.sola.clients.beans.application;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
+import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.application.validation.ApplicationCheck;
 import org.sola.clients.beans.applicationlog.ApplicationLogBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.ValidationResultBean;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.transferobjects.digitalarchive.DocumentBinaryTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.ActionedApplicationTO;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
-import org.sola.webservices.transferobjects.search.PropertyVerifierTO;
 
 /**
  * Represents full object of the application in the domain model. Could be
@@ -73,7 +68,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String SERVICES_FEE_PROPERTY = "servicesFee";
     public static final String TAX_PROPERTY = "tax";
     public static final String TOTAL_AMOUNT_PAID_PROPERTY = "totalAmountPaid";
-    public static final String TOTAL_FEE_PROPERTY = "totalFee";
+    public static final String VALUATION_AMOUNT_PROPERTY = "valuationAmount";
     public static final String SELECTED_SERVICE_PROPERTY = "selectedService";
     public static final String SELECTED_PROPPERTY_PROPERTY = "selectedProperty";
     public static final String SELECTED_SOURCE_PROPERTY = "selectedSource";
@@ -82,24 +77,33 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String ASSIGNEE_ID_PROPERTY = "assigneeId";
     public static final String STATUS_TYPE_PROPERTY = "statusType";
     public static final String APPLICATION_PROPERTY = "application";
+    public static final String RECEIPT_NUMBER_PROPERTY = "receiptNumber";
+    public static final String RECEIPT_DATE_PROPERTY = "receiptDate";
+    public static final String PAYMENT_REMARKS_PROPERTY = "paymentRemarks";
+    public static final String STATUS_CHANGE_DATE_PROPERTY = "statusChangeDate";
+    
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
-    private SolaList<ApplicationPropertyBean> propertyList;
+    private SolaList<BaUnitSearchResultBean> propertyList;
     private BigDecimal servicesFee;
     private BigDecimal tax;
     private BigDecimal totalAmountPaid;
-    private BigDecimal totalFee;
+    private BigDecimal valuationAmount;
+    private String receiptNumber;
+    private Date receiptDate;
+    private String paymentRemarks;
     @Size(min = 1, message = ClientMessage.CHECK_APP_SERVICES_NOT_EMPTY, payload = Localized.class)
     private SolaObservableList<ApplicationServiceBean> serviceList;
     private SolaList<SourceBean> sourceList;
     private SolaObservableList<ApplicationLogBean> appLogList;
     private transient ApplicationServiceBean selectedService;
-    private transient ApplicationPropertyBean selectedProperty;
+    private transient BaUnitSearchResultBean selectedProperty;
     private transient SourceBean selectedSource;
     private PartySummaryBean contactPerson;
     private PartySummaryBean agent;
     private String assigneeId;
     private ApplicationStatusTypeBean statusBean;
+    private Date statusChangeDate;
 
     /**
      * Default constructor to create application bean. Initializes the following
@@ -192,15 +196,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public boolean isEditingAllowed() {
         return checkAccessByOffice() && (isNew() || isLodged());
-//        boolean result = true;
-//        String appStatus = getStatusCode();
-//        if (appStatus != null && (appStatus.equals(StatusConstants.APPROVED)
-//                || appStatus.equals(StatusConstants.CANCELED)
-//                || appStatus.equals(StatusConstants.ARCHIVED)
-//                || appStatus.equals(StatusConstants.REJECTED))) {
-//            result = false;
-//        }
-//        return result;
     }
 
     /**
@@ -325,12 +320,12 @@ public class ApplicationBean extends ApplicationSummaryBean {
         propertySupport.firePropertyChange(ACTION_NOTES_PROPERTY, old, value);
     }
 
-    public SolaList<ApplicationPropertyBean> getPropertyList() {
+    public SolaList<BaUnitSearchResultBean> getPropertyList() {
         return propertyList;
     }
 
     @Valid
-    public ObservableList<ApplicationPropertyBean> getFilteredPropertyList() {
+    public ObservableList<BaUnitSearchResultBean> getFilteredPropertyList() {
         return propertyList.getFilteredList();
     }
 
@@ -344,11 +339,11 @@ public class ApplicationBean extends ApplicationSummaryBean {
         propertySupport.firePropertyChange(CONTACT_PERSON_PROPERTY, oldValue, this.contactPerson);
     }
 
-    public ApplicationPropertyBean getSelectedProperty() {
+    public BaUnitSearchResultBean getSelectedProperty() {
         return selectedProperty;
     }
 
-    public void setSelectedProperty(ApplicationPropertyBean value) {
+    public void setSelectedProperty(BaUnitSearchResultBean value) {
         selectedProperty = value;
         propertySupport.firePropertyChange(SELECTED_PROPPERTY_PROPERTY, null, value);
     }
@@ -361,7 +356,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
         this.appLogList = appLogList;
     }
 
-    public void setPropertyList(SolaList<ApplicationPropertyBean> propertyList) {
+    public void setPropertyList(SolaList<BaUnitSearchResultBean> propertyList) {
         this.propertyList = propertyList;
     }
 
@@ -401,6 +396,16 @@ public class ApplicationBean extends ApplicationSummaryBean {
         return serviceList;
     }
 
+    public Date getStatusChangeDate() {
+        return statusChangeDate;
+    }
+
+    public void setStatusChangeDate(Date statusChangeDate) {
+        Date oldValue = this.statusChangeDate;
+        this.statusChangeDate = statusChangeDate;
+        propertySupport.firePropertyChange(STATUS_CHANGE_DATE_PROPERTY, oldValue, this.statusChangeDate);
+    }
+
     public SolaList<SourceBean> getSourceList() {
         return sourceList;
     }
@@ -434,14 +439,44 @@ public class ApplicationBean extends ApplicationSummaryBean {
         propertySupport.firePropertyChange(TOTAL_AMOUNT_PAID_PROPERTY, old, value);
     }
 
-    public BigDecimal getTotalFee() {
-        return totalFee;
+    public BigDecimal getValuationAmount() {
+        return valuationAmount;
     }
 
-    public void setTotalFee(BigDecimal value) {
-        BigDecimal old = totalFee;
-        totalFee = value;
-        propertySupport.firePropertyChange(TOTAL_FEE_PROPERTY, old, value);
+    public void setValuationAmount(BigDecimal value) {
+        BigDecimal old = valuationAmount;
+        valuationAmount = value;
+        propertySupport.firePropertyChange(VALUATION_AMOUNT_PROPERTY, old, this.valuationAmount);
+    }
+
+    public String getPaymentRemarks() {
+        return paymentRemarks;
+    }
+
+    public void setPaymentRemarks(String paymentRemarks) {
+        String oldValue = this.paymentRemarks;
+        this.paymentRemarks = paymentRemarks;
+        propertySupport.firePropertyChange(PAYMENT_REMARKS_PROPERTY, oldValue, this.paymentRemarks);
+    }
+
+    public Date getReceiptDate() {
+        return receiptDate;
+    }
+
+    public void setReceiptDate(Date receiptDate) {
+        Date oldValue = this.receiptDate;
+        this.receiptDate = receiptDate;
+        propertySupport.firePropertyChange(RECEIPT_DATE_PROPERTY, oldValue, this.receiptDate);
+    }
+
+    public String getReceiptNumber() {
+        return receiptNumber;
+    }
+
+    public void setReceiptNumber(String receiptNumber) {
+        String oldValue = this.receiptNumber;
+        this.receiptNumber = receiptNumber;
+        propertySupport.firePropertyChange(RECEIPT_NUMBER_PROPERTY, oldValue, this.receiptNumber);
     }
 
     /**
@@ -551,7 +586,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      *
      * @param appProperty {@link ApplicationPropertyBean} to add into the list.
      */
-    public void addProperty(ApplicationPropertyBean appProperty) {
+    public void addProperty(BaUnitSearchResultBean appProperty) {
         if (propertyList != null && !propertyList.contains(appProperty)) {
             propertyList.addAsNew(appProperty);
         }
@@ -564,58 +599,6 @@ public class ApplicationBean extends ApplicationSummaryBean {
         if (selectedProperty != null && propertyList != null) {
             propertyList.safeRemove(selectedProperty, EntityAction.DELETE);
         }
-    }
-
-    /**
-     * Verifies selected property object. Checks if object exists in the
-     * database and on the map. Checks for the list of incomplete applications,
-     * related to the selected property object.
-     */
-    public boolean verifyProperty(ApplicationPropertyBean applicationProperty) {
-        if (applicationProperty != null) {
-            PropertyVerifierTO verifier = WSManager.getInstance().getSearchService().verifyApplicationProperty(
-                    this.getNr(), applicationProperty.getNameFirstpart(), applicationProperty.getNameLastpart());
-            if (verifier != null) {
-                applicationProperty.setBaUnitId(verifier.getId());
-                applicationProperty.setVerifiedLocation(verifier.isHasLocation());
-
-                if (verifier.getId() != null && !verifier.getId().equals("")) {
-                    applicationProperty.setVerifiedExists(true);
-                } else {
-                    applicationProperty.setVerifiedExists(false);
-                }
-
-                applicationProperty.setVerifiedApplications(true);
-
-                if (verifier.getApplicationsWhereFound() != null
-                        && !verifier.getApplicationsWhereFound().equals("")) {
-                    MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_HAS_INCOMPLETE_APPLICATIONS,
-                            new Object[]{applicationProperty.getNameFirstpart() + applicationProperty.getNameLastpart(),
-                                verifier.getApplicationsWhereFound()});
-
-                }
-                //added       
-                return true;
-            } else {
-                applicationProperty.setVerifiedExists(false);
-                applicationProperty.setVerifiedApplications(false);
-                applicationProperty.setVerifiedLocation(false);
-                return false;
-            }
-            //return true;
-        }
-        return false;
-    }
-
-    /**
-     * Calculates payment fee for selected services, based on application data.
-     */
-    public boolean calculateFee() {
-        ApplicationTO app = TypeConverters.BeanToTrasferObject(this, ApplicationTO.class);
-        app = WSManager.getInstance().getCaseManagementService().calculateFee(app);
-        TypeConverters.TransferObjectToBean(app, ApplicationBean.class, this);
-
-        return true;
     }
 
     /**

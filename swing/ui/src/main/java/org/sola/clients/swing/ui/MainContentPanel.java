@@ -192,6 +192,16 @@ public class MainContentPanel extends javax.swing.JPanel {
      *
      * @param panel Panel object to add into the cards collection.
      * @param cardName Name of the card to assign to the added panel.
+     */
+    public void addPanel(ContentPanel panel, String cardName) {
+        addPanel(panel, cardName, false);
+    }
+    
+    /**
+     * Adds panel into cards panels collection.
+     *
+     * @param panel Panel object to add into the cards collection.
+     * @param cardName Name of the card to assign to the added panel.
      * @param showPanel Indicates whether to show added panel.
      */
     public void addPanel(ContentPanel panel, String cardName, boolean showPanel) {
@@ -231,16 +241,6 @@ public class MainContentPanel extends javax.swing.JPanel {
         if (!cardsIndex.contains(cardName)) {
             cardsIndex.add(cardName);
         }
-    }
-
-    /**
-     * Adds panel into cards panels collection.
-     *
-     * @param panel Panel object to add into the cards collection.
-     * @param cardName Name of the card to assign to the added panel.
-     */
-    public void addPanel(ContentPanel panel, String cardName) {
-        addPanel(panel, cardName, false);
     }
 
     /**

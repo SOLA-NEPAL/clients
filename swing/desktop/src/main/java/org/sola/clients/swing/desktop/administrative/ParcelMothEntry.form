@@ -8,8 +8,6 @@
     </Component>
     <Component class="org.sola.clients.beans.administrative.LocBean" name="locBean">
     </Component>
-    <Component class="org.sola.clients.beans.cadastre.MapSheetListBean" name="mapSheetListBean">
-    </Component>
     <Component class="org.sola.clients.beans.cadastre.CadastreObjectListBean" name="cadastreObjectListBean">
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
@@ -19,6 +17,8 @@
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createMothBean()"/>
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="ParcelMothEntry_mothBean"/>
       </AuxValues>
+    </Component>
+    <Component class="org.sola.clients.beans.cadastre.MapSheetListBean" name="mapSheetListBean">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -41,7 +41,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel1" alignment="0" pref="765" max="32767" attributes="0"/>
+          <Component id="headerPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">

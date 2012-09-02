@@ -249,6 +249,10 @@ public final class CacheManager {
      * Cache key of the {@link GuthiNameBean} collection.
      */
     public static final String GUTHI_NAME_KEY = GuthiNameBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link GuthiNameBean} collection.
+     */
+    private static final String CACHED_VDCS_KEY = "cachedVdcs" + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
     private static final String GET_COMMUNICATION_TYPES = "getCommunicationTypes";
@@ -318,9 +322,41 @@ public final class CacheManager {
                         WSManager.getInstance().getReferenceDataService().getVdcs(districtCode),
                         VdcBean.class, (List) result);
                 cache.put(key, result);
+                for (VdcBean vdc : result) {
+                    getCachedVdcs().put(vdc.getCode(), vdc);
+                }
             }
         }
         return result;
+    }
+
+    public static VdcBean getVdc(String vdcCode) {
+        if (getCachedVdcs().containsKey(vdcCode)) {
+            return getCachedVdcs().get(vdcCode);
+        } else {
+            VdcBean vdcBean = TypeConverters.TransferObjectToBean(
+                    WSManager.getInstance().getReferenceDataService()
+                    .getVdcByCode(vdcCode), VdcBean.class, null);
+            if (vdcBean != null) {
+                getVdcs(vdcBean.getDistrictCode());
+            }
+            return vdcBean;
+        }
+    }
+
+    public static List<VdcBean> getVdcsByOffice() {
+        return getVdcs(OfficeBean.getCurrentOffice().getDistrictCode());
+    }
+
+    private static HashMap<String, VdcBean> getCachedVdcs() {
+        HashMap<String, VdcBean> vdcs;
+        if (cache.contains(CACHED_VDCS_KEY)) {
+            vdcs = (HashMap<String, VdcBean>) cache.get(CACHED_VDCS_KEY);
+        } else {
+            vdcs = new HashMap<String, VdcBean>();
+            cache.put(CACHED_VDCS_KEY, vdcs);
+        }
+        return vdcs;
     }
 
     public static List<OfficeBean> getOffices() {
@@ -684,13 +720,6 @@ public final class CacheManager {
         }
     }
 
-    //<editor-fold defaultstate="collapsed" desc="By Kumar">
-    public static List<VdcBean> getVdcs() {
-        return getCachedBeanList(VdcBean.class,
-                WSManager.getInstance().getReferenceDataService(),
-                GET_VDCS, VDC_KEY);
-    }
-
     public static List<MapSheetBean> getMapSheets() {
         return getCachedBeanList(MapSheetBean.class,
                 WSManager.getInstance().getCadastreService(),
@@ -756,6 +785,4 @@ public final class CacheManager {
                 WSManager.getInstance().getReferenceDataService(),
                 GET_PARCEL_TYPES, PARCEL_TYPES_KEY);
     }
-    //*************************************************************************************************************
-    //</editor-fold>
 }

@@ -29,6 +29,7 @@ package org.sola.clients.swing.desktop.cadastre;
 
 import java.awt.BorderLayout;
 import java.util.List;
+import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.validation.ValidationResultBean;
 import org.sola.clients.swing.gis.beans.TransactionBean;
 import org.sola.clients.swing.ui.validation.ValidationResultForm;
@@ -36,7 +37,6 @@ import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.clients.beans.application.ApplicationBean;
-import org.sola.clients.beans.application.ApplicationPropertyBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.referencedata.RequestTypeBean;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
@@ -57,13 +57,13 @@ public class CadastreTransactionMapPanel extends ContentPanel {
 
     private ApplicationBean applicationBean;
     private ApplicationServiceBean applicationService;
-    private ApplicationPropertyBean applicationProperty;
+    private BaUnitSearchResultBean applicationProperty;
     private ControlsBundleForTransaction mapControl = null;
 
     public CadastreTransactionMapPanel(
             ApplicationBean applicationBean,
             ApplicationServiceBean applicationService,
-            ApplicationPropertyBean applicationProperty,
+            BaUnitSearchResultBean applicationProperty,
             List<String> mapsheets) {
 
         this.applicationBean = applicationBean;
@@ -100,9 +100,9 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         this.mapControl.setReadOnly(!this.applicationService.isManagementAllowed());
     }
 
-     private void zoom_to_Selected_Parcel(ApplicationPropertyBean property){
-        String firstpart= property.getNameFirstpart();
-        String lastpart= property.getNameLastpart();
+     private void zoom_to_Selected_Parcel(BaUnitSearchResultBean property){
+        String firstpart= property.getNameFirstPart();
+        String lastpart= property.getNameLastPart();
         List<CadastreObjectTO> parcel=
               WSManager.getInstance().getCadastreService().getCadastreObjectByExactParts(firstpart, lastpart); //searching by number.
         
@@ -130,8 +130,8 @@ public class CadastreTransactionMapPanel extends ContentPanel {
             if (this.applicationProperty != null) {
                 title = String.format(bundle.getString("CadastreTransactionMapPanel.headerPanel.titleText.ApplicationAndProperty"),
                         applicationService.getRequestType().getDisplayValue(),
-                        applicationProperty.getNameFirstpart(),
-                        applicationProperty.getNameLastpart(),
+                        applicationProperty.getNameFirstPart(),
+                        applicationProperty.getNameLastPart(),
                         applicationBean.getNr());
             } else {
                 title = String.format(bundle.getString("CadastreTransactionMapPanel.headerPanel.titleText.Application"),
@@ -146,8 +146,8 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         String baUnitId = null;
         if (applicationProperty != null) {
             BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().GetBaUnitByCode(
-                    applicationProperty.getNameFirstpart(),
-                    applicationProperty.getNameLastpart());
+                    applicationProperty.getNameFirstPart(),
+                    applicationProperty.getNameLastPart());
             if (baUnitTO != null) {
                 baUnitId = baUnitTO.getId();
             }

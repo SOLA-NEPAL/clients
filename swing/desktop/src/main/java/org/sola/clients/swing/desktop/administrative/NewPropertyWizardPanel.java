@@ -33,10 +33,10 @@ import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.administrative.BaUnitBean;
+import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.administrative.BaUnitSearchResultListBean;
 import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.application.ApplicationBean;
-import org.sola.clients.beans.application.ApplicationPropertyBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.swing.common.tasks.SolaTask;
@@ -53,7 +53,7 @@ import org.sola.webservices.transferobjects.administrative.BaUnitTO;
 public class NewPropertyWizardPanel extends ContentPanel {
 
     public static final String SELECTED_RESULT_PROPERTY = "selectedResult";
-    private ApplicationPropertyBean selectedApplicationProperty;
+    private BaUnitSearchResultBean selectedApplicationProperty;
     private BaUnitBean baUnitBean;
     private java.util.ResourceBundle resourceBundle;
     private final static String CARD_SEARCH = "cardSearch";
@@ -105,11 +105,11 @@ public class NewPropertyWizardPanel extends ContentPanel {
         return applicationBean;
     }
 
-    public ApplicationPropertyBean getSelectedApplicationProperty() {
+    public BaUnitSearchResultBean getSelectedApplicationProperty() {
         return selectedApplicationProperty;
     }
 
-    public void setSelectedApplicationProperty(ApplicationPropertyBean selectedApplicationProperty) {
+    public void setSelectedApplicationProperty(BaUnitSearchResultBean selectedApplicationProperty) {
         this.selectedApplicationProperty = selectedApplicationProperty;
         customizeAppPropertySelectButton();
     }
@@ -552,8 +552,8 @@ public class NewPropertyWizardPanel extends ContentPanel {
 
     private void btnSelectFromApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFromApplicationActionPerformed
         if (selectedApplicationProperty != null) {
-            setupBaUnit(selectedApplicationProperty.getNameFirstpart(),
-                    selectedApplicationProperty.getNameLastpart());
+            setupBaUnit(selectedApplicationProperty.getNameFirstPart(),
+                    selectedApplicationProperty.getNameLastPart());
         }
     }//GEN-LAST:event_btnSelectFromApplicationActionPerformed
 

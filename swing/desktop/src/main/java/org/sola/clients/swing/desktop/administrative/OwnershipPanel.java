@@ -234,13 +234,17 @@ public class OwnershipPanel extends ContentPanel {
                     partyForm = new PartyPanelForm(true, null, isReadOnly, true);
                 }
                 partyForm.addPropertyChangeListener(personFormListener);
-                getMainContentPanel().addPanel(partyForm, MainContentPanel.CARD_PERSON, true);
+                getMainContentPanel().addPanel(partyForm, getThis().getId(), partyForm.getId(), true);
                 return null;
             }
         };
         TaskManager.getInstance().runTask(t);
     }
 
+    private OwnershipPanel getThis(){
+        return this;
+    }
+    
     private void changeOwnersByLoc(LocWithMothBean loc) {
         rrrBean.changeLoc(loc);
         showLocSearch(false);
@@ -290,7 +294,7 @@ public class OwnershipPanel extends ContentPanel {
         PersonSearchForm partySearchForm = new PersonSearchForm();
         partySearchForm.getPartySearchPanel().setShowSelectButton(true);
         partySearchForm.getPartySearchPanel().addPropertyChangeListener(personSearchFormListener);
-        getMainContentPanel().addPanel(partySearchForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
+        getMainContentPanel().addPanel(partySearchForm, getThis(), partySearchForm.getId(), true);
     }
 
     private void editOwner() {

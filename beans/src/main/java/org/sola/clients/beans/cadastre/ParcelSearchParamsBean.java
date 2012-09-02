@@ -42,12 +42,6 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
         return vdc.getCode();
     }
 
-    public void setVdcCode(String vdcCode) {
-        String oldValue = getVdc().getCode();
-        setVdc(CacheManager.getBeanByCode(CacheManager.getVdcs(), vdcCode));
-        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, vdcCode);
-    }
-
     public VdcBean getVdc() {
         return vdc;
     }

@@ -75,7 +75,7 @@ public class DocumentSearchPanel extends ContentPanel {
                                     }
                                 }
                             });
-                            getMainContentPanel().addPanel(form, MainContentPanel.CARD_SOURCE, true);
+                            getMainContentPanel().addPanel(form, getThis().getId(), form.getId(), true);
                             return null;
                         }
                     };
@@ -85,6 +85,10 @@ public class DocumentSearchPanel extends ContentPanel {
         });
     }
 
+    private DocumentSearchPanel getThis(){
+        return this;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -16,15 +16,12 @@
 package org.sola.clients.beans.referencedata;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 
@@ -60,7 +57,7 @@ public class VdcListBean extends AbstractBindingListBean {
     }
 
     /**
-     * Loads list of {@link DistrictBean}.
+     * Loads list of {@link VdcBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param districtCode Code of district to which VDCs belong to
@@ -69,6 +66,15 @@ public class VdcListBean extends AbstractBindingListBean {
         loadCodeList(VdcBean.class, vdcs, CacheManager.getVdcs(districtCode), createDummy);
     }
 
+    /**
+     * Loads list of {@link VdcBean} by current office district code.
+     *
+     * @param createDummy Indicates whether to add empty object on the list.
+     */
+    public void loadListByOffice(boolean createDummy) {
+       loadCodeList(VdcBean.class, vdcs, CacheManager.getVdcsByOffice(), createDummy);
+    }   
+    
     public void setExcludedCodes(String... codes) {
         vdcs.setExcludedCodes(codes);
     }
@@ -95,10 +101,6 @@ public class VdcListBean extends AbstractBindingListBean {
         return vdc;    
     }     
     
-    
-    public void loadVdcList() {
-       TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getVdcList(), VdcBean.class, (List) vdc);
-    }   
      public void removeSelectedVdc(){
         if(selectedVdc!=null){
             selectedVdc.setEntityAction(EntityAction.DELETE);

@@ -43,6 +43,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String NAME_PROPERTY = "name";
     public static final String NAME_FIRSTPART_PROPERTY = "nameFirstpart";
     public static final String NAME_LASTPART_PROPERTY = "nameLastpart";
+    public static final String PROPERTY_ID_CODE_PROPERTY = "propertyIdCode";
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     
     private String name;
@@ -83,6 +84,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
         String oldValue = this.nameFirstpart;
         this.nameFirstpart = nameFirstpart;
         propertySupport.firePropertyChange(NAME_FIRSTPART_PROPERTY, oldValue, nameFirstpart);
+        propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
 
     public String getNameLastpart() {
@@ -93,6 +95,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
         String oldValue = this.nameLastpart;
         this.nameLastpart = nameLastpart;
         propertySupport.firePropertyChange(NAME_LASTPART_PROPERTY, oldValue, nameLastpart);
+        propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
     
     public void setTypeCode(String typeCode) {
@@ -124,5 +127,26 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
         String old = this.fiscalYearCode;
         this.fiscalYearCode = fiscalYearCode;
         propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
+    }
+    
+        
+    public String getPropertyIdCode(){
+        return getPropertyIdCode(getNameFirstpart(), getNameLastpart());
+    }
+
+    /** 
+     * Returns unified Property identification number. 
+     * @param nameFirstPart First part of the property code.
+     * @param nameLastPart Last part of the property code.
+     */
+    public static String getPropertyIdCode(String nameFirstPart, String nameLastPart){
+        String code = nameFirstPart;
+        if(nameLastPart!=null){
+            if(code == null){
+                code = "";
+            }
+            code = code + "/" + nameLastPart;
+        }
+        return code;
     }
 }

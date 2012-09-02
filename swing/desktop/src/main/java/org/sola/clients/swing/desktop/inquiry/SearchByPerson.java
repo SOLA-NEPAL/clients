@@ -96,12 +96,16 @@ public class SearchByPerson extends ContentPanel {
                 }
 
                 if (panel != null) {
-                    getMainContentPanel().addPanel(panel, MainContentPanel.CARD_PERSON, true);
+                    getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
                 }
                 return null;
             }
         };
         TaskManager.getInstance().runTask(t);
+    }
+    
+    private SearchByPerson getThis(){
+        return this;
     }
     
      public PartySearchPanel getPartySearchPanel() {

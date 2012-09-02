@@ -49,7 +49,7 @@ import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.LocalizationManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
-import org.sola.clients.swing.desktop.administrative.BaUnitSearchPanel;
+import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
 import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
@@ -188,7 +188,7 @@ public class MainForm extends javax.swing.JFrame {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYSEARCH));
                 if (!pnlContent.isPanelOpened(MainContentPanel.CARD_BAUNIT_SEARCH)) {
-                    BaUnitSearchPanel baUnitSearchPanel = new BaUnitSearchPanel();
+                    BaUnitSearchForm baUnitSearchPanel = new BaUnitSearchForm();
                     pnlContent.addPanel(baUnitSearchPanel, MainContentPanel.CARD_BAUNIT_SEARCH);
                 }
                 pnlContent.showPanel(MainContentPanel.CARD_BAUNIT_SEARCH);
@@ -882,12 +882,6 @@ public class MainForm extends javax.swing.JFrame {
         showCurrentUserRolesReport(ReportManager.getCurrentUserWithRolesReport());
     }//GEN-LAST:event_menuCurrentUserRolesReportActionPerformed
     private void showCurrentUserRolesReport(JasperPrint report) {
-        ReportViewerForm form = new ReportViewerForm(report);
-        form.setVisible(true);
-        form.setAlwaysOnTop(true);
-    }
-
-    private void showVdcTestReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
         form.setAlwaysOnTop(true);

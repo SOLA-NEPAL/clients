@@ -43,6 +43,7 @@ import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationAssignmentPanel;
 import org.sola.clients.swing.desktop.application.ApplicationTransferForm;
+import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.renderers.BooleanCellRenderer;
@@ -213,7 +214,7 @@ public class DashBoardPanel extends ContentPanel {
                 if (getMainContentPanel() != null) {
                     ApplicationPanel applicationPanel = new ApplicationPanel(appBean.getId());
                     applicationPanel.addPropertyChangeListener(ApplicationBean.APPLICATION_PROPERTY, listener);
-                    getMainContentPanel().addPanel(applicationPanel, MainContentPanel.CARD_APPLICATION, true);
+                    getMainContentPanel().addPanel(applicationPanel, getThis().getId(), applicationPanel.getId(), true);
                 }
                 return null;
             }
@@ -221,6 +222,10 @@ public class DashBoardPanel extends ContentPanel {
         TaskManager.getInstance().runTask(t);
     }
 
+    private DashBoardPanel getThis(){
+        return this;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -125,10 +125,10 @@ public class ParcelMothEntry extends ContentPanel {
         locListBean = new org.sola.clients.beans.administrative.LocListBean();
         cadastreObjectBean = new org.sola.clients.beans.cadastre.CadastreObjectBean();
         locBean = new org.sola.clients.beans.administrative.LocBean();
-        mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
         cadastreObjectListBean = new org.sola.clients.beans.cadastre.CadastreObjectListBean();
         buttonGroup1 = new javax.swing.ButtonGroup();
         mothBean = createMothBean();
+        mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -409,7 +409,7 @@ public class ParcelMothEntry extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -618,7 +618,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void displayForm(Parcel_Selection_Form parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
-            getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
+            getMainContentPanel().addPanel(parcelSearchForm, this.getId(), parcelSearchForm.getId(), false);
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
     }
@@ -691,7 +691,7 @@ public class ParcelMothEntry extends ContentPanel {
 
     private void displayPersonSearchForm(PersonSearchForm partySearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_SEARCH_PERSONS)) {
-            getMainContentPanel().addPanel(partySearchForm, MainContentPanel.CARD_SEARCH_PERSONS);
+            getMainContentPanel().addPanel(partySearchForm, this.getId(), partySearchForm.getId(), false);
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_SEARCH_PERSONS);
     }

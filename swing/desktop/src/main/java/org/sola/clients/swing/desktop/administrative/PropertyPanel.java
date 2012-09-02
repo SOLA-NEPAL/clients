@@ -338,7 +338,7 @@ public class PropertyPanel extends ContentPanel {
                         }
                         NewPropertyWizardPanel newPropertyWizardPanel = new NewPropertyWizardPanel(applicationBean, allowSelection);
                         newPropertyWizardPanel.addPropertyChangeListener(newPropertyWizardListener);
-                        getMainContentPanel().addPanel(newPropertyWizardPanel, MainContentPanel.CARD_NEW_PROPERTY_WIZARD, true);
+                        getMainContentPanel().addPanel(newPropertyWizardPanel, getThis().getId(), newPropertyWizardPanel.getId(), true);
                         return null;
                     }
                 };
@@ -347,6 +347,10 @@ public class PropertyPanel extends ContentPanel {
         }
     }
 
+    private PropertyPanel getThis(){
+        return this;
+    }
+    
     public void showPriorTitileMessage() {
         if ((baUnitBean.getNameFirstpart() == null || baUnitBean.getNameFirstpart().length() < 1)
                 && (baUnitBean.getNameLastpart() == null || baUnitBean.getNameLastpart().length() < 1)) {
@@ -766,7 +770,7 @@ public class PropertyPanel extends ContentPanel {
         }
 
         panel.addPropertyChangeListener(SimpleRightPanel.UPDATED_RRR, rightFormListener);
-        getMainContentPanel().addPanel(panel, cardName, true);
+        getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
     }
 
     private void saveBaUnit(final boolean showMessage, final boolean closeOnSave) {
@@ -826,9 +830,8 @@ public class PropertyPanel extends ContentPanel {
                     PropertyPanel propertyPnl = new PropertyPanel(
                             relatedBaUnit.getRelatedBaUnit().getNameFirstpart(),
                             relatedBaUnit.getRelatedBaUnit().getNameLastpart());
-                    getMainContentPanel().addPanel(propertyPnl,
-                            MainContentPanel.CARD_PROPERTY_PANEL + "_"
-                            + relatedBaUnit.getRelatedBaUnit().getId(), true);
+                    getMainContentPanel().addPanel(propertyPnl, getThis().getId(),
+                            propertyPnl.getId(), true);
                     return null;
                 }
             };
@@ -2223,7 +2226,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
 
     private void displayForm(ParcelSearchPanelForm parcelSearchForm) {
         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_PARCEL_SEARCH)) {
-            getMainContentPanel().addPanel(parcelSearchForm, MainContentPanel.CARD_PARCEL_SEARCH);
+            getMainContentPanel().addPanel(parcelSearchForm, this.getId(), parcelSearchForm.getId(), false);
         }
         getMainContentPanel().showPanel(MainContentPanel.CARD_PARCEL_SEARCH);
     }

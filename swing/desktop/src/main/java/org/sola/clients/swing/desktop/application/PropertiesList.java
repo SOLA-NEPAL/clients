@@ -37,7 +37,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.ListModel;
 import org.jdesktop.observablecollections.ObservableList;
-import org.sola.clients.beans.application.ApplicationPropertyBean;
+import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
@@ -52,14 +52,14 @@ public class PropertiesList extends javax.swing.JDialog {
     public static final String SELECTED_PROPERTY = "selectedProperty";
     
     private SolaList propertyList;
-    private ApplicationPropertyBean selectedProperty;
+    private BaUnitSearchResultBean selectedProperty;
     
     /** Creates new form PropertiesList */
     public PropertiesList() {
         this(new SolaList());
     }
 
-    public PropertiesList(SolaList<ApplicationPropertyBean> propertyList) {
+    public PropertiesList(SolaList<BaUnitSearchResultBean> propertyList) {
         super((Frame)null, true);
         this.propertyList = propertyList;
         initComponents();
@@ -68,15 +68,15 @@ public class PropertiesList extends javax.swing.JDialog {
         showSelectedParcelMapSheet();
     }
     
-    public ObservableList<ApplicationPropertyBean> getPropertyList() {
+    public ObservableList<BaUnitSearchResultBean> getPropertyList() {
         return propertyList.getFilteredList();
     }
 
-    public ApplicationPropertyBean getSelectedProperty() {
+    public BaUnitSearchResultBean getSelectedProperty() {
         return selectedProperty;
     }
 
-    public void setSelectedProperty(ApplicationPropertyBean selectedProperty) {
+    public void setSelectedProperty(BaUnitSearchResultBean selectedProperty) {
         this.selectedProperty = selectedProperty;
     }
     
@@ -90,9 +90,9 @@ public class PropertiesList extends javax.swing.JDialog {
     private void showSelectedParcelMapSheet(){
         tabPropertyDetails.addRowSelectionInterval(0, 0);
         
-        ApplicationPropertyBean property=this.getSelectedProperty();
-        String firstpart= property.getNameFirstpart();
-        String lastpart= property.getNameLastpart();
+        BaUnitSearchResultBean property=this.getSelectedProperty();
+        String firstpart= property.getNameFirstPart();
+        String lastpart= property.getNameLastPart();
         List<CadastreObjectTO> parcel=
               WSManager.getInstance().getCadastreService().getCadastreObjectByExactParts(firstpart, lastpart); //searching by number.
         //the valued returned will be only one.

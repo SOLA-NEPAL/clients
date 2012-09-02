@@ -110,7 +110,6 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private SolaList<RrrBean> rrrList;
     private SolaList<BaUnitNotationBean> baUnitNotationList;
     private CadastreObjectBean cadastreObject;
-    private String cadastreObjectId;
     private SolaList<CadastreObjectBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
@@ -461,7 +460,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public ObservableList<SourceBean> getFilteredSourceList() {
         return sourceList.getFilteredList();
     }
-
+    
     public void removeSelectedParentBaUnit() {
         if (getSelectedParentBaUnit() != null) {
             getParentBaUnits().safeRemove(getSelectedParentBaUnit(), EntityAction.DELETE);

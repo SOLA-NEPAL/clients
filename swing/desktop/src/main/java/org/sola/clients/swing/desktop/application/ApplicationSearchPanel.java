@@ -699,13 +699,18 @@ public class ApplicationSearchPanel extends ContentPanel {
                 if (getMainContentPanel() != null) {
                     ApplicationPanel applicationPanel = new ApplicationPanel(
                             appList.getSelectedApplication().getId());
-                    getMainContentPanel().addPanel(applicationPanel, MainContentPanel.CARD_APPLICATION, true);
+                    getMainContentPanel().addPanel(applicationPanel, getThis().getId(), applicationPanel.getId(), true);
                 }
                 return null;
             }
         };
         TaskManager.getInstance().runTask(t);
     }
+    
+    private ApplicationSearchPanel getThis(){
+        return this;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.application.ApplicationSearchResultsListBean appList;
     private javax.swing.JScrollPane appListPanel;

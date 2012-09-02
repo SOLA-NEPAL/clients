@@ -70,8 +70,9 @@ public class AddressBean extends AbstractIdBean {
     }
 
     public void setVdcBean(VdcBean vdcBean) {
-        //this.vdcBean = vdcBean;
-        this.setJointRefDataBean(this.getVdcBean(), vdcBean, VDC_CODE_PROPERTY);
+        VdcBean oldValue = this.vdcBean;
+        this.vdcBean = vdcBean;
+        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcBean);
     }
 
     public String getVdcCode() {
@@ -80,7 +81,7 @@ public class AddressBean extends AbstractIdBean {
 
     public void setVdcCode(String value) {
         String oldValue = this.getVdcBean().getCode();
-        setVdcBean(CacheManager.getBeanByCode(CacheManager.getVdcs(this.getDistrictBean().getCode()), value));
+        setVdcBean(CacheManager.getVdc(value));
         propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, value);
     }
 
