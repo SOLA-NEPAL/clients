@@ -167,7 +167,7 @@ public class MainForm extends javax.swing.JFrame {
         menuRestrictionReleaseReason = new javax.swing.JMenuItem();
         menuRestrictionOffice = new javax.swing.JMenuItem();
         menuOwnerTypes = new javax.swing.JMenuItem();
-        menuShareTypes = new javax.swing.JMenuItem();
+        menuOwnershipTypes = new javax.swing.JMenuItem();
         menuTenantTypes = new javax.swing.JMenuItem();
         menuParcelTypes = new javax.swing.JMenuItem();
         menuLandClass = new javax.swing.JMenuItem();
@@ -678,14 +678,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu1.add(menuOwnerTypes);
 
-        menuShareTypes.setText(bundle.getString("MainForm.menuShareTypes.text")); // NOI18N
-        menuShareTypes.setName(bundle.getString("MainForm.menuShareTypes.name")); // NOI18N
-        menuShareTypes.addActionListener(new java.awt.event.ActionListener() {
+        menuOwnershipTypes.setText(bundle.getString("MainForm.menuOwnershipTypes.text")); // NOI18N
+        menuOwnershipTypes.setName(bundle.getString("MainForm.menuShareTypes.name")); // NOI18N
+        menuOwnershipTypes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuShareTypesActionPerformed(evt);
+                menuOwnershipTypesActionPerformed(evt);
             }
         });
-        jMenu1.add(menuShareTypes);
+        jMenu1.add(menuOwnershipTypes);
 
         menuTenantTypes.setText(bundle.getString("MainForm.menuTenantTypes.text")); // NOI18N
         menuTenantTypes.setName(bundle.getString("MainForm.menuTenantTypes.name")); // NOI18N
@@ -966,10 +966,10 @@ public class MainForm extends javax.swing.JFrame {
         manageOwnershipTpes();
     }//GEN-LAST:event_menuOwnerTypesActionPerformed
 
-    private void menuShareTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuShareTypesActionPerformed
+    private void menuOwnershipTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOwnershipTypesActionPerformed
         // TODO add your handling code here:
         manageShareTypes();
-    }//GEN-LAST:event_menuShareTypesActionPerformed
+    }//GEN-LAST:event_menuOwnershipTypesActionPerformed
 
     private void menuTenantTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTenantTypesActionPerformed
         // TODO add your handling code here:
@@ -1156,7 +1156,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void manageShareTypes() {
-        openReferenceDataPanel(ShareTypeBean.class, menuShareTypes.getText());
+        openReferenceDataPanel(OwnershipTypeBean.class, menuOwnershipTypes.getText());
     }
 
     private void manageTenantTypes() {
@@ -1214,6 +1214,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenuItem menuOwnerTypes;
+    private javax.swing.JMenuItem menuOwnershipTypes;
     private javax.swing.JMenuItem menuParcelTypes;
     private javax.swing.JMenu menuParty;
     private javax.swing.JMenuItem menuPartyRoleType;
@@ -1234,7 +1235,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuSecurity;
     private javax.swing.JMenuItem menuServiceActionTypes;
     private javax.swing.JMenuItem menuServiceStatusTypes;
-    private javax.swing.JMenuItem menuShareTypes;
     private javax.swing.JMenuItem menuSourceTypes;
     private javax.swing.JMenu menuSources;
     private javax.swing.JMenu menuSystem;

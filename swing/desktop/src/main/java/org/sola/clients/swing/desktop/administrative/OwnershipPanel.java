@@ -336,7 +336,7 @@ public class OwnershipPanel extends ContentPanel {
         menuEditOwner = new javax.swing.JMenuItem();
         menuViewOwner = new javax.swing.JMenuItem();
         rrrTypes = new org.sola.clients.beans.referencedata.RrrTypeListBean();
-        shareTypeListBean = new org.sola.clients.beans.referencedata.ShareTypeListBean();
+        shareTypeListBean = new org.sola.clients.beans.referencedata.OwnershipTypeListBean();
         ownerTypeListBean = new org.sola.clients.beans.referencedata.OwnerTypeListBean();
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar2 = new javax.swing.JToolBar();
@@ -1158,7 +1158,7 @@ public class OwnershipPanel extends ContentPanel {
     private javax.swing.JPopupMenu popUpOwners;
     private org.sola.clients.beans.administrative.RrrBean rrrBean;
     private org.sola.clients.beans.referencedata.RrrTypeListBean rrrTypes;
-    private org.sola.clients.beans.referencedata.ShareTypeListBean shareTypeListBean;
+    private org.sola.clients.beans.referencedata.OwnershipTypeListBean shareTypeListBean;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableRightholders;
     private javax.swing.JTextField txtDistrict;
     private javax.swing.JTextField txtMothNumber;

@@ -24,11 +24,14 @@ import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.OwnerTypeBean;
 import org.sola.clients.beans.referencedata.RegistrationStatusTypeBean;
 import org.sola.clients.beans.referencedata.RrrTypeBean;
-import org.sola.clients.beans.referencedata.ShareTypeBean;
+import org.sola.clients.beans.referencedata.OwnershipTypeBean;
 import org.sola.clients.beans.source.SourceBean;
 
-/** Represents LOC object with related documents and persons. */
+/**
+ * Represents LOC object with related documents and persons.
+ */
 public class RrrLocBean extends AbstractBindingBean {
+
     public static final String LOC_ID_PROPERTY = "locId";
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String REGISTRATION_DATE_PROPERTY = "registrationDate";
@@ -36,23 +39,21 @@ public class RrrLocBean extends AbstractBindingBean {
     public static final String RRR_TYPE_PROPERTY = "rrrType";
     public static final String OWNER_TYPE_PROPERTY = "ownerType";
     public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";
-    public static final String SHARE_TYPE_PROPERTY = "shareType";
-    public static final String SHARE_TYPE_CODE_PROPERTY = "shareTypeCode";
+    public static final String OWNERSHIP_TYPE_PROPERTY = "ownershipType";
+    public static final String OWNERSHIP_TYPE_CODE_PROPERTY = "ownershipTypeCode";
     public static final String REGISTRATION_STATUS_PROPERTY = "registrationStatus";
     public static final String NOTATION_TEXT_PROPERTY = "notationText";
-    
     private String locId;
     private RrrTypeBean rrrType;
     private OwnerTypeBean ownerType;
-    private ShareTypeBean shareType;
+    private OwnershipTypeBean ownershipType;
     private Date registrationDate;
     private RegistrationStatusTypeBean registrationStatus;
     private String notationText;
-    
     private SolaList<SourceBean> sourceList;
     private SolaList<PartySummaryBean> rightHolderList;
-    
-    public RrrLocBean(){
+
+    public RrrLocBean() {
         super();
     }
 
@@ -87,7 +88,7 @@ public class RrrLocBean extends AbstractBindingBean {
     }
 
     public SolaList<PartySummaryBean> getRightHolderList() {
-        if(rightHolderList==null){
+        if (rightHolderList == null) {
             rightHolderList = new SolaList<PartySummaryBean>();
         }
         return rightHolderList;
@@ -98,7 +99,7 @@ public class RrrLocBean extends AbstractBindingBean {
     }
 
     public SolaList<SourceBean> getSourceList() {
-        if(sourceList==null){
+        if (sourceList == null) {
             sourceList = new SolaList<SourceBean>();
         }
         return sourceList;
@@ -109,7 +110,7 @@ public class RrrLocBean extends AbstractBindingBean {
     }
 
     public String getStatusCode() {
-        if(getRegistrationStatus()!=null){
+        if (getRegistrationStatus() != null) {
             return getRegistrationStatus().getCode();
         } else {
             return null;
@@ -118,7 +119,7 @@ public class RrrLocBean extends AbstractBindingBean {
 
     public void setStatusCode(String statusCode) {
         String oldValue = null;
-        if(getRegistrationStatus() != null){
+        if (getRegistrationStatus() != null) {
             oldValue = getRegistrationStatus().getCode();
         }
         setRegistrationStatus(CacheManager.getBeanByCode(CacheManager.getRegistrationStatusTypes(), statusCode));
@@ -136,7 +137,7 @@ public class RrrLocBean extends AbstractBindingBean {
     }
 
     public String getTypeCode() {
-        if(getRrrType()!=null){
+        if (getRrrType() != null) {
             return getRrrType().getCode();
         } else {
             return null;
@@ -145,7 +146,7 @@ public class RrrLocBean extends AbstractBindingBean {
 
     public void setTypeCode(String typeCode) {
         String oldValue = null;
-        if(getRrrType() != null){
+        if (getRrrType() != null) {
             oldValue = getRrrType().getCode();
         }
         setRrrType(CacheManager.getBeanByCode(CacheManager.getRrrTypes(), typeCode));
@@ -161,7 +162,7 @@ public class RrrLocBean extends AbstractBindingBean {
         this.rrrType = rrrType;
         propertySupport.firePropertyChange(RRR_TYPE_PROPERTY, oldValue, this.rrrType);
     }
-    
+
     public String getOwnerTypeCode() {
         if (ownerType != null) {
             return ownerType.getCode();
@@ -178,7 +179,7 @@ public class RrrLocBean extends AbstractBindingBean {
         setOwnerType(CacheManager.getBeanByCode(CacheManager.getOwnerTypes(), ownerTypeCode));
         propertySupport.firePropertyChange(OWNER_TYPE_CODE_PROPERTY, oldValue, ownerTypeCode);
     }
-    
+
     public OwnerTypeBean getOwnerType() {
         return ownerType;
     }
@@ -188,31 +189,31 @@ public class RrrLocBean extends AbstractBindingBean {
         this.ownerType = ownerType;
         propertySupport.firePropertyChange(OWNER_TYPE_PROPERTY, oldValue, this.ownerType);
     }
-    
-    public String getShareTypeCode() {
-        if (shareType != null) {
-            return shareType.getCode();
+
+    public String getOwnershipTypeCode() {
+        if (ownershipType != null) {
+            return ownershipType.getCode();
         } else {
             return null;
         }
     }
 
-    public void setShareTypeCode(String shareTypeCode) {
+    public void setOwnershipTypeCode(String ownershipTypeCode) {
         String oldValue = null;
-        if (shareType != null) {
-            oldValue = shareType.getCode();
+        if (ownershipType != null) {
+            oldValue = ownershipType.getCode();
         }
-        setShareType(CacheManager.getBeanByCode(CacheManager.getShareTypes(), shareTypeCode));
-        propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY, oldValue, shareTypeCode);
-    }
-    
-    public ShareTypeBean getShareType() {
-        return shareType;
+        setOwnershipType(CacheManager.getBeanByCode(CacheManager.getOwnershipTypes(), ownershipTypeCode));
+        propertySupport.firePropertyChange(OWNERSHIP_TYPE_CODE_PROPERTY, oldValue, ownershipTypeCode);
     }
 
-    public void setShareType(ShareTypeBean shareType) {
-        ShareTypeBean oldValue = this.shareType;
-        this.shareType = shareType;
-        propertySupport.firePropertyChange(SHARE_TYPE_PROPERTY, oldValue, this.shareType);
+    public OwnershipTypeBean getOwnershipType() {
+        return ownershipType;
+    }
+
+    public void setOwnershipType(OwnershipTypeBean ownershipType) {
+        OwnershipTypeBean oldValue = this.ownershipType;
+        this.ownershipType = ownershipType;
+        propertySupport.firePropertyChange(OWNERSHIP_TYPE_PROPERTY, oldValue, this.ownershipType);
     }
 }

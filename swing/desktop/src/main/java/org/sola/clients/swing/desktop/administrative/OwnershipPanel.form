@@ -76,7 +76,7 @@
     </Container>
     <Component class="org.sola.clients.beans.referencedata.RrrTypeListBean" name="rrrTypes">
     </Component>
-    <Component class="org.sola.clients.beans.referencedata.ShareTypeListBean" name="shareTypeListBean">
+    <Component class="org.sola.clients.beans.referencedata.OwnershipTypeListBean" name="shareTypeListBean">
     </Component>
     <Component class="org.sola.clients.beans.referencedata.OwnerTypeListBean" name="ownerTypeListBean">
     </Component>
