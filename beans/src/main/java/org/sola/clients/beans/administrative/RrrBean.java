@@ -70,10 +70,12 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_TENANCY = "tenancy";
-    public static final String CODE_UNKNOWN = "unknown";
-    public static final String CODE_BYAPPLICATION = "byApplication";
-    public static final String CODE_BYLETTER = "byLetter";
-    public static final String CODE_LIKHATPARIT = "byLikhatParit";
+//    public static final String CODE_UNKNOWN = "unknown";
+//    public static final String CODE_BYAPPLICATION = "byApplication";
+//    public static final String CODE_BYLETTER = "byLetter";
+//    public static final String CODE_LIKHATPARIT = "byLikhatParit";
+    public static final String CODE_SIMPLE_RESTRICTION="simpleRestriction";
+    public static final String CODE_RESTRICTION_RELEASE="restrictionRelease";
     public static final String CODE_APARTMENT = "apartment";
     public static final String CODE_STATE_OWNERSHIP = "stateOwnership";
     public static final String CODE_MORTGAGE = "mortgage";
@@ -95,9 +97,9 @@ public class RrrBean extends AbstractTransactionedBean {
     // public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
     // public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     public static final String OWNER_TYPE_PROPERTY = "ownerType";
-    public static final String SHARE_TYPE_PROPERTY = "shareType";
+    public static final String OWNERSHIP_TYPE_PROPERTY = "shareType";
     public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";
-    public static final String SHARE_TYPE_CODE_PROPERTY = "shareTypeCode";
+    public static final String OWNERSHIP_TYPE_CODE_PROPERTY = "ownershipTypeCode";
     public static final String TENANCY_TYPE_PROPERTY = "tenancyType";
     public static final String TENANCY_CODE_PROPERTY = "tenancyTypeCode";
     public static final String RESTRICTION_REASON_PROPERTY = "restrictionReason";
@@ -140,7 +142,7 @@ public class RrrBean extends AbstractTransactionedBean {
     @NotNull(message = ClientMessage.CHECK_SELECT_OWNER_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private OwnerTypeBean ownerType;
     @NotNull(message = ClientMessage.CHECK_SELECT_SHARE_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
-    private ShareTypeBean shareType;
+    private OwnershipTypeBean ownershipType;
     private TenancyTypeBean tenancyType;
     private String restrictionOfficeName;
     private String restrictionReleaseOfficeName;
@@ -196,31 +198,31 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(OWNER_TYPE_PROPERTY, oldValue, this.ownerType);
     }
 
-    public String getShareTypeCode() {
-        if (shareType != null) {
-            return shareType.getCode();
+    public String getOwnershipTypeCode() {
+        if (ownershipType != null) {
+            return ownershipType.getCode();
         } else {
             return null;
         }
     }
 
-    public void setShareTypeCode(String shareTypeCode) {
+    public void setOwnershipTypeCode(String ownershipTypeCode) {
         String oldValue = null;
-        if (shareType != null) {
-            oldValue = shareType.getCode();
+        if (ownershipType != null) {
+            oldValue = ownershipType.getCode();
         }
-        setShareType(CacheManager.getBeanByCode(CacheManager.getShareTypes(), shareTypeCode));
-        propertySupport.firePropertyChange(SHARE_TYPE_CODE_PROPERTY, oldValue, shareTypeCode);
+        setOwnershipType(CacheManager.getBeanByCode(CacheManager.getOwnershipTypes(), ownershipTypeCode));
+        propertySupport.firePropertyChange(OWNERSHIP_TYPE_CODE_PROPERTY, oldValue, ownershipTypeCode);
     }
 
-    public ShareTypeBean getShareType() {
-        return shareType;
+    public OwnershipTypeBean getOwnershipType() {
+        return ownershipType;
     }
 
-    public void setShareType(ShareTypeBean shareType) {
-        ShareTypeBean oldValue = this.shareType;
-        this.shareType = shareType;
-        propertySupport.firePropertyChange(SHARE_TYPE_PROPERTY, oldValue, this.shareType);
+    public void setOwnershipType(OwnershipTypeBean ownershipType) {
+        OwnershipTypeBean oldValue = this.ownershipType;
+        this.ownershipType = ownershipType;
+        propertySupport.firePropertyChange(OWNERSHIP_TYPE_PROPERTY, oldValue, this.ownershipType);
     }
 
     public String getTenancyTypeCode() {
@@ -824,7 +826,7 @@ public class RrrBean extends AbstractTransactionedBean {
             setRegistrationDate(Calendar.getInstance().getTime());
             setTypeCode(null);
             setOwnerTypeCode(null);
-            setShareTypeCode(null);
+            setOwnershipTypeCode(null);
 
             Iterator<PartySummaryBean> iteratorRightholders = getRightHolderList().iterator();
             while (iteratorRightholders.hasNext()) {
@@ -855,7 +857,7 @@ public class RrrBean extends AbstractTransactionedBean {
         }
         setTypeCode(rrrLoc.getTypeCode());
         setOwnerTypeCode(rrrLoc.getOwnerTypeCode());
-        setShareTypeCode(rrrLoc.getShareTypeCode());
+        setOwnershipTypeCode(rrrLoc.getOwnershipTypeCode());
 
         if (getNotation() != null) {
             getNotation().setNotationText(rrrLoc.getNotationText());

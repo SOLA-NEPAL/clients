@@ -748,19 +748,22 @@ public class PropertyPanel extends ContentPanel {
         String rrrGroupCode = rrrBean.getRrrType().getRrrGroupTypeCode();
         String rrrTypeCode = rrrBean.getTypeCode();
 
-        if (rrrGroupCode.equals(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS)) {
-            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action, true);
-            cardName = MainContentPanel.CARD_MORTGAGE;
-        } else if (rrrGroupCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
+//        if (rrrGroupCode.equals(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS)) {
+//            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action, true);
+//            cardName = MainContentPanel.CARD_MORTGAGE;
+//        } else 
+        if (rrrGroupCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_OWNERSHIP;
-        } else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_UNKNOWN)
-                || rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_LIKHATPARIT)
-                || rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_BYAPPLICATION)
-                || rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_BYLETTER)) {
+        } else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_SIMPLE_RESTRICTION)) {
             cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
-            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action, true);
-        } else {
+            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
+        } 
+//        else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_RESTRICTION_RELEASE)) {
+//            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
+//            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action, false);
+//        } 
+        else {
             cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
         }

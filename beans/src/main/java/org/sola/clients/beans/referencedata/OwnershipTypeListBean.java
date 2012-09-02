@@ -24,13 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class ShareTypeListBean extends AbstractBindingListBean {
+public class OwnershipTypeListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_SHARE_TYPES_PROPERTY = "selectedShareType";
-    private SolaCodeList<ShareTypeBean> shareTypes;
-    private ShareTypeBean selectedShareType;
+    public static final String SELECTED_OWNERSHIP_TYPES_PROPERTY = "selectedOwnershipType";
+    private SolaCodeList<OwnershipTypeBean> ownershipTypes;
+    private OwnershipTypeBean selectedOwnershipType;
 
-    public ShareTypeListBean() {
+    public OwnershipTypeListBean() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class ShareTypeListBean extends AbstractBindingListBean {
      *
      * @param createDummy indicates whether to add empty object on the list
      */
-    public ShareTypeListBean(boolean createDummy) {
+    public OwnershipTypeListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,36 +49,36 @@ public class ShareTypeListBean extends AbstractBindingListBean {
      * @param createDummy indicates whether to add empty object on the list
      * @param excludedCodes codes, which should be skipped while filtering
      */
-    public ShareTypeListBean(boolean createDummy, String... excludedCodes) {
+    public OwnershipTypeListBean(boolean createDummy, String... excludedCodes) {
         super();
-        shareTypes = new SolaCodeList<ShareTypeBean>(excludedCodes);
+        ownershipTypes = new SolaCodeList<OwnershipTypeBean>(excludedCodes);
         loadList(createDummy);
     }
 
     /**
-     * Loads List of {@link ShareTypeBean}.
+     * Loads List of {@link OwnershipTypeBean}.
      *
      * @param createDummy indicates whether to add empty object on the list
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(ShareTypeBean.class, shareTypes, CacheManager.getShareTypes(), createDummy);
+        loadCodeList(OwnershipTypeBean.class, ownershipTypes, CacheManager.getOwnershipTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        shareTypes.setExcludedCodes(codes);
+        ownershipTypes.setExcludedCodes(codes);
     }
 
-    public ShareTypeBean getSelectedShareType() {
-        return selectedShareType;
+    public OwnershipTypeBean getSelectedOwnershipType() {
+        return selectedOwnershipType;
     }
 
-    public void setSelectedShareType(ShareTypeBean selectedShareType) {
-        ShareTypeBean oldValue = this.selectedShareType;
-        this.selectedShareType = selectedShareType;
-        propertySupport.firePropertyChange(SELECTED_SHARE_TYPES_PROPERTY, oldValue, this.selectedShareType);
+    public void setSelectedOwnershipType(OwnershipTypeBean selectedOwnershipType) {
+        OwnershipTypeBean oldValue = this.selectedOwnershipType;
+        this.selectedOwnershipType = selectedOwnershipType;
+        propertySupport.firePropertyChange(SELECTED_OWNERSHIP_TYPES_PROPERTY, oldValue, this.selectedOwnershipType);
     }
 
-    public ObservableList<ShareTypeBean> getShareTypes() {
-        return shareTypes.getFilteredList();
+    public ObservableList<OwnershipTypeBean> getOwnershipTypes() {
+        return ownershipTypes.getFilteredList();
     }
 }

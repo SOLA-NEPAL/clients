@@ -371,11 +371,11 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     OwnerTypeBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.OWNER_TYPE_KEY);
             refDataTOClass = OwnerTypeTO.class;
-        } else if (refDataClass == ShareTypeBean.class) {
-            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getShareTypes(null),
-                    ShareTypeBean.class, (List) refDataList);
-            CacheManager.remove(CacheManager.SHARE_TYPE_KEY);
-            refDataTOClass = ShareTypeTO.class;
+        } else if (refDataClass == OwnershipTypeBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getOwnershipTypes(null),
+                    OwnershipTypeBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.OWNERSHIP_TYPE_KEY);
+            refDataTOClass = OwnershipTypeTO.class;
         } else if (refDataClass == TenancyTypeBean.class) {
             TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getTenantTypes(null),
                     TenancyTypeBean.class, (List) refDataList);

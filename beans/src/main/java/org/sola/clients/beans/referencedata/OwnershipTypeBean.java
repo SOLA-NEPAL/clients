@@ -21,13 +21,13 @@ import org.sola.clients.beans.AbstractCodeBean;
  *
  * @author KumarKhadka
  */
-public class ShareTypeBean extends AbstractCodeBean {
+public class OwnershipTypeBean extends AbstractCodeBean {
 
     public static final String CODE_CANCEL = "cancel";
     public static final String CODE_NEW = "new";
     public static final String CODE_VARY = "vary";
 
-    public ShareTypeBean() {
+    public OwnershipTypeBean() {
         super();
     }
 }

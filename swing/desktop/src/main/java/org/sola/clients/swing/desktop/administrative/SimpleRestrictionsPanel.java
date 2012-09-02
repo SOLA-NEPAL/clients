@@ -93,28 +93,22 @@ public class SimpleRestrictionsPanel extends ContentPanel {
      * view.
      */
     public SimpleRestrictionsPanel(RrrBean rrrBean, ApplicationBean applicationBean,
-            ApplicationServiceBean applicationService, RrrBean.RRR_ACTION rrrAction,boolean show) {
+            ApplicationServiceBean applicationService, RrrBean.RRR_ACTION rrrAction) {
 
         this.appBean = applicationBean;
         this.appService = applicationService;
         this.rrrAction = rrrAction;
         prepareRrrBean(rrrBean, rrrAction);
 
-        initComponents();
-        showHidePanel(show);
+        initComponents();        
         headerPanel.setTitleText(rrrBean.getRrrType().getDisplayValue());
         customizeForm(rrrAction);
         saveRrrState();
     }
 
     private void showHidePanel(boolean show) {
-        if (show) {
-            restrictionPanel.setVisible(show);
-            restrictionReleasePanel.setVisible(!show);
-        } else {
-            restrictionPanel.setVisible(!show);
-            restrictionReleasePanel.setVisible(show);
-        }
+        restrictionPanel.setVisible(show);
+        restrictionReleasePanel.setVisible(!show);
     }
 
     /**
@@ -136,9 +130,11 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     private void customizeForm(RrrBean.RRR_ACTION rrrAction) {
         if (rrrAction == RrrBean.RRR_ACTION.NEW) {
             btnSave.setText("Create & Close");
+            showHidePanel(true);
         }
         if (rrrAction == RrrBean.RRR_ACTION.CANCEL) {
             btnSave.setText("Extinguish");
+            showHidePanel(false);
         }
 
         if (rrrAction != RrrBean.RRR_ACTION.EDIT && rrrAction != RrrBean.RRR_ACTION.VIEW
