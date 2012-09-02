@@ -58,7 +58,6 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String APPROVAL_DATETIME_PROPERTY = "approvalDatetime";
     public static final String HISTORIC_DATETIME_PROPERTY = "historicDatetime";
-    public static final String SOURCE_REFERENCE_PROPERTY = "sourceReference";
     public static final String NAME_FIRSTPART_PROPERTY = "nameFirstpart";
     public static final String NAME_LASTPART_PROPERTY = "nameLastpart";
     public static final String CADASTRE_OBJECT_TYPE_PROPERTY = "cadastreObjectType";
@@ -84,7 +83,6 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     
     private Date approvalDatetime;
     private Date historicDatetime;
-    private String sourceReference;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_CADFIRSTPART, payload = Localized.class)
     private String nameFirstpart;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_CADLASTPART, payload = Localized.class)
@@ -334,17 +332,6 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
         this.nameLastpart = nameLastpart;
         propertySupport.firePropertyChange(NAME_LASTPART_PROPERTY,
                 oldValue, nameLastpart);
-    }
-
-    public String getSourceReference() {
-        return sourceReference;
-    }
-
-    public void setSourceReference(String sourceReference) {
-        String oldValue = sourceReference;
-        this.sourceReference = sourceReference;
-        propertySupport.firePropertyChange(SOURCE_REFERENCE_PROPERTY,
-                oldValue, sourceReference);
     }
 
     public String getTypeCode() {
