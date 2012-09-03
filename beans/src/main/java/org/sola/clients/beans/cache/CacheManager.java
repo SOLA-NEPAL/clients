@@ -222,9 +222,9 @@ public final class CacheManager {
      */
     public static final String RESTRICTION_OFFICE_KEY = RestrictionOfficeBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the {@link ParcelTypeBean} collection.
+     * Cache key of the {@link LandTypeBean} collection.
      */
-    public static final String PARCEL_TYPES_KEY = ParcelTypeBean.class.getName() + LIST_POSTFIX;
+    public static final String LAND_TYPES_KEY = LandTypeBean.class.getName() + LIST_POSTFIX;
     /**
      * Cache key of the {@link TenancyTypeBean} collection.
      */
@@ -284,7 +284,7 @@ public final class CacheManager {
     private static final String GET_OFFICES = "getOffices";
     private static final String GET_MAPSHEETS = "getMapSheets";
     private static final String GET_VDCS = "getVdcs";
-    private static final String GET_PARCEL_TYPES = "getParcelTypes";
+    private static final String GET_LAND_TYPES = "getLandTypes";
     private static final String GET_RESTRICTION_REASONS = "getRestrictionReasons";
     private static final String GET_RESTRICTION_RELEASE_REASONS = "getRestrictionReleaseReasons";
     private static final String GET_RESTRICTION_OFFICES = "getRestrictionOffices";
@@ -780,9 +780,9 @@ public final class CacheManager {
                 GET_GUTHI_NAMES, GUTHI_NAME_KEY);
     }
 
-    public static List<ParcelTypeBean> getParcelTypes() {
-        return getCachedBeanList(ParcelTypeBean.class,
+    public static List<LandTypeBean> getLandTypes() {
+        return getCachedBeanList(LandTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
-                GET_PARCEL_TYPES, PARCEL_TYPES_KEY);
+                GET_LAND_TYPES, LAND_TYPES_KEY);
     }
 }

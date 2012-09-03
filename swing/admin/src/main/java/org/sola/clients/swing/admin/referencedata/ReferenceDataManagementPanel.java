@@ -391,11 +391,11 @@ public class ReferenceDataManagementPanel extends ContentPanel {
                     LandClassBean.class, (List) refDataList);
             CacheManager.remove(CacheManager.LAND_CLASS_KEY);
             refDataTOClass = LandClassTO.class;
-        } else if (refDataClass == ParcelTypeBean.class) {
-            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getParcelTypes(null),
-                    ParcelTypeBean.class, (List) refDataList);
-            CacheManager.remove(CacheManager.PARCEL_TYPES_KEY);
-            refDataTOClass = ParcelTypeTO.class;
+        } else if (refDataClass == LandTypeBean.class) {
+            TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getReferenceDataService().getLandTypes(null),
+                    LandTypeBean.class, (List) refDataList);
+            CacheManager.remove(CacheManager.LAND_TYPES_KEY);
+            refDataTOClass = LandTypeTO.class;
         }
     }
 

@@ -24,13 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author ShresthaKabin
  */
-public class ParcelTypeBeanList extends AbstractBindingListBean {
+public class LandTypeBeanList extends AbstractBindingListBean {
 
-    public static final String SELECTED_PARCEL_TYPE_PROPERTY = "selectedParcelType";
-    public SolaCodeList<ParcelTypeBean> parcelTypes;
-    private ParcelTypeBean selectedParcelType;
+    public static final String SELECTED_LAND_TYPE_PROPERTY = "selectedLandType";
+    public SolaCodeList<LandTypeBean> landTypes;
+    private LandTypeBean selectedLandType;
 
-    public ParcelTypeBeanList() {
+    public LandTypeBeanList() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class ParcelTypeBeanList extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public ParcelTypeBeanList(boolean createDummy) {
+    public LandTypeBeanList(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,39 +49,39 @@ public class ParcelTypeBeanList extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public ParcelTypeBeanList(boolean createDummy, String... excludedCodes) {
+    public LandTypeBeanList(boolean createDummy, String... excludedCodes) {
         super();
-        parcelTypes = new SolaCodeList<ParcelTypeBean>(excludedCodes);
+        landTypes = new SolaCodeList<LandTypeBean>(excludedCodes);
         loadList(createDummy);
 
     }
 
     /**
-     * Loads list of {@link ParcelTypeBean}.
+     * Loads list of {@link LandTypeBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(ParcelTypeBean.class, parcelTypes, CacheManager.getParcelTypes(), createDummy);
+        loadCodeList(LandTypeBean.class, landTypes, CacheManager.getLandTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        parcelTypes.setExcludedCodes(codes);
+        landTypes.setExcludedCodes(codes);
     }
 
-    public ParcelTypeBean getSelectedParcelType() {
-        return selectedParcelType;
+    public LandTypeBean getSelectedLandType() {
+        return selectedLandType;
     }
 
-    public void setSelectedParcelType(ParcelTypeBean selectedParcelType) {
-        ParcelTypeBean oldValue = this.selectedParcelType;
-        this.selectedParcelType = selectedParcelType;
+    public void setSelectedLandType(LandTypeBean selectedLandType) {
+        LandTypeBean oldValue = this.selectedLandType;
+        this.selectedLandType = selectedLandType;
         propertySupport.firePropertyChange(
-                SELECTED_PARCEL_TYPE_PROPERTY, oldValue, this.selectedParcelType);
+                SELECTED_LAND_TYPE_PROPERTY, oldValue, this.selectedLandType);
     }
 
-    public ObservableList<ParcelTypeBean> getParcelTypes() {
-        return parcelTypes.getFilteredList();
+    public ObservableList<LandTypeBean> getLandTypes() {
+        return landTypes.getFilteredList();
     }
 }

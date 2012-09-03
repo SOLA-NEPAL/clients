@@ -42,7 +42,7 @@ import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.referencedata.CadastreObjectTypeBean;
 import org.sola.clients.beans.referencedata.LandClassBean;
 import org.sola.clients.beans.referencedata.LandUseBean;
-import org.sola.clients.beans.referencedata.ParcelTypeBean;
+import org.sola.clients.beans.referencedata.LandTypeBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -64,14 +64,14 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     public static final String GEOM_POLYGON_PROPERTY = "geomPolygon";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
-    public static final String PARCEL_TYPE_BEAN_PROPERTY = "parcelTypeBean";
+    public static final String LAND_TYPE_BEAN_PROPERTY = "landTypeBean";
     public static final String LAND_USE_BEAN_PROPERTY = "landUseBean";
     public static final String LAND_CLASS_BEAN_PROPERTY = "landClassBean";
     public static final String ADDRESS_BEAN_PROPERTY = "adressBean";
     public static final String SPATIAL_VALUE_AREA_LIST_PROPERTY = "spatialValueAreaList";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
     public static final String PARCEL_NOTE_PROPERTY = "parcelNote";
-    public static final String PARCEL_TYPE_PROPERTY = "parcelTypeCode";
+    public static final String LAND_TYPE_PROPERTY = "landTypeCode";
     public static final String LAND_USE_CODE_PROPERTY = "landUseCode";
     public static final String LAND_CLASS_CODE_PROPERTY = "landClassCode";
     public static final String SELECTED_SPATIAL_VALUE_AREA_PROPERTY = "selectedSpatialValueArea";
@@ -97,7 +97,7 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
     private String parcelNote;
     private SolaObservableList<SpatialValueAreaBean> selectedSpatialValueArea;
     private MapSheetBean mapSheet;
-    private ParcelTypeBean parceltypeBean;
+    private LandTypeBean landTypeBean;
     private LandClassBean landClassBean;
     private LandUseBean landUseBean;
     private AddressBean addressBean;
@@ -136,15 +136,15 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
         propertySupport.firePropertyChange(LAND_USE_BEAN_PROPERTY, oldValue, this.landUseBean);
     }
 
-    public ParcelTypeBean getParceltypeBean() {
-        return parceltypeBean;
+    public LandTypeBean getLandTypeBean() {
+        return landTypeBean;
     }
 
-    public void setParceltypeBean(ParcelTypeBean parceltypeBean) {
-        ParcelTypeBean oldValue = this.parceltypeBean;
-        this.parceltypeBean = parceltypeBean;
+    public void setLandTypeBean(LandTypeBean landTypeBean) {
+        LandTypeBean oldValue = this.landTypeBean;
+        this.landTypeBean = landTypeBean;
         propertySupport.firePropertyChange(
-                PARCEL_TYPE_BEAN_PROPERTY, oldValue, this.parceltypeBean);
+                LAND_TYPE_BEAN_PROPERTY, oldValue, this.landTypeBean);
     }
 
     public SpatialValueAreaBean getSpatialValueArea() {
@@ -211,21 +211,21 @@ public class CadastreObjectBean extends AbstractTransactionedWithOfficeCodeBean 
                 oldValue, this.parcelNote);
     }
 
-    public String getParcelTypeCode() {
-        if (this.parceltypeBean == null) {
+    public String getLandTypeCode() {
+        if (this.landTypeBean == null) {
             return null;
         } else {
-            return parceltypeBean.getCode();
+            return landTypeBean.getCode();
         }
     }
 
-    public void setParcelTypeCode(String parcelTypeCode) {
+    public void setLandTypeCode(String landTypeCode) {
         String oldValue = null;
-        if (getParcelTypeCode() != null) {
-            oldValue = getParceltypeBean().getCode();
+        if (getLandTypeCode() != null) {
+            oldValue = getLandTypeBean().getCode();
         }
-        setParceltypeBean(CacheManager.getBeanByCode(CacheManager.getParcelTypes(), parcelTypeCode));
-        propertySupport.firePropertyChange(PARCEL_TYPE_PROPERTY, oldValue, parcelTypeCode);
+        setLandTypeBean(CacheManager.getBeanByCode(CacheManager.getLandTypes(), landTypeCode));
+        propertySupport.firePropertyChange(LAND_TYPE_PROPERTY, oldValue, landTypeCode);
     }
 
     public String getLandClassCode() {
