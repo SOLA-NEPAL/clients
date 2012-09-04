@@ -85,9 +85,9 @@ public class CadastreObjectLayer extends ExtendedLayerGraphics {
         fieldsWithValues.put(
                 LAYER_FIELD_LAST_PART, parcel.getNameLastpart());
         fieldsWithValues.put(
-                LAYER_FIELD_MAP_SHEET, parcel.getMapSheetCode());
+                LAYER_FIELD_MAP_SHEET, parcel.getMapSheetId());
         fieldsWithValues.put(
-                LAYER_FIELD_PARCEL_TYPE, parcel.getParcelTypeCode());
+                LAYER_FIELD_PARCEL_TYPE, parcel.getLandTypeCode());
 
         DecimalFormat df = new DecimalFormat("#0.00");
         WKBReader wkb_reader = new WKBReader();

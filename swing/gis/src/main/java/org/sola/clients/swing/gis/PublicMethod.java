@@ -856,8 +856,8 @@ public class PublicMethod {
         //read attributes.
         String firstpartname = target.getNameFirstpart();
         String lastpartname = target.getNameLastpart();
-        String mapsheetid = target.getMapSheetCode();
-        String parceltype = target.getParcelTypeCode();
+        String mapsheetid = target.getMapSheetId();
+        String parceltype = target.getLandTypeCode();
         //new parcels.
         try {
             CadastreChangeNewCadastreObjectLayer new_parcels = targetParcelsLayer.getNew_parcels();

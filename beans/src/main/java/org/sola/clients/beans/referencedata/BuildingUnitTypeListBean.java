@@ -22,15 +22,15 @@ import org.sola.clients.beans.controls.SolaCodeList;
 
 /**
  *
- * @author ShresthaKabin
+ * @author Kumar
  */
-public class LandTypeBeanList extends AbstractBindingListBean {
+public class BuildingUnitTypeListBean extends AbstractBindingListBean {
 
-    public static final String SELECTED_LAND_TYPE_PROPERTY = "selectedLandType";
-    public SolaCodeList<LandTypeBean> landTypes;
-    private LandTypeBean selectedLandType;
+    public static final String SELECTED_BUILDING_UNIT_TYPE_PROPERTY = "selectedBuildingUnitType";
+    public SolaCodeList<BuildingUnitTypeBean> buildingUnitTypes;
+    private BuildingUnitTypeBean selectedBuildingUnitType;
 
-    public LandTypeBeanList() {
+    public BuildingUnitTypeListBean() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class LandTypeBeanList extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public LandTypeBeanList(boolean createDummy) {
+    public BuildingUnitTypeListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,39 +49,39 @@ public class LandTypeBeanList extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public LandTypeBeanList(boolean createDummy, String... excludedCodes) {
+    public BuildingUnitTypeListBean(boolean createDummy, String... excludedCodes) {
         super();
-        landTypes = new SolaCodeList<LandTypeBean>(excludedCodes);
+        buildingUnitTypes = new SolaCodeList<BuildingUnitTypeBean>(excludedCodes);
         loadList(createDummy);
 
     }
 
     /**
-     * Loads list of {@link LandTypeBean}.
+     * Loads list of {@link BuildingUnitTypeBean}.
      *
      * @param createDummy Indicates whether to add empty object on the list.
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(LandTypeBean.class, landTypes, CacheManager.getLandTypes(), createDummy);
+        loadCodeList(BuildingUnitTypeBean.class, buildingUnitTypes, CacheManager.getBuildingUnitTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
-        landTypes.setExcludedCodes(codes);
+        buildingUnitTypes.setExcludedCodes(codes);
     }
 
-    public LandTypeBean getSelectedLandType() {
-        return selectedLandType;
+    public BuildingUnitTypeBean getSelectedBuildingUnitType() {
+        return selectedBuildingUnitType;
     }
 
-    public void setSelectedLandType(LandTypeBean selectedLandType) {
-        LandTypeBean oldValue = this.selectedLandType;
-        this.selectedLandType = selectedLandType;
+    public void setSelectedBuildingUnitType(BuildingUnitTypeBean selectedLandType) {
+        BuildingUnitTypeBean oldValue = this.selectedBuildingUnitType;
+        this.selectedBuildingUnitType = selectedLandType;
         propertySupport.firePropertyChange(
-                SELECTED_LAND_TYPE_PROPERTY, oldValue, this.selectedLandType);
+                SELECTED_BUILDING_UNIT_TYPE_PROPERTY, oldValue, this.selectedBuildingUnitType);
     }
 
-    public ObservableList<LandTypeBean> getLandTypes() {
-        return landTypes.getFilteredList();
+    public ObservableList<BuildingUnitTypeBean> getBuildingUnitTypes() {
+        return buildingUnitTypes.getFilteredList();
     }
 }

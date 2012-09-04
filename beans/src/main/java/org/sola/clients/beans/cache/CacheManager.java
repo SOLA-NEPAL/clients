@@ -250,8 +250,16 @@ public final class CacheManager {
      */
     public static final String GUTHI_NAME_KEY = GuthiNameBean.class.getName() + LIST_POSTFIX;
     /**
-     * Cache key of the {@link GuthiNameBean} collection.
+     * Cache key of the {@link BuildingUnitTypeBean} collection.
      */
+    /**
+     * Cache key of the {@link LandClassBean} collection.
+     */
+    public static final String BUILDING_UNIT_TYPE_KEY = BuildingUnitTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link AreaUnitTypeBean} collection.
+     */
+    public static final String AREA_UNIT_TYPE_KEY = AreaUnitTypeBean.class.getName() + LIST_POSTFIX;
     private static final String CACHED_VDCS_KEY = "cachedVdcs" + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
@@ -294,6 +302,8 @@ public final class CacheManager {
     private static final String GET_LAND_USES = "getLandUses";
     private static final String GET_LAND_CLASSES = "getLandClasses";
     private static final String GET_GUTHI_NAMES = "getGuthiNames";
+    private static final String GET_AREA_UNIT_TYPES = "getAreaUnitTypes";
+    private static final String GET_BUILDING_UNIT_TYPES = "getBuildingUnitTypes";
 
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result = new ArrayList<DepartmentBean>();
@@ -784,5 +794,17 @@ public final class CacheManager {
         return getCachedBeanList(LandTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_LAND_TYPES, LAND_TYPES_KEY);
+    }
+
+    public static List<AreaUnitTypeBean> getAreaUnitTypes() {
+        return getCachedBeanList(AreaUnitTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_AREA_UNIT_TYPES, AREA_UNIT_TYPE_KEY);
+    }
+
+    public static List<BuildingUnitTypeBean> getBuildingUnitTypes() {
+        return getCachedBeanList(BuildingUnitTypeBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_BUILDING_UNIT_TYPES, BUILDING_UNIT_TYPE_KEY);
     }
 }

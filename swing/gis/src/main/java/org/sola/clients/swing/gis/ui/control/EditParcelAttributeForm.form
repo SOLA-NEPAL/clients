@@ -16,7 +16,7 @@
     </Component>
     <Component class="org.sola.clients.beans.cadastre.MapSheetListBean" name="mapSheetListBean">
     </Component>
-    <Component class="org.sola.clients.beans.referencedata.LandTypeBeanList" name="landTypeBeanList">
+    <Component class="org.sola.clients.beans.referencedata.LandTypeListBean" name="landTypeBeanList">
     </Component>
   </NonVisualComponents>
   <Properties>

@@ -27,8 +27,8 @@
  */
 package org.sola.clients.swing.gis.to;
 
-import java.util.List;
-import org.sola.webservices.transferobjects.cadastre.SpatialValueAreaTO;
+//import java.util.List;
+//import org.sola.webservices.transferobjects.cadastre.SpatialValueAreaTO;
 
 /**
  * It extends the TO which is generated from the web service with the set method
@@ -41,9 +41,9 @@ import org.sola.webservices.transferobjects.cadastre.SpatialValueAreaTO;
 public class CadastreObjectExtraTO extends 
         org.sola.webservices.transferobjects.cadastre.CadastreObjectTO{
 
-    public void setSpatialValueAreaList(List<SpatialValueAreaTO> spatialValueAreaList) {
-        this.spatialValueAreaList = spatialValueAreaList;
-    }
+//    public void setSpatialValueAreaList(List<SpatialValueAreaTO> spatialValueAreaList) {
+//      //  this.spatialValueAreaList = spatialValueAreaList;
+//    }
     
 }
 
