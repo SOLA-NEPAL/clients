@@ -88,7 +88,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private BigDecimal servicesFee;
     private BigDecimal tax;
     private BigDecimal totalAmountPaid;
-    private BigDecimal valuationAmount;
+   private BigDecimal valuationAmount;
     private String receiptNumber;
     private Date receiptDate;
     private String paymentRemarks;

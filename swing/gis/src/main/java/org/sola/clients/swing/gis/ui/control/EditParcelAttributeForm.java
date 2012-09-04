@@ -9,9 +9,7 @@ import javax.swing.JOptionPane;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
-import org.sola.webservices.transferobjects.cadastre.SpatialValueAreaTO;
 
 /**
  *
@@ -56,7 +54,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
 
         jComboBox1 = new javax.swing.JComboBox();
         mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
-        parcelTypeBeanList = new org.sola.clients.beans.referencedata.ParcelTypeBeanList();
+        landTypeBeanList = new org.sola.clients.beans.referencedata.LandTypeBeanList();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cboMapSheets = new javax.swing.JComboBox();
@@ -135,10 +133,10 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
 
         jLabel5.setText("Parcel Type:");
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parcelTypes}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelTypeBeanList, eLProperty, jComboBox2);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${landTypes}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, landTypeBeanList, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.parceltypeBean}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.landTypeBean}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         jLabel6.setText("Parcel Note (Maximum 255 Characters):");
@@ -282,8 +280,8 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private org.sola.clients.beans.referencedata.LandTypeBeanList landTypeBeanList;
     private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
-    private org.sola.clients.beans.referencedata.ParcelTypeBeanList parcelTypeBeanList;
     private javax.swing.JTextField txtFirstPartName;
     private javax.swing.JTextField txtParcelNumber;
     private javax.swing.JTextField txtSecondPartName;

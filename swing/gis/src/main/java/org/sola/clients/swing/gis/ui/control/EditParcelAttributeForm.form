@@ -16,7 +16,7 @@
     </Component>
     <Component class="org.sola.clients.beans.cadastre.MapSheetListBean" name="mapSheetListBean">
     </Component>
-    <Component class="org.sola.clients.beans.referencedata.ParcelTypeBeanList" name="parcelTypeBeanList">
+    <Component class="org.sola.clients.beans.referencedata.LandTypeBeanList" name="landTypeBeanList">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -220,8 +220,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox2">
           <BindingProperties>
-            <BindingProperty name="elements" source="parcelTypeBeanList" sourcePath="${parcelTypes}" target="jComboBox2" targetPath="elements" updateStrategy="0" immediately="false"/>
-            <BindingProperty name="selectedItem" source="Form" sourcePath="${parcel.parceltypeBean}" target="jComboBox2" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="elements" source="landTypeBeanList" sourcePath="${landTypes}" target="jComboBox2" targetPath="elements" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="selectedItem" source="Form" sourcePath="${parcel.landTypeBean}" target="jComboBox2" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

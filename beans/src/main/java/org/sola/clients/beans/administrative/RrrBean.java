@@ -160,8 +160,8 @@ public class RrrBean extends AbstractTransactionedBean {
     private boolean terminating;
     private String fiscalYearCode;
     private String registrationNumber;
-    private double valuationAmount;
-    private double taxAmount;
+    private BigDecimal valuationAmount;
+    private BigDecimal taxAmount;
 
     public RrrBean() {
         super();
@@ -368,22 +368,22 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(REGISTRATION_NUMBER_PROPERTY, oldValue, this.registrationNumber);
     }
 
-    public double getValuationAmount() {
+    public BigDecimal getValuationAmount() {
         return valuationAmount;
     }
 
-    public void setValuationAmount(double valuationAmount) {
-        double oldValue = this.valuationAmount;
+    public void setValuationAmount(BigDecimal valuationAmount) {
+        BigDecimal oldValue = this.valuationAmount;
         this.valuationAmount = valuationAmount;
         propertySupport.firePropertyChange(VALUATION_AMOUNT_PROPERTY, oldValue, this.valuationAmount);
     }
 
-    public double getTaxAmount() {
+    public BigDecimal getTaxAmount() {
         return taxAmount;
     }
 
-    public void setTaxAmount(double taxAmount) {
-        double oldValue = this.taxAmount;
+    public void setTaxAmount(BigDecimal taxAmount) {
+        BigDecimal oldValue = this.taxAmount;
         this.taxAmount = taxAmount;
         propertySupport.firePropertyChange(TAX_AMOUNT_PROPERTY, oldValue, this.taxAmount);
     }
