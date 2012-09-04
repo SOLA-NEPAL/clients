@@ -339,6 +339,19 @@ public class ApplicationBean extends ApplicationSummaryBean {
         propertySupport.firePropertyChange(CONTACT_PERSON_PROPERTY, oldValue, this.contactPerson);
     }
 
+    @Override
+    public String getContactPersonId() {
+        if(getContactPerson()==null){
+            return null;
+        }else{
+            return getContactPerson().getId();
+        }
+    }
+    
+    @Override
+    public void setContactPersonId(String contactPersonId) {
+    }
+    
     public BaUnitSearchResultBean getSelectedProperty() {
         return selectedProperty;
     }

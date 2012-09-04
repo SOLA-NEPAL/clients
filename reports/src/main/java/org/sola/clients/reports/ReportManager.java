@@ -44,6 +44,7 @@ import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.security.UserBean;
 import org.sola.clients.beans.system.BrListBean;
 import org.sola.clients.beans.system.BrReportBean;
+import org.sola.clients.beans.party.PartyBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 /**
@@ -86,6 +87,7 @@ public class ReportManager {
         inputParameters.put("REPORT_LOCALE", Locale.getDefault());
         inputParameters.put("today", new Date());
         inputParameters.put("USER_NAME", SecurityBean.getCurrentUser().getFullUserName());
+        inputParameters.put("CONTACT_PERSON", PartyBean.getParty(appBean.getContactPersonId()));
         ApplicationBean[] beans = new ApplicationBean[1];
         beans[0] = appBean;
         JRDataSource jds = new JRBeanArrayDataSource(beans);
@@ -132,10 +134,10 @@ public class ReportManager {
         inputParameters.put("REPORT_LOCALE", Locale.getDefault());
         inputParameters.put("today", new Date());
         inputParameters.put("USER_NAME", SecurityBean.getCurrentUser().getFullUserName());
+        inputParameters.put("CONTACT_PERSON", PartyBean.getParty(appBean.getContactPersonId()));
         ApplicationBean[] beans = new ApplicationBean[1];
         beans[0] = appBean;
         JRDataSource jds = new JRBeanArrayDataSource(beans);
-        inputParameters.put("IMAGE_SCRITTA_GREEN", ReportManager.class.getResourceAsStream("/images/sola/caption_orange.png"));
         inputParameters.put("WHICH_CALLER", "R");
 
         try {
@@ -149,7 +151,7 @@ public class ReportManager {
     }
 
 
- /** 
+    /** 
      * Generates and displays <b>BR Report</b>.
      */
     public static JasperPrint getBrReport() {

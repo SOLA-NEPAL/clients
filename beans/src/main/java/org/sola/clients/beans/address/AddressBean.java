@@ -90,7 +90,9 @@ public class AddressBean extends AbstractIdBean {
     }
 
     public void setStreet(String street) {
+        String oldValue = this.street;
         this.street = street;
+        propertySupport.firePropertyChange(STREET_PROPERTY, oldValue, this.street);
     }
 
     public DistrictBean getDistrictBean() {

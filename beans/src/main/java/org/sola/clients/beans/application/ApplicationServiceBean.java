@@ -255,16 +255,18 @@ public class ApplicationServiceBean extends ApplicationServiceSummaryBean {
      * @param requestTypeCode Request type code to use for creating service.
      */
     public static boolean saveInformationService(String requestTypeCode) {
-        if (requestTypeCode == null) {
-            return false;
-        }
-        ApplicationServiceBean serviceBean = new ApplicationServiceBean();
-        RequestTypeBean requestType = CacheManager.getBeanByCode(CacheManager.getRequestTypes(), requestTypeCode);
-        if (requestType != null) {
-            serviceBean.setRequestType(requestType);
-            return serviceBean.saveInformationService();
-        } else {
-            return false;
-        }
+        // Uncomment the code below when save information service is required by DLRM
+        return true;
+//        if (requestTypeCode == null) {
+//            return false;
+//        }
+//        ApplicationServiceBean serviceBean = new ApplicationServiceBean();
+//        RequestTypeBean requestType = CacheManager.getBeanByCode(CacheManager.getRequestTypes(), requestTypeCode);
+//        if (requestType != null) {
+//            serviceBean.setRequestType(requestType);
+//            return serviceBean.saveInformationService();
+//        } else {
+//            return false;
+//        }
     }
 }
