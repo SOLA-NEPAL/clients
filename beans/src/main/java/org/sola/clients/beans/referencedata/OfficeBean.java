@@ -27,9 +27,8 @@ public class OfficeBean extends AbstractCodeBean {
 
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
     public static final String DISTRICT_PROPERTY = "district";
-    
     private static OfficeBean currentOffice;
-    @NotNull(message=ClientMessage.CHECK_SELECT_DISTRICT, payload=Localized.class)
+    @NotNull(message = ClientMessage.CHECK_SELECT_DISTRICT, payload = Localized.class)
     private DistrictBean district;
 
     public OfficeBean() {
@@ -37,7 +36,7 @@ public class OfficeBean extends AbstractCodeBean {
     }
 
     public String getDistrictCode() {
-        if(district == null){
+        if (district == null) {
             return null;
         }
         return district.getCode();
@@ -58,16 +57,18 @@ public class OfficeBean extends AbstractCodeBean {
         this.district = district;
         propertySupport.firePropertyChange(DISTRICT_PROPERTY, oldValue, this.district);
     }
-    
+
     public static OfficeBean getCurrentOffice() {
         if (currentOffice == null) {
-            currentOffice = TypeConverters.TransferObjectToBean(
-                    WSManager.getInstance().getAdminService().getCurrentOffice(),
-                    OfficeBean.class, null);
+            if (WSManager.getInstance().getAdminService() != null) {
+                currentOffice = TypeConverters.TransferObjectToBean(
+                        WSManager.getInstance().getAdminService().getCurrentOffice(),
+                        OfficeBean.class, null);
+            }
         }
         return currentOffice;
     }
-    
+
     public static String getCurrentOfficeCode() {
         if (getCurrentOffice() == null) {
             return null;

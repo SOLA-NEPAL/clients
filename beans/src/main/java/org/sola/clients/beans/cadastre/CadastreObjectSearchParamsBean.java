@@ -20,26 +20,31 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.VdcBean;
 
 /**
- *
- * @author Kumar
+ * Contains parameters for searching cadastre objects.
  */
-public class ParcelSearchParamsBean extends AbstractBindingBean {
+public class CadastreObjectSearchParamsBean extends AbstractBindingBean {
 
     public static final String VDC_PROPERTY = "vdc";
-    public static final String DISTRICT_CODE_PROPERTY = "districtCode";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String PARCEL_NO_PROPERTY = "parcelNo";
+    public static final String MAP_SHEET_CODE_PROPERTY = "mapSheetCode";
+    public static final String MAP_SHEET_PROPERTY = "mapSheet";
+
     private VdcBean vdc;
     private String wardNo;
     private String parcelNo;
-
-    public ParcelSearchParamsBean() {
+    private MapSheetBean mapSheet;
+    
+    public CadastreObjectSearchParamsBean() {
         super();
     }
 
     public String getVdcCode() {
-        return vdc.getCode();
+        if(getVdc() == null){
+            return null;
+        } 
+        return getVdc().getCode();
     }
 
     public VdcBean getVdc() {
@@ -47,10 +52,9 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
     }
 
     public void setVdc(VdcBean value) {
-        if (this.vdc == null) {
-            this.vdc = new VdcBean();
-        }
-        this.setJointRefDataBean(this.vdc, value, VDC_PROPERTY);
+        VdcBean oldValue = this.vdc;
+        this.vdc = value;
+        propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
     }
 
     public String getWardNo() {
@@ -71,5 +75,31 @@ public class ParcelSearchParamsBean extends AbstractBindingBean {
         String oldValue = parcelNo;
         parcelNo = value;
         propertySupport.firePropertyChange(PARCEL_NO_PROPERTY, oldValue, value);
+    }
+
+    public MapSheetBean getMapSheet() {
+        return mapSheet;
+    }
+
+    public void setMapSheet(MapSheetBean mapSheet) {
+        MapSheetBean oldValue = this.mapSheet;
+        this.mapSheet = mapSheet;
+        propertySupport.firePropertyChange(MAP_SHEET_PROPERTY, oldValue, this.mapSheet);
+    }
+
+    public String getMapSheetCode() {
+        if(getMapSheet() == null){
+            return null;
+        } 
+        return getMapSheet().getId();
+    }
+
+    public void setMapSheetCode(String mapSheetCode) {
+        String oldValue = null;
+        if(getMapSheet() !=null){
+            oldValue = getMapSheet().getId();
+        }
+        setMapSheet(CacheManager.getMapSheet(mapSheetCode));
+        propertySupport.firePropertyChange(MAP_SHEET_CODE_PROPERTY, oldValue, mapSheetCode);
     }
 }

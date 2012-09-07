@@ -261,6 +261,7 @@ public final class CacheManager {
      */
     public static final String AREA_UNIT_TYPE_KEY = AreaUnitTypeBean.class.getName() + LIST_POSTFIX;
     private static final String CACHED_VDCS_KEY = "cachedVdcs" + LIST_POSTFIX;
+    private static final String CACHED_MAP_SHEETS_KEY = "cachedMapSheets" + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
     private static final String GET_SOURCE_TYPES = "getSourceTypes";
     private static final String GET_COMMUNICATION_TYPES = "getCommunicationTypes";
@@ -345,8 +346,7 @@ public final class CacheManager {
             return getCachedVdcs().get(vdcCode);
         } else {
             VdcBean vdcBean = TypeConverters.TransferObjectToBean(
-                    WSManager.getInstance().getReferenceDataService()
-                    .getVdcByCode(vdcCode), VdcBean.class, null);
+                    WSManager.getInstance().getReferenceDataService().getVdcByCode(vdcCode), VdcBean.class, null);
             if (vdcBean != null) {
                 getVdcs(vdcBean.getDistrictCode());
             }
@@ -355,7 +355,10 @@ public final class CacheManager {
     }
 
     public static List<VdcBean> getVdcsByOffice() {
-        return getVdcs(OfficeBean.getCurrentOffice().getDistrictCode());
+        if (OfficeBean.getCurrentOffice() != null) {
+            return getVdcs(OfficeBean.getCurrentOffice().getDistrictCode());
+        }
+        return null;
     }
 
     private static HashMap<String, VdcBean> getCachedVdcs() {
@@ -730,10 +733,56 @@ public final class CacheManager {
         }
     }
 
-    public static List<MapSheetBean> getMapSheets() {
-        return getCachedBeanList(MapSheetBean.class,
-                WSManager.getInstance().getCadastreService(),
-                GET_MAPSHEETS, MAP_SHEET_KEY);
+    public static List<MapSheetBean> getMapSheets(String officeCode) {
+        List<MapSheetBean> result = new ArrayList<MapSheetBean>();
+        String key = MAP_SHEET_KEY + officeCode;
+
+        if (cache.contains(key)) {
+            result = (List<MapSheetBean>) cache.get(key);
+        } else {
+            if (WSManager.getInstance().getCadastreService() != null) {
+                TypeConverters.TransferObjectListToBeanList(
+                        WSManager.getInstance().getCadastreService().getMapSheetsByOffice(officeCode),
+                        MapSheetBean.class, (List) result);
+                cache.put(key, result);
+                HashMap<String, MapSheetBean> mapSheets = getCachedMapSheets();
+                for (MapSheetBean mapSheet : result) {
+                    mapSheets.put(mapSheet.getId(), mapSheet);
+                }
+            }
+        }
+        return result;
+    }
+
+    public static MapSheetBean getMapSheet(String mapSheetId) {
+        if (getCachedMapSheets().containsKey(mapSheetId)) {
+            return getCachedMapSheets().get(mapSheetId);
+        } else {
+            MapSheetBean mapSheetBean = TypeConverters.TransferObjectToBean(
+                    WSManager.getInstance().getCadastreService().getMapSheet(mapSheetId), MapSheetBean.class, null);
+            if (mapSheetBean != null) {
+                getMapSheets(mapSheetBean.getOfficeCode());
+            }
+            return mapSheetBean;
+        }
+    }
+
+    public static List<MapSheetBean> getMapSheetsByCurrentOffice() {
+        if (OfficeBean.getCurrentOffice() != null) {
+            return getMapSheets(OfficeBean.getCurrentOffice().getDistrictCode());
+        }
+        return null;
+    }
+
+    private static HashMap<String, MapSheetBean> getCachedMapSheets() {
+        HashMap<String, MapSheetBean> mapSheets;
+        if (cache.contains(CACHED_MAP_SHEETS_KEY)) {
+            mapSheets = (HashMap<String, MapSheetBean>) cache.get(CACHED_MAP_SHEETS_KEY);
+        } else {
+            mapSheets = new HashMap<String, MapSheetBean>();
+            cache.put(CACHED_MAP_SHEETS_KEY, mapSheets);
+        }
+        return mapSheets;
     }
 
     public static List<RestrictionOfficeBean> getRestrictionOffices() {

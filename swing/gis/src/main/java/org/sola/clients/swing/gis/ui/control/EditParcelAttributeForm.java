@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectSummaryTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -40,7 +41,7 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
      */
     public EditParcelAttributeForm() {
         initComponents();
-        mapSheetListBean.loadMapSheetList();
+        mapSheetListBean.loadList(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,14 +244,12 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         //call save method.
-        CadastreObjectTO cadTO=TypeConverters.BeanToTrasferObject(
-                parcel, CadastreObjectTO.class);
+        CadastreObjectSummaryTO cadTO=TypeConverters.BeanToTrasferObject(
+                parcel, CadastreObjectSummaryTO.class);
 
-        cadTO= WSManager.getInstance().getCadastreService()
-                .saveCadastreObject(cadTO);
+        cadTO= WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
         //converting back to bean again.
-        parcel=TypeConverters.TransferObjectToBean(
-                cadTO,CadastreObjectBean.class, parcel);
+        parcel=TypeConverters.TransferObjectToBean(cadTO,CadastreObjectBean.class, parcel);
         
         try {
             search_Completed_Trigger.invoke(method_holder_object,

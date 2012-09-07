@@ -48,7 +48,7 @@ public class BaUnitSearchExtPanel extends BaUnitSearchPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
-                PropertyPanel propertyPanel = new PropertyPanel(baUnitSearchResult.getNameFirstPart(), baUnitSearchResult.getNameLastPart());
+                PropertyPanel propertyPanel = new PropertyPanel(baUnitSearchResult.getId());
                 DesktopApplication.getMainForm().getMainContentPanel()
                         .addPanel(propertyPanel, getThis(), propertyPanel.getId(), true);
                 return null;

@@ -29,6 +29,7 @@ package org.sola.clients.beans.administrative;
 
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.referencedata.RegistrationStatusTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 
@@ -250,6 +251,6 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     }
     
     public String getPropertyIdCode(){
-        return BaUnitSummaryBean.getPropertyIdCode(getNameFirstPart(), getNameLastPart());
+        return CadastreObjectBean.getPropertyIdCode(getNameFirstPart(), getNameLastPart());
     }
 }

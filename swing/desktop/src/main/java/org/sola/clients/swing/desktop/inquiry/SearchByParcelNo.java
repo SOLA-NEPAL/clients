@@ -348,11 +348,7 @@ public class SearchByParcelNo extends ContentPanel {
         //invoke method.
         try {
             VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-            CadastreObjectBean cadBean = CadastreObjectBean.getCadastreObjectByVdcWardParcel(
-                    vdc.getCode(), txtWardNo.getText().toString(),
-                    Integer.parseInt(txtParcelNo.getText().toString()));
-            cadastreDetails.clear();
-            cadastreDetails.add(cadBean);
+            // Use CadastreObjectSearchResultsList
            // getBaUnitContainsSpatialUnitList(cadBean);
         } catch (Exception e) {
         }

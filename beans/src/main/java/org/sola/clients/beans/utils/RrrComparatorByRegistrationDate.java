@@ -19,7 +19,7 @@ import java.util.Comparator;
 import org.sola.clients.beans.administrative.RrrBean;
 
 /**
- * Compares 2 RrrBean by registration date in descending.
+ * Compares 2 RrrBean by registration date in descending mode.
  */
 public class RrrComparatorByRegistrationDate implements Comparator<RrrBean> {
 
