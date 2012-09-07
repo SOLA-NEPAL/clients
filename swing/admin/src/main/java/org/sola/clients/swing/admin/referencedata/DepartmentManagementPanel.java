@@ -36,10 +36,10 @@ public class DepartmentManagementPanel extends ContentPanel {
      */
     public DepartmentManagementPanel() {
         initComponents();
-        postInint();
+        postInit();
     }
 
-    private void postInint() {
+    private void postInit() {
         cbxOffices.setSelectedIndex(-1);
         departments.getDepartments().clear();
         offices.addPropertyChangeListener(new PropertyChangeListener() {
