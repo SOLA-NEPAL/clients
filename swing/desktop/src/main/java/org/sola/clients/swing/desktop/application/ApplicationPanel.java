@@ -65,7 +65,6 @@ import org.sola.clients.swing.desktop.ReportViewerForm;
 import org.sola.clients.swing.desktop.administrative.PropertyPanel;
 import org.sola.clients.swing.desktop.cadastre.CadastreTransactionMapPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
-import org.sola.clients.swing.desktop.cadastre.Parcel_Selection_Form;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
 import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
 import org.sola.clients.swing.desktop.source.TransactionedDocumentsPanel;
@@ -452,13 +451,13 @@ public class ApplicationPanel extends ContentPanel {
     private void openPropertyForm(final BaUnitBean baUnitBean, final boolean readOnly) {
         if (baUnitBean != null) {
             SolaTask t = new SolaTask<Void, Void>() {
-
+                PropertyPanel propertyPnl;
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
                     ApplicationBean applicationBean = appBean.copy();
-                    PropertyPanel propertyPnl = new PropertyPanel(applicationBean,
-                            applicationBean.getSelectedService(), baUnitBean, readOnly);
+                    propertyPnl = new PropertyPanel(applicationBean,
+                            applicationBean.getSelectedService(), baUnitBean.getId(), readOnly, false);
                     getMainContentPanel().addPanel(propertyPnl, getThis().getId(), propertyPnl.getId(), true);
                     return null;
                 }
@@ -466,7 +465,7 @@ public class ApplicationPanel extends ContentPanel {
                 @Override
                 protected void taskDone() {
                     if (!appBean.getSelectedService().getRequestTypeCode().equalsIgnoreCase(RequestTypeBean.CODE_NEW_DIGITAL_TITLE)) {
-                        ((PropertyPanel) getMainContentPanel().getPanel(MainContentPanel.CARD_PROPERTY_PANEL)).showPriorTitileMessage();
+                        ((PropertyPanel) getMainContentPanel().getPanel(propertyPnl.getId())).showPriorTitileMessage();
                     }
                 }
             };

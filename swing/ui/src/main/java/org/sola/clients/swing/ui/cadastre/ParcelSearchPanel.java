@@ -32,9 +32,7 @@ package org.sola.clients.swing.ui.cadastre;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
-import org.sola.clients.beans.cadastre.CadastreObjectBean;
-import org.sola.clients.beans.cadastre.ParcelSearchResultListBean;
-import org.sola.clients.beans.referencedata.DistrictListBean;
+import org.sola.clients.beans.cadastre.CadastreObjectSearchResultListBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.common.messaging.ClientMessage;
@@ -46,7 +44,6 @@ import org.sola.common.messaging.MessageUtility;
 public class ParcelSearchPanel extends JPanel {
 
     public static final String SELECT_PARCEL_PROPERTY = "selectParcel";
-    private CadastreObjectBean parcel;
 
     /**
      * Creates new form ParcelSearchPanel
@@ -54,10 +51,10 @@ public class ParcelSearchPanel extends JPanel {
     public ParcelSearchPanel() {
         initComponents();
 
-        parcelSearchResultListBean.addPropertyChangeListener(new PropertyChangeListener() {
+        cadastreObjectSearchResultListBean.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(ParcelSearchResultListBean.SELECTED_PARCEL_SEARCH_RESULT)) {
+                if (evt.getPropertyName().equals(CadastreObjectSearchResultListBean.SELECTED_CADASTRE_OBJECT_SEARCH_RESULT)) {
                     customizeParcelButtons();
                 }
             }
@@ -66,6 +63,17 @@ public class ParcelSearchPanel extends JPanel {
         postInit();
     }
 
+    private void postInit() {
+        vdcListBean.loadListByOffice(true);
+        mapSheetListBean.loadList(true);
+        cbxMapSheets.setSelectedIndex(0);
+        cbxVdc.setSelectedIndex(0);
+    }
+    
+    public CadastreObjectSearchResultListBean getParcelSearchResuls() {
+        return cadastreObjectSearchResultListBean;
+    }
+    
     public boolean isShowSelectButton() {
         return btnSelect.isVisible();
     }
@@ -79,12 +87,9 @@ public class ParcelSearchPanel extends JPanel {
      * Enables or disables Parcel management buttons, based on security rights.
      */
     private void customizeParcelButtons() {
-        boolean selected = parcelSearchResultListBean.getSelectedParcelSearchResult() != null;
-        boolean enabled = selected == true
-                && parcelSearchResultListBean.getSelectedParcelSearchResult().checkAccessByOffice();
-        menuSelect.setEnabled(btnSelect.isEnabled());
+        boolean selected = cadastreObjectSearchResultListBean.getSelectedCadastreObjectSearchResult() != null;
         btnSelect.setEnabled(selected);
-        menuSelect.setEnabled(btnSelect.isEnabled());
+        menuSelect.setEnabled(selected);
     }
 
     /**
@@ -94,16 +99,16 @@ public class ParcelSearchPanel extends JPanel {
         SolaTask t = new SolaTask<Void, Void>() {
             @Override
             public Void doTask() {
-               // setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_PARCEL_SEARCHING));
-                parcelSearchResultListBean.search(parcelSearchParamsBean);
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_PARCEL_SEARCHING));
+                cadastreObjectSearchResultListBean.search(cadastreObjectSearchParamsBean);
                 return null;
             }
 
             @Override
             public void taskDone() {
-                if (parcelSearchResultListBean.getParcelSearchResults().size() > 100) {
+                if (cadastreObjectSearchResultListBean.getCadastreObjectSearchResults().size() > 100) {
                     MessageUtility.displayMessage(ClientMessage.SEARCH_TOO_MANY_RESULTS, new String[]{"100"});
-                } else if (parcelSearchResultListBean.getParcelSearchResults().size() < 1) {
+                } else if (cadastreObjectSearchResultListBean.getCadastreObjectSearchResults().size() < 1) {
                     MessageUtility.displayMessage(ClientMessage.SEARCH_NO_RESULTS);
                 }
             }
@@ -112,14 +117,10 @@ public class ParcelSearchPanel extends JPanel {
     }
 
     private void fireParcelEvent(String propertyName) {
-        if (parcelSearchResultListBean.getSelectedParcelSearchResult() != null) {
-            firePropertyChange(propertyName, null,
-                    parcel = CadastreObjectBean.getParcel(parcelSearchResultListBean.getSelectedParcelSearchResult().getId()));
+        if (cadastreObjectSearchResultListBean.getSelectedCadastreObjectSearchResult() != null) {
+            firePropertyChange(propertyName, null, 
+                    cadastreObjectSearchResultListBean.getSelectedCadastreObjectSearchResult());
         }
-    }
-
-    public CadastreObjectBean getParcel() {
-        return parcel;
     }
 
     private void selectParcel() {
@@ -135,8 +136,9 @@ public class ParcelSearchPanel extends JPanel {
         menuSelect = new javax.swing.JMenuItem();
         districtListBean = new org.sola.clients.beans.referencedata.DistrictListBean();
         vdcListBean = new org.sola.clients.beans.referencedata.VdcListBean();
-        parcelSearchParamsBean = new org.sola.clients.beans.cadastre.ParcelSearchParamsBean();
-        parcelSearchResultListBean = new org.sola.clients.beans.cadastre.ParcelSearchResultListBean();
+        cadastreObjectSearchParamsBean = new org.sola.clients.beans.cadastre.CadastreObjectSearchParamsBean();
+        cadastreObjectSearchResultListBean = new org.sola.clients.beans.cadastre.CadastreObjectSearchResultListBean();
+        mapSheetListBean = new org.sola.clients.beans.cadastre.MapSheetListBean();
         scrlSearchPanel = new javax.swing.JScrollPane();
         pnlSearch = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -146,15 +148,15 @@ public class ParcelSearchPanel extends JPanel {
         btnSelect = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        cbxDistrict = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         cbxVdc = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         txtWardNo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cbxMapSheets = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
         txtParcelNo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -190,22 +192,30 @@ public class ParcelSearchPanel extends JPanel {
         tableParcelSearchResults.setName("tableParcelSearchResults"); // NOI18N
         tableParcelSearchResults.getTableHeader().setReorderingAllowed(false);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${parcelSearchResults}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchResultListBean, eLProperty, tableParcelSearchResults);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapsheetId}"));
-        columnBinding.setColumnName("Mapsheet Id");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${cadastreObjectSearchResults}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectSearchResultListBean, eLProperty, tableParcelSearchResults);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
+        columnBinding.setColumnName("Property Id Code");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${firstName}"));
-        columnBinding.setColumnName("First Name");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${vdcName}"));
+        columnBinding.setColumnName("Vdc Name");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lastName}"));
-        columnBinding.setColumnName("Last Name");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${wardNumber}"));
+        columnBinding.setColumnName("Ward Number");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${combinedMapSheets}"));
+        columnBinding.setColumnName("Combined Map Sheets");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
         columnBinding.setColumnName("Parcelno");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchResultListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedParcelSearchResult}"), tableParcelSearchResults, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectSearchResultListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedCadastreObjectSearchResult}"), tableParcelSearchResults, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
 
         tableParcelSearchResults.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,10 +225,11 @@ public class ParcelSearchPanel extends JPanel {
         });
         jScrollPane1.setViewportView(tableParcelSearchResults);
         java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/cadastre/Bundle"); // NOI18N
-        tableParcelSearchResults.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title0")); // NOI18N
-        tableParcelSearchResults.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title1")); // NOI18N
-        tableParcelSearchResults.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title2")); // NOI18N
-        tableParcelSearchResults.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title3")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title1")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title2")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title0_1")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title4")); // NOI18N
+        tableParcelSearchResults.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("ParcelSearchPanel.tableParcelSearchResults.columnModel.title3")); // NOI18N
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -249,7 +260,7 @@ public class ParcelSearchPanel extends JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
         );
 
         jPanel8.setName("jPanel8"); // NOI18N
@@ -257,47 +268,14 @@ public class ParcelSearchPanel extends JPanel {
         jPanel4.setName("jPanel4"); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
-        jPanel2.setName("jPanel2"); // NOI18N
-
-        cbxDistrict.setName("cbxDistrict"); // NOI18N
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cbxDistrict);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedDistrict}"), cbxDistrict, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        jLabel1.setText(bundle1.getString("ParcelSearchPanel.jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbxDistrict, 0, 94, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(jPanel2);
-
         jPanel3.setName("jPanel3"); // NOI18N
 
         cbxVdc.setName("cbxVdc"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cbxVdc);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean, eLProperty, cbxVdc);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cbxVdc, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cbxVdc, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         jLabel2.setText(bundle1.getString("ParcelSearchPanel.jLabel2.text")); // NOI18N
@@ -307,7 +285,7 @@ public class ParcelSearchPanel extends JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbxVdc, 0, 94, Short.MAX_VALUE)
+            .addComponent(cbxVdc, 0, 92, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -327,7 +305,7 @@ public class ParcelSearchPanel extends JPanel {
 
         txtWardNo.setName("txtWardNo"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${wardNo}"), txtWardNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${wardNo}"), txtWardNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         jLabel3.setText(bundle1.getString("ParcelSearchPanel.jLabel3.text")); // NOI18N
@@ -337,7 +315,7 @@ public class ParcelSearchPanel extends JPanel {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtWardNo, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+            .addComponent(txtWardNo, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -353,11 +331,44 @@ public class ParcelSearchPanel extends JPanel {
 
         jPanel4.add(jPanel6);
 
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        jLabel1.setText(bundle1.getString("ParcelSearchPanel.jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        cbxMapSheets.setName(bundle1.getString("ParcelSearchPanel.cbxMapSheets.name")); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheets}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, cbxMapSheets);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${mapSheet}"), cbxMapSheets, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 41, Short.MAX_VALUE))
+            .addComponent(cbxMapSheets, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxMapSheets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel2);
+
         jPanel1.setName("jPanel1"); // NOI18N
 
         txtParcelNo.setName("txtParcelNo"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, parcelSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"), txtParcelNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cadastreObjectSearchParamsBean, org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"), txtParcelNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         jLabel5.setText(bundle1.getString("ParcelSearchPanel.jLabel5.text")); // NOI18N
@@ -367,7 +378,7 @@ public class ParcelSearchPanel extends JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtParcelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+            .addComponent(txtParcelNo, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -425,8 +436,8 @@ public class ParcelSearchPanel extends JPanel {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout pnlSearchLayout = new javax.swing.GroupLayout(pnlSearch);
@@ -450,11 +461,11 @@ public class ParcelSearchPanel extends JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrlSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+            .addComponent(scrlSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrlSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+            .addComponent(scrlSearchPanel)
         );
 
         bindingGroup.bind();
@@ -475,36 +486,12 @@ public class ParcelSearchPanel extends JPanel {
     private void tableParcelSearchResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableParcelSearchResultsMouseClicked
     }//GEN-LAST:event_tableParcelSearchResultsMouseClicked
 
-    public ParcelSearchResultListBean getParcelSearchResuls() {
-        return parcelSearchResultListBean;
-    }
-
-    private void postInit() {
-        cbxDistrict.setSelectedIndex(-1);
-        districtListBean.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(DistrictListBean.SELECTED_DISTRICT_PROPERTY)) {
-                    searchVdcs();
-                }
-            }
-        });
-        searchVdcs();
-    }
-
-    private void searchVdcs() {
-        if (districtListBean.getSelectedDistrict() != null) {
-            cbxVdc.setEnabled(true);
-            vdcListBean.loadList(false, districtListBean.getSelectedDistrict().getCode());
-        } else {
-            cbxVdc.setEnabled(false);
-        }
-        cbxVdc.setSelectedIndex(-1);
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSelect;
-    private javax.swing.JComboBox cbxDistrict;
+    private org.sola.clients.beans.cadastre.CadastreObjectSearchParamsBean cadastreObjectSearchParamsBean;
+    private org.sola.clients.beans.cadastre.CadastreObjectSearchResultListBean cadastreObjectSearchResultListBean;
+    private javax.swing.JComboBox cbxMapSheets;
     private javax.swing.JComboBox cbxVdc;
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
     private javax.swing.JLabel jLabel1;
@@ -522,9 +509,8 @@ public class ParcelSearchPanel extends JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetListBean;
     private javax.swing.JMenuItem menuSelect;
-    private org.sola.clients.beans.cadastre.ParcelSearchParamsBean parcelSearchParamsBean;
-    private org.sola.clients.beans.cadastre.ParcelSearchResultListBean parcelSearchResultListBean;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JPopupMenu popupParcels;
     private javax.swing.JScrollPane scrlSearchPanel;

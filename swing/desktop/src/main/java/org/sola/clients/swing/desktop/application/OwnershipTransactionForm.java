@@ -41,7 +41,6 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableWithDefaultStyles1 = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
@@ -49,6 +48,7 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
         jButton5 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         btnAddToTransaction = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -66,11 +66,6 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jButton1.setText(bundle.getString("OwnershipTransactionForm.jButton1.text")); // NOI18N
         jButton1.setFocusable(false);
         jToolBar1.add(jButton1);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
-        jButton2.setText(bundle.getString("OwnershipTransactionForm.jButton2.text")); // NOI18N
-        jButton2.setFocusable(false);
-        jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/change-share.png"))); // NOI18N
         jButton3.setText(bundle.getString("OwnershipTransactionForm.jButton3.text")); // NOI18N
@@ -124,6 +119,11 @@ public class OwnershipTransactionForm extends javax.swing.JPanel {
         jButton5.setText(bundle.getString("OwnershipTransactionForm.jButton5.text")); // NOI18N
         jButton5.setFocusable(false);
         jToolBar2.add(jButton5);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
+        jButton2.setText(bundle.getString("OwnershipTransactionForm.jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
+        jToolBar2.add(jButton2);
 
         btnAddToTransaction.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         btnAddToTransaction.setText(bundle.getString("OwnershipTransactionForm.btnAddToTransaction.text")); // NOI18N

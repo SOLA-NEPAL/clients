@@ -70,7 +70,6 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
 
     public SourceSummaryBean() {
         super();
-        sourceType = new SourceTypeBean();
     }
 
     public void clean() {
@@ -87,6 +86,9 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     }
 
     public String getTypeCode() {
+        if(getSourceType() == null){
+            return null;
+        }
         return sourceType.getCode();
     }
 
@@ -97,9 +99,11 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
      * @param value Source type code.
      */
     public void setTypeCode(String typeCode) {
-        String old = sourceType.getCode();
-        setSourceType(CacheManager.getBeanByCode(
-                CacheManager.getSourceTypes(), typeCode));
+        String old = null;
+        if(getSourceType() != null){
+            old = sourceType.getCode();
+        }
+        setSourceType(CacheManager.getBeanByCode(CacheManager.getSourceTypes(), typeCode));
         propertySupport.firePropertyChange(SOURCE_TYPE_CODE_PROPERTY, old, typeCode);
     }
 
@@ -108,10 +112,9 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     }
 
     public void setSourceType(SourceTypeBean sourceType) {
-        if (this.sourceType == null) {
-            this.sourceType = new SourceTypeBean();
-        }
-        this.setJointRefDataBean(this.sourceType, sourceType, SOURCE_TYPE_PROPERTY);
+        SourceTypeBean oldValue = this.sourceType;
+        this.sourceType = sourceType;
+        propertySupport.firePropertyChange(SOURCE_TYPE_PROPERTY, oldValue, this.sourceType);
     }
 
     public Date getAcceptance() {

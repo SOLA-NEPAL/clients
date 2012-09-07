@@ -31,9 +31,11 @@
     </Component>
     <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean">
     </Component>
-    <Component class="org.sola.clients.beans.cadastre.ParcelSearchParamsBean" name="parcelSearchParamsBean">
+    <Component class="org.sola.clients.beans.cadastre.CadastreObjectSearchParamsBean" name="cadastreObjectSearchParamsBean">
     </Component>
-    <Component class="org.sola.clients.beans.cadastre.ParcelSearchResultListBean" name="parcelSearchResultListBean">
+    <Component class="org.sola.clients.beans.cadastre.CadastreObjectSearchResultListBean" name="cadastreObjectSearchResultListBean">
+    </Component>
+    <Component class="org.sola.clients.beans.cadastre.MapSheetListBean" name="mapSheetListBean">
     </Component>
   </NonVisualComponents>
   <AuxValues>
@@ -51,12 +53,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="scrlSearchPanel" alignment="0" pref="525" max="32767" attributes="0"/>
+          <Component id="scrlSearchPanel" alignment="0" pref="517" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="scrlSearchPanel" alignment="0" pref="310" max="32767" attributes="0"/>
+          <Component id="scrlSearchPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -117,7 +119,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="219" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="209" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -139,13 +141,6 @@
                           <TableColumnModel selectionModel="0">
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                                <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.tableParcelSearchResults.columnModel.title0" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                              </Title>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                                 <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.tableParcelSearchResults.columnModel.title1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                               </Title>
                               <Editor/>
@@ -154,6 +149,20 @@
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                                 <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.tableParcelSearchResults.columnModel.title2" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              </Title>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.tableParcelSearchResults.columnModel.title0_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              </Title>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.tableParcelSearchResults.columnModel.title4" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                               </Title>
                               <Editor/>
                               <Renderer/>
@@ -176,21 +185,29 @@
                         </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="elements" source="parcelSearchResultListBean" sourcePath="${parcelSearchResults}" target="tableParcelSearchResults" targetPath="elements" updateStrategy="0" immediately="true">
-                          <Subbinding sourcePath="${mapsheetId}">
+                        <BindingProperty name="elements" source="cadastreObjectSearchResultListBean" sourcePath="${cadastreObjectSearchResults}" target="tableParcelSearchResults" targetPath="elements" updateStrategy="0" immediately="true">
+                          <Subbinding sourcePath="${propertyIdCode}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
-                          <Subbinding sourcePath="${firstName}">
+                          <Subbinding sourcePath="${vdcName}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
-                          <Subbinding sourcePath="${lastName}">
+                          <Subbinding sourcePath="${wardNumber}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${combinedMapSheets}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
                           <Subbinding sourcePath="${parcelno}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
                         </BindingProperty>
-                        <BindingProperty name="selectedElement" source="parcelSearchResultListBean" sourcePath="${selectedParcelSearchResult}" target="tableParcelSearchResults" targetPath="selectedElement" updateStrategy="0" immediately="false">
+                        <BindingProperty name="selectedElement" source="cadastreObjectSearchResultListBean" sourcePath="${selectedCadastreObjectSearchResult}" target="tableParcelSearchResults" targetPath="selectedElement" updateStrategy="0" immediately="false">
                           <BindingParameter name="IGNORE_ADJUSTING" value="N"/>
                         </BindingProperty>
                       </BindingProperties>
@@ -247,8 +264,8 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel4" alignment="0" max="32767" attributes="1"/>
                       <Component id="jPanel5" alignment="1" max="32767" attributes="1"/>
+                      <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="1"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -264,52 +281,6 @@
                     <Property name="rows" type="int" value="1"/>
                   </Layout>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="jPanel2">
-                      <Properties>
-                        <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
-                      </Properties>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cbxDistrict" pref="94" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cbxDistrict" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="14" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JComboBox" name="cbxDistrict">
-                          <Properties>
-                            <Property name="name" type="java.lang.String" value="cbxDistrict" noResource="true"/>
-                          </Properties>
-                          <BindingProperties>
-                            <BindingProperty name="elements" source="districtListBean" sourcePath="${districts}" target="cbxDistrict" targetPath="elements" updateStrategy="0" immediately="false"/>
-                            <BindingProperty name="selectedItem" source="districtListBean" sourcePath="${selectedDistrict}" target="cbxDistrict" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-                          </BindingProperties>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel1">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.jLabel1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                            </Property>
-                            <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
-                          </Properties>
-                        </Component>
-                      </SubComponents>
-                    </Container>
                     <Container class="javax.swing.JPanel" name="jPanel3">
                       <Properties>
                         <Property name="name" type="java.lang.String" value="jPanel3" noResource="true"/>
@@ -318,7 +289,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cbxVdc" pref="94" max="32767" attributes="0"/>
+                              <Component id="cbxVdc" pref="92" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -343,7 +314,7 @@
                           </Properties>
                           <BindingProperties>
                             <BindingProperty name="elements" source="vdcListBean" sourcePath="${vdcs}" target="cbxVdc" targetPath="elements" updateStrategy="0" immediately="false"/>
-                            <BindingProperty name="selectedItem" source="parcelSearchParamsBean" sourcePath="${vdc}" target="cbxVdc" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                            <BindingProperty name="selectedItem" source="cadastreObjectSearchParamsBean" sourcePath="${vdc}" target="cbxVdc" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
                           </BindingProperties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -364,7 +335,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtWardNo" pref="94" max="32767" attributes="0"/>
+                              <Component id="txtWardNo" pref="92" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -388,7 +359,7 @@
                             <Property name="name" type="java.lang.String" value="txtWardNo" noResource="true"/>
                           </Properties>
                           <BindingProperties>
-                            <BindingProperty name="text" source="parcelSearchParamsBean" sourcePath="${wardNo}" target="txtWardNo" targetPath="text" updateStrategy="0" immediately="false">
+                            <BindingProperty name="text" source="cadastreObjectSearchParamsBean" sourcePath="${wardNo}" target="txtWardNo" targetPath="text" updateStrategy="0" immediately="false">
                               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                             </BindingProperty>
                           </BindingProperties>
@@ -403,6 +374,54 @@
                         </Component>
                       </SubComponents>
                     </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel2">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
+                      </Properties>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="cbxMapSheets" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="cbxMapSheets" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JLabel" name="jLabel1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.jLabel1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
+                            <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JComboBox" name="cbxMapSheets">
+                          <Properties>
+                            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                              <ResourceString bundle="org/sola/clients/swing/ui/cadastre/Bundle.properties" key="ParcelSearchPanel.cbxMapSheets.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                            </Property>
+                          </Properties>
+                          <BindingProperties>
+                            <BindingProperty name="elements" source="mapSheetListBean" sourcePath="${mapSheets}" target="cbxMapSheets" targetPath="elements" updateStrategy="0" immediately="false"/>
+                            <BindingProperty name="selectedItem" source="cadastreObjectSearchParamsBean" sourcePath="${mapSheet}" target="cbxMapSheets" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                          </BindingProperties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
                     <Container class="javax.swing.JPanel" name="jPanel1">
                       <Properties>
                         <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
@@ -411,7 +430,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtParcelNo" pref="94" max="32767" attributes="0"/>
+                              <Component id="txtParcelNo" pref="92" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -435,7 +454,7 @@
                             <Property name="name" type="java.lang.String" value="txtParcelNo" noResource="true"/>
                           </Properties>
                           <BindingProperties>
-                            <BindingProperty name="text" source="parcelSearchParamsBean" sourcePath="${parcelNo}" target="txtParcelNo" targetPath="text" updateStrategy="0" immediately="false">
+                            <BindingProperty name="text" source="cadastreObjectSearchParamsBean" sourcePath="${parcelNo}" target="txtParcelNo" targetPath="text" updateStrategy="0" immediately="false">
                               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                             </BindingProperty>
                           </BindingProperties>

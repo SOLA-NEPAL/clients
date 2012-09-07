@@ -37,6 +37,7 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.cadastre.CadastreObjectSummarytBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
@@ -106,11 +107,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public static final String PENDING_ACTION_CODE_PROPERTY = "pendingActionCode";
     public static final String PENDING_ACTION_PROPERTY = "pendingTypeAction";
     public static final String CADASTRE_OBJECT_PROPERTY = "cadastreObject";
-            
+    public static final String MOTH_PROPERTY = "moth";
+    public static final String LOC_PROPERTY = "loc";
     private SolaList<RrrBean> rrrList;
     private SolaList<BaUnitNotationBean> baUnitNotationList;
-    private CadastreObjectBean cadastreObject;
-    private SolaList<CadastreObjectBean> newCadastreObjectList;
+    private CadastreObjectSummarytBean cadastreObject;
+    private SolaList<CadastreObjectSummarytBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
     private SolaList<RelatedBaUnitInfoBean> childBaUnits;
@@ -121,6 +123,8 @@ public class BaUnitBean extends BaUnitSummaryBean {
     private transient BaUnitNotationBean selectedBaUnitNotation;
     private transient RelatedBaUnitInfoBean selectedParentBaUnit;
     private transient RelatedBaUnitInfoBean selectedChildBaUnit;
+    private transient String moth;
+    private transient String loc;
     private TypeActionBean pendingTypeAction;
 
     public BaUnitBean() {
@@ -140,11 +144,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
         rrrList.addObservableListListener(allBaUnitNotationsListener);
         baUnitNotationList.addObservableListListener(allBaUnitNotationsListener);
         rrrList.addObservableListListener(new ObservableListListener() {
-            
+
             RrrComparatorByRegistrationDate sorter = new RrrComparatorByRegistrationDate();
-            
+
             @Override
             public void listElementsAdded(ObservableList list, int index, int length) {
+                fireMothLocUpdate();
                 for (int i = index; i < length + index; i++) {
                     rrrHistoricList.add((RrrBean) list.get(i));
                 }
@@ -153,13 +158,15 @@ public class BaUnitBean extends BaUnitSummaryBean {
 
             @Override
             public void listElementsRemoved(ObservableList list, int index, List oldElements) {
+                fireMothLocUpdate();
                 rrrHistoricList.removeAll(oldElements);
                 Collections.sort(rrrHistoricList.getFilteredList(), sorter);
             }
 
             @Override
             public void listElementReplaced(ObservableList list, int index, Object oldElement) {
-                rrrHistoricList.set(rrrHistoricList.indexOf(oldElement), (RrrBean)oldElement);
+                fireMothLocUpdate();
+                rrrHistoricList.set(rrrHistoricList.indexOf(oldElement), (RrrBean) oldElement);
                 Collections.sort(rrrHistoricList.getFilteredList(), sorter);
             }
 
@@ -169,17 +176,40 @@ public class BaUnitBean extends BaUnitSummaryBean {
         });
     }
 
-    public void createPaperTitle(SourceBean source) {
-        if (source != null) {
-            for (SourceBean sourceBean : sourceList) {
-                sourceBean.setEntityAction(EntityAction.DISASSOCIATE);
+    private void fireMothLocUpdate() {
+        String oldMoth = this.moth;
+        String oldLoc = this.loc;
+        
+        this.moth = "";
+        this.loc= "";
+        
+        if (getRrrFilteredList() != null) {
+            for (RrrBean rrr : getRrrFilteredList()) {
+                if (rrr.getLoc() != null) {
+                    if (rrr.getLoc().getMoth() != null) {
+                        this.moth = rrr.getLoc().getMoth().getMothlujNumber();
+                    }
+                    this.loc = rrr.getLoc().getPageNumber();
+                    break;
+                }
             }
-            sourceList.addAsNew(source);
-            sourceList.filter();
         }
+        
+        propertySupport.firePropertyChange(MOTH_PROPERTY, oldMoth, this.moth);
+        propertySupport.firePropertyChange(LOC_PROPERTY, oldLoc, this.loc);
     }
 
-    // Checks for pending RRRs by RRR type and transaction.
+    public String getLoc() {
+        return loc;
+    }
+
+    public String getMoth() {
+        return moth;
+    }
+
+    /**
+     * Checks for pending RRRs by RRR type and transaction.
+     */
     public boolean isPendingRrrExists(String rrrTypeCode) {
         if (getRrrFilteredList() != null && rrrTypeCode != null) {
             for (RrrBean bean : getRrrFilteredList()) {
@@ -191,7 +221,9 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return false;
     }
 
-    // Checks for pending RRRs by provided RRR object.
+    /**
+     * Checks for pending RRRs by provided RRR object.
+     */
     public boolean isPendingRrrExists(RrrBean rrrBean) {
         if (getRrrFilteredList() != null && rrrBean != null) {
             for (RrrBean bean : getRrrFilteredList()) {
@@ -295,7 +327,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return baUnitNotationList.getFilteredList();
     }
 
-    public SolaList<CadastreObjectBean> getNewCadastreObjectList() {
+    public SolaList<CadastreObjectSummarytBean> getNewCadastreObjectList() {
         if (newCadastreObjectList == null) {
             loadNewParcels();
         }
@@ -347,10 +379,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
         this.setJointRefDataBean(this.pendingTypeAction, pendingTypeAction, PENDING_ACTION_PROPERTY);
     }
 
-    public ObservableList<CadastreObjectBean> getSelectedNewCadastreObjects() {
-        ObservableList<CadastreObjectBean> selectedCadastreObjects =
-                ObservableCollections.observableList(new ArrayList<CadastreObjectBean>());
-        for (CadastreObjectBean cadastreObjectTmp : getNewCadastreObjectList()) {
+    public ObservableList<CadastreObjectSummarytBean> getSelectedNewCadastreObjects() {
+        ObservableList<CadastreObjectSummarytBean> selectedCadastreObjects =
+                ObservableCollections.observableList(new ArrayList<CadastreObjectSummarytBean>());
+        for (CadastreObjectSummarytBean cadastreObjectTmp : getNewCadastreObjectList()) {
             if (cadastreObjectTmp.isSelected()) {
                 selectedCadastreObjects.add(cadastreObjectTmp);
             }
@@ -378,22 +410,22 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return selectedRrrs;
     }
 
-    public ObservableList<CadastreObjectBean> getFilteredNewCadastreObjectList() {
+    public ObservableList<CadastreObjectSummarytBean> getFilteredNewCadastreObjectList() {
         return getNewCadastreObjectList().getFilteredList();
     }
 
-    public CadastreObjectBean getCadastreObject() {
+    public CadastreObjectSummarytBean getCadastreObject() {
         return cadastreObject;
     }
 
-    public void setCadastreObject(CadastreObjectBean cadastreObject) {
-        CadastreObjectBean oldValue = this.cadastreObject;
+    public void setCadastreObject(CadastreObjectSummarytBean cadastreObject) {
+        CadastreObjectSummarytBean oldValue = this.cadastreObject;
         this.cadastreObject = cadastreObject;
         propertySupport.firePropertyChange(CADASTRE_OBJECT_PROPERTY, oldValue, this.cadastreObject);
     }
 
     public String getCadastreObjectId() {
-        if(getCadastreObject() == null ){
+        if (getCadastreObject() == null) {
             return null;
         } else {
             return getCadastreObject().getId();
@@ -460,7 +492,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public ObservableList<SourceBean> getFilteredSourceList() {
         return sourceList.getFilteredList();
     }
-    
+
     public void removeSelectedParentBaUnit() {
         if (getSelectedParentBaUnit() != null) {
             getParentBaUnits().safeRemove(getSelectedParentBaUnit(), EntityAction.DELETE);
@@ -500,7 +532,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
      */
     private void loadNewParcels() {
         if (newCadastreObjectList == null) {
-            newCadastreObjectList = new SolaList<CadastreObjectBean>();
+            newCadastreObjectList = new SolaList<CadastreObjectSummarytBean>();
         }
         newCadastreObjectList.clear();
         if (getId() != null) {
@@ -511,8 +543,9 @@ public class BaUnitBean extends BaUnitSummaryBean {
                 for (CadastreObjectSearchResultTO result : searchResults) {
                     ids.add(result.getId());
                 }
-                TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getCadastreObjects(ids),
-                        CadastreObjectBean.class, (List) newCadastreObjectList);
+                TypeConverters.TransferObjectListToBeanList(WSManager.getInstance()
+                        .getCadastreService().getCadastreObjects(ids),
+                        CadastreObjectSummarytBean.class, (List) newCadastreObjectList);
             }
         }
     }
@@ -531,12 +564,20 @@ public class BaUnitBean extends BaUnitSummaryBean {
      *
      * @param baUnitId The ID of BA Unit to return.
      */
-    public static BaUnitBean getBaUnitsById(String baUnitId) {
+    public static BaUnitBean getBaUnitById(String baUnitId) {
         return TypeConverters.TransferObjectToBean(
                 WSManager.getInstance().getAdministrative().GetBaUnitById(baUnitId),
                 BaUnitBean.class, null);
     }
 
+    /**
+     * Returns {@link BaUnitBean} by first and last name part.
+     */
+    public static BaUnitBean getBaUnit(String nameFirstPart, String nameLastPart) {
+        BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().GetBaUnitByCode(nameFirstPart, nameLastPart);
+        return TypeConverters.TransferObjectToBean(baUnitTO, BaUnitBean.class, null);
+    }
+    
     /**
      * Returns list of BA Units, created by the given service.
      *

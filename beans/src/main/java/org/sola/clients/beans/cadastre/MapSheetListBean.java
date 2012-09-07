@@ -15,28 +15,24 @@
  */
 package org.sola.clients.beans.cadastre;
 
-import java.util.List;
 import org.sola.clients.beans.AbstractBindingListBean;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaObservableList;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.webservices.transferobjects.EntityAction;
 
 /**
- *
- * @author KumarKhadka
+ * Holds list of {@link MapSheetBean} objects.
  */
 public class MapSheetListBean extends AbstractBindingListBean {
 
     public static final String SELECTED_MAPSHEET = "selectedMapSheet";
     SolaObservableList<MapSheetBean> mapSheets;
     private MapSheetBean selectedMapSheet;
-    
-    public MapSheetListBean()
-    {
-        mapSheets= new SolaObservableList<MapSheetBean>();
+
+    public MapSheetListBean() {
+        mapSheets = new SolaObservableList<MapSheetBean>();
     }
-            
 
     public MapSheetBean getSelectedMapSheet() {
         return selectedMapSheet;
@@ -47,38 +43,44 @@ public class MapSheetListBean extends AbstractBindingListBean {
         this.selectedMapSheet = selectedMapSheet;
         propertySupport.firePropertyChange(SELECTED_MAPSHEET, oldValue, this.selectedMapSheet);
     }
-    
-    public void updateSelectedMapSheet(MapSheetBean newMapSheet){
-        if(selectedMapSheet!=null && newMapSheet!=null && mapSheets.contains(selectedMapSheet)){
+
+    public void updateSelectedMapSheet(MapSheetBean newMapSheet) {
+        if (selectedMapSheet != null && newMapSheet != null && mapSheets.contains(selectedMapSheet)) {
             mapSheets.set(mapSheets.indexOf(selectedMapSheet), newMapSheet);
         }
     }
 
     public SolaObservableList<MapSheetBean> getMapSheets() {
-//        if (mapSheets == null) {
-//            mapSheets = new SolaObservableList<MapSheetBean>();
-//        }
         return mapSheets;
     }
 
-    public void loadMapSheetList() {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetList(), MapSheetBean.class, (SolaObservableList) mapSheets);
+    /**
+     * Loads list of {@link MapSheetBean} by the current office ID.
+     *
+     * @param createDummy Indicates whether to add empty object on the list.
+     */
+    public final void loadList(boolean createDummy) {
+        if(OfficeBean.getCurrentOffice()!=null){
+            loadList(OfficeBean.getCurrentOffice().getCode(), createDummy);
+        }
     }
-    
-    public void loadMapSheetList(String officeCode,String language) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByOffice(officeCode, language), MapSheetBean.class, (List) mapSheets);
-    }
-    
-    public void loadMapSheetList(String officeCode) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByOffice(officeCode), MapSheetBean.class, (List) mapSheets);
-    }
-    
-    public void loadMapSheetListByDefaultOffice() {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().getMapSheetListByDefaultOffice(), MapSheetBean.class, (List) mapSheets);
-    }
-    
-     public void loadMapSheetList(int mapSheetType) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getCadastreService().loadMapSheet(mapSheetType), MapSheetBean.class, (List) mapSheets);
+
+    /**
+     * Loads list of {@link MapSheetBean} by provided office ID.
+     *
+     * @param createDummy Indicates whether to add empty object on the list.
+     * @param officeId Office ID, for which to load map sheets.
+     */
+    public final void loadList(String officeId, boolean createDummy) {
+        mapSheets.clear();
+        mapSheets.addAll(CacheManager.getMapSheets(officeId));
+        if (createDummy) {
+            MapSheetBean dummy = new MapSheetBean();
+            dummy.setId(null);
+            dummy.setMapNumber(" ");
+            dummy.setEntityAction(EntityAction.DISASSOCIATE);
+            mapSheets.add(0, dummy);
+        }
     }
 
     /**
@@ -92,15 +94,15 @@ public class MapSheetListBean extends AbstractBindingListBean {
         }
         mapSheets.add(mapSheetBean);
     }
-/**
- * remove selectedMapSheet from the list
- */
-    
+
+    /**
+     * remove selectedMapSheet from the list
+     */
     public void removeSelected() {
         if (selectedMapSheet != null) {
             selectedMapSheet.setEntityAction(EntityAction.DELETE);
             selectedMapSheet.saveMapSheet();
-             mapSheets.remove(selectedMapSheet);
+            mapSheets.remove(selectedMapSheet);
         }
     }
 }
