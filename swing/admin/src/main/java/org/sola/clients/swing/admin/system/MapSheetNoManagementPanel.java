@@ -120,11 +120,8 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         if (mapSheetBean.validate(true).size() > 0) {
             return;
         }
-
-
-
         mapSheetBean.saveMapSheet();
-        MessageUtility.displayMessage(ClientMessage.ADMIN_VDC_SAVED,
+        MessageUtility.displayMessage(ClientMessage.ADMIN_MAPSHEET_SAVED,
                 new String[]{mapSheetBean.getMapNumber()});
 
         if (editMode) {
