@@ -30,12 +30,12 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 public class MapSheetNoManagementPanel extends ContentPanel {
-
+    
     public static final String MAPSHEET_BEAN_PROPERTY = "mapSheetBean";
     private MapSheetBean mapSheetBean;
     private boolean editMode;
     private ObservableList<Integer> srids;
-
+    
     public MapSheetBean getMapSheetBean() {
         return mapSheetBean;
     }
@@ -49,17 +49,17 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         } else {
             this.mapSheetBean = new MapSheetBean();
         }
-
+        
         firePropertyChange(MAPSHEET_BEAN_PROPERTY, null, this.mapSheetBean);
     }
-
+    
     private void sridsManagement() {
         srids = ObservableCollections.observableList(new ArrayList<Integer>());
         srids.add(97260);
         srids.add(97261);
         srids.add(97262);
     }
-
+    
     public List<Integer> getSrids() {
         return srids;
     }
@@ -74,10 +74,10 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         customizePanel();
         showHidePanel(false);
     }
-
+    
     private void postInit() {
         cmbOfficeFilter.setSelectedIndex(-1);
-
+        
         officeListBean1.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -86,7 +86,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 }
             }
         });
-
+        
         mapSheetListBean.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -96,18 +96,18 @@ public class MapSheetNoManagementPanel extends ContentPanel {
             }
         });
     }
-
+    
     private void showHidePanel(boolean show) {
         panelCreateEdit.setVisible(show);
     }
-
+    
     private void loadMapsheets() {
         if (officeListBean1.getSelectedOffice() != null) {
             mapSheetListBean.loadList(officeListBean1.getSelectedOffice().getCode(), false);
             mapSheetListBean.setSelectedMapSheet(null);
         }
     }
-
+    
     private void customizePanel() {
         boolean enabled = mapSheetListBean.getSelectedMapSheet() != null;
         btnEdit.setEnabled(enabled);
@@ -115,15 +115,15 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         menuEdit.setEnabled(enabled);
         menuRemove.setEnabled(enabled);
     }
-
+    
     private void saveMapSheet() {
         if (mapSheetBean.validate(true).size() > 0) {
             return;
-        }
+        }        
         mapSheetBean.saveMapSheet();
         MessageUtility.displayMessage(ClientMessage.ADMIN_MAPSHEET_SAVED,
                 new String[]{mapSheetBean.getMapNumber()});
-
+        
         if (editMode) {
             if (mapSheetListBean.getSelectedMapSheet() != null) {
                 mapSheetListBean.updateSelectedMapSheet((MapSheetBean) mapSheetBean.copy());
@@ -134,7 +134,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         }
         setMapSheetBean(null);
     }
-
+    
     private void disableButton() {
         if (!editMode) {
             btnSave.setText(MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_CREATE));
@@ -142,14 +142,14 @@ public class MapSheetNoManagementPanel extends ContentPanel {
             btnSave.setText(MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_SAVE));
         }
     }
-
+    
     private void addMapSheet() {
         editMode = false;
         setMapSheetBean(new MapSheetBean());
         showHidePanel(true);
         disableButton();
     }
-
+    
     private void editMapSheet() {
         editMode = true;
         if (mapSheetListBean.getSelectedMapSheet() != null) {
@@ -158,7 +158,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         }
         disableButton();
     }
-
+    
     private void removeMapSheet() {
         if (mapSheetListBean.getSelectedMapSheet() != null) {
             if (MessageUtility.displayMessage(
@@ -168,9 +168,9 @@ public class MapSheetNoManagementPanel extends ContentPanel {
                 mapSheetListBean.removeSelected();
             }
         }
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -547,36 +547,36 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveMapSheet();
     }//GEN-LAST:event_btnSaveActionPerformed
-
+    
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         addMapSheet();
     }//GEN-LAST:event_btnAddActionPerformed
-
+    
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         editMapSheet();
     }//GEN-LAST:event_btnEditActionPerformed
-
+    
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         removeMapSheet();
     }//GEN-LAST:event_btnRemoveActionPerformed
-
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         setMapSheetBean(null);
         showHidePanel(false);
     }//GEN-LAST:event_btnCancelActionPerformed
-
+    
     private void menuAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddActionPerformed
         addMapSheet();
     }//GEN-LAST:event_menuAddActionPerformed
-
+    
     private void menuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditActionPerformed
         editMapSheet();
     }//GEN-LAST:event_menuEditActionPerformed
-
+    
     private void menuRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveActionPerformed
         removeMapSheet();
     }//GEN-LAST:event_menuRemoveActionPerformed
-
+    
     private void cmbSRIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSRIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbSRIDActionPerformed

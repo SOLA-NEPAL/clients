@@ -55,6 +55,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_SEARCH_BY_MOTH_PANA_PARCEL = "searchByMothPanaParcel";
     public final static String CARD_SEARCH_BY_PARCEL_NO = "searchByParcelNo";
     public final static String CARD_MOTH_SHRESTA_ENTRY = "mothShrestaEntry";
+    public final static String CARD_MAPSHEET_MANAGEMENT="mapsheetManagement";
     public final static String CARD_OWNER_ENTRY = "landOwnerEntry";
     public final static String CARD_PARCEL_SEARCH = "parcelSearch";
     public final static String CARD_PARCEL_ENTRY = "parcelsEntry";

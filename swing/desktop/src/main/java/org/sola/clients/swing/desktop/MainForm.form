@@ -452,9 +452,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="statusPanel" alignment="0" pref="634" max="32767" attributes="0"/>
-          <Component id="applicationsMain" alignment="1" pref="634" max="32767" attributes="0"/>
-          <Component id="pnlContent" alignment="0" pref="634" max="32767" attributes="0"/>
+          <Component id="statusPanel" alignment="0" pref="808" max="32767" attributes="0"/>
+          <Component id="applicationsMain" alignment="1" pref="808" max="32767" attributes="0"/>
+          <Component id="pnlContent" alignment="0" pref="808" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -462,7 +462,7 @@
           <Group type="102" alignment="1" attributes="0">
               <Component id="applicationsMain" min="-2" pref="27" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnlContent" pref="368" max="32767" attributes="0"/>
+              <Component id="pnlContent" pref="374" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="statusPanel" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -613,6 +613,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenMapActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/common/map-pencil.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/desktop/Bundle.properties" key="MainForm.jButton1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="statusPanel">
@@ -636,7 +651,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtUserName" min="-2" pref="193" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="taskPanel1" pref="382" max="32767" attributes="0"/>
+                  <Component id="taskPanel1" pref="556" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
