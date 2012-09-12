@@ -9,8 +9,6 @@
 		</field>
 	</subDataset>
 	<subDataset name="dataset3">
-		<field name="nameFirstpart" class="java.lang.String"/>
-		<field name="nameLastpart" class="java.lang.String"/>
 		<field name="propertyIdCode" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="dataset1">

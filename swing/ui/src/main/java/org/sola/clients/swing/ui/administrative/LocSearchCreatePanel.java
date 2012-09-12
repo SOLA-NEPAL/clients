@@ -24,16 +24,8 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
     }
 
     private void postInit() {
-        cbxDistricts.setSelectedIndex(-1);
-        districtListBean.addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(DistrictListBean.SELECTED_DISTRICT_PROPERTY)) {
-                    searchVdcs();
-                }
-            }
-        });
+        vdcList.loadListByOffice(false);
+        cbxVdcs.setSelectedIndex(-1);
         vdcList.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -61,17 +53,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
                 }
             }
         });
-        searchVdcs();
-    }
-
-    private void searchVdcs() {
-        if (districtListBean.getSelectedDistrict() != null) {
-            cbxVdcs.setEnabled(true);
-            vdcList.loadList(false, districtListBean.getSelectedDistrict().getCode());
-        } else {
-            cbxVdcs.setEnabled(false);
-        }
-        cbxVdcs.setSelectedIndex(-1);
+        customizeMothType();
     }
 
     private void customizeMothType() {
@@ -142,7 +124,6 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        districtListBean = new org.sola.clients.beans.referencedata.DistrictListBean();
         vdcList = new org.sola.clients.beans.referencedata.VdcListBean();
         mothList = new org.sola.clients.beans.administrative.MothListBean();
         mothTypes = new org.sola.clients.beans.referencedata.MothTypeListBean();
@@ -150,9 +131,6 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
         btnSelect = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        cbxDistricts = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cbxVdcs = new javax.swing.JComboBox();
@@ -195,42 +173,14 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setLayout(new java.awt.GridLayout(1, 4, 15, 0));
-
-        jLabel1.setText("District");
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${districts}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, eLProperty, cbxDistricts);
-        bindingGroup.addBinding(jComboBoxBinding);
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, districtListBean, org.jdesktop.beansbinding.ELProperty.create("${selectedDistrict}"), cbxDistricts, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 48, Short.MAX_VALUE))
-            .addComponent(cbxDistricts, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxDistricts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
-        );
-
-        jPanel6.add(jPanel1);
+        jPanel6.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
         jLabel2.setText("VDC\\Municipality");
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcList, eLProperty, cbxVdcs);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcList, eLProperty, cbxVdcs);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcList, org.jdesktop.beansbinding.ELProperty.create("${selectedVdc}"), cbxVdcs, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcList, org.jdesktop.beansbinding.ELProperty.create("${selectedVdc}"), cbxVdcs, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -239,7 +189,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
             .addComponent(cbxVdcs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -267,7 +217,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGap(0, 56, Short.MAX_VALUE))
             .addComponent(cbxMothType, 0, 0, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
@@ -281,7 +231,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
         jPanel6.add(jPanel7);
 
-        jLabel3.setText("Moth\\Luj No");
+        jLabel3.setText("Moth\\Luj Number");
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothList, eLProperty, cbxMothNumbers);
@@ -309,7 +259,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
         jPanel6.add(jPanel3);
 
-        jLabel4.setText("Page No");
+        jLabel4.setText("Page Number");
 
         txtPageNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -356,7 +306,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(toolbarMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -389,18 +339,14 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSelect;
-    private javax.swing.JComboBox cbxDistricts;
     private javax.swing.JComboBox cbxMothNumbers;
     private javax.swing.JComboBox cbxMothType;
     private javax.swing.JComboBox cbxVdcs;
-    private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

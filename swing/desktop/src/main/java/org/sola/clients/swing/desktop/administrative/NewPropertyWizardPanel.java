@@ -1,32 +1,32 @@
 /**
-* ******************************************************************************************
-* Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
-* (FAO). All rights reserved.
-*
+ * ******************************************************************************************
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
+ * 
 * Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
+ * modification, are permitted provided that the following conditions are met:
+ * 
 * 1. Redistributions of source code must retain the above copyright notice,this
-* list of conditions and the following disclaimer. 2. Redistributions in binary
-* form must reproduce the above copyright notice,this list of conditions and
-* the following disclaimer in the documentation and/or other materials provided
-* with the distribution. 3. Neither the name of FAO nor the names of its
-* contributors may be used to endorse or promote products derived from this
-* software without specific prior written permission.
-*
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ * 
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-* CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-* IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-* *********************************************************************************************
-*/
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ * *********************************************************************************************
+ */
 package org.sola.clients.swing.desktop.administrative;
 
 import java.awt.CardLayout;
@@ -48,26 +48,27 @@ import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
 
 /**
-* Allows to search and/or select BA unit for the new title registration.
-*/
+ * Allows to search and/or select BA unit for the new title registration.
+ */
 public class NewPropertyWizardPanel extends ContentPanel {
 
     public static final String SELECTED_RESULT_PROPERTY = "selectedResult";
     private BaUnitSearchResultBean selectedApplicationProperty;
     private BaUnitBean baUnitBean;
+    private BaUnitSearchResultBean selectedBaUnitSearchResult;
     private java.util.ResourceBundle resourceBundle;
     private final static String CARD_SEARCH = "cardSearch";
     private final static String CARD_BAUNIT = "cardBaUnit";
     private boolean allowSelection;
 
     /**
-* Class constructor.
-*
+     * Class constructor.
+     *     
 * @param applicationBean Application instance used to pick up property
-* list.
-* @param allowSelection Defines if selection of parcels and rights is
-* allowed.
-*/
+     * list.
+     * @param allowSelection Defines if selection of parcels and rights is
+     * allowed.
+     */
     public NewPropertyWizardPanel(ApplicationBean applicationBean, boolean allowSelection) {
         this.applicationBean = applicationBean;
         this.allowSelection = allowSelection;
@@ -96,8 +97,8 @@ public class NewPropertyWizardPanel extends ContentPanel {
     }
 
     /**
-* Creates {@link ApplicationBean} instance to bind on the form.
-*/
+     * Creates {@link ApplicationBean} instance to bind on the form.
+     */
     private ApplicationBean createApplicationBean() {
         if (applicationBean == null) {
             applicationBean = new ApplicationBean();
@@ -129,22 +130,26 @@ public class NewPropertyWizardPanel extends ContentPanel {
 
     public void setBaUnitBean(BaUnitBean baUnitBean) {
         if (baUnitBean != null) {
-            this.baUnitBean = baUnitBean;
-            this.baUnitBean.filterCurrentRecords();
-            firePropertyChange("baUnitBean", null, this.baUnitBean);
+            if (this.baUnitBean == null || !this.baUnitBean.equals(baUnitBean)) {
+                this.baUnitBean = baUnitBean;
+                this.baUnitBean.filterCurrentRecords();
+                firePropertyChange("baUnitBean", null, this.baUnitBean);
+            }
         }
     }
 
     /**
-* Sets {@link BaUnitBean} by first and last name part.
-*/
-    private void setupBaUnit(final String nameFirstPart, final String nameLastPart) {
+     * Sets {@link BaUnitBean} by first and last name part.
+     */
+    private void setupBaUnit(final BaUnitSearchResultBean baUnitSearchResult) {
+        selectedBaUnitSearchResult = baUnitSearchResult;
+
         SolaTask t = new SolaTask<Void, Void>() {
 
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_GETTING_PROPERTY_OBJECT));
-                BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().GetBaUnitByCode(nameFirstPart, nameLastPart);
+                BaUnitTO baUnitTO = WSManager.getInstance().getAdministrative().GetBaUnitById(baUnitSearchResult.getId());
                 BaUnitBean baUnitBean1 = TypeConverters.TransferObjectToBean(baUnitTO, BaUnitBean.class, null);
                 if (baUnitBean1 != null) {
                     setBaUnitBean(baUnitBean1);
@@ -233,16 +238,25 @@ public class NewPropertyWizardPanel extends ContentPanel {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${selected}"));
         columnBinding.setColumnName("Selected");
         columnBinding.setColumnClass(Boolean.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameFirstpart}"));
-        columnBinding.setColumnName("Name Firstpart");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
+        columnBinding.setColumnName("Property Id Code");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameLastpart}"));
-        columnBinding.setColumnName("Name Lastpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address.vdcBean.displayValue}"));
+        columnBinding.setColumnName("Address.vdc Bean.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cadastreObjectType.displayValue}"));
-        columnBinding.setColumnName("Cadastre Object Type.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address.wardNo}"));
+        columnBinding.setColumnName("Address.ward No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapSheet.mapNumber}"));
+        columnBinding.setColumnName("Map Sheet.map Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelno}"));
+        columnBinding.setColumnName("Parcelno");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
@@ -255,6 +269,8 @@ public class NewPropertyWizardPanel extends ContentPanel {
         tableNewParcels.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("NewPropertyWizardPanel.tableNewParcels.columnModel.title1")); // NOI18N
         tableNewParcels.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("NewPropertyWizardPanel.tableNewParcels.columnModel.title2")); // NOI18N
         tableNewParcels.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("NewPropertyWizardPanel.tableNewParcels.columnModel.title3")); // NOI18N
+        tableNewParcels.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableNewParcels.columnModel.title4")); // NOI18N
+        tableNewParcels.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableNewParcels.columnModel.title5")); // NOI18N
 
         jLabel2.setText(bundle.getString("NewPropertyWizardPanel.jLabel2.text_1")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
@@ -263,7 +279,7 @@ public class NewPropertyWizardPanel extends ContentPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addContainerGap())
@@ -315,7 +331,7 @@ public class NewPropertyWizardPanel extends ContentPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addContainerGap())
@@ -364,15 +380,16 @@ public class NewPropertyWizardPanel extends ContentPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addComponent(cbxRelationType, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBackToSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFinish, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addContainerGap())
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(cbxRelationType, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBackToSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFinish, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBackToSelection, btnFinish});
@@ -419,21 +436,33 @@ public class NewPropertyWizardPanel extends ContentPanel {
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${filteredPropertyList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, applicationBean, eLProperty, tableApplicationProperty);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameFirstpart}"));
-        columnBinding.setColumnName("Name Firstpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
+        columnBinding.setColumnName("Property Id Code");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameLastpart}"));
-        columnBinding.setColumnName("Name Lastpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${vdc.displayValue}"));
+        columnBinding.setColumnName("Vdc.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${area}"));
-        columnBinding.setColumnName("Area");
-        columnBinding.setColumnClass(java.math.BigDecimal.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${wardNo}"));
+        columnBinding.setColumnName("Ward No");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalValue}"));
-        columnBinding.setColumnName("Total Value");
-        columnBinding.setColumnClass(java.math.BigDecimal.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapNumber}"));
+        columnBinding.setColumnName("Map Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"));
+        columnBinding.setColumnName("Parcel No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mothNo}"));
+        columnBinding.setColumnName("Moth No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${panaNo}"));
+        columnBinding.setColumnName("Pana No");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedApplicationProperty}"), tableApplicationProperty, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
@@ -444,6 +473,9 @@ public class NewPropertyWizardPanel extends ContentPanel {
         tableApplicationProperty.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableApplicationProperty.columnModel.title1")); // NOI18N
         tableApplicationProperty.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableApplicationProperty.columnModel.title2")); // NOI18N
         tableApplicationProperty.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableApplicationProperty.columnModel.title3")); // NOI18N
+        tableApplicationProperty.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableApplicationProperty.columnModel.title4")); // NOI18N
+        tableApplicationProperty.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableApplicationProperty.columnModel.title5")); // NOI18N
+        tableApplicationProperty.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("NewPropertyWizardPanel.tableApplicationProperty.columnModel.title6")); // NOI18N
 
         btnSelectFromApplication.setText(bundle1.getString("NewPropertyWizardPanel.btnSelectFromApplication.text")); // NOI18N
         btnSelectFromApplication.setName("btnSelectFromApplication"); // NOI18N
@@ -457,11 +489,13 @@ public class NewPropertyWizardPanel extends ContentPanel {
         pnlApplicationProperty.setLayout(pnlApplicationPropertyLayout);
         pnlApplicationPropertyLayout.setHorizontalGroup(
             pnlApplicationPropertyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlApplicationPropertyLayout.createSequentialGroup()
+            .addGroup(pnlApplicationPropertyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlApplicationPropertyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
-                    .addComponent(btnSelectFromApplication, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlApplicationPropertyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addGroup(pnlApplicationPropertyLayout.createSequentialGroup()
+                        .addComponent(btnSelectFromApplication, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlApplicationPropertyLayout.setVerticalGroup(
@@ -481,6 +515,7 @@ public class NewPropertyWizardPanel extends ContentPanel {
 
         baUnitSearchPanel.setName("baUnitSearchPanel"); // NOI18N
         baUnitSearchPanel.setShowOpenButton(false);
+        baUnitSearchPanel.setShowSelectButton(false);
 
         btnSelectFromSearch.setText(bundle1.getString("NewPropertyWizardPanel.btnSelectFromSearch.text")); // NOI18N
         btnSelectFromSearch.setName("btnSelectFromSearch"); // NOI18N
@@ -494,11 +529,13 @@ public class NewPropertyWizardPanel extends ContentPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
-                    .addComponent(btnSelectFromSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnSelectFromSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -532,10 +569,10 @@ public class NewPropertyWizardPanel extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -552,15 +589,13 @@ public class NewPropertyWizardPanel extends ContentPanel {
 
     private void btnSelectFromApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFromApplicationActionPerformed
         if (selectedApplicationProperty != null) {
-            setupBaUnit(selectedApplicationProperty.getNameFirstPart(),
-                    selectedApplicationProperty.getNameLastPart());
+            setupBaUnit(selectedApplicationProperty);
         }
     }//GEN-LAST:event_btnSelectFromApplicationActionPerformed
 
     private void btnSelectFromSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFromSearchActionPerformed
         if (baUnitSearchPanel.getSelectedSearchResult() != null) {
-            setupBaUnit(baUnitSearchPanel.getSelectedSearchResult().getNameFirstPart(),
-                    baUnitSearchPanel.getSelectedSearchResult().getNameLastPart());
+            setupBaUnit(baUnitSearchPanel.getSelectedSearchResult());
         }
     }//GEN-LAST:event_btnSelectFromSearchActionPerformed
 
@@ -597,7 +632,7 @@ public class NewPropertyWizardPanel extends ContentPanel {
             rrrBean.setStatusCode(StatusConstants.PENDING);
         }
 
-        Object[] result = new Object[]{selectedBaUnit, baUnitRelTypeListBean.getSelectedBaUnitRelType()};
+        Object[] result = new Object[]{selectedBaUnit, baUnitRelTypeListBean.getSelectedBaUnitRelType(), selectedBaUnitSearchResult};
         getMainContentPanel().closePanel(this);
         firePropertyChange(SELECTED_RESULT_PROPERTY, null, result);
     }//GEN-LAST:event_btnFinishActionPerformed

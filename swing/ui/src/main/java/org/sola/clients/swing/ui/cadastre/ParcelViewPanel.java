@@ -31,7 +31,7 @@ package org.sola.clients.swing.ui.cadastre;
 
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.cadastre.CadastreObjectSearchResultBean;
-import org.sola.clients.beans.cadastre.CadastreObjectSummarytBean;
+import org.sola.clients.beans.cadastre.CadastreObjectSummaryBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.common.messaging.ClientMessage;
@@ -42,34 +42,34 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class ParcelViewPanel extends javax.swing.JPanel {
 
-    private CadastreObjectSummarytBean cadastreObject;
+    private CadastreObjectSummaryBean cadastreObject;
 
     public ParcelViewPanel() {
         setupCadastreObject(null);
         initComponents();
     }
 
-    private void setupCadastreObject(CadastreObjectSummarytBean cadastreObjectBean) {
-        CadastreObjectSummarytBean oldValue = this.cadastreObject;
+    private void setupCadastreObject(CadastreObjectSummaryBean cadastreObjectBean) {
+        CadastreObjectSummaryBean oldValue = this.cadastreObject;
         if (cadastreObjectBean == null) {
-            this.cadastreObject = new CadastreObjectBean();
+            this.cadastreObject = new CadastreObjectSummaryBean();
         } else {
             this.cadastreObject = cadastreObjectBean;
         }
-        firePropertyChange("cadastreObject", oldValue, this.cadastreObject);
+        firePropertyChange("cadastreObject", null, this.cadastreObject);
     }
 
-    public CadastreObjectSummarytBean getCadastreObject() {
+    public CadastreObjectSummaryBean getCadastreObject() {
         return cadastreObject;
     }
 
-    public void setCadastreObject(CadastreObjectSummarytBean cadastreObjectBean) {
+    public void setCadastreObject(CadastreObjectSummaryBean cadastreObjectBean) {
         setupCadastreObject(cadastreObjectBean);
     }
     
     public void setCadastreObject(final CadastreObjectSearchResultBean cadastreObjectSearchResultBean) {
         SolaTask t = new SolaTask<Void, Void>() {
-            CadastreObjectSummarytBean cadastreObject;
+            CadastreObjectSummaryBean cadastreObject;
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_GETTING_PARCEL));
@@ -171,7 +171,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         txtParcelVdc.setEditable(false);
         txtParcelVdc.setName(bundle.getString("ParcelViewPanel.txtParcelVdc.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.addressBean.vdcBean.displayValue}"), txtParcelVdc, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.address.vdcBean.displayValue}"), txtParcelVdc, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel15Layout = new org.jdesktop.layout.GroupLayout(jPanel15);
@@ -202,7 +202,7 @@ public class ParcelViewPanel extends javax.swing.JPanel {
         txtParcelWardNumber.setEditable(false);
         txtParcelWardNumber.setName(bundle.getString("ParcelViewPanel.txtParcelWardNumber.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.addressBean.wardNo}"), txtParcelWardNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject.address.wardNo}"), txtParcelWardNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel16Layout = new org.jdesktop.layout.GroupLayout(jPanel16);

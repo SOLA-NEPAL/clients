@@ -338,19 +338,24 @@ public final class CacheManager {
                 }
             }
         }
-        return result;
+        return Collections.unmodifiableList(result);
     }
 
     public static VdcBean getVdc(String vdcCode) {
+        VdcBean vdcBean;
         if (getCachedVdcs().containsKey(vdcCode)) {
-            return getCachedVdcs().get(vdcCode);
+            vdcBean = getCachedVdcs().get(vdcCode);
         } else {
-            VdcBean vdcBean = TypeConverters.TransferObjectToBean(
+            vdcBean = TypeConverters.TransferObjectToBean(
                     WSManager.getInstance().getReferenceDataService().getVdcByCode(vdcCode), VdcBean.class, null);
             if (vdcBean != null) {
                 getVdcs(vdcBean.getDistrictCode());
             }
-            return vdcBean;
+        }
+        if(vdcBean!=null){
+            return vdcBean.copy();
+        } else {
+            return null;
         }
     }
 
@@ -751,19 +756,24 @@ public final class CacheManager {
                 }
             }
         }
-        return result;
+        return Collections.unmodifiableList(result);
     }
 
     public static MapSheetBean getMapSheet(String mapSheetId) {
+        MapSheetBean mapSheetBean;
         if (getCachedMapSheets().containsKey(mapSheetId)) {
-            return getCachedMapSheets().get(mapSheetId);
+            mapSheetBean = getCachedMapSheets().get(mapSheetId);
         } else {
-            MapSheetBean mapSheetBean = TypeConverters.TransferObjectToBean(
+            mapSheetBean = TypeConverters.TransferObjectToBean(
                     WSManager.getInstance().getCadastreService().getMapSheet(mapSheetId), MapSheetBean.class, null);
             if (mapSheetBean != null) {
                 getMapSheets(mapSheetBean.getOfficeCode());
             }
-            return mapSheetBean;
+        }
+        if (mapSheetBean != null) {
+            return mapSheetBean.copy();
+        } else {
+            return null;
         }
     }
 

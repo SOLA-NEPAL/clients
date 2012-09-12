@@ -610,7 +610,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public void removeSelectedProperty() {
         if (selectedProperty != null && propertyList != null) {
-            propertyList.safeRemove(selectedProperty, EntityAction.DELETE);
+            propertyList.safeRemove(selectedProperty, EntityAction.DISASSOCIATE);
         }
     }
 

@@ -61,6 +61,7 @@ public class BaUnitSearchForm extends ContentPanel {
 
         baUnitSearchPanel1.setName("baUnitSearchPanel1"); // NOI18N
 
+        setHeaderPanel(headerPanel1);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
         setHelpTopic(bundle.getString("BaUnitSearchForm.helpTopic")); // NOI18N
         setName("Form"); // NOI18N

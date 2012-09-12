@@ -23,10 +23,6 @@ import org.sola.clients.beans.AbstractCodeBean;
  */
 public class LandUseBean extends AbstractCodeBean {
 
-    public static final String CODE_CANCEL = "cancel";
-    public static final String CODE_NEW = "new";
-    public static final String CODE_VARY = "vary";
-
     public LandUseBean() {
         super();
     }

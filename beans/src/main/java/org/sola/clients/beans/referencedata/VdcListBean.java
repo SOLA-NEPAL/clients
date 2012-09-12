@@ -30,7 +30,6 @@ public class VdcListBean extends AbstractBindingListBean {
     public static final String SELECTED_VDC_PROPERTY = "selectedVdc";
     private SolaCodeList<VdcBean> vdcs;
     private VdcBean selectedVdc;
-    private ObservableList<VdcBean> vdc;
 
     public VdcListBean(){
         this(false);
@@ -92,14 +91,6 @@ public class VdcListBean extends AbstractBindingListBean {
     public ObservableList<VdcBean> getVdcs() {
         return vdcs.getFilteredList();
     }
-    
-    
-    public ObservableList<VdcBean> getVdc() {
-         if (vdc == null) {
-            vdc = ObservableCollections.observableList(new ArrayList<VdcBean>());
-        }
-        return vdc;    
-    }     
     
      public void removeSelectedVdc(){
         if(selectedVdc!=null){

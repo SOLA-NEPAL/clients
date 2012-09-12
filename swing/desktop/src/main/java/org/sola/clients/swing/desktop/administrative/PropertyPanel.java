@@ -29,19 +29,18 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
-import org.sola.clients.beans.administrative.BaUnitBean;
-import org.sola.clients.beans.administrative.BaUnitNotationBean;
-import org.sola.clients.beans.administrative.RelatedBaUnitInfoBean;
-import org.sola.clients.beans.administrative.RrrBean;
+import org.jdesktop.beansbinding.AutoBinding;
+import org.jdesktop.beansbinding.Bindings;
+import org.sola.clients.beans.administrative.*;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.cadastre.CadastreObjectSearchResultBean;
+import org.sola.clients.beans.cadastre.CadastreObjectSummaryBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.reports.ReportManager;
@@ -50,6 +49,7 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.ReportViewerForm;
+import org.sola.clients.swing.desktop.cadastre.ParcelPanelForm;
 import org.sola.clients.swing.desktop.cadastre.ParcelSearchPanelForm;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForBaUnit;
 import org.sola.clients.swing.ui.ContentPanel;
@@ -61,7 +61,6 @@ import org.sola.clients.swing.ui.renderers.TerminatingCellRenderer;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
-import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  * This form is used to manage property object ({
@@ -83,11 +82,10 @@ public class PropertyPanel extends ContentPanel {
                 pnlParcelView.setCadastreObject((CadastreObjectSearchResultBean) evt.getNewValue());
                 baUnitBean.setNameFirstpart(searchResult.getFirstName());
                 baUnitBean.setNameLastpart(searchResult.getLastName());
-                getMainContentPanel().closePanel((ContentPanel)((Component)evt.getSource()).getParent());
+                getMainContentPanel().closePanel((ContentPanel) ((Component) evt.getSource()).getParent());
             }
         }
     }
-    
     private ParcelSearchFormListener parcelSearchFormListener = new ParcelSearchFormListener();
 
     private class RightFormListener implements PropertyChangeListener {
@@ -101,7 +99,6 @@ public class PropertyPanel extends ContentPanel {
             }
         }
     }
-    
     private ApplicationBean applicationBean;
     private ApplicationServiceBean applicationService;
     private ControlsBundleForBaUnit mapControl = null;
@@ -110,15 +107,15 @@ public class PropertyPanel extends ContentPanel {
     private PropertyChangeListener newPropertyWizardListener;
     private String baUnitId;
     private boolean splitting;
-    
+
     /**
      * Creates {@link BaUnitBean} used to bind form components.
      */
     private BaUnitBean createBaUnitBean() {
         if (baUnitBean == null) {
-            if(baUnitId!=null){
+            if (baUnitId != null) {
                 baUnitBean = BaUnitBean.getBaUnitById(baUnitId);
-            } 
+            }
             if (baUnitBean == null) {
                 baUnitBean = new BaUnitBean();
             }
@@ -132,17 +129,17 @@ public class PropertyPanel extends ContentPanel {
 
     /**
      * Form constructor. Creates and open form in read only mode.
-     *     
+     *
      * @param baUnitId ID of {@link BaUnitBean}, used to get and bind data on
      * the form.
      */
     public PropertyPanel(String baUnitId) {
         this(null, null, baUnitId, true, false);
     }
-    
+
     /**
      * Form constructor.
-     *     
+     *
      * @param applicationBean {@link ApplicationBean} instance, used to get list
      * of documents.
      * @param applicationService {@link ApplicationServiceBean} instance, used
@@ -193,9 +190,9 @@ public class PropertyPanel extends ContentPanel {
      * Makes post initialization tasks.
      */
     private void postInit() {
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE,
+        org.jdesktop.beansbinding.Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE,
                 baUnitBean, org.jdesktop.beansbinding.ELProperty.create("${cadastreObject}"),
-                pnlParcelView, org.jdesktop.beansbinding.BeanProperty.create("cadastreObject"));
+                pnlParcelView, org.jdesktop.beansbinding.BeanProperty.create("cadastreObject"), "parcelDetailsBinding");
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
         customizeForm();
@@ -234,7 +231,7 @@ public class PropertyPanel extends ContentPanel {
         });
 
         saveBaUnitState();
-        if(splitting){
+        if (splitting) {
             showNewTitleWizard(false);
         }
     }
@@ -257,7 +254,7 @@ public class PropertyPanel extends ContentPanel {
         customizeTerminationButton();
         customizeHistoricRightsViewButton();
     }
-    
+
     private void customizeHeaderCaption() {
         if (baUnitBean.getNameFirstpart() != null && baUnitBean.getNameLastpart() != null) {
             headerPanel.setTitleText(String.format(
@@ -307,11 +304,7 @@ public class PropertyPanel extends ContentPanel {
                     @Override
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYLINK));
-                        boolean allowSelection = true;
-                        if (applicationService != null) {
-                            allowSelection = !applicationService.getRequestTypeCode().equalsIgnoreCase(RequestTypeBean.CODE_NEW_DIGITAL_TITLE);
-                        }
-                        NewPropertyWizardPanel newPropertyWizardPanel = new NewPropertyWizardPanel(applicationBean, allowSelection);
+                        NewPropertyWizardPanel newPropertyWizardPanel = new NewPropertyWizardPanel(applicationBean, true);
                         newPropertyWizardPanel.addPropertyChangeListener(newPropertyWizardListener);
                         getMainContentPanel().addPanel(newPropertyWizardPanel, getThis().getId(), newPropertyWizardPanel.getId(), true);
                         return null;
@@ -348,6 +341,7 @@ public class PropertyPanel extends ContentPanel {
 
         BaUnitBean selectedBaUnit = (BaUnitBean) selectedResult[0];
         BaUnitRelTypeBean baUnitRelType = (BaUnitRelTypeBean) selectedResult[1];
+        BaUnitSearchResultBean selectedBaUnitSearchResult= (BaUnitSearchResultBean)selectedResult[2];
 
         // Check relation type to be same as on the list.
         for (RelatedBaUnitInfoBean parent : baUnitBean.getFilteredParentBaUnits()) {
@@ -377,7 +371,7 @@ public class PropertyPanel extends ContentPanel {
             }
             if (!exists) {
                 // Check if RRR is ownership and there is no existing RRR of ownership with pending state
-                if (rrr.getRrrType() != null || rrr.getRrrType().getRrrGroupTypeCode() != null
+                if (rrr.getRrrType() != null && rrr.getRrrType().getRrrGroupTypeCode() != null
                         && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)
                         && baUnitBean.hasPendingOwnership()) {
                     MessageUtility.displayMessage(ClientMessage.BAUNIT_ALREADY_HAS_PENDING_OWNERSHIP);
@@ -399,7 +393,7 @@ public class PropertyPanel extends ContentPanel {
         RelatedBaUnitInfoBean relatedBuUnit = new RelatedBaUnitInfoBean();
         relatedBuUnit.setBaUnitId(baUnitBean.getId());
         relatedBuUnit.setBaUnitRelType(baUnitRelType);
-        relatedBuUnit.setRelatedBaUnit(selectedBaUnit);
+        relatedBuUnit.setRelatedBaUnit(selectedBaUnitSearchResult);
         relatedBuUnit.setRelatedBaUnitId(selectedBaUnit.getId());
         baUnitBean.getParentBaUnits().addAsNew(relatedBuUnit);
 
@@ -499,12 +493,12 @@ public class PropertyPanel extends ContentPanel {
      * selection in the list of parcel.
      */
     private void customizeParcelButtons() {
-        boolean pending = baUnitBean.getStatusCode() == null || 
-                baUnitBean.getStatusCode().equals(StatusConstants.PENDING);
+        boolean pending = baUnitBean.getStatusCode() == null
+                || baUnitBean.getStatusCode().equals(StatusConstants.PENDING);
         boolean enabled = baUnitBean.getCadastreObject() != null
                 && !baUnitBean.getCadastreObject().isLocked() || !readOnly;
-        
-        btnEditParcel.setEnabled(enabled);
+
+        btnEditParcel.setEnabled(!readOnly);
         btnShowOnMap.setEnabled(enabled);
         btnSelectParcel.setEnabled(!readOnly && pending);
     }
@@ -811,6 +805,26 @@ public class PropertyPanel extends ContentPanel {
             };
             TaskManager.getInstance().runTask(t);
         }
+    }
+
+    private void editParcel() {
+        CadastreObjectSummaryBean cadastreObject = null;
+        if (baUnitBean.getCadastreObject() != null) {
+            cadastreObject = (CadastreObjectSummaryBean) baUnitBean.getCadastreObject().copy();
+        } 
+        
+        ParcelPanelForm form = new ParcelPanelForm(cadastreObject, false, true);
+        form.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals(ParcelPanelForm.CADASTRE_OBJECT_SAVE)) {
+                    baUnitBean.setCadastreObject(null);
+                    baUnitBean.setCadastreObject((CadastreObjectSummaryBean) evt.getNewValue());
+                }
+            }
+        });
+        getMainContentPanel().addPanel(form, this.getId(), form.getId(), true);
     }
 
     private void saveBaUnitState() {
@@ -1231,7 +1245,7 @@ public class PropertyPanel extends ContentPanel {
         txtBaUnitStatus.setEditable(false);
         txtBaUnitStatus.setName("txtBaUnitStatus"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitBean, org.jdesktop.beansbinding.ELProperty.create("${status.displayValue}"), txtBaUnitStatus, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitBean, org.jdesktop.beansbinding.ELProperty.create("${status.displayValue}"), txtBaUnitStatus, org.jdesktop.beansbinding.BeanProperty.create("text"), "statusBinding");
         bindingGroup.addBinding(binding);
 
         org.jdesktop.layout.GroupLayout jPanel6Layout = new org.jdesktop.layout.GroupLayout(jPanel6);
@@ -1842,24 +1856,36 @@ public class PropertyPanel extends ContentPanel {
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${filteredParentBaUnits}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitBean, eLProperty, tableParentBaUnits);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.name}"));
-        columnBinding.setColumnName("Related Ba Unit.name");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.propertyIdCode}"));
+        columnBinding.setColumnName("Related Ba Unit.property Id Code");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.nameFirstpart}"));
-        columnBinding.setColumnName("Related Ba Unit.name Firstpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.vdc.displayValue}"));
+        columnBinding.setColumnName("Related Ba Unit.vdc.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.nameLastpart}"));
-        columnBinding.setColumnName("Related Ba Unit.name Lastpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.wardNo}"));
+        columnBinding.setColumnName("Related Ba Unit.ward No");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${baUnitRelType.displayValue}"));
-        columnBinding.setColumnName("Ba Unit Rel Type.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.mapNumber}"));
+        columnBinding.setColumnName("Related Ba Unit.map Number");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.status.displayValue}"));
-        columnBinding.setColumnName("Related Ba Unit.status.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.parcelNo}"));
+        columnBinding.setColumnName("Related Ba Unit.parcel No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.mothNo}"));
+        columnBinding.setColumnName("Related Ba Unit.moth No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.panaNo}"));
+        columnBinding.setColumnName("Related Ba Unit.pana No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.registrationStatus.displayValue}"));
+        columnBinding.setColumnName("Related Ba Unit.registration Status.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
@@ -1872,6 +1898,9 @@ public class PropertyPanel extends ContentPanel {
         tableParentBaUnits.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PropertyPanel.tableParentBaUnits.columnModel.title2_1")); // NOI18N
         tableParentBaUnits.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertyPanel.jTable1.columnModel.title4")); // NOI18N
         tableParentBaUnits.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("PropertyPanel.jTable1.columnModel.title3_1")); // NOI18N
+        tableParentBaUnits.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("PropertyPanel.tableParentBaUnits.columnModel.title5")); // NOI18N
+        tableParentBaUnits.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("PropertyPanel.tableParentBaUnits.columnModel.title6")); // NOI18N
+        tableParentBaUnits.getColumnModel().getColumn(7).setHeaderValue(bundle.getString("PropertyPanel.tableParentBaUnits.columnModel.title7_1")); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel8Layout = new org.jdesktop.layout.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -1924,24 +1953,32 @@ public class PropertyPanel extends ContentPanel {
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${filteredChildBaUnits}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitBean, eLProperty, tableChildBaUnits);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.name}"));
-        columnBinding.setColumnName("Related Ba Unit.name");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.propertyIdCode}"));
+        columnBinding.setColumnName("Related Ba Unit.property Id Code");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.nameFirstpart}"));
-        columnBinding.setColumnName("Related Ba Unit.name Firstpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.vdc.displayValue}"));
+        columnBinding.setColumnName("Related Ba Unit.vdc.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.nameLastpart}"));
-        columnBinding.setColumnName("Related Ba Unit.name Lastpart");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.mapNumber}"));
+        columnBinding.setColumnName("Related Ba Unit.map Number");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${baUnitRelType.displayValue}"));
-        columnBinding.setColumnName("Ba Unit Rel Type.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.parcelNo}"));
+        columnBinding.setColumnName("Related Ba Unit.parcel No");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.status.displayValue}"));
-        columnBinding.setColumnName("Related Ba Unit.status.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.mothNo}"));
+        columnBinding.setColumnName("Related Ba Unit.moth No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.panaNo}"));
+        columnBinding.setColumnName("Related Ba Unit.pana No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relatedBaUnit.registrationStatus.displayValue}"));
+        columnBinding.setColumnName("Related Ba Unit.registration Status.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
@@ -1954,6 +1991,8 @@ public class PropertyPanel extends ContentPanel {
         tableChildBaUnits.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PropertyPanel.tableChildBaUnits.columnModel.title2_1")); // NOI18N
         tableChildBaUnits.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertyPanel.tableChildBaUnits.columnModel.title3_1")); // NOI18N
         tableChildBaUnits.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("PropertyPanel.tableChildBaUnits.columnModel.title4")); // NOI18N
+        tableChildBaUnits.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("PropertyPanel.tableChildBaUnits.columnModel.title5")); // NOI18N
+        tableChildBaUnits.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("PropertyPanel.tableChildBaUnits.columnModel.title6")); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -2054,15 +2093,15 @@ private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     }//GEN-LAST:event_tableRightsMouseClicked
 
 private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-    if (this.mapControl == null) {
-        this.mapControl = new ControlsBundleForBaUnit();
-        this.mapControl.setCadastreObjects(baUnitBean.getId());
-        if (applicationBean != null) {
-            this.mapControl.setApplicationId(this.applicationBean.getId());
-        }
-        this.mapPanel.setLayout(new BorderLayout());
-        this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
-    }
+//    if (this.mapControl == null) {
+//        this.mapControl = new ControlsBundleForBaUnit();
+//        this.mapControl.setCadastreObjects(baUnitBean.getId());
+//        if (applicationBean != null) {
+//            this.mapControl.setApplicationId(this.applicationBean.getId());
+//        }
+//        this.mapPanel.setLayout(new BorderLayout());
+//        this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
+//    }
 }//GEN-LAST:event_formComponentShown
 
     private void btnAddParentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddParentActionPerformed
@@ -2178,7 +2217,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     }//GEN-LAST:event_tableRightsHistoryMouseClicked
 
     private void btnEditParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditParcelActionPerformed
-        // TODO add your handling code here:
+        editParcel();
     }//GEN-LAST:event_btnEditParcelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

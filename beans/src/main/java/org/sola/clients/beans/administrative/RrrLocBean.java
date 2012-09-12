@@ -34,7 +34,6 @@ public class RrrLocBean extends AbstractBindingBean {
 
     public static final String LOC_ID_PROPERTY = "locId";
     public static final String TYPE_CODE_PROPERTY = "typeCode";
-    public static final String REGISTRATION_DATE_PROPERTY = "registrationDate";
     public static final String STATUS_CODE_PROPERTY = "statusCode";
     public static final String RRR_TYPE_PROPERTY = "rrrType";
     public static final String OWNER_TYPE_PROPERTY = "ownerType";
@@ -42,15 +41,11 @@ public class RrrLocBean extends AbstractBindingBean {
     public static final String OWNERSHIP_TYPE_PROPERTY = "ownershipType";
     public static final String OWNERSHIP_TYPE_CODE_PROPERTY = "ownershipTypeCode";
     public static final String REGISTRATION_STATUS_PROPERTY = "registrationStatus";
-    public static final String NOTATION_TEXT_PROPERTY = "notationText";
     private String locId;
     private RrrTypeBean rrrType;
     private OwnerTypeBean ownerType;
     private OwnershipTypeBean ownershipType;
-    private Date registrationDate;
     private RegistrationStatusTypeBean registrationStatus;
-    private String notationText;
-    private SolaList<SourceBean> sourceList;
     private SolaList<PartySummaryBean> rightHolderList;
 
     public RrrLocBean() {
@@ -67,26 +62,6 @@ public class RrrLocBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(LOC_ID_PROPERTY, oldValue, this.locId);
     }
 
-    public String getNotationText() {
-        return notationText;
-    }
-
-    public void setNotationText(String notationText) {
-        String oldValue = this.notationText;
-        this.notationText = notationText;
-        propertySupport.firePropertyChange(NOTATION_TEXT_PROPERTY, oldValue, this.locId);
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Date registrationDate) {
-        Date oldValue = this.registrationDate;
-        this.registrationDate = registrationDate;
-        propertySupport.firePropertyChange(REGISTRATION_DATE_PROPERTY, oldValue, this.registrationDate);
-    }
-
     public SolaList<PartySummaryBean> getRightHolderList() {
         if (rightHolderList == null) {
             rightHolderList = new SolaList<PartySummaryBean>();
@@ -96,17 +71,6 @@ public class RrrLocBean extends AbstractBindingBean {
 
     public void setRightHolderList(SolaList<PartySummaryBean> rightHolderList) {
         this.rightHolderList = rightHolderList;
-    }
-
-    public SolaList<SourceBean> getSourceList() {
-        if (sourceList == null) {
-            sourceList = new SolaList<SourceBean>();
-        }
-        return sourceList;
-    }
-
-    public void setSourceList(SolaList<SourceBean> sourceList) {
-        this.sourceList = sourceList;
     }
 
     public String getStatusCode() {

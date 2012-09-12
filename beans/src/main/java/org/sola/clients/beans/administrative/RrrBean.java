@@ -38,6 +38,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.administrative.RrrBean.RRR_ACTION;
@@ -74,8 +75,8 @@ public class RrrBean extends AbstractTransactionedBean {
 //    public static final String CODE_BYAPPLICATION = "byApplication";
 //    public static final String CODE_BYLETTER = "byLetter";
 //    public static final String CODE_LIKHATPARIT = "byLikhatParit";
-    public static final String CODE_SIMPLE_RESTRICTION="simpleRestriction";
-    public static final String CODE_RESTRICTION_RELEASE="restrictionRelease";
+    public static final String CODE_SIMPLE_RESTRICTION = "simpleRestriction";
+    public static final String CODE_RESTRICTION_RELEASE = "restrictionRelease";
     public static final String CODE_APARTMENT = "apartment";
     public static final String CODE_STATE_OWNERSHIP = "stateOwnership";
     public static final String CODE_MORTGAGE = "mortgage";
@@ -97,7 +98,7 @@ public class RrrBean extends AbstractTransactionedBean {
     // public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
     // public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     public static final String OWNER_TYPE_PROPERTY = "ownerType";
-    public static final String OWNERSHIP_TYPE_PROPERTY = "shareType";
+    public static final String OWNERSHIP_TYPE_PROPERTY = "ownershipType";
     public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";
     public static final String OWNERSHIP_TYPE_CODE_PROPERTY = "ownershipTypeCode";
     public static final String TENANCY_TYPE_PROPERTY = "tenancyType";
@@ -121,6 +122,8 @@ public class RrrBean extends AbstractTransactionedBean {
     private String sn;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
+    @NotEmpty(message = ClientMessage.CHECK_REGISTRATION_NUMBER, payload = Localized.class)
+    private String registrationNumber;
     private String transactionId;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_EXPIRATION, payload = Localized.class, groups = {MortgageValidationGroup.class})
     @Future(message = ClientMessage.CHECK_FUTURE_EXPIRATION, payload = Localized.class,
@@ -159,7 +162,6 @@ public class RrrBean extends AbstractTransactionedBean {
     private transient PartySummaryBean selectedRightHolder;
     private boolean terminating;
     private String fiscalYearCode;
-    private String registrationNumber;
     private BigDecimal valuationAmount;
     private BigDecimal taxAmount;
 
@@ -756,7 +758,8 @@ public class RrrBean extends AbstractTransactionedBean {
      *     
 * @param resetChildren If true, will change ID fields also for child
      * objects.
-     * @param removeBaUnitId If true, will set <code>BaUnitId</code> to null.
+     * @param removeBaUnitId If true, will set
+     * <code>BaUnitId</code> to null.
      */
     public void resetIdAndVerion(boolean resetChildren, boolean removeBaUnitId) {
         generateId();
@@ -767,10 +770,12 @@ public class RrrBean extends AbstractTransactionedBean {
             setBaUnitId(null);
         }
         if (resetChildren) {
-            getNotation().generateId();
-            getNotation().resetVersion();
-            if (removeBaUnitId) {
-                getNotation().setBaUnitId(null);
+            if (getNotation() != null) {
+                getNotation().generateId();
+                getNotation().resetVersion();
+                if (removeBaUnitId) {
+                    getNotation().setBaUnitId(null);
+                }
             }
         }
     }
@@ -821,9 +826,6 @@ public class RrrBean extends AbstractTransactionedBean {
 
         if (rrrLoc == null) {
             // Clear all values if rrrLoc is null
-
-            getNotation().setNotationText(null);
-            setRegistrationDate(Calendar.getInstance().getTime());
             setTypeCode(null);
             setOwnerTypeCode(null);
             setOwnershipTypeCode(null);
@@ -837,35 +839,12 @@ public class RrrBean extends AbstractTransactionedBean {
                     getRightHolderList().safeRemove(party, EntityAction.DISASSOCIATE);
                 }
             }
-
-            Iterator<SourceBean> iteratorSources = getSourceList().iterator();
-            while (iteratorSources.hasNext()) {
-                SourceBean source = iteratorSources.next();
-                if (getSourceList().isNewlyAdded(source)) {
-                    iteratorSources.remove();
-                } else {
-                    getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
-                }
-            }
             return;
         }
 
-        if (rrrLoc.getRegistrationDate() == null) {
-            setRegistrationDate(Calendar.getInstance().getTime());
-        } else {
-            setRegistrationDate(rrrLoc.getRegistrationDate());
-        }
         setTypeCode(rrrLoc.getTypeCode());
         setOwnerTypeCode(rrrLoc.getOwnerTypeCode());
         setOwnershipTypeCode(rrrLoc.getOwnershipTypeCode());
-
-        if (getNotation() != null) {
-            getNotation().setNotationText(rrrLoc.getNotationText());
-        } else {
-            BaUnitNotationBean tmpNotation = new BaUnitNotationBean();
-            tmpNotation.setNotationText(rrrLoc.getNotationText());
-            setNotation(tmpNotation);
-        }
 
         // Update rightholders
         if (rrrLoc.getRightHolderList() == null) {
@@ -912,55 +891,6 @@ public class RrrBean extends AbstractTransactionedBean {
                 }
                 if (!found) {
                     addOrUpdateRightholder(party);
-                }
-            }
-        }
-
-        // Update sources
-        if (rrrLoc.getSourceList() == null) {
-            Iterator<SourceBean> iteratorSources = getSourceList().iterator();
-            while (iteratorSources.hasNext()) {
-                SourceBean sourceBean = iteratorSources.next();
-                if (getSourceList().isNewlyAdded(sourceBean)) {
-                    iteratorSources.remove();
-                } else {
-                    getSourceList().safeRemove(sourceBean, EntityAction.DISASSOCIATE);
-                }
-            }
-        } else {
-            if (getSourceList() == null) {
-                setSourceList(new SolaList<SourceBean>());
-            }
-            // Remove if not in rrrLoc list
-            Iterator<SourceBean> iteratorSources = getSourceList().iterator();
-            while (iteratorSources.hasNext()) {
-                SourceBean source = iteratorSources.next();
-                boolean found = false;
-                for (SourceBean source2 : rrrLoc.getSourceList()) {
-                    if (source.getId().equals(source2.getId())) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    if (getSourceList().isNewlyAdded(source)) {
-                        iteratorSources.remove();
-                    } else {
-                        getSourceList().safeRemove(source, EntityAction.DISASSOCIATE);
-                    }
-                }
-            }
-            // Add new sources on rrr from rrrLoc
-            for (SourceBean source : rrrLoc.getSourceList()) {
-                boolean found = false;
-                for (SourceBean source2 : getSourceList()) {
-                    if (source.getId().equals(source2.getId())) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    addOrUpdateSource(source);
                 }
             }
         }

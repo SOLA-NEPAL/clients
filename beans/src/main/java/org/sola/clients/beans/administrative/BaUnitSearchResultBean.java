@@ -56,10 +56,10 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String rightholders;
     private String officeCode;
     private String fiscalYearCode;
-    private boolean locId;
-    private boolean mothId;
-    private boolean panaNo;
-    private boolean mothNo;
+    private String locId;
+    private String mothId;
+    private String panaNo;
+    private String mothNo;
     private String wardNo;
     private VdcBean vdc;
     private String parcelNo;
@@ -159,14 +159,6 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
 
-    public boolean isLocId() {
-        return locId;
-    }
-
-    public void setLocId(boolean locId) {
-        this.locId = locId;
-    }
-
     public String getMapNumber() {
         return mapNumber;
     }
@@ -183,27 +175,35 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         this.mapSheetId = mapSheetId;
     }
 
-    public boolean isMothId() {
+    public String getLocId() {
+        return locId;
+    }
+
+    public void setLocId(String locId) {
+        this.locId = locId;
+    }
+
+    public String getMothId() {
         return mothId;
     }
 
-    public void setMothId(boolean mothId) {
+    public void setMothId(String mothId) {
         this.mothId = mothId;
     }
 
-    public boolean isMothNo() {
+    public String getMothNo() {
         return mothNo;
     }
 
-    public void setMothNo(boolean mothNo) {
+    public void setMothNo(String mothNo) {
         this.mothNo = mothNo;
     }
 
-    public boolean isPanaNo() {
+    public String getPanaNo() {
         return panaNo;
     }
 
-    public void setPanaNo(boolean panaNo) {
+    public void setPanaNo(String panaNo) {
         this.panaNo = panaNo;
     }
 

@@ -34,8 +34,6 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.referencedata.BaUnitTypeBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.webservices.transferobjects.administrative.BaUnitBasicTO;
-
 /** 
  * Represents summary object of the {@link BaUnitBean}. 
  * Could be populated from the {@link BaUnitBasicTO} object.<br />
@@ -51,9 +49,7 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     
     private String name;
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_FIRSTPART, payload=Localized.class)
     private String nameFirstpart;
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_FIRSTPART, payload=Localized.class)
     private String nameLastpart;
     private BaUnitTypeBean baUnitType;
     private String fiscalYearCode;

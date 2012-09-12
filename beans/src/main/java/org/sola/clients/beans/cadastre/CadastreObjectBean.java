@@ -29,22 +29,6 @@
  */
 package org.sola.clients.beans.cadastre;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
-import org.sola.clients.beans.address.AddressBean;
-import org.sola.clients.beans.cache.CacheManager;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.referencedata.AreaUnitTypeBean;
-import org.sola.clients.beans.referencedata.BuildingUnitTypeBean;
-import org.sola.clients.beans.referencedata.CadastreObjectTypeBean;
-import org.sola.clients.beans.referencedata.LandClassBean;
-import org.sola.clients.beans.referencedata.LandTypeBean;
-import org.sola.clients.beans.referencedata.LandUseBean;
-import org.sola.clients.beans.validation.Localized;
-import org.sola.common.messaging.ClientMessage;
-import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -52,7 +36,7 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * domain model. Could be populated from the {@link CadastreObjectTO} object.
  * The difference from {@link CadastreObjecSummarytBean} is geometry column.
  */
-public class CadastreObjectBean extends CadastreObjectSummarytBean {
+public class CadastreObjectBean extends CadastreObjectSummaryBean {
 
     public static final String GEOM_POLYGON_PROPERTY = "geomPolygon";
     private byte[] geomPolygon;

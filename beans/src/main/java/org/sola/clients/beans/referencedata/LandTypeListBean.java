@@ -31,7 +31,7 @@ public class LandTypeListBean extends AbstractBindingListBean {
     private LandTypeBean selectedLandType;
 
     public LandTypeListBean() {
-        this(false);
+        this(true);
     }
 
     /**

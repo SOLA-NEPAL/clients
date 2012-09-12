@@ -31,7 +31,7 @@ public class LandUseListBean extends AbstractBindingListBean {
     private LandUseBean selectedLandUse;
 
     public LandUseListBean() {
-        this(false);
+        this(true);
     }
 
     /**
@@ -79,7 +79,7 @@ public class LandUseListBean extends AbstractBindingListBean {
         propertySupport.firePropertyChange(SELECTED_LAND_USES_PROPERTY, oldValue, this.selectedLandUse);
     }
 
-    public ObservableList<LandUseBean> getTenantTypes() {
+    public ObservableList<LandUseBean> getLandUses() {
         return landUses.getFilteredList();
     }
 }

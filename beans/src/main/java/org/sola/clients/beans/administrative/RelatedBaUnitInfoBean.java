@@ -46,7 +46,7 @@ public class RelatedBaUnitInfoBean extends AbstractVersionedBean {
     private String baUnitId;
     private String relatedBaUnitId;
     private BaUnitRelTypeBean baUnitRelType;
-    private BaUnitSummaryBean relatedBaUnit;
+    private BaUnitSearchResultBean relatedBaUnit;
     
     public RelatedBaUnitInfoBean(){
         super();
@@ -62,12 +62,12 @@ public class RelatedBaUnitInfoBean extends AbstractVersionedBean {
         propertySupport.firePropertyChange(BA_UNIT_ID_PROPERTY, oldValue, this.baUnitId);
     }
 
-    public BaUnitSummaryBean getRelatedBaUnit() {
+    public BaUnitSearchResultBean getRelatedBaUnit() {
         return relatedBaUnit;
     }
 
-    public void setRelatedBaUnit(BaUnitSummaryBean relatedBaUnit) {
-        BaUnitSummaryBean oldValue = this.relatedBaUnit;
+    public void setRelatedBaUnit(BaUnitSearchResultBean relatedBaUnit) {
+        BaUnitSearchResultBean oldValue = this.relatedBaUnit;
         this.relatedBaUnit = relatedBaUnit;
         propertySupport.firePropertyChange(RELATED_BA_UNIT_PROPERTY, oldValue, this.relatedBaUnit);
     }

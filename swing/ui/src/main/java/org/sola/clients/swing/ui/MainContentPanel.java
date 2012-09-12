@@ -288,6 +288,7 @@ public class MainContentPanel extends javax.swing.JPanel {
                 Entry<String, ContentPanel> entry = it.next();
                 for (String tmpCardName : cardNames) {
                     if (entry.getKey().equals(tmpCardName)) {
+                        entry.getValue().removePropertyChangeListener(panelListener);
                         pnlContent.remove(entry.getValue());
                         it.remove();
                         cardsIndex.remove(tmpCardName);

@@ -52,6 +52,7 @@ public class AddressBean extends AbstractIdBean {
     public static final String STREET_PROPERTY = "street";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
+    public static final String VDC_BEAN_PROPERTY = "vdcBean";
     public static final String DISTRICT_CODE_PROPERTY = "districtcode";
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_ADDRESS, payload = Localized.class)
     private String description;
@@ -72,7 +73,7 @@ public class AddressBean extends AbstractIdBean {
     public void setVdcBean(VdcBean vdcBean) {
         VdcBean oldValue = this.vdcBean;
         this.vdcBean = vdcBean;
-        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcBean);
+        propertySupport.firePropertyChange(VDC_BEAN_PROPERTY, oldValue, this.vdcBean);
     }
 
     public String getVdcCode() {

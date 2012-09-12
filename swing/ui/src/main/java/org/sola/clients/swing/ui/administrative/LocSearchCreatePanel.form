@@ -2,8 +2,6 @@
 
 <Form version="1.8" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="org.sola.clients.beans.referencedata.DistrictListBean" name="districtListBean">
-    </Component>
     <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcList">
     </Component>
     <Component class="org.sola.clients.beans.administrative.MothListBean" name="mothList">
@@ -27,7 +25,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="jPanel6" max="32767" attributes="0"/>
+              <Component id="jPanel6" pref="465" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -90,48 +88,11 @@
     <Container class="javax.swing.JPanel" name="jPanel6">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="4"/>
+        <Property name="columns" type="int" value="3"/>
         <Property name="horizontalGap" type="int" value="15"/>
         <Property name="rows" type="int" value="1"/>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="48" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="cbxDistricts" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cbxDistricts" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="District"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cbxDistricts">
-              <BindingProperties>
-                <BindingProperty name="elements" source="districtListBean" sourcePath="${districts}" target="cbxDistricts" targetPath="elements" updateStrategy="0" immediately="false"/>
-                <BindingProperty name="selectedItem" source="districtListBean" sourcePath="${selectedDistrict}" target="cbxDistricts" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
-            </Component>
-          </SubComponents>
-        </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
 
           <Layout>
@@ -139,7 +100,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cbxVdcs" max="32767" attributes="0"/>
               </Group>
@@ -176,7 +137,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cbxMothType" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -232,7 +193,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Moth\u005cLuj No" containsInvalidXMLChars="true"/>
+                <Property name="text" type="java.lang.String" value="Moth\u005cLuj Number" containsInvalidXMLChars="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbxMothNumbers">
@@ -269,7 +230,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Page No"/>
+                <Property name="text" type="java.lang.String" value="Page Number"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPageNumber">

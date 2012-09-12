@@ -17,24 +17,26 @@ package org.sola.clients.beans.administrative;
 
 import java.util.Date;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.MothTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 
 public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
 
-    public static final String CREATION_DATE_PROPERTY = "creationDate";
+    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String MOTHLUJ_PROPERTY = "mothLuj";
     public static final String MOTH_TYPE_PROPERTY = "mothType";
     public static final String VDC_PROPERTY = "vdc";
+    public static final String WARD_NUMBER_PROPERTY = "wardNumber";
     public static final String SELECTED_VDC = "selectedVdc";
 
     private String mothlujNumber;
-    private String vdcCode;
     private MothTypeBean mothType;
-    private Date creationDate;
+    private String fiscalYearCode;
+    private String wardNumber;
     private VdcBean vdc;
 
     public MothBasicBean() {
@@ -54,8 +56,8 @@ public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
         if (getVdc() != null) {
             oldValue = getVdc().getCode();
         }
-        this.vdcCode = vdcCode;
-        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, this.vdcCode);
+        setVdc(CacheManager.getVdc(vdcCode));
+        propertySupport.firePropertyChange(VDC_CODE_PROPERTY, oldValue, vdcCode);
     }
 
     public VdcBean getVdc() {
@@ -68,14 +70,24 @@ public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
         propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public String getFiscalYearCode() {
+        return fiscalYearCode;
     }
 
-    public void setCreationDate(Date creationDate) {
-        Date oldValue = this.creationDate;
-        this.creationDate = creationDate;
-        propertySupport.firePropertyChange(CREATION_DATE_PROPERTY, oldValue, this.creationDate);
+    public void setFiscalYearCode(String fiscalYearCode) {
+        String oldValue = this.fiscalYearCode;
+        this.fiscalYearCode = fiscalYearCode;
+        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, oldValue, this.fiscalYearCode);
+    }
+
+    public String getWardNumber() {
+        return wardNumber;
+    }
+
+    public void setWardNumber(String wardNumber) {
+        String oldValue = this.wardNumber;
+        this.wardNumber = wardNumber;
+        propertySupport.firePropertyChange(WARD_NO_PROPERTY, oldValue, this.wardNumber);
     }
 
     public String getMothLuj() {

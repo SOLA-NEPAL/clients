@@ -17,14 +17,12 @@ package org.sola.clients.beans.cadastre;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.address.AddressBean;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.cadastre.validation.CadastreObjectCheck;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
-import org.sola.clients.beans.validation.Localized;
-import org.sola.common.messaging.ClientMessage;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectSummaryTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
@@ -33,7 +31,8 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * Contains properties and methods to manage <b>Cadastre</b> object of the
  * domain model. Could be populated from the {@link CadastreObjectTO} object.
  */
-public class CadastreObjectSummarytBean  extends AbstractTransactionedWithOfficeCodeBean {
+@CadastreObjectCheck
+public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeCodeBean {
     
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String APPROVAL_DATETIME_PROPERTY = "approvalDatetime";
@@ -49,7 +48,7 @@ public class CadastreObjectSummarytBean  extends AbstractTransactionedWithOffice
     public static final String LAND_TYPE_BEAN_PROPERTY = "landTypeBean";
     public static final String LAND_USE_BEAN_PROPERTY = "landUseBean";
     public static final String LAND_CLASS_BEAN_PROPERTY = "landClassBean";
-    public static final String ADDRESS_BEAN_PROPERTY = "adressBean";
+    public static final String ADDRESS_PROPERTY = "address";
     public static final String SPATIAL_VALUE_AREA_LIST_PROPERTY = "spatialValueAreaList";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
     public static final String PARCEL_NOTE_PROPERTY = "parcelNote";
@@ -74,9 +73,7 @@ public class CadastreObjectSummarytBean  extends AbstractTransactionedWithOffice
     
     private Date approvalDatetime;
     private Date historicDatetime;
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_CADFIRSTPART, payload = Localized.class)
     private String nameFirstpart;
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_CADLASTPART, payload = Localized.class)
     private String nameLastpart;
     private CadastreObjectTypeBean cadastreObjectType;
     private transient boolean selected;
@@ -89,25 +86,28 @@ public class CadastreObjectSummarytBean  extends AbstractTransactionedWithOffice
     private LandTypeBean landTypeBean;
     private LandClassBean landClassBean;
     private LandUseBean landUseBean;
-    private AddressBean addressBean;
+    private AddressBean address;
     private AreaUnitTypeBean areaUnitType;
     private BuildingUnitTypeBean buildingUnitType;
     private String transactionId;
     private String fiscalYearCode;
     private BigDecimal officialArea;
     
-    public CadastreObjectSummarytBean(){
+    public CadastreObjectSummaryBean(){
         super();
     }
     
-    public AddressBean getAddressBean() {
-        return addressBean;
+    public AddressBean getAddress() {
+        if(address == null){
+            address = new AddressBean();
+        }
+        return address;
     }
 
-    public void setAddressBean(AddressBean addressBean) {
-        AddressBean oldValue = this.addressBean;
-        this.addressBean = addressBean;
-        propertySupport.firePropertyChange(ADDRESS_BEAN_PROPERTY, oldValue, this.addressBean);
+    public void setAddress(AddressBean addressBean) {
+        AddressBean oldValue = this.address;
+        this.address = addressBean;
+        propertySupport.firePropertyChange(ADDRESS_PROPERTY, oldValue, this.address);
     }
 
     public LandClassBean getLandClassBean() {
@@ -282,20 +282,11 @@ public class CadastreObjectSummarytBean  extends AbstractTransactionedWithOffice
     }
 
     public String getAddressId() {
-        if (getAddressBean() != null) {
-            return getAddressBean().getId();
+        if (getAddress() != null) {
+            return getAddress().getId();
         } else {
             return null;
         }
-    }
-
-    public void setAddressId(String addressId) {
-        String oldValue = null;
-        if (addressBean != null) {
-            oldValue = addressBean.getId();
-        }
-        setAddressBean(TypeConverters.TransferObjectToBean(WSManager.getInstance().getCaseManagementService().getAddress(addressId), AddressBean.class, null));
-        propertySupport.firePropertyChange(ADDRESS_ID_PROPERTY, oldValue, addressId);
     }
 
     public String getParcelno() {
@@ -535,7 +526,7 @@ public class CadastreObjectSummarytBean  extends AbstractTransactionedWithOffice
     public void saveCadastreObject() {
         CadastreObjectSummaryTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectSummaryTO.class);
         cadTO = WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
-        TypeConverters.TransferObjectToBean(cadTO, CadastreObjectSummarytBean.class, this);
+        TypeConverters.TransferObjectToBean(cadTO, CadastreObjectSummaryBean.class, this);
     }
 
     /**

@@ -26,7 +26,6 @@ public class VdcBean extends AbstractCodeBean {
     public static final String DISTRICT_CODE_PROPERTY = "districtCode";
     public static final String DISTRICT_PROPERTY = "district";
 
-    private String districtCode;  
     private DistrictBean district;
     
     public VdcBean(){
@@ -34,7 +33,10 @@ public class VdcBean extends AbstractCodeBean {
     }
     
     public String getDistrictCode() {
-        return districtCode;
+        if(getDistrict()==null){
+            return null;
+        }
+        return getDistrict().getCode();
     }
 
     public void setDistrictCode(String districtCode) {

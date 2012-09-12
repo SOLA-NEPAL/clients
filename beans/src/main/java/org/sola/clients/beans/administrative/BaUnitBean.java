@@ -33,11 +33,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
 import org.sola.clients.beans.cache.CacheManager;
-import org.sola.clients.beans.cadastre.CadastreObjectSummarytBean;
+import org.sola.clients.beans.cadastre.CadastreObjectSummaryBean;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.controls.SolaObservableList;
@@ -47,6 +49,8 @@ import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.referencedata.TypeActionBean;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.utils.RrrComparatorByRegistrationDate;
+import org.sola.clients.beans.validation.Localized;
+import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
@@ -111,8 +115,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
     public static final String LOC_PROPERTY = "loc";
     private SolaList<RrrBean> rrrList;
     private SolaList<BaUnitNotationBean> baUnitNotationList;
-    private CadastreObjectSummarytBean cadastreObject;
-    private SolaList<CadastreObjectSummarytBean> newCadastreObjectList;
+    @Valid
+    @NotNull(message = ClientMessage.BAUNIT_SELECT_PARCEL, payload = Localized.class)
+    private CadastreObjectSummaryBean cadastreObject;
+    private SolaList<CadastreObjectSummaryBean> newCadastreObjectList;
     private SolaObservableList<BaUnitNotationBean> allBaUnitNotationList;
     private SolaList<SourceBean> sourceList;
     private SolaList<RelatedBaUnitInfoBean> childBaUnits;
@@ -144,12 +150,9 @@ public class BaUnitBean extends BaUnitSummaryBean {
         rrrList.addObservableListListener(allBaUnitNotationsListener);
         baUnitNotationList.addObservableListListener(allBaUnitNotationsListener);
         rrrList.addObservableListListener(new ObservableListListener() {
-
             RrrComparatorByRegistrationDate sorter = new RrrComparatorByRegistrationDate();
-
             @Override
             public void listElementsAdded(ObservableList list, int index, int length) {
-                fireMothLocUpdate();
                 for (int i = index; i < length + index; i++) {
                     rrrHistoricList.add((RrrBean) list.get(i));
                 }
@@ -158,16 +161,35 @@ public class BaUnitBean extends BaUnitSummaryBean {
 
             @Override
             public void listElementsRemoved(ObservableList list, int index, List oldElements) {
-                fireMothLocUpdate();
                 rrrHistoricList.removeAll(oldElements);
                 Collections.sort(rrrHistoricList.getFilteredList(), sorter);
             }
 
             @Override
             public void listElementReplaced(ObservableList list, int index, Object oldElement) {
-                fireMothLocUpdate();
                 rrrHistoricList.set(rrrHistoricList.indexOf(oldElement), (RrrBean) oldElement);
                 Collections.sort(rrrHistoricList.getFilteredList(), sorter);
+            }
+
+            @Override
+            public void listElementPropertyChanged(ObservableList list, int index) {
+            }
+        });
+        
+        rrrList.getFilteredList().addObservableListListener(new ObservableListListener() {
+            @Override
+            public void listElementsAdded(ObservableList list, int index, int length) {
+                fireMothLocUpdate();
+            }
+
+            @Override
+            public void listElementsRemoved(ObservableList list, int index, List oldElements) {
+                fireMothLocUpdate();
+            }
+
+            @Override
+            public void listElementReplaced(ObservableList list, int index, Object oldElement) {
+                fireMothLocUpdate();
             }
 
             @Override
@@ -327,7 +349,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return baUnitNotationList.getFilteredList();
     }
 
-    public SolaList<CadastreObjectSummarytBean> getNewCadastreObjectList() {
+    public SolaList<CadastreObjectSummaryBean> getNewCadastreObjectList() {
         if (newCadastreObjectList == null) {
             loadNewParcels();
         }
@@ -379,10 +401,10 @@ public class BaUnitBean extends BaUnitSummaryBean {
         this.setJointRefDataBean(this.pendingTypeAction, pendingTypeAction, PENDING_ACTION_PROPERTY);
     }
 
-    public ObservableList<CadastreObjectSummarytBean> getSelectedNewCadastreObjects() {
-        ObservableList<CadastreObjectSummarytBean> selectedCadastreObjects =
-                ObservableCollections.observableList(new ArrayList<CadastreObjectSummarytBean>());
-        for (CadastreObjectSummarytBean cadastreObjectTmp : getNewCadastreObjectList()) {
+    public ObservableList<CadastreObjectSummaryBean> getSelectedNewCadastreObjects() {
+        ObservableList<CadastreObjectSummaryBean> selectedCadastreObjects =
+                ObservableCollections.observableList(new ArrayList<CadastreObjectSummaryBean>());
+        for (CadastreObjectSummaryBean cadastreObjectTmp : getNewCadastreObjectList()) {
             if (cadastreObjectTmp.isSelected()) {
                 selectedCadastreObjects.add(cadastreObjectTmp);
             }
@@ -410,16 +432,16 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return selectedRrrs;
     }
 
-    public ObservableList<CadastreObjectSummarytBean> getFilteredNewCadastreObjectList() {
+    public ObservableList<CadastreObjectSummaryBean> getFilteredNewCadastreObjectList() {
         return getNewCadastreObjectList().getFilteredList();
     }
 
-    public CadastreObjectSummarytBean getCadastreObject() {
+    public CadastreObjectSummaryBean getCadastreObject() {
         return cadastreObject;
     }
 
-    public void setCadastreObject(CadastreObjectSummarytBean cadastreObject) {
-        CadastreObjectSummarytBean oldValue = this.cadastreObject;
+    public void setCadastreObject(CadastreObjectSummaryBean cadastreObject) {
+        CadastreObjectSummaryBean oldValue = this.cadastreObject;
         this.cadastreObject = cadastreObject;
         propertySupport.firePropertyChange(CADASTRE_OBJECT_PROPERTY, oldValue, this.cadastreObject);
     }
@@ -532,7 +554,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
      */
     private void loadNewParcels() {
         if (newCadastreObjectList == null) {
-            newCadastreObjectList = new SolaList<CadastreObjectSummarytBean>();
+            newCadastreObjectList = new SolaList<CadastreObjectSummaryBean>();
         }
         newCadastreObjectList.clear();
         if (getId() != null) {
@@ -545,7 +567,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
                 }
                 TypeConverters.TransferObjectListToBeanList(WSManager.getInstance()
                         .getCadastreService().getCadastreObjects(ids),
-                        CadastreObjectSummarytBean.class, (List) newCadastreObjectList);
+                        CadastreObjectSummaryBean.class, (List) newCadastreObjectList);
             }
         }
     }
