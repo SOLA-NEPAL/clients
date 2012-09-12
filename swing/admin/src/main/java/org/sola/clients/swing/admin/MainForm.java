@@ -115,6 +115,8 @@ public class MainForm extends javax.swing.JFrame {
         btnBr = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         btnCalendar = new javax.swing.JButton();
+        btnFiscalYear = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -255,6 +257,30 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         mainToolbar.add(btnCalendar);
+
+        btnFiscalYear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
+        btnFiscalYear.setText(bundle.getString("MainForm.btnFiscalYear.text")); // NOI18N
+        btnFiscalYear.setFocusable(false);
+        btnFiscalYear.setName("btnFiscalYear"); // NOI18N
+        btnFiscalYear.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnFiscalYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiscalYearActionPerformed(evt);
+            }
+        });
+        mainToolbar.add(btnFiscalYear);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
+        jButton1.setText(bundle.getString("MainForm.jButton1.text")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        mainToolbar.add(jButton1);
 
         statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusPanel.setName("statusPanel"); // NOI18N
@@ -991,6 +1017,21 @@ public class MainForm extends javax.swing.JFrame {
         manageLandUses();
     }//GEN-LAST:event_menuLandUsesActionPerformed
 
+    private void btnFiscalYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiscalYearActionPerformed
+        // TODO add your handling code here:
+        showFiscalYearForm();
+    }//GEN-LAST:event_btnFiscalYearActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         manageMapSheet();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void showFiscalYearForm() {
+        FiscalYearManagementPanel form = new FiscalYearManagementPanel();
+        mainContentPanel.addPanel(form, MainContentPanel.CARD_FISCAL_YEARS, true);
+    }
+
     /**
      * Opens roles management panel.
      */
@@ -1174,13 +1215,14 @@ public class MainForm extends javax.swing.JFrame {
     private void manageLandUses() {
         openReferenceDataPanel(LandUseBean.class, menuLandUses.getText());
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBr;
     private javax.swing.JButton btnCalendar;
+    private javax.swing.JButton btnFiscalYear;
     private javax.swing.JButton btnGroups;
     private javax.swing.JButton btnRoles;
     private javax.swing.JButton btnUsers;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;

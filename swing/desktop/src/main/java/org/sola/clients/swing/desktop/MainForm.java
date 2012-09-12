@@ -54,6 +54,7 @@ import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
+import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
@@ -323,6 +324,7 @@ public class MainForm extends javax.swing.JFrame {
         btnManageParties = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnOpenMap = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
         labStatus = new javax.swing.JLabel();
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
@@ -471,6 +473,17 @@ public class MainForm extends javax.swing.JFrame {
         });
         applicationsMain.add(btnOpenMap);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
+        jButton1.setText(bundle.getString("MainForm.jButton1.text_1")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        applicationsMain.add(jButton1);
+
         statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusPanel.setPreferredSize(new java.awt.Dimension(1024, 24));
 
@@ -490,7 +503,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
+                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -735,16 +748,16 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
-            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
+            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
+            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(applicationsMain, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -881,6 +894,19 @@ public class MainForm extends javax.swing.JFrame {
         // showTestReport(ReportManager.getTestReportToDisplyListOfVdc(vdcListBean1.getVdcs())); 
         showCurrentUserRolesReport(ReportManager.getCurrentUserWithRolesReport());
     }//GEN-LAST:event_menuCurrentUserRolesReportActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        showMapsheetManagementPanel();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private void showMapsheetManagementPanel() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
+            MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
+            pnlContent.addPanel(srchParcel, MainContentPanel.CARD_MAPSHEET_MANAGEMENT);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_MAPSHEET_MANAGEMENT);
+    }
+    
     private void showCurrentUserRolesReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
@@ -936,6 +962,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnSearchApplications;
     private javax.swing.JButton btnShowDashboard;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

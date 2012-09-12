@@ -55,6 +55,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_SEARCH_BY_MOTH_PANA_PARCEL = "searchByMothPanaParcel";
     public final static String CARD_SEARCH_BY_PARCEL_NO = "searchByParcelNo";
     public final static String CARD_MOTH_SHRESTA_ENTRY = "mothShrestaEntry";
+    public final static String CARD_MAPSHEET_MANAGEMENT="mapsheetManagement";
     public final static String CARD_OWNER_ENTRY = "landOwnerEntry";
     public final static String CARD_PARCEL_SEARCH = "parcelSearch";
     public final static String CARD_PARCEL_ENTRY = "parcelsEntry";
@@ -97,8 +98,10 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_ADMIN_CALENDAR = "calendarPanel";
     public final static String CARD_OFFICES = "offices";
     public final static String CARD_OFFICE = "office";
-    public final static String CARD_DEPARTMENTS = "departmetns";
+    public final static String CARD_DEPARTMENTS = "departments";
     public final static String CARD_DEPARTMENT = "department";
+    public final static String CARD_FISCAL_YEARS = "fiscalYears";
+    public final static String CARD_FISCAL_YEAR = "fiscalYear";
     public final static String CARD_VDC = "vdc";
     public final static String CARD_VDCS = "vdcs";
     private HashMap<String, ContentPanel> cards;

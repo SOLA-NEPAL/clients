@@ -16,42 +16,42 @@
 package org.sola.clients.swing.admin.referencedata;
 
 import java.util.ResourceBundle;
-import org.sola.clients.beans.referencedata.DepartmentBean;
+import org.sola.clients.beans.referencedata.FiscalYearBean;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.referencedata.DepartmentPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
- * Shows {@link DepartmentPanel} and allows to change department object data.
+ *
+ * @author Kumar
  */
-public class DepartmentPanelForm extends ContentPanel {
+public class FiscalYearPanelForm extends ContentPanel {
 
     private boolean closeOnSave;
-    private DepartmentBean departmentBean;
+    private FiscalYearBean fiscalYearBean;
     private ResourceBundle resourceBundle;
-    
+
     /**
      * Default constructor
      */
-    public DepartmentPanelForm() {
+    public FiscalYearPanelForm() {
         initComponents();
     }
 
     /**
      * Form constructor.
      *
-     * @param officeBean The instance of office object to show on the panel.
+     *
      * @param closeOnSave Indicates whether to close the form upon save action
      * takes place.
      */
-    public DepartmentPanelForm(DepartmentBean departmentBean, boolean closeOnSave) {
-        this.departmentBean = departmentBean;
+    public FiscalYearPanelForm(FiscalYearBean fiscalYearBean, boolean closeOnSave){
+         this.fiscalYearBean = fiscalYearBean;
         this.closeOnSave = closeOnSave;
         resourceBundle = ResourceBundle.getBundle("org/sola/clients/swing/admin/referencedata/Bundle");
 
         initComponents();
-        setDepartmentBean(this.departmentBean);
+        setFiscalYearBean(this.fiscalYearBean);
     }
     
     public boolean isCloseOnSave() {
@@ -63,23 +63,24 @@ public class DepartmentPanelForm extends ContentPanel {
         customizePanel();
     }
 
-    public DepartmentBean getDepartmentBean() {
-        return departmentPanel.getDepartmentBean();
+    public FiscalYearBean getFiscalYearBean() {
+        return fiscalYearPanel.getFiscalYearBean();
     }
 
-    public final void setDepartmentBean(DepartmentBean departmentBean) {
-        this.departmentBean = departmentBean;
-        departmentPanel.setDepartmentBean(departmentBean);
+    public final void setFiscalYearBean(FiscalYearBean fiscalYearBean) {
+        this.fiscalYearBean = fiscalYearBean;
+        fiscalYearPanel.setFiscalYearBean(fiscalYearBean);
         customizePanel();
+
     }
 
     private void customizePanel() {
-        if (departmentBean != null) {
-            headerPanel.setTitleText(String.format(
-                    resourceBundle.getString("DepartmentPanelForm.headerPanel.titleText"),
-                    departmentBean.getTranslatedDisplayValue()));
+        if (fiscalYearBean != null) {
+            headerPanel1.setTitleText(String.format(
+                    resourceBundle.getString("FiscalYearPanelForm.headerPanel1.titleText"),
+                    fiscalYearBean.getTranslatedDisplayValue()));
         } else {
-            headerPanel.setTitleText(String.format(resourceBundle.getString("DepartmentPanelForm.headerPanel.titleText"),
+            headerPanel1.setTitleText(String.format(resourceBundle.getString("FiscalYearPanelForm.headerPanel1.titleText"),
                     MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_NEW)));
         }
 
@@ -94,9 +95,9 @@ public class DepartmentPanelForm extends ContentPanel {
 
     private void save() {
         boolean isSaved = false;
-        if (departmentPanel.save(true)) {
-            MessageUtility.displayMessage(ClientMessage.ADMIN_DEPARTMENT_SAVED,
-                    new String[]{departmentPanel.getDepartmentBean().getTranslatedDisplayValue()});
+        if (fiscalYearPanel.save(true)) {
+            MessageUtility.displayMessage(ClientMessage.ADMIN_FISCAL_YEAR_SAVED,
+                    new String[]{fiscalYearPanel.getFiscalYearBean().getTranslatedDisplayValue()});
             isSaved = true;
         }
 
@@ -109,26 +110,24 @@ public class DepartmentPanelForm extends ContentPanel {
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
-        departmentPanel = new org.sola.clients.swing.ui.referencedata.DepartmentPanel();
+        fiscalYearPanel = new org.sola.clients.swing.ui.referencedata.FiscalYearPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnSave = new javax.swing.JButton();
+        headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
 
-        setHeaderPanel(headerPanel);
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/admin/referencedata/Bundle"); // NOI18N
-        headerPanel.setTitleText(bundle.getString("DepartmentPanelForm.headerPanel.titleText")); // NOI18N
+        setHeaderPanel(headerPanel1);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
-        btnSave.setText(bundle.getString("DepartmentPanelForm.btnSave.text")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/admin/referencedata/Bundle"); // NOI18N
+        btnSave.setText(bundle.getString("FiscalYearPanelForm.btnSave.text")); // NOI18N
         btnSave.setFocusable(false);
         btnSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -138,37 +137,42 @@ public class DepartmentPanelForm extends ContentPanel {
         });
         jToolBar1.add(btnSave);
 
+        headerPanel1.setTitleText(bundle.getString("FiscalYearPanelForm.headerPanel1.titleText_1")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(departmentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(fiscalYearPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(headerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(departmentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                .addComponent(fiscalYearPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
         save();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private org.sola.clients.swing.ui.referencedata.DepartmentPanel departmentPanel;
-    private org.sola.clients.swing.ui.HeaderPanel headerPanel;
+    private org.sola.clients.swing.ui.referencedata.FiscalYearPanel fiscalYearPanel;
+    private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

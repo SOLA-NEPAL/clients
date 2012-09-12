@@ -260,6 +260,10 @@ public final class CacheManager {
      * Cache key of the {@link AreaUnitTypeBean} collection.
      */
     public static final String AREA_UNIT_TYPE_KEY = AreaUnitTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the {@link FiscalYearBean} collection.
+     */
+    public static final String FISCAL_YEAR_KEY = FiscalYearBean.class.getName() + LIST_POSTFIX;
     private static final String CACHED_VDCS_KEY = "cachedVdcs" + LIST_POSTFIX;
     private static final String CACHED_MAP_SHEETS_KEY = "cachedMapSheets" + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
@@ -305,6 +309,7 @@ public final class CacheManager {
     private static final String GET_GUTHI_NAMES = "getGuthiNames";
     private static final String GET_AREA_UNIT_TYPES = "getAreaUnitTypes";
     private static final String GET_BUILDING_UNIT_TYPES = "getBuildingUnitTypes";
+    private static final String GET_FISCAL_YEARS = "getFiscalYears";
 
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result = new ArrayList<DepartmentBean>();
@@ -865,5 +870,11 @@ public final class CacheManager {
         return getCachedBeanList(BuildingUnitTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_BUILDING_UNIT_TYPES, BUILDING_UNIT_TYPE_KEY);
+    }
+
+    public static List<FiscalYearBean> getFiscalYears() {
+        return getCachedBeanList(FiscalYearBean.class,
+                WSManager.getInstance().getReferenceDataService(),
+                GET_FISCAL_YEARS, FISCAL_YEAR_KEY);
     }
 }

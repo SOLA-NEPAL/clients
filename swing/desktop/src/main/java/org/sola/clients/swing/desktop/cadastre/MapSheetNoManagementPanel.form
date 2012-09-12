@@ -75,7 +75,7 @@
               <Component id="jPanel5" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
-          <Component id="headerPanel1" max="32767" attributes="0"/>
+          <Component id="headerPanel1" pref="1020" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -110,7 +110,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="panelCreateEdit" alignment="0" max="32767" attributes="0"/>
+                      <Component id="panelCreateEdit" max="32767" attributes="0"/>
                       <Component id="jPanel1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -125,34 +125,33 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="toolbarRefData" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbarMapsheet" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="cmbOfficeFilter" min="-2" pref="198" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="txtOffice1" min="-2" pref="262" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" alignment="0" pref="465" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="toolbarRefData" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cmbOfficeFilter" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="toolbarMapsheet" max="32767" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="txtOffice1" alignment="3" max="32767" attributes="0"/>
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="429" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JToolBar" name="toolbarRefData">
+            <Container class="javax.swing.JToolBar" name="toolbarMapsheet">
               <Properties>
                 <Property name="floatable" type="boolean" value="false"/>
                 <Property name="rollover" type="boolean" value="true"/>
@@ -166,7 +165,7 @@
                       <Image iconType="3" name="/images/common/add.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/admin/referencedata/Bundle.properties" key="ReferenceDataManagementPanel.btnAddRefData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="ReferenceDataManagementPanel.btnAddRefData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="2"/>
@@ -182,7 +181,7 @@
                       <Image iconType="3" name="/images/common/pencil.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/admin/referencedata/Bundle.properties" key="ReferenceDataManagementPanel.btnEditRefData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="ReferenceDataManagementPanel.btnEditRefData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="2"/>
@@ -198,7 +197,7 @@
                       <Image iconType="3" name="/images/common/remove.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="org/sola/clients/swing/admin/referencedata/Bundle.properties" key="ReferenceDataManagementPanel.btnRemoveRefData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="org/sola/clients/swing/desktop/cadastre/Bundle.properties" key="ReferenceDataManagementPanel.btnRemoveRefData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="2"/>
@@ -210,12 +209,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JComboBox" name="cmbOfficeFilter">
-              <BindingProperties>
-                <BindingProperty name="elements" source="officeListBean1" sourcePath="${offices}" target="cmbOfficeFilter" targetPath="elements" updateStrategy="0" immediately="false"/>
-                <BindingProperty name="selectedItem" source="officeListBean1" sourcePath="${selectedOffice}" target="cmbOfficeFilter" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Office:"/>
@@ -288,6 +281,16 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JTextField" name="txtOffice1">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${currentOffice.displayValue}" target="txtOffice1" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelCreateEdit">
@@ -335,11 +338,11 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="359" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="cmbOffice" alignment="0" pref="395" max="32767" attributes="0"/>
+                          <Component id="txtOffice" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -347,7 +350,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cmbOffice" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtOffice" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -359,14 +362,14 @@
                         <Property name="text" type="java.lang.String" value="Office"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="cmbOffice">
+                    <Component class="javax.swing.JTextField" name="txtOffice">
                       <Properties>
-                        <Property name="name" type="java.lang.String" value="" noResource="true"/>
-                        <Property name="opaque" type="boolean" value="false"/>
+                        <Property name="editable" type="boolean" value="false"/>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="elements" source="officeListBean" sourcePath="${offices}" target="cmbOffice" targetPath="elements" updateStrategy="0" immediately="false"/>
-                        <BindingProperty name="selectedItem" source="Form" sourcePath="${mapSheetBean.office}" target="cmbOffice" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                        <BindingProperty name="text" source="Form" sourcePath="${currentOffice.displayValue}" target="txtOffice" targetPath="text" updateStrategy="0" immediately="false">
+                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                        </BindingProperty>
                       </BindingProperties>
                     </Component>
                   </SubComponents>
@@ -380,7 +383,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="cmbMapSheetType" pref="395" max="32767" attributes="0"/>
+                          <Component id="cmbMapSheetType" pref="388" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -424,7 +427,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="328" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txtMapSheetNo" max="32767" attributes="0"/>
                       </Group>
@@ -465,7 +468,7 @@
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="cmbSRID" alignment="0" pref="395" max="32767" attributes="0"/>
+                          <Component id="cmbSRID" alignment="0" pref="388" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">

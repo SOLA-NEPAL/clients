@@ -22,9 +22,9 @@ import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaCodeList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
+import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 
 /**
  * Holds list of {@link DepartmentBean} objects.

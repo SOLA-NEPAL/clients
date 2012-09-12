@@ -135,7 +135,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             btnSave.setText("Extinguish");
             //showHidePanel(false);
             editField(false);
-            
+
         }
         if (rrrAction == RrrBean.RRR_ACTION.EDIT) {
             showHidePanel(true);
@@ -410,7 +410,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel9Layout.createSequentialGroup()
                 .add(jLabel5)
-                .add(0, 102, Short.MAX_VALUE))
+                .add(0, 86, Short.MAX_VALUE))
             .add(txtSerialNumber)
         );
         jPanel9Layout.setVerticalGroup(
@@ -457,7 +457,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
                 .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel22)
                     .add(jPanel11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(0, 86, Short.MAX_VALUE))
+                .add(0, 70, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -490,7 +490,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             .add(txtBundlePageNo)
             .add(jPanel8Layout.createSequentialGroup()
                 .add(jLabel23)
-                .add(0, 93, Short.MAX_VALUE))
+                .add(0, 77, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -522,7 +522,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
-                .add(jLabel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .add(jLabel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                 .addContainerGap())
             .add(cmbRestrictionReason, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -555,7 +555,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             .add(txtRestrictionOfficeName)
             .add(jPanel4Layout.createSequentialGroup()
                 .add(jLabel3)
-                .add(0, 18, Short.MAX_VALUE))
+                .add(0, 2, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -585,7 +585,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel5Layout.createSequentialGroup()
                 .add(jLabel4)
-                .add(0, 47, Short.MAX_VALUE))
+                .add(0, 31, Short.MAX_VALUE))
             .add(txtRestrictionOfficeAddress)
         );
         jPanel5Layout.setVerticalGroup(
@@ -615,7 +615,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jLabel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 123, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-            .add(txtPrice, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+            .add(txtPrice, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -651,7 +651,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel14Layout.createSequentialGroup()
                 .add(jLabel6)
-                .add(0, 237, Short.MAX_VALUE))
+                .add(0, 206, Short.MAX_VALUE))
             .add(cmbRestrictionReleaseReason, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
@@ -682,7 +682,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
             jPanel15Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel15Layout.createSequentialGroup()
                 .add(jLabel7)
-                .add(0, 219, Short.MAX_VALUE))
+                .add(0, 188, Short.MAX_VALUE))
             .add(txtRestrictionReleaseOfficeName)
         );
         jPanel15Layout.setVerticalGroup(
@@ -713,10 +713,10 @@ public class SimpleRestrictionsPanel extends ContentPanel {
                         .add(355, 355, 355))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, groupPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, txtNotationText)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, restrictionReleasePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, restrictionReleasePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .add(restrictionPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addContainerGap())))
         );
