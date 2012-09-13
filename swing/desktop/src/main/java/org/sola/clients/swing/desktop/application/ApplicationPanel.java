@@ -454,31 +454,6 @@ public class ApplicationPanel extends ContentPanel {
         }
     }
 
-    private void openPropertyForm(final BaUnitBean baUnitBean, final boolean readOnly) {
-        if (baUnitBean != null) {
-            SolaTask t = new SolaTask<Void, Void>() {
-                PropertyPanel propertyPnl;
-                @Override
-                public Void doTask() {
-                    setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
-                    ApplicationBean applicationBean = appBean.copy();
-                    propertyPnl = new PropertyPanel(applicationBean,
-                            applicationBean.getSelectedService(), baUnitBean.getId(), readOnly, false);
-                    getMainContentPanel().addPanel(propertyPnl, getThis().getId(), propertyPnl.getId(), true);
-                    return null;
-                }
-
-                @Override
-                protected void taskDone() {
-                    if (!appBean.getSelectedService().getRequestTypeCode().equalsIgnoreCase(RequestTypeBean.CODE_NEW_DIGITAL_TITLE)) {
-                        ((PropertyPanel) getMainContentPanel().getPanel(propertyPnl.getId())).showPriorTitileMessage();
-                    }
-                }
-            };
-            TaskManager.getInstance().runTask(t);
-        }
-    }
-
     /**
      * Opens dialog form to display status change result for application or
      * service.
@@ -665,69 +640,8 @@ public class ApplicationPanel extends ContentPanel {
                 }
 
             } else {
-
-                // Try to get BA Units, craeted through the service
-                List<BaUnitBean> baUnitsList = BaUnitBean.getBaUnitsByServiceId(appBean.getSelectedService().getId());
-
-                if (baUnitsList != null && baUnitsList.size() > 0) {
-                    if (baUnitsList.size() > 1) {
-                        // Show BA Unit Selection Form
-                        BaUnitsListPanel baUnitListPanel = new BaUnitsListPanel(baUnitsList);
-                        baUnitListPanel.addPropertyChangeListener(new PropertyChangeListener() {
-
-                            @Override
-                            public void propertyChange(PropertyChangeEvent evt) {
-                                if (evt.getPropertyName().equals(BaUnitsListPanel.SELECTED_BAUNIT_PROPERTY)
-                                        && evt.getNewValue() != null) {
-                                    BaUnitBean baUnitBean = (BaUnitBean) evt.getNewValue();
-                                    openPropertyForm(baUnitBean, readOnly);
-                                    ((ContentPanel) evt.getSource()).close();
-                                }
-                            }
-                        });
-                        getMainContentPanel().addPanel(baUnitListPanel, getThis().getId(), baUnitListPanel.getId(), true);
-                    } else {
-                        openPropertyForm(baUnitsList.get(0), readOnly);
-                    }
-                } else {
-                    //New ownership overwritten by custom nepal service.
-                    // Open property form for new title registration
-// if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_APARTMENT)
-// || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_FREEHOLD)
-// || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_OWNERSHIP)
-// || requestType.equalsIgnoreCase(RequestTypeBean.CODE_NEW_STATE)) {
-                    if (!readOnly) {
-                        // Open empty property form
-                        openPropertyForm(new BaUnitBean(), readOnly);
-                    }
-// } else {
-//
-// // Open property form for existing title changes
-// if (appBean.getPropertyList().getFilteredList().size() == 1) {
-// openPropertyForm(appBean.getPropertyList().getFilteredList().get(0), readOnly);
-// } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
-// PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
-// propertyListForm.setLocationRelativeTo(this);
-//
-// propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
-//
-// @Override
-// public void propertyChange(PropertyChangeEvent evt) {
-// if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
-// && evt.getNewValue() != null) {
-// ApplicationPropertyBean property = (ApplicationPropertyBean) evt.getNewValue();
-// ((JDialog) evt.getSource()).dispose();
-// openPropertyForm(property, readOnly);
-// }
-// }
-// });
-//
-// propertyListForm.setVisible(true);
-// } else {
-// MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_LIST_EMPTY);
-// }
-// }
-                }
+                // Open property transaction form 
+                openPropertyTransactionForm(appBean.getSelectedService(), readOnly);
             }
 
         } else {
@@ -735,6 +649,12 @@ public class ApplicationPanel extends ContentPanel {
         }
     }
 
+    private void openPropertyTransactionForm(ApplicationServiceBean service, boolean readOnly){
+        ApplicationBean appBeanCopy = appBean.copy();
+        PropertyTransactionForm form = new PropertyTransactionForm(appBeanCopy, service, readOnly);
+        getMainContentPanel().addPanel(form, this.getId(), form.getId(), true);
+    }
+    
     private ApplicationPanel getThis() {
         return this;
     }

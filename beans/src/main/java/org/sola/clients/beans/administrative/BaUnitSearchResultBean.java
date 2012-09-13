@@ -65,9 +65,12 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String parcelNo;
     private String mapNumber;
     private String mapSheetId;
+    private String action;
+    transient java.util.ResourceBundle bundle;
     
     public BaUnitSearchResultBean(){
         super();
+        bundle = java.util.ResourceBundle.getBundle("org/sola/clients/beans/administrative/Bundle");
     }
 
     public String getId() {
@@ -252,5 +255,21 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     
     public String getPropertyIdCode(){
         return CadastreObjectBean.getPropertyIdCode(getNameFirstPart(), getNameLastPart());
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+    
+    public String getActionDescription(){
+        if(bundle!=null && getAction()!=null){
+            return bundle.getString("action." + getAction());
+        } else {
+            return getAction();
+        }
     }
 }
