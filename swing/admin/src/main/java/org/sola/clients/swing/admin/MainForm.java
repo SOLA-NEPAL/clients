@@ -116,6 +116,7 @@ public class MainForm extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JToolBar.Separator();
         btnCalendar = new javax.swing.JButton();
         btnFiscalYear = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
         jButton1 = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
@@ -269,6 +270,9 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         mainToolbar.add(btnFiscalYear);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        mainToolbar.add(jSeparator2);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
         jButton1.setText(bundle.getString("MainForm.jButton1.text")); // NOI18N
@@ -1227,6 +1231,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel lblUserName;
