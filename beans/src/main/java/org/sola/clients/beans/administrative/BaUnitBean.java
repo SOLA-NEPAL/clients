@@ -635,6 +635,11 @@ public class BaUnitBean extends BaUnitSummaryBean {
         }
     }
 
+    /** Deletes BA unit from the DB if it has pending status, if not, exception will be thrown. */
+    public static void deletePendingBaUnit(String baUnitId){
+        WSManager.getInstance().getAdministrative().deletePendingBaUnit(baUnitId);
+    }
+    
     /**
      * Returns collection of {@link BaUnitBean} objects. This method is used by
      * Jasper report designer to extract properties of BA Unit bean to help

@@ -65,12 +65,20 @@ public class BaUnitSearchResultListBean extends AbstractBindingListBean {
     
     // METHODS
     
-    /** Searches BA units given parameters. */
+    /** Searches BA units by the given parameters. */
     public void search(BaUnitSearchParamsBean params){
         getBaUnitSearchResults().clear();
         BaUnitSearchParamsTO searchParams = TypeConverters.BeanToTrasferObject(params, BaUnitSearchParamsTO.class);
         TypeConverters.TransferObjectListToBeanList(
                 WSManager.getInstance().getSearchService().searchBaUnit(searchParams), 
+                BaUnitSearchResultBean.class, (List)getBaUnitSearchResults());
+    }
+    
+    /** Searched all BA units by service ID. */
+    public void searchAllBaUnitsByService(String serviceId){
+        getBaUnitSearchResults().clear();
+        TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getSearchService().getAllBaUnitsByService(serviceId), 
                 BaUnitSearchResultBean.class, (List)getBaUnitSearchResults());
     }
 }

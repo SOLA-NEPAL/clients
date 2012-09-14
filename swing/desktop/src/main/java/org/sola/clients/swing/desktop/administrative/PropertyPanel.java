@@ -106,7 +106,6 @@ public class PropertyPanel extends ContentPanel {
     java.util.ResourceBundle resourceBundle;
     private PropertyChangeListener newPropertyWizardListener;
     private String baUnitId;
-    private boolean splitting;
 
     /**
      * Creates {@link BaUnitBean} used to bind form components.
@@ -134,7 +133,7 @@ public class PropertyPanel extends ContentPanel {
      * the form.
      */
     public PropertyPanel(String baUnitId) {
-        this(null, null, baUnitId, true, false);
+        this(null, null, baUnitId, true);
     }
 
     /**
@@ -149,10 +148,8 @@ public class PropertyPanel extends ContentPanel {
      * @param readOnly If true, opens form in read only mode.
      */
     public PropertyPanel(ApplicationBean applicationBean,
-            ApplicationServiceBean applicationService,
-            String baUnitId, boolean readOnly, boolean splitting) {
+            ApplicationServiceBean applicationService, String baUnitId, boolean readOnly) {
         this.baUnitId = baUnitId;
-        this.splitting = splitting;
         beforeInit(applicationBean, applicationService, readOnly);
         initComponents();
         postInit();
@@ -229,11 +226,6 @@ public class PropertyPanel extends ContentPanel {
                 }
             }
         });
-
-        saveBaUnitState();
-        if (splitting) {
-            showNewTitleWizard(false);
-        }
     }
 
     /**
@@ -275,44 +267,44 @@ public class PropertyPanel extends ContentPanel {
     /**
      * Shows {@link NewPropertyWizardPanel} to select parent property.
      */
-    private void showNewTitleWizard(boolean showMessage) {
+    public void showNewTitleWizard(boolean showMessage) {
         if (baUnitBean == null || (baUnitBean.getStatusCode() != null
                 && !baUnitBean.getStatusCode().equals(StatusConstants.PENDING))) {
             return;
         }
 
-        if (!showMessage || (showMessage && MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECT_EXISTING_PROPERTY) == MessageUtility.BUTTON_ONE)) {
-            // Open selection form
-            if (getMainContentPanel() != null) {
-                if (newPropertyWizardListener == null) {
-                    newPropertyWizardListener = new PropertyChangeListener() {
-
-                        @Override
-                        public void propertyChange(PropertyChangeEvent evt) {
-                            if (evt.getPropertyName().equals(NewPropertyWizardPanel.SELECTED_RESULT_PROPERTY)) {
-                                if (addParentProperty((Object[]) evt.getNewValue())
-                                        && MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECT_EXISTING_PROPERTY_AGAIN) == MessageUtility.BUTTON_ONE) {
-                                    showNewTitleWizard(false);
-                                }
-                            }
-                        }
-                    };
-                }
-
-                SolaTask t = new SolaTask<Void, Void>() {
+        //if (!showMessage || (showMessage && MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECT_EXISTING_PROPERTY) == MessageUtility.BUTTON_ONE)) {
+        // Open selection form
+        if (getMainContentPanel() != null) {
+            if (newPropertyWizardListener == null) {
+                newPropertyWizardListener = new PropertyChangeListener() {
 
                     @Override
-                    public Void doTask() {
-                        setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYLINK));
-                        NewPropertyWizardPanel newPropertyWizardPanel = new NewPropertyWizardPanel(applicationBean, true);
-                        newPropertyWizardPanel.addPropertyChangeListener(newPropertyWizardListener);
-                        getMainContentPanel().addPanel(newPropertyWizardPanel, getThis().getId(), newPropertyWizardPanel.getId(), true);
-                        return null;
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        if (evt.getPropertyName().equals(NewPropertyWizardPanel.SELECTED_RESULT_PROPERTY)) {
+                            if (addParentProperty((Object[]) evt.getNewValue())
+                                    && MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECT_EXISTING_PROPERTY_AGAIN) == MessageUtility.BUTTON_ONE) {
+                                showNewTitleWizard(false);
+                            }
+                        }
                     }
                 };
-                TaskManager.getInstance().runTask(t);
             }
+
+            SolaTask t = new SolaTask<Void, Void>() {
+
+                @Override
+                public Void doTask() {
+                    setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYLINK));
+                    NewPropertyWizardPanel newPropertyWizardPanel = new NewPropertyWizardPanel(applicationBean, true);
+                    newPropertyWizardPanel.addPropertyChangeListener(newPropertyWizardListener);
+                    getMainContentPanel().addPanel(newPropertyWizardPanel, getThis().getId(), newPropertyWizardPanel.getId(), true);
+                    return null;
+                }
+            };
+            TaskManager.getInstance().runTask(t);
         }
+        //}
     }
 
     private PropertyPanel getThis() {
@@ -341,7 +333,7 @@ public class PropertyPanel extends ContentPanel {
 
         BaUnitBean selectedBaUnit = (BaUnitBean) selectedResult[0];
         BaUnitRelTypeBean baUnitRelType = (BaUnitRelTypeBean) selectedResult[1];
-        BaUnitSearchResultBean selectedBaUnitSearchResult= (BaUnitSearchResultBean)selectedResult[2];
+        BaUnitSearchResultBean selectedBaUnitSearchResult = (BaUnitSearchResultBean) selectedResult[2];
 
         // Check relation type to be same as on the list.
         for (RelatedBaUnitInfoBean parent : baUnitBean.getFilteredParentBaUnits()) {
@@ -465,13 +457,6 @@ public class PropertyPanel extends ContentPanel {
 
         // Check BaUnit status to be current
         if (baUnitBean.getStatusCode() == null || !baUnitBean.getStatusCode().equals(StatusConstants.CURRENT)) {
-            enabled = false;
-        }
-
-        // Check RequestType to have cancel action.
-        if (applicationService == null || applicationService.getRequestType() == null
-                || applicationService.getRequestType().getTypeActionCode() == null
-                || !applicationService.getRequestType().getTypeActionCode().equals(TypeActionBean.CODE_CANCEL)) {
             enabled = false;
         }
 
@@ -811,8 +796,8 @@ public class PropertyPanel extends ContentPanel {
         CadastreObjectSummaryBean cadastreObject = null;
         if (baUnitBean.getCadastreObject() != null) {
             cadastreObject = (CadastreObjectSummaryBean) baUnitBean.getCadastreObject().copy();
-        } 
-        
+        }
+
         ParcelPanelForm form = new ParcelPanelForm(cadastreObject, false, true);
         form.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -2219,7 +2204,6 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private void btnEditParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditParcelActionPerformed
         editParcel();
     }//GEN-LAST:event_btnEditParcelActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.administrative.BaUnitBean baUnitBean;
     private org.sola.clients.beans.referencedata.RrrTypeListBean baUnitRrrTypes;
