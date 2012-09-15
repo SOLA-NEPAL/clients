@@ -164,9 +164,9 @@ public class TransactionedDocumentsPanel extends ContentPanel {
         jToolBar2 = new javax.swing.JToolBar();
         btnAddDocumentFromApplication = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        documentSeachPanel = new org.sola.clients.swing.ui.source.DocumentSearchPanel();
         jToolBar3 = new javax.swing.JToolBar();
         btnAddDocumentFromSearch = new javax.swing.JButton();
+        documentSeachPanel = new org.sola.clients.swing.ui.source.DocumentSearchPanel();
         groupSelectedDocuments = new org.sola.clients.swing.ui.GroupPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnRemove = new javax.swing.JButton();
@@ -235,12 +235,6 @@ public class TransactionedDocumentsPanel extends ContentPanel {
 
         jPanel2.setName("jPanel2"); // NOI18N
 
-        documentSeachPanel.setName("documentSeachPanel"); // NOI18N
-        documentSeachPanel.setShowAttachButton(false);
-        documentSeachPanel.setShowEditButton(false);
-        documentSeachPanel.setShowPrintButton(false);
-        documentSeachPanel.setShowSelectButton(false);
-
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
         jToolBar3.setName("jToolBar3"); // NOI18N
@@ -255,15 +249,17 @@ public class TransactionedDocumentsPanel extends ContentPanel {
         });
         jToolBar3.add(btnAddDocumentFromSearch);
 
+        documentSeachPanel.setName(bundle.getString("TransactionedDocumentsPanel.documentSeachPanel.name")); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(documentSeachPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-                    .addComponent(jToolBar3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addComponent(documentSeachPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(

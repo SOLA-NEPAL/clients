@@ -51,10 +51,6 @@ public class DocumentSearchDialog extends javax.swing.JDialog {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/source/Bundle"); // NOI18N
         setTitle(bundle.getString("DocumentSearchDialog.title")); // NOI18N
 
-        documentSearchPanel.setShowAttachButton(false);
-        documentSearchPanel.setShowEditButton(false);
-        documentSearchPanel.setShowPrintButton(false);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

@@ -46,10 +46,23 @@ public class SourceBean extends SourceSummaryBean {
     public static final String MAIN_TYPE_PROPERTY = "mainType";
     public static final String AVAILABILITY_STATUS_CODE_PROPERTY = "availabilityStatusCode";
     public static final String CONTENT_PROPERTY = "content";
+    public static final String OWNER_PROPERTY = "owner";
+    public static final String DESCRIPTION_PROPERTY = "description";
+    public static final String PACKET_NUMBER_PROPERTY = "packetNumber";
+    public static final String TAMELI_PROPERTY = "tameliNumber";
+    public static final String LIKHAT_REGISTRATION_NUMBER_PROPERTY = "likhatRegistrationNumber";
+    public static final String PAGE_NUMBER_PROPERTY = "pageNumber";
+    
     private String mainType;
     private String availabilityStatusCode;
     private String content;
     private DocumentBean archiveDocument;
+    private String owner;
+    private String description;
+    private String packetNumber;
+    private String tameliNumber;
+    private String likhatRegistrationNumber;
+    private String pageNumber;
 
     public SourceBean() {
         super();
@@ -95,6 +108,66 @@ public class SourceBean extends SourceSummaryBean {
         propertySupport.firePropertyChange(ARCHIVE_DOCUMENT_PROPERTY, null, archiveDocument);
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        String oldValue = this.description;
+        this.description = description;
+        propertySupport.firePropertyChange(DESCRIPTION_PROPERTY, oldValue, this.description);
+    }
+
+    public String getLikhatRegistrationNumber() {
+        return likhatRegistrationNumber;
+    }
+
+    public void setLikhatRegistrationNumber(String likhatRegistrationNumber) {
+        String oldValue = this.likhatRegistrationNumber;
+        this.likhatRegistrationNumber = likhatRegistrationNumber;
+        propertySupport.firePropertyChange(LIKHAT_REGISTRATION_NUMBER_PROPERTY, oldValue, this.likhatRegistrationNumber);
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        String oldValue = this.owner;
+        this.owner = owner;
+        propertySupport.firePropertyChange(OWNER_PROPERTY, oldValue, this.owner);
+    }
+
+    public String getPacketNumber() {
+        return packetNumber;
+    }
+
+    public void setPacketNumber(String packetNumber) {
+        String oldValue = this.packetNumber;
+        this.packetNumber = packetNumber;
+        propertySupport.firePropertyChange(PACKET_NUMBER_PROPERTY, oldValue, this.packetNumber);
+    }
+
+    public String getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(String pageNumber) {
+        String oldValue = this.pageNumber;
+        this.pageNumber = pageNumber;
+        propertySupport.firePropertyChange(PAGE_NUMBER_PROPERTY, oldValue, this.pageNumber);
+    }
+
+    public String getTameliNumber() {
+        return tameliNumber;
+    }
+
+    public void setTameliNumber(String tameliNumber) {
+        String oldValue = this.tameliNumber;
+        this.tameliNumber = tameliNumber;
+        propertySupport.firePropertyChange(TAMELI_PROPERTY, oldValue, this.tameliNumber);
+    }
+
     @Override
     public String getArchiveDocumentId() {
         if (archiveDocument != null) {
@@ -112,11 +185,17 @@ public class SourceBean extends SourceSummaryBean {
     @Override
     public void clean() {
         super.clean();
-        this.setArchiveDocument(null);
-        this.setAvailabilityStatusCode(null);
-        this.setContent(null);
-        this.setMainType(null);
-        this.setSourceType(null);
+        setArchiveDocument(null);
+        setAvailabilityStatusCode(null);
+        setContent(null);
+        setMainType(null);
+        setSourceType(null);
+        setOwner(null);
+        setDescription(null);
+        setPacketNumber(null);
+        setTameliNumber(null);
+        setLikhatRegistrationNumber(null);
+        setPageNumber(null);
     }
 
     public void openDocument() {

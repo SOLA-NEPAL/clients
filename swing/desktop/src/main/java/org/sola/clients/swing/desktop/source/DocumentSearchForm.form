@@ -6,7 +6,7 @@
       <ComponentRef name="headerPanel1"/>
     </Property>
     <Property name="helpTopic" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-      <ResourceString bundle="org/sola/clients/swing/desktop/source/Bundle.properties" key="DocumentSearchPanel.helpTopic" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+      <ResourceString bundle="org/sola/clients/swing/desktop/source/Bundle.properties" key="DocumentSearchForm.helpTopic" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
     </Property>
     <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
   </Properties>
@@ -49,7 +49,7 @@
       <Properties>
         <Property name="name" type="java.lang.String" value="headerPanel1" noResource="true"/>
         <Property name="titleText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/sola/clients/swing/desktop/source/Bundle.properties" key="DocumentSearchPanel.headerPanel1.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/sola/clients/swing/desktop/source/Bundle.properties" key="DocumentSearchForm.headerPanel1.titleText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -63,11 +63,11 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="org.sola.clients.swing.ui.source.DocumentSearchPanel" name="documentSeachPanel">
+        <Component class="org.sola.clients.swing.ui.source.DocumentSearchPanel" name="documentSearchPanel">
           <Properties>
-            <Property name="name" type="java.lang.String" value="documentSeachPanel" noResource="true"/>
-            <Property name="showAttachButton" type="boolean" value="false"/>
-            <Property name="showSelectButton" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/desktop/source/Bundle.properties" key="DocumentSearchForm.documentSearchPanel.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

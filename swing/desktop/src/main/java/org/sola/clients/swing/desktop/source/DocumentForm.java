@@ -15,13 +15,11 @@
  */
 package org.sola.clients.swing.desktop.source;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.source.DocumentPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -32,13 +30,22 @@ public class DocumentForm extends ContentPanel {
 
     private SourceBean document;
     public static final String DOCUMENT_SAVED = "documentSaved";
+    private boolean saveOnAction;
+    private boolean closeOnAction;
+    private boolean allowEditing;
+
+    private DocumentPanel createDocumentPanel() {
+        if (documentPanel == null) {
+            documentPanel = new DocumentPanel(document, allowEditing);
+        }
+        return documentPanel;
+    }
 
     /**
      * Default form constructor
      */
     public DocumentForm() {
-        initComponents();
-        postInit();
+        this(null, false, true, false);
     }
 
     /**
@@ -46,13 +53,17 @@ public class DocumentForm extends ContentPanel {
      *
      * @param document Document to edit.
      */
-    public DocumentForm(SourceBean document) {
+    public DocumentForm(SourceBean document, boolean saveOnAction, boolean closeOnAction, boolean allowEditing) {
         this.document = document;
+        this.saveOnAction = saveOnAction;
+        this.closeOnAction = closeOnAction;
+        this.allowEditing = allowEditing;
         initComponents();
         postInit();
     }
 
     private void postInit() {
+        btnSave.setEnabled(allowEditing);
         if (document == null) {
             headerPanel.setTitleText(
                     MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_DOCUMENT)
@@ -62,28 +73,44 @@ public class DocumentForm extends ContentPanel {
                     MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_DOCUMENT)
                     + " - #" + document.getLaNr());
         }
-        documentPanel.setDocument(document);
+        if (closeOnAction) {
+            btnSave.setText(MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_SAVE_AND_CLOSE));
+        } else {
+            btnSave.setText(MessageUtility.getLocalizedMessageText(ClientMessage.GENERAL_LABELS_SAVE));
+        }
     }
 
-    private void saveDocument() {
-        SolaTask t = new SolaTask<Boolean, Boolean>() {
+    private void save() {
+        if (saveOnAction) {
+            SolaTask t = new SolaTask<Boolean, Boolean>() {
 
-            @Override
-            public Boolean doTask() {
-                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_SAVING));
-                return documentPanel.saveDocument();
-            }
-
-            @Override
-            protected void taskDone() {
-                if (get() == Boolean.TRUE) {
-                    MessageUtility.displayMessage(ClientMessage.SOURCE_SAVED);
-                    firePropertyChange(DOCUMENT_SAVED, false, true);
-                    close();
+                @Override
+                public Boolean doTask() {
+                    setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_SAVING));
+                    return documentPanel.save();
                 }
-            }
-        };
-        TaskManager.getInstance().runTask(t);
+
+                @Override
+                protected void taskDone() {
+                    if (get() == Boolean.TRUE) {
+                        fireDocumentSave();
+                    }
+                }
+            };
+            TaskManager.getInstance().runTask(t);
+        } else {
+            fireDocumentSave();
+        }
+
+    }
+
+    private void fireDocumentSave() {
+        firePropertyChange(DOCUMENT_SAVED, null, documentPanel.getSource());
+        if (closeOnAction) {
+            close();
+        } else {
+            MessageUtility.displayMessage(ClientMessage.SOURCE_SAVED);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -91,16 +118,14 @@ public class DocumentForm extends ContentPanel {
     private void initComponents() {
 
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
-        documentPanel = new org.sola.clients.swing.ui.source.DocumentPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnSave = new javax.swing.JButton();
+        documentPanel = createDocumentPanel();
 
         setHeaderPanel(headerPanel);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/source/Bundle"); // NOI18N
         headerPanel.setTitleText(bundle.getString("DocumentForm.headerPanel.titleText")); // NOI18N
-
-        documentPanel.setShowAddButton(false);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -134,13 +159,13 @@ public class DocumentForm extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(documentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addComponent(documentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        saveDocument();
+        save();
     }//GEN-LAST:event_btnSaveActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;

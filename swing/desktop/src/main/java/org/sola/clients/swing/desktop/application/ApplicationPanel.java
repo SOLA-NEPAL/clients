@@ -29,7 +29,6 @@
  */
 package org.sola.clients.swing.desktop.application;
 
-import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -43,7 +42,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import org.jdesktop.beansbinding.*;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
-import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationDocumentsHelperBean;
@@ -62,18 +60,20 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.ReportViewerForm;
-import org.sola.clients.swing.desktop.administrative.PropertyPanel;
 import org.sola.clients.swing.desktop.cadastre.CadastreTransactionMapPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
-import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
+import org.sola.clients.swing.desktop.source.DocumentSearchForm;
+import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
 import org.sola.clients.swing.desktop.source.TransactionedDocumentsPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.administrative.BaUnitSearchPanel;
-import org.sola.clients.swing.ui.renderers.*;
-import org.sola.clients.swing.ui.source.DocumentPanel;
-import org.sola.clients.swing.ui.source.FileBrowserForm;
+import org.sola.clients.swing.ui.renderers.BooleanCellRenderer;
+import org.sola.clients.swing.ui.renderers.FormattersFactory;
+import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
+import org.sola.clients.swing.ui.renderers.ViolationCellRenderer;
+import org.sola.clients.swing.ui.source.QuickDocumentPanel;
 import org.sola.clients.swing.ui.validation.ValidationResultForm;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
@@ -122,6 +122,12 @@ public class ApplicationPanel extends ContentPanel {
         return applicationBean;
     }
 
+    private DocumentsManagementExtPanel createDocumentsPanel(){
+        if(documents == null){
+            documents = new DocumentsManagementExtPanel(appBean.getSourceList(), appBean, true);
+        }
+        return documents;
+    }
     /**
      * Default constructor to create new application.
      */
@@ -169,7 +175,7 @@ public class ApplicationPanel extends ContentPanel {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(DocumentPanel.UPDATED_SOURCE)
+                if (evt.getPropertyName().equals(QuickDocumentPanel.UPDATED_SOURCE)
                         && evt.getNewValue() != null) {
                     appBean.getSourceList().addAsNew((SourceBean) evt.getNewValue());
                 }
@@ -232,13 +238,9 @@ public class ApplicationPanel extends ContentPanel {
                         customizeApplicationForm();
                         customizeServicesButtons();
                         customizePropertyButtons();
-                        customizeDocumentsButtons();
                         break;
                     case ApplicationBean.SELECTED_PROPPERTY_PROPERTY:
                         customizePropertyButtons();
-                        break;
-                    case ApplicationBean.SELECTED_SOURCE_PROPERTY:
-                        customizeDocumentsButtons();
                         break;
                 }
             }
@@ -247,7 +249,6 @@ public class ApplicationPanel extends ContentPanel {
         customizeServicesButtons();
         customizeApplicationForm();
         customizePropertyButtons();
-        customizeDocumentsButtons();
     }
 
     public BaUnitSearchResultBean getApplicationProperty() {
@@ -319,8 +320,7 @@ public class ApplicationPanel extends ContentPanel {
             btnSave.setEnabled(editAllowed);
             baUnitSearchPanel.setReadOnly(!editAllowed);
             btnRemoveProperty.setEnabled(editAllowed);
-            btnDeleteDoc.setEnabled(editAllowed);
-            btnAddExistingDocument.setEnabled(editAllowed);
+            documents.setAllowEdit(editAllowed);
             btnPrintFee.setEnabled(editAllowed);
             btnValidate.setEnabled(editAllowed);
             cbxPaid.setEnabled(editAllowed);
@@ -437,24 +437,6 @@ public class ApplicationPanel extends ContentPanel {
     }
 
     /**
-     * Disables or enables buttons, related to the documents list management.
-     */
-    private void customizeDocumentsButtons() {
-        SourceBean selectedDocument = appBean.getSelectedSource();
-        boolean enablePropertyButtons = appBean.isEditingAllowed();
-
-        btnDeleteDoc.setEnabled(false);
-        btnOpenAttachment.setEnabled(false);
-
-        if (selectedDocument != null) {
-            btnDeleteDoc.setEnabled(enablePropertyButtons);
-            if (selectedDocument.getArchiveDocumentId() != null && selectedDocument.getArchiveDocumentId().length() > 0) {
-                btnOpenAttachment.setEnabled(true);
-            }
-        }
-    }
-
-    /**
      * Opens dialog form to display status change result for application or
      * service.
      */
@@ -536,7 +518,7 @@ public class ApplicationPanel extends ContentPanel {
                     public Void doTask() {
                         setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
                         if (!getMainContentPanel().isPanelOpened(MainContentPanel.CARD_DOCUMENT_SEARCH)) {
-                            DocumentSearchPanel documentSearchPanel = new DocumentSearchPanel();
+                            DocumentSearchForm documentSearchPanel = new DocumentSearchForm();
                             getMainContentPanel().addPanel(documentSearchPanel, getThis().getId(), documentSearchPanel.getId(), false);
                         }
                         getMainContentPanel().showPanel(MainContentPanel.CARD_DOCUMENT_SEARCH);
@@ -871,15 +853,10 @@ public class ApplicationPanel extends ContentPanel {
         tblDocTypesHelper = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         groupPanel5 = new org.sola.clients.swing.ui.GroupPanel();
         jPanel17 = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
-        btnAddExistingDocument = new javax.swing.JButton();
-        btnDeleteDoc = new javax.swing.JButton();
-        btnOpenAttachment = new javax.swing.JButton();
-        scrollDocuments = new javax.swing.JScrollPane();
-        tabDocuments = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        documents = createDocumentsPanel();
         jPanel18 = new javax.swing.JPanel();
         groupPanel6 = new org.sola.clients.swing.ui.GroupPanel();
-        addDocumentPanel = new org.sola.clients.swing.ui.source.DocumentPanel();
+        addDocumentPanel = new org.sola.clients.swing.ui.source.QuickDocumentPanel();
         validationPanel = new javax.swing.JPanel();
         validationsPanel = new javax.swing.JScrollPane();
         tabValidations = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
@@ -2020,110 +1997,19 @@ public class ApplicationPanel extends ContentPanel {
 
         jPanel17.setName(bundle.getString("ApplicationPanel.jPanel17.name")); // NOI18N
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-        jToolBar1.setToolTipText(bundle.getString("ApplicationPanel.jToolBar1.toolTipText")); // NOI18N
-        jToolBar1.setName("jToolBar1"); // NOI18N
-
-        btnAddExistingDocument.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
-        btnAddExistingDocument.setText(bundle.getString("ApplicationPanel.btnAddExistingDocument.text")); // NOI18N
-        btnAddExistingDocument.setFocusable(false);
-        btnAddExistingDocument.setName(bundle.getString("ApplicationPanel.btnAddExistingDocument.name")); // NOI18N
-        btnAddExistingDocument.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAddExistingDocument.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddExistingDocumentActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnAddExistingDocument);
-
-        btnDeleteDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
-        btnDeleteDoc.setText(bundle.getString("ApplicationPanel.btnDeleteDoc.text")); // NOI18N
-        btnDeleteDoc.setName("btnDeleteDoc"); // NOI18N
-        btnDeleteDoc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteDocActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnDeleteDoc);
-
-        btnOpenAttachment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document-view.png"))); // NOI18N
-        btnOpenAttachment.setText(bundle.getString("ApplicationPanel.btnOpenAttachment.text")); // NOI18N
-        btnOpenAttachment.setActionCommand(bundle.getString("ApplicationPanel.btnOpenAttachment.actionCommand")); // NOI18N
-        btnOpenAttachment.setName("btnOpenAttachment"); // NOI18N
-        btnOpenAttachment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenAttachmentActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnOpenAttachment);
-
-        scrollDocuments.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        scrollDocuments.setName("scrollDocuments"); // NOI18N
-        scrollDocuments.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-
-        tabDocuments.setName("tabDocuments"); // NOI18N
-        tabDocuments.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${sourceFilteredList}");
-        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, eLProperty, tabDocuments);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sourceType.displayValue}"));
-        columnBinding.setColumnName("Source Type.display Value");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${referenceNr}"));
-        columnBinding.setColumnName("Reference Nr");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${recordation}"));
-        columnBinding.setColumnName("Recordation");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laNr}"));
-        columnBinding.setColumnName("La Nr");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${submission}"));
-        columnBinding.setColumnName("Submission");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${archiveDocumentId}"));
-        columnBinding.setColumnName("Archive Document Id");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${selectedSource}"), tabDocuments, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
-        bindingGroup.addBinding(binding);
-
-        tabDocuments.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabDocumentsMouseClicked(evt);
-            }
-        });
-        scrollDocuments.setViewportView(tabDocuments);
-        tabDocuments.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("ApplicationPanel.tabDocuments.columnModel.title0")); // NOI18N
-        tabDocuments.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("ApplicationPanel.tabDocuments.columnModel.title2")); // NOI18N
-        tabDocuments.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("ApplicationPanel.tabDocuments.columnModel.title1")); // NOI18N
-        tabDocuments.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("ApplicationPanel.tabDocuments.columnModel.title3")); // NOI18N
-        tabDocuments.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("ApplicationPanel.tabDocuments.columnModel.title4")); // NOI18N
-        tabDocuments.getColumnModel().getColumn(5).setPreferredWidth(30);
-        tabDocuments.getColumnModel().getColumn(5).setMaxWidth(30);
-        tabDocuments.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("ApplicationPanel.tabDocuments.columnModel.title5")); // NOI18N
-        tabDocuments.getColumnModel().getColumn(5).setCellRenderer(new AttachedDocumentCellRenderer());
+        documents.setName(bundle.getString("ApplicationPanel.documents.name")); // NOI18N
+        documents.setShowAddFromApplicationButton(false);
+        documents.setShowNewButton(false);
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-            .addComponent(scrollDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(documents, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+            .addComponent(documents, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
         );
 
         jPanel18.setName(bundle.getString("ApplicationPanel.jPanel18.name")); // NOI18N
@@ -2138,7 +2024,7 @@ public class ApplicationPanel extends ContentPanel {
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(groupPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(groupPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
             .addComponent(addDocumentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
@@ -2352,28 +2238,6 @@ public class ApplicationPanel extends ContentPanel {
 
     private void documentPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_documentPanelMouseClicked
     }//GEN-LAST:event_documentPanelMouseClicked
-
-    private void btnOpenAttachmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenAttachmentActionPerformed
-        openAttachment();
-    }//GEN-LAST:event_btnOpenAttachmentActionPerformed
-
-    private void btnDeleteDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDocActionPerformed
-        removeSelectedSource();
-    }//GEN-LAST:event_btnDeleteDocActionPerformed
-
-    private void btnAddExistingDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExistingDocumentActionPerformed
-        openSeachDocuments();
-    }//GEN-LAST:event_btnAddExistingDocumentActionPerformed
-
-    /**
-     * Opens {@link FileBrowserForm} to select digital copy of the document and
-     * get it attached.
-     */
-    private void tabDocumentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabDocumentsMouseClicked
-        if (evt.getClickCount() == 2) {
-            openAttachment();
-        }
-    }//GEN-LAST:event_tabDocumentsMouseClicked
 
     private void propertyPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_propertyPanelMouseClicked
     }//GEN-LAST:event_propertyPanelMouseClicked
@@ -2811,19 +2675,16 @@ public class ApplicationPanel extends ContentPanel {
         return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.sola.clients.swing.ui.source.DocumentPanel addDocumentPanel;
+    private org.sola.clients.swing.ui.source.QuickDocumentPanel addDocumentPanel;
     private org.sola.clients.swing.desktop.party.PartySelectExtPanel agentSelectPanel;
     public org.sola.clients.beans.application.ApplicationBean appBean;
     private org.sola.clients.swing.desktop.party.PartySelectExtPanel applicantSelectPanel;
     private org.sola.clients.beans.application.ApplicationDocumentsHelperBean applicationDocumentsHelper;
     private org.sola.clients.swing.desktop.administrative.BaUnitSearchExtPanel baUnitSearchPanel;
-    private javax.swing.JButton btnAddExistingDocument;
     private javax.swing.JButton btnAddService;
     private javax.swing.JButton btnCancelService;
     private javax.swing.JButton btnCompleteService;
-    private javax.swing.JButton btnDeleteDoc;
     private javax.swing.JButton btnDownService;
-    private javax.swing.JButton btnOpenAttachment;
     private javax.swing.JButton btnPrintFee;
     private javax.swing.JButton btnPrintStatusReport;
     private javax.swing.JButton btnRemoveProperty;
@@ -2837,6 +2698,7 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JCheckBox cbxPaid;
     public javax.swing.JPanel contactPanel;
     public javax.swing.JPanel documentPanel;
+    private org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel documents;
     private org.sola.clients.swing.common.controls.DropDownButton dropDownButton1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel2;
@@ -2881,7 +2743,6 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JLabel labDate;
     private javax.swing.JLabel labStatus;
@@ -2908,11 +2769,9 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JPopupMenu popupApplicationActions;
     public javax.swing.JPanel propertyPanel;
     private javax.swing.JScrollPane scrollDocRequired;
-    private javax.swing.JScrollPane scrollDocuments;
     private javax.swing.JScrollPane scrollFeeDetails1;
     private javax.swing.JScrollPane scrollPropertyDetails;
     private javax.swing.JPanel servicesPanel;
-    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tabDocuments;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tabPropertyDetails;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tabServices;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tabValidations;

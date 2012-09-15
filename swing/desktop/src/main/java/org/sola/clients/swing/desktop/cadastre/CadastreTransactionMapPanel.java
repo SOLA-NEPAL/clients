@@ -39,6 +39,7 @@ import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.referencedata.RequestTypeBean;
+import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
 import org.sola.clients.swing.gis.beans.TransactionCadastreRedefinitionBean;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreChange;
@@ -155,16 +156,15 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         return baUnitId;
     }
 
-    private DocumentsManagementPanel createDocumentsPanel() {
+    private DocumentsManagementExtPanel createDocumentsPanel() {
         if (applicationBean == null) {
             applicationBean = new ApplicationBean();
         }
 
         boolean allowEdit = true;
 
-        DocumentsManagementPanel panel = new DocumentsManagementPanel(
-                this.mapControl.getTransactionBean().getSourceIdList(),
-                applicationBean, allowEdit);
+        DocumentsManagementExtPanel panel = new DocumentsManagementExtPanel(null, applicationBean, allowEdit);
+        panel.loadSourcesByIds(this.mapControl.getTransactionBean().getSourceIdList());
         return panel;
     }
 
@@ -199,7 +199,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 292, Short.MAX_VALUE)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
 
         headerPanel.setName("headerPanel"); // NOI18N
@@ -223,7 +223,8 @@ public class CadastreTransactionMapPanel extends ContentPanel {
         groupPanel1.setName("groupPanel1"); // NOI18N
         groupPanel1.setTitleText(bundle.getString("CadastreTransactionMapPanel.groupPanel1.titleText")); // NOI18N
 
-        documentsPanel.setName("documentsPanel"); // NOI18N
+        documentsPanel.setName(bundle.getString("CadastreTransactionMapPanel.documentsPanel.name")); // NOI18N
+        documentsPanel.setShowEditButton(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -235,8 +236,8 @@ public class CadastreTransactionMapPanel extends ContentPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
-                    .addComponent(documentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
-                    .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(documentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -248,7 +249,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(documentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(documentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -270,7 +271,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
 }//GEN-LAST:event_btnSaveActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private org.sola.clients.swing.ui.source.DocumentsManagementPanel documentsPanel;
+    private org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel documentsPanel;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
     private javax.swing.JToolBar jToolBar1;
