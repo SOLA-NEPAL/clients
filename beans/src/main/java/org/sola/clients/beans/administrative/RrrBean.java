@@ -743,6 +743,14 @@ public class RrrBean extends AbstractTransactionedBean {
         if (rrrAction == RRR_ACTION.CANCEL) {
             // Make a copy of current bean with new ID
             copy.setTerminating(true);
+            if(copy.getNotation()!=null){
+                copy.getNotation().setNotationText(null);
+            }
+            copy.setRegistrationNumber(null);
+            for (Iterator<SourceBean> it = copy.getSourceList().iterator(); it.hasNext();) {
+                it.next();
+                it.remove();
+            }
         }
 
         if (rrrAction == RRR_ACTION.EDIT) {
