@@ -30,10 +30,10 @@ package org.sola.clients.swing.ui.application;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.application.ApplicationBean;
-import org.sola.clients.swing.ui.source.DocumentPanel;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.swing.ui.source.DocumentsPanel;
 import org.sola.clients.beans.source.SourceBean;
+import org.sola.clients.beans.source.SourceListBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -44,7 +44,8 @@ public class ApplicationDocumentsForm extends javax.swing.JDialog {
 
     public static final String SELECTED_SOURCE = "selectedSource";
     private SolaList<SourceBean> sourceList;
-
+    private ApplicationBean applicationBean;
+    
     private DocumentsPanel createDocumentsPanel() {
         DocumentsPanel panel;
         if (sourceList != null) {
@@ -60,35 +61,42 @@ public class ApplicationDocumentsForm extends javax.swing.JDialog {
      * @param applicationBean {@ApplicationBean} to use on the form to display
      * list of documents.
      */
-    public ApplicationDocumentsForm(ApplicationBean applicationBean,
-            java.awt.Frame parent, boolean modal) {
+    public ApplicationDocumentsForm(ApplicationBean applicationBean, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.applicationBean = applicationBean;
         this.sourceList = applicationBean.getSourceList();
 
         initComponents();
-        tabs.setTitleAt(0, String.format("Application #%s", applicationBean.getNr()));
+        postInit();
+    }
 
-        documentPanel.addPropertyChangeListener(new PropertyChangeListener() {
+    private void postInit(){
+        setTitle(String.format("Application #%s", applicationBean.getNr()));
+        documentsPanel.getSourceListBean().addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(DocumentPanel.UPDATED_SOURCE) && evt.getNewValue() != null) {
-                    fireUpdatedSourceEvent((SourceBean) evt.getNewValue());
+                if(evt.getPropertyName().equals(SourceListBean.SELECTED_SOURCE_PROPERTY)){
+                    customizeButtons();
                 }
             }
         });
+        customizeButtons();
     }
 
-    private void fireUpdatedSourceEvent(SourceBean source) {
-        this.firePropertyChange(SELECTED_SOURCE, null, source);
-        this.dispose();
+    private void customizeButtons(){
+        boolean enabled = documentsPanel.getSourceListBean().getSelectedSource() != null;
+        btnSelect.setEnabled(enabled);
+        menuSelect.setEnabled(enabled);
     }
-
-    public void addDocument() {
+    
+    private void selectDocument() {
         if (documentsPanel.getSourceListBean().getSelectedSource() == null) {
             MessageUtility.displayMessage(ClientMessage.GENERAL_SELECT_DOCUMENT);
         } else {
-            fireUpdatedSourceEvent((SourceBean) documentsPanel.getSourceListBean().getSelectedSource().copy());
+            this.firePropertyChange(SELECTED_SOURCE, null, 
+                    (SourceBean) documentsPanel.getSourceListBean().getSelectedSource().copy());
+            this.dispose();
         }
     }
 
@@ -96,108 +104,68 @@ public class ApplicationDocumentsForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tabs = new javax.swing.JTabbedPane();
-        panelApplicationDocs = new javax.swing.JPanel();
+        popupSources = new javax.swing.JPopupMenu();
+        menuSelect = new javax.swing.JMenuItem();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnSelect = new javax.swing.JButton();
         documentsPanel = createDocumentsPanel();
-        btnAdd = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        documentPanel = new org.sola.clients.swing.ui.source.DocumentPanel();
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/application/Bundle"); // NOI18N
+        popupSources.setName(bundle.getString("ApplicationDocumentsForm.popupSources.name")); // NOI18N
+
+        menuSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/select.png"))); // NOI18N
+        menuSelect.setText(bundle.getString("ApplicationDocumentsForm.menuSelect.text")); // NOI18N
+        menuSelect.setName(bundle.getString("ApplicationDocumentsForm.menuSelect.name")); // NOI18N
+        popupSources.add(menuSelect);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/application/Bundle"); // NOI18N
         setTitle(bundle.getString("ApplicationDocumentsForm.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        tabs.setName("tabs"); // NOI18N
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setName(bundle.getString("ApplicationDocumentsForm.jToolBar1.name")); // NOI18N
 
-        panelApplicationDocs.setName("panelApplicationDocs"); // NOI18N
-
-        documentsPanel.setName("documentsPanel"); // NOI18N
-
-        btnAdd.setText(bundle.getString("ApplicationDocumentsForm.btnAdd.text")); // NOI18N
-        btnAdd.setName("btnAdd"); // NOI18N
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/select.png"))); // NOI18N
+        btnSelect.setText(bundle.getString("ApplicationDocumentsForm.btnSelect.text")); // NOI18N
+        btnSelect.setName("btnSelect"); // NOI18N
+        btnSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnSelectActionPerformed(evt);
             }
         });
+        jToolBar1.add(btnSelect);
 
-        org.jdesktop.layout.GroupLayout panelApplicationDocsLayout = new org.jdesktop.layout.GroupLayout(panelApplicationDocs);
-        panelApplicationDocs.setLayout(panelApplicationDocsLayout);
-        panelApplicationDocsLayout.setHorizontalGroup(
-            panelApplicationDocsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(panelApplicationDocsLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(panelApplicationDocsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(btnAdd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 72, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(documentsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 529, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        panelApplicationDocsLayout.setVerticalGroup(
-            panelApplicationDocsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(panelApplicationDocsLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(documentsPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 178, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(btnAdd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        tabs.addTab(bundle.getString("ApplicationDocumentsForm.panelApplicationDocs.TabConstraints.tabTitle"), panelApplicationDocs); // NOI18N
-
-        jPanel2.setName("jPanel2"); // NOI18N
-
-        documentPanel.setName("documentPanel"); // NOI18N
-
-        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(documentPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel2Layout.createSequentialGroup()
-                .add(23, 23, 23)
-                .add(documentPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 142, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
-        );
-
-        tabs.addTab(bundle.getString("ApplicationDocumentsForm.jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+        documentsPanel.setComponentPopupMenu(popupSources);
+        documentsPanel.setName("documentsPanel"); // NOI18N
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(tabs, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 557, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(documentsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(tabs, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(documentsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        addDocument();
-    }//GEN-LAST:event_btnAddActionPerformed
+    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
+        selectDocument();
+    }//GEN-LAST:event_btnSelectActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private org.sola.clients.swing.ui.source.DocumentPanel documentPanel;
+    private javax.swing.JButton btnSelect;
     private org.sola.clients.swing.ui.source.DocumentsPanel documentsPanel;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel panelApplicationDocs;
-    private javax.swing.JTabbedPane tabs;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menuSelect;
+    private javax.swing.JPopupMenu popupSources;
     // End of variables declaration//GEN-END:variables
 }

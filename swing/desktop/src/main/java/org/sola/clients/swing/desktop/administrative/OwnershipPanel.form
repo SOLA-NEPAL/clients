@@ -839,7 +839,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="groupPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pnlOwners" pref="108" max="32767" attributes="0"/>
+                      <Component id="pnlOwners" pref="126" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -873,7 +873,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="groupPanel2" alignment="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="groupPanel2" alignment="0" pref="286" max="32767" attributes="0"/>
                   <Component id="documentsPanel" alignment="0" pref="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
@@ -882,7 +882,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="groupPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="documentsPanel" pref="0" max="32767" attributes="0"/>
+                      <Component id="documentsPanel" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -896,9 +896,11 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="org.sola.clients.swing.ui.source.DocumentsManagementPanel" name="documentsPanel">
+            <Component class="org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel" name="documentsPanel">
               <Properties>
-                <Property name="name" type="java.lang.String" value="documentsPanel" noResource="true"/>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="OwnershipPanel.documentsPanel.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createDocumentsPanel()"/>

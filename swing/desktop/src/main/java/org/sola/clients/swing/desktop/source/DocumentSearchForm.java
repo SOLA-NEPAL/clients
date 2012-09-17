@@ -35,25 +35,24 @@ import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
  * Allows to search documents and print out digital copies.
  */
-public class DocumentSearchPanel extends ContentPanel {
+public class DocumentSearchForm extends ContentPanel {
 
     /**
      * Default constructor.
      */
-    public DocumentSearchPanel() {
+    public DocumentSearchForm() {
         initComponents();
         postInit();
     }
 
     private void postInit() {
-        documentSeachPanel.addPropertyChangeListener(new PropertyChangeListener() {
+        documentSearchPanel.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -65,13 +64,13 @@ public class DocumentSearchPanel extends ContentPanel {
                         @Override
                         public Void doTask() {
                             setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_FORM_OPENING));
-                            DocumentForm form = new DocumentForm(source);
+                            DocumentForm form = new DocumentForm(source, true, true, true);
                             form.addPropertyChangeListener(new PropertyChangeListener() {
 
                                 @Override
                                 public void propertyChange(PropertyChangeEvent evt) {
                                     if (evt.getPropertyName().equals(DocumentForm.DOCUMENT_SAVED)) {
-                                        documentSeachPanel.searchDocuments();
+                                        documentSearchPanel.searchDocuments();
                                     }
                                 }
                             });
@@ -81,11 +80,15 @@ public class DocumentSearchPanel extends ContentPanel {
                     };
                     TaskManager.getInstance().runTask(t);
                 }
+                if (evt.getPropertyName().equals(org.sola.clients.swing.ui.source.DocumentSearchPanel.SELECT_SOURCE)) {
+                    close();
+                }
+                firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             }
         });
     }
 
-    private DocumentSearchPanel getThis(){
+    private DocumentSearchForm getThis(){
         return this;
     }
     
@@ -95,23 +98,21 @@ public class DocumentSearchPanel extends ContentPanel {
 
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        documentSeachPanel = new org.sola.clients.swing.ui.source.DocumentSearchPanel();
+        documentSearchPanel = new org.sola.clients.swing.ui.source.DocumentSearchPanel();
 
         setHeaderPanel(headerPanel1);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/source/Bundle"); // NOI18N
-        setHelpTopic(bundle.getString("DocumentSearchPanel.helpTopic")); // NOI18N
+        setHelpTopic(bundle.getString("DocumentSearchForm.helpTopic")); // NOI18N
         setName("Form"); // NOI18N
 
         headerPanel1.setName("headerPanel1"); // NOI18N
-        headerPanel1.setTitleText(bundle.getString("DocumentSearchPanel.headerPanel1.titleText")); // NOI18N
+        headerPanel1.setTitleText(bundle.getString("DocumentSearchForm.headerPanel1.titleText")); // NOI18N
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        documentSeachPanel.setName("documentSeachPanel"); // NOI18N
-        documentSeachPanel.setShowAttachButton(false);
-        documentSeachPanel.setShowSelectButton(false);
-        jScrollPane1.setViewportView(documentSeachPanel);
+        documentSearchPanel.setName(bundle.getString("DocumentSearchForm.documentSearchPanel.name")); // NOI18N
+        jScrollPane1.setViewportView(documentSearchPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -133,7 +134,7 @@ public class DocumentSearchPanel extends ContentPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.sola.clients.swing.ui.source.DocumentSearchPanel documentSeachPanel;
+    private org.sola.clients.swing.ui.source.DocumentSearchPanel documentSearchPanel;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

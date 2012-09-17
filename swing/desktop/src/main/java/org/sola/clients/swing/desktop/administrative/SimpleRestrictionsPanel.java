@@ -37,6 +37,7 @@ import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.desktop.MainForm;
+import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.source.DocumentsManagementPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -56,7 +57,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     /**
      * Creates {@link DocumentsManagementPanel} instance.
      */
-    private DocumentsManagementPanel createDocumentsPanel() {
+    private DocumentsManagementExtPanel createDocumentsPanel() {
         if (rrrBean == null) {
             rrrBean = new RrrBean();
         }
@@ -225,7 +226,6 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         restrictionReasonListBean = new org.sola.clients.beans.referencedata.RestrictionReasonListBean();
         rrrBean = CreateRrrBean();
         restrictionReleaseReasonListBean = new org.sola.clients.beans.referencedata.RestrictionReleaseReasonListBean();
-        documentsPanel = createDocumentsPanel();
         jLabel15 = new javax.swing.JLabel();
         txtNotationText = new javax.swing.JTextField();
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
@@ -275,14 +275,13 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel15 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtRestrictionReleaseOfficeName = new javax.swing.JTextField();
+        documentsPanel = createDocumentsPanel();
 
         setCloseOnHide(true);
         setHeaderPanel(headerPanel);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
         setHelpTopic(bundle.getString("SimpleRestrictionsPanel.helpTopic")); // NOI18N
         setName("Form"); // NOI18N
-
-        documentsPanel.setName("documentsPanel"); // NOI18N
 
         jLabel15.setFont(LafManager.getInstance().getLabFontBold());
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
@@ -719,6 +718,8 @@ public class SimpleRestrictionsPanel extends ContentPanel {
 
         restrictionReleasePanel.add(jPanel15);
 
+        documentsPanel.setName(bundle.getString("SimpleRestrictionsPanel.documentsPanel.name")); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -729,11 +730,11 @@ public class SimpleRestrictionsPanel extends ContentPanel {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
+                        .add(jLabel15)
+                        .addContainerGap())
+                    .add(layout.createSequentialGroup()
                         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 415, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE))
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel15)
-                        .add(355, 355, 355))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, documentsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -780,7 +781,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbRestrictionReason;
     private javax.swing.JComboBox cmbRestrictionReleaseReason;
-    private org.sola.clients.swing.ui.source.DocumentsManagementPanel documentsPanel;
+    private org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel documentsPanel;
     private javax.swing.Box.Filler filler1;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;

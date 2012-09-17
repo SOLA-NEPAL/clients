@@ -61,7 +61,7 @@ import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
 import org.sola.clients.swing.desktop.inquiry.SearchByPerson;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.reports.LodgementReportParamsForm;
-import org.sola.clients.swing.desktop.source.DocumentSearchPanel;
+import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.RolesConstants;
 import org.sola.common.help.HelpUtility;
@@ -206,7 +206,7 @@ public class MainForm extends javax.swing.JFrame {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
                 if (!pnlContent.isPanelOpened(MainContentPanel.CARD_DOCUMENT_SEARCH)) {
-                    DocumentSearchPanel documentSearchPanel = new DocumentSearchPanel();
+                    DocumentSearchForm documentSearchPanel = new DocumentSearchForm();
                     pnlContent.addPanel(documentSearchPanel, MainContentPanel.CARD_DOCUMENT_SEARCH);
                 }
                 pnlContent.showPanel(MainContentPanel.CARD_DOCUMENT_SEARCH);

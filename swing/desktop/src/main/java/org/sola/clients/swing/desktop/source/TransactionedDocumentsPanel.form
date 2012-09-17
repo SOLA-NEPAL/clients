@@ -205,11 +205,11 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="documentSeachPanel" alignment="0" pref="640" max="32767" attributes="0"/>
-                                  <Component id="jToolBar3" alignment="0" pref="640" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jToolBar3" pref="640" max="32767" attributes="0"/>
+                                  <Component id="documentSeachPanel" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -228,15 +228,6 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="org.sola.clients.swing.ui.source.DocumentSearchPanel" name="documentSeachPanel">
-                      <Properties>
-                        <Property name="name" type="java.lang.String" value="documentSeachPanel" noResource="true"/>
-                        <Property name="showAttachButton" type="boolean" value="false"/>
-                        <Property name="showEditButton" type="boolean" value="false"/>
-                        <Property name="showPrintButton" type="boolean" value="false"/>
-                        <Property name="showSelectButton" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
                     <Container class="javax.swing.JToolBar" name="jToolBar3">
                       <Properties>
                         <Property name="floatable" type="boolean" value="false"/>
@@ -262,6 +253,13 @@
                         </Component>
                       </SubComponents>
                     </Container>
+                    <Component class="org.sola.clients.swing.ui.source.DocumentSearchPanel" name="documentSeachPanel">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/source/Bundle.properties" key="TransactionedDocumentsPanel.documentSeachPanel.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
