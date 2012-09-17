@@ -24,8 +24,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="575" max="32767" attributes="0"/>
-          <Component id="scrollMap" alignment="0" pref="575" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" pref="420" max="32767" attributes="0"/>
+          <Component id="scrollMap" alignment="0" pref="420" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -33,7 +33,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="headerPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollMap" pref="351" max="32767" attributes="0"/>
+              <Component id="scrollMap" pref="267" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -195,7 +195,6 @@ public class PropertyPanel extends ContentPanel {
         customizeForm();
 
         rrrTypes.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(RrrTypeListBean.SELECTED_RRR_TYPE_PROPERTY)) {
@@ -205,7 +204,6 @@ public class PropertyPanel extends ContentPanel {
         });
 
         baUnitBean.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(BaUnitBean.SELECTED_RIGHT_PROPERTY)) {
@@ -278,7 +276,6 @@ public class PropertyPanel extends ContentPanel {
         if (getMainContentPanel() != null) {
             if (newPropertyWizardListener == null) {
                 newPropertyWizardListener = new PropertyChangeListener() {
-
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
                         if (evt.getPropertyName().equals(NewPropertyWizardPanel.SELECTED_RESULT_PROPERTY)) {
@@ -292,7 +289,6 @@ public class PropertyPanel extends ContentPanel {
             }
 
             SolaTask t = new SolaTask<Void, Void>() {
-
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYLINK));
@@ -702,27 +698,20 @@ public class PropertyPanel extends ContentPanel {
         String rrrGroupCode = rrrBean.getRrrType().getRrrGroupTypeCode();
         String rrrTypeCode = rrrBean.getTypeCode();
 
-//        if (rrrGroupCode.equals(RrrBean.GROUP_TYPE_CODE_RESTRICTIONS)) {
-//            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action, true);
-//            cardName = MainContentPanel.CARD_MORTGAGE;
-//        } else 
         if (rrrGroupCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_OWNERSHIP;
         } else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_SIMPLE_RESTRICTION)) {
-            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
             panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
-        } //        else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_RESTRICTION_RELEASE)) {
-        //            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
-        //            panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action, false);
-        //        } 
-        else {
+            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
+        } else {
             cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
         }
-
+ 
         panel.addPropertyChangeListener(SimpleRightPanel.UPDATED_RRR, rightFormListener);
-        getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
+        //getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
+        getMainContentPanel().addPanel(panel, getThis().getId(), cardName, true);
     }
 
     private void saveBaUnit(final boolean showMessage, final boolean closeOnSave) {
@@ -731,7 +720,6 @@ public class PropertyPanel extends ContentPanel {
         }
 
         SolaTask<Void, Void> t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_SAVING));
@@ -777,7 +765,6 @@ public class PropertyPanel extends ContentPanel {
     private void openPropertyForm(final RelatedBaUnitInfoBean relatedBaUnit) {
         if (relatedBaUnit != null && relatedBaUnit.getRelatedBaUnit() != null) {
             SolaTask t = new SolaTask<Void, Void>() {
-
                 @Override
                 public Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTY));
@@ -800,7 +787,6 @@ public class PropertyPanel extends ContentPanel {
 
         ParcelPanelForm form = new ParcelPanelForm(cadastreObject, false, true);
         form.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(ParcelPanelForm.CADASTRE_OBJECT_SAVE)) {
