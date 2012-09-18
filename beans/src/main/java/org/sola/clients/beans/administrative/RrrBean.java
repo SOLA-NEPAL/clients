@@ -119,6 +119,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String REGISTRATION_NUMBER_PROPERTY = "registrationNumber;";
     private String baUnitId;
     private String nr;
+    @NotEmpty(message = ClientMessage.CHECK_SERIAL_NO, payload = Localized.class)
     private String sn;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
@@ -140,18 +141,25 @@ public class RrrBean extends AbstractTransactionedBean {
     private RrrTypeBean rrrType;
     private LocWithMothBean loc;
     private String officeCode;
-    private RestrictionReasonBean restrictionReason;
     //private RestrictionOfficeBean restrictionOffice; //can be needed for further modification
     @NotNull(message = ClientMessage.CHECK_SELECT_OWNER_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private OwnerTypeBean ownerType;
     @NotNull(message = ClientMessage.CHECK_SELECT_SHARE_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private OwnershipTypeBean ownershipType;
     private TenancyTypeBean tenancyType;
+    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_OFFICE, payload = Localized.class)
     private String restrictionOfficeName;
+    // @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_RELEASE_OFFICE, payload = Localized.class)
     private String restrictionReleaseOfficeName;
+    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_OFFICE_ADDRESS, payload = Localized.class)
     private String restrictionOfficeAddress;
+    @NotEmpty(message = ClientMessage.CHECK_BUNDLE_NO, payload = Localized.class)
     private String bundleNumber;
+    @NotEmpty(message = ClientMessage.CHECK_BUNDLE_PAGE, payload = Localized.class)
     private String bundlePageNo;
+    @NotNull(message = ClientMessage.CHECK_RESTRICTION_REASON, payload = Localized.class)
+    private RestrictionReasonBean restrictionReason;
+    // @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_RELEASE_REASONS, payload = Localized.class)
     private RestrictionReleaseReasonBean restrictionReleaseReason;
     @Valid
     private BaUnitNotationBean notation;
@@ -171,6 +179,33 @@ public class RrrBean extends AbstractTransactionedBean {
         sourceList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
+    }
+
+    public RestrictionReasonBean getRestrictionReason() {
+        return restrictionReason;
+    }
+
+    public void setRestrictionReason(RestrictionReasonBean restrictionReason) {
+        RestrictionReasonBean oldValue = this.restrictionReason;
+        this.restrictionReason = restrictionReason;
+        propertySupport.firePropertyChange(RESTRICTION_REASON_PROPERTY, oldValue, this.restrictionReason);
+    }
+
+    public String getRestrictionReasonCode() {
+        if (restrictionReason != null) {
+            return restrictionReason.getCode();
+        } else {
+            return null;
+        }
+    }
+
+    public void setRestrictionReasonCode(String restrictionReasonCode) {
+        String oldValue = null;
+        if (restrictionReason != null) {
+            oldValue = restrictionReason.getCode();
+        }
+        setRestrictionReason(CacheManager.getBeanByCode(CacheManager.getRestrictionReasons(), restrictionReasonCode));
+        propertySupport.firePropertyChange(RESTRICTION_REASON_CODE_PROPERTY, oldValue, restrictionReasonCode);
     }
 
     public String getOwnerTypeCode() {
@@ -252,35 +287,6 @@ public class RrrBean extends AbstractTransactionedBean {
         TenancyTypeBean oldValue = this.tenancyType;
         this.tenancyType = tenancyType;
         propertySupport.firePropertyChange(TENANCY_TYPE_PROPERTY, oldValue, this.tenancyType);
-    }
-
-    public String getRestrictionReasonCode() {
-        if (restrictionReason != null) {
-            return restrictionReason.getCode();
-        } else {
-            return null;
-        }
-    }
-
-    public void setRestrictionReasonCode(String restrictionReasonCode) {
-        String oldValue = null;
-        if (restrictionReasonCode != null) {
-            oldValue = restrictionReason.getCode();
-        }
-        setRestrictionReason(CacheManager.getBeanByCode(
-                CacheManager.getRestrictionReasons(), restrictionReasonCode));
-        propertySupport.firePropertyChange(RESTRICTION_REASON_CODE_PROPERTY,
-                oldValue, restrictionReasonCode);
-    }
-
-    public RestrictionReasonBean getRestrictionReason() {
-        return restrictionReason;
-    }
-
-    public void setRestrictionReason(RestrictionReasonBean restrictionReason) {
-        RestrictionReasonBean oldValue = this.restrictionReason;
-        this.restrictionReason = restrictionReason;
-        propertySupport.firePropertyChange(RESTRICTION_REASON_PROPERTY, oldValue, this.restrictionReason);
     }
 
     public String getRestrictionReleaseReasonCode() {
@@ -743,7 +749,7 @@ public class RrrBean extends AbstractTransactionedBean {
         if (rrrAction == RRR_ACTION.CANCEL) {
             // Make a copy of current bean with new ID
             copy.setTerminating(true);
-            if(copy.getNotation()!=null){
+            if (copy.getNotation() != null) {
                 copy.getNotation().setNotationText(null);
             }
             copy.setRegistrationNumber(null);
@@ -766,8 +772,7 @@ public class RrrBean extends AbstractTransactionedBean {
      *     
 * @param resetChildren If true, will change ID fields also for child
      * objects.
-     * @param removeBaUnitId If true, will set
-     * <code>BaUnitId</code> to null.
+     * @param removeBaUnitId If true, will set <code>BaUnitId</code> to null.
      */
     public void resetIdAndVerion(boolean resetChildren, boolean removeBaUnitId) {
         generateId();

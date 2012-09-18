@@ -708,10 +708,10 @@ public class PropertyPanel extends ContentPanel {
             cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
         }
- 
+
         panel.addPropertyChangeListener(SimpleRightPanel.UPDATED_RRR, rightFormListener);
-        //getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
-        getMainContentPanel().addPanel(panel, getThis().getId(), cardName, true);
+        getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
+        // getMainContentPanel().addPanel(panel, getThis().getId(), cardName, true);
     }
 
     private void saveBaUnit(final boolean showMessage, final boolean closeOnSave) {

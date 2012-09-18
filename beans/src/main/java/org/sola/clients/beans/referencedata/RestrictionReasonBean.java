@@ -23,9 +23,7 @@ import org.sola.clients.beans.AbstractCodeBean;
  */
 public class RestrictionReasonBean extends AbstractCodeBean {
 
-    public static final String CODE_CANCEL = "cancel";
-    public static final String CODE_NEW = "new";
-    public static final String CODE_VARY = "vary";
+    public static final String CODE_CANCEL = "cancel";   
 
     public RestrictionReasonBean() {
         super();

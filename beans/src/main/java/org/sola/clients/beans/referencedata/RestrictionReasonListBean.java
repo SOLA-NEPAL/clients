@@ -52,7 +52,7 @@ public class RestrictionReasonListBean extends AbstractBindingListBean {
     public RestrictionReasonListBean(boolean createDummy, String... excludedCodes) {
         super();
         restrictionReasons = new SolaCodeList<RestrictionReasonBean>(excludedCodes);
-        loadList(createDummy);        
+        loadList(createDummy);
     }
 
     /**

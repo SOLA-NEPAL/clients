@@ -52,11 +52,11 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="documentsPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="documentsPanel" alignment="0" pref="734" max="32767" attributes="0"/>
                           <Component id="groupPanel1" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtNotationText" alignment="0" max="32767" attributes="0"/>
                           <Component id="restrictionReleasePanel" alignment="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="restrictionPanel" pref="897" max="32767" attributes="0"/>
+                          <Component id="restrictionPanel" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -363,7 +363,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="129" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="88" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtSerialNumber" max="32767" attributes="0"/>
               </Group>
@@ -419,7 +419,7 @@
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel11" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="72" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -495,7 +495,7 @@
                   <Component id="txtBundlePageNo" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="120" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="79" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -538,19 +538,17 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel3">
+        <Container class="javax.swing.JPanel" name="jPanel10">
           <Properties>
-            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="SimpleRestrictionsPanel.jPanel3.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
+            <Property name="name" type="java.lang.String" value="jPanel10" noResource="true"/>
           </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jLabel14" pref="203" max="32767" attributes="1"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="63" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cmbRestrictionReason" max="32767" attributes="0"/>
               </Group>
@@ -558,26 +556,24 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cmbRestrictionReason" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel14">
+            <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/common/red_asterisk.gif"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="SimpleRestrictionsPanel.jLabel14.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="SimpleRestrictionsPanel.jLabel8.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
-                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="SimpleRestrictionsPanel.jLabel14.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
+                <Property name="name" type="java.lang.String" value="jLabel8" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbRestrictionReason">
@@ -604,7 +600,7 @@
                   <Component id="txtRestrictionOfficeName" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="45" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -653,7 +649,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="74" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="33" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtRestrictionOfficeAddress" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -704,7 +700,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel20" min="-2" pref="123" max="-2" attributes="1"/>
-                  <Component id="txtPrice" pref="213" max="32767" attributes="0"/>
+                  <Component id="txtPrice" pref="172" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -769,7 +765,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="291" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="209" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cmbRestrictionReleaseReason" max="32767" attributes="0"/>
               </Group>
@@ -818,7 +814,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="273" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="191" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtRestrictionReleaseOfficeName" alignment="0" max="32767" attributes="0"/>
               </Group>
