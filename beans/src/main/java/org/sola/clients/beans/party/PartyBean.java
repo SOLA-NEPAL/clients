@@ -41,7 +41,6 @@ import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.digitalarchive.DocumentBinaryBean;
 import org.sola.clients.beans.party.validation.PartyIdTypeCheck;
 import org.sola.clients.beans.referencedata.*;
@@ -114,6 +113,9 @@ public class PartyBean extends PartySummaryBean {
     private DocumentBinaryBean rightFingerDoc;
     private DocumentBinaryBean signatureDoc;
 
+    
+    
+    
     public DocumentBinaryBean getLeftFingerDoc() {
         return leftFingerDoc;
     }

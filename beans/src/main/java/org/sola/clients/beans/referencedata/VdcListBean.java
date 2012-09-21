@@ -15,8 +15,6 @@
  */
 package org.sola.clients.beans.referencedata;
 
-import java.util.ArrayList;
-import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.AbstractBindingListBean;
 import org.sola.clients.beans.AbstractCodeBean;
@@ -31,10 +29,10 @@ public class VdcListBean extends AbstractBindingListBean {
     private SolaCodeList<VdcBean> vdcs;
     private VdcBean selectedVdc;
 
-    public VdcListBean(){
+    public VdcListBean() {
         this(false);
     }
-    
+
     /**
      * Creates object instance.
      *
@@ -71,13 +69,13 @@ public class VdcListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      */
     public void loadListByOffice(boolean createDummy) {
-       loadCodeList(VdcBean.class, vdcs, CacheManager.getVdcsByOffice(), createDummy);
-    }   
-    
+        loadCodeList(VdcBean.class, vdcs, CacheManager.getVdcsByOffice(), createDummy);
+    }
+
     public void setExcludedCodes(String... codes) {
         vdcs.setExcludedCodes(codes);
     }
-    
+
     public VdcBean getSelectedVdc() {
         return selectedVdc;
     }
@@ -91,9 +89,9 @@ public class VdcListBean extends AbstractBindingListBean {
     public ObservableList<VdcBean> getVdcs() {
         return vdcs.getFilteredList();
     }
-    
-     public void removeSelectedVdc(){
-        if(selectedVdc!=null){
+
+    public void removeSelectedVdc() {
+        if (selectedVdc != null) {
             selectedVdc.setEntityAction(EntityAction.DELETE);
             AbstractCodeBean.saveRefData(selectedVdc, DepartmentTO.class);
         }
