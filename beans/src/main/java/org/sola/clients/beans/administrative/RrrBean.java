@@ -44,6 +44,9 @@ import org.sola.clients.beans.AbstractTransactionedBean;
 import org.sola.clients.beans.administrative.RrrBean.RRR_ACTION;
 import org.sola.clients.beans.administrative.validation.MortgageValidationGroup;
 import org.sola.clients.beans.administrative.validation.OwnershipValidationGroup;
+import org.sola.clients.beans.administrative.validation.RestrictionReleaseValidationGroup;
+import org.sola.clients.beans.administrative.validation.RestrictionValidationGroup;
+import org.sola.clients.beans.administrative.validation.TenancyValidationGroup;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.party.PartySummaryBean;
@@ -71,6 +74,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_TENANCY = "tenancy";
+    public static final String TENANT_PROPERTY = "tenant";
 //    public static final String CODE_UNKNOWN = "unknown";
 //    public static final String CODE_BYAPPLICATION = "byApplication";
 //    public static final String CODE_BYLETTER = "byLetter";
@@ -119,7 +123,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String REGISTRATION_NUMBER_PROPERTY = "registrationNumber;";
     private String baUnitId;
     private String nr;
-    @NotEmpty(message = ClientMessage.CHECK_SERIAL_NO, payload = Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_SERIAL_NO, payload = Localized.class, groups = {RestrictionValidationGroup.class})
     private String sn;
     @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
     private Date registrationDate;
@@ -146,20 +150,21 @@ public class RrrBean extends AbstractTransactionedBean {
     private OwnerTypeBean ownerType;
     @NotNull(message = ClientMessage.CHECK_SELECT_SHARE_TYPE, payload = Localized.class, groups = {OwnershipValidationGroup.class})
     private OwnershipTypeBean ownershipType;
+    @NotNull(message = ClientMessage.CHECK_TENANCY_TYPE, payload = Localized.class, groups = {TenancyValidationGroup.class})
     private TenancyTypeBean tenancyType;
-    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_OFFICE, payload = Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_OFFICE, payload = Localized.class, groups = {RestrictionValidationGroup.class})
     private String restrictionOfficeName;
-    // @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_RELEASE_OFFICE, payload = Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_RELEASE_OFFICE, payload = Localized.class, groups = {RestrictionReleaseValidationGroup.class})
     private String restrictionReleaseOfficeName;
-    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_OFFICE_ADDRESS, payload = Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_OFFICE_ADDRESS, payload = Localized.class, groups = {RestrictionValidationGroup.class})
     private String restrictionOfficeAddress;
-    @NotEmpty(message = ClientMessage.CHECK_BUNDLE_NO, payload = Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_BUNDLE_NO, payload = Localized.class, groups = RestrictionValidationGroup.class)
     private String bundleNumber;
-    @NotEmpty(message = ClientMessage.CHECK_BUNDLE_PAGE, payload = Localized.class)
+    @NotEmpty(message = ClientMessage.CHECK_BUNDLE_PAGE, payload = Localized.class, groups = RestrictionValidationGroup.class)
     private String bundlePageNo;
-    @NotNull(message = ClientMessage.CHECK_RESTRICTION_REASON, payload = Localized.class)
+    //@NotEmpty(message = ClientMessage.CHECK_RESTRICTION_REASON, payload = Localized.class, groups=RestrictionValidationGroup.class)
     private RestrictionReasonBean restrictionReason;
-    // @NotEmpty(message = ClientMessage.CHECK_RESTRICTION_RELEASE_REASONS, payload = Localized.class)
+    //@NotEmpty(message = ClientMessage.CHECK_RESTRICTION_RELEASE_REASONS, payload = Localized.class, groups = {RestrictionReleaseValidationGroup.class})
     private RestrictionReleaseReasonBean restrictionReleaseReason;
     @Valid
     private BaUnitNotationBean notation;
@@ -275,7 +280,7 @@ public class RrrBean extends AbstractTransactionedBean {
         if (tenancyType != null) {
             oldValue = tenancyType.getCode();
         }
-        setTenancyType(CacheManager.getBeanByCode(CacheManager.getTenantTypes(), tenancyTypeCode));
+        setTenancyType(CacheManager.getBeanByCode(CacheManager.getTenancyTypes(), tenancyTypeCode));
         propertySupport.firePropertyChange(TENANCY_CODE_PROPERTY, oldValue, tenancyTypeCode);
     }
 

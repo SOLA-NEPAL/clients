@@ -228,7 +228,7 @@ public final class CacheManager {
     /**
      * Cache key of the {@link TenancyTypeBean} collection.
      */
-    public static final String TENANT_TYPE_KEY = TenancyTypeBean.class.getName() + LIST_POSTFIX;
+    public static final String TENANCY_TYPE_KEY = TenancyTypeBean.class.getName() + LIST_POSTFIX;
     /**
      * Cache key of the {@link OwnershipTypeBean} collection.
      */
@@ -303,7 +303,7 @@ public final class CacheManager {
     private static final String GET_RESTRICTION_OFFICES = "getRestrictionOffices";
     private static final String GET_OWNER_TYPES = "getOwnerTypes";
     private static final String GET_OWNERSHIP_TYPES = "getOwnershipTypes";
-    private static final String GET_TENANT_TYPES = "getTenantTypes";
+    private static final String GET_TENANCY_TYPES = "getTenancyTypes";
     private static final String GET_LAND_USES = "getLandUses";
     private static final String GET_LAND_CLASSES = "getLandClasses";
     private static final String GET_GUTHI_NAMES = "getGuthiNames";
@@ -830,10 +830,10 @@ public final class CacheManager {
                 GET_OWNERSHIP_TYPES, OWNERSHIP_TYPE_KEY);
     }
 
-    public static List<TenancyTypeBean> getTenantTypes() {
+    public static List<TenancyTypeBean> getTenancyTypes() {
         return getCachedBeanList(TenancyTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
-                GET_TENANT_TYPES, TENANT_TYPE_KEY);
+                GET_TENANCY_TYPES, TENANCY_TYPE_KEY);
     }
 
     public static List<LandClassBean> getLandClasses() {

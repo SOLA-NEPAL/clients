@@ -29,17 +29,18 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
+import javax.validation.groups.Default;
 import org.sola.clients.beans.administrative.RrrBean;
+import org.sola.clients.beans.administrative.validation.RestrictionReleaseValidationGroup;
+import org.sola.clients.beans.administrative.validation.RestrictionValidationGroup;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
-import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.source.DocumentsManagementPanel;
-import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -202,12 +203,22 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     }
 
     private boolean saveRrr() {
-        if (rrrBean.validate(true).size() <= 0) {
-            firePropertyChange(UPDATED_RRR, null, rrrBean);
-            close();
-            return true;
+        if (rrrAction == RrrBean.RRR_ACTION.CANCEL) {
+            if (rrrBean.validate(true, Default.class, RestrictionReleaseValidationGroup.class).size() <= 0) {
+                firePropertyChange(UPDATED_RRR, null, rrrBean);
+                close();
+                return true;
+            }
+            return false;
+        } else {
+            if (rrrBean.validate(true, Default.class, RestrictionValidationGroup.class).size() <= 0) {
+                firePropertyChange(UPDATED_RRR, null, rrrBean);
+                close();
+                return true;
+            }
+            return false;
+
         }
-        return false;
     }
 
     private void saveRrrState() {

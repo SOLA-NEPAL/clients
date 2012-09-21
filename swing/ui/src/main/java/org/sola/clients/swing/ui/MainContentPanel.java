@@ -78,6 +78,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_MORTGAGE = "mortgagePanel";
     public final static String CARD_SIMPLE_RIGHT = "simpleRightPanel";
     public final static String CARD_SIMPLE_RESTRICTIONS = "simpleRestrictionsPanel";
+    public final static String CARD_TENANCY="tenancy";
     public final static String CARD_OWNERSHIP = "ownershipPanel";
     public final static String CARD_OWNERSHIP_SHARE = "ownershipSharePanel";
     public final static String CARD_TRANSACTIONED_DOCUMENT = "transactionedDocumentPanel";

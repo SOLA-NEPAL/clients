@@ -24,13 +24,13 @@ import org.sola.clients.beans.controls.SolaCodeList;
  *
  * @author KumarKhadka
  */
-public class TenantTypeListBean extends AbstractBindingListBean {
+public class TenancyTypeListBean extends AbstractBindingListBean {
 
     public static final String SELECTED_TENANT_TYPES_PROPERTY = "selectedTenantType";
     private SolaCodeList<TenancyTypeBean> tenantTypes;
     private TenancyTypeBean selectedTenantType;
  
-    public TenantTypeListBean() {
+    public TenancyTypeListBean() {
         this(false);
     }
 
@@ -39,7 +39,7 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      *
      * @param createDummy Indicates whether to add empty object on the list.
      */
-    public TenantTypeListBean(boolean createDummy) {
+    public TenancyTypeListBean(boolean createDummy) {
         this(createDummy, (String) null);
     }
 
@@ -49,7 +49,7 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      * @param createDummy Indicates whether to add empty object on the list.
      * @param excludedCodes Codes, which should be skipped while filtering.
      */
-    public TenantTypeListBean(boolean createDummy, String... excludedCodes) {
+    public TenancyTypeListBean(boolean createDummy, String... excludedCodes) {
         super();
         tenantTypes = new SolaCodeList<TenancyTypeBean>(excludedCodes);
         loadList(createDummy);
@@ -62,7 +62,7 @@ public class TenantTypeListBean extends AbstractBindingListBean {
      * @param lang is the selected language
      */
     public final void loadList(boolean createDummy) {
-        loadCodeList(TenancyTypeBean.class, tenantTypes, CacheManager.getTenantTypes(), createDummy);
+        loadCodeList(TenancyTypeBean.class, tenantTypes, CacheManager.getTenancyTypes(), createDummy);
     }
 
     public void setExcludedCodes(String... codes) {
