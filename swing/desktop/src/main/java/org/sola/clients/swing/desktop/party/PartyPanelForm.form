@@ -25,9 +25,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerPanel" alignment="0" pref="789" max="32767" attributes="0"/>
-          <Component id="jToolBar1" alignment="0" pref="789" max="32767" attributes="0"/>
-          <Component id="jScrollPane1" alignment="0" pref="789" max="32767" attributes="0"/>
+          <Component id="headerPanel" alignment="0" pref="799" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" pref="799" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="0" pref="799" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -89,7 +89,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="org.sola.clients.swing.ui.party.PartyPanel" name="partyPanel">
+        <Component class="org.sola.clients.swing.desktop.party.PartyPanel" name="partyPanel">
           <Properties>
             <Property name="name" type="java.lang.String" value="partyPanel" noResource="true"/>
           </Properties>

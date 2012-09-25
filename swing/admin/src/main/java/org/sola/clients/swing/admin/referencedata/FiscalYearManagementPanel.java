@@ -152,7 +152,7 @@ public class FiscalYearManagementPanel extends ContentPanel {
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${fiscalYears}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, fiscalYearListBean, eLProperty, tblFiscalYears);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${translatedDisplayValue}"));
-        columnBinding.setColumnName("Name");
+        columnBinding.setColumnName("Translated Display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${startDate}"));
@@ -164,11 +164,11 @@ public class FiscalYearManagementPanel extends ContentPanel {
         columnBinding.setColumnClass(java.util.Date.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${translatedDescription}"));
-        columnBinding.setColumnName("Description");
+        columnBinding.setColumnName("Translated Description");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${current}"));
-        columnBinding.setColumnName("Is Current");
+        columnBinding.setColumnName("Current");
         columnBinding.setColumnClass(Boolean.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
@@ -176,6 +176,11 @@ public class FiscalYearManagementPanel extends ContentPanel {
         bindingGroup.addBinding(binding);
 
         jScrollPane1.setViewportView(tblFiscalYears);
+        tblFiscalYears.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title0")); // NOI18N
+        tblFiscalYears.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title1")); // NOI18N
+        tblFiscalYears.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title2")); // NOI18N
+        tblFiscalYears.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title3")); // NOI18N
+        tblFiscalYears.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title4")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

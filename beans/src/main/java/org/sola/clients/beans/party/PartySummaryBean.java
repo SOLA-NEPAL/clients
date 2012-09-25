@@ -57,19 +57,30 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String TYPE_PROPERTY = "type";
     public static final String IS_RIGHTHOLDER_PROPERTY = "rightHolder";
     public static final String ROLE_CODE_PROPERTY = "roleCode";
-    public static final String  FULL_NAME_PROPERTY = "fullName";
-    
-    @NotEmpty(message= ClientMessage.CHECK_NOTNULL_NAME, payload=Localized.class)
+    public static final String FULL_NAME_PROPERTY = "fullName";
+    public static final String IS_CHILD_PROPERTY = "child";
+    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_NAME, payload = Localized.class)
     private String name;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_LASTNAME, payload = Localized.class, groups = PartyIndividualValidationGroup.class)
     private String lastName;
     private String extId;
     private boolean rightHolder;
-    private PartyTypeBean typeBean;
+    private PartyTypeBean partyType;
+    private boolean child;
 
     public PartySummaryBean() {
         super();
-        typeBean = new PartyTypeBean();
+        partyType = new PartyTypeBean();
+    }
+
+    public boolean isChild() {
+        return child;
+    }
+
+    public void setChild(boolean value) {
+        boolean oldValue = this.child;
+        this.child = value;
+        propertySupport.firePropertyChange(IS_CHILD_PROPERTY, oldValue, this.child);
     }
 
     public String getExtId() {
@@ -116,24 +127,24 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         return fullName;
     }
 
-    public PartyTypeBean getType() {
-        return typeBean;
+    public PartyTypeBean getPartyType() {
+        return partyType;
     }
 
-    public void setType(PartyTypeBean typeBean) {
-        if (this.typeBean == null) {
-            this.typeBean = new PartyTypeBean();
+    public void setPartyType(PartyTypeBean typeBean) {
+        if (this.partyType == null) {
+            this.partyType = new PartyTypeBean();
         }
-        this.setJointRefDataBean(this.typeBean, typeBean, TYPE_PROPERTY);
+        this.setJointRefDataBean(this.partyType, typeBean, TYPE_PROPERTY);
     }
 
     public String getTypeCode() {
-        return typeBean.getCode();
+        return partyType.getCode();
     }
 
     public void setTypeCode(String value) {
-        String oldValue = typeBean.getCode();
-        setType(CacheManager.getBeanByCode(CacheManager.getPartyTypes(), value));
+        String oldValue = partyType.getCode();
+        setPartyType(CacheManager.getBeanByCode(CacheManager.getPartyTypes(), value));
         propertySupport.firePropertyChange(TYPE_CODE_PROPERTY, oldValue, value);
     }
 

@@ -52,9 +52,10 @@ import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.casemanagement.PartyTO;
 
 /**
- * Represents party object in the domain model. Could be populated from the {@link PartyTO}
- * object.<br /> For more information see data dictionary <b>Party</b> schema.
- * <br />This bean is used as a part of {@link ApplicationBean}.
+ * Represents party object in the domain model. Could be populated from the
+ * {@link PartyTO} object.<br /> For more information see data dictionary
+ * <b>Party</b> schema. <br />This bean is used as a part of
+ * {@link ApplicationBean}.
  */
 @PartyIdTypeCheck(message = ClientMessage.CHECK_PERSON_ID_DOC_NUMBER, payload = Localized.class)
 public class PartyBean extends PartySummaryBean {
@@ -71,51 +72,152 @@ public class PartyBean extends PartySummaryBean {
     public static final String ID_TYPE_PROPERTY = "idType";
     public static final String IDNUMBER_PROPERTY = "idNumber";
     public static final String FAX_PROPERTY = "fax";
-    public static final String FATHERSNAME_PROPERTY = "fathersName";
-    public static final String GRANDFATHERSNAME_PROPERTY = "fathersLastName";
+    public static final String FATHER_NAME_PROPERTY = "fatherName";
     public static final String ALIAS_PROPERTY = "alias";
-    //additional fields exposing.
-    public static final String GRAND_FATHER_NAME_PROPERTY = "grandfatherName";
-    public static final String GRAND_FATHER_LAST_NAME_PROPERTY = "grGandFatherLastName";
+    public static final String GRAND_FATHER_NAME_PROPERTY = "grandFatherName";
     public static final String BIRTH_DATE_PROPERTY = "brithDate";
-    public static final String REMARKS_PROPERTY = "rmks";
+    public static final String REMARKS_PROPERTY = "remarks";
     public static final String ID_ISSUING_OFFICE_PROPERTY = "id_issuing_office_code";
     public static final String ID_ISSUE_DATE_PROPERTY = "id_issueDate";
     public static final String PHOTO_PROPERTY = "photo";
     public static final String LEFT_FINGERPRINT_PROPERTY = "leftFingerPrint";
     public static final String RIGHT_FINGERPRINT_PROPERTY = "rightFingerPrint";
     public static final String SIGNATURE_PROPERTY = "signature";
+    public static final String FATHER_TYPE_CODE_PROPERTY = "fatherTypeCode";
+    public static final String GRAND_FATHER_TYPE_CODE_PROPERTY = "grandfatherTypeCode";
+    public static final String GRAND_FATHER_TYPE_PROPERTY = "grandFatherType";
+    public static final String ID_OFFICE_TYPE_PROPERTY = "idOfficeType";
+    public static final String ID_OFFICE_TYPE_CODE_PROPERTY = "idOfficeTypeCode";
+    public static final String PARENT_PROPERTY = "parent";
+    public static final String PARENT_ID_PROPERTY = "parentId";
+    public static final String ID_ISSUING_DISTRICT_CODE_PROPERTY = "idOfficeDistrictCode";
+    public static final String ID_ISSUING_DISTRICT_PROPERTY = "idIssuingDistrict";
     @Email(message = ClientMessage.CHECK_INVALID_EMAIL, payload = Localized.class)
     private String email;
     private String phone;
     private String mobile;
     private String idNumber;
     private String fax;
-    private String fathersName;
-    private String fathersLastName;
+    private String fatherName;
     private String alias;
-    private AddressBean addressBean;
-    private GenderTypeBean genderTypeBean;
-    private IdTypeBean idTypeBean;
-    private CommunicationTypeBean communicationTypeBean;
+    private AddressBean address;
+    private GenderTypeBean genderType;
+    private IdTypeBean idType;
+    private CommunicationTypeBean preferredCommunication;
     private SolaList<PartyRoleBean> roleList;
     private transient PartyRoleBean selectedRole;
-    //additional fields
-    private String grandfatherName;
-    private String grandFatherLastName;
+    private String grandFatherName;
     private Date birthDate;
-    private String rmks;
+    private String remarks;
     private OfficeBean officeBean;
     private Date idIssueDate;
-    //variable to store image field.
     private DocumentBinaryBean photoDoc;
     private DocumentBinaryBean leftFingerDoc;
     private DocumentBinaryBean rightFingerDoc;
     private DocumentBinaryBean signatureDoc;
+    private String parentId;
+    private GrandFatherTypeBean grandFatherType;
+    private IdOfficeTypeBean idOfficeType;
+    private PartySummaryBean parent;
+    private DistrictBean idIssuingDistrict;
 
-    
-    
-    
+    public DistrictBean getIdIssuingDistrict() {
+        if (this.idIssuingDistrict == null) {
+            this.idIssuingDistrict = new DistrictBean();
+        }
+        return this.idIssuingDistrict;
+    }
+
+    public void setIdIssuingDistrict(DistrictBean idIssuingdistrict) {
+        this.setJointRefDataBean(getIdIssuingDistrict(), idIssuingdistrict, ID_ISSUING_DISTRICT_PROPERTY);
+    }
+
+    public String getIdOfficeDistrictCode() {
+        return getIdIssuingDistrict().getCode();
+    }
+
+    public void setIdOfficeDistrictCode(String idOfficeDistrictCode) {
+        String oldValue = idIssuingDistrict.getCode();
+        setIdIssuingDistrict(CacheManager.getBeanByCode(CacheManager.getDistricts(), idOfficeDistrictCode));
+        propertySupport.firePropertyChange(ID_ISSUING_DISTRICT_CODE_PROPERTY, oldValue, idOfficeDistrictCode);
+    }
+
+    public PartySummaryBean getParent() {
+        return parent;
+    }
+
+    public void setParent(PartySummaryBean value) {
+        PartySummaryBean oldValue = parent;
+        parent = value;
+        propertySupport.firePropertyChange(PARENT_PROPERTY, oldValue, this.parent);
+    }
+
+    public String getParentId() {
+        if (getParent() == null) {
+            return null;
+        } else {
+            return getParent().getId();
+        }
+    }
+
+    public void setParentId(String parentId) {
+        String oldValue = this.parentId;
+        this.parentId = parentId;
+        propertySupport.firePropertyChange(PARENT_ID_PROPERTY, oldValue, this.parentId);
+    }
+
+    public IdOfficeTypeBean getIdOfficeType() {
+        if (this.idOfficeType == null) {
+            this.idOfficeType = new IdOfficeTypeBean();
+        }
+        return this.idOfficeType;
+    }
+
+    public void setIdOfficeType(IdOfficeTypeBean idOfficeType) {
+        this.setJointRefDataBean(getIdOfficeType(), idOfficeType, ID_OFFICE_TYPE_PROPERTY);
+    }
+
+    public String getIdOfficeTypeCode() {
+        return getIdOfficeType().getCode();
+    }
+
+    public void setIdOfficeTypeCode(String value) {
+        String oldValue = idOfficeType.getCode();
+        setIdOfficeType(CacheManager.getBeanByCode(CacheManager.getIdOfficeTypes(), value));
+        propertySupport.firePropertyChange(ID_OFFICE_TYPE_CODE_PROPERTY, oldValue, value);
+    }
+
+    public String getGrandfatherTypeCode() {
+        return getGrandFatherType().getCode();
+    }
+
+    public void setGrandfatherTypeCode(String value) {
+        String oldValue = grandFatherType.getCode();
+        setGrandFatherType(CacheManager.getBeanByCode(CacheManager.getGrandFatherTypes(), value));
+        propertySupport.firePropertyChange(GRAND_FATHER_TYPE_CODE_PROPERTY, oldValue, value);
+    }
+
+    public String getFatherTypeCode() {
+        return getGrandFatherType().getCode();
+    }
+
+    public void setFatherTypeCode(String value) {
+        String oldValue = grandFatherType.getCode();
+        setGrandFatherType(CacheManager.getBeanByCode(CacheManager.getGrandFatherTypes(), value));
+        propertySupport.firePropertyChange(FATHER_TYPE_CODE_PROPERTY, oldValue, value);
+    }
+
+    public GrandFatherTypeBean getGrandFatherType() {
+        if (this.grandFatherType == null) {
+            this.grandFatherType = new GrandFatherTypeBean();
+        }
+        return this.grandFatherType;
+    }
+
+    public void setGrandFatherType(GrandFatherTypeBean grandFatherType) {
+        this.setJointRefDataBean(getGrandFatherType(), grandFatherType, GRAND_FATHER_TYPE_PROPERTY);
+    }
+
     public DocumentBinaryBean getLeftFingerDoc() {
         return leftFingerDoc;
     }
@@ -212,24 +314,14 @@ public class PartyBean extends PartySummaryBean {
         propertySupport.firePropertyChange(BIRTH_DATE_PROPERTY, oldValue, this.birthDate);
     }
 
-    public String getGrandFatherLastName() {
-        return grandFatherLastName;
+    public String getGrandFatherName() {
+        return grandFatherName;
     }
 
-    public void setGrandFatherLastName(String grandFatherLastName) {
-        String oldValue = this.grandFatherLastName;
-        this.grandFatherLastName = grandFatherLastName;
-        propertySupport.firePropertyChange(GRAND_FATHER_LAST_NAME_PROPERTY, oldValue, this.grandFatherLastName);
-    }
-
-    public String getGrandfatherName() {
-        return grandfatherName;
-    }
-
-    public void setGrandfatherName(String grandfatherName) {
-        String oldValue = this.grandfatherName;
-        this.grandfatherName = grandfatherName;
-        propertySupport.firePropertyChange(GRANDFATHERSNAME_PROPERTY, oldValue, this.grandfatherName);
+    public void setGrandFatherName(String grandFatherName) {
+        String oldValue = this.grandFatherName;
+        this.grandFatherName = grandFatherName;
+        propertySupport.firePropertyChange(GRAND_FATHER_NAME_PROPERTY, oldValue, this.grandFatherName);
     }
 
     public Date getIdIssueDate() {
@@ -242,14 +334,14 @@ public class PartyBean extends PartySummaryBean {
         propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
     }
 
-    public String getRmks() {
-        return rmks;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setRmks(String rmks) {
-        String oldValue = this.rmks;
-        this.rmks = rmks;
-        propertySupport.firePropertyChange(REMARKS_PROPERTY, oldValue, this.rmks);
+    public void setRemarks(String remarks) {
+        String oldValue = this.remarks;
+        this.remarks = remarks;
+        propertySupport.firePropertyChange(REMARKS_PROPERTY, oldValue, this.remarks);
     }
 
     /**
@@ -268,7 +360,7 @@ public class PartyBean extends PartySummaryBean {
         this.setMobile(null);
         this.setIdNumber(null);
         this.setFax(null);
-        this.setFathersName(null);
+        this.setFatherName(null);
         this.setAlias(null);
         this.setGenderType(new GenderTypeBean());
         this.setIdType(new IdTypeBean());
@@ -278,7 +370,7 @@ public class PartyBean extends PartySummaryBean {
         this.setName(null);
         this.setLastName(null);
         this.setExtId(null);
-        this.setType(new PartyTypeBean());
+        this.setPartyType(new PartyTypeBean());
         this.setAddress(new AddressBean());
         //additional field.
         this.setPhotoDoc(new DocumentBinaryBean());
@@ -290,14 +382,14 @@ public class PartyBean extends PartySummaryBean {
     }
 
     public AddressBean getAddress() {
-        if (addressBean == null) {
-            addressBean = new AddressBean();
+        if (address == null) {
+            address = new AddressBean();
         }
-        return addressBean;
+        return address;
     }
 
     public void setAddress(AddressBean addressBean) {
-        this.addressBean = addressBean;
+        this.address = addressBean;
     }
 
     public String getEmail() {
@@ -320,24 +412,14 @@ public class PartyBean extends PartySummaryBean {
         propertySupport.firePropertyChange(FAX_PROPERTY, oldValue, this.fax);
     }
 
-    public String getFathersName() {
-        return fathersName;
+    public String getFatherName() {
+        return fatherName;
     }
 
-    public void setFathersName(String value) {
-        String oldValue = fathersName;
-        fathersName = value;
-        propertySupport.firePropertyChange(FATHERSNAME_PROPERTY, oldValue, value);
-    }
-
-    public String getFathersLastName() {
-        return fathersLastName;
-    }
-
-    public void setFathersLastName(String value) {
-        String oldValue = fathersLastName;
-        fathersLastName = value;
-        propertySupport.firePropertyChange(GRANDFATHERSNAME_PROPERTY, oldValue, value);
+    public void setFatherName(String value) {
+        String oldValue = fatherName;
+        fatherName = value;
+        propertySupport.firePropertyChange(FATHER_NAME_PROPERTY, oldValue, value);
     }
 
     public String getAlias() {
@@ -361,10 +443,10 @@ public class PartyBean extends PartySummaryBean {
     }
 
     public GenderTypeBean getGenderType() {
-        if (genderTypeBean == null) {
-            genderTypeBean = new GenderTypeBean();
+        if (genderType == null) {
+            genderType = new GenderTypeBean();
         }
-        return genderTypeBean;
+        return genderType;
     }
 
     public void setGenderType(GenderTypeBean genderTypeBean) {
@@ -386,10 +468,10 @@ public class PartyBean extends PartySummaryBean {
     }
 
     public IdTypeBean getIdType() {
-        if (this.idTypeBean == null) {
-            this.idTypeBean = new IdTypeBean();
+        if (this.idType == null) {
+            this.idType = new IdTypeBean();
         }
-        return this.idTypeBean;
+        return this.idType;
     }
 
     public String getIdTypeCode() {
@@ -397,7 +479,7 @@ public class PartyBean extends PartySummaryBean {
     }
 
     public void setIdTypeCode(String value) {
-        String oldValue = idTypeBean.getCode();
+        String oldValue = idType.getCode();
         setIdType(CacheManager.getBeanByCode(CacheManager.getIdTypes(), value));
         propertySupport.firePropertyChange(ID_TYPE_CODE_PROPERTY, oldValue, value);
     }
@@ -432,10 +514,10 @@ public class PartyBean extends PartySummaryBean {
     }
 
     public CommunicationTypeBean getPreferredCommunication() {
-        if (this.communicationTypeBean == null) {
-            this.communicationTypeBean = new CommunicationTypeBean();
+        if (this.preferredCommunication == null) {
+            this.preferredCommunication = new CommunicationTypeBean();
         }
-        return communicationTypeBean;
+        return preferredCommunication;
     }
 
     public void setPreferredCommunication(CommunicationTypeBean communicationTypeBean) {
@@ -459,13 +541,14 @@ public class PartyBean extends PartySummaryBean {
     }
 
     /**
-     * Sets preferred communication code and retrieves {@link CommunicationTypeBean}
-     * object related to the given code from the cache.
+     * Sets preferred communication code and retrieves
+     * {@link CommunicationTypeBean} object related to the given code from the
+     * cache.
      *
      * @param value Preferred communication code.
      */
     public void setPreferredCommunicationCode(String value) {
-        String oldValue = communicationTypeBean.getCode();
+        String oldValue = preferredCommunication.getCode();
         setPreferredCommunication(CacheManager.getBeanByCode(
                 CacheManager.getCommunicationTypes(), value));
         propertySupport.firePropertyChange(PREFERRED_COMMUNICATION_PROPERTY, oldValue, value);
@@ -581,36 +664,36 @@ public class PartyBean extends PartySummaryBean {
     public void setLeftFingerPrint(File file, int width, int height) {
         assignImage(file, width, height, getLeftFingerDoc(), LEFT_FINGERPRINT_PROPERTY);
     }
-    
+
     public void assignImage(File file, int width, int height, DocumentBinaryBean document, String propertyString) {
         byte[] imageBinary = FileUtility.getFileBinary(
                 FileUtility.createImageThumbnail(file, width, height));
-        
+
         if (imageBinary == null && document == null) {
             return;
         }
 
         if (document == null) {
             document = new DocumentBinaryBean();
-            if(propertyString.equals(RIGHT_FINGERPRINT_PROPERTY)){
+            if (propertyString.equals(RIGHT_FINGERPRINT_PROPERTY)) {
                 setRightFingerDoc(document);
             }
-            if(propertyString.equals(LEFT_FINGERPRINT_PROPERTY)){
+            if (propertyString.equals(LEFT_FINGERPRINT_PROPERTY)) {
                 setLeftFingerDoc(document);
             }
-            if(propertyString.equals(SIGNATURE_PROPERTY)){
+            if (propertyString.equals(SIGNATURE_PROPERTY)) {
                 setSignatureDoc(document);
             }
-            if(propertyString.equals(PHOTO_PROPERTY)){
+            if (propertyString.equals(PHOTO_PROPERTY)) {
                 setPhotoDoc(document);
             }
-        } 
+        }
 
         if (imageBinary == null && !document.isNew()) {
             document.setEntityAction(EntityAction.DELETE);
         }
 
-        if(file!=null){
+        if (file != null) {
             document.setDescription(file.getName());
             document.setExtension(FileUtility.getFileExtesion(file.getName()));
         }

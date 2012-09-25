@@ -159,9 +159,9 @@ public class PartyPanelForm extends ContentPanel {
         savePartyState();
     }
 
-    private org.sola.clients.swing.ui.party.PartyPanel createPartyPanel() {
-        org.sola.clients.swing.ui.party.PartyPanel panel;
-        panel = new org.sola.clients.swing.ui.party.PartyPanel(partyBean, readOnly);
+    private org.sola.clients.swing.desktop.party.PartyPanel createPartyPanel() {
+        org.sola.clients.swing.desktop.party.PartyPanel panel;
+        panel = new org.sola.clients.swing.desktop.party.PartyPanel(partyBean, readOnly);
         return panel;
     }
 
@@ -282,9 +282,9 @@ public class PartyPanelForm extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,6 +305,6 @@ public class PartyPanelForm extends ContentPanel {
     private org.sola.clients.swing.ui.HeaderPanel headerPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
-    private org.sola.clients.swing.ui.party.PartyPanel partyPanel;
+    private org.sola.clients.swing.desktop.party.PartyPanel partyPanel;
     // End of variables declaration//GEN-END:variables
 }
