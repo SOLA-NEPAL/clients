@@ -46,11 +46,11 @@ public class PartySearchParamsBean extends AbstractBindingBean {
     public static final String ROLE_TYPE_CODE_PROPERTY = "roleTypeCode";
     public static final String PARTY_TYPE_PROPERTY = "partyType";
     public static final String ROLE_TYPE_PROPERTY = "roleType";
-    public static final String IS_CHILD_PROPERTY = "child";
+   // public static final String IS_CHILD_PROPERTY = "child";
     private String name;
     private PartyTypeBean partyType;
     private PartyRoleTypeBean roleType;
-    private boolean child;
+    //private boolean child;
 
     public PartySearchParamsBean() {
         super();
@@ -108,13 +108,13 @@ public class PartySearchParamsBean extends AbstractBindingBean {
         this.setJointRefDataBean(getRoleType(), roleType, ROLE_TYPE_PROPERTY);
     }
 
-    public boolean isChild() {
-        return child;
-    }
-
-    public void setChild(boolean child) {
-        boolean oldValue = this.child;
-        this.child = child;
-        propertySupport.firePropertyChange(IS_CHILD_PROPERTY, oldValue, this.child);
-    }
+//    public boolean isChild() {
+//        return child;
+//    }
+//
+//    public void setChild(boolean child) {
+//        boolean oldValue = this.child;
+//        this.child = child;
+//        propertySupport.firePropertyChange(IS_CHILD_PROPERTY, oldValue, this.child);
+//    }
 }
