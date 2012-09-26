@@ -115,9 +115,9 @@ public class PartyBean extends PartySummaryBean {
     private DocumentBinaryBean leftFingerDoc;
     private DocumentBinaryBean rightFingerDoc;
     private DocumentBinaryBean signatureDoc;
-    private String parentId;
     private GrandFatherTypeBean grandFatherType;
     private IdOfficeTypeBean idOfficeType;
+    private String parentId;
     private PartySummaryBean parent;
     private DistrictBean idIssuingDistrict;
 

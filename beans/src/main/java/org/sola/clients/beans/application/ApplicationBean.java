@@ -81,14 +81,13 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String RECEIPT_DATE_PROPERTY = "receiptDate";
     public static final String PAYMENT_REMARKS_PROPERTY = "paymentRemarks";
     public static final String STATUS_CHANGE_DATE_PROPERTY = "statusChangeDate";
-    
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
     private SolaList<BaUnitSearchResultBean> propertyList;
     private BigDecimal servicesFee;
     private BigDecimal tax;
     private BigDecimal totalAmountPaid;
-   private BigDecimal valuationAmount;
+    private BigDecimal valuationAmount;
     private String receiptNumber;
     private Date receiptDate;
     private String paymentRemarks;
@@ -107,9 +106,10 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
     /**
      * Default constructor to create application bean. Initializes the following
-     * list of beans which are the parts of the application bean: <br /> {@link ApplicationActionTypeBean}
-     * <br /> {@link PartySummaryBean} <br /> {@link ApplicationPropertyBean}
-     * <br /> {@link ApplicationServiceBean} <br /> {@link SourceBean}
+     * list of beans which are the parts of the application bean: <br />
+     * {@link ApplicationActionTypeBean} <br /> {@link PartySummaryBean} <br />
+     * {@link ApplicationPropertyBean} <br /> {@link ApplicationServiceBean} <br
+     * /> {@link SourceBean}
      */
     public ApplicationBean() {
         super();
@@ -240,8 +240,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
     }
 
     /**
-     * Sets application status code and retrieves {@link ApplicationStatusTypeBean}
-     * from the cache.
+     * Sets application status code and retrieves
+     * {@link ApplicationStatusTypeBean} from the cache.
      *
      * @param value Application status code.
      */
@@ -278,7 +278,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
     public void setAgent(PartySummaryBean value) {
         PartySummaryBean oldValue = agent;
-        agent=value;
+        agent = value;
         propertySupport.firePropertyChange(AGENT_PROPERTY, oldValue, this.agent);
     }
 
@@ -287,8 +287,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
     }
 
     /**
-     * Sets application action code and retrieves {@link ApplicationActionTypeBean}
-     * from the cache.
+     * Sets application action code and retrieves
+     * {@link ApplicationActionTypeBean} from the cache.
      *
      * @param value Application action code.
      */
@@ -341,17 +341,17 @@ public class ApplicationBean extends ApplicationSummaryBean {
 
     @Override
     public String getContactPersonId() {
-        if(getContactPerson()==null){
+        if (getContactPerson() == null) {
             return null;
-        }else{
+        } else {
             return getContactPerson().getId();
         }
     }
-    
+
     @Override
     public void setContactPersonId(String contactPersonId) {
     }
-    
+
     public BaUnitSearchResultBean getSelectedProperty() {
         return selectedProperty;
     }

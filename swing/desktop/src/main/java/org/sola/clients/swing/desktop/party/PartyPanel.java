@@ -87,7 +87,6 @@ public class PartyPanel extends javax.swing.JPanel {
     public PartyPanel(PartyBean partyBean, boolean readOnly) {
         this.readOnly = readOnly;
         initComponents();
-        postInit();
         setupPartyBean(partyBean);
 
         this.partyRoleTypes.addPropertyChangeListener(new PropertyChangeListener() {
@@ -113,7 +112,6 @@ public class PartyPanel extends javax.swing.JPanel {
         });
 
         customizeParentChildPanel(false);
-
         customizeAddRoleButton(null);
         customizeRoleButtons(null);
     }
@@ -210,7 +208,7 @@ public class PartyPanel extends javax.swing.JPanel {
             readOnly = !this.partyBean.checkAccessByOffice();
         }
         customizePanel();
-
+        postInit();
         firePropertyChange("partyBean", null, this.partyBean);
         BindingTools.refreshBinding(bindingGroup, "rolesGroup");
     }
@@ -264,24 +262,20 @@ public class PartyPanel extends javax.swing.JPanel {
             btnAddRole.setEnabled(false);
             btnRemoveRole.setEnabled(false);
             menuRemoveRole.setEnabled(false);
-            // txtFatherFirstName.setEnabled(false);
             txtFatherName.setEnabled(false);
             txtAlias.setEnabled(false);
             txtPhone.setEnabled(false);
             txtEmail.setEnabled(false);
             txtMobile.setEnabled(false);
-            //additional fields.
             cmbDistrict.setEnabled(false);
             cmbIdOffice.setEnabled(false);
             cmbVDCs.setEnabled(false);
             txtIssueDate.setEditable(false);
             txtIssueDate.setBackground(Color.LIGHT_GRAY);
             txtBirthDate.setEnabled(false);
-            //txtGrandFatherFirstName.setEnabled(false);
             txtGrandFatherName.setEnabled(false);
             txtWardNo.setEnabled(false);
             txtRemarks.setEnabled(false);
-            //image browsing buttons.
             btnBrowsePhoto.setEnabled(false);
             btnBrowseLeftFinger.setEnabled(false);
             btnBrowseRightFinger.setEnabled(false);
@@ -327,13 +321,11 @@ public class PartyPanel extends javax.swing.JPanel {
 
     private void enableIndividualFields(boolean enable) {
         txtLastName.setEnabled(enable);
-        //txtFatherFirstName.setEnabled(enable);
         txtFatherName.setEnabled(enable);
         txtAlias.setEnabled(enable);
         cmbGender.setEnabled(enable);
         cmbIdType.setEnabled(enable);
         txtIdref.setEnabled(enable);
-        //additional fields.
         cmbIdOffice.setEnabled(enable);
         txtIssueDate.setEditable(enable);
         if (enable) {
@@ -341,7 +333,6 @@ public class PartyPanel extends javax.swing.JPanel {
         } else {
             txtIssueDate.setBackground(Color.LIGHT_GRAY);
         }
-        //txtGrandFatherFirstName.setEnabled(enable);
         txtGrandFatherName.setEnabled(enable);
     }
 
@@ -349,11 +340,29 @@ public class PartyPanel extends javax.swing.JPanel {
         return partyBean.validate(showMessage).size() < 1;
     }
 
-    public boolean saveParty() {
+    private boolean checkParent() {
+        if (partyBean.getParent().isChild() == true) {
+            MessageUtility.displayMessage(ClientMessage.CHILD_PARTY_PARENT);
+            partyBean.setParent(null);
+            return false;
+        } else {
+            return checkValiddate();
+        }
+    }
+
+    private boolean checkValiddate() {
         if (validateParty(true)) {
             return partyBean.saveParty();
         } else {
             return false;
+        }
+    }
+
+    public boolean saveParty() {
+        if (partyBean.isChild() == true) {
+            return checkParent();
+        } else {
+            return checkValiddate();
         }
     }
 
@@ -602,7 +611,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
         );
 
         jPanel10.setName("jPanel10"); // NOI18N
@@ -1723,7 +1732,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(groupPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         detailsPanel.addTab(bundle.getString("PartyPanel.fullPanel.TabConstraints.tabTitle"), fullPanel); // NOI18N
@@ -1767,7 +1776,7 @@ public class PartyPanel extends javax.swing.JPanel {
                     .addComponent(individualButton)
                     .addComponent(entityButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE))
+                .addComponent(detailsPanel))
         );
 
         bindingGroup.bind();
