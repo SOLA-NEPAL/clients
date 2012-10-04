@@ -37,7 +37,7 @@ import org.sola.common.messaging.MessageUtility;
  *
  * @author KumarKhadka
  */
-public class MothSrestaEntry extends ContentPanel {
+public class MothManagementForm extends ContentPanel {
 
     public static final String MOTH_SAVED = "mothSaved";
     public static final String LOC_SAVED = "locSaved";
@@ -49,9 +49,9 @@ public class MothSrestaEntry extends ContentPanel {
     private boolean editMode = false;
 
     /**
-     * Creates new form MothSrestaEntry
+     * Creates new form MothManagementForm
      */
-    public MothSrestaEntry() {
+    public MothManagementForm() {
         initComponents();
         createMothSetup();
         customizeMothType();

@@ -50,7 +50,7 @@ import org.sola.clients.swing.common.LocalizationManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
-import org.sola.clients.swing.desktop.administrative.MothSrestaEntry;
+import org.sola.clients.swing.desktop.administrative.MothManagementForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
@@ -949,7 +949,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY)) {
-            MothSrestaEntry srchLndOwner = new MothSrestaEntry();
+            MothManagementForm srchLndOwner = new MothManagementForm();
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
