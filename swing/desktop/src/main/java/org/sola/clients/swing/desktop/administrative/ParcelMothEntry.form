@@ -59,7 +59,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jPanel9" pref="475" max="32767" attributes="0"/>
+              <Component id="jPanel9" pref="337" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -76,7 +76,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="4"/>
-        <Property name="horizontalGap" type="int" value="30"/>
+        <Property name="horizontalGap" type="int" value="15"/>
         <Property name="rows" type="int" value="1"/>
       </Layout>
       <SubComponents>
@@ -88,7 +88,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtVdc" pref="103" max="32767" attributes="0"/>
+                      <Component id="txtVdc" pref="57" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -132,7 +132,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtMothLuj" pref="103" max="32767" attributes="0"/>
+                      <Component id="txtMothLuj" pref="57" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -176,7 +176,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtMothLujNo" pref="83" max="32767" attributes="0"/>
+                      <Component id="txtMothLujNo" pref="37" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -220,7 +220,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtPageNo" pref="101" max="32767" attributes="0"/>
+                      <Component id="txtPageNo" pref="55" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -275,7 +275,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane3" alignment="0" pref="733" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" alignment="0" pref="501" max="32767" attributes="0"/>
                   <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
@@ -284,7 +284,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="178" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="109" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -395,7 +395,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jToolBar2" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jScrollPane4" alignment="0" pref="733" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" alignment="0" pref="501" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -403,7 +403,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jToolBar2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" pref="178" max="32767" attributes="0"/>
+                      <Component id="jScrollPane4" pref="109" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
