@@ -226,7 +226,7 @@ public class MainForm extends javax.swing.JFrame {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
                 PersonSearchForm partySearchPanelForm = new PersonSearchForm();
-                partySearchPanelForm.getPartySeachPanel().setShowSelectButton(showSelectButton);
+                partySearchPanelForm.getPartySearchPanel().setShowSelectButton(showSelectButton);
                 pnlContent.addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
             }

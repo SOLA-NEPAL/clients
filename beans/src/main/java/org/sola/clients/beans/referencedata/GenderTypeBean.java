@@ -39,9 +39,7 @@ import org.sola.webservices.transferobjects.referencedata.GenderTypeTO;
  * <br />This bean is used as a part of {@link PartyBean}.
  */
 public class GenderTypeBean extends AbstractCodeBean {
-    
     public GenderTypeBean() {
         super();
     }
-    
 }

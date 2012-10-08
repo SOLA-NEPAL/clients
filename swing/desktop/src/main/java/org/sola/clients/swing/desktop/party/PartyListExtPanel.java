@@ -72,8 +72,8 @@ public class PartyListExtPanel extends PartyListPanel {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
                 final PersonSearchForm form = new PersonSearchForm();
-                form.getPartySeachPanel().setShowSelectButton(true);
-                form.getPartySeachPanel().addPropertyChangeListener(new PropertyChangeListener() {
+                form.getPartySearchPanel().setShowSelectButton(true);
+                form.getPartySearchPanel().addPropertyChangeListener(new PropertyChangeListener() {
 
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {

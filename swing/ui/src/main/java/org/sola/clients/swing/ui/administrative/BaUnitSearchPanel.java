@@ -35,9 +35,9 @@ import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.administrative.BaUnitSearchResultListBean;
 import org.sola.clients.swing.common.LafManager;
+import org.sola.clients.swing.common.controls.BrowseControlListener;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
-import org.sola.clients.swing.ui.renderers.CellDelimitedListRenderer;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -48,14 +48,27 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
 
     public static final String OPEN_SELECTED_BAUNIT = "openSelectedBaUnit";
     public static final String SELECT_BAUNIT = "selectBaUnit";
+    public static final String BROWSE_RIGHTHOLDER = "browseRightHolder";
     private boolean readOnly = false;
-    
+     
     /**
      * Default constructor.
      */
     public BaUnitSearchPanel() {
         initComponents();
+        postInit();
+    }
 
+    private void postInit() {
+        vdcList.loadListByOffice(true);
+        mapSheetList.loadList(true);
+        if(mapSheetList.getMapSheets().size()>0){
+            cbxMapSheet.setSelectedIndex(0);
+        }
+        if(vdcList.getVdcs().size()>0){
+            cbxVdc.setSelectedIndex(0);
+        }
+        
         customieButtons();
         baUnitSearchResults.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -67,8 +80,34 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
                 }
             }
         });
-    }
+        
+        browseRightholder.addBrowseControlEventListener(new BrowseControlListener() {
 
+            @Override
+            public void deleteButtonClicked(MouseEvent e) {
+                clearRightHolder();
+            }
+
+            @Override
+            public void browseButtonClicked(MouseEvent e) {
+                firePropertyChange(BROWSE_RIGHTHOLDER, false, true);
+            }
+
+            @Override
+            public void controlClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void textClicked(MouseEvent e) {
+            }
+        });
+    }
+    
+    private void clearRightHolder(){
+        baUnitSearchParams.setRightHolderId(null);
+        baUnitSearchParams.setRightHolderName(null);
+    }
+    
     private void customieButtons() {
         boolean enabled = baUnitSearchResults.getSelectedBaUnitSearchResult()!=null && !readOnly;
         btnSearch.setEnabled(!readOnly);
@@ -138,6 +177,12 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         firePropertyChange(SELECT_BAUNIT, null, baUnitSearchResults.getSelectedBaUnitSearchResult());
     }
     
+    private void clearFields(){
+        baUnitSearchParams.clear();
+        cbxVdc.setSelectedIndex(-1);
+        cbxMapSheet.setSelectedIndex(-1);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -148,19 +193,34 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         popUpSearchResults = new javax.swing.JPopupMenu();
         menuOpenBaUnit = new javax.swing.JMenuItem();
         menuSelect = new javax.swing.JMenuItem();
+        vdcList = new org.sola.clients.beans.referencedata.VdcListBean();
+        mapSheetList = new org.sola.clients.beans.cadastre.MapSheetListBean();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNameFirstPart = new javax.swing.JTextField();
+        cbxVdc = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtNameLastPart = new javax.swing.JTextField();
+        txtWard = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cbxMapSheet = new javax.swing.JComboBox();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtParcelNumber = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtMoth = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtLoc = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtRightholder = new javax.swing.JTextField();
+        browseRightholder = new org.sola.clients.swing.common.controls.BrowseControl();
         jPanel5 = new javax.swing.JPanel();
         btnSearch = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        btnClear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableSearchResults = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jToolBar1 = new javax.swing.JToolBar();
@@ -194,16 +254,19 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         popUpSearchResults.add(menuSelect);
 
         jPanel4.setName("jPanel4"); // NOI18N
-        jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
+        jPanel4.setLayout(new java.awt.GridLayout(2, 4, 15, 0));
 
         jPanel1.setName("jPanel1"); // NOI18N
 
         jLabel1.setText(bundle.getString("BaUnitSearchPanel.jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        txtNameFirstPart.setName("txtNameFirstPart"); // NOI18N
+        cbxVdc.setName(bundle.getString("BaUnitSearchPanel.cbxVdc.name")); // NOI18N
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${nameFirstPart}"), txtNameFirstPart, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcList, eLProperty, cbxVdc);
+        bindingGroup.addBinding(jComboBoxBinding);
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cbxVdc, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -212,16 +275,16 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap())
-            .addComponent(txtNameFirstPart)
+                .addContainerGap(60, Short.MAX_VALUE))
+            .addComponent(cbxVdc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNameFirstPart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cbxVdc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel1);
@@ -231,9 +294,9 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         jLabel3.setText(bundle.getString("BaUnitSearchPanel.jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        txtNameLastPart.setName("txtNameLastPart"); // NOI18N
+        txtWard.setName("txtWard"); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${nameLastPart}"), txtNameLastPart, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${wardNo}"), txtWard, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -242,28 +305,152 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap())
-            .addComponent(txtNameLastPart)
+                .addContainerGap(113, Short.MAX_VALUE))
+            .addComponent(txtWard)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNameLastPart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtWard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel3);
+
+        jPanel6.setName(bundle.getString("BaUnitSearchPanel.jPanel6.name")); // NOI18N
+
+        jLabel5.setText(bundle.getString("BaUnitSearchPanel.jLabel5.text")); // NOI18N
+        jLabel5.setName(bundle.getString("BaUnitSearchPanel.jLabel5.name")); // NOI18N
+
+        cbxMapSheet.setName(bundle.getString("BaUnitSearchPanel.cbxMapSheet.name")); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheets}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetList, eLProperty, cbxMapSheet);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${mapSheet}"), cbxMapSheet, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(cbxMapSheet, 0, 139, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxMapSheet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel6);
+
+        jPanel7.setName(bundle.getString("BaUnitSearchPanel.jPanel7.name")); // NOI18N
+
+        jLabel6.setText(bundle.getString("BaUnitSearchPanel.jLabel6.text")); // NOI18N
+        jLabel6.setName(bundle.getString("BaUnitSearchPanel.jLabel6.name")); // NOI18N
+
+        txtParcelNumber.setName(bundle.getString("BaUnitSearchPanel.txtParcelNumber.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"), txtParcelNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addGap(0, 71, Short.MAX_VALUE))
+            .addComponent(txtParcelNumber)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtParcelNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel7);
+
+        jPanel8.setName(bundle.getString("BaUnitSearchPanel.jPanel8.name")); // NOI18N
+
+        jLabel7.setText(bundle.getString("BaUnitSearchPanel.jLabel7.text")); // NOI18N
+        jLabel7.setName(bundle.getString("BaUnitSearchPanel.jLabel7.name")); // NOI18N
+
+        txtMoth.setName(bundle.getString("BaUnitSearchPanel.txtMoth.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${moth}"), txtMoth, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(txtMoth, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtMoth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel8);
+
+        jPanel9.setName(bundle.getString("BaUnitSearchPanel.jPanel9.name")); // NOI18N
+
+        jLabel8.setText(bundle.getString("BaUnitSearchPanel.jLabel8.text")); // NOI18N
+        jLabel8.setName(bundle.getString("BaUnitSearchPanel.jLabel8.name")); // NOI18N
+
+        txtLoc.setName(bundle.getString("BaUnitSearchPanel.txtLoc.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${loc}"), txtLoc, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addGap(0, 76, Short.MAX_VALUE))
+            .addComponent(txtLoc)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel9);
 
         jPanel2.setName("jPanel2"); // NOI18N
 
         jLabel2.setText(bundle.getString("BaUnitSearchPanel.jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        txtRightholder.setName("txtRightholder"); // NOI18N
+        browseRightholder.setName(bundle.getString("BaUnitSearchPanel.browseRightholder.name")); // NOI18N
+        browseRightholder.setUnderline(false);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${ownerName}"), txtRightholder, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${rightHolderName}"), browseRightholder, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -272,15 +459,15 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap())
-            .addComponent(txtRightholder)
+                .addContainerGap(77, Short.MAX_VALUE))
+            .addComponent(browseRightholder, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRightholder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(browseRightholder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -299,30 +486,49 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         jLabel4.setText(bundle.getString("BaUnitSearchPanel.jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        btnClear.setText(bundle.getString("BaUnitSearchPanel.btnClear.text")); // NOI18N
+        btnClear.setName(bundle.getString("BaUnitSearchPanel.btnClear.name")); // NOI18N
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addContainerGap(85, Short.MAX_VALUE))
-            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 3, Short.MAX_VALUE)
+                .addComponent(btnClear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearch))
         );
+
+        jPanel5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnClear, btnSearch});
+
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearch)
+                    .addComponent(btnClear))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel4.add(jPanel5);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         tableSearchResults.setComponentPopupMenu(popUpSearchResults);
         tableSearchResults.setName("tableSearchResults"); // NOI18N
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${baUnitSearchResults}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${baUnitSearchResults}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchResults, eLProperty, tableSearchResults);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
         columnBinding.setColumnName("Property Id Code");
@@ -418,23 +624,18 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
-                .addGap(4, 4, 4)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -485,38 +686,57 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         fireSelectBaUnit();
     }//GEN-LAST:event_menuSelectActionPerformed
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clearFields();
+    }//GEN-LAST:event_btnClearActionPerformed
+
     private void openBaUnit() {
         if (baUnitSearchResults.getSelectedBaUnitSearchResult() != null) {
             firePropertyChange(OPEN_SELECTED_BAUNIT, null, baUnitSearchResults.getSelectedBaUnitSearchResult());
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.sola.clients.beans.administrative.BaUnitSearchParamsBean baUnitSearchParams;
+    protected org.sola.clients.beans.administrative.BaUnitSearchParamsBean baUnitSearchParams;
     private org.sola.clients.beans.administrative.BaUnitSearchResultListBean baUnitSearchResults;
+    private org.sola.clients.swing.common.controls.BrowseControl browseRightholder;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnOpenBaUnit;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSelect;
+    private javax.swing.JComboBox cbxMapSheet;
+    private javax.swing.JComboBox cbxVdc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblSearchResult;
     private javax.swing.JLabel lblSearchResultCount;
+    private org.sola.clients.beans.cadastre.MapSheetListBean mapSheetList;
     private javax.swing.JMenuItem menuOpenBaUnit;
     private javax.swing.JMenuItem menuSelect;
     private javax.swing.JPopupMenu popUpSearchResults;
     private javax.swing.JToolBar.Separator separator1;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableSearchResults;
-    private javax.swing.JTextField txtNameFirstPart;
-    private javax.swing.JTextField txtNameLastPart;
-    private javax.swing.JTextField txtRightholder;
+    private javax.swing.JTextField txtLoc;
+    private javax.swing.JTextField txtMoth;
+    private javax.swing.JTextField txtParcelNumber;
+    private javax.swing.JTextField txtWard;
+    private org.sola.clients.beans.referencedata.VdcListBean vdcList;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

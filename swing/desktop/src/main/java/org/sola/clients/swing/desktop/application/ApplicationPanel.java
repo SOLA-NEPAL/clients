@@ -70,7 +70,7 @@ import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.administrative.BaUnitSearchPanel;
 import org.sola.clients.swing.ui.renderers.BooleanCellRenderer;
-import org.sola.clients.swing.ui.renderers.FormattersFactory;
+import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
 import org.sola.clients.swing.ui.renderers.ViolationCellRenderer;
 import org.sola.clients.swing.ui.source.QuickDocumentPanel;
@@ -1838,7 +1838,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(groupPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
         );
 
         jPanel16.setName(bundle.getString("ApplicationPanel.jPanel16.name")); // NOI18N
@@ -1925,7 +1925,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(tbPropertyDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout propertyPanelLayout = new javax.swing.GroupLayout(propertyPanel);

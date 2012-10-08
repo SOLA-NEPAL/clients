@@ -18,10 +18,13 @@ package org.sola.clients.swing.desktop.administrative;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
+import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.DesktopApplication;
+import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.ui.administrative.BaUnitSearchPanel;
+import org.sola.clients.swing.ui.party.PartySearchPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -36,8 +39,13 @@ public class BaUnitSearchExtPanel extends BaUnitSearchPanel {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(BaUnitSearchPanel.OPEN_SELECTED_BAUNIT)){
-                    openPropertyForm((BaUnitSearchResultBean)evt.getNewValue());
+                switch (evt.getPropertyName()) {
+                    case BaUnitSearchPanel.OPEN_SELECTED_BAUNIT:
+                        openPropertyForm((BaUnitSearchResultBean)evt.getNewValue());
+                        break;
+                    case BaUnitSearchPanel.BROWSE_RIGHTHOLDER:
+                        openPersonSearchForm();
+                        break;
                 }
             }
         });
@@ -56,7 +64,36 @@ public class BaUnitSearchExtPanel extends BaUnitSearchPanel {
         };
         TaskManager.getInstance().runTask(t);
     }
+    
+    private void openPersonSearchForm() {
+        SolaTask t = new SolaTask<Void, Void>() {
+            @Override
+            public Void doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
+                final PersonSearchForm form = new PersonSearchForm();
+                form.getPartySearchPanel().setShowAddButton(false);
+                form.getPartySearchPanel().setShowEditButton(false);
+                form.getPartySearchPanel().setShowRemoveButton(false);
+                form.getPartySearchPanel().addPropertyChangeListener(new PropertyChangeListener() {
 
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        if (evt.getPropertyName().equals(PartySearchPanel.SELECT_PARTY_PROPERTY)) {
+                            PartySearchResultBean party = (PartySearchResultBean)evt.getNewValue();
+                            baUnitSearchParams.setRightHolderId(party.getId());
+                            baUnitSearchParams.setRightHolderName(party.getFullName());
+                            form.close();
+                        }
+                    }
+                });
+                DesktopApplication.getMainForm().getMainContentPanel().addPanel(form, getThis(), form.getId(), true);
+                
+                return null;
+            }
+        };
+        TaskManager.getInstance().runTask(t);
+    }
+    
     private BaUnitSearchExtPanel getThis(){
         return this;
     }

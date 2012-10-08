@@ -492,7 +492,7 @@
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="54" max="32767" attributes="0"/>
+                      <EmptySpace pref="74" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1686,7 +1686,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="groupPanel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="baUnitSearchPanel" pref="177" max="32767" attributes="0"/>
+                          <Component id="baUnitSearchPanel" pref="195" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1730,7 +1730,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="tbPropertyDetails" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="scrollPropertyDetails" pref="108" max="32767" attributes="1"/>
+                          <Component id="scrollPropertyDetails" pref="90" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

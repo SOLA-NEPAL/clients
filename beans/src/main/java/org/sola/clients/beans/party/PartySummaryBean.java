@@ -35,7 +35,7 @@ import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.validation.PartyIndividualValidationGroup;
-import org.sola.clients.beans.referencedata.PartyTypeBean;
+import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -59,6 +59,20 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String ROLE_CODE_PROPERTY = "roleCode";
     public static final String FULL_NAME_PROPERTY = "fullName";
     public static final String IS_CHILD_PROPERTY = "child";
+    public static final String ID_OFFICE_TYPE_CODE_PROPERTY = "idOfficeTypeCode";
+    public static final String ID_OFFICE_TYPE_PROPERTY = "idOfficeType";
+    public static final String ID_ISSUE_DATE_PROPERTY = "idIssueDate";
+    public static final String ID_NUMBER_PROPERTY = "idNumber";
+    public static final String FATHER_TYPE_CODE_PROPERTY = "fatherTypeCode";
+    public static final String FATHER_TYPE_PROPERTY = "fatherType";
+    public static final String FATHER_NAME_PROPERTY = "fatherName";
+    public static final String GRANDFATHER_TYPE_CODE_PROPERTY = "grandfatherTypeCode";
+    public static final String GRANDFATHER_TYPE_PROPERTY = "grandFatherType";
+    public static final String GRANDFATHER_NAME_PROPERTY = "grandfatherName";
+    public static final String GENDER_CODE_PROPERTY = "genderCode";
+    public static final String GENDER_TYPE_PROPERTY = "genderType";
+    public static final String PARENT_ID_PROPERTY = "parentId";
+    
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_NAME, payload = Localized.class)
     private String name;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_LASTNAME, payload = Localized.class, groups = PartyIndividualValidationGroup.class)
@@ -67,6 +81,15 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     private boolean rightHolder;
     private PartyTypeBean partyType;
     private boolean child;
+    private String idIssueDate;
+    private String idNumber;
+    private FatherTypeBean fatherType;
+    private String fatherName;
+    private GrandFatherTypeBean grandFatherType;
+    private IdOfficeTypeBean idOfficeType;
+    private String grandfatherName;
+    private GenderTypeBean genderType;
+    private String parentId;
 
     public PartySummaryBean() {
         super();
@@ -127,6 +150,16 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         return fullName;
     }
 
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        String oldValue = this.parentId;
+        this.parentId = parentId;
+        propertySupport.firePropertyChange(PARENT_ID_PROPERTY, oldValue, this.parentId);
+    }
+
     public PartyTypeBean getPartyType() {
         return partyType;
     }
@@ -165,6 +198,142 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         boolean oldValue = this.rightHolder;
         this.rightHolder = rightHolder;
         propertySupport.firePropertyChange(IS_RIGHTHOLDER_PROPERTY, oldValue, this.rightHolder);
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        String oldValue = this.fatherName;
+        this.fatherName = fatherName;
+        propertySupport.firePropertyChange(FATHER_NAME_PROPERTY, oldValue, this.fatherName);
+    }
+
+    public String getFatherTypeCode() {
+        if(getFatherType()==null){
+            return null;
+        } 
+        return getFatherType().getCode();
+    }
+
+    public void setFatherTypeCode(String fatherTypeCode) {
+        String oldValue = null;
+        if(getFatherType()!=null){
+            oldValue = getFatherType().getCode();
+        } 
+        setFatherType(CacheManager.getBeanByCode(CacheManager.getFatherTypes(), fatherTypeCode));
+        propertySupport.firePropertyChange(FATHER_TYPE_CODE_PROPERTY, oldValue, fatherTypeCode);
+    }
+
+    public FatherTypeBean getFatherType() {
+        return fatherType;
+    }
+
+    public void setFatherType(FatherTypeBean fatherType) {
+        FatherTypeBean oldValue = this.fatherType;
+        this.fatherType = fatherType;
+        propertySupport.firePropertyChange(FATHER_TYPE_PROPERTY, oldValue, this.fatherType);
+    }
+
+    public String getGenderCode() {
+        return getGenderType().getCode();
+    }
+
+    public void setGenderCode(String value) {
+        String oldValue = getGenderType().getCode();
+        setGenderType(CacheManager.getBeanByCode(CacheManager.getGenderTypes(), value));
+        propertySupport.firePropertyChange(GENDER_CODE_PROPERTY, oldValue, value);
+    }
+
+    public String getGrandfatherName() {
+        return grandfatherName;
+    }
+
+    public void setGrandfatherName(String grandfatherName) {
+        String oldValue = this.grandfatherName;
+        this.grandfatherName = grandfatherName;
+        propertySupport.firePropertyChange(GRANDFATHER_NAME_PROPERTY, oldValue, this.grandfatherName);
+    }
+
+    public IdOfficeTypeBean getIdOfficeType() {
+        return idOfficeType;
+    }
+
+    public void setIdOfficeType(IdOfficeTypeBean idOfficeType) {
+        IdOfficeTypeBean oldValue = this.idOfficeType;
+        this.idOfficeType = idOfficeType;
+        propertySupport.firePropertyChange(ID_OFFICE_TYPE_PROPERTY, oldValue, this.idOfficeType);
+    }
+    
+    public String getIdOfficeTypeCode() {
+        if(getIdOfficeType()==null){
+            return null;
+        }
+        return getIdOfficeType().getCode();
+    }
+
+    public void setIdOfficeTypeCode(String value) {
+        String oldValue = null;
+        if(getIdOfficeType()!=null){
+            oldValue=idOfficeType.getCode();
+        }
+        setIdOfficeType(CacheManager.getBeanByCode(CacheManager.getIdOfficeTypes(), value));
+        propertySupport.firePropertyChange(ID_OFFICE_TYPE_CODE_PROPERTY, oldValue, value);
+    }
+
+    public String getGrandfatherTypeCode() {
+        return getGrandFatherType().getCode();
+    }
+
+    public void setGrandfatherTypeCode(String value) {
+        String oldValue = grandFatherType.getCode();
+        setGrandFatherType(CacheManager.getBeanByCode(CacheManager.getGrandFatherTypes(), value));
+        propertySupport.firePropertyChange(GRANDFATHER_TYPE_CODE_PROPERTY, oldValue, value);
+    }
+    
+    public GrandFatherTypeBean getGrandFatherType() {
+        if (this.grandFatherType == null) {
+            this.grandFatherType = new GrandFatherTypeBean();
+        }
+        return this.grandFatherType;
+    }
+
+    public void setGrandFatherType(GrandFatherTypeBean grandFatherType) {
+        GrandFatherTypeBean oldValue = this.grandFatherType;
+        this.grandFatherType = grandFatherType;
+        propertySupport.firePropertyChange(GRANDFATHER_TYPE_PROPERTY, oldValue, this.grandFatherType);
+    }
+
+    public String getIdIssueDate() {
+        return idIssueDate;
+    }
+
+    public void setIdIssueDate(String idIssueDate) {
+        String oldValue = this.idIssueDate;
+        this.idIssueDate = idIssueDate;
+        propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String value) {
+        String oldValue = idNumber;
+        idNumber = value;
+        propertySupport.firePropertyChange(ID_NUMBER_PROPERTY, oldValue, value);
+    }
+    
+    public GenderTypeBean getGenderType() {
+        if (genderType == null) {
+            genderType = new GenderTypeBean();
+        }
+        return genderType;
+    }
+
+    public void setGenderType(GenderTypeBean genderTypeBean) {
+        this.setJointRefDataBean(getGenderType(), genderTypeBean, GENDER_TYPE_PROPERTY);
     }
 
     @Override

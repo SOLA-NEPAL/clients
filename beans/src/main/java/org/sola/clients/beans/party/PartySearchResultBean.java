@@ -32,7 +32,59 @@ package org.sola.clients.beans.party;
  * from the {@link PartySearchResultTO} object.<br /> 
  */
 public class PartySearchResultBean extends PartySummaryBean {
+    
+    private String vdcCode;
+    private String vdcName;
+    private String wardNo;
+    private String street;
+    
     public PartySearchResultBean(){
         super();
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getVdcCode() {
+        return vdcCode;
+    }
+
+    public void setVdcCode(String vdcCode) {
+        this.vdcCode = vdcCode;
+    }
+
+    public String getVdcName() {
+        return vdcName;
+    }
+
+    public void setVdcName(String vdcName) {
+        this.vdcName = vdcName;
+    }
+
+    public String getWardNo() {
+        return wardNo;
+    }
+
+    public void setWardNo(String wardNo) {
+        this.wardNo = wardNo;
+    }
+    
+    public String getAddress(){
+        String address = "";
+        if(getVdcName()!=null){
+            address = address + getVdcName();
+        }
+        if(getWardNo()!=null && !getWardNo().isEmpty()){
+            if(address.length()>0){
+                address = address + "-";
+            }
+            address = address + getWardNo();
+        }
+        return address;
     }
 }

@@ -170,7 +170,7 @@ public class QuickDocumentPanel extends javax.swing.JPanel {
     private void fireDocumentChangeEvent() {
         SourceBean updatedSource;
         if (getDocument().isNew()) {
-            updatedSource = getDocument();
+            updatedSource = getDocument().copy();
             clearFields();
         } else {
             updatedSource = getDocument();

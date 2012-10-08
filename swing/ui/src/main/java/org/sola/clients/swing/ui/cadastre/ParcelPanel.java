@@ -7,7 +7,7 @@ import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
-import org.sola.clients.swing.ui.renderers.FormattersFactory;
+import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
