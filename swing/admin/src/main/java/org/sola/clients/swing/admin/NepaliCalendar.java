@@ -17,8 +17,8 @@ package org.sola.clients.swing.admin;
 
 import javax.swing.JOptionPane;
 import org.sola.clients.beans.system.NepaliMonthBean;
+import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.renderers.FormattersFactory;
 
 /**
  *
