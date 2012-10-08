@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothListBean;
-import org.sola.clients.beans.referencedata.DistrictListBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
 import org.sola.common.messaging.ClientMessage;
@@ -93,13 +92,14 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
             if (loc == null) {
                 if (MessageUtility.displayMessage(ClientMessage.LOC_NOT_FOUND_CREATE_NEW)
                         == MessageUtility.BUTTON_ONE) {
-                    loc = LocWithMothBean.createLoc(mothList.getSelectedMoth(), txtPageNumber.getText());
+                    loc = LocWithMothBean.createLoc(mothList.getSelectedMoth(), txtPageNumber.getText());                   
                 } else {
                     return;
                 }
             }
             
             if (loc != null) {
+                MessageUtility.displayMessage(ClientMessage.LOC_CREATED);
                 firePropertyChange(LOC_FOUND, null, loc);
             } else {
                 MessageUtility.displayMessage(ClientMessage.LOC_CREATE_FAILED);

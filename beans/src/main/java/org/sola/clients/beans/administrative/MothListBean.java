@@ -19,12 +19,17 @@ import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.EntityAction;
 
 public class MothListBean extends AbstractBindingBean {
 
     public static final String SELECTED_MOTH = "selectedMoth";
     private MothBasicBean selectedMoth;
     SolaObservableList<MothBasicBean> moths;
+
+//    public MothListBean() {
+//        moths = new SolaObservableList<MothBasicBean>();
+//    }
 
     public SolaObservableList<MothBasicBean> getMoths() {
         if (moths == null) {
@@ -45,5 +50,13 @@ public class MothListBean extends AbstractBindingBean {
         MothBasicBean oldValue = this.selectedMoth;
         this.selectedMoth = selectedMoth;
         propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
+    }
+    public void removeSelected() {
+        if (selectedMoth != null) {
+            selectedMoth.setEntityAction(EntityAction.DELETE);
+            MothBean getMoth=(MothBean)getSelectedMoth();
+            getMoth.saveMoth();
+            moths.remove(selectedMoth);
+        }
     }
 }

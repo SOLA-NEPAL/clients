@@ -20,27 +20,33 @@ import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
+import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  *
  * @author KumarKhadka
  */
 public class LocListBean extends AbstractBindingBean {
-    public static final String SELECTED_LOC="selectedLoc";
+
+    public static final String SELECTED_LOC = "selectedLoc";
     private LocBean selectedLoc;
     SolaObservableList<LocBean> locs;
+
+    public LocListBean() {
+        locs = new SolaObservableList<LocBean>();
+    }
 
     public LocBean getSelectedLoc() {
         return selectedLoc;
     }
 
     public void setSelectedLoc(LocBean selectedLoc) {
-        LocBean oldValue=this.selectedLoc;
+        LocBean oldValue = this.selectedLoc;
         this.selectedLoc = selectedLoc;
         propertySupport.firePropertyChange(SELECTED_LOC, oldValue, this.selectedLoc);
     }
 
-    public  SolaObservableList<LocBean>getLocs() {
+    public SolaObservableList<LocBean> getLocs() {
         if (locs == null) {
             locs = new SolaObservableList<LocBean>();
         }
@@ -56,9 +62,16 @@ public class LocListBean extends AbstractBindingBean {
         }
         return null;
     }
-    
-     public void loadLocList(String mothId) {
+
+    public void loadLocList(String mothId) {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getLocList(mothId), LocBean.class, (SolaObservableList) locs);
     }
     
+    public void removeSelected() {
+        if (selectedLoc != null) {
+            selectedLoc.setEntityAction(EntityAction.DELETE);
+            selectedLoc.saveLoc();
+            locs.remove(selectedLoc);
+        }
+    }
 }

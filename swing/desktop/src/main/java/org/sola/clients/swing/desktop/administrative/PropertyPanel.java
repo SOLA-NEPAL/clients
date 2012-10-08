@@ -153,7 +153,7 @@ public class PropertyPanel extends ContentPanel {
         beforeInit(applicationBean, applicationService, readOnly);
         initComponents();
         postInit();
-        hideUncessaryTabs();
+        hideUnnecessaryTabs();
     }
 
     private void beforeInit(ApplicationBean applicationBean,
@@ -164,7 +164,7 @@ public class PropertyPanel extends ContentPanel {
         resourceBundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle");
     }
 
-    private void hideUncessaryTabs() {
+    private void hideUnnecessaryTabs() {
         for (Component jp : tabsMain.getComponents()) {
             String panel_name = jp.getName();
             if (is_UnnecessaryTab(panel_name)) {
