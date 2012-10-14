@@ -23,8 +23,6 @@ import org.sola.clients.beans.AbstractCodeBean;
  */
 public class AreaUnitTypeBean extends AbstractCodeBean {
 
-    public static final String CODE_CANCEL = "cancel";
-
     public AreaUnitTypeBean() {
         super();
     }

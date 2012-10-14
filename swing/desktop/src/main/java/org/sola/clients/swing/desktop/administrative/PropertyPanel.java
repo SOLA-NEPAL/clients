@@ -33,7 +33,6 @@ import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
-import net.sf.jasperreports.engine.JasperPrint;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Bindings;
 import org.sola.clients.beans.administrative.*;
@@ -48,7 +47,6 @@ import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
-import org.sola.clients.swing.desktop.ReportViewerForm;
 import org.sola.clients.swing.desktop.cadastre.ParcelPanelForm;
 import org.sola.clients.swing.desktop.cadastre.ParcelSearchPanelForm;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForBaUnit;
@@ -58,6 +56,7 @@ import org.sola.clients.swing.ui.cadastre.ParcelSearchPanel;
 import org.sola.clients.swing.ui.renderers.LockCellRenderer;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.clients.swing.ui.renderers.TerminatingCellRenderer;
+import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -595,15 +594,6 @@ public class PropertyPanel extends ContentPanel {
     }
 
     /**
-     * Opens {@link ReportViewerForm} to display report.
-     */
-    private void showReport(JasperPrint report) {
-        ReportViewerForm form = new ReportViewerForm(report);
-        form.setLocationRelativeTo(this);
-        form.setVisible(true);
-    }
-
-    /**
      * Removes selected right from the list of rights.
      */
     private void removeRight() {
@@ -670,8 +660,12 @@ public class PropertyPanel extends ContentPanel {
      * Prints BA unit certificate.
      */
     private void print() {
-        showReport(ReportManager.getBaUnitReport(BaUnitBean.getBaUnit(
-                baUnitBean.getNameFirstpart(), baUnitBean.getNameLastpart())));
+        if(baUnitBean.getCurrentLoc()!=null && baUnitBean.getCurrentLoc().getId() != null
+                && !baUnitBean.getCurrentLoc().getId().isEmpty()){
+            ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(baUnitBean.getCurrentLoc().getId(), "np"));
+        } else {
+            MessageUtility.displayMessage(ClientMessage.LOC_APPROVED_RRR_WITH_LOC_NOT_FOUND);
+        }
     }
 
     /**
@@ -1050,7 +1044,6 @@ public class PropertyPanel extends ContentPanel {
             .add(0, 100, Short.MAX_VALUE)
         );
 
-        setHeaderPanel(headerPanel);
         setHelpTopic(bundle.getString("PropertyPanel.helpTopic")); // NOI18N
         setName("Form"); // NOI18N
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -1453,9 +1446,9 @@ public class PropertyPanel extends ContentPanel {
         columnBinding.setColumnName("Rrr Type.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationDate}"));
-        columnBinding.setColumnName("Registration Date");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationDateFormatted}"));
+        columnBinding.setColumnName("Registration Date Formatted");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status.displayValue}"));
         columnBinding.setColumnName("Status.display Value");
@@ -1543,9 +1536,9 @@ public class PropertyPanel extends ContentPanel {
         columnBinding.setColumnName("Rrr Type");
         columnBinding.setColumnClass(org.sola.clients.beans.referencedata.RrrTypeBean.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationDate}"));
-        columnBinding.setColumnName("Registration Date");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationDateFormatted}"));
+        columnBinding.setColumnName("Registration Date Formatted");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status.displayValue}"));
         columnBinding.setColumnName("Status.display Value");
@@ -1617,9 +1610,9 @@ public class PropertyPanel extends ContentPanel {
         columnBinding.setColumnName("Rrr Type.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationDate}"));
-        columnBinding.setColumnName("Registration Date");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationDateFormatted}"));
+        columnBinding.setColumnName("Registration Date Formatted");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status.displayValue}"));
         columnBinding.setColumnName("Status.display Value");

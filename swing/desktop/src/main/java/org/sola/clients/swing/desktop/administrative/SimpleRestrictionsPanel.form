@@ -232,8 +232,8 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtRegDatetime" max="32767" attributes="1"/>
-                  <Component id="jLabel13" alignment="0" pref="200" max="32767" attributes="1"/>
+                  <Component id="jLabel13" pref="200" max="32767" attributes="1"/>
+                  <Component id="txtRegDatetime" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -259,19 +259,15 @@
                 <Property name="name" type="java.lang.String" value="jLabel13" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtRegDatetime">
+            <Component class="org.sola.clients.swing.common.controls.NepaliDateField" name="txtRegDatetime">
               <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="1" type="1"/>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="SimpleRestrictionsPanel.txtRegDatetime.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="txtRegDatetime" noResource="true"/>
               </Properties>
               <BindingProperties>
                 <BindingProperty name="value" source="rrrBean" sourcePath="${registrationDate}" target="txtRegDatetime" targetPath="value" updateStrategy="0" immediately="false"/>
               </BindingProperties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRegDatetimeActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -201,8 +201,8 @@ public class QuickDocumentPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtDocRefNumber = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        txtDocRecordDate = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
+        txtDocRecordDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtOfficeRegistrationNo = new javax.swing.JTextField();
@@ -281,18 +281,13 @@ public class QuickDocumentPanel extends javax.swing.JPanel {
 
         jPanel2.setName("jPanel2"); // NOI18N
 
-        txtDocRecordDate.setFont(new java.awt.Font("Thaoma", 0, 12));
-        txtDocRecordDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtDocRecordDate.setName("txtDocRecordDate"); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${document.recordation}"), txtDocRecordDate, org.jdesktop.beansbinding.BeanProperty.create("value"), "DocDate");
-        bindingGroup.addBinding(binding);
-
-        txtDocRecordDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtDocRecordDate.setHorizontalAlignment(JTextField.LEADING);
-
         jLabel3.setText(bundle.getString("QuickDocumentPanel.jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
+
+        txtDocRecordDate.setName(bundle.getString("QuickDocumentPanel.txtDocRecordDate.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${document.recordation}"), txtDocRecordDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -301,7 +296,7 @@ public class QuickDocumentPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(0, 43, Short.MAX_VALUE))
-            .addComponent(txtDocRecordDate)
+            .addComponent(txtDocRecordDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,7 +456,7 @@ public class QuickDocumentPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel pnlAddButton;
     private org.sola.clients.beans.referencedata.SourceTypeListBean sourceTypeListBean;
-    private javax.swing.JFormattedTextField txtDocRecordDate;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtDocRecordDate;
     private javax.swing.JTextField txtDocRefNumber;
     private javax.swing.JTextField txtOfficeRegistrationNo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

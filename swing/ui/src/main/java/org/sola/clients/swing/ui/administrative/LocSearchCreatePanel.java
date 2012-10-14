@@ -2,6 +2,7 @@ package org.sola.clients.swing.ui.administrative;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ResourceBundle;
 import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothListBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
@@ -12,8 +13,9 @@ import org.sola.common.messaging.MessageUtility;
 public class LocSearchCreatePanel extends javax.swing.JPanel {
 
     public static final String LOC_FOUND = "locFound";
-    public static final String CLOSE_PANEL="closePanel";
-
+    public static final String CLOSE_PANEL = "closePanel";
+    private boolean createNewIfNotFound = true;
+    private ResourceBundle resourceBundle;
     /**
      * Creates new form LocSearchCreatePanel
      */
@@ -23,6 +25,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
     }
 
     private void postInit() {
+        resourceBundle = ResourceBundle.getBundle("org/sola/clients/swing/ui/administrative/Bundle"); 
         vdcList.loadListByOffice(false);
         cbxVdcs.setSelectedIndex(-1);
         vdcList.addPropertyChangeListener(new PropertyChangeListener() {
@@ -76,9 +79,9 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
         txtPageNumber.setText("");
         btnSelect.setEnabled(false);
     }
-    
-    private void customizeSelectButton(){
-        if(txtPageNumber.getText()!=null && !txtPageNumber.getText().isEmpty()){
+
+    private void customizeSelectButton() {
+        if (txtPageNumber.getText() != null && !txtPageNumber.getText().isEmpty()) {
             btnSelect.setEnabled(true);
         } else {
             btnSelect.setEnabled(false);
@@ -90,24 +93,28 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
             LocWithMothBean loc = LocWithMothBean.searchLocByMothAndPage(
                     mothList.getSelectedMoth(), txtPageNumber.getText());
             if (loc == null) {
-                if (MessageUtility.displayMessage(ClientMessage.LOC_NOT_FOUND_CREATE_NEW)
-                        == MessageUtility.BUTTON_ONE) {
-                    loc = LocWithMothBean.createLoc(mothList.getSelectedMoth(), txtPageNumber.getText());                   
+                if (createNewIfNotFound) {
+                    if (MessageUtility.displayMessage(ClientMessage.LOC_NOT_FOUND_CREATE_NEW)
+                            == MessageUtility.BUTTON_ONE) {
+                        loc = LocWithMothBean.createLoc(mothList.getSelectedMoth(), txtPageNumber.getText());
+
+                        if (loc != null) {
+                            MessageUtility.displayMessage(ClientMessage.LOC_CREATED);
+                        } else {
+                            MessageUtility.displayMessage(ClientMessage.LOC_CREATE_FAILED);
+                        }
+                    }
                 } else {
-                    return;
+                    MessageUtility.displayMessage(ClientMessage.LOC_NOT_FOUND);
                 }
             }
-            
             if (loc != null) {
-                MessageUtility.displayMessage(ClientMessage.LOC_CREATED);
                 firePropertyChange(LOC_FOUND, null, loc);
-            } else {
-                MessageUtility.displayMessage(ClientMessage.LOC_CREATE_FAILED);
             }
         }
     }
-    
-    private void cancel(){
+
+    private void cancel() {
         firePropertyChange(CLOSE_PANEL, false, true);
     }
 
@@ -117,6 +124,19 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
     public void setShowToolbar(boolean visible) {
         toolbarMain.setVisible(visible);
+    }
+
+    public boolean isCreateNewIfNotFound() {
+        return createNewIfNotFound;
+    }
+
+    public void setCreateNewIfNotFound(boolean createNewIfNotFound) {
+        this.createNewIfNotFound = createNewIfNotFound;
+        if(createNewIfNotFound){
+            btnSelect.setText(resourceBundle.getString("LocSearchCreatePanel.btnSelect.text"));
+        } else {
+            btnSelect.setText(resourceBundle.getString("LocSearchCreatePanel.btnSelect.text2"));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -146,14 +166,15 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
         toolbarMain = new javax.swing.JToolBar();
         btnCancel = new javax.swing.JButton();
 
-        btnSelect.setText("Select");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/administrative/Bundle"); // NOI18N
+        btnSelect.setText(bundle.getString("LocSearchCreatePanel.btnSelect.text")); // NOI18N
         btnSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSelectActionPerformed(evt);
             }
         });
 
-        jLabel5.setText(" ");
+        jLabel5.setText(bundle.getString("LocSearchCreatePanel.jLabel5.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -175,7 +196,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
         jPanel6.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
-        jLabel2.setText("VDC\\Municipality");
+        jLabel2.setText(bundle.getString("LocSearchCreatePanel.jLabel2.text")); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcList, eLProperty, cbxVdcs);
@@ -203,7 +224,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
         jPanel6.add(jPanel2);
 
-        jLabel6.setText("Moth type");
+        jLabel6.setText(bundle.getString("LocSearchCreatePanel.jLabel6.text")); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mothTypes}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothTypes, eLProperty, cbxMothType);
@@ -231,7 +252,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
         jPanel6.add(jPanel7);
 
-        jLabel3.setText("Moth\\Luj Number");
+        jLabel3.setText(bundle.getString("LocSearchCreatePanel.jLabel3.text")); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothList, eLProperty, cbxMothNumbers);
@@ -259,7 +280,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
         jPanel6.add(jPanel3);
 
-        jLabel4.setText("Page Number");
+        jLabel4.setText(bundle.getString("LocSearchCreatePanel.jLabel4.text")); // NOI18N
 
         txtPageNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -291,7 +312,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
         toolbarMain.setRollover(true);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/cancel.png"))); // NOI18N
-        btnCancel.setText("Cancel");
+        btnCancel.setText(bundle.getString("LocSearchCreatePanel.btnCancel.text")); // NOI18N
         btnCancel.setFocusable(false);
         btnCancel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +327,7 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(toolbarMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -335,7 +356,6 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
     private void txtPageNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPageNumberKeyReleased
         customizeSelectButton();
     }//GEN-LAST:event_txtPageNumberKeyReleased
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSelect;

@@ -45,6 +45,7 @@ import org.sola.clients.beans.digitalarchive.DocumentBinaryBean;
 import org.sola.clients.beans.party.validation.PartyCheck;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
+import org.sola.common.DateUtility;
 import org.sola.common.FileUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -72,6 +73,7 @@ public class PartyBean extends PartySummaryBean {
     public static final String ALIAS_PROPERTY = "alias";
     public static final String GRAND_FATHER_NAME_PROPERTY = "grandFatherName";
     public static final String BIRTH_DATE_PROPERTY = "birthDate";
+    public static final String BIRTH_DATE_FORMATTED_PROPERTY = "birthDateFormatted";
     public static final String REMARKS_PROPERTY = "remarks";
     public static final String PHOTO_PROPERTY = "photo";
     public static final String LEFT_FINGERPRINT_PROPERTY = "leftFingerPrint";
@@ -221,10 +223,16 @@ public class PartyBean extends PartySummaryBean {
         return birthDate;
     }
 
+    public String getBirthDateFormatted(){
+        return DateUtility.toFormattedNepaliDate(birthDate);
+    }
+    
     public void setBirthDate(String birthDate) {
+        String oldFormattedValue = getBirthDateFormatted();
         String oldValue = this.birthDate;
         this.birthDate = birthDate;
         propertySupport.firePropertyChange(BIRTH_DATE_PROPERTY, oldValue, this.birthDate);
+        propertySupport.firePropertyChange(BIRTH_DATE_FORMATTED_PROPERTY, oldFormattedValue, getBirthDateFormatted());
     }
 
     public String getRemarks() {

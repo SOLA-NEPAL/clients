@@ -8,6 +8,7 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import org.sola.common.DateUtility;
 import org.sola.common.NepaliIntegersConvertor;
 
 /**
@@ -27,13 +28,7 @@ public class NepaliDateCellRenderer extends DefaultTableCellRenderer {
         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         if (value != null) {
-
-            String stringDate = NepaliIntegersConvertor.toNepaliInteger(value.toString());
-
-            if (stringDate.length() == 8) {
-                stringDate = stringDate.substring(0, 4) + "/" + stringDate.substring(4, 6) + "/" + stringDate.substring(6);
-            }
-            label.setText(stringDate);
+            label.setText(DateUtility.toFormattedNepaliDate(value.toString()));
             return this;
         }
 

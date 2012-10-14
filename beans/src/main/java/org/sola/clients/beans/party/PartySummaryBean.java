@@ -37,6 +37,7 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.validation.PartyIndividualValidationGroup;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
+import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.casemanagement.PartySummaryTO;
@@ -62,6 +63,7 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String ID_OFFICE_TYPE_CODE_PROPERTY = "idOfficeTypeCode";
     public static final String ID_OFFICE_TYPE_PROPERTY = "idOfficeType";
     public static final String ID_ISSUE_DATE_PROPERTY = "idIssueDate";
+    public static final String ID_ISSUE_FORMATTED_DATE_PROPERTY  = "idIssueFormattedDate";
     public static final String ID_NUMBER_PROPERTY = "idNumber";
     public static final String FATHER_TYPE_CODE_PROPERTY = "fatherTypeCode";
     public static final String FATHER_TYPE_PROPERTY = "fatherType";
@@ -309,10 +311,16 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         return idIssueDate;
     }
 
+    public String getIdIssueFormattedDate(){
+        return DateUtility.toFormattedNepaliDate(idIssueDate);
+    }
+    
     public void setIdIssueDate(String idIssueDate) {
+        String oldFormattedValue = getIdIssueFormattedDate();
         String oldValue = this.idIssueDate;
         this.idIssueDate = idIssueDate;
         propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
+        propertySupport.firePropertyChange(ID_ISSUE_FORMATTED_DATE_PROPERTY, oldFormattedValue, getIdIssueFormattedDate());
     }
 
     public String getIdNumber() {

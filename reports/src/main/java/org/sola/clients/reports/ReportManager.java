@@ -39,6 +39,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.sola.clients.beans.administrative.BaUnitBean;
+import org.sola.clients.beans.administrative.LocDetailsBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
 import org.sola.clients.beans.party.PartyBean;
@@ -75,6 +76,32 @@ public class ReportManager {
         try {
             return JasperFillManager.fillReport(
                     ReportManager.class.getResourceAsStream("/reports/ApplicationPrintingForm.jasper"),
+                    inputParameters, jds);
+        } catch (JRException ex) {
+            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+                    new Object[]{ex.getLocalizedMessage()});
+            return null;
+        }
+    }
+    
+    /**
+     * Generates and displays <b>Lodgement notice</b> report for the new
+     * application.
+     *
+     * @param appBean Application bean containing data for the report.
+     */
+    public static JasperPrint getLocDetailsReport(LocDetailsBean locDetails) {
+        HashMap inputParameters = new HashMap();
+        inputParameters.put("REPORT_LOCALE", Locale.getDefault());
+        inputParameters.put("today", new Date());
+        inputParameters.put("USER_NAME", SecurityBean.getCurrentUser().getFullUserName());
+        LocDetailsBean[] beans = new LocDetailsBean[1];
+        beans[0] = locDetails;
+        JRDataSource jds = new JRBeanArrayDataSource(beans);
+
+        try {
+            return JasperFillManager.fillReport(
+                    ReportManager.class.getResourceAsStream("/reports/Loc.jasper"),
                     inputParameters, jds);
         } catch (JRException ex) {
             MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,

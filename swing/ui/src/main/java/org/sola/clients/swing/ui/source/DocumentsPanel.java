@@ -40,9 +40,9 @@ import org.sola.clients.beans.source.SourceListBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.renderers.AttachedDocumentCellRenderer;
+import org.sola.clients.swing.ui.renderers.NepaliDateCellRenderer;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
-import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  * Displays documents list. This panel could be used on different forms, where
@@ -236,9 +236,9 @@ public class DocumentsPanel extends javax.swing.JPanel {
         columnBinding.setColumnName("Reference Nr");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${recordation}"));
-        columnBinding.setColumnName("Recordation");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${recordationFormatted}"));
+        columnBinding.setColumnName("Recordation Formatted");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laNr}"));
         columnBinding.setColumnName("La Nr");
@@ -266,6 +266,7 @@ public class DocumentsPanel extends javax.swing.JPanel {
         tableDocuments.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title0_1")); // NOI18N
         tableDocuments.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title3_1")); // NOI18N
         tableDocuments.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title4")); // NOI18N
+        tableDocuments.getColumnModel().getColumn(2).setCellRenderer(null);
         tableDocuments.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title1_1")); // NOI18N
         tableDocuments.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title5")); // NOI18N
         tableDocuments.getColumnModel().getColumn(5).setPreferredWidth(30);

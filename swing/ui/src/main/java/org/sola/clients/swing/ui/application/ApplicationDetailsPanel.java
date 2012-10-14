@@ -39,6 +39,7 @@ import org.sola.clients.beans.sorters.ServicesSorterByOrder;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.converters.DateConverter;
 import org.sola.clients.swing.ui.renderers.AttachedDocumentCellRenderer;
+import org.sola.clients.swing.ui.renderers.NepaliDateCellRenderer;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
 /** 
@@ -880,6 +881,7 @@ public class ApplicationDetailsPanel extends javax.swing.JPanel {
         tabDocuments.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("ApplicationDetailsPanel.tabDocuments.columnModel.title0")); // NOI18N
         tabDocuments.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("ApplicationDetail.tabDocuments.columnModel.title5_1")); // NOI18N
         tabDocuments.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("ApplicationDetail.tabDocuments.columnModel.title3_1")); // NOI18N
+        tabDocuments.getColumnModel().getColumn(2).setCellRenderer(new NepaliDateCellRenderer());
         tabDocuments.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("ApplicationDetailsPanel.tabDocuments.columnModel.title2_1")); // NOI18N
         tabDocuments.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("ApplicationDetail.tabDocuments.columnModel.title4_1")); // NOI18N
         tabDocuments.getColumnModel().getColumn(5).setPreferredWidth(30);

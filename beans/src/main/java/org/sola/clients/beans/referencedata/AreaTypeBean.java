@@ -25,11 +25,11 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class AreaTypeBean extends AbstractBindingBean {
 
-    public static final String CODE_AREA_TYPE_SQMT = "Square Meter";
-    public static final String CODE_AREA_TYPE_HECTARE = "Hectare";
-    public static final String CODE_AREA_TYPE_SQFT = "Square Feet";
-    public static final String CODE_AREA_TYPE_BIGHA_KATHA_DHUR = "Bigha-Katha-Dhur";
-    public static final String CODE_AREA_TYPE_ROPANI_ANA_PAISA_DAM = "Ropani-Ana-Paisa-Dam";
+    public static final String CODE_AREA_TYPE_SQMT = "sqm";
+    public static final String CODE_AREA_TYPE_HECTARE = "hectare";
+    public static final String CODE_AREA_TYPE_SQFT = "sqfeet";
+    public static final String CODE_AREA_TYPE_BIGHA_KATHA_DHUR = "bighar";
+    public static final String CODE_AREA_TYPE_ROPANI_ANA_PAISA_DAM = "ropani";
     private String areaTypeCode;
     private String areaTypeName;
 

@@ -38,6 +38,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.*;
+import org.sola.common.NepaliIntegersConvertor;
 
 /**
  * Provides formatters for {@link JFormattedTextField}
@@ -116,10 +117,16 @@ public class FormattersFactory {
                 if (userInput != null && !userInput.trim().isEmpty()) {
                     String tmp = userInput.replace("_", "").replace("/", "");
                     if (!tmp.isEmpty()) {
-                        result = super.stringToValue(userInput);
+                        result = super.stringToValue(NepaliIntegersConvertor.toStringInteger(userInput, false));
                     }
                 }
                 return result;
+            }
+            
+            @Override
+            public String valueToString(Object value) throws ParseException {
+                String valueString = value == null ? null : value.toString();
+                return super.valueToString(NepaliIntegersConvertor.toNepaliInteger(valueString, false));
             }
         };
 
