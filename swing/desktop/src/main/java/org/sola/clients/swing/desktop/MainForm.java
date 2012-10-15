@@ -42,7 +42,12 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.party.PartyBean;
+import org.sola.clients.beans.party.PartySummaryBean;
+import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.security.SecurityBean;
+import org.sola.clients.beans.source.SourceBean;
+import org.sola.clients.beans.source.SourceSummaryBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.DefaultExceptionHandler;
 import org.sola.clients.swing.common.LafManager;
@@ -362,6 +367,7 @@ public class MainForm extends javax.swing.JFrame {
         menuReportsDesktop = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuCurrentUserRolesReport = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jmiContextHelp = new javax.swing.JMenuItem();
@@ -726,6 +732,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuReportsDesktop.add(menuCurrentUserRolesReport);
 
+        jMenuItem1.setText(bundle.getString("MainForm.jMenuItem1.text")); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuReportsDesktop.add(jMenuItem1);
+
         menuBar.add(menuReportsDesktop);
 
         helpMenu.setText(bundle.getString("MainForm.helpMenu.text")); // NOI18N
@@ -901,6 +915,22 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         showMapsheetManagementPanel();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        OfficeBean officeBean=OfficeBean.getCurrentOffice();        
+        PartyBean party=PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
+       // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
+        showRestrictionReport(ReportManager.getRestrictionReport(officeBean,party));//,sa,party));      
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    
+    
+private void showRestrictionReport(JasperPrint report) {
+	ReportViewerForm form = new ReportViewerForm(report);
+        form.setVisible(true);
+        form.setAlwaysOnTop(true);
+}
+
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -970,6 +1000,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Application status report" pageWidth="595" pageHeight="842" columnWidth="548" leftMargin="27" rightMargin="20" topMargin="24" bottomMargin="20" resourceBundle="org.sola.clients.reports.locale.ApplicationStatusReport">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Application status report" pageWidth="595" pageHeight="842" columnWidth="548" leftMargin="27" rightMargin="20" topMargin="24" bottomMargin="20" resourceBundle="org.sola.clients.reports.locale.ApplicationStatusReport" uuid="f19a1efa-01b6-40ef-83e5-064746aeb604">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="195"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#006633"/>
@@ -30,7 +30,7 @@
 			<style backcolor="#EFFFEF"/>
 		</conditionalStyle>
 	</style>
-	<subDataset name="dataset2">
+	<subDataset name="dataset2" uuid="caa2d09e-a5df-4648-b8ee-88fab16582db">
 		<field name="serviceName" class="java.lang.String">
 			<fieldDescription><![CDATA[requestType.displayValue]]></fieldDescription>
 		</field>
@@ -38,10 +38,10 @@
 			<fieldDescription><![CDATA[status.displayValue]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="dataset3">
+	<subDataset name="dataset3" uuid="0a8265aa-5f21-4222-a7af-7ac260a56894">
 		<field name="propertyIdCode" class="java.lang.String"/>
 	</subDataset>
-	<subDataset name="dataset1">
+	<subDataset name="dataset1" uuid="a8b3d632-4246-469d-b2dc-9a1973ed1646">
 		<queryString>
 			<![CDATA[]]>
 		</queryString>
@@ -51,7 +51,7 @@
 			<fieldDescription><![CDATA[sourceType.displayValue]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="ApplicationLog">
+	<subDataset name="ApplicationLog" uuid="43cb1c4f-42ff-4137-b780-1310569f2295">
 		<queryString language="SQL">
 			<![CDATA[]]>
 		</queryString>
@@ -134,14 +134,14 @@
 	<title>
 		<band height="48" splitType="Stretch">
 			<textField>
-				<reportElement x="1" y="0" width="547" height="48" forecolor="#4DA771" backcolor="#43A771"/>
+				<reportElement uuid="84ba0b1f-917d-4810-a5b8-9db2ecdb2f9b" x="1" y="0" width="547" height="48" forecolor="#4DA771" backcolor="#43A771"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="33" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{title}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement mode="Opaque" x="0" y="46" width="548" height="1" forecolor="#4DA771" backcolor="#43A771"/>
+				<reportElement uuid="f607942a-4646-437c-aef4-129d0a3cc62e" mode="Opaque" x="0" y="46" width="548" height="1" forecolor="#4DA771" backcolor="#43A771"/>
 				<graphicElement>
 					<pen lineWidth="3.0"/>
 				</graphicElement>
@@ -157,21 +157,21 @@
 	<detail>
 		<band height="587" splitType="Immediate">
 			<componentElement>
-				<reportElement positionType="Float" x="10" y="356" width="538" height="20"/>
+				<reportElement uuid="633790b0-99fa-4c91-bfda-c9b188b30684" positionType="Float" x="10" y="356" width="538" height="20"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="dataset2">
+					<datasetRun subDataset="dataset2" uuid="417f209b-bd41-45d9-8bd6-89c2d676241c">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{serviceList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="20" width="538">
 						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-							<reportElement positionType="Float" x="23" y="0" width="515" height="20"/>
+							<reportElement uuid="6fcb7bc2-b916-4599-a9cf-7dc3a338aa08" positionType="Float" x="23" y="0" width="515" height="20"/>
 							<textElement>
 								<font fontName="SansSerif" size="12" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{serviceName} + " (" + $F{status} + ")"]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement positionType="Float" x="0" y="0" width="23" height="20"/>
+							<reportElement uuid="37188871-85ac-463c-a00b-80f584566e9a" positionType="Float" x="0" y="0" width="23" height="20"/>
 							<textElement>
 								<font fontName="SansSerif" size="12" isBold="true"/>
 							</textElement>
@@ -181,59 +181,59 @@
 				</jr:list>
 			</componentElement>
 			<textField>
-				<reportElement x="1" y="71" width="100" height="20"/>
+				<reportElement uuid="177da36d-f56d-4607-beec-bce4464b1a58" x="1" y="71" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{agent}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="96" width="100" height="20"/>
+				<reportElement uuid="4171f106-9643-4916-8550-b0fddbe6f106" x="1" y="96" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{contactname}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="121" width="100" height="20"/>
+				<reportElement uuid="1296bc5a-5a58-4acb-8e30-691ba00b8cea" x="1" y="121" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{address}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="146" width="100" height="20"/>
+				<reportElement uuid="c545f92b-4315-4654-ad97-50d5563c8c35" x="1" y="146" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{phone}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="172" width="100" height="20"/>
+				<reportElement uuid="fba54aa8-d1a6-4c8d-97f4-e64ab932545d" x="1" y="172" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="197" width="100" height="20"/>
+				<reportElement uuid="a9060ab1-2bb5-45a6-999a-51bd2d182237" x="1" y="197" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{contactby}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="1" y="333" width="354" height="20"/>
+				<reportElement uuid="96903849-7b86-4300-a038-e11884b9d44c" positionType="Float" x="1" y="333" width="354" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{services}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="1" y="250" width="529" height="1"/>
+				<reportElement uuid="2a67902b-63bd-4ea7-962f-d4053994fa6d" x="1" y="250" width="529" height="1"/>
 			</line>
 			<textField>
-				<reportElement positionType="Float" mode="Transparent" x="1" y="281" width="354" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement uuid="5a64c467-a13b-4d2e-aa37-e6323cf23a85" positionType="Float" mode="Transparent" x="1" y="281" width="354" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -241,14 +241,14 @@
 				<textFieldExpression><![CDATA[$R{documentlist}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement positionType="Float" x="10" y="303" width="538" height="21"/>
+				<reportElement uuid="b08e9acb-2ad6-4fc5-a58a-1c94a9d24a4d" positionType="Float" x="10" y="303" width="538" height="21"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="dataset1">
+					<datasetRun subDataset="dataset1" uuid="734e451a-cdb9-43d1-a2e3-b27aa5ff3c60">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{sourceFilteredList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="21" width="538">
 						<textField pattern="" isBlankWhenNull="false">
-							<reportElement positionType="Float" mode="Transparent" x="0" y="0" width="23" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+							<reportElement uuid="f2dadbd9-f534-4834-ba9a-d011dc476607" positionType="Float" mode="Transparent" x="0" y="0" width="23" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 							<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 								<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 								<paragraph lineSpacing="Single"/>
@@ -256,7 +256,7 @@
 							<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 						</textField>
 						<textField pattern="" isBlankWhenNull="true">
-							<reportElement positionType="Float" mode="Transparent" x="23" y="1" width="515" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+							<reportElement uuid="ad43e4bc-149d-4b42-ba20-38f41c780f66" positionType="Float" mode="Transparent" x="23" y="1" width="515" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 							<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 								<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 								<paragraph lineSpacing="Single"/>
@@ -267,34 +267,34 @@
 				</jr:list>
 			</componentElement>
 			<line>
-				<reportElement positionType="Float" x="1" y="301" width="529" height="1"/>
+				<reportElement uuid="85291d9d-7455-4305-b976-992e269f81aa" positionType="Float" x="1" y="301" width="529" height="1"/>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="1" y="353" width="529" height="1"/>
+				<reportElement uuid="0292fcaf-b70b-4815-acd0-98f9511ab85e" positionType="Float" x="1" y="353" width="529" height="1"/>
 			</line>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="2" y="523" width="85" height="20"/>
+				<reportElement uuid="6e2fa308-82c2-4a02-9601-d184e30bb860" positionType="FixRelativeToBottom" x="2" y="523" width="85" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{operator}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="FixRelativeToBottom" x="87" y="523" width="173" height="20"/>
+				<reportElement uuid="0afcd1c1-5bce-4e9f-8424-41b78d47a980" positionType="FixRelativeToBottom" x="87" y="523" width="173" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true" isItalic="true" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{USER_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="1" y="561" width="86" height="20"/>
+				<reportElement uuid="7714be64-676f-448b-befd-5cfae7e38fa7" positionType="FixRelativeToBottom" x="1" y="561" width="86" height="20"/>
 				<textElement markup="none">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{signature}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement positionType="FixRelativeToBottom" x="355" y="549" width="193" height="33">
+				<reportElement uuid="65651740-2697-483d-bc13-670e314cfc30" positionType="FixRelativeToBottom" x="355" y="549" width="193" height="33">
 					<printWhenExpression><![CDATA[$F{nr} != null]]></printWhenExpression>
 				</reportElement>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="false" checksumRequired="false">
@@ -303,42 +303,42 @@
 			</componentElement>
 			<elementGroup>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="10" y="434" width="152" height="20"/>
+					<reportElement uuid="c1555102-055c-4276-b602-08b0703d21db" positionType="Float" x="10" y="434" width="152" height="20"/>
 					<textElement>
 						<font fontName="SansSerif" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{valuationAmount}.toPlainString()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement positionType="Float" x="9" y="415" width="153" height="20"/>
+					<reportElement uuid="d4f355a5-c335-416b-ab2b-3ca18bb48eb9" positionType="Float" x="9" y="415" width="153" height="20"/>
 					<textElement markup="none">
 						<font fontName="SansSerif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{fee}]]></textFieldExpression>
 				</textField>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="184" y="434" width="137" height="20"/>
+					<reportElement uuid="9dd790b2-032e-4fb1-aa07-1db907a205e8" positionType="Float" x="184" y="434" width="137" height="20"/>
 					<textElement>
 						<font fontName="SansSerif" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tax}.toPlainString()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement positionType="Float" x="184" y="415" width="137" height="20"/>
+					<reportElement uuid="4665551a-c311-4ce1-8689-a79764e4c62e" positionType="Float" x="184" y="415" width="137" height="20"/>
 					<textElement markup="none">
 						<font fontName="SansSerif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{tax}]]></textFieldExpression>
 				</textField>
 				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement positionType="Float" x="348" y="434" width="111" height="21"/>
+					<reportElement uuid="f5fe689b-10b9-4fd8-a467-2a02e22b1a05" positionType="Float" x="348" y="434" width="111" height="21"/>
 					<textElement>
 						<font fontName="SansSerif" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{servicesFee}.toPlainString()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement positionType="Float" x="348" y="415" width="111" height="20"/>
+					<reportElement uuid="3e1773cb-47c6-42e3-a116-95da35ab23e9" positionType="Float" x="348" y="415" width="111" height="20"/>
 					<textElement markup="none">
 						<font fontName="SansSerif" size="12"/>
 					</textElement>
@@ -346,14 +346,14 @@
 				</textField>
 			</elementGroup>
 			<componentElement>
-				<reportElement positionType="Float" x="10" y="254" width="538" height="20"/>
+				<reportElement uuid="80281fce-9118-4292-9489-2790f576adfc" positionType="Float" x="10" y="254" width="538" height="20"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="dataset3">
+					<datasetRun subDataset="dataset3" uuid="cb118d5c-21e2-485d-af64-5fb9e0a5e784">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{filteredPropertyList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="20" width="538">
 						<textField pattern="" isBlankWhenNull="true">
-							<reportElement positionType="Float" mode="Transparent" x="23" y="0" width="515" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+							<reportElement uuid="6c08b5f4-5935-4e06-a3cd-f9f261957f6f" positionType="Float" mode="Transparent" x="23" y="0" width="515" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 							<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 								<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 								<paragraph lineSpacing="Single"/>
@@ -361,7 +361,7 @@
 							<textFieldExpression><![CDATA[$F{propertyIdCode}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement positionType="Float" x="0" y="0" width="23" height="20"/>
+							<reportElement uuid="260cc6e3-093a-4469-a970-6a3710b77bd3" positionType="Float" x="0" y="0" width="23" height="20"/>
 							<textElement>
 								<font fontName="SansSerif" size="12" isBold="true"/>
 							</textElement>
@@ -371,7 +371,7 @@
 				</jr:list>
 			</componentElement>
 			<textField>
-				<reportElement mode="Transparent" x="1" y="230" width="354" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement uuid="12a7838c-f420-4120-9352-f4f241c9bdc9" mode="Transparent" x="1" y="230" width="354" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -379,161 +379,161 @@
 				<textFieldExpression><![CDATA[$R{propertylist}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="87" y="577" width="261" height="1">
+				<reportElement uuid="c1deff9e-e20d-41c6-90a2-baa78091991e" positionType="FixRelativeToBottom" x="87" y="577" width="261" height="1">
 					<printWhenExpression><![CDATA[$P{WHICH_CALLER}.equals( "R" )]]></printWhenExpression>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="1" y="408" width="529" height="1"/>
+				<reportElement uuid="800819ed-7fe0-4d6f-bdce-d769427703c0" positionType="Float" x="1" y="408" width="529" height="1"/>
 			</line>
 			<textField>
-				<reportElement positionType="Float" x="1" y="388" width="354" height="20"/>
+				<reportElement uuid="3d238a97-ea68-4f65-8bbe-1bdc720e4051" positionType="Float" x="1" y="388" width="354" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12" isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{payment}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="8" width="100" height="20"/>
+				<reportElement uuid="e348fe96-b52d-4a3e-9146-2e9ca8894f30" x="2" y="8" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{lodgementDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="38" width="100" height="20"/>
+				<reportElement uuid="93b92988-398d-4920-ab77-86e658102971" x="0" y="38" width="100" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{appnum}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="38" width="149" height="20"/>
+				<reportElement uuid="13c91f19-c356-44cf-800e-34a4c77c0e8c" x="111" y="38" width="149" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nr}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="59" width="536" height="1"/>
+				<reportElement uuid="d62369a0-d79a-42fa-983d-de6e04c6a293" x="0" y="59" width="536" height="1"/>
 			</line>
 			<textField pattern="">
-				<reportElement x="112" y="8" width="148" height="20"/>
+				<reportElement uuid="035ed12e-778c-48f2-926d-2973e63a4577" x="112" y="8" width="148" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{lodgingDatetime}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="282" y="8" width="151" height="20"/>
+				<reportElement uuid="209d8467-5c1b-46cc-bece-889b10673ff5" x="282" y="8" width="151" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{status}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="433" y="8" width="115" height="20"/>
+				<reportElement uuid="8389a4fb-f70e-4f64-8177-ef67eb548d2d" x="433" y="8" width="115" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="172" width="439" height="20"/>
+				<reportElement uuid="f04ae54e-b110-46c5-96df-d27468f53c7c" x="102" y="172" width="439" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CONTACT_PERSON}.getEmail()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="71" width="439" height="20"/>
+				<reportElement uuid="47de8f63-6886-4923-b593-cf6947a0741b" x="102" y="71" width="439" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agent.fullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="197" width="439" height="20"/>
+				<reportElement uuid="9060bf8c-3ae2-414c-892f-143a97fd4b3d" x="102" y="197" width="439" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CONTACT_PERSON}.getPreferredCommunication().getDisplayValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="121" width="439" height="20"/>
+				<reportElement uuid="6a1ea5c2-f697-475b-b0ab-590ce12954cf" x="102" y="121" width="439" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CONTACT_PERSON}.getAddress().getStreet()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="96" width="439" height="20"/>
+				<reportElement uuid="d1b7ad50-9553-4e4b-b879-40a68a8da527" x="102" y="96" width="439" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{contactPerson.fullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="102" y="146" width="439" height="20"/>
+				<reportElement uuid="230f7e36-0989-41a9-b01d-106d00fd8919" x="102" y="146" width="439" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CONTACT_PERSON}.getPhone()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="12" y="482" width="150" height="20"/>
+				<reportElement uuid="d7e38873-c743-4d17-9316-da3f2f380b5e" positionType="Float" x="12" y="482" width="150" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receiptNumber}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="184" y="482" width="137" height="20"/>
+				<reportElement uuid="5866e1c5-c244-485d-897a-61b727a8634d" positionType="Float" x="184" y="482" width="137" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receiptDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="12" y="462" width="150" height="20"/>
+				<reportElement uuid="a9caa014-6e11-4747-bc68-8d229029d0e3" positionType="Float" x="12" y="462" width="150" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{receiptNumber}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="184" y="462" width="137" height="20"/>
+				<reportElement uuid="2cbacdd1-5a1f-474b-a18e-f087ec6f50d0" positionType="Float" x="184" y="462" width="137" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{receiptDate}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="0" y="514" width="529" height="1"/>
+				<reportElement uuid="c59cc953-707b-4219-9b26-2c6862fd9a9d" positionType="Float" x="0" y="514" width="529" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="433" y="38" width="115" height="20"/>
+				<reportElement uuid="bb19065a-debe-4d65-9894-ba6c3b996c50" x="433" y="38" width="115" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{statusChangeDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="282" y="38" width="151" height="20"/>
+				<reportElement uuid="001c777c-2934-4561-84e4-cb799d769344" x="282" y="38" width="151" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{statusChangeDate}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement positionType="Float" x="381" y="523" width="148" height="20"/>
+				<reportElement uuid="e0dfe669-d109-4ebf-8c49-ac337e3b9d83" positionType="Float" x="381" y="523" width="148" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="319" y="523" width="62" height="20"/>
+				<reportElement uuid="3e1244d6-9f2b-4f57-b450-2805f53fdb47" positionType="Float" x="319" y="523" width="62" height="20"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="12" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 				</textElement>
@@ -544,12 +544,12 @@
 	<pageFooter>
 		<band height="27">
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="162" y="4" width="80" height="20"/>
+				<reportElement uuid="fdd55dde-81cc-4af8-88b0-42983cb89795" positionType="FixRelativeToBottom" x="162" y="4" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$R{page}+$V{PAGE_NUMBER}+$R{of}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement positionType="FixRelativeToBottom" x="242" y="4" width="40" height="20"/>
+				<reportElement uuid="0ed54543-4a36-4b81-8670-c07261cfba0a" positionType="FixRelativeToBottom" x="242" y="4" width="40" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
