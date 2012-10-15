@@ -9,7 +9,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
-import org.sola.common.EnglishNepaliNumericLetterConversion;
+import org.sola.common.NepaliIntegersConvertor;
 
 /**
  *
@@ -18,12 +18,12 @@ import org.sola.common.EnglishNepaliNumericLetterConversion;
 public class JTextBoxWithAutoLocalizationOfNumber extends JTextField {
 
     public String getTextInEnglish() {
-        return EnglishNepaliNumericLetterConversion.toEnglish(this.getText());
+        return NepaliIntegersConvertor.toStringInteger(this.getText());
         //return textInEnglish;
     }
 
     public String getTextInNepali() {
-        return EnglishNepaliNumericLetterConversion.toNepali(this.getText());
+        return NepaliIntegersConvertor.toNepaliInteger(this.getText());
     }
     //This method uses DoubleDocument to handle the textfield 
 
@@ -41,9 +41,8 @@ public class JTextBoxWithAutoLocalizationOfNumber extends JTextField {
             if (str == null) {
                 return;
             }           
-            str = EnglishNepaliNumericLetterConversion.getLocalizedValue(str);
+            str = NepaliIntegersConvertor.getLocalizedValue(str);
             super.insertString(offs, str, a);
-
         }
     }
 }

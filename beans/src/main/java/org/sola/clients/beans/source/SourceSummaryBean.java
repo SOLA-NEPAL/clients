@@ -37,6 +37,7 @@ import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.SourceTypeBean;
 import org.sola.clients.beans.validation.Localized;
+import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.webservices.transferobjects.casemanagement.SourceSummaryTO;
 
@@ -52,6 +53,7 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String ARCHIVE_DOCUMENT_ID_PROPERTY = "archiveDocumentId";
     public static final String LA_NR_PROPERTY = "laNr";
     public static final String RECORDATION_PROPERTY = "recordation";
+    public static final String RECORDATION_FORMATTED_PROPERTY = "recordationFormatted";
     public static final String REFERENCE_NR_PROPERTY = "referenceNr";
     public static final String SUBMISSION_PROPERTY = "submission";
     public static final String SOURCE_TYPE_CODE_PROPERTY = "typeCode";
@@ -61,7 +63,7 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     private String archiveDocumentId;
     private String laNr;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_RECORDATION, payload = Localized.class)
-    private Date recordation;
+    private String recordation;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCENR, payload = Localized.class)
     private String referenceNr;
     private Date submission;
@@ -157,14 +159,20 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
         propertySupport.firePropertyChange(LA_NR_PROPERTY, old, value);
     }
 
-    public Date getRecordation() {
+    public String getRecordation() {
         return recordation;
     }
 
-    public void setRecordation(Date value) {
-        Date old = recordation;
+    public String getRecordationFormatted(){
+        return DateUtility.toFormattedNepaliDate(recordation);
+    }
+    
+    public void setRecordation(String value) {
+        String oldFormatted = getRecordationFormatted();
+        String old = recordation;
         recordation = value;
         propertySupport.firePropertyChange(RECORDATION_PROPERTY, old, value);
+        propertySupport.firePropertyChange(RECORDATION_FORMATTED_PROPERTY, oldFormatted, getRecordationFormatted());
     }
 
     public String getReferenceNr() {

@@ -49,23 +49,24 @@ public class SourceSearchParamsBean extends AbstractBindingBean {
     
     private String laNumber;
     private String refNumber;
-    private Date fromRecordationDate;
-    private Date toRecordationDate;
+    private String fromRecordationDate;
+    private String toRecordationDate;
     private Date fromSubmissionDate;
     private Date toSubmissionDate;
     private SourceTypeBean sourceType;
+    private String appNumber;
     
     public SourceSearchParamsBean(){
         super();
         sourceType = new SourceTypeBean();
     }
 
-    public Date getFromRecordationDate() {
+    public String getFromRecordationDate() {
         return fromRecordationDate;
     }
 
-    public void setFromRecordationDate(Date fromRecordationDate) {
-        Date old = this.fromRecordationDate;
+    public void setFromRecordationDate(String fromRecordationDate) {
+        String old = this.fromRecordationDate;
         this.fromRecordationDate = fromRecordationDate;
         propertySupport.firePropertyChange(FROM_RECORDATION_DATE_PROPERTY, old, this.fromRecordationDate);
     }
@@ -100,12 +101,12 @@ public class SourceSearchParamsBean extends AbstractBindingBean {
         propertySupport.firePropertyChange(REF_NUMBER_PROPERTY, old, this.refNumber);
     }
 
-    public Date getToRecordationDate() {
+    public String getToRecordationDate() {
         return toRecordationDate;
     }
 
-    public void setToRecordationDate(Date toRecordationDate) {
-        Date old = this.toRecordationDate;
+    public void setToRecordationDate(String toRecordationDate) {
+        String old = this.toRecordationDate;
         this.toRecordationDate = toRecordationDate;
         propertySupport.firePropertyChange(TO_RECORDATION_DATE_PROPERTY, old, this.toRecordationDate);
     }
@@ -133,6 +134,14 @@ public class SourceSearchParamsBean extends AbstractBindingBean {
 
     public SourceTypeBean getSourceType() {
         return sourceType;
+    }
+
+    public String getAppNumber() {
+        return appNumber;
+    }
+
+    public void setAppNumber(String appNumber) {
+        this.appNumber = appNumber;
     }
 
     public void setSourceType(SourceTypeBean sourceType) {

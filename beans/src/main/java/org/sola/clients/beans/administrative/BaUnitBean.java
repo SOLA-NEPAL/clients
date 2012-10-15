@@ -221,6 +221,18 @@ public class BaUnitBean extends BaUnitSummaryBean {
         propertySupport.firePropertyChange(LOC_PROPERTY, oldLoc, this.loc);
     }
 
+    public LocWithMothBean getCurrentLoc(){
+        if (getRrrFilteredList() != null) {
+            for (RrrBean rrr : getRrrFilteredList()) {
+                if (rrr.getLoc() != null && rrr.getStatusCode()!=null && 
+                        rrr.getStatusCode().equals(StatusConstants.CURRENT)) {
+                    return rrr.getLoc();
+                }
+            }
+        }
+        return null;
+    }
+    
     public String getLoc() {
         return loc;
     }

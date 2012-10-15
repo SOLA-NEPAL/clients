@@ -46,7 +46,7 @@ import org.sola.clients.swing.desktop.party.PartyListExtPanel;
 import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.administrative.LocSearchCreatePanel;
-import org.sola.clients.swing.ui.renderers.FormattersFactory;
+import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -293,7 +293,7 @@ public class OwnershipPanel extends ContentPanel {
         jPanel17 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        txtRegDatetime = new javax.swing.JFormattedTextField();
+        txtRegDatetime = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel18 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtRegNumber = new javax.swing.JTextField();
@@ -794,8 +794,7 @@ public class OwnershipPanel extends ContentPanel {
         jLabel13.setText(bundle.getString("OwnershipPanel.jLabel13.text")); // NOI18N
         jLabel13.setName("jLabel13"); // NOI18N
 
-        txtRegDatetime.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtRegDatetime.setName("txtRegDatetime"); // NOI18N
+        txtRegDatetime.setName(bundle.getString("OwnershipPanel.txtRegDatetime.name")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${registrationDate}"), txtRegDatetime, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
@@ -807,15 +806,14 @@ public class OwnershipPanel extends ContentPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addGap(0, 50, Short.MAX_VALUE))
-            .addComponent(txtRegDatetime)
+            .addComponent(txtRegDatetime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRegDatetime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(txtRegDatetime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel17.add(jPanel6);
@@ -1017,7 +1015,7 @@ public class OwnershipPanel extends ContentPanel {
     private javax.swing.JTextField txtMothtype;
     private javax.swing.JTextField txtNotationText;
     private javax.swing.JTextField txtPageNumber;
-    private javax.swing.JFormattedTextField txtRegDatetime;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtRegDatetime;
     private javax.swing.JTextField txtRegNumber;
     private javax.swing.JFormattedTextField txtTaxFee;
     private javax.swing.JFormattedTextField txtValuationAmount;

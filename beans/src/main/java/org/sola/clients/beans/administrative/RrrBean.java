@@ -31,12 +31,9 @@ package org.sola.clients.beans.administrative;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import javax.validation.Valid;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jdesktop.observablecollections.ObservableList;
@@ -56,6 +53,7 @@ import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
+import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
@@ -128,15 +126,13 @@ public class RrrBean extends AbstractTransactionedBean {
     private String nr;
     @NotEmpty(message = ClientMessage.CHECK_SERIAL_NO, payload = Localized.class, groups = {RestrictionValidationGroup.class})
     private String sn;
-    @Past(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
-    private Date registrationDate;
+    @NotEmpty(message = ClientMessage.CHECK_REGISTRATION_DATE, payload = Localized.class)
+    private String registrationDate;
     @NotEmpty(message = ClientMessage.CHECK_REGISTRATION_NUMBER, payload = Localized.class)
     private String registrationNumber;
     private String transactionId;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_EXPIRATION, payload = Localized.class, groups = {MortgageValidationGroup.class})
-    @Future(message = ClientMessage.CHECK_FUTURE_EXPIRATION, payload = Localized.class,
-    groups = {MortgageValidationGroup.class})
-    private Date expirationDate;
+    private String expirationDate;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_MORTGAGEAMOUNT, payload = Localized.class, groups = {MortgageValidationGroup.class})
     private BigDecimal mortgageAmount;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_MORTAGAETYPE, payload = Localized.class, groups = {MortgageValidationGroup.class})
@@ -183,7 +179,12 @@ public class RrrBean extends AbstractTransactionedBean {
 
     public RrrBean() {
         super();
-        registrationDate = Calendar.getInstance().getTime();
+        if(WSManager.getInstance().getAdminService()!=null){
+            registrationDate = WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime());
+            if(registrationDate!=null){
+                registrationDate = registrationDate.replace("-", "");
+            }
+        }
         sourceList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();
@@ -538,11 +539,11 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(RRR_TYPE_PROPERTY, oldValue, this.rrrType);
     }
 
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -588,11 +589,15 @@ public class RrrBean extends AbstractTransactionedBean {
         propertySupport.firePropertyChange(SN_PROPERTY, oldValue, this.sn);
     }
 
-    public Date getRegistrationDate() {
+    public String getRegistrationDate() {
         return registrationDate;
     }
+    
+    public String getRegistrationDateFormatted() {
+        return DateUtility.toFormattedNepaliDate(registrationDate);
+    }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
     }
 

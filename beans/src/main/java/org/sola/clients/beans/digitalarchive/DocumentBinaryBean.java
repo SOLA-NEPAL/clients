@@ -48,7 +48,11 @@ public class DocumentBinaryBean extends DocumentBean {
     }
 
     public void setBody(byte[] value) {
-        body = value.clone();
+        if(value==null){
+            body=null;
+        } else {
+            body = value.clone();
+        }
         propertySupport.firePropertyChange(BODY_PROPERTY, null, value);
     }
 

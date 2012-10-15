@@ -36,7 +36,6 @@ import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.party.PartySearchPanel;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -83,13 +82,16 @@ public class PersonSearchForm extends ContentPanel {
                         });
                         break;
                     case PartySearchPanel.EDIT_PARTY_PROPERTY:
-                        panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), false, true);
+                        setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_GETTING_PERSON));
+                        panel = new PartyPanelForm(true, PartyBean.getParty(((PartySearchResultBean)evt.getNewValue()).getId()), false, true);
                         break;
                     case PartySearchPanel.VIEW_PARTY_PROPERTY:
-                        panel = new PartyPanelForm(true, (PartyBean) evt.getNewValue(), true, true);
+                        setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_GETTING_PERSON));
+                        panel = new PartyPanelForm(true, PartyBean.getParty(((PartySearchResultBean)evt.getNewValue()).getId()), true, true);
                         break;
                 }
                 if (panel != null) {
+                    setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSON));
                     openPersonPanel(panel);
                 }
                 return null;
@@ -107,7 +109,7 @@ public class PersonSearchForm extends ContentPanel {
                 .getPartySearchResuls().getSelectedPartySearchResult();
     }
     
-    public PartySearchPanel getPartySeachPanel(){
+    public PartySearchPanel getPartySearchPanel() {
         return partySearchPanel;
     }
     
@@ -151,7 +153,4 @@ public class PersonSearchForm extends ContentPanel {
     private org.sola.clients.swing.ui.party.PartySearchPanel partySearchPanel;
     // End of variables declaration//GEN-END:variables
 
-    public PartySearchPanel getPartySearchPanel() {
-        return partySearchPanel;
-    }
 }

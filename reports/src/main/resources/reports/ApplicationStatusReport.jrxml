@@ -46,9 +46,11 @@
 			<![CDATA[]]>
 		</queryString>
 		<field name="referenceNr" class="java.lang.String"/>
-		<field name="acceptance" class="java.lang.String"/>
 		<field name="sourceType" class="java.lang.String">
 			<fieldDescription><![CDATA[sourceType.displayValue]]></fieldDescription>
+		</field>
+		<field name="recordationFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[recordationFormatted]]></fieldDescription>
 		</field>
 	</subDataset>
 	<subDataset name="ApplicationLog" uuid="43cb1c4f-42ff-4137-b780-1310569f2295">
@@ -261,7 +263,7 @@
 								<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 								<paragraph lineSpacing="Single"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{sourceType}+" - ref. nr:"+$F{referenceNr}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{sourceType}+" - ref. nr:"+$F{referenceNr} + ", " + $F{recordationFormatted}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
 				</jr:list>

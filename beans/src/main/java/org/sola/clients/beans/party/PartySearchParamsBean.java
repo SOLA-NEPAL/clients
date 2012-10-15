@@ -29,10 +29,13 @@
  */
 package org.sola.clients.beans.party;
 
+import java.util.Locale;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.PartyRoleTypeBean;
 import org.sola.clients.beans.referencedata.PartyTypeBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.webservices.transferobjects.search.PartySearchParamsTO;
 
 /**
@@ -46,14 +49,50 @@ public class PartySearchParamsBean extends AbstractBindingBean {
     public static final String ROLE_TYPE_CODE_PROPERTY = "roleTypeCode";
     public static final String PARTY_TYPE_PROPERTY = "partyType";
     public static final String ROLE_TYPE_PROPERTY = "roleType";
-   // public static final String IS_CHILD_PROPERTY = "child";
+    public static final String LASTNAME_PROPERTY = "lastName";
+    public static final String FATHER_NAME_PROPERTY = "fatherName";
+    public static final String GRANDFATHER_NAME_PROPERTY = "grandFatherName";
+    public static final String ID_ISSUE_DATE_PROPERTY = "idIssueDate";
+    public static final String ID_NUMBER_PROPERTY = "idNumber";
+    public static final String DISTRICT_PROPERTY = "district";
+    public static final String WARD_NUMBER_PROPERTY = "wardNumber";
+    public static final String VDC_PROPERTY = "vdc";
+    public static final String STREET_PROPERTY = "street";
+    
     private String name;
     private PartyTypeBean partyType;
     private PartyRoleTypeBean roleType;
-    //private boolean child;
+    private String lastName;
+    private String fatherName;
+    private String grandFartherName;
+    private Integer idIssueDate;
+    private String idNumber;
+    private DistrictBean district;
+    private String wardNumber;
+    private VdcBean vdc;
+    private String street;
+    private String langCode;
 
     public PartySearchParamsBean() {
         super();
+        langCode = Locale.getDefault().getLanguage();
+    }
+
+    public void clear(){
+        setName(null);
+        setPartyType(null);
+        setRoleType(null);setLastName(null);
+        setFatherName(null);
+        setGrandFartherName(null);
+        setIdIssueDate(null);
+        setIdNumber(null);
+        setDistrict(null);
+        setVdc(null);
+        setStreet(null);
+    }
+    
+    public String getLangCode() {
+        return langCode;
     }
 
     public String getName() {
@@ -94,7 +133,9 @@ public class PartySearchParamsBean extends AbstractBindingBean {
     }
 
     public void setPartyType(PartyTypeBean partyType) {
-        this.setJointRefDataBean(getPartyType(), partyType, PARTY_TYPE_PROPERTY);
+        PartyTypeBean oldValue = this.partyType;
+        this.partyType = partyType;
+        propertySupport.firePropertyChange(PARTY_TYPE_PROPERTY, oldValue, this.partyType);
     }
 
     public PartyRoleTypeBean getRoleType() {
@@ -105,16 +146,99 @@ public class PartySearchParamsBean extends AbstractBindingBean {
     }
 
     public void setRoleType(PartyRoleTypeBean roleType) {
-        this.setJointRefDataBean(getRoleType(), roleType, ROLE_TYPE_PROPERTY);
+        PartyRoleTypeBean oldValue = this.roleType;
+        this.roleType=roleType;
+        propertySupport.firePropertyChange(ROLE_TYPE_PROPERTY, oldValue, this.roleType);
     }
 
-//    public boolean isChild() {
-//        return child;
-//    }
-//
-//    public void setChild(boolean child) {
-//        boolean oldValue = this.child;
-//        this.child = child;
-//        propertySupport.firePropertyChange(IS_CHILD_PROPERTY, oldValue, this.child);
-//    }
+    public DistrictBean getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(DistrictBean district) {
+        DistrictBean oldValue = this.district;
+        this.district = district;
+        propertySupport.firePropertyChange(DISTRICT_PROPERTY, oldValue, this.district);
+    }
+
+    public String getDistrictCode() {
+        if(getDistrict()==null){
+            return null;
+        }
+        return getDistrict().getCode();
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getGrandFartherName() {
+        return grandFartherName;
+    }
+
+    public void setGrandFartherName(String grandFartherName) {
+        this.grandFartherName = grandFartherName;
+    }
+
+    public Integer getIdIssueDate() {
+        return idIssueDate;
+    }
+
+    public void setIdIssueDate(Integer idIssueDate) {
+        Integer oldValue = this.idIssueDate;
+        this.idIssueDate = idIssueDate;
+        propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public VdcBean getVdc() {
+        return vdc;
+    }
+
+    public void setVdc(VdcBean vdc) {
+        this.vdc = vdc;
+    }
+
+    public String getVdcCode() {
+        if(getVdc()==null){
+            return null;
+        }
+        return getVdc().getCode();
+    }
+
+    public String getWardNumber() {
+        return wardNumber;
+    }
+
+    public void setWardNumber(String wardNumber) {
+        this.wardNumber = wardNumber;
+    }
+
 }

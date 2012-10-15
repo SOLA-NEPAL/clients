@@ -179,9 +179,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel13" min="-2" max="-2" attributes="1"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtRegDatetime" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtRegDatetime" pref="60" max="32767" attributes="1"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="cbxIsPrimary" min="-2" pref="117" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="308" max="-2" attributes="0"/>
               </Group>
@@ -192,8 +192,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtRegDatetime" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbxIsPrimary" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtRegDatetime" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -213,17 +213,6 @@
             <BindingProperty name="selected" source="rrrBean" sourcePath="${primary}" target="cbxIsPrimary" targetPath="selected" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="txtRegDatetime">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="1"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="txtRegDatetime" noResource="true"/>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="value" source="rrrBean" sourcePath="${registrationDate}" target="txtRegDatetime" targetPath="value" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -234,6 +223,16 @@
             </Property>
             <Property name="name" type="java.lang.String" value="jLabel13" noResource="true"/>
           </Properties>
+        </Component>
+        <Component class="org.sola.clients.swing.common.controls.NepaliDateField" name="txtRegDatetime">
+          <Properties>
+            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/desktop/administrative/Bundle.properties" key="SimpleRightPanel.txtRegDatetime.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+          <BindingProperties>
+            <BindingProperty name="value" source="rrrBean" sourcePath="${registrationDate}" target="txtRegDatetime" targetPath="value" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
         </Component>
       </SubComponents>
     </Container>

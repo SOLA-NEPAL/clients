@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Parties">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="fatherName" class="java.lang.String">
+			<fieldDescription><![CDATA[fatherName]]></fieldDescription>
+		</field>
+		<field name="grandfatherName" class="java.lang.String">
+			<fieldDescription><![CDATA[grandfatherName]]></fieldDescription>
+		</field>
+		<field name="idIssueDate" class="java.lang.Integer">
+			<fieldDescription><![CDATA[idIssueDate]]></fieldDescription>
+		</field>
+		<field name="idNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[idNumber]]></fieldDescription>
+		</field>
+		<field name="lastName" class="java.lang.String">
+			<fieldDescription><![CDATA[lastName]]></fieldDescription>
+		</field>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[name]]></fieldDescription>
+		</field>
+		<field name="street" class="java.lang.String">
+			<fieldDescription><![CDATA[street]]></fieldDescription>
+		</field>
+		<field name="vdcName" class="java.lang.String">
+			<fieldDescription><![CDATA[vdcName]]></fieldDescription>
+		</field>
+		<field name="wardNo" class="java.lang.String">
+			<fieldDescription><![CDATA[wardNo]]></fieldDescription>
+		</field>
+		<field name="photoImage" class="java.io.InputStream">
+			<fieldDescription><![CDATA[photoImage]]></fieldDescription>
+		</field>
+		<field name="rightFingerprintImage" class="java.io.InputStream">
+			<fieldDescription><![CDATA[rightFingerprintImage]]></fieldDescription>
+		</field>
+		<field name="leftFingerprintImage" class="java.io.InputStream">
+			<fieldDescription><![CDATA[leftFingerprintImage]]></fieldDescription>
+		</field>
+		<field name="address" class="java.lang.String">
+			<fieldDescription><![CDATA[address]]></fieldDescription>
+		</field>
+		<field name="fullName" class="java.lang.String">
+			<fieldDescription><![CDATA[fullName]]></fieldDescription>
+		</field>
+		<field name="idIssueDateFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[idIssueDateFormatted]]></fieldDescription>
+		</field>
+		<field name="officeName" class="java.lang.String">
+			<fieldDescription><![CDATA[officeName]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="Rrrs">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="mothNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[mothNumber]]></fieldDescription>
+		</field>
+		<field name="landType" class="org.sola.clients.beans.referencedata.LandTypeBean">
+			<fieldDescription><![CDATA[landType]]></fieldDescription>
+		</field>
+		<field name="mapNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[mapNumber]]></fieldDescription>
+		</field>
+		<field name="officialArea" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[officialArea]]></fieldDescription>
+		</field>
+		<field name="officeName" class="java.lang.String">
+			<fieldDescription><![CDATA[officeName]]></fieldDescription>
+		</field>
+		<field name="landUse" class="org.sola.clients.beans.referencedata.LandUseBean">
+			<fieldDescription><![CDATA[landUse]]></fieldDescription>
+		</field>
+		<field name="notationText" class="java.lang.String">
+			<fieldDescription><![CDATA[notationText]]></fieldDescription>
+		</field>
+		<field name="officialAreaFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[officialAreaFormatted]]></fieldDescription>
+		</field>
+		<field name="landClass" class="org.sola.clients.beans.referencedata.LandClassBean">
+			<fieldDescription><![CDATA[landClass]]></fieldDescription>
+		</field>
+		<field name="oldParcels" class="java.lang.String">
+			<fieldDescription><![CDATA[oldParcels]]></fieldDescription>
+		</field>
+		<field name="ownerType" class="org.sola.clients.beans.referencedata.OwnerTypeBean">
+			<fieldDescription><![CDATA[ownerType]]></fieldDescription>
+		</field>
+		<field name="ownershipType" class="org.sola.clients.beans.referencedata.OwnershipTypeBean">
+			<fieldDescription><![CDATA[ownershipType]]></fieldDescription>
+		</field>
+		<field name="panaNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[panaNumber]]></fieldDescription>
+		</field>
+		<field name="parcelNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[parcelNumber]]></fieldDescription>
+		</field>
+		<field name="tenants" class="java.lang.String">
+			<fieldDescription><![CDATA[tenants]]></fieldDescription>
+		</field>
+		<field name="vdcName" class="java.lang.String">
+			<fieldDescription><![CDATA[vdcName]]></fieldDescription>
+		</field>
+		<field name="wardNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[wardNumber]]></fieldDescription>
+		</field>
+		<field name="regNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[regNumber]]></fieldDescription>
+		</field>
+		<field name="regDateFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[regDateFormatted]]></fieldDescription>
+		</field>
+		<field name="requestName" class="java.lang.String">
+			<fieldDescription><![CDATA[requestName]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset1"/>
+	<subDataset name="dataset2"/>
+	<subDataset name="dataset3"/>
+	<parameter name="USER_NAME" class="java.lang.String"/>
+	<parameter name="today" class="java.util.Date"/>
+	<parameter name="OFFICE_NAME" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="parties" class="org.sola.clients.beans.controls.SolaObservableList">
+		<fieldDescription><![CDATA[parties]]></fieldDescription>
+	</field>
+	<field name="rrrs" class="org.sola.clients.beans.controls.SolaObservableList">
+		<fieldDescription><![CDATA[rrrs]]></fieldDescription>
+	</field>
+	<field name="serialNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[serialNumber]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="802" height="28"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Land ownership certificate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="631" y="0" width="39" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[S/N:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="670" y="0" width="132" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{serialNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="229" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="802" height="138"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Parties">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{parties}.toArray())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="138" width="802">
+						<image hAlign="Center">
+							<reportElement x="14" y="32" width="90" height="90"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+							<imageExpression><![CDATA[$F{photoImage}]]></imageExpression>
+						</image>
+						<image hAlign="Center">
+							<reportElement x="127" y="31" width="85" height="90"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+							<imageExpression><![CDATA[$F{rightFingerprintImage}]]></imageExpression>
+						</image>
+						<image hAlign="Center">
+							<reportElement x="212" y="31" width="85" height="90"/>
+							<graphicElement>
+								<pen lineWidth="0.5"/>
+							</graphicElement>
+							<imageExpression><![CDATA[$F{leftFingerprintImage}]]></imageExpression>
+						</image>
+						<staticText>
+							<reportElement x="127" y="12" width="170" height="19"/>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+								<font size="12"/>
+							</textElement>
+							<text><![CDATA[Fingerprints]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="329" y="8" width="137" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Owner name :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="329" y="28" width="137" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Address :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="329" y="48" width="137" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Father's name :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="329" y="68" width="137" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Grandfather's name :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="329" y="88" width="137" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Citizenship number :]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="329" y="108" width="137" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Transaction office : ]]></text>
+						</staticText>
+						<textField isBlankWhenNull="true">
+							<reportElement x="466" y="8" width="326" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="466" y="28" width="326" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="466" y="48" width="326" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{fatherName}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="466" y="68" width="326" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{grandfatherName}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="466" y="88" width="144" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{idNumber}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="610" y="88" width="60" height="20"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<text><![CDATA[Date :  ]]></text>
+						</staticText>
+						<textField isBlankWhenNull="true">
+							<reportElement x="670" y="88" width="122" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{idIssueDateFormatted}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="466" y="108" width="326" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{officeName}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement key="rightFinger" x="127" y="32" width="85" height="89" forecolor="#999999"/>
+							<box topPadding="4"/>
+							<textElement textAlignment="Center" verticalAlignment="Top">
+								<font size="10"/>
+							</textElement>
+							<text><![CDATA[Right]]></text>
+						</staticText>
+						<staticText>
+							<reportElement key="leftFinger" x="215" y="31" width="82" height="90" forecolor="#999999"/>
+							<box topPadding="4"/>
+							<textElement textAlignment="Center" verticalAlignment="Top">
+								<font size="10"/>
+							</textElement>
+							<text><![CDATA[Left]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement positionType="Float" x="52" y="164" width="107" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Descriptioin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="159" y="144" width="56" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[VDC /
+Municipality]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="215" y="144" width="56" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Ward No
+Map sheet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="271" y="144" width="56" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Parcel No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="327" y="144" width="56" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Land use
+Ownership type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="383" y="144" width="56" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Share type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="439" y="144" width="82" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tenant names]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="521" y="144" width="50" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Land type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="571" y="144" width="78" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Area]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="649" y="144" width="46" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Moth
+Pana No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="695" y="144" width="47" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Remarks]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="10" y="184" width="782" height="32"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Rrrs">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{rrrs}.toArray())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="32" width="782">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="42" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{oldParcels}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="42" y="0" width="42" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{regNumber}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="42" y="16" width="107" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{requestName}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="84" y="0" width="65" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{regDateFormatted}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="149" y="0" width="56" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{vdcName}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="205" y="0" width="56" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{wardNumber}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="261" y="0" width="56" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{parcelNumber}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="205" y="16" width="56" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{mapNumber}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="317" y="0" width="56" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{landUse}.getDisplayValue()]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="317" y="16" width="56" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{ownershipType}.getDisplayValue()]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="373" y="0" width="56" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{ownerType}.getDisplayValue()]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="429" y="0" width="82" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{tenants}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="511" y="0" width="50" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{landType}.getDisplayValue()]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="561" y="0" width="78" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{officialAreaFormatted}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="561" y="16" width="78" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{officialArea}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="639" y="0" width="46" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{mothNumber}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="639" y="16" width="46" height="16"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{panaNumber}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="685" y="0" width="47" height="32"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{notationText}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="732" y="0" width="50" height="32"/>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement/>
+							<text><![CDATA[ ]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement positionType="Float" x="10" y="144" width="149" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Proof]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="10" y="164" width="42" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Old prcl]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="742" y="144" width="50" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Approved by]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="32">
+			<textField evaluationTime="Report">
+				<reportElement positionType="FixRelativeToBottom" x="762" y="9" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="656" y="9" width="106" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["page "+$V{PAGE_NUMBER}+" of "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="17" splitType="Stretch"/>
+	</summary>
+</jasperReport>

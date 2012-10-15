@@ -27,30 +27,23 @@
  */
 package org.sola.clients.beans.party.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import org.sola.clients.beans.party.PartyBean;
+import javax.validation.Payload;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import javax.validation.Constraint;
+import static java.lang.annotation.ElementType.*;
 
 /**
- * Used to make validation for {@link PartyIdTypeCheck}.
+ * Used on {@link PartyBean} object to validate document ID type and reference number.
  */
-public class PartyIdTypeValidator implements ConstraintValidator<PartyIdTypeCheck, PartyBean> {
-
-    @Override
-    public void initialize(PartyIdTypeCheck constraintAnnotation) {
-    }
-
-    @Override
-    public boolean isValid(PartyBean partyBean, ConstraintValidatorContext context) {
-        if(partyBean == null){
-            return true;
-        }
-        if(partyBean.getIdTypeCode() != null && (partyBean.getIdNumber() == null || 
-                partyBean.getIdTypeCode().length()<1)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-    
+@Target({TYPE, METHOD, FIELD, ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy=PartyValidator.class)
+@Documented
+public @interface PartyCheck {
+    String message() default "";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default{};
 }

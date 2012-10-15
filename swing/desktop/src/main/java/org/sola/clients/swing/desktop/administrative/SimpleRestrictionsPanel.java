@@ -255,7 +255,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        txtRegDatetime = new javax.swing.JFormattedTextField();
+        txtRegDatetime = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel6 = new javax.swing.JPanel();
         txtRegistrationNo = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -363,24 +363,17 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         jLabel13.setText(bundle.getString("SimpleRestrictionsPanel.jLabel13.text")); // NOI18N
         jLabel13.setName("jLabel13"); // NOI18N
 
-        txtRegDatetime.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtRegDatetime.setName("txtRegDatetime"); // NOI18N
+        txtRegDatetime.setName(bundle.getString("SimpleRestrictionsPanel.txtRegDatetime.name")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rrrBean, org.jdesktop.beansbinding.ELProperty.create("${registrationDate}"), txtRegDatetime, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-
-        txtRegDatetime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRegDatetimeActionPerformed(evt);
-            }
-        });
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(txtRegDatetime)
             .add(jLabel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .add(txtRegDatetime, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -746,7 +739,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
                         .add(jLabel15)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .add(layout.createSequentialGroup()
                         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 415, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE))
@@ -789,9 +782,6 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         saveRrr();
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void txtRegDatetimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegDatetimeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRegDatetimeActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbRestrictionReason;
@@ -840,7 +830,7 @@ public class SimpleRestrictionsPanel extends ContentPanel {
     private javax.swing.JTextField txtBundlePageNo;
     private javax.swing.JTextField txtNotationText;
     private javax.swing.JTextField txtPrice;
-    private javax.swing.JFormattedTextField txtRegDatetime;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtRegDatetime;
     private javax.swing.JTextField txtRegistrationNo;
     private javax.swing.JTextField txtRestrictionOfficeAddress;
     private javax.swing.JTextField txtRestrictionOfficeName;

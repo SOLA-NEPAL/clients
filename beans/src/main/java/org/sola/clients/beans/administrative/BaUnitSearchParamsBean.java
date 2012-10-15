@@ -27,51 +27,75 @@
  */
 package org.sola.clients.beans.administrative;
 
-import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.cadastre.CadastreObjectSearchParamsBean;
 
 /**
  * Represents search criteria for searching BA units.
  */
-public class BaUnitSearchParamsBean extends AbstractBindingBean {
-    public static final String NAME_FIRST_PART_PROPERTY = "nameFirstPart";
-    public static final String NAME_LAST_PART_PROPERTY = "nameLastPart";
-    public static final String OWNER_NAME_PROPERTY = "ownerName";
+public class BaUnitSearchParamsBean extends CadastreObjectSearchParamsBean {
+    public static final String MOTH_PROPERTY = "moth";
+    public static final String LOC_PROPERTY = "loc";
+    public static final String RIGHTHOLDER_ID_PROPERTY = "rightHolderId";
+    public static final String RIGHTHOLDER_NAME_PROPERTY = "rightHolderName";
+
+    private String moth;
+    private String loc;
+    private String rightHolderId;
+    private String rightHolderName;
     
-    private String nameFirstPart;
-    private String nameLastPart;
-    private String ownerName;
-    
-    public BaUnitSearchParamsBean(){
+    public BaUnitSearchParamsBean() {
         super();
     }
 
-    public String getNameFirstPart() {
-        return nameFirstPart;
+    public String getLoc() {
+        return loc;
     }
 
-    public void setNameFirstPart(String nameFirstPart) {
-        String oldValue = this.nameFirstPart;
-        this.nameFirstPart = nameFirstPart;
-        propertySupport.firePropertyChange(NAME_FIRST_PART_PROPERTY, oldValue, this.nameFirstPart);
+    public void setLoc(String loc) {
+        String oldValue = this.loc;
+        this.loc = loc;
+        propertySupport.firePropertyChange(LOC_PROPERTY, oldValue, this.loc);
     }
 
-    public String getNameLastPart() {
-        return nameLastPart;
+    public String getMoth() {
+        return moth;
     }
 
-    public void setNameLastPart(String nameLastPart) {
-        String oldValue = this.nameLastPart;
-        this.nameLastPart = nameLastPart;
-        propertySupport.firePropertyChange(NAME_LAST_PART_PROPERTY, oldValue, this.nameLastPart);
+    public void setMoth(String moth) {
+        String oldValue = this.moth;
+        this.moth = moth;
+        propertySupport.firePropertyChange(MOTH_PROPERTY, oldValue, this.moth);
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public String getRightHolderId() {
+        return rightHolderId;
     }
 
-    public void setOwnerName(String ownerName) {
-        String oldValue = this.ownerName;
-        this.ownerName = ownerName;
-        propertySupport.firePropertyChange(OWNER_NAME_PROPERTY, oldValue, this.ownerName);
+    public void setRightHolderId(String rightHolderId) {
+        String oldValue = this.rightHolderId;
+        this.rightHolderId = rightHolderId;
+        propertySupport.firePropertyChange(RIGHTHOLDER_ID_PROPERTY, oldValue, this.rightHolderId);
+    }
+
+    public String getRightHolderName() {
+        return rightHolderName;
+    }
+
+    public void setRightHolderName(String rightHolderName) {
+        String oldValue = this.rightHolderName;
+        this.rightHolderName = rightHolderName;
+        propertySupport.firePropertyChange(RIGHTHOLDER_NAME_PROPERTY, oldValue, this.rightHolderName);
+    }
+    
+    /** Clears parameter values. */
+    public void clear(){
+        setVdc(null);
+        setMapSheet(null);
+        setWardNo(null);
+        setParcelNo(null);
+        setLoc(null);
+        setMoth(null);
+        setRightHolderId(null);
+        setRightHolderName(null);
     }
 }

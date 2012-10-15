@@ -29,11 +29,12 @@
  */
 package org.sola.clients.beans.address;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractIdBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.messaging.ClientMessage;
@@ -53,16 +54,18 @@ public class AddressBean extends AbstractIdBean {
     public static final String WARD_NO_PROPERTY = "wardNo";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String VDC_BEAN_PROPERTY = "vdcBean";
-    public static final String DISTRICT_CODE_PROPERTY = "districtcode";
-    @NotEmpty(message = ClientMessage.CHECK_NOTNULL_ADDRESS, payload = Localized.class)
     private String description;
     private String extAddressId;
-    //additional fields.
     private String street;
-    private DistrictBean districtBean;
+    @NotNull(message = ClientMessage.CHECK_VDC_NOT_NULL, payload = Localized.class)
     private VdcBean vdcBean;
+    @NotEmpty(message = ClientMessage.CHECK_WARD_NOT_NULL, payload = Localized.class)
     private String wardNo;
 
+    public AddressBean() {
+        super();
+    }
+        
     public VdcBean getVdcBean() {
         if (vdcBean == null) {
             vdcBean = new VdcBean();
@@ -76,6 +79,7 @@ public class AddressBean extends AbstractIdBean {
         propertySupport.firePropertyChange(VDC_BEAN_PROPERTY, oldValue, this.vdcBean);
     }
 
+    @NotEmpty(message = ClientMessage.CHECK_VDC_NOT_NULL, payload = Localized.class)
     public String getVdcCode() {
         return this.getVdcBean().getCode();
     }
@@ -96,28 +100,6 @@ public class AddressBean extends AbstractIdBean {
         propertySupport.firePropertyChange(STREET_PROPERTY, oldValue, this.street);
     }
 
-    public DistrictBean getDistrictBean() {
-        if (districtBean == null) {
-            districtBean = new DistrictBean();
-        }
-        return districtBean;
-    }
-
-    public void setDistrictBean(DistrictBean districtBean) {
-        //this.districtBean = districtBean;
-        this.setJointRefDataBean(this.getDistrictBean(), districtBean, DISTRICT_CODE_PROPERTY);
-    }
-
-    public String getDistrictCode() {
-        return this.getDistrictBean().getCode();
-    }
-
-    public void setDistrictCode(String value) {
-        String oldValue = this.getDistrictBean().getCode();
-        setDistrictBean(CacheManager.getBeanByCode(CacheManager.getDistricts(), value));
-        propertySupport.firePropertyChange(DISTRICT_CODE_PROPERTY, oldValue, value);
-    }
-
     public String getWardNo() {
         return wardNo;
     }
@@ -126,10 +108,6 @@ public class AddressBean extends AbstractIdBean {
         String oldValue = this.wardNo;
         this.wardNo = wardNo;
         propertySupport.firePropertyChange(WARD_NO_PROPERTY, oldValue, this.wardNo);
-    }
-
-    public AddressBean() {
-        super();
     }
 
     public String getDescription() {

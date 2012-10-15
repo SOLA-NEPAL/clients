@@ -105,6 +105,8 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_FISCAL_YEAR = "fiscalYear";
     public final static String CARD_VDC = "vdc";
     public final static String CARD_VDCS = "vdcs";
+    public final static String CARD_LOC_SEARCH = "locSearch";
+    
     private HashMap<String, ContentPanel> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;

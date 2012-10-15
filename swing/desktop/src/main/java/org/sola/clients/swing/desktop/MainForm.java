@@ -29,6 +29,7 @@
  */
 package org.sola.clients.swing.desktop;
 
+import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -55,6 +56,7 @@ import org.sola.clients.swing.common.LocalizationManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
+import org.sola.clients.swing.desktop.administrative.LocSearchForm;
 import org.sola.clients.swing.desktop.administrative.MothManagementForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
@@ -90,7 +92,6 @@ public class MainForm extends javax.swing.JFrame {
         HelpUtility.getInstance().registerHelpMenu(jmiContextHelp, "overview");
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
-
             @Override
             public void windowOpened(WindowEvent e) {
                 postInit();
@@ -141,7 +142,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void openNewApplicationForm() {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APPNEW));
@@ -155,7 +155,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void openMap() {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_MAP));
@@ -172,7 +171,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void searchApplications() {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APPSEARCH));
@@ -189,7 +187,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void searchBaUnit() {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYSEARCH));
@@ -206,7 +203,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void searchDocuments() {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
@@ -226,12 +222,11 @@ public class MainForm extends javax.swing.JFrame {
      */
     public void openSearchParties(final boolean showSelectButton) {
         SolaTask t = new SolaTask<Void, Void>() {
-
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
                 PersonSearchForm partySearchPanelForm = new PersonSearchForm();
-                partySearchPanelForm.getPartySeachPanel().setShowSelectButton(showSelectButton);
+                partySearchPanelForm.getPartySearchPanel().setShowSelectButton(showSelectButton);
                 pnlContent.addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
             }
@@ -245,6 +240,22 @@ public class MainForm extends javax.swing.JFrame {
             pnlContent.addPanel(dashBoard, MainContentPanel.CARD_DASHBOARD);
         }
         pnlContent.showPanel(MainContentPanel.CARD_DASHBOARD);
+    }
+
+    private void openLocSearch() {
+        SolaTask t = new SolaTask<Void, Void>() {
+            @Override
+            public Void doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_LOC_SEARCH));
+                if (!pnlContent.isPanelOpened(MainContentPanel.CARD_LOC_SEARCH)) {
+                    LocSearchForm form = new LocSearchForm();
+                    pnlContent.addPanel(form, MainContentPanel.CARD_LOC_SEARCH);
+                }
+                pnlContent.showPanel(MainContentPanel.CARD_LOC_SEARCH);
+                return null;
+            }
+        };
+        TaskManager.getInstance().runTask(t);
     }
 
     private void showAboutBox() {
@@ -286,7 +297,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     /**
-     * Calls {@link MainForm#checkBeanState(org.sola.clients.beans.AbstractBindingBean)}
+     * Calls
+     * {@link MainForm#checkBeanState(org.sola.clients.beans.AbstractBindingBean)}
      * method to detect if there are any changes on the provided bean. If it
      * returns true, warning message is shown and the result of user selection
      * is returned. If user clicks <b>Yes</b> button to confirm saving changes,
@@ -325,6 +337,7 @@ public class MainForm extends javax.swing.JFrame {
         btnSearchApplications = new javax.swing.JButton();
         btnOpenBaUnitSearch = new javax.swing.JButton();
         btnDocumentSearch = new javax.swing.JButton();
+        btnSearchLoc = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         btnManageParties = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -362,6 +375,7 @@ public class MainForm extends javax.swing.JFrame {
         menuBaUnitSearch = new javax.swing.JMenuItem();
         menuDocumentSearch = new javax.swing.JMenuItem();
         menuPersons = new javax.swing.JMenuItem();
+        menuSearchLoc = new javax.swing.JMenuItem();
         menuMap = new javax.swing.JMenu();
         menuShowMap = new javax.swing.JMenuItem();
         menuReportsDesktop = new javax.swing.JMenu();
@@ -453,6 +467,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         applicationsMain.add(btnDocumentSearch);
+
+        btnSearchLoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        btnSearchLoc.setText(bundle.getString("MainForm.btnSearchLoc.text")); // NOI18N
+        btnSearchLoc.setFocusable(false);
+        btnSearchLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchLocActionPerformed(evt);
+            }
+        });
+        applicationsMain.add(btnSearchLoc);
         applicationsMain.add(jSeparator3);
 
         btnManageParties.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/users.png"))); // NOI18N
@@ -511,7 +535,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
+                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -698,6 +722,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSearch.add(menuPersons);
 
+        menuSearchLoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        menuSearchLoc.setText(bundle.getString("MainForm.menuSearchLoc.text")); // NOI18N
+        menuSearchLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSearchLocActionPerformed(evt);
+            }
+        });
+        menuSearch.add(menuSearchLoc);
+
         menuBar.add(menuSearch);
 
         menuMap.setText(bundle.getString("MainForm.menuMap.text")); // NOI18N
@@ -764,9 +797,9 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
-            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -862,14 +895,6 @@ public class MainForm extends javax.swing.JFrame {
         reportDateChooser.setVisible(true);
     }
 
-    /**
-     * Opens {@link ReportViewerForm} to display report.
-     */
-    private void showReport(JasperPrint report) {
-        ReportViewerForm form = new ReportViewerForm(report);
-        form.setVisible(true);
-    }
-
     private void menuLodgementReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLodgementReportActionPerformed
         openLodgementReportParamsForm();
 //        showReport(ReportManager.getLodgementReport(lodgementBean1, ));  
@@ -918,19 +943,25 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        OfficeBean officeBean=OfficeBean.getCurrentOffice();        
-        PartyBean party=PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
-       // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
-        showRestrictionReport(ReportManager.getRestrictionReport(officeBean,party));//,sa,party));      
+        OfficeBean officeBean = OfficeBean.getCurrentOffice();
+        PartyBean party = PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
+        // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
+        showRestrictionReport(ReportManager.getRestrictionReport(officeBean, party));//,sa,party));      
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
-    
-private void showRestrictionReport(JasperPrint report) {
-	ReportViewerForm form = new ReportViewerForm(report);
+
+    private void showRestrictionReport(JasperPrint report) {
+        ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
         form.setAlwaysOnTop(true);
-}
+    }
 
+    private void menuSearchLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchLocActionPerformed
+        openLocSearch();
+    }//GEN-LAST:event_menuSearchLocActionPerformed
+
+    private void btnSearchLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchLocActionPerformed
+        openLocSearch();
+    }//GEN-LAST:event_btnSearchLocActionPerformed
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -938,7 +969,7 @@ private void showRestrictionReport(JasperPrint report) {
         }
         pnlContent.showPanel(MainContentPanel.CARD_MAPSHEET_MANAGEMENT);
     }
-    
+
     private void showCurrentUserRolesReport(JasperPrint report) {
         ReportViewerForm form = new ReportViewerForm(report);
         form.setVisible(true);
@@ -992,6 +1023,7 @@ private void showRestrictionReport(JasperPrint report) {
     private javax.swing.JButton btnOpenBaUnitSearch;
     private javax.swing.JButton btnOpenMap;
     private javax.swing.JButton btnSearchApplications;
+    private javax.swing.JButton btnSearchLoc;
     private javax.swing.JButton btnShowDashboard;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButton1;
@@ -1030,6 +1062,7 @@ private void showRestrictionReport(JasperPrint report) {
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
     private javax.swing.JMenuItem menuSearchByPerson;
+    private javax.swing.JMenuItem menuSearchLoc;
     private javax.swing.JMenuItem menuShowMap;
     private javax.swing.JMenu menuSrch;
     private javax.swing.JMenu menuView;

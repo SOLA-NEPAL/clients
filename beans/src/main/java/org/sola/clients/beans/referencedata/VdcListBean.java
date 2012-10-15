@@ -60,6 +60,9 @@ public class VdcListBean extends AbstractBindingListBean {
      * @param districtCode Code of district to which VDCs belong to
      */
     public final void loadList(boolean createDummy, String districtCode) {
+        if(districtCode == null || districtCode.isEmpty()){
+            vdcs.clear();
+        }
         loadCodeList(VdcBean.class, vdcs, CacheManager.getVdcs(districtCode), createDummy);
     }
 
