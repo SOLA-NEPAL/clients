@@ -23,6 +23,8 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.cadastre.validation.CadastreObjectCheck;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
+import org.sola.clients.beans.system.AreaBean;
+import org.sola.common.AreaConversion;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectSummaryTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
@@ -87,14 +89,14 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     private LandClassBean landClassBean;
     private LandUseBean landUseBean;
     private AddressBean address;
-    private AreaUnitTypeBean areaUnitType;
     private BuildingUnitTypeBean buildingUnitType;
     private String transactionId;
     private String fiscalYearCode;
-    private BigDecimal officialArea;
+    private AreaBean area;
     
     public CadastreObjectSummaryBean(){
         super();
+        area = new AreaBean();
     }
     
     public AddressBean getAddress() {
@@ -470,13 +472,13 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     }
 
     public AreaUnitTypeBean getAreaUnitType() {
-        return areaUnitType;
+        return area.getUnitType();
     }
 
     public void setAreaUnitType(AreaUnitTypeBean areaUnitType) {
-        AreaUnitTypeBean oldValue = this.areaUnitType;
-        this.areaUnitType = areaUnitType;
-        propertySupport.firePropertyChange(AREA_UNIT_TYPE_PROPERTY, oldValue, this.areaUnitType);
+        AreaUnitTypeBean oldValue = area.getUnitType();
+        area.setUnitType(areaUnitType);
+        propertySupport.firePropertyChange(AREA_UNIT_TYPE_PROPERTY, oldValue, areaUnitType);
     }
 
     public String getBuildingUnitTypeCode() {
@@ -497,11 +499,7 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     }
 
     public String getAreaUnitTypeCode() {
-        if (this.areaUnitType == null) {
-            return null;
-        } else {
-            return areaUnitType.getCode();
-        }
+        return area.getUnitTypeCode();
     }
 
     public void setAreaUnitTypeCode(String areaUnitTypeCode) {
@@ -513,14 +511,29 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
         propertySupport.firePropertyChange(AREA_UNIT_TYPE_CODE_PROPERTY, oldValue, areaUnitTypeCode);
     }
 
-    public BigDecimal getOfficialArea() {
-        return officialArea;
+    public AreaBean getArea() {
+        return area;
     }
 
+    public BigDecimal getOfficialArea() {
+        return area.getAreaInSqMt();
+    }
+
+    public String getOfficialAreaFormatted() {
+        if(area.getAreaInSqMt()==null){
+            return null;
+        }
+        String stringArea = AreaConversion.getAreaInLocalUnit(getAreaUnitTypeCode(), area.getAreaInSqMt().doubleValue());
+        if(stringArea!=null && !stringArea.isEmpty()){
+            stringArea = stringArea + " (" + area.getAreaInSqMt().toPlainString() + ")";
+        }
+        return stringArea;
+    }
+    
     public void setOfficialArea(BigDecimal officialArea) {
-        BigDecimal oldValue = this.officialArea;
-        this.officialArea = officialArea;
-        propertySupport.firePropertyChange(OFFICIAL_AREA_PROPERTY, oldValue, this.officialArea);
+        BigDecimal oldValue = area.getAreaInSqMt();
+        area.setAreaInSqMt(officialArea);
+        propertySupport.firePropertyChange(OFFICIAL_AREA_PROPERTY, oldValue, area.getAreaInSqMt());
     }
 
     public void saveCadastreObject() {

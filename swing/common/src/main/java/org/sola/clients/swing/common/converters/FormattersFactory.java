@@ -64,13 +64,13 @@ public class FormattersFactory {
 
     public DefaultFormatterFactory getDecimalFormatterFactory() {
         if (decimalFormatterFactory == null) {
-            DefaultFormatter fmt = new NumberFormatter(new DecimalFormat("#.#######"));
+            DefaultFormatter fmt = new NumberFormatter(new DecimalFormat("#.####"));
             fmt.setValueClass(BigDecimal.class);
             decimalFormatterFactory = new DefaultFormatterFactory(fmt, fmt, fmt);
         }
         return decimalFormatterFactory;
     }
-
+ 
     public DefaultFormatterFactory getIntegerFormatterFactory() {
         if (integerFormatterFactory == null) {
             DefaultFormatter fmt = new NumberFormatter(NumberFormat.getIntegerInstance());
