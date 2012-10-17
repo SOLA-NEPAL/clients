@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="203cd98b-6d67-40f4-a294-f273335edf76">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -83,7 +83,7 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Parties">
+	<subDataset name="Parties" uuid="cf262011-4f22-4473-b504-4984fcd05487">
 		<queryString>
 			<![CDATA[]]>
 		</queryString>
@@ -136,7 +136,7 @@
 			<fieldDescription><![CDATA[officeName]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="Rrrs">
+	<subDataset name="Rrrs" uuid="20a2d1d1-2427-46b8-acda-8982f1775da1">
 		<queryString>
 			<![CDATA[]]>
 		</queryString>
@@ -201,9 +201,9 @@
 			<fieldDescription><![CDATA[requestName]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="dataset1"/>
-	<subDataset name="dataset2"/>
-	<subDataset name="dataset3"/>
+	<subDataset name="dataset1" uuid="ba1f2d41-0427-4622-b1c0-30d16b87d84c"/>
+	<subDataset name="dataset2" uuid="f43e41d7-358e-4410-99f3-ec87983f8eb0"/>
+	<subDataset name="dataset3" uuid="6835e51a-8817-4cb3-9ddb-f3bd72d8007d"/>
 	<parameter name="USER_NAME" class="java.lang.String"/>
 	<parameter name="today" class="java.util.Date"/>
 	<parameter name="OFFICE_NAME" class="java.lang.String"/>
@@ -225,58 +225,58 @@
 	<title>
 		<band height="60" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="30" width="802" height="28"/>
+				<reportElement uuid="4a4a81a5-1468-40b6-9d92-689c1a062250" x="0" y="32" width="802" height="28"/>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Land ownership certificate]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="631" y="0" width="39" height="20"/>
+				<reportElement uuid="10555220-6c59-4d42-bd9a-6656ac5f9a8a" x="610" y="0" width="60" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[S/N:]]></text>
+				<text><![CDATA[ज.ध.प्र. पुर्जा नं :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="670" y="0" width="132" height="20"/>
+				<reportElement uuid="c3f0f176-cea0-42ed-9ece-ea9460c56a2d" x="670" y="0" width="132" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{serialNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="229" splitType="Stretch">
+		<band height="265" splitType="Stretch">
 			<componentElement>
-				<reportElement x="0" y="0" width="802" height="138"/>
+				<reportElement uuid="1affb0f1-215b-4d97-a245-cc09d10654d8" x="0" y="0" width="802" height="138"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="Parties">
+					<datasetRun subDataset="Parties" uuid="4d74e403-2411-4d20-b380-0d3cf95aa1ff">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{parties}.toArray())]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="138" width="802">
 						<image hAlign="Center">
-							<reportElement x="14" y="32" width="90" height="90"/>
+							<reportElement uuid="04c01aad-2bb5-4399-80c6-dfe175a87533" x="21" y="23" width="90" height="90"/>
 							<graphicElement>
 								<pen lineWidth="0.5"/>
 							</graphicElement>
 							<imageExpression><![CDATA[$F{photoImage}]]></imageExpression>
 						</image>
 						<image hAlign="Center">
-							<reportElement x="127" y="31" width="85" height="90"/>
+							<reportElement uuid="5a98418c-2c20-4a15-9e62-3a53b9cb0207" x="127" y="25" width="85" height="85"/>
 							<graphicElement>
 								<pen lineWidth="0.5"/>
 							</graphicElement>
 							<imageExpression><![CDATA[$F{rightFingerprintImage}]]></imageExpression>
 						</image>
 						<image hAlign="Center">
-							<reportElement x="212" y="31" width="85" height="90"/>
+							<reportElement uuid="d61714b5-2429-482b-82b0-068f8ac1e0bd" x="212" y="25" width="85" height="90"/>
 							<graphicElement>
 								<pen lineWidth="0.5"/>
 							</graphicElement>
 							<imageExpression><![CDATA[$F{leftFingerprintImage}]]></imageExpression>
 						</image>
 						<staticText>
-							<reportElement x="127" y="12" width="170" height="19"/>
+							<reportElement uuid="0ae0401f-6461-4791-8473-4b682d860b20" x="127" y="5" width="170" height="19"/>
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -287,127 +287,137 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 								<font size="12"/>
 							</textElement>
-							<text><![CDATA[Fingerprints]]></text>
+							<text><![CDATA[औठा छाप]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="329" y="8" width="137" height="20"/>
+							<reportElement uuid="fef85ba1-9390-4f5b-a201-f948f87427d2" x="329" y="8" width="137" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Owner name :]]></text>
+							<text><![CDATA[जग्गाधनीको नाम थर :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="329" y="28" width="137" height="20"/>
+							<reportElement uuid="4c582a01-209d-4966-b212-a5d03af0d77f" x="329" y="28" width="137" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Address :]]></text>
+							<text><![CDATA[जग्गाधनीको ठेगाना:]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="329" y="48" width="137" height="20"/>
+							<reportElement uuid="5da54dc3-d7e4-477a-b0d3-79e0df508eed" x="329" y="48" width="137" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Father's name :]]></text>
+							<text><![CDATA[बाबुको नाम :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="329" y="68" width="137" height="20"/>
+							<reportElement uuid="5ee3856f-3c36-4888-934d-39112e8bb9b7" x="329" y="68" width="137" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Grandfather's name :]]></text>
+							<text><![CDATA[बाजेको नाम :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="329" y="88" width="137" height="20"/>
+							<reportElement uuid="54106585-8e75-49c4-9574-0d1c8a740f00" x="329" y="88" width="137" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Citizenship number :]]></text>
+							<text><![CDATA[नागरिकता नं :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="329" y="108" width="137" height="20"/>
+							<reportElement uuid="59992a3c-9ae2-4475-aab2-6e61806df52a" x="329" y="108" width="137" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Transaction office : ]]></text>
+							<text><![CDATA[कार्यलय : ]]></text>
 						</staticText>
 						<textField isBlankWhenNull="true">
-							<reportElement x="466" y="8" width="326" height="20"/>
+							<reportElement uuid="f196ddad-d1d4-403a-a910-6f40871dce33" x="466" y="8" width="326" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="466" y="28" width="326" height="20"/>
+							<reportElement uuid="19460d9f-baf9-4531-8d11-205774212c35" x="466" y="28" width="326" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="466" y="48" width="326" height="20"/>
+							<reportElement uuid="88c40b4d-50b6-4ac5-ab9f-98f51375ee5a" x="466" y="48" width="326" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{fatherName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="466" y="68" width="326" height="20"/>
+							<reportElement uuid="b59da8b5-8e73-418e-92a5-2733d4110854" x="466" y="68" width="326" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{grandfatherName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="466" y="88" width="144" height="20"/>
+							<reportElement uuid="16c069b2-03c1-4560-87a2-f3efb55d7c40" x="466" y="88" width="144" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{idNumber}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement x="610" y="88" width="60" height="20"/>
+							<reportElement uuid="93cd14d3-2fa6-4cc8-a1ab-3f1cae5faac6" x="610" y="88" width="60" height="20"/>
 							<textElement textAlignment="Right" verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
-							<text><![CDATA[Date :  ]]></text>
+							<text><![CDATA[मिति :  ]]></text>
 						</staticText>
 						<textField isBlankWhenNull="true">
-							<reportElement x="670" y="88" width="122" height="20"/>
+							<reportElement uuid="725d8fb7-1ef5-45f9-9032-37a4468f75ec" x="670" y="88" width="122" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{idIssueDateFormatted}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="466" y="108" width="326" height="20"/>
+							<reportElement uuid="32837dba-3fb6-4c57-88b5-82b73b0cf1f0" x="466" y="108" width="326" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{officeName}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement key="rightFinger" x="127" y="32" width="85" height="89" forecolor="#999999"/>
+							<reportElement uuid="8cf1fbf7-5244-41aa-b472-f2fe1baec04b" key="rightFinger" x="127" y="25" width="85" height="91" forecolor="#999999"/>
 							<box topPadding="4"/>
 							<textElement textAlignment="Center" verticalAlignment="Top">
 								<font size="10"/>
 							</textElement>
-							<text><![CDATA[Right]]></text>
+							<text><![CDATA[दाँया]]></text>
 						</staticText>
 						<staticText>
-							<reportElement key="leftFinger" x="215" y="31" width="82" height="90" forecolor="#999999"/>
+							<reportElement uuid="224c009d-9cfe-4db5-880c-685472c49f1c" key="leftFinger" x="212" y="25" width="85" height="90" forecolor="#999999"/>
 							<box topPadding="4"/>
 							<textElement textAlignment="Center" verticalAlignment="Top">
 								<font size="10"/>
 							</textElement>
-							<text><![CDATA[Left]]></text>
+							<text><![CDATA[बाँया]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="2056c4e2-7474-4b33-9cf2-92d69d7bfacb" x="11" y="116" width="114" height="20"/>
+							<textElement/>
+							<text><![CDATA[फोटो प्रमाणित गर्नेको दस्तखत]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="4e4bfacc-76ed-4d4e-b0db-096f02943db9" x="158" y="117" width="100" height="20"/>
+							<textElement/>
+							<text><![CDATA[जग्गाधनीको दस्तखत]]></text>
 						</staticText>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="52" y="164" width="107" height="20"/>
+				<reportElement uuid="51799deb-0689-472d-bd16-1297a8f3c9e8" positionType="Float" x="52" y="164" width="107" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -418,10 +428,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Descriptioin]]></text>
+				<text><![CDATA[कारोबार व्यहोरा]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="159" y="144" width="56" height="40"/>
+				<reportElement uuid="0bba47d1-bb14-46ef-9c4b-f710c69ac5c9" positionType="Float" x="159" y="144" width="56" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -432,11 +442,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[VDC /
-Municipality]]></text>
+				<text><![CDATA[गा.बि.स./ न.पा.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="215" y="144" width="56" height="40"/>
+				<reportElement uuid="f4b1853e-2b7f-467c-9569-2f673e240372" positionType="Float" x="215" y="144" width="56" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -447,11 +456,10 @@ Municipality]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Ward No
-Map sheet]]></text>
+				<text><![CDATA[वडा नं. / नक्सा सिट]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="271" y="144" width="56" height="40"/>
+				<reportElement uuid="7f9702b7-1cb0-41e6-a220-892e0a60678f" positionType="Float" x="271" y="144" width="56" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -462,10 +470,10 @@ Map sheet]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Parcel No]]></text>
+				<text><![CDATA[कित्ता नं.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="327" y="144" width="56" height="40"/>
+				<reportElement uuid="27410777-6fc2-47d3-9960-e278c1add422" positionType="Float" x="327" y="144" width="56" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -476,11 +484,10 @@ Map sheet]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Land use
-Ownership type]]></text>
+				<text><![CDATA[बिबरण (घर, आवादी, ईत्यादी)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="383" y="144" width="56" height="40"/>
+				<reportElement uuid="dd24bf36-f996-4274-bc14-6c7f6a5d51da" positionType="Float" x="383" y="144" width="56" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -491,10 +498,10 @@ Ownership type]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Share type]]></text>
+				<text><![CDATA[ज.ध. को हक हिस्सा]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="439" y="144" width="82" height="40"/>
+				<reportElement uuid="213d82b1-10b3-4ee9-a504-487f498e79e6" positionType="Float" x="439" y="144" width="82" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -505,10 +512,10 @@ Ownership type]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Tenant names]]></text>
+				<text><![CDATA[मोहिको नाम थर]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="521" y="144" width="50" height="40"/>
+				<reportElement uuid="bc5f76e3-e870-4ffc-97ba-5dab9a782142" positionType="Float" x="521" y="144" width="50" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -519,10 +526,10 @@ Ownership type]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Land type]]></text>
+				<text><![CDATA[किसिम वा बर्ग]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="571" y="144" width="78" height="40"/>
+				<reportElement uuid="5081396d-4c06-4cff-8682-470228050bfa" positionType="Float" x="571" y="144" width="78" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -533,10 +540,10 @@ Ownership type]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Area]]></text>
+				<text><![CDATA[क्षेत्रफल]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="649" y="144" width="46" height="40"/>
+				<reportElement uuid="4141c2e0-dce3-44ea-8092-e4f831480f11" positionType="Float" x="649" y="144" width="46" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -547,11 +554,10 @@ Ownership type]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Moth
-Pana No]]></text>
+				<text><![CDATA[मोठ / पाना नं.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="695" y="144" width="47" height="40"/>
+				<reportElement uuid="3ec15cfa-d02d-43f0-a2e0-d5804e575ea0" positionType="Float" x="695" y="144" width="47" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -562,17 +568,17 @@ Pana No]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Remarks]]></text>
+				<text><![CDATA[कैफियत बिबरण]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" x="10" y="184" width="782" height="32"/>
+				<reportElement uuid="096c272a-a6fd-49c6-99d4-d0d4c5b4b7aa" positionType="Float" x="10" y="184" width="782" height="32"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
-					<datasetRun subDataset="Rrrs">
+					<datasetRun subDataset="Rrrs" uuid="b8de8ea3-6c67-40a1-b316-a17e21b95217">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{rrrs}.toArray())]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="32" width="782">
 						<textField isBlankWhenNull="true">
-							<reportElement x="0" y="0" width="42" height="32"/>
+							<reportElement uuid="5dfa7755-46ec-4d75-8d01-425e225bd231" x="0" y="0" width="42" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -586,7 +592,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{oldParcels}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="42" y="0" width="42" height="16"/>
+							<reportElement uuid="4cdcce9c-1870-4844-a572-e851ec2aca25" x="42" y="0" width="42" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -598,7 +604,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{regNumber}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="42" y="16" width="107" height="16"/>
+							<reportElement uuid="ea470735-e863-478d-a0a9-ab274c185628" x="42" y="16" width="107" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -610,7 +616,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{requestName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="84" y="0" width="65" height="16"/>
+							<reportElement uuid="27e35993-75a5-4ead-b2f1-9470c6085d17" x="84" y="0" width="65" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -622,7 +628,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{regDateFormatted}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="149" y="0" width="56" height="32"/>
+							<reportElement uuid="b64a01f6-20f3-4a30-9a0d-61be01d7671b" x="149" y="0" width="56" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -636,7 +642,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{vdcName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="205" y="0" width="56" height="16"/>
+							<reportElement uuid="c2f44eb4-a34a-4465-ae0e-2c214dc0a5a9" x="205" y="0" width="56" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -650,7 +656,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{wardNumber}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="261" y="0" width="56" height="32"/>
+							<reportElement uuid="ffcde019-3545-40c1-b3dc-645155805255" x="261" y="0" width="56" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -664,7 +670,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{parcelNumber}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="205" y="16" width="56" height="16"/>
+							<reportElement uuid="a6ae38c1-20a4-4185-ba7b-14fc86fc4b67" x="205" y="16" width="56" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -678,7 +684,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{mapNumber}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="317" y="0" width="56" height="16"/>
+							<reportElement uuid="38235c09-5e2a-4143-bffb-f3a57500a481" x="317" y="0" width="56" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -692,7 +698,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{landUse}.getDisplayValue()]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="317" y="16" width="56" height="16"/>
+							<reportElement uuid="1d28b990-7e46-467a-9e19-7a26dbdc1dc0" x="317" y="16" width="56" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -706,7 +712,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{ownershipType}.getDisplayValue()]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="373" y="0" width="56" height="32"/>
+							<reportElement uuid="bf0fab7c-7f12-4660-bdc8-092b40f605be" x="373" y="0" width="56" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -720,7 +726,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{ownerType}.getDisplayValue()]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="429" y="0" width="82" height="32"/>
+							<reportElement uuid="8b0380ab-010e-447d-bbd6-9a5019bc6a77" x="429" y="0" width="82" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -734,7 +740,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{tenants}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="511" y="0" width="50" height="32"/>
+							<reportElement uuid="cc04beb3-93e0-41cf-b343-380e82134e35" x="511" y="0" width="50" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -748,7 +754,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{landType}.getDisplayValue()]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="561" y="0" width="78" height="16"/>
+							<reportElement uuid="26b6acc9-78e5-4883-aea5-028d297d2b4c" x="561" y="0" width="78" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -762,7 +768,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{officialAreaFormatted}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="561" y="16" width="78" height="16"/>
+							<reportElement uuid="590d4e47-8c7b-40ed-93ca-014c68e2c78f" x="561" y="16" width="78" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -776,7 +782,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{officialArea}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="639" y="0" width="46" height="16"/>
+							<reportElement uuid="c9864dee-b0de-4d46-8eb1-ada1548a6105" x="639" y="0" width="46" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -790,7 +796,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{mothNumber}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="639" y="16" width="46" height="16"/>
+							<reportElement uuid="6c6b82ad-48bd-4ae8-a883-037471543d0e" x="639" y="16" width="46" height="16"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -804,7 +810,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{panaNumber}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement x="685" y="0" width="47" height="32"/>
+							<reportElement uuid="54886ce4-b9d9-4a57-920f-ee05aa1dd43a" x="685" y="0" width="47" height="32"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -818,7 +824,7 @@ Pana No]]></text>
 							<textFieldExpression><![CDATA[$F{notationText}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement x="732" y="0" width="50" height="32"/>
+							<reportElement uuid="57b90291-d894-4e1e-9a4d-8ab5c6c5ae95" x="732" y="0" width="50" height="32"/>
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -833,7 +839,7 @@ Pana No]]></text>
 				</jr:list>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="10" y="144" width="149" height="20"/>
+				<reportElement uuid="6c43d173-53b7-45e9-a270-86054ee88e45" positionType="Float" x="10" y="144" width="149" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -844,10 +850,10 @@ Pana No]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Proof]]></text>
+				<text><![CDATA[प्रमाण संकेत]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="10" y="164" width="42" height="20"/>
+				<reportElement uuid="39d3977f-60e5-4847-87c7-37297a86e186" positionType="Float" x="10" y="164" width="42" height="20"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -858,10 +864,10 @@ Pana No]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Old prcl]]></text>
+				<text><![CDATA[सा.कि.नं]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="742" y="144" width="50" height="40"/>
+				<reportElement uuid="5d25566c-abde-48dc-8c87-e08c9c69318d" positionType="Float" x="742" y="144" width="50" height="40"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -872,19 +878,40 @@ Pana No]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Approved by]]></text>
+				<text><![CDATA[प्रमाणित गर्नेको दस्तखत]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="83404fcd-9d7d-41be-8cc3-0745d028f257" x="4" y="245" width="83" height="20"/>
+				<textElement/>
+				<text><![CDATA[प्रिन्ट गर्नेको दस्तखत :]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ad61e2fb-e657-4880-817b-bc708eb227d7" x="91" y="258" width="145" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="6baf646c-2f60-4fd2-94c9-0e5afd87065b" x="301" y="245" width="64" height="20"/>
+				<textElement/>
+				<text><![CDATA[प्रिन्ट मिति :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a2b3c3e0-b4f3-4c88-ac91-e4e99eed7be7" x="560" y="245" width="93" height="20"/>
+				<textElement/>
+				<text><![CDATA[रुजु गर्नेको दस्तखत :]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="6254d609-9f8d-4eef-954a-e32dd603fd9a" x="656" y="258" width="140" height="1"/>
+			</line>
 		</band>
 	</detail>
 	<pageFooter>
 		<band height="32">
 			<textField evaluationTime="Report">
-				<reportElement positionType="FixRelativeToBottom" x="762" y="9" width="40" height="20"/>
+				<reportElement uuid="ebd077fa-0e83-450a-932f-5c61c5fe4862" positionType="FixRelativeToBottom" x="762" y="9" width="40" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="656" y="9" width="106" height="20"/>
+				<reportElement uuid="ebad4c97-5653-4370-a701-48568ad3784e" positionType="FixRelativeToBottom" x="656" y="9" width="106" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["page "+$V{PAGE_NUMBER}+" of "]]></textFieldExpression>
 			</textField>
