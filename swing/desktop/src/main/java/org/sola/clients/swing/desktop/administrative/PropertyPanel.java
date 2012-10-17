@@ -1044,6 +1044,7 @@ public class PropertyPanel extends ContentPanel {
             .add(0, 100, Short.MAX_VALUE)
         );
 
+        setHeaderPanel(headerPanel);
         setHelpTopic(bundle.getString("PropertyPanel.helpTopic")); // NOI18N
         setName("Form"); // NOI18N
         addComponentListener(new java.awt.event.ComponentAdapter() {

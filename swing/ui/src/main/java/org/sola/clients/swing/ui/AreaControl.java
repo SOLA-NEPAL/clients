@@ -4,18 +4,45 @@
  */
 package org.sola.clients.swing.ui;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.system.AreaBean;
+import org.sola.clients.swing.common.converters.FormattersFactory;
+import org.sola.common.AreaConversion;
 
 public class AreaControl extends ContentPanel {
 
-    private AreaBean area;
+    private class UnitTypeListener implements PropertyChangeListener {
+
+        public UnitTypeListener() {
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(AreaBean.UNIT_TYPE)) {
+                customizeTextFields();
+            }
+        }
+    }
     
+    private AreaBean area;
+    private UnitTypeListener unitTypeListener = new UnitTypeListener();
+
     /**
      * Creates new form AreaControl
      */
     public AreaControl() {
-        area = new AreaBean(); 
+        area = new AreaBean();
         initComponents();
+        cmbLocalUnit.setSelectedIndex(-1);
+        area.addPropertyChangeListener(unitTypeListener);
+        customizeTextFields();
+    }
+
+    private void customizeTextFields() {
+        boolean enabled = area.getUnitType() != null;
+        txtAreaInLocalUnit.setEnabled(enabled);
+        txtAreaInSqMeter.setEnabled(enabled);
     }
 
     public AreaBean getArea() {
@@ -23,7 +50,19 @@ public class AreaControl extends ContentPanel {
     }
 
     public void setArea(AreaBean area) {
-        this.area = area;
+        AreaBean oldValue = this.area;
+        if(this.area!=null){
+            this.area.removePropertyChangeListener(unitTypeListener);
+        }
+        
+        if (area == null) {
+            this.area = new AreaBean();
+        } else {
+            this.area = area;
+        }
+        this.area.addPropertyChangeListener(unitTypeListener);
+        firePropertyChange("area", oldValue, this.area);
+        customizeTextFields();
     }
 
     @SuppressWarnings("unchecked")
@@ -31,7 +70,7 @@ public class AreaControl extends ContentPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        areaTypeListBean = new org.sola.clients.beans.referencedata.AreaTypeListBean();
+        areaUnitTypes = new org.sola.clients.beans.referencedata.AreaUnitTypeListBean();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cmbLocalUnit = new javax.swing.JComboBox();
@@ -40,16 +79,16 @@ public class AreaControl extends ContentPanel {
         txtAreaInLocalUnit = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtAreaInSqMeter = new javax.swing.JTextField();
+        txtAreaInSqMeter = new javax.swing.JFormattedTextField();
 
-        setLayout(new java.awt.GridLayout(1, 0, 15, 0));
+        setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
-        jLabel1.setText("Local Unit");
+        jLabel1.setText("Area units");
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${areaTypes}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, areaTypeListBean, eLProperty, cmbLocalUnit);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${areaUnitTypes}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, areaUnitTypes, eLProperty, cmbLocalUnit);
         bindingGroup.addBinding(jComboBoxBinding);
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${area.localUnit}"), cmbLocalUnit, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${area.unitType}"), cmbLocalUnit, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -58,24 +97,30 @@ public class AreaControl extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 106, Short.MAX_VALUE))
+                .addGap(0, 39, Short.MAX_VALUE))
             .addComponent(cmbLocalUnit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbLocalUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel1);
 
-        jLabel2.setText("Area In Local Unit");
+        jLabel2.setText("Area in units");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${area.areaInLocalUnit}"), txtAreaInLocalUnit, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
+
+        txtAreaInLocalUnit.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtAreaInLocalUnitFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -83,23 +128,25 @@ public class AreaControl extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addGap(0, 28, Short.MAX_VALUE))
             .addComponent(txtAreaInLocalUnit)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAreaInLocalUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         add(jPanel2);
 
-        jLabel3.setText("Area In Sq. Meter");
+        jLabel3.setText("Area in sq. meters");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${area.areaInSqMt}"), txtAreaInSqMeter, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        txtAreaInSqMeter.setFormatterFactory(FormattersFactory.getInstance().getDecimalFormatterFactory());
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${area.areaInSqMt}"), txtAreaInSqMeter, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -108,24 +155,34 @@ public class AreaControl extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 66, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(txtAreaInSqMeter)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAreaInSqMeter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         add(jPanel3);
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtAreaInLocalUnitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAreaInLocalUnitFocusLost
+        String areaCode = null;
+        if (area.getUnitType() != null) {
+            areaCode = area.getUnitType().getCode();
+        }
+        if (!AreaConversion.checkArea(txtAreaInLocalUnit.getText(), areaCode)) {
+            txtAreaInLocalUnit.setText(AreaConversion.getDefaultArea(areaCode));
+        }
+    }//GEN-LAST:event_txtAreaInLocalUnitFocusLost
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.sola.clients.beans.referencedata.AreaTypeListBean areaTypeListBean;
+    private org.sola.clients.beans.referencedata.AreaUnitTypeListBean areaUnitTypes;
     private javax.swing.JComboBox cmbLocalUnit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -134,7 +191,7 @@ public class AreaControl extends ContentPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txtAreaInLocalUnit;
-    private javax.swing.JTextField txtAreaInSqMeter;
+    private javax.swing.JFormattedTextField txtAreaInSqMeter;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
