@@ -43,6 +43,7 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
@@ -535,7 +536,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
+                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -797,9 +798,9 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
-            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -942,11 +943,9 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        OfficeBean officeBean = OfficeBean.getCurrentOffice();
-        PartyBean party = PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
-        // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
-        showRestrictionReport(ReportManager.getRestrictionReport(officeBean, party));//,sa,party));      
+        // TODO add your handling code here:       
+        RrrBean rrrBean = RrrBean.getRrr("e7c3a331-bd70-4f78-94fe-97cf66d64e1a");
+        showRestrictionReport(ReportManager.getRestrictionReport(rrrBean));
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void showRestrictionReport(JasperPrint report) {

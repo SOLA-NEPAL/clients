@@ -40,15 +40,13 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.administrative.LocDetailsBean;
+import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
 import org.sola.clients.beans.party.PartyBean;
-import org.sola.clients.beans.party.PartySummaryBean;
-import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.security.UserBean;
-import org.sola.clients.beans.source.SourceSummaryBean;
 import org.sola.clients.beans.system.BrListBean;
 import org.sola.clients.beans.system.BrReportBean;
 import org.sola.common.messaging.ClientMessage;
@@ -341,19 +339,15 @@ public class ReportManager {
      * @param clientName Client name
      */
     //,SourceSummaryBean sourceSummaryBean,PartyBean partyBean
-    public static JasperPrint getRestrictionReport(OfficeBean officeBean,PartyBean partyBean) {
+    public static JasperPrint getRestrictionReport(RrrBean rrrBean) {
         HashMap inputParameters = new HashMap();
         inputParameters.put("REPORT_LOCALE", Locale.getDefault());        
        // RequestListBean[] beans = new RequestListBean[1];
        // beans[0] = requestList;
         //JRDataSource jds = new JRBeanArrayDataSource(beans);
-        Object [] objects=new Object[2];
-        //OfficeBean [] offices=new OfficeBean[1];
-        objects[0]=officeBean;
-       // objects[1]=sourceSummaryBean;
-        objects[1]=partyBean;         
-       
-        JRDataSource jds=new JRBeanArrayDataSource(objects);
+        RrrBean [] beans=new RrrBean[1];
+        beans[0]=rrrBean;
+        JRDataSource jds=new JRBeanArrayDataSource(beans);
         
         try {
             return JasperFillManager.fillReport(

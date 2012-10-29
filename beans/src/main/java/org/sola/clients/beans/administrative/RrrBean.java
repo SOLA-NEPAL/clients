@@ -58,6 +58,7 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
+import org.sola.webservices.transferobjects.casemanagement.PartyTO;
 
 /**
  * Contains properties and methods to manage <b>RRR</b> object of the domain
@@ -179,9 +180,9 @@ public class RrrBean extends AbstractTransactionedBean {
 
     public RrrBean() {
         super();
-        if(WSManager.getInstance().getAdminService()!=null){
+        if (WSManager.getInstance().getAdminService() != null) {
             registrationDate = WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime());
-            if(registrationDate!=null){
+            if (registrationDate != null) {
                 registrationDate = registrationDate.replace("-", "");
             }
         }
@@ -592,7 +593,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public String getRegistrationDate() {
         return registrationDate;
     }
-    
+
     public String getRegistrationDateFormatted() {
         return DateUtility.toFormattedNepaliDate(registrationDate);
     }
@@ -920,5 +921,19 @@ public class RrrBean extends AbstractTransactionedBean {
                 }
             }
         }
+    }
+
+    /**
+     * Returns rrrs by ID.
+     */
+    public static RrrBean getRrr(String rrrId) {
+        if (rrrId == null || rrrId.length() < 1) {
+            return null;
+        }
+
+        RrrTO rrrTO = WSManager.getInstance().getAdministrative().getRrr(rrrId);
+        RrrBean rrrBean = TypeConverters.TransferObjectToBean(rrrTO, RrrBean.class, null);
+
+        return rrrBean;
     }
 }
