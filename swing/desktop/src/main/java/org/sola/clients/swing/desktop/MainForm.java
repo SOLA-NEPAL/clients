@@ -894,7 +894,7 @@ public class MainForm extends javax.swing.JFrame {
         OfficeBean officeBean = OfficeBean.getCurrentOffice();
         PartyBean party = PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
         // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
-        showRestrictionReport(ReportManager.getRestrictionReport(officeBean, party));//,sa,party));      
+        //showRestrictionReport(ReportManager.getRestrictionReport(officeBean, party));//,sa,party));      
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void showRestrictionReport(JasperPrint report) {
