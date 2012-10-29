@@ -140,9 +140,11 @@ public class LocSearchResultsPanel extends javax.swing.JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${panaNumber}"));
         columnBinding.setColumnName("Pana Number");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tmpPanaNumber}"));
         columnBinding.setColumnName("Tmp Pana Number");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${owners}"));
         columnBinding.setColumnName("Owners");
         columnBinding.setColumnClass(String.class);

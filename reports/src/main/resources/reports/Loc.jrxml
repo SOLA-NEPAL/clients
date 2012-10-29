@@ -205,7 +205,7 @@
 	<subDataset name="dataset2" uuid="f43e41d7-358e-4410-99f3-ec87983f8eb0"/>
 	<subDataset name="dataset3" uuid="6835e51a-8817-4cb3-9ddb-f3bd72d8007d"/>
 	<parameter name="USER_NAME" class="java.lang.String"/>
-	<parameter name="today" class="java.util.Date"/>
+	<parameter name="CURRENT_DATE" class="java.lang.String"/>
 	<parameter name="OFFICE_NAME" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
@@ -219,20 +219,16 @@
 	<field name="serialNumber" class="java.lang.String">
 		<fieldDescription><![CDATA[serialNumber]]></fieldDescription>
 	</field>
+	<field name="duplicate" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[duplicate]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="60" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="4a4a81a5-1468-40b6-9d92-689c1a062250" x="0" y="32" width="802" height="28"/>
-				<textElement textAlignment="Center">
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Land ownership certificate]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="10555220-6c59-4d42-bd9a-6656ac5f9a8a" x="610" y="0" width="60" height="20"/>
+				<reportElement uuid="10555220-6c59-4d42-bd9a-6656ac5f9a8a" x="600" y="0" width="70" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
@@ -243,10 +239,26 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{serialNumber}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a6eb3517-015e-49df-abb9-bd783c182527" x="0" y="29" width="802" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OFFICE_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c87fc89f-4c0f-42f7-bc96-dfa06e4dce76" x="0" y="29" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{duplicate}==true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[D U P L I C A T E]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
-		<band height="265" splitType="Stretch">
+		<band height="232" splitType="Stretch">
 			<componentElement>
 				<reportElement uuid="1affb0f1-215b-4d97-a245-cc09d10654d8" x="0" y="0" width="802" height="138"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
@@ -262,21 +274,21 @@
 							<imageExpression><![CDATA[$F{photoImage}]]></imageExpression>
 						</image>
 						<image hAlign="Center">
-							<reportElement uuid="5a98418c-2c20-4a15-9e62-3a53b9cb0207" x="127" y="25" width="85" height="85"/>
+							<reportElement uuid="5a98418c-2c20-4a15-9e62-3a53b9cb0207" x="127" y="23" width="85" height="90"/>
 							<graphicElement>
 								<pen lineWidth="0.5"/>
 							</graphicElement>
 							<imageExpression><![CDATA[$F{rightFingerprintImage}]]></imageExpression>
 						</image>
 						<image hAlign="Center">
-							<reportElement uuid="d61714b5-2429-482b-82b0-068f8ac1e0bd" x="212" y="25" width="85" height="90"/>
+							<reportElement uuid="d61714b5-2429-482b-82b0-068f8ac1e0bd" x="212" y="23" width="85" height="90"/>
 							<graphicElement>
 								<pen lineWidth="0.5"/>
 							</graphicElement>
 							<imageExpression><![CDATA[$F{leftFingerprintImage}]]></imageExpression>
 						</image>
 						<staticText>
-							<reportElement uuid="0ae0401f-6461-4791-8473-4b682d860b20" x="127" y="5" width="170" height="19"/>
+							<reportElement uuid="0ae0401f-6461-4791-8473-4b682d860b20" x="127" y="5" width="170" height="18"/>
 							<box>
 								<pen lineWidth="0.5"/>
 								<topPen lineWidth="0.5"/>
@@ -388,7 +400,7 @@
 							<textFieldExpression><![CDATA[$F{officeName}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement uuid="8cf1fbf7-5244-41aa-b472-f2fe1baec04b" key="rightFinger" x="127" y="25" width="85" height="91" forecolor="#999999"/>
+							<reportElement uuid="8cf1fbf7-5244-41aa-b472-f2fe1baec04b" key="rightFinger" x="127" y="23" width="85" height="90" forecolor="#999999"/>
 							<box topPadding="4"/>
 							<textElement textAlignment="Center" verticalAlignment="Top">
 								<font size="10"/>
@@ -396,7 +408,7 @@
 							<text><![CDATA[दाँया]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="224c009d-9cfe-4db5-880c-685472c49f1c" key="leftFinger" x="212" y="25" width="85" height="90" forecolor="#999999"/>
+							<reportElement uuid="224c009d-9cfe-4db5-880c-685472c49f1c" key="leftFinger" x="212" y="23" width="85" height="90" forecolor="#999999"/>
 							<box topPadding="4"/>
 							<textElement textAlignment="Center" verticalAlignment="Top">
 								<font size="10"/>
@@ -410,7 +422,7 @@
 						</staticText>
 						<staticText>
 							<reportElement uuid="4e4bfacc-76ed-4d4e-b0db-096f02943db9" x="158" y="117" width="100" height="20"/>
-							<textElement/>
+							<textElement textAlignment="Center"/>
 							<text><![CDATA[जग्गाधनीको दस्तखत]]></text>
 						</staticText>
 					</jr:listContents>
@@ -880,27 +892,6 @@
 				</textElement>
 				<text><![CDATA[प्रमाणित गर्नेको दस्तखत]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="83404fcd-9d7d-41be-8cc3-0745d028f257" x="4" y="245" width="83" height="20"/>
-				<textElement/>
-				<text><![CDATA[प्रिन्ट गर्नेको दस्तखत :]]></text>
-			</staticText>
-			<line>
-				<reportElement uuid="ad61e2fb-e657-4880-817b-bc708eb227d7" x="91" y="258" width="145" height="1"/>
-			</line>
-			<staticText>
-				<reportElement uuid="6baf646c-2f60-4fd2-94c9-0e5afd87065b" x="301" y="245" width="64" height="20"/>
-				<textElement/>
-				<text><![CDATA[प्रिन्ट मिति :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="a2b3c3e0-b4f3-4c88-ac91-e4e99eed7be7" x="560" y="245" width="93" height="20"/>
-				<textElement/>
-				<text><![CDATA[रुजु गर्नेको दस्तखत :]]></text>
-			</staticText>
-			<line>
-				<reportElement uuid="6254d609-9f8d-4eef-954a-e32dd603fd9a" x="656" y="258" width="140" height="1"/>
-			</line>
 		</band>
 	</detail>
 	<pageFooter>
@@ -918,6 +909,35 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="17" splitType="Stretch"/>
+		<band height="41" splitType="Stretch">
+			<line>
+				<reportElement uuid="ad61e2fb-e657-4880-817b-bc708eb227d7" x="94" y="28" width="145" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="6254d609-9f8d-4eef-954a-e32dd603fd9a" x="659" y="28" width="140" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="83404fcd-9d7d-41be-8cc3-0745d028f257" x="7" y="15" width="83" height="20"/>
+				<textElement/>
+				<text><![CDATA[प्रिन्ट गर्नेको दस्तखत :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6baf646c-2f60-4fd2-94c9-0e5afd87065b" x="304" y="15" width="53" height="20"/>
+				<textElement/>
+				<text><![CDATA[प्रिन्ट मिति :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a2b3c3e0-b4f3-4c88-ac91-e4e99eed7be7" x="563" y="15" width="93" height="20"/>
+				<textElement/>
+				<text><![CDATA[रुजु गर्नेको दस्तखत :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5e24958f-759c-4ae0-a964-9f4fca86255f" x="357" y="15" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

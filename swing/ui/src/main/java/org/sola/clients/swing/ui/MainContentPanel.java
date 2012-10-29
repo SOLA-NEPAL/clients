@@ -106,6 +106,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_VDC = "vdc";
     public final static String CARD_VDCS = "vdcs";
     public final static String CARD_LOC_SEARCH = "locSearch";
+    public final static String CARD_RESTRICTIONS_SEARCH = "restrictionsSearch";
     
     private HashMap<String, ContentPanel> cards;
     private ArrayList<String> cardsIndex;

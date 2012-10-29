@@ -29,11 +29,8 @@
  */
 package org.sola.clients.swing.desktop;
 
-import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
@@ -45,11 +42,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.party.PartyBean;
-import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.security.SecurityBean;
-import org.sola.clients.beans.source.SourceBean;
-import org.sola.clients.beans.source.SourceSummaryBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.DefaultExceptionHandler;
 import org.sola.clients.swing.common.LafManager;
@@ -59,18 +53,16 @@ import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
 import org.sola.clients.swing.desktop.administrative.LocSearchForm;
 import org.sola.clients.swing.desktop.administrative.MothManagementForm;
+import org.sola.clients.swing.desktop.administrative.RestrictionSearchForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
-import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
-import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
-import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
-import org.sola.clients.swing.desktop.inquiry.SearchByPerson;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.reports.LodgementReportParamsForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import org.sola.common.RolesConstants;
 import org.sola.common.help.HelpUtility;
 import org.sola.common.logging.LogUtility;
@@ -106,13 +98,6 @@ public class MainForm extends javax.swing.JFrame {
      * has been opened. It helps to display form with no significant delays.
      */
     private void postInit() {
-        // Set center screen location 
-//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-//        int x = ((dim.width) / 2);
-//        int y = ((dim.height) / 2);
-//
-//        this.setLocation(x - (this.getWidth() / 2), y - (this.getHeight() / 2));
-
         // Customize buttons
         btnNewApplication.setEnabled(SecurityBean.isInRole(RolesConstants.APPLICATION_CREATE_APPS));
         btnOpenMap.setEnabled(SecurityBean.isInRole(RolesConstants.GIS_VIEW_MAP));
@@ -258,6 +243,22 @@ public class MainForm extends javax.swing.JFrame {
         };
         TaskManager.getInstance().runTask(t);
     }
+    
+    private void openRestrictionsSearch(){
+        SolaTask t = new SolaTask<Void, Void>() {
+            @Override
+            public Void doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_RESTRICTIONS_SEARCH));
+                if (!pnlContent.isPanelOpened(MainContentPanel.CARD_RESTRICTIONS_SEARCH)) {
+                    RestrictionSearchForm form = new RestrictionSearchForm();
+                    pnlContent.addPanel(form, MainContentPanel.CARD_RESTRICTIONS_SEARCH);
+                }
+                pnlContent.showPanel(MainContentPanel.CARD_RESTRICTIONS_SEARCH);
+                return null;
+            }
+        };
+        TaskManager.getInstance().runTask(t);
+    }
 
     private void showAboutBox() {
         AboutForm aboutBox = new AboutForm(this);
@@ -335,6 +336,8 @@ public class MainForm extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btnNewApplication = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
+        btnMothShrestaEntry = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JToolBar.Separator();
         btnSearchApplications = new javax.swing.JButton();
         btnOpenBaUnitSearch = new javax.swing.JButton();
         btnDocumentSearch = new javax.swing.JButton();
@@ -364,19 +367,14 @@ public class MainForm extends javax.swing.JFrame {
         menuApplications = new javax.swing.JMenu();
         menuNewApplication = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        menuDataEntry = new javax.swing.JMenu();
         menuMothStrestaEnry = new javax.swing.JMenuItem();
-        menuSrch = new javax.swing.JMenu();
-        menuSearchByPerson = new javax.swing.JMenuItem();
-        mnuSearchByMothPana = new javax.swing.JMenuItem();
-        mnuSearchByParcelNo = new javax.swing.JMenuItem();
-        mnuSearchByMothPanaParcel = new javax.swing.JMenuItem();
         menuSearch = new javax.swing.JMenu();
         menuSearchApplication = new javax.swing.JMenuItem();
         menuBaUnitSearch = new javax.swing.JMenuItem();
         menuDocumentSearch = new javax.swing.JMenuItem();
         menuPersons = new javax.swing.JMenuItem();
         menuSearchLoc = new javax.swing.JMenuItem();
+        menuRestrictionsSearch = new javax.swing.JMenuItem();
         menuMap = new javax.swing.JMenu();
         menuShowMap = new javax.swing.JMenuItem();
         menuReportsDesktop = new javax.swing.JMenu();
@@ -432,6 +430,17 @@ public class MainForm extends javax.swing.JFrame {
         });
         applicationsMain.add(btnNewApplication);
         applicationsMain.add(jSeparator4);
+
+        btnMothShrestaEntry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open-list.png"))); // NOI18N
+        btnMothShrestaEntry.setText(bundle.getString("MainForm.btnMothShrestaEntry.text")); // NOI18N
+        btnMothShrestaEntry.setFocusable(false);
+        btnMothShrestaEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMothShrestaEntryActionPerformed(evt);
+            }
+        });
+        applicationsMain.add(btnMothShrestaEntry);
+        applicationsMain.add(jSeparator6);
 
         btnSearchApplications.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
         btnSearchApplications.setText(bundle.getString("MainForm.btnSearchApplications.text")); // NOI18N
@@ -536,7 +545,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
+                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,58 +639,14 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenu4.setText(bundle.getString("MainForm.jMenu4.text")); // NOI18N
 
-        menuDataEntry.setText(bundle.getString("MainForm.menuDataEntry.text")); // NOI18N
-
-        menuMothStrestaEnry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document--pencil.png"))); // NOI18N
+        menuMothStrestaEnry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open-list.png"))); // NOI18N
         menuMothStrestaEnry.setText(bundle.getString("MainForm.menuMothStrestaEnry.text")); // NOI18N
         menuMothStrestaEnry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuMothStrestaEnryActionPerformed(evt);
             }
         });
-        menuDataEntry.add(menuMothStrestaEnry);
-
-        jMenu4.add(menuDataEntry);
-
-        menuSrch.setText(bundle.getString("MainForm.menuSrch.text")); // NOI18N
-
-        menuSearchByPerson.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        menuSearchByPerson.setText(bundle.getString("MainForm.menuSearchByPerson.text")); // NOI18N
-        menuSearchByPerson.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSearchByPersonActionPerformed(evt);
-            }
-        });
-        menuSrch.add(menuSearchByPerson);
-
-        mnuSearchByMothPana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        mnuSearchByMothPana.setText(bundle.getString("MainForm.mnuSearchByMothPana.text")); // NOI18N
-        mnuSearchByMothPana.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuSearchByMothPanaActionPerformed(evt);
-            }
-        });
-        menuSrch.add(mnuSearchByMothPana);
-
-        mnuSearchByParcelNo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        mnuSearchByParcelNo.setText(bundle.getString("MainForm.mnuSearchByParcelNo.text")); // NOI18N
-        mnuSearchByParcelNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuSearchByParcelNoActionPerformed(evt);
-            }
-        });
-        menuSrch.add(mnuSearchByParcelNo);
-
-        mnuSearchByMothPanaParcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
-        mnuSearchByMothPanaParcel.setText(bundle.getString("MainForm.mnuSearchByMothPanaParcel.text")); // NOI18N
-        mnuSearchByMothPanaParcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuSearchByMothPanaParcelActionPerformed(evt);
-            }
-        });
-        menuSrch.add(mnuSearchByMothPanaParcel);
-
-        jMenu4.add(menuSrch);
+        jMenu4.add(menuMothStrestaEnry);
 
         menuBar.add(jMenu4);
 
@@ -731,6 +696,15 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         menuSearch.add(menuSearchLoc);
+
+        menuRestrictionsSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        menuRestrictionsSearch.setText(bundle.getString("MainForm.menuRestrictionsSearch.text")); // NOI18N
+        menuRestrictionsSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRestrictionsSearchActionPerformed(evt);
+            }
+        });
+        menuSearch.add(menuRestrictionsSearch);
 
         menuBar.add(menuSearch);
 
@@ -798,16 +772,16 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
-            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
+            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
+            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(applicationsMain, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -898,7 +872,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void menuLodgementReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLodgementReportActionPerformed
         openLodgementReportParamsForm();
-//        showReport(ReportManager.getLodgementReport(lodgementBean1, ));  
     }//GEN-LAST:event_menuLodgementReportActionPerformed
 
     private void menuPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPersonsActionPerformed
@@ -906,46 +879,22 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPersonsActionPerformed
 
     private void menuMothStrestaEnryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMothStrestaEnryActionPerformed
-        // TODO add your handling code here:
         mothShrestaEntry();
     }//GEN-LAST:event_menuMothStrestaEnryActionPerformed
 
-    private void menuSearchByPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchByPersonActionPerformed
-        // TODO add your handling code here:
-        showSearchPerson();
-    }//GEN-LAST:event_menuSearchByPersonActionPerformed
-
-    private void mnuSearchByMothPanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByMothPanaActionPerformed
-        // TODO add your handling code here:
-        showSearchByMothPana();
-    }//GEN-LAST:event_mnuSearchByMothPanaActionPerformed
-
-    private void mnuSearchByMothPanaParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByMothPanaParcelActionPerformed
-        // TODO add your handling code here:
-        showSearchByMothPanaAndParcelNo();
-    }//GEN-LAST:event_mnuSearchByMothPanaParcelActionPerformed
-
-    private void mnuSearchByParcelNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSearchByParcelNoActionPerformed
-        // TODO add your handling code here:
-        showSearchByParcelNo();
-    }//GEN-LAST:event_mnuSearchByParcelNoActionPerformed
-
     private void menuCurrentUserRolesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCurrentUserRolesReportActionPerformed
-        // TODO add your handling code here:       
-        // vdcListBean1.loadList(false, "25");
-        // showTestReport(ReportManager.getTestReportToDisplyListOfVdc(vdcListBean1.getVdcs())); 
         showCurrentUserRolesReport(ReportManager.getCurrentUserWithRolesReport());
     }//GEN-LAST:event_menuCurrentUserRolesReportActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         showMapsheetManagementPanel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:       
-        RrrBean rrrBean = RrrBean.getRrr("e7c3a331-bd70-4f78-94fe-97cf66d64e1a");
-        showRestrictionReport(ReportManager.getRestrictionReport(rrrBean));
+        OfficeBean officeBean = OfficeBean.getCurrentOffice();
+        PartyBean party = PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
+        // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
+        showRestrictionReport(ReportManager.getRestrictionReport(officeBean, party));//,sa,party));      
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void showRestrictionReport(JasperPrint report) {
@@ -961,6 +910,14 @@ public class MainForm extends javax.swing.JFrame {
     private void btnSearchLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchLocActionPerformed
         openLocSearch();
     }//GEN-LAST:event_btnSearchLocActionPerformed
+
+    private void btnMothShrestaEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMothShrestaEntryActionPerformed
+        mothShrestaEntry();
+    }//GEN-LAST:event_btnMothShrestaEntryActionPerformed
+
+    private void menuRestrictionsSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionsSearchActionPerformed
+        openRestrictionsSearch();
+    }//GEN-LAST:event_menuRestrictionsSearchActionPerformed
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -975,38 +932,6 @@ public class MainForm extends javax.swing.JFrame {
         form.setAlwaysOnTop(true);
     }
 
-    private void showSearchByParcelNo() {
-        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO)) {
-            SearchByParcelNo srchParcel = new SearchByParcelNo();
-            pnlContent.addPanel(srchParcel, MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
-        }
-        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_PARCEL_NO);
-    }
-
-    private void showSearchByMothPanaAndParcelNo() {
-        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL)) {
-            SearchByMothPanaParcelNo srchMohPanaParcel = new SearchByMothPanaParcelNo();
-            pnlContent.addPanel(srchMohPanaParcel, MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
-        }
-        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA_PARCEL);
-    }
-
-    private void showSearchByMothPana() {
-        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA)) {
-            SearchByMothAndPageNo srchMohPana = new SearchByMothAndPageNo();
-            pnlContent.addPanel(srchMohPana, MainContentPanel.CARD_SEARCH_BY_MOTH_PANA);
-        }
-        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_MOTH_PANA);
-    }
-
-    private void showSearchPerson() {
-        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
-            SearchByPerson srchLndOwner = new SearchByPerson();
-            pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
-        }
-        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
-    }
-
     private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY)) {
             MothManagementForm srchLndOwner = new MothManagementForm();
@@ -1018,6 +943,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JToolBar applicationsMain;
     private javax.swing.JButton btnDocumentSearch;
     private javax.swing.JButton btnManageParties;
+    private javax.swing.JButton btnMothShrestaEntry;
     private javax.swing.JButton btnNewApplication;
     private javax.swing.JButton btnOpenBaUnitSearch;
     private javax.swing.JButton btnOpenMap;
@@ -1037,6 +963,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JMenuItem jmiContextHelp;
     private javax.swing.JLabel labStatus;
     private javax.swing.JMenuItem menuAllLogLevel;
@@ -1044,7 +971,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuBaUnitSearch;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuCurrentUserRolesReport;
-    private javax.swing.JMenu menuDataEntry;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
     private javax.swing.JMenuItem menuLangEN;
@@ -1058,16 +984,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuOffLogLevel;
     private javax.swing.JMenuItem menuPersons;
     private javax.swing.JMenu menuReportsDesktop;
+    private javax.swing.JMenuItem menuRestrictionsSearch;
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
-    private javax.swing.JMenuItem menuSearchByPerson;
     private javax.swing.JMenuItem menuSearchLoc;
     private javax.swing.JMenuItem menuShowMap;
-    private javax.swing.JMenu menuSrch;
     private javax.swing.JMenu menuView;
-    private javax.swing.JMenuItem mnuSearchByMothPana;
-    private javax.swing.JMenuItem mnuSearchByMothPanaParcel;
-    private javax.swing.JMenuItem mnuSearchByParcelNo;
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;
     private javax.swing.JPanel statusPanel;
     private org.sola.clients.swing.common.tasks.TaskPanel taskPanel1;

@@ -15,7 +15,11 @@
  */
 package org.sola.clients.beans.system;
 
+import java.util.Calendar;
+import java.util.Date;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.common.NepaliIntegersConvertor;
+import org.sola.services.boundary.wsclients.WSManager;
 
 /**
  *
@@ -42,5 +46,21 @@ public class NepaliYearBean extends AbstractBindingBean{
     public String toString(){
         return Integer.toString(getNepYear());
     }
+ 
+    public static String getCurrentNepaliDate(boolean format){
+        return getNepaliDate(Calendar.getInstance().getTime(), format);
+    }
     
+    public static String getNepaliDate(Date date, boolean format){
+        String stringDate = "";
+        if(WSManager.getInstance().getAdminService()!=null){
+            stringDate = WSManager.getInstance().getAdminService().getNepaliDate(date);
+            if(stringDate!=null && !format){
+                stringDate = stringDate.replace("-", "");
+            } else {
+                stringDate = NepaliIntegersConvertor.toNepaliInteger(stringDate, false);
+            }
+        }
+        return stringDate;
+    }
 }

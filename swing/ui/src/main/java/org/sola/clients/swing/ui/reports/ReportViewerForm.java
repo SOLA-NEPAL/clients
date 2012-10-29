@@ -76,19 +76,15 @@ public class ReportViewerForm extends javax.swing.JFrame {
             return;
         }
 
-        SerialNumberDialog form = new SerialNumberDialog(null, true);
+        final SerialNumberDialog form = new SerialNumberDialog(null, true);
         Utils.positionFormCentrally(form);
         form.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(SerialNumberDialog.SERIAL_NUMBER_PROPERTY)) {
-                    String sn = null;
-                    if (evt.getNewValue() != null) {
-                        sn = evt.getNewValue().toString();
-                    }
-                    locDetails.setSerialNumber(sn);
-                    //((SerialNumberDialog)evt.getSource()).setVisible(true);
+                if (evt.getPropertyName().equals(SerialNumberDialog.SELECTED_PROPERTY)) {
+                    locDetails.setSerialNumber(form.getSerialNumber());
+                    locDetails.setDuplicate(form.isDuplicate());
                 }
             }
         });
