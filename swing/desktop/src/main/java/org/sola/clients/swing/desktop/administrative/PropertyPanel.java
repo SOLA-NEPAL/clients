@@ -695,9 +695,6 @@ public class PropertyPanel extends ContentPanel {
         if (rrrGroupCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_OWNERSHIP;
-       // } else if (rrrGroupCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_RIGHTS)) {
-           // panel = new TenancyPanel(rrrBean, applicationBean, applicationService, action);
-           // cardName = MainContentPanel.CARD_TENANCY;
         }else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_SIMPLE_RESTRICTION)) {
             panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
             cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;

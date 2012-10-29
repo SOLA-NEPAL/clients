@@ -292,7 +292,6 @@ public class SimpleRestrictionsPanel extends ContentPanel {
         txtRestrictionReleaseOfficeName = new javax.swing.JTextField();
         documentsPanel = createDocumentsPanel();
 
-        setCloseOnHide(true);
         setHeaderPanel(headerPanel);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
         setHelpTopic(bundle.getString("SimpleRestrictionsPanel.helpTopic")); // NOI18N

@@ -30,7 +30,6 @@
 package org.sola.clients.beans.administrative;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Iterator;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -46,16 +45,14 @@ import org.sola.clients.beans.administrative.validation.RestrictionValidationGro
 import org.sola.clients.beans.administrative.validation.TenancyValidationGroup;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
+import org.sola.clients.beans.system.NepaliYearBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
-import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -179,12 +176,7 @@ public class RrrBean extends AbstractTransactionedBean {
 
     public RrrBean() {
         super();
-        if(WSManager.getInstance().getAdminService()!=null){
-            registrationDate = WSManager.getInstance().getAdminService().getNepaliDate(Calendar.getInstance().getTime());
-            if(registrationDate!=null){
-                registrationDate = registrationDate.replace("-", "");
-            }
-        }
+        registrationDate = NepaliYearBean.getCurrentNepaliDate(false);
         sourceList = new SolaList();
         rightHolderList = new SolaList();
         notation = new BaUnitNotationBean();

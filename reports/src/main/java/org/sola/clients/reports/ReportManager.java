@@ -43,14 +43,13 @@ import org.sola.clients.beans.administrative.LocDetailsBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
 import org.sola.clients.beans.party.PartyBean;
-import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.security.UserBean;
-import org.sola.clients.beans.source.SourceSummaryBean;
 import org.sola.clients.beans.system.BrListBean;
 import org.sola.clients.beans.system.BrReportBean;
+import org.sola.clients.beans.system.NepaliYearBean;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -96,7 +95,8 @@ public class ReportManager {
     public static JasperPrint getLocDetailsReport(LocDetailsBean locDetails) {
         HashMap inputParameters = new HashMap();
         inputParameters.put("REPORT_LOCALE", Locale.getDefault());
-        inputParameters.put("today", new Date());
+        inputParameters.put("CURRENT_DATE", NepaliYearBean.getCurrentNepaliDate(true));
+        inputParameters.put("OFFICE_NAME", OfficeBean.getCurrentOffice().getDisplayValue());
         inputParameters.put("USER_NAME", SecurityBean.getCurrentUser().getFullUserName());
         LocDetailsBean[] beans = new LocDetailsBean[1];
         beans[0] = locDetails;

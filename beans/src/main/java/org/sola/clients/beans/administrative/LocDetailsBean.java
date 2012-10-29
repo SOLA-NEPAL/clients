@@ -15,11 +15,9 @@
  */
 package org.sola.clients.beans.administrative;
 
-import java.util.List;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.services.boundary.transferobjects.search.LocDetailsTO;
 import org.sola.services.boundary.wsclients.WSManager;
 
 public class LocDetailsBean extends AbstractBindingBean {
@@ -27,6 +25,7 @@ public class LocDetailsBean extends AbstractBindingBean {
     private SolaObservableList<PartyLocBean> parties;
     private SolaObservableList<RrrLocDetailsBean> rrrs;
     private String serialNumber;
+    private boolean duplicate=false;
     
     public LocDetailsBean(){
         super();
@@ -60,5 +59,13 @@ public class LocDetailsBean extends AbstractBindingBean {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public boolean isDuplicate() {
+        return duplicate;
+    }
+
+    public void setDuplicate(boolean duplicate) {
+        this.duplicate = duplicate;
     }
 }

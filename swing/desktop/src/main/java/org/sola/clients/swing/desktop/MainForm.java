@@ -29,11 +29,8 @@
  */
 package org.sola.clients.swing.desktop;
 
-import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import java.awt.ComponentOrientation;
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
@@ -44,11 +41,8 @@ import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.party.PartyBean;
-import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.security.SecurityBean;
-import org.sola.clients.beans.source.SourceBean;
-import org.sola.clients.beans.source.SourceSummaryBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.DefaultExceptionHandler;
 import org.sola.clients.swing.common.LafManager;
@@ -58,18 +52,16 @@ import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
 import org.sola.clients.swing.desktop.administrative.LocSearchForm;
 import org.sola.clients.swing.desktop.administrative.MothManagementForm;
+import org.sola.clients.swing.desktop.administrative.RestrictionSearchForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
-import org.sola.clients.swing.desktop.inquiry.SearchByMothAndPageNo;
-import org.sola.clients.swing.desktop.inquiry.SearchByMothPanaParcelNo;
-import org.sola.clients.swing.desktop.inquiry.SearchByParcelNo;
-import org.sola.clients.swing.desktop.inquiry.SearchByPerson;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
 import org.sola.clients.swing.desktop.reports.LodgementReportParamsForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.ui.MainContentPanel;
+import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import org.sola.common.RolesConstants;
 import org.sola.common.help.HelpUtility;
 import org.sola.common.logging.LogUtility;
@@ -105,13 +97,6 @@ public class MainForm extends javax.swing.JFrame {
      * has been opened. It helps to display form with no significant delays.
      */
     private void postInit() {
-        // Set center screen location 
-//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-//        int x = ((dim.width) / 2);
-//        int y = ((dim.height) / 2);
-//
-//        this.setLocation(x - (this.getWidth() / 2), y - (this.getHeight() / 2));
-
         // Customize buttons
         btnNewApplication.setEnabled(SecurityBean.isInRole(RolesConstants.APPLICATION_CREATE_APPS));
         btnOpenMap.setEnabled(SecurityBean.isInRole(RolesConstants.GIS_VIEW_MAP));
@@ -257,6 +242,22 @@ public class MainForm extends javax.swing.JFrame {
         };
         TaskManager.getInstance().runTask(t);
     }
+    
+    private void openRestrictionsSearch(){
+        SolaTask t = new SolaTask<Void, Void>() {
+            @Override
+            public Void doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_RESTRICTIONS_SEARCH));
+                if (!pnlContent.isPanelOpened(MainContentPanel.CARD_RESTRICTIONS_SEARCH)) {
+                    RestrictionSearchForm form = new RestrictionSearchForm();
+                    pnlContent.addPanel(form, MainContentPanel.CARD_RESTRICTIONS_SEARCH);
+                }
+                pnlContent.showPanel(MainContentPanel.CARD_RESTRICTIONS_SEARCH);
+                return null;
+            }
+        };
+        TaskManager.getInstance().runTask(t);
+    }
 
     private void showAboutBox() {
         AboutForm aboutBox = new AboutForm(this);
@@ -372,6 +373,7 @@ public class MainForm extends javax.swing.JFrame {
         menuDocumentSearch = new javax.swing.JMenuItem();
         menuPersons = new javax.swing.JMenuItem();
         menuSearchLoc = new javax.swing.JMenuItem();
+        menuRestrictionsSearch = new javax.swing.JMenuItem();
         menuMap = new javax.swing.JMenu();
         menuShowMap = new javax.swing.JMenuItem();
         menuReportsDesktop = new javax.swing.JMenu();
@@ -694,6 +696,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSearch.add(menuSearchLoc);
 
+        menuRestrictionsSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/search.png"))); // NOI18N
+        menuRestrictionsSearch.setText(bundle.getString("MainForm.menuRestrictionsSearch.text")); // NOI18N
+        menuRestrictionsSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRestrictionsSearchActionPerformed(evt);
+            }
+        });
+        menuSearch.add(menuRestrictionsSearch);
+
         menuBar.add(menuSearch);
 
         menuMap.setText(bundle.getString("MainForm.menuMap.text")); // NOI18N
@@ -860,7 +871,6 @@ public class MainForm extends javax.swing.JFrame {
 
     private void menuLodgementReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLodgementReportActionPerformed
         openLodgementReportParamsForm();
-//        showReport(ReportManager.getLodgementReport(lodgementBean1, ));  
     }//GEN-LAST:event_menuLodgementReportActionPerformed
 
     private void menuPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPersonsActionPerformed
@@ -868,7 +878,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPersonsActionPerformed
 
     private void menuMothStrestaEnryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMothStrestaEnryActionPerformed
-        // TODO add your handling code here:
         mothShrestaEntry();
     }//GEN-LAST:event_menuMothStrestaEnryActionPerformed
 
@@ -904,6 +913,10 @@ public class MainForm extends javax.swing.JFrame {
     private void btnMothShrestaEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMothShrestaEntryActionPerformed
         mothShrestaEntry();
     }//GEN-LAST:event_btnMothShrestaEntryActionPerformed
+
+    private void menuRestrictionsSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionsSearchActionPerformed
+        openRestrictionsSearch();
+    }//GEN-LAST:event_menuRestrictionsSearchActionPerformed
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -970,6 +983,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuOffLogLevel;
     private javax.swing.JMenuItem menuPersons;
     private javax.swing.JMenu menuReportsDesktop;
+    private javax.swing.JMenuItem menuRestrictionsSearch;
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
     private javax.swing.JMenuItem menuSearchLoc;
