@@ -107,6 +107,10 @@ public class RestrictionSearchResultBean extends AbstractBasicIdBean {
         this.price = price;
     }
 
+    public String getReferenceDateFormatted() {
+        return DateUtility.toFormattedNepaliDate(referenceDate);
+    }
+    
     public String getReferenceDate() {
         return referenceDate;
     }
@@ -127,6 +131,10 @@ public class RestrictionSearchResultBean extends AbstractBasicIdBean {
         return registrationDate;
     }
 
+    public String getRegistrationDateFormatted(){
+        return DateUtility.toFormattedNepaliDate(registrationDate);
+    }
+    
     public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
     }

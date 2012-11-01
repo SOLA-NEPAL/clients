@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="890c07fe-98df-4b3f-9fc4-e81031b41b2f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="8"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -127,7 +127,7 @@
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="dataset1">
+	<subDataset name="dataset1" uuid="66aba6e1-aa8c-4cf3-a9fe-10e28320b4f0">
 		<queryString language="SQL">
 			<![CDATA[]]>
 		</queryString>
@@ -147,7 +147,7 @@
 			<fieldDescription><![CDATA[status.displayValue]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="Rights">
+	<subDataset name="Rights" uuid="b2c42a9f-0ed2-4b13-9dfc-276fc0ad2a50">
 		<field name="rrrType" class="java.lang.String">
 			<fieldDescription><![CDATA[rrrType.displayValue]]></fieldDescription>
 		</field>
@@ -158,7 +158,7 @@
 			<fieldDescription><![CDATA[status.displayValue]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="Ownership">
+	<subDataset name="Ownership" uuid="8cfd6f97-aabf-446d-b635-868dca5b7621">
 		<field name="Owners" class="java.lang.String">
 			<fieldDescription><![CDATA[rrrShare.rightHoldersStringList]]></fieldDescription>
 		</field>
@@ -169,7 +169,7 @@
 			<fieldDescription><![CDATA[status]]></fieldDescription>
 		</field>
 	</subDataset>
-	<subDataset name="Notations">
+	<subDataset name="Notations" uuid="1c35a943-cd2e-4ee3-b0ba-b0ed721a22cf">
 		<field name="Ref. Number" class="java.lang.String">
 			<fieldDescription><![CDATA[referenceNr]]></fieldDescription>
 		</field>
@@ -223,28 +223,28 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="230" height="42" forecolor="#006666"/>
+				<reportElement uuid="31899d4b-1ac5-43d1-aafa-cb127faeb346" x="0" y="0" width="230" height="42" forecolor="#006666"/>
 				<textElement>
 					<font size="28" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Title registration]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="59" width="76" height="20"/>
+				<reportElement uuid="d79e7156-7310-484a-af45-aedd14cbd98f" x="0" y="59" width="76" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[Date Issued:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="76" y="59" width="235" height="20"/>
+				<reportElement uuid="ee886167-cf6d-463c-aae4-6ca7b91731c9" x="76" y="59" width="235" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="41" width="555" height="1" forecolor="#006666"/>
+				<reportElement uuid="5046ae4f-1e60-48e0-9503-950467a4d497" x="0" y="41" width="555" height="1" forecolor="#006666"/>
 				<graphicElement>
 					<pen lineWidth="3.0"/>
 				</graphicElement>
@@ -260,64 +260,64 @@
 	<detail>
 		<band height="403" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="13" width="120" height="20"/>
+				<reportElement uuid="d55c835f-5fc6-4e69-b88b-9ecc1ecd355d" x="0" y="13" width="120" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[Name first/last part:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="120" y="13" width="435" height="20"/>
+				<reportElement uuid="b2d21188-02e4-4545-9989-5053791574fb" x="120" y="13" width="435" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nameFirstpart} + "/" + $F{nameLastpart}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nameFirstpart} + "/" + $F{nameLastpart}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="44" width="120" height="20"/>
+				<reportElement uuid="255369f0-56d4-450e-babd-1306ec636abd" x="0" y="44" width="120" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[Estate type:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="120" y="44" width="435" height="20"/>
+				<reportElement uuid="3d315a7a-d6ca-4f49-a70b-214c98e06798" x="120" y="44" width="435" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{estateType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{estateType}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="76" width="120" height="20"/>
+				<reportElement uuid="d42bab4d-21ca-4f16-a0b4-535e6dd30360" x="0" y="76" width="120" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12"/>
 				</textElement>
 				<text><![CDATA[Description:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="120" y="76" width="435" height="20"/>
+				<reportElement uuid="1dd095b9-5e5d-4b16-a410-23f8ede1a3e8" x="120" y="76" width="435" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" isItalic="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="108" width="100" height="20"/>
+				<reportElement uuid="38fa614e-aae2-41f0-b30d-ed261f959c1e" x="0" y="108" width="100" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PARCELS:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table" style="table" x="0" y="129" width="555" height="41"/>
+				<reportElement uuid="24b2611f-bb84-455f-a293-e95b4001bb82" key="table" style="table" x="0" y="129" width="555" height="41"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="dataset1">
+					<datasetRun subDataset="dataset1" uuid="8d26d15b-1a68-470b-83b0-3eeb2c3908c6">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{cadastreObjectFilteredList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="160">
+					<jr:column uuid="71d78042-f148-47af-9d51-c4a4357fd3c0" width="160">
 						<jr:columnHeader style="table_CH" height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="160" height="22"/>
+								<reportElement uuid="2c994b0b-b954-4aee-bb34-9711306fed34" x="0" y="0" width="160" height="22"/>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -327,19 +327,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="23" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="160" height="20"/>
+								<reportElement uuid="c0af00a4-7654-43a8-9119-b30d4f46bf6f" x="0" y="0" width="160" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="4" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{nameFirstpart} !=null && $F{nameLastpart} != null ? $F{nameFirstpart} + "/" + $F{nameLastpart} : ""]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nameFirstpart} !=null && $F{nameLastpart} != null ? $F{nameFirstpart} + "/" + $F{nameLastpart} : ""]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="171">
+					<jr:column uuid="fdbd4025-27c9-44b1-8eb5-1ef1af152043" width="171">
 						<jr:columnHeader style="table_CH" height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="171" height="22"/>
+								<reportElement uuid="e2e1bd13-ff7b-43f4-b616-12501ca782c1" x="0" y="0" width="171" height="22"/>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -349,19 +349,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="23" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="171" height="20"/>
+								<reportElement uuid="0e284333-6f00-49f8-ba77-3b96d609b5ba" x="0" y="0" width="171" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{cadastreObjectType}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{cadastreObjectType}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="131">
+					<jr:column uuid="a12fae66-63c8-4f7e-9d42-b0fe5b2ea84c" width="131">
 						<jr:columnHeader style="table_CH" height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="131" height="22"/>
+								<reportElement uuid="f9ed06b9-61e3-4dea-a114-356212db8a92" x="0" y="0" width="131" height="22"/>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -371,19 +371,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="23" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="131" height="20"/>
+								<reportElement uuid="82a98888-6de2-4c42-82d3-fa30c05cfe6d" x="0" y="0" width="131" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{sourceReference}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{sourceReference}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="93">
+					<jr:column uuid="116eb6df-36c9-485f-827d-df4bfe98dd54" width="93">
 						<jr:columnHeader style="table_CH" height="22" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="93" height="22"/>
+								<reportElement uuid="9730891f-6a51-4927-a742-2e549f9cca43" x="0" y="0" width="93" height="22"/>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -393,34 +393,34 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table_TD" height="23" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="93" height="20"/>
+								<reportElement uuid="1b5e308c-1b7d-4ac0-afe4-320ee3414979" x="0" y="0" width="93" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="181" width="100" height="20"/>
+				<reportElement uuid="179b33a2-f4df-4e16-9220-98395f218080" positionType="Float" x="0" y="181" width="100" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RIGHTS:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table 1" style="table 1" positionType="Float" x="0" y="201" width="555" height="44"/>
+				<reportElement uuid="193d6525-8a62-48c3-823d-190d239731a2" key="table 1" style="table 1" positionType="Float" x="0" y="201" width="555" height="44"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Rights">
+					<datasetRun subDataset="Rights" uuid="3657469a-2b00-46c1-bacd-2aeddf0128e0">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{rrrFilteredList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="280">
+					<jr:column uuid="49051a05-d9ef-4338-a732-5e12e682fb64" width="280">
 						<jr:columnHeader style="table 1_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="280" height="24"/>
+								<reportElement uuid="3922719f-fec1-4a13-9192-d77fd66a9e9a" x="0" y="0" width="280" height="24"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -430,19 +430,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="280" height="20"/>
+								<reportElement uuid="c76ba8d4-0278-43f4-af57-e719b4ca5b2d" x="0" y="0" width="280" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="4" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{rrrType}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{rrrType}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="147">
+					<jr:column uuid="0d934ace-ffc3-49eb-b31e-7ad8981dcc7e" width="147">
 						<jr:columnHeader style="table 1_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="147" height="24"/>
+								<reportElement uuid="8cb81f7b-bcc2-423e-a698-362ebf329744" x="0" y="0" width="147" height="24"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -452,19 +452,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="147" height="20"/>
+								<reportElement uuid="7f60ec7b-6b75-4187-b0b2-64a1f1790238" x="0" y="0" width="147" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.util.Date"><![CDATA[$F{registrationDate}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{registrationDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="127">
+					<jr:column uuid="12c43b00-5c38-4aef-ad32-04d508b51310" width="127">
 						<jr:columnHeader style="table 1_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="127" height="24"/>
+								<reportElement uuid="61a7616b-425e-40a0-a95e-83e520c897ce" x="0" y="0" width="127" height="24"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -474,34 +474,34 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="127" height="20"/>
+								<reportElement uuid="dd3dfc8b-6da4-4ba5-a9ff-ff5c4efa7ff7" x="0" y="0" width="127" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="256" width="100" height="20"/>
+				<reportElement uuid="c229567f-1563-4f7d-97a6-cdfac7d9e48b" positionType="Float" x="0" y="256" width="100" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OWNERSHIP:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table 3" style="table 3" positionType="Float" x="0" y="276" width="555" height="44"/>
+				<reportElement uuid="cd4bdab3-034a-442f-8ebe-fcb6992f7563" key="table 3" style="table 3" positionType="Float" x="0" y="276" width="555" height="44"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Ownership">
+					<datasetRun subDataset="Ownership" uuid="24de40fb-aa70-4002-8eab-d79fabc2e7f2">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{rrrSharesList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="366">
+					<jr:column uuid="43596b06-d167-4daf-842d-46a92ebbdbb3" width="366">
 						<jr:columnHeader style="table 3_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="366" height="24"/>
+								<reportElement uuid="f2927cba-eb8b-48a9-afde-ff12ccdb3ab6" x="0" y="0" width="366" height="24"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -511,19 +511,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 3_TD" height="22" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="366" height="20"/>
+								<reportElement uuid="9d475d01-83d9-4372-8dbd-27c568aa566b" x="0" y="0" width="366" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="4" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{Owners}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Owners}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90">
+					<jr:column uuid="2b25d91c-b858-44e4-9ed6-c26aac577156" width="90">
 						<jr:columnHeader style="table 3_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="24"/>
+								<reportElement uuid="5cc6e3d9-4fc2-4668-8bc8-c3d1f6a57637" x="0" y="0" width="90" height="24"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -533,19 +533,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 3_TD" height="22" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="90" height="20"/>
+								<reportElement uuid="ebaf2e47-4ef5-4e19-b5e9-b4f2a9ee6c42" x="0" y="0" width="90" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{Share}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Share}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="98">
+					<jr:column uuid="2b5fb5a4-02c7-4ab5-8964-41ff2998c012" width="98">
 						<jr:columnHeader style="table 3_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="98" height="24"/>
+								<reportElement uuid="79bd396a-2d31-463a-96e4-e615fdaaba4b" x="0" y="0" width="98" height="24"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -555,34 +555,34 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 3_TD" height="22" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="98" height="20"/>
+								<reportElement uuid="3ce6b2db-e57d-4891-835b-68441d3182c0" x="0" y="0" width="98" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{Status}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Status}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="330" width="100" height="20"/>
+				<reportElement uuid="20a16871-88b3-4e79-a1d0-bbd653984580" positionType="Float" x="0" y="330" width="100" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTATIONS:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table 4" style="table 4" positionType="Float" x="0" y="350" width="555" height="43"/>
+				<reportElement uuid="d0a21b75-9700-458b-99dd-14f95f048933" key="table 4" style="table 4" positionType="Float" x="0" y="350" width="555" height="43"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Notations">
+					<datasetRun subDataset="Notations" uuid="57ec0d25-2193-4521-a396-060d6eb3e32f">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanArrayDataSource($F{allBaUnitNotationList}.toArray())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="90">
+					<jr:column uuid="65389751-8e9c-4bb4-aba3-c014962e0058" width="90">
 						<jr:columnHeader style="table 4_CH" height="25" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="90" height="25"/>
+								<reportElement uuid="5c6e6d1f-4b68-478c-a550-d94bbb77da4c" x="0" y="0" width="90" height="25"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -592,19 +592,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="90" height="20"/>
+								<reportElement uuid="fb746be3-0fa2-4662-b881-aa0b4f279af5" x="0" y="0" width="90" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="4" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{Ref. Number}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Ref. Number}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="370">
+					<jr:column uuid="225b670f-a62d-4804-b398-2f7af210e01e" width="370">
 						<jr:columnHeader style="table 4_CH" height="25" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="370" height="25"/>
+								<reportElement uuid="275f9d18-2dfd-44b6-aace-00c007583027" x="0" y="0" width="370" height="25"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -614,19 +614,19 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="370" height="20"/>
+								<reportElement uuid="39bbff53-8458-4ad7-a501-efe9c81cbd2c" x="0" y="0" width="370" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{Notation Text}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Notation Text}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="94">
+					<jr:column uuid="bd0d956d-5bba-4d9c-a237-449fa7b6981f" width="94">
 						<jr:columnHeader style="table 4_CH" height="25" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="94" height="25"/>
+								<reportElement uuid="3222afdf-9a62-4520-9a8e-6fa3791d4560" x="0" y="0" width="94" height="25"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Tahoma" size="12" isBold="true"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
@@ -636,12 +636,12 @@
 						</jr:columnHeader>
 						<jr:detailCell style="table 4_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="94" height="20"/>
+								<reportElement uuid="cf2e21ce-a570-4c76-aa2e-ac087755708e" x="0" y="0" width="94" height="20"/>
 								<textElement>
 									<font fontName="Tahoma" size="12"/>
 									<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 								</textElement>
-								<textFieldExpression class="java.lang.String"><![CDATA[$F{Status}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Status}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -652,41 +652,41 @@
 	<columnFooter>
 		<band height="61" splitType="Stretch">
 			<componentElement>
-				<reportElement x="334" y="20" width="221" height="36"/>
+				<reportElement uuid="90016ca4-53cc-454d-b54d-2b99ed3a9263" x="334" y="20" width="221" height="36"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{nameFirstpart} + "/" + $F{nameLastpart}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<staticText>
-				<reportElement x="7" y="25" width="56" height="20"/>
+				<reportElement uuid="edad1a7b-9c69-4f28-be88-33997541a43c" x="7" y="25" width="56" height="20"/>
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Registar]]></text>
 			</staticText>
 			<line>
-				<reportElement x="63" y="38" width="255" height="1"/>
+				<reportElement uuid="c6b6a994-e54f-443b-af70-6f025c2bf88d" x="63" y="38" width="255" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="63" y="38" width="255" height="20"/>
+				<reportElement uuid="74c8edc8-d503-4d9c-825b-9f53ab375235" x="63" y="38" width="255" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["(" + $P{USER} + ")"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["(" + $P{USER} + ")"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="37" splitType="Stretch">
 			<textField>
-				<reportElement x="435" y="14" width="80" height="20"/>
+				<reportElement uuid="1bd23a39-89e6-40cf-bdcd-5b71104ca0e1" x="435" y="14" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="515" y="14" width="40" height="20"/>
+				<reportElement uuid="b1bc3611-c9a3-44c9-916a-8a968a196874" x="515" y="14" width="40" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
