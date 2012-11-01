@@ -31,6 +31,7 @@ package org.sola.clients.swing.ui.renderers;
 
 import java.awt.Component;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -44,6 +45,7 @@ import javax.swing.table.TableColumnModel;
 public class TableCellListRenderer extends JTextArea implements TableCellRenderer {
 
     private final DefaultTableCellRenderer adaptee = new DefaultTableCellRenderer();
+    private HashMap<Integer, Integer> rowHeights = new HashMap<Integer, Integer>();
     private String[] methods;
 
     public TableCellListRenderer(String... methods) {
@@ -97,11 +99,11 @@ public class TableCellListRenderer extends JTextArea implements TableCellRendere
 
             TableColumnModel columnModel = table.getColumnModel();
             setSize(columnModel.getColumn(column).getWidth(), 100000);
+            int prefHeight = (int) getPreferredSize().getHeight();
 
-            int height_wanted = (int) getPreferredSize().getHeight();
-
-            if (height_wanted != table.getRowHeight(row)) {
-                table.setRowHeight(row, height_wanted);
+            if (prefHeight > table.getRowHeight(row) && !rowHeights.containsKey(row)) {
+                rowHeights.put(row, prefHeight);
+                table.setRowHeight(row, prefHeight);
             }
 
         } catch (Exception e) {

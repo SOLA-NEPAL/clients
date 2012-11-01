@@ -908,36 +908,36 @@
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="41" splitType="Stretch">
+	<lastPageFooter>
+		<band height="50">
 			<line>
-				<reportElement uuid="ad61e2fb-e657-4880-817b-bc708eb227d7" x="94" y="28" width="145" height="1"/>
+				<reportElement uuid="ad61e2fb-e657-4880-817b-bc708eb227d7" x="87" y="22" width="145" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="6254d609-9f8d-4eef-954a-e32dd603fd9a" x="659" y="28" width="140" height="1"/>
+				<reportElement uuid="6254d609-9f8d-4eef-954a-e32dd603fd9a" x="652" y="22" width="140" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="83404fcd-9d7d-41be-8cc3-0745d028f257" x="7" y="15" width="83" height="20"/>
+				<reportElement uuid="83404fcd-9d7d-41be-8cc3-0745d028f257" x="0" y="9" width="83" height="20"/>
 				<textElement/>
 				<text><![CDATA[प्रिन्ट गर्नेको दस्तखत :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6baf646c-2f60-4fd2-94c9-0e5afd87065b" x="304" y="15" width="53" height="20"/>
+				<reportElement uuid="6baf646c-2f60-4fd2-94c9-0e5afd87065b" x="297" y="9" width="53" height="20"/>
 				<textElement/>
 				<text><![CDATA[प्रिन्ट मिति :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a2b3c3e0-b4f3-4c88-ac91-e4e99eed7be7" x="563" y="15" width="93" height="20"/>
+				<reportElement uuid="a2b3c3e0-b4f3-4c88-ac91-e4e99eed7be7" x="556" y="9" width="93" height="20"/>
 				<textElement/>
 				<text><![CDATA[रुजु गर्नेको दस्तखत :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="5e24958f-759c-4ae0-a964-9f4fca86255f" x="357" y="15" width="100" height="20"/>
+				<reportElement uuid="5e24958f-759c-4ae0-a964-9f4fca86255f" x="350" y="9" width="100" height="20"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CURRENT_DATE}]]></textFieldExpression>
 			</textField>
 		</band>
-	</summary>
+	</lastPageFooter>
 </jasperReport>
