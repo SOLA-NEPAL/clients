@@ -36,10 +36,10 @@ import java.awt.Font;
 import java.util.Locale;
 import javax.swing.JTable;
 import javax.swing.JViewport;
-import javax.swing.RowSorter;
 import javax.swing.UIManager;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -52,7 +52,8 @@ public class JTableWithDefaultStyles extends JTable {
     private Color scrollPaneBackgroundColor;
     private Color defaultBackground;
     private Color oddRowColor;
-
+    protected MouseInputAdapter rowResizer, columnResizer = null; 
+    
     /**
      * Class constructor. Initializes default values
      */
@@ -125,6 +126,7 @@ public class JTableWithDefaultStyles extends JTable {
             public void ancestorMoved(AncestorEvent event) {
             }
         });        
+        new TableRowResizer(this);
     }
 
     /**
@@ -183,4 +185,24 @@ public class JTableWithDefaultStyles extends JTable {
     public void disableSorting() {
         this.setRowSorter(null);
     }
+    
+    // turn resizing on/of 
+    public void setResizableRow(boolean resize){ 
+        if(resize){ 
+            if(rowResizer==null) 
+                rowResizer = new TableRowResizer(this); 
+        }else if(rowResizer!=null){ 
+            removeMouseListener(rowResizer); 
+            removeMouseMotionListener(rowResizer); 
+            rowResizer = null; 
+        } 
+    } 
+ 
+    // mouse press intended for resize shouldn't change row/col/cell celection 
+    @Override
+    public void changeSelection(int row, int column, boolean toggle, boolean extend) { 
+        if(getCursor()==TableRowResizer.resizeCursor) 
+            return; 
+        super.changeSelection(row, column, toggle, extend); 
+    } 
 }

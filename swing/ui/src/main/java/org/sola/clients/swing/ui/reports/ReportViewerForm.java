@@ -34,9 +34,9 @@ import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.administrative.LocDetailsBean;
+import org.sola.clients.beans.administrative.RestrictionInfoBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.utils.Utils;
-import org.sola.webservices.transferobjects.EntityAction;
 
 /**
  * Displays reports.

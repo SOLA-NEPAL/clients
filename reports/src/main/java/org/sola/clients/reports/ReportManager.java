@@ -40,6 +40,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.administrative.LocDetailsBean;
+import org.sola.clients.beans.administrative.RestrictionInfoBean;
+import org.sola.clients.beans.administrative.RestrictionSearchResultBean;
 import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
@@ -86,12 +88,11 @@ public class ReportManager {
             return null;
         }
     }
-    
+
     /**
-     * Generates and displays <b>Lodgement notice</b> report for the new
-     * application.
+     * Generates and displays <b>Land ownership certificate</b>
      *
-     * @param appBean Application bean containing data for the report.
+     * @param locDetails LOC bean, containing all required information.
      */
     public static JasperPrint getLocDetailsReport(LocDetailsBean locDetails) {
         HashMap inputParameters = new HashMap();
@@ -106,6 +107,56 @@ public class ReportManager {
         try {
             return JasperFillManager.fillReport(
                     ReportManager.class.getResourceAsStream("/reports/Loc.jasper"),
+                    inputParameters, jds);
+        } catch (JRException ex) {
+            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+                    new Object[]{ex.getLocalizedMessage()});
+            return null;
+        }
+    }
+
+    /**
+     * Generates and displays <b>Restriction letter</b>
+     *
+     * @param restrictionInfo Restriction info bean, containing all required
+     * information to generate report.
+     */
+    public static JasperPrint getRestrictionLetterReport(List<RestrictionInfoBean> restrictionInfoList) {
+        HashMap inputParameters = new HashMap();
+        inputParameters.put("REPORT_LOCALE", Locale.getDefault());
+        inputParameters.put("CURRENT_DATE", NepaliYearBean.getCurrentNepaliDate(true));
+        inputParameters.put("OFFICE_NAME", OfficeBean.getCurrentOffice().getDisplayValue());
+        inputParameters.put("USER_NAME", SecurityBean.getCurrentUser().getFullUserName());
+        inputParameters.put("Logo", ReportManager.class.getResourceAsStream("/images/sola/MLRM.png"));
+        JRDataSource jds = new JRBeanArrayDataSource(restrictionInfoList.toArray());
+
+        try {
+            return JasperFillManager.fillReport(
+                    ReportManager.class.getResourceAsStream("/reports/RestrictionLetter.jasper"),
+                    inputParameters, jds);
+        } catch (JRException ex) {
+            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
+                    new Object[]{ex.getLocalizedMessage()});
+            return null;
+        }
+    }
+
+    /**
+     * Generates and displays <b>Restrictions list</b>
+     *
+     * @param restrictions List of restrictions to print.
+     */
+    public static JasperPrint getRestrictionsListReport(List<RestrictionSearchResultBean> restrictions) {
+        HashMap inputParameters = new HashMap();
+        inputParameters.put("REPORT_LOCALE", Locale.getDefault());
+        inputParameters.put("CURRENT_DATE", NepaliYearBean.getCurrentNepaliDate(true));
+        inputParameters.put("OFFICE_NAME", OfficeBean.getCurrentOffice().getDisplayValue());
+        inputParameters.put("USER_NAME", SecurityBean.getCurrentUser().getFullUserName());
+        JRDataSource jds = new JRBeanArrayDataSource(restrictions.toArray());
+
+        try {
+            return JasperFillManager.fillReport(
+                    ReportManager.class.getResourceAsStream("/reports/RestrictionsList.jasper"),
                     inputParameters, jds);
         } catch (JRException ex) {
             MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
@@ -329,32 +380,6 @@ public class ReportManager {
         try {
             return JasperFillManager.fillReport(
                     ReportManager.class.getResourceAsStream("/reports/CurrentUserRolesReport.jasper"),
-                    inputParameters, jds);
-        } catch (JRException ex) {
-            MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,
-                    new Object[]{ex.getLocalizedMessage()});
-            return null;
-        }
-    }
-
-    /* Generates and displays <b>Client's request report</b>.
-     * @param requestList Request list bean containing data for the report.
-     * @param clientName Client name
-     */
-    //,SourceSummaryBean sourceSummaryBean,PartyBean partyBean
-    public static JasperPrint getRestrictionReport(RrrBean rrrBean) {
-        HashMap inputParameters = new HashMap();
-        inputParameters.put("REPORT_LOCALE", Locale.getDefault());        
-       // RequestListBean[] beans = new RequestListBean[1];
-       // beans[0] = requestList;
-        //JRDataSource jds = new JRBeanArrayDataSource(beans);
-        RrrBean [] beans=new RrrBean[1];
-        beans[0]=rrrBean;
-        JRDataSource jds=new JRBeanArrayDataSource(beans);
-        
-        try {
-            return JasperFillManager.fillReport(
-                    ReportManager.class.getResourceAsStream("/reports/RestrictionLater.jasper"),
                     inputParameters, jds);
         } catch (JRException ex) {
             MessageUtility.displayMessage(ClientMessage.REPORT_GENERATION_FAILED,

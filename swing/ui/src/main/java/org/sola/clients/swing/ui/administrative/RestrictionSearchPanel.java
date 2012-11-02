@@ -2,11 +2,15 @@ package org.sola.clients.swing.ui.administrative;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import org.sola.clients.beans.administrative.RestrictionInfoListBean;
 import org.sola.clients.beans.administrative.RestrictionSearchResultListBean;
+import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.renderers.NepaliDateCellRenderer;
+import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
+import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -88,6 +92,25 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         if (vdcs.getVdcs().size() > 0) {
             cbxVdcs.setSelectedIndex(0);
         }
+    }
+    
+    private void printRestrictionLetter(){
+        if (restrictionSearchResults.getSelectedResult() == null) {
+            return;
+        }
+        RestrictionInfoListBean restriction = new RestrictionInfoListBean();
+        restriction.search(restrictionSearchResults.getSelectedResult().getReferenceNr(), 
+                restrictionSearchResults.getSelectedResult().getReferenceDate(), "np");
+        ReportViewerForm.showReport(ReportManager.getRestrictionLetterReport(
+                restriction.getRestrictionInfoList()));
+    }
+    
+    private void printRestrictionsList(){
+        if (restrictionSearchResults.getSearchResults().size()<1) {
+            return;
+        }
+        ReportViewerForm.showReport(ReportManager.getRestrictionsListReport(
+                restrictionSearchResults.getSearchResults()));
     }
 
     @SuppressWarnings("unchecked")
@@ -177,10 +200,20 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         menuPrintList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/print.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/administrative/Bundle"); // NOI18N
         menuPrintList.setText(bundle.getString("RestrictionSearchPanel.menuPrintList.text")); // NOI18N
+        menuPrintList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPrintListActionPerformed(evt);
+            }
+        });
         popupRestrictions.add(menuPrintList);
 
         menuPrintLetter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/print.png"))); // NOI18N
         menuPrintLetter.setText(bundle.getString("RestrictionSearchPanel.menuPrintLetter.text")); // NOI18N
+        menuPrintLetter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPrintLetterActionPerformed(evt);
+            }
+        });
         popupRestrictions.add(menuPrintLetter);
 
         jPanel20.setLayout(new java.awt.GridLayout(4, 5, 15, 5));
@@ -720,11 +753,21 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         btnPrintList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/print.png"))); // NOI18N
         btnPrintList.setText(bundle.getString("RestrictionSearchPanel.btnPrintList.text")); // NOI18N
         btnPrintList.setFocusable(false);
+        btnPrintList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintListActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnPrintList);
 
         btnPrintLetter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/print.png"))); // NOI18N
         btnPrintLetter.setText(bundle.getString("RestrictionSearchPanel.btnPrintLetter.text")); // NOI18N
         btnPrintLetter.setFocusable(false);
+        btnPrintLetter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintLetterActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnPrintLetter);
         jToolBar1.add(jSeparator1);
 
@@ -816,6 +859,7 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         tableSearchResults.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title1_1")); // NOI18N
         tableSearchResults.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title2_1")); // NOI18N
         tableSearchResults.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title3_1")); // NOI18N
+        tableSearchResults.getColumnModel().getColumn(4).setMinWidth(100);
         tableSearchResults.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title4")); // NOI18N
         tableSearchResults.getColumnModel().getColumn(4).setCellRenderer(new org.sola.clients.swing.ui.renderers.CellDelimitedListRenderer("; "));
         tableSearchResults.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title5")); // NOI18N
@@ -832,6 +876,7 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         tableSearchResults.getColumnModel().getColumn(14).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title14")); // NOI18N
         tableSearchResults.getColumnModel().getColumn(15).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title15")); // NOI18N
         tableSearchResults.getColumnModel().getColumn(16).setHeaderValue(bundle.getString("RestrictionSearchPanel.tableSearchResults.columnModel.title16")); // NOI18N
+        tableSearchResults.getColumnModel().getColumn(16).setCellRenderer(new TableCellTextAreaRenderer());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -861,6 +906,23 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clear();
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnPrintLetterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintLetterActionPerformed
+        printRestrictionLetter();
+    }//GEN-LAST:event_btnPrintLetterActionPerformed
+
+    private void menuPrintLetterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPrintLetterActionPerformed
+        printRestrictionLetter();
+    }//GEN-LAST:event_menuPrintLetterActionPerformed
+
+    private void btnPrintListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintListActionPerformed
+        printRestrictionsList();
+    }//GEN-LAST:event_btnPrintListActionPerformed
+
+    private void menuPrintListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPrintListActionPerformed
+        printRestrictionsList();
+    }//GEN-LAST:event_menuPrintListActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnPrintLetter;
