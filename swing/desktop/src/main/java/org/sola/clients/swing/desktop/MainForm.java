@@ -40,7 +40,6 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.security.SecurityBean;
@@ -52,7 +51,7 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
 import org.sola.clients.swing.desktop.administrative.LocSearchForm;
-import org.sola.clients.swing.desktop.administrative.MothManagementForm;
+import org.sola.clients.swing.desktop.administrative.MothManagementForm2;
 import org.sola.clients.swing.desktop.administrative.RestrictionSearchForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
@@ -934,7 +933,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY)) {
-            MothManagementForm srchLndOwner = new MothManagementForm();
+            MothManagementForm2 srchLndOwner = new MothManagementForm2();
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
