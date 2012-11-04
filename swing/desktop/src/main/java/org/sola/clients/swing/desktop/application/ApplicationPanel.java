@@ -291,23 +291,7 @@ public class ApplicationPanel extends ContentPanel {
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_REJECT));
         menuArchive.setEnabled(appBean.canArchive()
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_ARCHIVE));
-        menuDispatch.setEnabled(appBean.canDespatch()
-                && SecurityBean.isInRole(RolesConstants.APPLICATION_DESPATCH));
-        menuRequisition.setEnabled(appBean.canRequisition()
-                && SecurityBean.isInRole(RolesConstants.APPLICATION_REQUISITE));
-        menuResubmit.setEnabled(appBean.canResubmit()
-                && SecurityBean.isInRole(RolesConstants.APPLICATION_RESUBMIT));
-        menuLapse.setEnabled(appBean.canLapse()
-                && SecurityBean.isInRole(RolesConstants.APPLICATION_WITHDRAW));
-        menuWithdraw.setEnabled(appBean.canWithdraw()
-                && SecurityBean.isInRole(RolesConstants.APPLICATION_WITHDRAW));
         btnPrintStatusReport.setEnabled(appBean.getRowVersion() > 0);
-        
-        menuDispatch.setVisible(false);
-        menuWithdraw.setVisible(false);
-        menuLapse.setVisible(false);
-        menuRequisition.setVisible(false);
-        menuResubmit.setVisible(false);
         
         if (btnValidate.isEnabled()) {
             btnValidate.setEnabled(appBean.canValidate()
@@ -760,11 +744,6 @@ public class ApplicationPanel extends ContentPanel {
         popupApplicationActions = new javax.swing.JPopupMenu();
         menuApprove = new javax.swing.JMenuItem();
         menuCancel = new javax.swing.JMenuItem();
-        menuWithdraw = new javax.swing.JMenuItem();
-        menuLapse = new javax.swing.JMenuItem();
-        menuRequisition = new javax.swing.JMenuItem();
-        menuResubmit = new javax.swing.JMenuItem();
-        menuDispatch = new javax.swing.JMenuItem();
         menuArchive = new javax.swing.JMenuItem();
         pnlHeader = new org.sola.clients.swing.ui.HeaderPanel();
         jToolBar3 = new javax.swing.JToolBar();
@@ -977,56 +956,6 @@ public class ApplicationPanel extends ContentPanel {
             }
         });
         popupApplicationActions.add(menuCancel);
-
-        menuWithdraw.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/withdraw.png"))); // NOI18N
-        menuWithdraw.setText(bundle.getString("ApplicationPanel.menuWithdraw.text")); // NOI18N
-        menuWithdraw.setName("menuWithdraw"); // NOI18N
-        menuWithdraw.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuWithdrawActionPerformed(evt);
-            }
-        });
-        popupApplicationActions.add(menuWithdraw);
-
-        menuLapse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/lapse.png"))); // NOI18N
-        menuLapse.setText(bundle.getString("ApplicationPanel.menuLapse.text")); // NOI18N
-        menuLapse.setName("menuLapse"); // NOI18N
-        menuLapse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuLapseActionPerformed(evt);
-            }
-        });
-        popupApplicationActions.add(menuLapse);
-
-        menuRequisition.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/requisition.png"))); // NOI18N
-        menuRequisition.setText(bundle.getString("ApplicationPanel.menuRequisition.text")); // NOI18N
-        menuRequisition.setName("menuRequisition"); // NOI18N
-        menuRequisition.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuRequisitionActionPerformed(evt);
-            }
-        });
-        popupApplicationActions.add(menuRequisition);
-
-        menuResubmit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/resubmit.png"))); // NOI18N
-        menuResubmit.setText(bundle.getString("ApplicationPanel.menuResubmit.text")); // NOI18N
-        menuResubmit.setName("menuResubmit"); // NOI18N
-        menuResubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuResubmitActionPerformed(evt);
-            }
-        });
-        popupApplicationActions.add(menuResubmit);
-
-        menuDispatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/envelope.png"))); // NOI18N
-        menuDispatch.setText(bundle.getString("ApplicationPanel.menuDispatch.text")); // NOI18N
-        menuDispatch.setName("menuDispatch"); // NOI18N
-        menuDispatch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDispatchActionPerformed(evt);
-            }
-        });
-        popupApplicationActions.add(menuDispatch);
 
         menuArchive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/archive.png"))); // NOI18N
         menuArchive.setText(bundle.getString("ApplicationPanel.menuArchive.text")); // NOI18N
@@ -2176,26 +2105,6 @@ public class ApplicationPanel extends ContentPanel {
         rejectApplication();
     }//GEN-LAST:event_menuCancelActionPerformed
 
-    private void menuWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuWithdrawActionPerformed
-        withdrawApplication();
-    }//GEN-LAST:event_menuWithdrawActionPerformed
-
-    private void menuLapseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLapseActionPerformed
-        lapseApplication();
-    }//GEN-LAST:event_menuLapseActionPerformed
-
-    private void menuRequisitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRequisitionActionPerformed
-        requisitionApplication();
-    }//GEN-LAST:event_menuRequisitionActionPerformed
-
-    private void menuResubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuResubmitActionPerformed
-        resubmitApplication();
-    }//GEN-LAST:event_menuResubmitActionPerformed
-
-    private void menuDispatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDispatchActionPerformed
-        dispatchApplication();
-    }//GEN-LAST:event_menuDispatchActionPerformed
-
     private void menuArchiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArchiveActionPerformed
         archiveApplication();
     }//GEN-LAST:event_menuArchiveActionPerformed
@@ -2341,20 +2250,10 @@ public class ApplicationPanel extends ContentPanel {
                             if (ApplicationActionTypeBean.VALIDATE.equals(actionType)) {
                                 displayValidationResultFormInSuccess = false;
                                 validationResultListBean.setValidationResultList(appBean.validate());
-                            } else if (ApplicationActionTypeBean.WITHDRAW.equals(actionType)) {
-                                result = appBean.withdraw();
                             } else if (ApplicationActionTypeBean.CANCEL.equals(actionType)) {
                                 result = appBean.reject();
                             } else if (ApplicationActionTypeBean.ARCHIVE.equals(actionType)) {
                                 result = appBean.archive();
-                            } else if (ApplicationActionTypeBean.DESPATCH.equals(actionType)) {
-                                result = appBean.despatch();
-                            } else if (ApplicationActionTypeBean.LAPSE.equals(actionType)) {
-                                result = appBean.lapse();
-                            } else if (ApplicationActionTypeBean.REQUISITION.equals(actionType)) {
-                                result = appBean.requisition();
-                            } else if (ApplicationActionTypeBean.RESUBMIT.equals(actionType)) {
-                                result = appBean.resubmit();
                             } else if (ApplicationActionTypeBean.APPROVE.equals(actionType)) {
                                 result = appBean.approve();
                             }
@@ -2753,17 +2652,12 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JMenuItem menuCancel;
     private javax.swing.JMenuItem menuCancelService;
     private javax.swing.JMenuItem menuCompleteService;
-    private javax.swing.JMenuItem menuDispatch;
-    private javax.swing.JMenuItem menuLapse;
     private javax.swing.JMenuItem menuMoveServiceDown;
     private javax.swing.JMenuItem menuMoveServiceUp;
     private javax.swing.JMenuItem menuRemoveService;
-    private javax.swing.JMenuItem menuRequisition;
-    private javax.swing.JMenuItem menuResubmit;
     private javax.swing.JMenuItem menuRevertService;
     private javax.swing.JMenuItem menuStartService;
     private javax.swing.JMenuItem menuViewService;
-    private javax.swing.JMenuItem menuWithdraw;
     private org.sola.clients.swing.ui.HeaderPanel pnlHeader;
     private javax.swing.JPopupMenu popUpServices;
     private javax.swing.JPopupMenu popupApplicationActions;

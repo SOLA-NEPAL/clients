@@ -652,68 +652,11 @@ public class ApplicationBean extends ApplicationSummaryBean {
     }
 
     /**
-     * Withdraws application
-     */
-    public List<ValidationResultBean> withdraw() {
-        List<ValidationResultBean> result = TypeConverters.TransferObjectListToBeanList(
-                WSManager.getInstance().getCaseManagementService().applicationActionWithdraw(this.getId(), this.getRowVersion()),
-                ValidationResultBean.class, null);
-        this.reload();
-        return result;
-    }
-
-    /**
-     * Requisitions application
-     */
-    public List<ValidationResultBean> requisition() {
-        List<ValidationResultBean> result = TypeConverters.TransferObjectListToBeanList(
-                WSManager.getInstance().getCaseManagementService().applicationActionRequisition(this.getId(), this.getRowVersion()),
-                ValidationResultBean.class, null);
-        this.reload();
-        return result;
-    }
-
-    /**
      * Archives application
      */
     public List<ValidationResultBean> archive() {
         List<ValidationResultBean> result = TypeConverters.TransferObjectListToBeanList(
                 WSManager.getInstance().getCaseManagementService().applicationActionArchive(this.getId(), this.getRowVersion()),
-                ValidationResultBean.class, null);
-        this.reload();
-        return result;
-    }
-
-    /**
-     * Despatches application
-     */
-    public List<ValidationResultBean> despatch() {
-        List<ValidationResultBean> result = TypeConverters.TransferObjectListToBeanList(
-                WSManager.getInstance().getCaseManagementService().applicationActionDespatch(this.getId(), this.getRowVersion()),
-                ValidationResultBean.class, null);
-        this.reload();
-        return result;
-    }
-
-    /**
-     * Lapses application
-     */
-    public List<ValidationResultBean> lapse() {
-        List<ValidationResultBean> result = TypeConverters.TransferObjectListToBeanList(
-                WSManager.getInstance().getCaseManagementService().applicationActionLapse(
-                this.getId(), this.getRowVersion()),
-                ValidationResultBean.class, null);
-        this.reload();
-        return result;
-    }
-
-    /**
-     * Lapses application
-     */
-    public List<ValidationResultBean> resubmit() {
-        List<ValidationResultBean> result = TypeConverters.TransferObjectListToBeanList(
-                WSManager.getInstance().getCaseManagementService().applicationActionResubmit(
-                this.getId(), this.getRowVersion()),
                 ValidationResultBean.class, null);
         this.reload();
         return result;
