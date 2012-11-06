@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.administrative.RestrictionInfoListBean;
 import org.sola.clients.beans.administrative.RestrictionSearchResultListBean;
+import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.common.tasks.SolaTask;
@@ -11,6 +12,7 @@ import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.renderers.NepaliDateCellRenderer;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
 import org.sola.clients.swing.ui.reports.ReportViewerForm;
+import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -45,7 +47,8 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
     }
 
     private void customizePrintButtons() {
-        btnPrintLetter.setEnabled(restrictionSearchResults.getSelectedResult() != null);
+        btnPrintLetter.setEnabled(restrictionSearchResults.getSelectedResult() != null &&
+                SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_RESTRICTION_PRINT));
         btnPrintList.setEnabled(restrictionSearchResults.getSearchResults().size() > 0);
         menuPrintLetter.setEnabled(btnPrintLetter.isEnabled());
         menuPrintList.setEnabled(btnPrintList.isEnabled());

@@ -478,24 +478,7 @@ public class ApplicationPanel extends ContentPanel {
     private void launchService(final boolean readOnly) {
         if (appBean.getSelectedService() != null) {
             String requestType = appBean.getSelectedService().getRequestTypeCode();
-            // Power of attorney or other type document registration
-            if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_REG_POWER_OF_ATTORNEY)
-                    || requestType.equalsIgnoreCase(RequestTypeBean.CODE_REG_STANDARD_DOCUMENT)) {
-                // Run registration/cancelation Power of attorney
-                SolaTask t = new SolaTask<Void, Void>() {
-
-                    @Override
-                    public Void doTask() {
-                        setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
-                        TransactionedDocumentsPanel form = new TransactionedDocumentsPanel(
-                                appBean, appBean.getSelectedService());
-                        getMainContentPanel().addPanel(form, getThis().getId(), form.getId(), true);
-                        return null;
-                    }
-                };
-                TaskManager.getInstance().runTask(t);
-            } // Document copy request
-            else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_DOCUMENT_COPY)) {
+            if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_DOCUMENT_COPY)) {
                 SolaTask t = new SolaTask<Void, Void>() {
 
                     @Override
@@ -545,24 +528,6 @@ public class ApplicationPanel extends ContentPanel {
             } // Cadastre change services
             else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_CHANGE)
                     || requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_REDEFINITION)) {
-
-// if (appBean.getPropertyList().getFilteredList().size() == 1) {
-// SolaTask t = new SolaTask<Void, Void>() {
-//
-// @Override
-// public Void doTask() {
-// setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
-// CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-// appBean,
-// appBean.getSelectedService(),
-// appBean.getPropertyList().getFilteredList().get(0));
-// getMainContentPanel().addPanel(form, MainContentPanel.CARD_CADASTRECHANGE, true);
-// return null;
-// }
-// };
-// TaskManager.getInstance().runTask(t);
-//
-// } else if (appBean.getPropertyList().getFilteredList().size() > 1) {
                 if (appBean.getPropertyList().getFilteredList().size() > 0) {
                     final PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
                     propertyListForm.setLocationRelativeTo(this);

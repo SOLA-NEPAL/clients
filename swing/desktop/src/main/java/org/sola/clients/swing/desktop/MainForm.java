@@ -38,12 +38,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.logging.Level;
 import javax.swing.ImageIcon;
-import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.AbstractBindingBean;
-import org.sola.clients.beans.party.PartyBean;
-import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.security.SecurityBean;
-import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.DefaultExceptionHandler;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.LocalizationManager;
@@ -58,10 +54,8 @@ import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
-import org.sola.clients.swing.desktop.reports.LodgementReportParamsForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.ui.MainContentPanel;
-import org.sola.clients.swing.ui.reports.ReportViewerForm;
 import org.sola.common.RolesConstants;
 import org.sola.common.help.HelpUtility;
 import org.sola.common.logging.LogUtility;
@@ -103,10 +97,23 @@ public class MainForm extends javax.swing.JFrame {
         btnSearchApplications.setEnabled(SecurityBean.isInRole(RolesConstants.APPLICATION_VIEW_APPS));
         btnShowDashboard.setEnabled(SecurityBean.isInRole(RolesConstants.APPLICATION_VIEW_APPS));
         btnManageParties.setEnabled(SecurityBean.isInRole(RolesConstants.PARTY_SAVE));
-
-        menuSearchApplication.setEnabled(btnSearchApplications.isEnabled());
+        btnMothShrestaEntry.setEnabled(SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_MOTH_MANAGEMENT));
+        btnOpenBaUnitSearch.setEnabled(SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_SEARCH));
+        btnDocumentSearch.setEnabled(SecurityBean.isInRole(RolesConstants.SOURCE_SEARCH));
+        btnSearchLoc.setEnabled(SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_SEARCH));
+        btnManageMapSheets.setEnabled(SecurityBean.isInRole(RolesConstants.CADASTRE_MAP_SHEET_SAVE));
+        
         menuNewApplication.setEnabled(btnNewApplication.isEnabled());
-
+        menuShowMap.setEnabled(btnOpenMap.isEnabled());
+        menuSearchApplication.setEnabled(btnSearchApplications.isEnabled());
+        menuPersons.setEnabled(btnManageParties.isEnabled());
+        menuMothStrestaEnry.setEnabled(btnMothShrestaEntry.isEnabled());
+        menuBaUnitSearch.setEnabled(btnOpenBaUnitSearch.isEnabled());
+        menuDocumentSearch.setEnabled(btnDocumentSearch.isEnabled());
+        menuSearchLoc.setEnabled(btnSearchLoc.isEnabled());
+        menuRestrictionsSearch.setEnabled(SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_RESTRICTIONS_SEARCH));
+        menuManageMapSheets.setEnabled(btnManageMapSheets.isEnabled());
+        
         // Load dashboard
         openDashBoard();
 
@@ -346,7 +353,7 @@ public class MainForm extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnOpenMap = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
-        jButton1 = new javax.swing.JButton();
+        btnManageMapSheets = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
         labStatus = new javax.swing.JLabel();
         taskPanel1 = new org.sola.clients.swing.common.tasks.TaskPanel();
@@ -376,10 +383,7 @@ public class MainForm extends javax.swing.JFrame {
         menuRestrictionsSearch = new javax.swing.JMenuItem();
         menuMap = new javax.swing.JMenu();
         menuShowMap = new javax.swing.JMenuItem();
-        menuReportsDesktop = new javax.swing.JMenu();
-        menuLodgementReport = new javax.swing.JMenuItem();
-        menuCurrentUserRolesReport = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuManageMapSheets = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jmiContextHelp = new javax.swing.JMenuItem();
@@ -514,16 +518,16 @@ public class MainForm extends javax.swing.JFrame {
         applicationsMain.add(btnOpenMap);
         applicationsMain.add(jSeparator5);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
-        jButton1.setText(bundle.getString("MainForm.jButton1.text_1")); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnManageMapSheets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
+        btnManageMapSheets.setText(bundle.getString("MainForm.btnManageMapSheets.text_1")); // NOI18N
+        btnManageMapSheets.setFocusable(false);
+        btnManageMapSheets.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManageMapSheets.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnManageMapSheetsActionPerformed(evt);
             }
         });
-        applicationsMain.add(jButton1);
+        applicationsMain.add(btnManageMapSheets);
 
         statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusPanel.setPreferredSize(new java.awt.Dimension(1024, 24));
@@ -544,7 +548,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE))
+                .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -718,36 +722,16 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuMap.add(menuShowMap);
 
+        menuManageMapSheets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
+        menuManageMapSheets.setText(bundle.getString("MainForm.menuManageMapSheets.text")); // NOI18N
+        menuManageMapSheets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuManageMapSheetsActionPerformed(evt);
+            }
+        });
+        menuMap.add(menuManageMapSheets);
+
         menuBar.add(menuMap);
-
-        menuReportsDesktop.setText(bundle.getString("MainForm.menuReportsDesktop.text_1")); // NOI18N
-
-        menuLodgementReport.setText(bundle.getString("MainForm.menuLodgementReportDesktop.text_1")); // NOI18N
-        menuLodgementReport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuLodgementReportActionPerformed(evt);
-            }
-        });
-        menuReportsDesktop.add(menuLodgementReport);
-        menuLodgementReport.getAccessibleContext().setAccessibleName(bundle.getString("MainForm.menuLodgementReport.AccessibleContext.accessibleName")); // NOI18N
-
-        menuCurrentUserRolesReport.setText(bundle.getString("MainForm.menuCurrentUserRolesReport.text")); // NOI18N
-        menuCurrentUserRolesReport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCurrentUserRolesReportActionPerformed(evt);
-            }
-        });
-        menuReportsDesktop.add(menuCurrentUserRolesReport);
-
-        jMenuItem1.setText(bundle.getString("MainForm.jMenuItem1.text")); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuReportsDesktop.add(jMenuItem1);
-
-        menuBar.add(menuReportsDesktop);
 
         helpMenu.setText(bundle.getString("MainForm.helpMenu.text")); // NOI18N
 
@@ -771,9 +755,9 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
-            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 913, Short.MAX_VALUE)
+            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 913, Short.MAX_VALUE)
+            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -864,15 +848,6 @@ public class MainForm extends javax.swing.JFrame {
         searchBaUnit();
     }//GEN-LAST:event_btnOpenBaUnitSearchActionPerformed
 
-    private void openLodgementReportParamsForm() {
-        LodgementReportParamsForm reportDateChooser = new LodgementReportParamsForm(this, true);
-        reportDateChooser.setVisible(true);
-    }
-
-    private void menuLodgementReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLodgementReportActionPerformed
-        openLodgementReportParamsForm();
-    }//GEN-LAST:event_menuLodgementReportActionPerformed
-
     private void menuPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPersonsActionPerformed
         openSearchParties(false);
     }//GEN-LAST:event_menuPersonsActionPerformed
@@ -881,26 +856,9 @@ public class MainForm extends javax.swing.JFrame {
         mothShrestaEntry();
     }//GEN-LAST:event_menuMothStrestaEnryActionPerformed
 
-    private void menuCurrentUserRolesReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCurrentUserRolesReportActionPerformed
-        showCurrentUserRolesReport(ReportManager.getCurrentUserWithRolesReport());
-    }//GEN-LAST:event_menuCurrentUserRolesReportActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnManageMapSheetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageMapSheetsActionPerformed
         showMapsheetManagementPanel();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        OfficeBean officeBean = OfficeBean.getCurrentOffice();
-        PartyBean party = PartyBean.getParty("abb31244-39c0-402c-90fe-f0fe8f3cff90");
-        // SourceSummaryBean sa=SourceBean.getSource("27aeefc9-2eb7-4592-bdaa-2bd4dda3f8b3");
-        showRestrictionReport(ReportManager.getRestrictionReport(officeBean, party));//,sa,party));      
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void showRestrictionReport(JasperPrint report) {
-        ReportViewerForm form = new ReportViewerForm(report);
-        form.setVisible(true);
-        form.setAlwaysOnTop(true);
-    }
+    }//GEN-LAST:event_btnManageMapSheetsActionPerformed
 
     private void menuSearchLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchLocActionPerformed
         openLocSearch();
@@ -917,18 +875,16 @@ public class MainForm extends javax.swing.JFrame {
     private void menuRestrictionsSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionsSearchActionPerformed
         openRestrictionsSearch();
     }//GEN-LAST:event_menuRestrictionsSearchActionPerformed
+
+    private void menuManageMapSheetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuManageMapSheetsActionPerformed
+        showMapsheetManagementPanel();
+    }//GEN-LAST:event_menuManageMapSheetsActionPerformed
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
             pnlContent.addPanel(srchParcel, MainContentPanel.CARD_MAPSHEET_MANAGEMENT);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MAPSHEET_MANAGEMENT);
-    }
-
-    private void showCurrentUserRolesReport(JasperPrint report) {
-        ReportViewerForm form = new ReportViewerForm(report);
-        form.setVisible(true);
-        form.setAlwaysOnTop(true);
     }
 
     private void mothShrestaEntry() {
@@ -941,6 +897,7 @@ public class MainForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar applicationsMain;
     private javax.swing.JButton btnDocumentSearch;
+    private javax.swing.JButton btnManageMapSheets;
     private javax.swing.JButton btnManageParties;
     private javax.swing.JButton btnMothShrestaEntry;
     private javax.swing.JButton btnNewApplication;
@@ -950,13 +907,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnSearchLoc;
     private javax.swing.JButton btnShowDashboard;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
@@ -969,20 +924,18 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuApplications;
     private javax.swing.JMenuItem menuBaUnitSearch;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem menuCurrentUserRolesReport;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
     private javax.swing.JMenuItem menuLangEN;
     private javax.swing.JMenuItem menuLangIT;
     private javax.swing.JMenu menuLanguage;
-    private javax.swing.JMenuItem menuLodgementReport;
     private javax.swing.JMenu menuLogLevel;
+    private javax.swing.JMenuItem menuManageMapSheets;
     private javax.swing.JMenu menuMap;
     private javax.swing.JMenuItem menuMothStrestaEnry;
     private javax.swing.JMenuItem menuNewApplication;
     private javax.swing.JMenuItem menuOffLogLevel;
     private javax.swing.JMenuItem menuPersons;
-    private javax.swing.JMenu menuReportsDesktop;
     private javax.swing.JMenuItem menuRestrictionsSearch;
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;

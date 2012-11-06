@@ -38,6 +38,7 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import org.sola.clients.swing.common.controls.TableRowResizer;
 
 /**
  * Renders table cell containing List object of the list.
@@ -45,7 +46,6 @@ import javax.swing.table.TableColumnModel;
 public class TableCellListRenderer extends JTextArea implements TableCellRenderer {
 
     private final DefaultTableCellRenderer adaptee = new DefaultTableCellRenderer();
-    private HashMap<Integer, Integer> rowHeights = new HashMap<Integer, Integer>();
     private String[] methods;
 
     public TableCellListRenderer(String... methods) {
@@ -101,9 +101,19 @@ public class TableCellListRenderer extends JTextArea implements TableCellRendere
             setSize(columnModel.getColumn(column).getWidth(), 100000);
             int prefHeight = (int) getPreferredSize().getHeight();
 
-            if (prefHeight > table.getRowHeight(row) && !rowHeights.containsKey(row)) {
-                rowHeights.put(row, prefHeight);
-                table.setRowHeight(row, prefHeight);
+            if(prefHeight > table.getRowHeight(row)){
+                TableRowResizer resizer = null;
+                if(table.getMouseListeners().length > 0){
+                    for (int i = 0; i < table.getMouseListeners().length; i++) {
+                        if(table.getMouseListeners()[i] instanceof TableRowResizer){
+                            resizer = (TableRowResizer)table.getMouseListeners()[i];
+                        }
+                    }
+                }
+                
+                if(resizer==null || !resizer.isResizing()){
+                    table.setRowHeight(row, prefHeight);
+                }
             }
 
         } catch (Exception e) {

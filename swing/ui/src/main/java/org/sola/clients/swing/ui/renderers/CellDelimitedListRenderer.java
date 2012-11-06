@@ -37,6 +37,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import org.sola.clients.swing.common.controls.TableRowResizer;
 
 /**
  * Renders table cell with application services list to display in the form of
@@ -46,7 +47,6 @@ public class CellDelimitedListRenderer extends JTextArea implements TableCellRen
 
     private final DefaultTableCellRenderer adaptee = new DefaultTableCellRenderer();
     private String delimiter;
-    private HashMap<Integer, Integer> rowHeights = new HashMap<Integer, Integer>();
 
     public CellDelimitedListRenderer(String delimiter) {
         if (delimiter == null || delimiter.length() < 1) {
@@ -95,9 +95,19 @@ public class CellDelimitedListRenderer extends JTextArea implements TableCellRen
             setSize(columnModel.getColumn(column).getWidth(), 100000);
             int prefHeight = (int) getPreferredSize().getHeight();
             
-            if(prefHeight > table.getRowHeight(row) && !rowHeights.containsKey(row)){
-                rowHeights.put(row, prefHeight);
-                table.setRowHeight(row, prefHeight);
+            if(prefHeight > table.getRowHeight(row)){
+                TableRowResizer resizer = null;
+                if(table.getMouseListeners().length > 0){
+                    for (int i = 0; i < table.getMouseListeners().length; i++) {
+                        if(table.getMouseListeners()[i] instanceof TableRowResizer){
+                            resizer = (TableRowResizer)table.getMouseListeners()[i];
+                        }
+                    }
+                }
+                
+                if(resizer==null || !resizer.isResizing()){
+                    table.setRowHeight(row, prefHeight);
+                }
             }
 
         } catch (Exception e) {

@@ -6,11 +6,13 @@ import javax.naming.directory.SearchResult;
 import org.sola.clients.beans.administrative.LocDetailsBean;
 import org.sola.clients.beans.administrative.LocSearchParamsBean;
 import org.sola.clients.beans.administrative.LocSearchResultListBean;
+import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
 import org.sola.clients.swing.ui.reports.ReportViewerForm;
+import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -41,7 +43,8 @@ public class LocSearchResultsPanel extends javax.swing.JPanel {
     }
 
     private void customizePrintButton() {
-        boolean enabled = locSearchResults.getSeletedResult() != null;
+        boolean enabled = locSearchResults.getSeletedResult() != null 
+                && SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_PRINT_CERT);
         btnPrint.setEnabled(enabled);
         menuPrint.setEnabled(enabled);
     }

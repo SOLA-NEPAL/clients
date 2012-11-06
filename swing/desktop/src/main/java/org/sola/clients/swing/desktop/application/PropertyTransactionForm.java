@@ -22,10 +22,12 @@ import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.administrative.BaUnitSearchResultListBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
+import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.PropertyPanel;
 import org.sola.clients.swing.ui.ContentPanel;
+import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.common.StatusConstants;
@@ -59,6 +61,9 @@ public class PropertyTransactionForm extends ContentPanel {
             this.appBean = appBean;
         }
         this.readOnly = readOnly;
+        if(!readOnly){
+            this.readOnly = SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_SAVE);
+        }
         this.appService = appService;
         initComponents();
         postInit();
@@ -113,9 +118,10 @@ public class PropertyTransactionForm extends ContentPanel {
 
     private void customizeAppPropertyButtons() {
         boolean enabled = selectedAppProperty != null;
+        
         btnViewAppProperty.setEnabled(enabled);
-        btnVaryAppProperty.setEnabled(enabled && !readOnly);
-        btnSplitAppProperty.setEnabled(enabled && !readOnly);
+        btnVaryAppProperty.setEnabled(!readOnly && enabled);
+        btnSplitAppProperty.setEnabled(!readOnly && enabled);
         menuViewAppProperty.setEnabled(btnViewAppProperty.isEnabled());
         menuChangeAppProperty.setEnabled(btnVaryAppProperty.isEnabled());
         menuSplitAppProperty.setEnabled(btnSplitAppProperty.isEnabled());
@@ -123,6 +129,7 @@ public class PropertyTransactionForm extends ContentPanel {
 
     private void customizeTransactionPropertyButtons() {
         boolean enabled = baUnitList.getSelectedBaUnitSearchResult() != null;
+        
         boolean pending = false;
         if (enabled) {
             pending = baUnitList.getSelectedBaUnitSearchResult() != null

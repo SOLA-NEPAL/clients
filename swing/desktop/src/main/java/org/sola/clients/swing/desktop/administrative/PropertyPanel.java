@@ -421,7 +421,8 @@ public class PropertyPanel extends ContentPanel {
      * .
      */
     private void customizePrintButton() {
-        btnPrintBaUnit.setEnabled(baUnitBean.getRowVersion() > 0);
+        btnPrintBaUnit.setEnabled(baUnitBean.getRowVersion() > 0 
+                && SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_PRINT_CERT));
     }
 
     private void customizeHistoricRightsViewButton() {
