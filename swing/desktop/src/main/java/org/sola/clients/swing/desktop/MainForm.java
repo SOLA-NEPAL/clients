@@ -54,6 +54,7 @@ import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
 import org.sola.clients.swing.desktop.party.PersonSearchForm;
+import org.sola.clients.swing.desktop.security.PasswordChangeForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.RolesConstants;
@@ -324,6 +325,11 @@ public class MainForm extends javax.swing.JFrame {
         return hasChanges;
     }
 
+    private void showPasswordChangeForm(){
+        PasswordChangeForm form = new PasswordChangeForm();
+        pnlContent.addPanel(form, MainContentPanel.CARD_PASSWORD_CHANGE, true);
+    }
+    
     public MainContentPanel getMainContentPanel() {
         return pnlContent;
     }
@@ -384,6 +390,8 @@ public class MainForm extends javax.swing.JFrame {
         menuMap = new javax.swing.JMenu();
         menuShowMap = new javax.swing.JMenuItem();
         menuManageMapSheets = new javax.swing.JMenuItem();
+        menuSettings = new javax.swing.JMenu();
+        menuChangePassword = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jmiContextHelp = new javax.swing.JMenuItem();
@@ -733,6 +741,19 @@ public class MainForm extends javax.swing.JFrame {
 
         menuBar.add(menuMap);
 
+        menuSettings.setText(bundle.getString("MainForm.menuSettings.text")); // NOI18N
+
+        menuChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/lock--pencil.png"))); // NOI18N
+        menuChangePassword.setText(bundle.getString("MainForm.menuChangePassword.text")); // NOI18N
+        menuChangePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuChangePasswordActionPerformed(evt);
+            }
+        });
+        menuSettings.add(menuChangePassword);
+
+        menuBar.add(menuSettings);
+
         helpMenu.setText(bundle.getString("MainForm.helpMenu.text")); // NOI18N
 
         aboutMenuItem.setText(bundle.getString("MainForm.aboutMenuItem.text")); // NOI18N
@@ -879,6 +900,10 @@ public class MainForm extends javax.swing.JFrame {
     private void menuManageMapSheetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuManageMapSheetsActionPerformed
         showMapsheetManagementPanel();
     }//GEN-LAST:event_menuManageMapSheetsActionPerformed
+
+    private void menuChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuChangePasswordActionPerformed
+        showPasswordChangeForm();
+    }//GEN-LAST:event_menuChangePasswordActionPerformed
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -924,6 +949,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuApplications;
     private javax.swing.JMenuItem menuBaUnitSearch;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuChangePassword;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
     private javax.swing.JMenuItem menuLangEN;
@@ -940,6 +966,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuSearch;
     private javax.swing.JMenuItem menuSearchApplication;
     private javax.swing.JMenuItem menuSearchLoc;
+    private javax.swing.JMenu menuSettings;
     private javax.swing.JMenuItem menuShowMap;
     private javax.swing.JMenu menuView;
     private org.sola.clients.swing.ui.MainContentPanel pnlContent;

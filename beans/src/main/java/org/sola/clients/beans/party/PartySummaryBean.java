@@ -29,6 +29,7 @@
  */
 package org.sola.clients.beans.party;
 
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
 import org.sola.clients.beans.application.ApplicationBean;
@@ -81,6 +82,7 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     private String lastName;
     private String extId;
     private boolean rightHolder;
+    @NotNull(message = ClientMessage.PARTY_SELECT_TYPE, payload = Localized.class)
     private PartyTypeBean partyType;
     private boolean child;
     private String idIssueDate;
@@ -95,7 +97,6 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
 
     public PartySummaryBean() {
         super();
-        partyType = new PartyTypeBean();
     }
 
     public boolean isChild() {
@@ -167,18 +168,23 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     }
 
     public void setPartyType(PartyTypeBean typeBean) {
-        if (this.partyType == null) {
-            this.partyType = new PartyTypeBean();
-        }
-        this.setJointRefDataBean(this.partyType, typeBean, TYPE_PROPERTY);
+        PartyTypeBean oldValue = this.partyType;
+        this.partyType = typeBean;
+        propertySupport.firePropertyChange(TYPE_PROPERTY, oldValue, this.partyType);
     }
 
     public String getTypeCode() {
-        return partyType.getCode();
+        if(getPartyType() == null){
+            return null;
+        }
+        return getPartyType().getCode();
     }
 
     public void setTypeCode(String value) {
-        String oldValue = partyType.getCode();
+        String oldValue = null;
+        if(getPartyType() != null){
+            oldValue = partyType.getCode();
+        }
         setPartyType(CacheManager.getBeanByCode(CacheManager.getPartyTypes(), value));
         propertySupport.firePropertyChange(TYPE_CODE_PROPERTY, oldValue, value);
     }

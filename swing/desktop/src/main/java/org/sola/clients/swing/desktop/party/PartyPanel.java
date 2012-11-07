@@ -58,8 +58,6 @@ import org.sola.webservices.transferobjects.EntityAction;
 public class PartyPanel extends javax.swing.JPanel {
 
     private PartyBean partyBean;
-    static String individualString = "naturalPerson";
-    static String entityString = "nonNaturalPerson";
     private static final String individualLabel = MessageUtility.getLocalizedMessage(
             ClientMessage.GENERAL_LABELS_INDIVIDUAL).getMessage();
     private static final String entityLabel = MessageUtility.getLocalizedMessage(
@@ -132,8 +130,7 @@ public class PartyPanel extends javax.swing.JPanel {
                     cbxVdcs.setSelectedIndex(-1);
                 }
             }
-        });
-
+        });      
         customizeAddRoleButton(null);
         customizeRoleButtons(null);
     }
@@ -230,6 +227,7 @@ public class PartyPanel extends javax.swing.JPanel {
             cmbDistrict.setSelectedIndex(-1);
             cbxVdcs.setSelectedIndex(-1);
             cmbIdOffice.setSelectedIndex(-1);
+            cbxPartyType.setSelectedIndex(-1);
             cmbPreferredCommunication.setSelectedIndex(-1);
             cmbFatherType.setSelectedIndex(-1);
             cmbGrandFatherType.setSelectedIndex(-1);
@@ -245,6 +243,13 @@ public class PartyPanel extends javax.swing.JPanel {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(PartyBean.SELECTED_ROLE_PROPERTY)) {
                     customizeRoleButtons((PartyRoleBean) evt.getNewValue());
+                } else if(evt.getPropertyName().equals(PartyBean.TYPE_PROPERTY)){
+                    PartyTypeBean partyType = (PartyTypeBean)evt.getNewValue();
+                    if(partyType!=null){
+                        switchPartyType(partyType.isIndividual());
+                    } else {
+                        switchPartyType(true);
+                    }
                 }
             }
         });
@@ -285,22 +290,18 @@ public class PartyPanel extends javax.swing.JPanel {
     private void customizePanel() {
         if (partyBean.isNew()) {
             switchPartyType(true);
-            individualButton.setSelected(true);
         } else {
-            if (partyBean.getTypeCode() != null && partyBean.getTypeCode().equals(entityString)) {
-                entityButton.setSelected(true);
+            if (partyBean.getPartyType() != null && !partyBean.getPartyType().isIndividual()) {
                 labName.setText(entityLabel);
                 enableIndividualFields(false);
             } else {
-                individualButton.setSelected(true);
                 labName.setText(individualLabel);
                 enableIndividualFields(true);
             }
         }
 
         if (readOnly) {
-            individualButton.setEnabled(false);
-            entityButton.setEnabled(false);
+            cbxPartyType.setEnabled(false);
             txtFirstName.setEnabled(false);
             txtLastName.setEnabled(false);
             cmbIdType.setEnabled(false);
@@ -345,10 +346,8 @@ public class PartyPanel extends javax.swing.JPanel {
      */
     private void switchPartyType(boolean isIndividual) {
         if (isIndividual) {
-            partyBean.setTypeCode(individualString);
             labName.setText(individualLabel);
         } else {
-            partyBean.setTypeCode(entityString);
             labName.setText(entityLabel);
         }
         cmbGender.setSelectedIndex(0);
@@ -386,14 +385,13 @@ public class PartyPanel extends javax.swing.JPanel {
         cmbIdType.setEnabled(enable);
         txtIdref.setEnabled(enable);
         cmbIdOffice.setEnabled(enable);
-        txtIdIssueDate.setEditable(enable);
+        txtIdIssueDate.setEnabled(enable);
         txtGrandFatherName.setEnabled(enable);
-        txtBirthday.setEditable(enable);
+        txtBirthday.setEnabled(enable);
         cmbFatherType.setEnabled(enable);
         cmbGrandFatherType.setEnabled(enable);
         txtIdIssueDate.setEditable(enable);
         cmbIdIssuingDistrict.setEnabled(enable);
-        txtRemarks.setEditable(enable);
         parentPanel.setReadOnly(!enable);
         btnBrowsePhoto.setEnabled(enable);
         btnBrowseLeftFinger.setEnabled(enable);
@@ -424,7 +422,6 @@ public class PartyPanel extends javax.swing.JPanel {
 
         idTypes = createIdTypes();
         partyRoleTypes = createPartyRolesList();
-        buttonGroup1 = new javax.swing.ButtonGroup();
         popupRoles = new javax.swing.JPopupMenu();
         menuRemoveRole = new javax.swing.JMenuItem();
         genderTypes = createGenderTypes();
@@ -437,6 +434,7 @@ public class PartyPanel extends javax.swing.JPanel {
         idOfficeTypes = createIdOfficeTypes();
         fatherTypes = createFatherTypes();
         idOfficeDistricts = createIdOfficeDistricts();
+        partyTypeListBean = new org.sola.clients.beans.referencedata.PartyTypeListBean();
         detailsPanel = new javax.swing.JTabbedPane();
         basicPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -466,6 +464,9 @@ public class PartyPanel extends javax.swing.JPanel {
         cmbIdIssuingDistrict = new javax.swing.JComboBox();
         groupPanel5 = new org.sola.clients.swing.ui.GroupPanel();
         jPanel32 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        cbxPartyType = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         labName = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
@@ -547,11 +548,6 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel25 = new javax.swing.JPanel();
         txtRemarks = new javax.swing.JTextField();
         groupPanel8 = new org.sola.clients.swing.ui.GroupPanel();
-        entityButton = new javax.swing.JRadioButton();
-        individualButton = new javax.swing.JRadioButton();
-
-        buttonGroup1.add(individualButton);
-        buttonGroup1.add(entityButton);
 
         popupRoles.setName("popupRoles"); // NOI18N
 
@@ -661,7 +657,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
         );
 
         jPanel10.setName("jPanel10"); // NOI18N
@@ -689,7 +685,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cmbIdType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(labIdType)
-                .addGap(0, 90, Short.MAX_VALUE))
+                .addGap(0, 84, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -719,7 +715,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtIdref)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(labIdref)
-                .addGap(0, 76, Short.MAX_VALUE))
+                .addGap(0, 70, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -748,7 +744,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 63, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
             .addComponent(txtIdIssueDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel20Layout.setVerticalGroup(
@@ -781,7 +777,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 50, Short.MAX_VALUE))
+                .addGap(0, 44, Short.MAX_VALUE))
             .addComponent(cmbIdOffice, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
@@ -814,7 +810,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 45, Short.MAX_VALUE))
+                .addGap(0, 39, Short.MAX_VALUE))
             .addComponent(cmbIdIssuingDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
@@ -832,7 +828,41 @@ public class PartyPanel extends javax.swing.JPanel {
         groupPanel5.setTitleText(bundle.getString("PartyPanel.groupPanel5.titleText")); // NOI18N
 
         jPanel32.setName(bundle.getString("PartyPanel.jPanel32.name")); // NOI18N
-        jPanel32.setLayout(new java.awt.GridLayout(2, 4, 15, 0));
+        jPanel32.setLayout(new java.awt.GridLayout(3, 4, 15, 0));
+
+        jPanel3.setName(bundle.getString("PartyPanel.jPanel3.name")); // NOI18N
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        jLabel7.setText(bundle.getString("PartyPanel.jLabel7.text")); // NOI18N
+        jLabel7.setName(bundle.getString("PartyPanel.jLabel7.name")); // NOI18N
+
+        cbxPartyType.setName(bundle.getString("PartyPanel.cbxPartyType.name")); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partyTypes}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partyTypeListBean, eLProperty, cbxPartyType);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.partyType}"), cbxPartyType, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cbxPartyType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addGap(0, 170, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxPartyType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        jPanel32.add(jPanel3);
 
         jPanel4.setName("jPanel4"); // NOI18N
 
@@ -857,7 +887,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtFirstName)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(labName)
-                .addGap(0, 99, Short.MAX_VALUE))
+                .addGap(0, 147, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -891,7 +921,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtLastName)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(labLastName)
-                .addGap(0, 111, Short.MAX_VALUE))
+                .addGap(0, 159, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -921,7 +951,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtBirthday, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(txtBirthday, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -957,7 +987,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cmbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(lblGender)
-                .addGap(0, 125, Short.MAX_VALUE))
+                .addGap(0, 173, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -987,10 +1017,10 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cmbFatherType, 0, 160, Short.MAX_VALUE)
+            .addComponent(cmbFatherType, 0, 208, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labFatherFirstName)
-                .addGap(0, 82, Short.MAX_VALUE))
+                .addGap(0, 130, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1019,8 +1049,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(labFatherLastName)
-                .addContainerGap(53, Short.MAX_VALUE))
-            .addComponent(txtFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addContainerGap(101, Short.MAX_VALUE))
+            .addComponent(txtFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1050,10 +1080,10 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cmbGrandFatherType, 0, 160, Short.MAX_VALUE)
+            .addComponent(cmbGrandFatherType, 0, 208, Short.MAX_VALUE)
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addGap(0, 76, Short.MAX_VALUE))
+                .addGap(0, 124, Short.MAX_VALUE))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1080,10 +1110,10 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtGrandFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(txtGrandFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(0, 72, Short.MAX_VALUE))
+                .addGap(0, 120, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1129,7 +1159,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel27Layout.createSequentialGroup()
                 .addComponent(jLabel9)
-                .addGap(0, 84, Short.MAX_VALUE))
+                .addGap(0, 76, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel27Layout.setVerticalGroup(
@@ -1165,7 +1195,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cbxVdcs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addGap(0, 59, Short.MAX_VALUE))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1196,7 +1226,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtWardNo, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addGap(0, 81, Short.MAX_VALUE))
+                .addGap(0, 73, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1229,7 +1259,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtStreet)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(labAddress)
-                .addGap(0, 130, Short.MAX_VALUE))
+                .addGap(0, 122, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1254,11 +1284,11 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addGroup(basicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(groupPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel32, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel32, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(groupPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(groupPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         basicPanelLayout.setVerticalGroup(
@@ -1304,7 +1334,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 95, Short.MAX_VALUE))
+                .addGap(0, 89, Short.MAX_VALUE))
             .addComponent(txtPhone)
         );
         jPanel31Layout.setVerticalGroup(
@@ -1334,7 +1364,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(labMobile)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
             .addComponent(txtMobile)
         );
         jPanel12Layout.setVerticalGroup(
@@ -1364,7 +1394,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 107, Short.MAX_VALUE))
+                .addGap(0, 101, Short.MAX_VALUE))
             .addComponent(txtFax)
         );
         jPanel15Layout.setVerticalGroup(
@@ -1397,8 +1427,8 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(labEmail)
-                .addContainerGap(97, Short.MAX_VALUE))
-            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addContainerGap(91, Short.MAX_VALUE))
+            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1430,7 +1460,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel30Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(cmbPreferredCommunication, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel30Layout.setVerticalGroup(
@@ -1691,7 +1721,7 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtRemarks, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+            .addComponent(txtRemarks)
             .addComponent(groupPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel25Layout.setVerticalGroup(
@@ -1717,7 +1747,7 @@ public class PartyPanel extends javax.swing.JPanel {
                         .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(groupPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE))
+                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         fullPanelLayout.setVerticalGroup(
@@ -1735,67 +1765,24 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(groupPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         detailsPanel.addTab(bundle.getString("PartyPanel.fullPanel.TabConstraints.tabTitle"), fullPanel); // NOI18N
-
-        buttonGroup1.add(entityButton);
-        entityButton.setText(bundle.getString("PartyPanel.entityButton.text")); // NOI18N
-        entityButton.setActionCommand(bundle.getString("PartyPanel.entityButton.actionCommand")); // NOI18N
-        entityButton.setName("entityButton"); // NOI18N
-        entityButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                entityButtonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(individualButton);
-        individualButton.setText(bundle.getString("PartyPanel.individualButton.text")); // NOI18N
-        individualButton.setActionCommand(bundle.getString("PartyPanel.individualButton.actionCommand")); // NOI18N
-        individualButton.setName("individualButton"); // NOI18N
-        individualButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                individualButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(individualButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(entityButton)
-                .addContainerGap())
-            .addComponent(detailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(detailsPanel)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(individualButton)
-                    .addComponent(entityButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detailsPanel))
+            .addComponent(detailsPanel, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void individualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_individualButtonActionPerformed
-        if (individualButton.isSelected()) {
-            switchPartyType(true);
-        }
-    }//GEN-LAST:event_individualButtonActionPerformed
-
-    private void entityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entityButtonActionPerformed
-        if (entityButton.isSelected()) {
-            switchPartyType(false);
-        }
-    }//GEN-LAST:event_entityButtonActionPerformed
 
     private void btnAddRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoleActionPerformed
         addRole();
@@ -1879,8 +1866,8 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnClearRFP;
     private javax.swing.JButton btnClearSignature;
     private javax.swing.JButton btnRemoveRole;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cbxPartyRoleTypes;
+    private javax.swing.JComboBox cbxPartyType;
     private javax.swing.JComboBox cbxVdcs;
     private javax.swing.JComboBox cmbDistrict;
     private javax.swing.JComboBox cmbFatherType;
@@ -1893,7 +1880,6 @@ public class PartyPanel extends javax.swing.JPanel {
     private org.sola.clients.beans.referencedata.CommunicationTypeListBean communicationTypes;
     private javax.swing.JTabbedPane detailsPanel;
     private org.sola.clients.beans.referencedata.DistrictListBean districtListBean;
-    private javax.swing.JRadioButton entityButton;
     private org.sola.clients.beans.referencedata.FatherTypeListBean fatherTypes;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel fullPanel;
@@ -1910,7 +1896,6 @@ public class PartyPanel extends javax.swing.JPanel {
     private org.sola.clients.beans.referencedata.DistrictListBean idOfficeDistricts;
     private org.sola.clients.beans.referencedata.IdOfficeTypeListBean idOfficeTypes;
     private org.sola.clients.beans.referencedata.IdTypeListBean idTypes;
-    private javax.swing.JRadioButton individualButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1921,6 +1906,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1944,6 +1930,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel32;
@@ -1975,6 +1962,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JPanel parentCustomizePanel;
     private org.sola.clients.swing.desktop.party.PartySelectExtPanel parentPanel;
     private org.sola.clients.beans.referencedata.PartyRoleTypeListBean partyRoleTypes;
+    private org.sola.clients.beans.referencedata.PartyTypeListBean partyTypeListBean;
     private javax.swing.JPopupMenu popupRoles;
     private javax.swing.JPanel rightFinger;
     private javax.swing.JScrollPane roleTableScrollPanel;

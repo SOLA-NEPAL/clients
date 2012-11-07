@@ -67,21 +67,12 @@ public class RrrBean extends AbstractTransactionedBean {
         NEW, VARY, CANCEL, EDIT, VIEW;
     }
     public static final String GROUP_TYPE_CODE_OWNERSHIP = "ownership";
-    public static final String GROUP_TYPE_CODE_RESPONSIBILITIES = "responsibilities";
     public static final String GROUP_TYPE_CODE_RIGHTS = "rights";
     public static final String GROUP_TYPE_CODE_RESTRICTIONS = "restrictions";
     public static final String CODE_OWNERSHIP = "ownership";
     public static final String CODE_TENANCY = "tenancy";
-    public static final String TENANT_PROPERTY = "tenant";
-//    public static final String CODE_UNKNOWN = "unknown";
-//    public static final String CODE_BYAPPLICATION = "byApplication";
-//    public static final String CODE_BYLETTER = "byLetter";
-//    public static final String CODE_LIKHATPARIT = "byLikhatParit";
     public static final String CODE_SIMPLE_RESTRICTION = "simpleRestriction";
-    public static final String CODE_RESTRICTION_RELEASE = "restrictionRelease";
-    public static final String CODE_APARTMENT = "apartment";
-    public static final String CODE_STATE_OWNERSHIP = "stateOwnership";
-    public static final String CODE_MORTGAGE = "mortgage";
+
     public static final String BA_UNIT_ID_PROPERTY = "baUnitId";
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String RRR_TYPE_PROPERTY = "rrrType";
@@ -97,8 +88,6 @@ public class RrrBean extends AbstractTransactionedBean {
     public static final String LOC_PROPERTY = "loc";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String SELECTED_RIGHTHOLDER_PROPERTY = "selectedRightHolder";
-    // public static final String RESTRICTION_OFFICE_PROPERTY = "restrictionOffice";
-    // public static final String RESTRICTION_OFFICE_CODE_PROPERTY = "restrictionOfficeCode";
     public static final String OWNER_TYPE_PROPERTY = "ownerType";
     public static final String OWNERSHIP_TYPE_PROPERTY = "ownershipType";
     public static final String OWNER_TYPE_CODE_PROPERTY = "ownerTypeCode";

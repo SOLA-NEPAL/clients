@@ -39,6 +39,10 @@ import org.sola.webservices.transferobjects.referencedata.RequestTypeTO;
  * @link ApplicationBean}.
  */
 public class RequestCategoryTypeBean extends AbstractCodeBean {
+    public static final String CATEGORY_REG_SERVICES = "registrationServices";
+    public static final String CATEGORY_CADASTRE_SERVICES = "cadastreServices";
+    public static final String CATEGORY_INFO_SERVICES = "informationServices";
+    
     public RequestCategoryTypeBean(){
         super();
     }

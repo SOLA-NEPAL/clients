@@ -62,7 +62,7 @@ public class PropertyTransactionForm extends ContentPanel {
         }
         this.readOnly = readOnly;
         if(!readOnly){
-            this.readOnly = SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_SAVE);
+            this.readOnly = !SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_SAVE);
         }
         this.appService = appService;
         initComponents();

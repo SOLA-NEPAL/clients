@@ -67,7 +67,7 @@ public class SecurityBean extends AbstractBindingBean {
             return getCurrentUser().isInRole(roles);
         }
     }
-
+    
     public String getUserName() {
         return userName;
     }

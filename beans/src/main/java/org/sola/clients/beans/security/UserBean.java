@@ -169,6 +169,11 @@ public class UserBean extends UserSummaryBean {
         return WSManager.getInstance().getAdminService().changePassword(userName, password);
     }
     
+    /** Changes current user password. */
+    public static boolean changeCurrentPassword(String oldPassword, String newPassword){
+        return WSManager.getInstance().getAdminService().changeCurrentUserPassword(oldPassword, newPassword);
+    }
+    
     /** Returns user by the given ID */
     public static UserBean getUser(String userName){
         return TypeConverters.TransferObjectToBean(WSManager.getInstance()

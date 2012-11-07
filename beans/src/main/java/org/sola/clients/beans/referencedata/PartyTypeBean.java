@@ -39,7 +39,17 @@ import org.sola.webservices.transferobjects.referencedata.PartyTypeTO;
  */
 public class PartyTypeBean extends AbstractCodeBean {
 
+    private boolean individual;
+    
     public PartyTypeBean() {
         super();
+    }
+
+    public boolean isIndividual() {
+        return individual;
+    }
+
+    public void setIndividual(boolean individual) {
+        this.individual = individual;
     }
 }

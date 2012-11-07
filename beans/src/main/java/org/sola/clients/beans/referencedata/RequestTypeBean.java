@@ -51,12 +51,6 @@ public class RequestTypeBean extends AbstractCodeBean {
     public static final String CODE_CADASTRE_REDEFINITION = "redefineCadastre";
     public static final String CODE_REG_POWER_OF_ATTORNEY = "regnPowerOfAttorney";
     public static final String CODE_REG_STANDARD_DOCUMENT = "regnStandardDocument";
-    public static final String CODE_NEW_APARTMENT = "newApartment";
-    public static final String CODE_NEW_FREEHOLD = "newFreehold";
-    public static final String CODE_NEW_OWNERSHIP = "newOwnership";
-    public static final String CODE_NEW_STATE = "newState";
-    public static final String CODE_NEW_DIGITAL_TITLE = "newDigitalTitle";
-    public static final String CODE_TITLE_SERACH = "titleSearch";
     public static final String CODE_DOCUMENT_COPY = "documentCopy";
     public static final String CODE_SERVICE_ENQUIRY = "serviceEnquiry";
     
@@ -72,38 +66,6 @@ public class RequestTypeBean extends AbstractCodeBean {
     public static final String BASE_FEE_PROPERTY = "baseFee";
     public static final String AREA_BASE_FEE_PROPERTY = "areaBaseFee";
     public static final String VALUE_BASE_FEE_PROPERTY = "valueBaseFee";
-    
-    //Services code used for nepal customization.
-    public static final String CODE_AFTER_DEATH_WILLING="afterDeathWilling";
-    public static final String CODE_AGREEMENT="agreement";
-    public static final String CODE_CANCEL_PROPERTY="cancelProperty";
-    public static final String CODE_CHAKLA_BANDHI="chakalaBandhi";
-    public static final String CODE_DECISION_BASED="decisionBased";
-    public static final String CODE_DISTI_BANDAKI="distriBandhaki";
-    public static final String CODE_DONATION_LETTER="donationLetter";
-    public static final String CODE_EXCHANGE="exchange";
-    public static final String CODE_GUTHI="Guthi";
-    public static final String CODE_GUTHI_RAITANI="guthiRaitani";
-    public static final String CODE_LAKHA_BANDAKI="lakhaBandhaki";
-    public static final String CODE_LEAVE_NOTICE="leaveNotice";
-    public static final String CODE_LOC_MERGING="locMerging";
-    public static final String CODE_MANU_JODIAKO="manuJodiako";
-    public static final String CODE_MEMO_BASED="memoBased";
-    public static final String CODE_MISSING_PARCEL_REGISTRATION="missingLandRegister";
-    public static final String CODE_MULTIPLE_OWNER="multipleOwner";
-    public static final String CODE_NEW_SURVEY="newSurvey";
-    public static final String CODE_OLD_SURVEY="oldSurvey";
-    public static final String CODE_OWNER_CANCEL="ownerCancellation";
-    public static final String CODE_OWNERSHIP_CLEARANCE="ownershipClearance";
-    public static final String CODE_PROPERTY_DIVISION="propertyDivision";
-    public static final String CODE_REGISTRATION_DISMISSAL="registrationDismiss";
-    public static final String CODE_DEED_REGISTRATION="regnDeeds";
-    public static final String CODE_REMOVE_DUPLICATE="removeDuplicate";
-    public static final String CODE_RESIGNATION="resignation";
-    public static final String CODE_RIGHT_RECEIVED="rightReceived";
-    public static final String CODE_SHRESTHA_ADYABADHIK="shresthaAdhyabadhik";
-    public static final String CODE_STAY_CURRENT="stayCurrent";
-    public static final String CODE_THREE_GENERATION="threeGeneration";
     
     private int nrDaysToComplete;
     private int nrPropertiesRequired;

@@ -325,6 +325,24 @@ public class ApplicationPanel extends ContentPanel {
         saveAppState();
     }
 
+    private boolean canRunService(ApplicationServiceBean appService){
+        if(appService == null || appService.getRequestType() == null || 
+                appService.getRequestType().getRequestCategoryCode() == null){
+            return false;
+        }
+        String requestCatCode = appService.getRequestType().getRequestCategoryCode();
+        
+        if(requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_CADASTRE_SERVICES)){
+            return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_CADASTRE_SERVICES);
+        } else if(requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_INFO_SERVICES)){
+            return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_INFORMATION_SERVICES);
+        } else if(requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_REG_SERVICES)){
+            return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_REG_SERVICES);
+        } else {
+            return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_REG_SERVICES);
+        }
+    }
+    
     /**
      * Disables or enables buttons, related to the services list management.
      */
@@ -383,7 +401,7 @@ public class ApplicationPanel extends ContentPanel {
                 btnCancelService.setEnabled(selectedService.isManagementAllowed()
                         && SecurityBean.isInRole(RolesConstants.APPLICATION_SERVICE_CANCEL));
                 btnStartService.setEnabled(selectedService.isManagementAllowed()
-                        && SecurityBean.isInRole(RolesConstants.APPLICATION_SERVICE_START));
+                        && canRunService(selectedService));
 
                 String serviceStatus = selectedService.getStatusCode();
 
@@ -392,7 +410,7 @@ public class ApplicationPanel extends ContentPanel {
                     btnRevertService.setEnabled(SecurityBean.isInRole(RolesConstants.APPLICATION_SERVICE_REVERT));
                 } else {
                     btnCompleteService.setEnabled(selectedService.isManagementAllowed()
-                            && SecurityBean.isInRole(RolesConstants.APPLICATION_SERVICE_COMPLETE));
+                            && canRunService(selectedService));
                     btnRevertService.setEnabled(false);
                 }
             }
