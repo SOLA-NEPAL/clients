@@ -29,7 +29,9 @@ package org.sola.clients.beans.security;
 
 import java.util.HashMap;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.converters.TypeConverters;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.common.SOLAException;
 import org.sola.common.StringUtility;
 import org.sola.common.messaging.ClientMessage;
@@ -118,7 +120,12 @@ public class SecurityBean extends AbstractBindingBean {
         }
         
         if (throwException) {
-            throw new SOLAException(ClientMessage.ADMIN_VDC_ACCESS_DENIED);
+            VdcBean vdc = CacheManager.getVdc(vdcCode);
+            String vdcName = "Unknown";
+            if(vdc!=null){
+                vdcName = vdc.getDisplayValue();
+            }
+            throw new SOLAException(ClientMessage.ADMIN_VDC_ACCESS_DENIED, new String[]{vdcName,wardNumber});
         }
         return false;
     }
