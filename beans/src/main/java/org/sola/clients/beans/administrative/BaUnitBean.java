@@ -47,6 +47,7 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.RrrGroupTypeBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.referencedata.TypeActionBean;
+import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.beans.utils.RrrComparatorByRegistrationDate;
 import org.sola.clients.beans.validation.Localized;
@@ -554,6 +555,12 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     public boolean saveBaUnit(String serviceId) {
+        // Check VDC access
+        if(getCadastreObject()!=null && getCadastreObject().getAddress()!=null){
+            SecurityBean.checkVdcWardAccess(getCadastreObject().getAddress().getVdcCode(), 
+                    getCadastreObject().getAddress().getWardNo(), true);
+        }
+        
         BaUnitTO baUnit = TypeConverters.BeanToTrasferObject(this, BaUnitTO.class);
         baUnit = WSManager.getInstance().getAdministrative().SaveBaUnit(serviceId, baUnit);
         TypeConverters.TransferObjectToBean(baUnit, BaUnitBean.class, this);

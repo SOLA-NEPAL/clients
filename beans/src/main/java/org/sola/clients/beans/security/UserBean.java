@@ -31,10 +31,12 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.controls.SolaList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.DepartmentBean;
 import org.sola.clients.beans.validation.Localized;
+import org.sola.common.StringUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
@@ -52,6 +54,8 @@ public class UserBean extends UserSummaryBean {
     public static final String USERNAME_PROPERTY = "userName";
     public static final String ACTIVE_PROPERTY = "active";
     public static final String DEPARTMENT_PROPERTY = "department";
+    public static final String VDCS_PROPERTY = "vdcs";
+    public static final String SELECTED_VDC_PROPERTY = "selectedVdc";
     
     @NotEmpty(message=ClientMessage.CHECK_NOTNULL_USERNAME, payload=Localized.class)
     private String userName;
@@ -61,11 +65,14 @@ public class UserBean extends UserSummaryBean {
     private SolaList<RoleBean> roles;
     @NotNull(message=ClientMessage.CHECK_USER_DEPARTMENT_NOT_NULL, payload=Localized.class)
     private DepartmentBean department;
+    private SolaList<UserVdcBean> vdcs;
+    private UserVdcBean selectedVdc;
             
     public UserBean() {
         super();
         active = true;
         userGroups = new SolaList<UserGroupBean>();
+        vdcs = new SolaList<UserVdcBean>();
     }
 
     public String getUserName() {
@@ -97,6 +104,19 @@ public class UserBean extends UserSummaryBean {
         propertySupport.firePropertyChange(USER_GROUPS_PROPERTY, null, this.userGroups);
     }
 
+    public ObservableList<UserVdcBean> getFilteredVdcs() {
+        return vdcs.getFilteredList();
+    }
+    
+    public SolaList<UserVdcBean> getVdcs() {
+        return vdcs;
+    }
+
+    public void setVdcs(SolaList<UserVdcBean> vdcs) {
+        this.vdcs = vdcs;
+        propertySupport.firePropertyChange(VDCS_PROPERTY, null, this.vdcs);
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -121,6 +141,16 @@ public class UserBean extends UserSummaryBean {
             return null;
         }
         return department.getCode();
+    }
+
+    public UserVdcBean getSelectedVdc() {
+        return selectedVdc;
+    }
+
+    public void setSelectedVdc(UserVdcBean selectedVdc) {
+        UserVdcBean oldValue = this.selectedVdc;
+        this.selectedVdc = selectedVdc;
+        propertySupport.firePropertyChange(SELECTED_VDC_PROPERTY, oldValue, this.selectedVdc);
     }
     
     // Methods
@@ -149,8 +179,30 @@ public class UserBean extends UserSummaryBean {
         }
         return roles;
     }
+
+    /** Adds new {@link UserVdcBean} into the list of user's Vdcs. */
+    public void addVdc(UserVdcBean newVdc){
+        if(getVdcs()!=null && newVdc !=null){
+            for(UserVdcBean currentVdc : getVdcs()){
+                if(StringUtility.empty(currentVdc.getVdcCode()).equals(StringUtility.empty(newVdc.getVdcCode())) && 
+                        StringUtility.empty(currentVdc.getWardNumber()).equals(StringUtility.empty(newVdc.getWardNumber()))){
+                    if(currentVdc.getEntityAction()!=null && (currentVdc.getEntityAction() == EntityAction.DELETE 
+                            || currentVdc.getEntityAction() == EntityAction.DISASSOCIATE)){
+                        currentVdc.setEntityAction(null);
+                    }
+                    return;
+                }
+            }
+            getVdcs().addAsNew(newVdc);
+        }
+    }
     
-    // Methods
+    /** Removes selected {@link UserVdcBean} */
+    public void removeSelectedVdc(){
+        if(selectedVdc!=null){
+            getVdcs().safeRemove(selectedVdc, EntityAction.DELETE);
+        }
+    }
     
     /** Saves user. */
     public void save(){

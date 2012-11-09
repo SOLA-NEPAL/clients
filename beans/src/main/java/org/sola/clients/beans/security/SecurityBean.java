@@ -31,6 +31,7 @@ import java.util.HashMap;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.common.SOLAException;
+import org.sola.common.StringUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
@@ -90,6 +91,36 @@ public class SecurityBean extends AbstractBindingBean {
         char[] oldValue = userPassword;
         userPassword = value.toCharArray();
         propertySupport.firePropertyChange(USER_PASSWORD_PROPERTY, oldValue, userPassword);
+    }
+    
+    /** 
+     * Checks current user rights for the given VDC and/or Ward. Returns true if user has access.
+     * @param vdcCode Code of VDC to check.
+     * @param wardNumber Ward number to check.
+     * @param throwException Flag, indicating whether to throw an exception or not in case of the lack of access.
+     */
+    public static boolean checkVdcWardAccess(String vdcCode, String wardNumber, boolean throwException) {
+        if (vdcCode == null || vdcCode.isEmpty()) {
+            return true;
+        }
+
+        UserBean user = getCurrentUser();
+
+        for (UserVdcBean userVdc : user.getVdcs()) {
+            if(StringUtility.empty(userVdc.getVdcCode()).equals(StringUtility.empty(vdcCode))){
+                if(StringUtility.isEmpty(userVdc.getWardNumber())){
+                    return true;
+                }
+                if(StringUtility.empty(userVdc.getWardNumber()).equals(StringUtility.empty(wardNumber))){
+                    return true;
+                }
+            }
+        }
+        
+        if (throwException) {
+            throw new SOLAException(ClientMessage.ADMIN_VDC_ACCESS_DENIED);
+        }
+        return false;
     }
 
     /** 

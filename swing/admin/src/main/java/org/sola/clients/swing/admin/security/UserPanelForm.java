@@ -69,9 +69,13 @@ public class UserPanelForm extends ContentPanel {
         resourceBundle = ResourceBundle.getBundle("org/sola/clients/swing/admin/security/Bundle"); 
         
         initComponents();
-        setUserBean(this.userBean);
+        customizePanel();
     }
 
+    private UserPanel creatUserPanel(){
+        return new UserPanel(userBean);
+    }
+    
     public boolean isReadOnly() {
         return readOnly;
     }
@@ -137,7 +141,7 @@ public class UserPanelForm extends ContentPanel {
         jToolBar1 = new javax.swing.JToolBar();
         btnSave = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        userPanel = new org.sola.clients.swing.ui.security.UserPanel();
+        userPanel = creatUserPanel();
 
         setCloseOnHide(true);
         setHeaderPanel(headerPanel);
@@ -174,7 +178,7 @@ public class UserPanelForm extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
