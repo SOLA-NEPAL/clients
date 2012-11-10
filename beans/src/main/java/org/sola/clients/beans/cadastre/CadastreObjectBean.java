@@ -40,7 +40,7 @@ public class CadastreObjectBean extends CadastreObjectSummaryBean {
 
     public static final String GEOM_POLYGON_PROPERTY = "geomPolygon";
     private byte[] geomPolygon;
-
+    
     public CadastreObjectBean() {
         super();
     }

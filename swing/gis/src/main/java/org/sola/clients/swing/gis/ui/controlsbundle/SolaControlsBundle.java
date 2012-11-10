@@ -145,11 +145,6 @@ public abstract class SolaControlsBundle extends ControlsBundle {
             PublicMethod.getConstructionData(consLayer, mapsheets);
             this.getMap().initializeSelectionLayer();
             this.getMap().zoomToFullExtent();
-//            if (mapsheets==null || mapsheets.size()<1){
-//                MapDisplayOptionForm mapDisplayForm=new MapDisplayOptionForm(
-//                        this.getMap(),parcelLayer,consLayer,mapsheets);
-//                mapDisplayForm.setVisible(true);
-//            }
         } catch (Exception ex) {
             Messaging.getInstance().show(GisMessage.GENERAL_CONTROLBUNDLE_ERROR);
             org.sola.common.logging.LogUtility.log(

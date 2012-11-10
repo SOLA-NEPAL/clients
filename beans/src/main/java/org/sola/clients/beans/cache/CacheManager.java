@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.cadastre.DatasetBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
@@ -276,6 +277,14 @@ public final class CacheManager {
      * Cache key of the {@link FatherTypeBean} collection.
      */
     public static final String FATHER_TYPE_KEY = FatherTypeBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the current user's {@link DatasetBean} collection.
+     */
+    public static final String CURRENT_USER_DATASETS_KEY = "CURRENT_USER_" + DatasetBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the current office {@link DatasetBean} collection.
+     */
+    public static final String CURRENT_OFFICE_DATASETS_KEY = "CURRENT_OFFICE_" + DatasetBean.class.getName() + LIST_POSTFIX;
     
     private static final String CACHED_VDCS_KEY = "cachedVdcs" + LIST_POSTFIX;
     private static final String CACHED_MAP_SHEETS_KEY = "cachedMapSheets" + LIST_POSTFIX;
@@ -326,7 +335,21 @@ public final class CacheManager {
     private static final String GET_GRAND_FATHER_TYPES = "getGrandFatherTypes";
     private static final String GET_ID_OFFICE_TYPES = "getIdOfficeTypes";
     private static final String GET_FATHER_TYPES = "getFatherTypes";
+    private static final String GET_DATASETS_BY_CURRENT_OFFICE = "getDatasetsByCurrentOffice";
+    private static final String GET_DATASETS_BY_CURRENT_USER = "getDatasetsByCurrentUser";
 
+    public static List<DatasetBean> getDatasetsByCurrentOffice() {
+        return getCachedBeanList(DatasetBean.class,
+                WSManager.getInstance().getCadastreService(),
+                GET_DATASETS_BY_CURRENT_OFFICE, CURRENT_OFFICE_DATASETS_KEY);
+    }
+    
+    public static List<DatasetBean> getDatasetsByCurrentUser() {
+        return getCachedBeanList(DatasetBean.class,
+                WSManager.getInstance().getCadastreService(),
+                GET_DATASETS_BY_CURRENT_USER, CURRENT_USER_DATASETS_KEY);
+    }
+    
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result = new ArrayList<DepartmentBean>();
         String key = DEPARTMENT_KEY + officeCode;
