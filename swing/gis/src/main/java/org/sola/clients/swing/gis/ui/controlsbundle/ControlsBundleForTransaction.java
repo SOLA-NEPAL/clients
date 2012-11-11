@@ -47,7 +47,7 @@ import org.sola.clients.swing.gis.data.PojoFeatureSource;
 import org.sola.clients.swing.gis.layer.CadastreBoundaryPointLayer;
 import org.sola.clients.swing.gis.layer.CadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.PojoLayer;
-import org.sola.clients.swing.gis.mapaction.MapOptionShow;
+import org.sola.clients.swing.gis.mapaction.DatasetSelectionButton;
 import org.sola.clients.swing.gis.tool.CadastreBoundaryEditTool;
 import org.sola.clients.swing.gis.tool.CadastreBoundarySelectTool;
 import org.sola.common.messaging.GisMessage;

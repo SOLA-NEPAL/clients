@@ -76,6 +76,8 @@ import org.geotools.swing.extended.exception.MapScaleException;
 import org.geotools.swing.mapaction.extended.ExtendedAction;
 import org.geotools.swing.tool.extended.ExtendedTool;
 import org.opengis.referencing.operation.TransformException;
+import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.cadastre.DatasetBean;
 
 /**
  * This is an extension of the swing control {
@@ -94,6 +96,7 @@ import org.opengis.referencing.operation.TransformException;
  */
 public class Map extends JMapPane {
 
+    public static final String DATASET_CHANGED_PROPERTY = "dataset";
     private static String SRID_RESOURCE_LOCATION = "resources/srid.properties";
     private static String SELECTION_SLD_FILE = "selection.xml";
     private static String SELECTION_LAYER_NAME = "selection";
@@ -111,9 +114,9 @@ public class Map extends JMapPane {
     private double pixelResolution = 0;
     private Toc toc;
     private CursorTool activeTool = null;
-    
+    private DatasetBean dataset;
     //for zoom previous action storing draw extents.
-    private List<ReferencedEnvelope> draw_Envelops=new ArrayList<ReferencedEnvelope>();
+    private List<ReferencedEnvelope> draw_Envelops = new ArrayList<ReferencedEnvelope>();
     private JTextField txtScale;
 
     public JTextField getTxtScale() {
@@ -507,6 +510,42 @@ public class Map extends JMapPane {
         return solaLayer;
     }
 
+    public DatasetBean getDataset() {
+        return dataset;
+    }
+
+    public String getDatasetId() {
+        if (getDataset() == null) {
+            return null;
+        }
+        return getDataset().getId();
+    }
+
+    public void setDataset(DatasetBean dataset) throws InitializeMapException {
+        if (dataset != null) {
+            this.dataset = dataset;
+            this.srid = dataset.getSrid();
+            if (!sridResource.contains(Integer.toString(srid))) {
+                sridResource.setProperty(Integer.toString(srid), CacheManager.getCrs(srid));
+            }
+            try {
+                getMapContent().getViewport().setCoordinateReferenceSystem(
+                        this.generateCoordinateReferenceSystem(srid));
+            } catch (FactoryException ex) {
+                    throw new InitializeMapException(
+                            Messaging.Ids.MAPCONTROL_MAPCONTEXT_WITHOUT_SRID_ERROR.toString(), ex);
+            }
+            if (getMapContent().getCoordinateReferenceSystem() == null) {
+                    throw new InitializeMapException(
+                            Messaging.Ids.MAPCONTROL_MAPCONTEXT_WITHOUT_SRID_ERROR.toString(), null);
+            }
+            if (getMapContent().layers().size() > 0) {
+                refresh();
+            }
+        }
+        firePropertyChange(DATASET_CHANGED_PROPERTY, false, true);
+    }
+
     /**
      * It adds a layer of type WMS which is actually a WMS Server with a list of
      * layers in it.
@@ -627,7 +666,7 @@ public class Map extends JMapPane {
         this.toolsGroup.add(btn);
         inToolbar.add(btn);
     }
-    
+
     public void addMapAction(
             AbstractAction action, boolean hasTool, JToolBar inToolbar,
             boolean enabled, String buttonName) {
@@ -648,7 +687,7 @@ public class Map extends JMapPane {
             boolean enabled, String textBoxName) {
         //Label box.
         JLabel lbl = new JLabel();
-        lbl.setText(textBoxName + " 1:");
+        lbl.setText(textBoxName + ": ");
         lbl.setSize(50, 25);
         lbl.setEnabled(enabled);
         inToolbar.add(lbl);
@@ -661,6 +700,7 @@ public class Map extends JMapPane {
         this.setTxtScale(txt);
         inToolbar.add(txt);
     }
+
     /**
      * It adds a tool in the map. The tool adds also an action in the toolbar
      * which can activate the tool
@@ -671,7 +711,7 @@ public class Map extends JMapPane {
     public void addTool(ExtendedTool tool, JToolBar inToolbar, boolean enabled) {
         this.addMapAction(new ExtendedAction(this, tool), inToolbar, enabled);
     }
-    
+
     public void addTool(ExtendedTool tool, JToolBar inToolbar, boolean enabled,
             String buttonName) {
         this.addMapAction(new ExtendedAction(this, tool), inToolbar,
@@ -687,11 +727,10 @@ public class Map extends JMapPane {
     public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled) {
         this.addMapAction(action, action.getAttachedTool() != null, inToolbar, enabled);
     }
-    
+
     public void addMapAction(ExtendedAction action, JToolBar inToolbar, boolean enabled,
             String buttonName) {
-        this.addMapAction(action, action.getAttachedTool() != null, inToolbar
-                , enabled,buttonName);
+        this.addMapAction(action, action.getAttachedTool() != null, inToolbar, enabled, buttonName);
     }
 
     /**
@@ -783,7 +822,7 @@ public class Map extends JMapPane {
     }
 
     //<editor-fold defaultstate="collapse" desc="By Kabindra">
-     /**
+    /**
      * It refreshes the map, for checking purpose.
      */
     public void refresh(boolean bln_redraw) {
@@ -791,22 +830,22 @@ public class Map extends JMapPane {
         //redraw map.
         this.drawLayers(bln_redraw);
     }
-    
+
     // <needed for zoom previous--addition>
     //------------------------------------------------
     public void record_ZoomEnvelope() {
-        if (draw_Envelops.size()>25){
+        if (draw_Envelops.size() > 25) {
             draw_Envelops.remove(0);
         }
         draw_Envelops.add(this.getDisplayArea());
     }
 
     //zoom previous action.
-    public void zoomPrevious(){
-        int n=draw_Envelops.size();
-        if (n>0){
+    public void zoomPrevious() {
+        int n = draw_Envelops.size();
+        if (n > 0) {
             //last window used to draw.
-            ReferencedEnvelope zoomwindow=draw_Envelops.get(n-1);
+            ReferencedEnvelope zoomwindow = draw_Envelops.get(n - 1);
             this.setDisplayArea(zoomwindow);
             this.drawLayers(false);
             //remove used window.
@@ -814,7 +853,7 @@ public class Map extends JMapPane {
         }
     }
     //</editor-fold>
-    
+
     /**
      * Gets the current scale of the map.
      *
@@ -843,9 +882,11 @@ public class Map extends JMapPane {
         clearLabelCache.set(true);
         super.drawLayers(createNewImage);
         try {
-            if (this.getWidth()==0 || this.getHeight()==0) return;
+            if (this.getWidth() == 0 || this.getHeight() == 0) {
+                return;
+            }
             DecimalFormat df = new DecimalFormat("#0");
-            String currentScale= df.format(this.getScale());
+            String currentScale = df.format(this.getScale());
             txtScale.setText(currentScale);
         } catch (MapScaleException ex) {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);

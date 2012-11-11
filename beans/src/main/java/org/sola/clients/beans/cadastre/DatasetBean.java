@@ -16,6 +16,8 @@
 package org.sola.clients.beans.cadastre;
 
 import org.sola.clients.beans.AbstractBasicIdBean;
+import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.referencedata.VdcBean;
 
 public class DatasetBean extends AbstractBasicIdBean {
     private String name;

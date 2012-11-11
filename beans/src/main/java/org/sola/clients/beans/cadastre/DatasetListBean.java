@@ -59,4 +59,12 @@ public class DatasetListBean extends AbstractBindingBean {
             datasets.add(dataset);
         }
     }
+    
+    /** Loads datasets by VDC code. */
+    public void loadDatasetsByVdc(String vdcCode){
+        datasets.clear();
+        for(DatasetBean dataset : CacheManager.getDatasetsByVdc(vdcCode)){
+            datasets.add(dataset);
+        }
+    }
 }

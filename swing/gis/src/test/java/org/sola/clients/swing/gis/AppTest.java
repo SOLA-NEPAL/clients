@@ -135,7 +135,7 @@ public class AppTest {
 //        spatialQuery.setSrid(srid);
         ResultForNavigationInfo result =
                 PojoDataAccess.getInstance().GetQueryData(
-                "Parcels", west, south, east, north, srid, pixelResolution);
+                "Parcels", west, south, east, north, srid, null, pixelResolution);
         Date endTime = Calendar.getInstance().getTime();
         System.out.println("Number of results: " + result.getToAdd().size());
         if (result.getToAdd().size() > 0) {
