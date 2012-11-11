@@ -24,7 +24,9 @@ import org.sola.webservices.transferobjects.administrative.LocWithMothTO;
 public class LocWithMothBean extends LocBean {
 
     public static final String MOTH_PROPERTY = "moth";
+    public static final String IS_CHECKED_PROPERTY = "checked";
     private MothBasicBean moth;
+    boolean checked;
 
     public LocWithMothBean() {
         super();
@@ -32,6 +34,14 @@ public class LocWithMothBean extends LocBean {
 
     public MothBasicBean getMoth() {
         return moth;
+    }
+
+    @Override
+    public String getMothId() {
+        if (getMoth() == null) {
+            return null;
+        }
+        return getMoth().getId();
     }
 
     public void setMoth(MothBasicBean moth) {
@@ -61,5 +71,15 @@ public class LocWithMothBean extends LocBean {
         LocSearchByMothParamsTO searchParamsTO = TypeConverters.BeanToTrasferObject(searchParams, LocSearchByMothParamsTO.class);
         LocWithMothTO locTO = WSManager.getInstance().getAdministrative().getLocByPageNoAndMoth(searchParamsTO);
         return TypeConverters.TransferObjectToBean(locTO, LocWithMothBean.class, null);
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        boolean oldValue = this.checked;
+        this.checked = checked;
+        propertySupport.firePropertyChange(IS_CHECKED_PROPERTY, oldValue, this.checked);
     }
 }

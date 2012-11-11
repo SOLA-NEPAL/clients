@@ -3,14 +3,24 @@
 <Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <NonVisualComponents>
     <Component class="org.sola.clients.beans.referencedata.VdcListBean" name="vdcListBean1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createVdcLst()"/>
+      </AuxValues>
     </Component>
     <Component class="org.sola.clients.beans.referencedata.MothTypeListBean" name="mothTypeListBean1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createMothTypeList()"/>
+      </AuxValues>
     </Component>
     <Component class="org.sola.clients.beans.administrative.MothListBean" name="mothListBean1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="createMothList()"/>
+      </AuxValues>
     </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="locationByPlatform" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -166,11 +176,11 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="36" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="cmbMothLujNo" alignment="0" max="32767" attributes="0"/>
+                  <Component id="cmbMothLujNo" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -195,7 +205,7 @@
             <Component class="javax.swing.JComboBox" name="cmbMothLujNo">
               <BindingProperties>
                 <BindingProperty name="elements" source="mothListBean1" sourcePath="${moths}" target="cmbMothLujNo" targetPath="elements" updateStrategy="0" immediately="false"/>
-                <BindingProperty name="selectedItem" source="mothListBean1" sourcePath="${selectedMoth}" target="cmbMothLujNo" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="selectedItem" source="Form" sourcePath="${locWithMothBean.moth}" target="cmbMothLujNo" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
           </SubComponents>
@@ -233,7 +243,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtTmpPageNo">
               <BindingProperties>
-                <BindingProperty name="text" source="Form" sourcePath="${locBean.tmpPanaNo}" target="txtTmpPageNo" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="Form" sourcePath="${locWithMothBean.tmpPanaNo}" target="txtTmpPageNo" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -245,11 +255,11 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="txtPageNo" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtPageNo" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -273,13 +283,10 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtPageNo">
               <BindingProperties>
-                <BindingProperty name="text" source="Form" sourcePath="${locBean.pageNumber}" target="txtPageNo" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="Form" sourcePath="${locWithMothBean.panaNo}" target="txtPageNo" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPageNoActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

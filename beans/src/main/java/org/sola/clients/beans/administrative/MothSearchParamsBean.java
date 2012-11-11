@@ -15,30 +15,34 @@
  */
 package org.sola.clients.beans.administrative;
 
-import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
+import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.MothTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 
-public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
+/**
+ *
+ * @author Kumar
+ */
+public class MothSearchParamsBean extends AbstractBindingBean {
 
-    public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
-    public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
-    public static final String WARD_NO_PROPERTY = "wardNo";
-    public static final String MOTHLUJ_PROPERTY = "mothLuj";
-    public static final String MOTH_TYPE_PROPERTY = "mothType";
     public static final String VDC_PROPERTY = "vdc";
-    public static final String WARD_NUMBER_PROPERTY = "wardNumber";
-    public static final String SELECTED_VDC = "selectedVdc";
-    private String mothlujNumber;
-    private MothTypeBean mothType;
-    private String fiscalYearCode;
-    private String wardNumber;
+    public static final String MOTH_TYPE_PROPERTY = "mothLuj";
+    public static final String MOTH_TYPE_BEAN_PROPERTY = "mothTypeBean";
+    public static final String MOTH_LUJ_NUMBER_PROPERTY = "mothlujNumber";
     private VdcBean vdc;
+    private MothTypeBean mothTypeBean;
+    private String mothlujNumber;
 
-    public MothBasicBean() {
-        super();
+    public MothTypeBean getMothTypeBean() {
+        return mothTypeBean;
+    }
+
+    public void setMothTypeBean(MothTypeBean mothTypeBean) {
+        MothTypeBean oldValue = this.mothTypeBean;
+        this.mothTypeBean = mothTypeBean;
+        propertySupport.firePropertyChange(MOTH_TYPE_BEAN_PROPERTY, oldValue, this.mothTypeBean);
     }
 
     public String getVdcCode() {
@@ -68,48 +72,21 @@ public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
         propertySupport.firePropertyChange(VDC_PROPERTY, oldValue, this.vdc);
     }
 
-    public String getFiscalYearCode() {
-        return fiscalYearCode;
-    }
-
-    public void setFiscalYearCode(String fiscalYearCode) {
-        String oldValue = this.fiscalYearCode;
-        this.fiscalYearCode = fiscalYearCode;
-        propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, oldValue, this.fiscalYearCode);
-    }
-
-    public String getWardNumber() {
-        return wardNumber;
-    }
-
-    public void setWardNumber(String wardNumber) {
-        String oldValue = this.wardNumber;
-        this.wardNumber = wardNumber;
-        propertySupport.firePropertyChange(WARD_NO_PROPERTY, oldValue, this.wardNumber);
-    }
-
     public String getMothLuj() {
-        return getMothType().getMothTypeCode();
-
+        if (getMothTypeBean() != null) {
+            return getMothTypeBean().getMothTypeCode();
+        } else {
+            return null;
+        }
     }
 
     public void setMothLuj(String mothLuj) {
-        String oldValue = getMothType().getMothTypeCode();
-        setMothType(new MothTypeBean(mothLuj));
-        propertySupport.firePropertyChange(MOTHLUJ_PROPERTY, oldValue, mothLuj);
-    }
-
-    public MothTypeBean getMothType() {
-        if (mothType == null) {
-            mothType = new MothTypeBean();
+        String oldValue = null;
+        if (getMothTypeBean() != null) {
+            oldValue = getMothTypeBean().getMothTypeCode();
         }
-        return mothType;
-    }
-
-    public void setMothType(MothTypeBean mothType) {
-        MothTypeBean oldValue = this.mothType;
-        this.mothType = mothType;
-        propertySupport.firePropertyChange(MOTH_TYPE_PROPERTY, oldValue, this.mothType);
+        setMothTypeBean(new MothTypeBean(mothLuj));
+        propertySupport.firePropertyChange(MOTH_TYPE_PROPERTY, oldValue, mothLuj);
     }
 
     public String getMothlujNumber() {
@@ -120,10 +97,5 @@ public class MothBasicBean extends AbstractIdWithOfficeCodeBean {
         String oldValue = this.mothlujNumber;
         this.mothlujNumber = mothlujNumber;
         propertySupport.firePropertyChange(MOTH_LUJ_NUMBER_PROPERTY, oldValue, this.mothlujNumber);
-    }
-
-    @Override
-    public String toString() {
-        return mothlujNumber;
     }
 }

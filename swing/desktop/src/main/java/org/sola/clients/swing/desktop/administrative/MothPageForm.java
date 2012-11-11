@@ -17,17 +17,13 @@ package org.sola.clients.swing.desktop.administrative;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.sola.clients.beans.administrative.LocBean;
-import org.sola.clients.beans.administrative.LocListBean;
-import org.sola.clients.beans.administrative.MothBean;
+import javax.swing.JDialog;
+import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothListBean;
-import org.sola.clients.beans.referencedata.MothTypeBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
-import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
-import org.sola.clients.swing.desktop.MainForm;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -37,41 +33,73 @@ import org.sola.common.messaging.MessageUtility;
 public class MothPageForm extends javax.swing.JDialog {
 
     public static final String LOC_SAVED = "locSaved";
-    public static final String LOC_BEAN_PROPERTY = "locBean";
+    public static final String LOC_WITH_MOTH_BEAN_PROPERTY = "locWithMothBean";
     public static final String LOC_FOUND = "locFound";
-    private LocBean locBean;
+    private LocWithMothBean locWithMothBean;
+    boolean editflag = true;
+
+    private VdcListBean createVdcLst() {
+        VdcListBean list = new VdcListBean();
+        list.loadListByOffice(false);
+        if (locWithMothBean != null && !locWithMothBean.isNew()) {
+            list.setSelectedVdc(locWithMothBean.getMoth().getVdc());
+        }
+        return list;
+    }
+
+    private MothTypeListBean createMothTypeList() {
+        createMothList();
+        if (mothTypeListBean1 == null) {
+            mothTypeListBean1 = new MothTypeListBean();
+        }
+        mothTypeListBean1.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals(MothTypeListBean.SELECTED_MOTH_TYPE_PROPERTY)) {
+                    searchMoth();
+                    customizeTextFieldForMothPageNo();
+                }
+            }
+        });
+        if (locWithMothBean != null && !locWithMothBean.isNew()) {
+            mothTypeListBean1.setSelectedMothType(locWithMothBean.getMoth().getMothType());
+        }
+        return mothTypeListBean1;
+    }
+
+    private MothListBean createMothList() {
+        if (mothListBean1 == null) {
+            mothListBean1 = new MothListBean();
+        }
+        return mothListBean1;
+    }
 
     /**
      * Creates new form MothPageForm
      */
-    public MothPageForm(java.awt.Frame parent, boolean modal) {
+    public MothPageForm(java.awt.Frame parent, boolean modal, LocWithMothBean locWithMothBean) {
         super(parent, modal);
+        if (locWithMothBean == null) {
+            this.locWithMothBean = new LocWithMothBean();
+        } else {
+            this.locWithMothBean = locWithMothBean;
+        }
         initComponents();
-        customizeMothList();
-        customizeMothType();
-        customizeTextFieldForMothPageNo();
-        vdcListBean1.loadListByOffice(true);
         postInit();
     }
 
-    private void postInit() {
+    public LocWithMothBean getLocWithMothBean() {
+        return locWithMothBean;
+    }
 
-//        locList.addPropertyChangeListener(new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                if (evt.getPropertyName().equals(LocListBean.SELECTED_LOC)) {
-//                    locButtonEnable();
-//                }
-//            }
-//        });
-//        mothList.addPropertyChangeListener(new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                if (evt.getPropertyName().equals(MothListBean.SELECTED_MOTH)) {
-//                    mothButtonEnable();
-//                }
-//            }
-//        });
+    private void postInit() {
+        if (locWithMothBean.isNew()) {
+            editflag = false;
+            cmbVdc.setSelectedIndex(-1);
+            customizeMothList();
+            customizeMothType();
+            customizeTextFieldForMothPageNo();
+        }
 
         vdcListBean1.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -81,37 +109,48 @@ public class MothPageForm extends javax.swing.JDialog {
                 }
             }
         });
+    }
 
-
-        mothTypeListBean1.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(MothTypeListBean.SELECTED_MOTH_TYPE_PROPERTY)) {
-                    customizeMothList();
-                    VdcBean vdc = (VdcBean) cmbVdc.getSelectedItem();
-                    MothTypeBean mothType = (MothTypeBean) cmbMothLujNo.getSelectedItem();
-                    mothListBean1.loadMothList(vdc.getCode(), mothType.getMothTypeCode());
-                }
+    private void searchMoth() {
+        if (vdcListBean1.getSelectedVdc() != null && mothTypeListBean1.getSelectedMothType() != null) {
+            if (cmbMothLujNo != null) {
+                cmbMothLujNo.setEnabled(true);
             }
-        });
-        
-         mothListBean1.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(MothListBean.SELECTED_MOTH)) {
-                    customizeTextFieldForMothPageNo();
-                }
+            mothListBean1.loadMothList(vdcListBean1.getSelectedVdc().getCode(),
+                    mothTypeListBean1.getSelectedMothType().getMothTypeCode());
+        } else {
+            if (cmbMothLujNo != null) {
+                cmbMothLujNo.setEnabled(false);
             }
-        });
-
+        }
+        if (locWithMothBean.isNew()) {
+            cmbMothLujNo.setSelectedIndex(-1);
+        }
     }
 
     private void customizeTextFieldForMothPageNo() {
-        boolean enable = mothListBean1.getSelectedMoth() != null;
-        txtPageNo.setEnabled(enable);
-        txtTmpPageNo.setEnabled(enable);
+        boolean enable = mothTypeListBean1.getSelectedMothType() != null;
+        if (mothTypeListBean1.getSelectedMothType() == null) {
+            if (txtPageNo != null) {
+                txtPageNo.setEnabled(enable);
+                txtTmpPageNo.setEnabled(enable);
+            }
+            return;
+        }
+        if ("Moth".equals(mothTypeListBean1.getSelectedMothType().getMothTypeName())) {
+            if (txtPageNo != null) {
+                txtPageNo.setEnabled(enable);
+                txtTmpPageNo.setEnabled(!enable);
+            }
+        }
+        if ("Luj".equals(mothTypeListBean1.getSelectedMothType().getMothTypeName())) {
+            if (txtPageNo != null) {
+                txtTmpPageNo.setEnabled(enable);
+                txtPageNo.setEnabled(!enable);
+            }
+        }
     }
-    
+
     private void customizeMothList() {
         boolean enable = mothTypeListBean1.getSelectedMothType() != null;
         cmbMothLujNo.setEnabled(enable);
@@ -120,23 +159,7 @@ public class MothPageForm extends javax.swing.JDialog {
     private void customizeMothType() {
         boolean enable = vdcListBean1.getSelectedVdc() != null;
         cmbMothType.setEnabled(enable);
-    }
-
-    public LocBean getLocBean() {
-        return locBean;
-    }
-
-    public void setLocBean(LocBean locBean) {
-        setUpLocBean(locBean);
-    }
-
-    private void setUpLocBean(LocBean locBean) {
-        if (locBean != null) {
-            this.locBean = locBean;
-        } else {
-            this.locBean = new LocBean();
-        }
-        firePropertyChange(LOC_BEAN_PROPERTY, null, this.locBean);
+        cmbMothType.setSelectedIndex(-1);
     }
 
     @SuppressWarnings("unchecked")
@@ -144,9 +167,9 @@ public class MothPageForm extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        vdcListBean1 = new org.sola.clients.beans.referencedata.VdcListBean();
-        mothTypeListBean1 = new org.sola.clients.beans.referencedata.MothTypeListBean();
-        mothListBean1 = new org.sola.clients.beans.administrative.MothListBean();
+        vdcListBean1 = createVdcLst();
+        mothTypeListBean1 = createMothTypeList();
+        mothListBean1 = createMothList();
         jToolBar1 = new javax.swing.JToolBar();
         btnSave = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
@@ -167,6 +190,7 @@ public class MothPageForm extends javax.swing.JDialog {
         txtPageNo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationByPlatform(true);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -245,7 +269,7 @@ public class MothPageForm extends javax.swing.JDialog {
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean1, eLProperty, cmbMothLujNo);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean1, org.jdesktop.beansbinding.ELProperty.create("${selectedMoth}"), cmbMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${locWithMothBean.moth}"), cmbMothLujNo, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -270,7 +294,7 @@ public class MothPageForm extends javax.swing.JDialog {
 
         jLabel4.setText(bundle.getString("MothPageForm.jLabel4.text")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${locBean.tmpPanaNo}"), txtTmpPageNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${locWithMothBean.tmpPanaNo}"), txtTmpPageNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -295,14 +319,8 @@ public class MothPageForm extends javax.swing.JDialog {
 
         jLabel5.setText(bundle.getString("MothPageForm.jLabel5.text")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${locBean.pageNumber}"), txtPageNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${locWithMothBean.panaNo}"), txtPageNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
-
-        txtPageNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPageNoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -348,16 +366,46 @@ public class MothPageForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPageNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPageNoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPageNoActionPerformed
-
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        saveLoc(false);
+        createLoc();
 
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void createLoc() {
+        if ((locWithMothBean.getMoth() != null && !txtPageNo.getText().isEmpty())
+                || (locWithMothBean.getMoth() != null && !txtTmpPageNo.getText().isEmpty())) {
+            LocWithMothBean loc = LocWithMothBean.searchLocByMothAndPage(
+                    locWithMothBean.getMoth(), txtPageNo.getText());
+            if (loc != null) {
+                MessageUtility.displayMessage(ClientMessage.LOC_EXIST);
+                return;
+            }
+            if (loc == null) {
+                if (MessageUtility.displayMessage(ClientMessage.LOC_NOT_FOUND_CREATE_NEW)
+                        == MessageUtility.BUTTON_ONE) {
+                    saveLoc(false);
+                } else {
+                    return;
+                }
+            }
+        }
+    }
+
+    public boolean validateLoc(boolean showMessage) {
+        return locWithMothBean.validate(showMessage).size() < 1;
+    }
+
+    public boolean saveLoc() {
+        if (validateLoc(true)) {
+            return locWithMothBean.saveLoc();
+        } else {
+            return false;
+        }
+    }
+
     private void saveLoc(final boolean allowClose) {
+        final JDialog dlg = this;
         SolaTask<Boolean, Boolean> t = new SolaTask<Boolean, Boolean>() {
             @Override
             public Boolean doTask() {
@@ -372,25 +420,19 @@ public class MothPageForm extends javax.swing.JDialog {
                     if (allowClose) {
                     } else {
                         MessageUtility.displayMessage(ClientMessage.LOC_SAVED);
-                        txtPageNo.setText("");
-                        MainForm.saveBeanState(locBean);
+                        if (editflag == true) {
+                            dlg.setVisible(false);
+                        }
+                        cmbVdc.setSelectedIndex(-1);
+                        customizeMothType();
+                        cmbMothLujNo.setSelectedIndex(-1);
+                        txtPageNo.setText(null);
+                        txtTmpPageNo.setText(null);
                     }
                 }
             }
         };
         TaskManager.getInstance().runTask(t);
-    }
-
-    public boolean saveLoc() {
-        if (validateLoc(true)) {
-            return locBean.saveLoc();
-        } else {
-            return false;
-        }
-    }
-
-    public boolean validateLoc(boolean showMessage) {
-        return locBean.validate(showMessage).size() < 1;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;

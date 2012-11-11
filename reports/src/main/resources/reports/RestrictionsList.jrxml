@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8db55bc7-dfa1-4e10-af17-679be4219c04">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="82"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="CURRENT_DATE" class="java.lang.String"/>
 	<queryString>
@@ -71,7 +71,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Registered active restrictions]]></text>
+				<text><![CDATA[दर्ता  भएका कायम रोक्काहरु]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="b3cd489f-db81-44c8-967a-912573f3e7c0" x="702" y="33" width="100" height="20"/>
@@ -110,7 +110,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[VDC]]></text>
+				<text><![CDATA[गाबिस/नगरपालिका]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="86" y="23" width="72" height="20" backcolor="#CCCCCC"/>
@@ -124,7 +124,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ward]]></text>
+				<text><![CDATA[वडा नं]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="158" y="23" width="68" height="20" backcolor="#CCCCCC"/>
@@ -138,7 +138,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Parcel num.]]></text>
+				<text><![CDATA[कित्ता नं]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="158" y="3" width="68" height="20" backcolor="#CCCCCC"/>
@@ -152,7 +152,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Map sheet]]></text>
+				<text><![CDATA[नक्सा सिट]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="626" y="3" width="176" height="20" backcolor="#CCCCCC"/>
@@ -166,7 +166,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Owner(s)]]></text>
+				<text><![CDATA[जग्गाधनी(हरु)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="626" y="23" width="176" height="20" backcolor="#CCCCCC"/>
@@ -180,7 +180,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Remarks]]></text>
+				<text><![CDATA[कैफियत]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="224" y="23" width="66" height="20" backcolor="#CCCCCC"/>
@@ -194,7 +194,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bundle page]]></text>
+				<text><![CDATA[रोक्का मोठ पाना]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="224" y="3" width="66" height="20" backcolor="#CCCCCC"/>
@@ -208,7 +208,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bundle num.]]></text>
+				<text><![CDATA[रोक्का मोठ नं]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="290" y="3" width="69" height="20" backcolor="#CCCCCC"/>
@@ -222,7 +222,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reg. number]]></text>
+				<text><![CDATA[दर्ता नं]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="290" y="23" width="69" height="20" backcolor="#CCCCCC"/>
@@ -236,7 +236,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reg. date]]></text>
+				<text><![CDATA[दर्ता मिति]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="359" y="3" width="70" height="20" backcolor="#CCCCCC"/>
@@ -250,7 +250,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ref. number]]></text>
+				<text><![CDATA[चलानी नं]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="359" y="23" width="70" height="20" backcolor="#CCCCCC"/>
@@ -264,7 +264,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ref. date]]></text>
+				<text><![CDATA[चलानी मिति]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="429" y="3" width="82" height="20" backcolor="#CCCCCC"/>
@@ -278,7 +278,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[S/N]]></text>
+				<text><![CDATA[सि.नं]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="429" y="23" width="82" height="20" backcolor="#CCCCCC"/>
@@ -292,7 +292,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Restriction type]]></text>
+				<text><![CDATA[रोक्का प्रकार]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="511" y="23" width="115" height="20" backcolor="#CCCCCC"/>
@@ -306,7 +306,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Restriction office]]></text>
+				<text><![CDATA[रोक्का राख्ने कार्यलय]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="511" y="3" width="115" height="20" backcolor="#CCCCCC"/>
@@ -320,7 +320,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reason]]></text>
+				<text><![CDATA[रोक्का कारण]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c1c08538-452d-49f0-8282-34c681f7c358" mode="Opaque" x="25" y="3" width="61" height="40" backcolor="#CCCCCC"/>
@@ -334,7 +334,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Price]]></text>
+				<text><![CDATA[मुल्य]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

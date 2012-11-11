@@ -15,10 +15,8 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import javax.swing.JDialog;
 import org.sola.clients.beans.administrative.MothBean;
-import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
@@ -34,73 +32,38 @@ public class MothForm extends javax.swing.JDialog {
     public static final String MOTH_BEAN_PROPERTY = "mothBean";
     public static final String MOTH_SAVED = "mothSaved";
     private MothBean mothBean;
+    private boolean editflag = false;
+
+    private VdcListBean createVdcLst() {
+        VdcListBean list = new VdcListBean();
+        list.loadListByOffice(false);
+        return list;
+    }
 
     /**
      * Creates new form MothForm
      */
-    public MothForm(java.awt.Frame parent, boolean modal) {
+    public MothForm(java.awt.Frame parent, boolean modal, MothBean mothBean) {
         super(parent, modal);
+        if (mothBean == null) {
+            this.mothBean = new MothBean();
+        } else {
+            this.mothBean = mothBean;
+        }
         initComponents();
-       
-        customizeMothType();
-        customizeMothLujNo();
-        setUpMothBean(mothBean);
         customizeForm();
-        vdcListBean1.loadListByOffice(true);
-        postInit();
-    }
-
-    private void postInit() {
-        vdcListBean1.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(VdcListBean.SELECTED_VDC_PROPERTY)) {
-                    customizeMothType();
-                }
-            }
-        });
-
-
-        mothTypeListBean1.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(MothTypeListBean.SELECTED_MOTH_TYPE_PROPERTY)) {
-                    customizeMothLujNo();
-                }
-            }
-        });
-    }
-
-    private void customizeMothType() {
-        boolean enable = vdcListBean1.getSelectedVdc() != null;
-        cmbMothType.setEnabled(enable);
-    }
-
-    private void customizeMothLujNo() {
-        boolean enable = mothTypeListBean1.getSelectedMothType() != null;
-        txtMothLujNumber.setEnabled(enable);
     }
 
     private void customizeForm() {
-        cmbVdc.setSelectedIndex(-1);
-        cmbMothType.setSelectedIndex(-1);
+        if (mothBean.isNew()) {
+            editflag = true;
+            cmbVdc.setSelectedIndex(-1);
+            cmbMothType.setSelectedIndex(-1);
+        }
     }
 
     public MothBean getMothBean() {
         return mothBean;
-    }
-
-    private void setUpMothBean(MothBean mothBean) {
-        if (mothBean != null) {
-            this.mothBean = mothBean;
-        } else {
-            this.mothBean = new MothBean();
-        }
-        firePropertyChange(MOTH_BEAN_PROPERTY, null, this.mothBean);
-    }
-
-    public void setMothBean(MothBean mothBean) {
-        setUpMothBean(mothBean);
     }
 
     @SuppressWarnings("unchecked")
@@ -108,7 +71,7 @@ public class MothForm extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        vdcListBean1 = new org.sola.clients.beans.referencedata.VdcListBean();
+        vdcListBean1 = createVdcLst();
         mothTypeListBean1 = new org.sola.clients.beans.referencedata.MothTypeListBean();
         jToolBar1 = new javax.swing.JToolBar();
         btnSave = new javax.swing.JButton();
@@ -126,6 +89,7 @@ public class MothForm extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
         setTitle(bundle.getString("MothForm.title")); // NOI18N
+        setLocationByPlatform(true);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -142,6 +106,7 @@ public class MothForm extends javax.swing.JDialog {
 
         jPanel4.setLayout(new java.awt.GridLayout(1, 3, 15, 0));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel1.setText(bundle.getString("MothForm.jLabel1.text")); // NOI18N
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
@@ -170,6 +135,7 @@ public class MothForm extends javax.swing.JDialog {
 
         jPanel4.add(jPanel1);
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel2.setText(bundle.getString("MothForm.jLabel2.text")); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mothTypes}");
@@ -198,6 +164,7 @@ public class MothForm extends javax.swing.JDialog {
 
         jPanel4.add(jPanel2);
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel3.setText(bundle.getString("MothForm.jLabel3.text")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${mothBean.mothlujNumber}"), txtMothLujNumber, org.jdesktop.beansbinding.BeanProperty.create("text"));
@@ -209,7 +176,7 @@ public class MothForm extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 33, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
             .addComponent(txtMothLujNumber)
         );
         jPanel3Layout.setVerticalGroup(
@@ -249,9 +216,14 @@ public class MothForm extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        if (mothBean.getVdc() == null || mothBean.getMothType() == null || mothBean.getMothlujNumber() == null) {
+            MessageUtility.displayMessage(ClientMessage.MOTH_INSUFFCIENT_PARAMETER);
+            return;
+        }
         saveMoth(false);
     }//GEN-LAST:event_btnSaveActionPerformed
     private void saveMoth(final boolean allowClose) {
+        final JDialog dlg = this;
         SolaTask<Boolean, Boolean> t = new SolaTask<Boolean, Boolean>() {
             @Override
             public Boolean doTask() {
@@ -266,8 +238,13 @@ public class MothForm extends javax.swing.JDialog {
                     if (allowClose) {
                     } else {
                         MessageUtility.displayMessage(ClientMessage.MOTH_SAVED);
-                        txtMothLujNumber.setText(null);
-                        customizeForm();
+                        if (editflag == true) {
+                            cmbVdc.setSelectedIndex(-1);
+                            cmbMothType.setSelectedIndex(-1);
+                            txtMothLujNumber.setText("");
+                            return;
+                        }
+                        dlg.setVisible(false);
                         MainForm.saveBeanState(mothBean);
                     }
                 }

@@ -15,21 +15,19 @@
  */
 package org.sola.clients.beans.administrative;
 
+import java.util.List;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
+import org.sola.webservices.transferobjects.administrative.MothSearchParamsTO;
 
 public class MothListBean extends AbstractBindingBean {
 
     public static final String SELECTED_MOTH = "selectedMoth";
     private MothBasicBean selectedMoth;
     SolaObservableList<MothBasicBean> moths;
-
-//    public MothListBean() {
-//        moths = new SolaObservableList<MothBasicBean>();
-//    }
 
     public SolaObservableList<MothBasicBean> getMoths() {
         if (moths == null) {
@@ -39,7 +37,7 @@ public class MothListBean extends AbstractBindingBean {
     }
 
     public void loadMothList(String vdcCode, String mothLuj) {
-        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getMoths(vdcCode, mothLuj), MothBean.class, (SolaObservableList) moths);
+        TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getMoths(vdcCode, mothLuj), MothBean.class, (SolaObservableList) getMoths());
     }
 
     public MothBasicBean getSelectedMoth() {
@@ -51,12 +49,21 @@ public class MothListBean extends AbstractBindingBean {
         this.selectedMoth = selectedMoth;
         propertySupport.firePropertyChange(SELECTED_MOTH, oldValue, this.selectedMoth);
     }
+
     public void removeSelected() {
         if (selectedMoth != null) {
             selectedMoth.setEntityAction(EntityAction.DELETE);
-            MothBean getMoth=(MothBean)getSelectedMoth();
+            MothBean getMoth = (MothBean) getSelectedMoth();
             getMoth.saveMoth();
             moths.remove(selectedMoth);
         }
+    }
+
+    public void search(MothSearchParamsBean searchParams) {
+        moths.clear();
+        TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getAdministrative().searchMoths(
+                TypeConverters.BeanToTrasferObject(searchParams, MothSearchParamsTO.class)),
+                MothBean.class, (List) moths);
     }
 }
