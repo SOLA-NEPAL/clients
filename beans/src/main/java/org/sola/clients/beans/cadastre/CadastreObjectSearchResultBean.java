@@ -43,6 +43,7 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
     private String firstName;
     private String lastName;
     private String parcelno;
+    private String baUnitId;
     
     public CadastreObjectSearchResultBean() {
         super();
@@ -94,6 +95,14 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
 
     public String getId() {
         return id;
+    }
+
+    public String getBaUnitId() {
+        return baUnitId;
+    }
+
+    public void setBaUnitId(String baUnitId) {
+        this.baUnitId = baUnitId;
     }
 
     public void setId(String id) {

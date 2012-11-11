@@ -78,6 +78,10 @@ public class PropertyPanel extends ContentPanel {
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals(ParcelSearchPanel.SELECT_PARCEL_PROPERTY)) {
                 CadastreObjectSearchResultBean searchResult = (CadastreObjectSearchResultBean) evt.getNewValue();
+                if(searchResult.getBaUnitId()!=null && !searchResult.getBaUnitId().equals(baUnitBean.getId())){
+                    MessageUtility.displayMessage(ClientMessage.BAUNIT_SELECTED_PARCEL_ALREADY_USED);
+                    return;
+                }
                 pnlParcelView.setCadastreObject((CadastreObjectSearchResultBean) evt.getNewValue());
                 baUnitBean.setNameFirstpart(searchResult.getFirstName());
                 baUnitBean.setNameLastpart(searchResult.getLastName());
@@ -421,7 +425,8 @@ public class PropertyPanel extends ContentPanel {
      * .
      */
     private void customizePrintButton() {
-        btnPrintBaUnit.setEnabled(baUnitBean.getRowVersion() > 0);
+        btnPrintBaUnit.setEnabled(baUnitBean.getRowVersion() > 0 
+                && SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_PRINT_CERT));
     }
 
     private void customizeHistoricRightsViewButton() {

@@ -25,6 +25,7 @@ import javax.swing.event.MouseInputAdapter;
 public class TableRowResizer extends MouseInputAdapter{ 
     public static Cursor resizeCursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR); 
  
+    private boolean resizing = false;
     private int mouseYOffset, resizingRow; 
     private Cursor otherCursor = resizeCursor; 
     private JTable table; 
@@ -55,10 +56,17 @@ public class TableRowResizer extends MouseInputAdapter{
         int rowIndex = (p.y < midPoint) ? row - 1 : row; 
  
         return rowIndex; 
-    } 
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
+        resizing = false;
+    }
  
     @Override
     public void mousePressed(MouseEvent e){ 
+        resizing = true;
         Point p = e.getPoint(); 
  
         resizingRow = getResizingRow(p); 
@@ -84,9 +92,14 @@ public class TableRowResizer extends MouseInputAdapter{
         int mouseY = e.getY(); 
  
         if(resizingRow >= 0){ 
-            int newHeight = mouseY - mouseYOffset; 
-            if(newHeight > 5)
+            int newHeight = mouseY - mouseYOffset;
+            if(newHeight > 5){
                 table.setRowHeight(resizingRow, newHeight); 
+            }
         } 
-    } 
+    }
+
+    public boolean isResizing() {
+        return resizing;
+    }
 } 

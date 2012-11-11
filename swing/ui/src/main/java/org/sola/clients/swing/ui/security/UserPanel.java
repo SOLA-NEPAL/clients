@@ -33,10 +33,14 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.referencedata.DepartmentBean;
+import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.beans.security.UserBean;
+import org.sola.clients.beans.security.UserVdcBean;
 import org.sola.clients.swing.common.controls.BrowseControlListener;
+import org.sola.clients.swing.common.utils.Utils;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
+import org.sola.common.FrameUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -95,9 +99,24 @@ public class UserPanel extends javax.swing.JPanel {
         } else {
             this.user = new UserBean();
         }
+        this.user.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(UserBean.SELECTED_VDC_PROPERTY)){
+                    customizeVdcButtons();
+                }
+            }
+        });
         firePropertyChange("user", null, this.user);
     }
 
+    private void customizeVdcButtons(){
+        boolean enabled = user.getSelectedVdc()!=null;
+        btnRemoveVdc.setEnabled(enabled);
+        menuRemoveVdc.setEnabled(enabled);
+    }
+    
     private void clearDepartment() {
         if (browseDepartments != null) {
             browseDepartments.setText("");
@@ -118,6 +137,7 @@ public class UserPanel extends javax.swing.JPanel {
         passwordBean.setPassword(null);
         passwordBean.setPasswordConfirmation(null);
         txtUserName.setEnabled(getUser().isNew());
+        customizeVdcButtons();
     }
 
     private void showDepartmentSelectionForm() {
@@ -193,7 +213,26 @@ public class UserPanel extends javax.swing.JPanel {
         }
         return false;
     }
+    
+    private void removeVdc(){
+        user.removeSelectedVdc();
+    }
 
+    private void showAddVdcForm(){
+        UserVdcForm form = new UserVdcForm(null, true);
+        form.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(UserVdcForm.VDC_PROPERTY)){
+                    user.addVdc((UserVdcBean)evt.getNewValue());
+                }
+            }
+        });
+        Utils.positionFormCentrally(form);
+        form.setVisible(true);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -203,6 +242,9 @@ public class UserPanel extends javax.swing.JPanel {
         userGroupHelperList = new org.sola.clients.beans.security.UserGroupHelperListBean();
         departments = new org.sola.clients.beans.referencedata.DepartmentListBean();
         loadDepartmentsList();
+        menuVdcs = new javax.swing.JPopupMenu();
+        menuAddVdc = new javax.swing.JMenuItem();
+        menuRemoveVdc = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -217,12 +259,6 @@ public class UserPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         jPanel9 = new javax.swing.JPanel();
-        pnlGroups = new javax.swing.JPanel();
-        groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableGroups = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
-        jLabel3 = new javax.swing.JLabel();
-        browseDepartments = new org.sola.clients.swing.common.controls.BrowseControl();
         pnlPassword = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -231,6 +267,44 @@ public class UserPanel extends javax.swing.JPanel {
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtPasswordConfirmation = new javax.swing.JPasswordField();
+        pnlGroups = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        browseDepartments = new org.sola.clients.swing.common.controls.BrowseControl();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        groupPanel1 = new org.sola.clients.swing.ui.GroupPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableGroups = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        jPanel10 = new javax.swing.JPanel();
+        groupPanel2 = new org.sola.clients.swing.ui.GroupPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableVdcs = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnAddVdc = new javax.swing.JButton();
+        btnRemoveVdc = new javax.swing.JButton();
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/security/Bundle"); // NOI18N
+        menuVdcs.setName(bundle.getString("UserPanel.menuVdcs.name")); // NOI18N
+
+        menuAddVdc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
+        menuAddVdc.setText(bundle.getString("UserPanel.menuAddVdc.text")); // NOI18N
+        menuAddVdc.setName(bundle.getString("UserPanel.menuAddVdc.name")); // NOI18N
+        menuAddVdc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAddVdcActionPerformed(evt);
+            }
+        });
+        menuVdcs.add(menuAddVdc);
+
+        menuRemoveVdc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
+        menuRemoveVdc.setText(bundle.getString("UserPanel.menuRemoveVdc.text")); // NOI18N
+        menuRemoveVdc.setName(bundle.getString("UserPanel.menuRemoveVdc.name")); // NOI18N
+        menuRemoveVdc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRemoveVdcActionPerformed(evt);
+            }
+        });
+        menuVdcs.add(menuRemoveVdc);
 
         setAlignmentX(0.0F);
         setAlignmentY(0.0F);
@@ -241,7 +315,6 @@ public class UserPanel extends javax.swing.JPanel {
         jPanel5.setName("jPanel5"); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/ui/security/Bundle"); // NOI18N
         jLabel1.setText(bundle.getString("UserPanel.jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -277,9 +350,9 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(cbxActive, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jLabel5))
                 .addContainerGap())
         );
@@ -336,8 +409,8 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jLabel4))
                 .addContainerGap())
         );
@@ -358,87 +431,6 @@ public class UserPanel extends javax.swing.JPanel {
 
         jPanel9.setName("jPanel9"); // NOI18N
         jPanel9.setLayout(new java.awt.BorderLayout());
-
-        pnlGroups.setName("pnlGroups"); // NOI18N
-
-        groupPanel1.setName("groupPanel1"); // NOI18N
-        groupPanel1.setTitleText(bundle.getString("UserPanel.groupPanel1.titleText")); // NOI18N
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        tableGroups.setAlignmentX(0.0F);
-        tableGroups.setAlignmentY(0.0F);
-        tableGroups.setName("tableGroups"); // NOI18N
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${userGroupHelpers}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, userGroupHelperList, eLProperty, tableGroups);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${inUserGroups}"));
-        columnBinding.setColumnName("In User Groups");
-        columnBinding.setColumnClass(Boolean.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${groupSummary.name}"));
-        columnBinding.setColumnName("Group Summary.name");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${groupSummary.description}"));
-        columnBinding.setColumnName("Group Summary.description");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane2.setViewportView(tableGroups);
-        tableGroups.getColumnModel().getColumn(0).setMaxWidth(30);
-        tableGroups.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title0_1")); // NOI18N
-        tableGroups.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tableGroups.getColumnModel().getColumn(1).setMaxWidth(300);
-        tableGroups.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title1_1")); // NOI18N
-        tableGroups.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title2_1")); // NOI18N
-        tableGroups.getColumnModel().getColumn(2).setCellRenderer(new TableCellTextAreaRenderer());
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
-        jLabel3.setText(bundle.getString("UserPanel.jLabel3.text")); // NOI18N
-        jLabel3.setName(bundle.getString("UserPanel.jLabel3.name")); // NOI18N
-
-        browseDepartments.setColor(new java.awt.Color(0, 0, 0));
-        browseDepartments.setDisplayDeleteButton(false);
-        browseDepartments.setName(bundle.getString("UserPanel.browseDepartments.name")); // NOI18N
-        browseDepartments.setUnderline(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${user.department.departmentAndOfficeName}"), browseDepartments, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        javax.swing.GroupLayout pnlGroupsLayout = new javax.swing.GroupLayout(pnlGroups);
-        pnlGroups.setLayout(pnlGroupsLayout);
-        pnlGroupsLayout.setHorizontalGroup(
-            pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGroupsLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
-                .addGap(10, 10, 10))
-            .addGroup(pnlGroupsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnlGroupsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGroupsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(browseDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlGroupsLayout.setVerticalGroup(
-            pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGroupsLayout.createSequentialGroup()
-                .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(browseDepartments, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
-        );
-
-        jPanel9.add(pnlGroups, java.awt.BorderLayout.CENTER);
 
         pnlPassword.setName("pnlPassword"); // NOI18N
 
@@ -465,7 +457,7 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jLabel7))
                 .addContainerGap())
         );
@@ -500,7 +492,7 @@ public class UserPanel extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                    .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(51, 51, 51)))
@@ -521,9 +513,9 @@ public class UserPanel extends javax.swing.JPanel {
         pnlPassword.setLayout(pnlPasswordLayout);
         pnlPasswordLayout.setHorizontalGroup(
             pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
+            .addGap(0, 617, Short.MAX_VALUE)
             .addGroup(pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
         );
         pnlPasswordLayout.setVerticalGroup(
             pnlPasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -536,12 +528,180 @@ public class UserPanel extends javax.swing.JPanel {
 
         jPanel9.add(pnlPassword, java.awt.BorderLayout.PAGE_START);
 
+        pnlGroups.setName("pnlGroups"); // NOI18N
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        jLabel3.setText(bundle.getString("UserPanel.jLabel3.text")); // NOI18N
+        jLabel3.setName(bundle.getString("UserPanel.jLabel3.name")); // NOI18N
+
+        browseDepartments.setColor(new java.awt.Color(0, 0, 0));
+        browseDepartments.setDisplayDeleteButton(false);
+        browseDepartments.setName(bundle.getString("UserPanel.browseDepartments.name")); // NOI18N
+        browseDepartments.setUnderline(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${user.department.departmentAndOfficeName}"), browseDepartments, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel6.setName(bundle.getString("UserPanel.jPanel6.name")); // NOI18N
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0, 15, 0));
+
+        jPanel3.setName(bundle.getString("UserPanel.jPanel3.name")); // NOI18N
+
+        groupPanel1.setName("groupPanel1"); // NOI18N
+        groupPanel1.setTitleText(bundle.getString("UserPanel.groupPanel1.titleText")); // NOI18N
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        tableGroups.setAlignmentX(0.0F);
+        tableGroups.setAlignmentY(0.0F);
+        tableGroups.setName("tableGroups"); // NOI18N
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${userGroupHelpers}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, userGroupHelperList, eLProperty, tableGroups);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${inUserGroups}"));
+        columnBinding.setColumnName("In User Groups");
+        columnBinding.setColumnClass(Boolean.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${groupSummary.name}"));
+        columnBinding.setColumnName("Group Summary.name");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${groupSummary.description}"));
+        columnBinding.setColumnName("Group Summary.description");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane2.setViewportView(tableGroups);
+        tableGroups.getColumnModel().getColumn(0).setMaxWidth(30);
+        tableGroups.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title0_1")); // NOI18N
+        tableGroups.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableGroups.getColumnModel().getColumn(1).setMaxWidth(300);
+        tableGroups.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title1_1")); // NOI18N
+        tableGroups.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("UserPanel.tableGroups.columnModel.title2_1")); // NOI18N
+        tableGroups.getColumnModel().getColumn(2).setCellRenderer(new TableCellTextAreaRenderer());
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(groupPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(groupPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+        );
+
+        jPanel6.add(jPanel3);
+
+        jPanel10.setName(bundle.getString("UserPanel.jPanel10.name")); // NOI18N
+
+        groupPanel2.setName(bundle.getString("UserPanel.groupPanel2.name")); // NOI18N
+        groupPanel2.setTitleText(bundle.getString("UserPanel.groupPanel2.titleText")); // NOI18N
+
+        jScrollPane3.setName(bundle.getString("UserPanel.jScrollPane3.name")); // NOI18N
+
+        tableVdcs.setComponentPopupMenu(menuVdcs);
+        tableVdcs.setName(bundle.getString("UserPanel.tableVdcs.name")); // NOI18N
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${user.filteredVdcs}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tableVdcs);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${vdc.displayValue}"));
+        columnBinding.setColumnName("Vdc.display Value");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${wardNumber}"));
+        columnBinding.setColumnName("Ward Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${user.selectedVdc}"), tableVdcs, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
+        jScrollPane3.setViewportView(tableVdcs);
+        tableVdcs.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("UserPanel.tableVdcs.columnModel.title0_1")); // NOI18N
+        tableVdcs.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("UserPanel.tableVdcs.columnModel.title1_1")); // NOI18N
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setName(bundle.getString("UserPanel.jToolBar1.name")); // NOI18N
+
+        btnAddVdc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
+        btnAddVdc.setText(bundle.getString("UserPanel.btnAddVdc.text")); // NOI18N
+        btnAddVdc.setFocusable(false);
+        btnAddVdc.setName(bundle.getString("UserPanel.btnAddVdc.name")); // NOI18N
+        btnAddVdc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddVdcActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAddVdc);
+
+        btnRemoveVdc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/remove.png"))); // NOI18N
+        btnRemoveVdc.setText(bundle.getString("UserPanel.btnRemoveVdc.text")); // NOI18N
+        btnRemoveVdc.setFocusable(false);
+        btnRemoveVdc.setName(bundle.getString("UserPanel.btnRemoveVdc.name")); // NOI18N
+        btnRemoveVdc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveVdcActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnRemoveVdc);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(groupPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(groupPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+        );
+
+        jPanel6.add(jPanel10);
+
+        javax.swing.GroupLayout pnlGroupsLayout = new javax.swing.GroupLayout(pnlGroups);
+        pnlGroups.setLayout(pnlGroupsLayout);
+        pnlGroupsLayout.setHorizontalGroup(
+            pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlGroupsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlGroupsLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(browseDepartments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlGroupsLayout.setVerticalGroup(
+            pnlGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlGroupsLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(browseDepartments, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+
+        jPanel9.add(pnlGroups, java.awt.BorderLayout.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -554,11 +714,31 @@ public class UserPanel extends javax.swing.JPanel {
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuRemoveVdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRemoveVdcActionPerformed
+        removeVdc();
+    }//GEN-LAST:event_menuRemoveVdcActionPerformed
+
+    private void btnRemoveVdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveVdcActionPerformed
+        removeVdc();
+    }//GEN-LAST:event_btnRemoveVdcActionPerformed
+
+    private void btnAddVdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddVdcActionPerformed
+        showAddVdcForm();
+    }//GEN-LAST:event_btnAddVdcActionPerformed
+
+    private void menuAddVdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddVdcActionPerformed
+        showAddVdcForm();
+    }//GEN-LAST:event_menuAddVdcActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.swing.common.controls.BrowseControl browseDepartments;
+    private javax.swing.JButton btnAddVdc;
+    private javax.swing.JButton btnRemoveVdc;
     private javax.swing.JCheckBox cbxActive;
     private org.sola.clients.beans.referencedata.DepartmentListBean departments;
     private org.sola.clients.swing.ui.GroupPanel groupPanel1;
+    private org.sola.clients.swing.ui.GroupPanel groupPanel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -567,18 +747,27 @@ public class UserPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menuAddVdc;
+    private javax.swing.JMenuItem menuRemoveVdc;
+    private javax.swing.JPopupMenu menuVdcs;
     private org.sola.clients.beans.security.PasswordBean passwordBean;
     private javax.swing.JPanel pnlGroups;
     private javax.swing.JPanel pnlPassword;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableGroups;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableVdcs;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
