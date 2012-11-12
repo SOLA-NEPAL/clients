@@ -44,6 +44,7 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
     private String lastName;
     private String parcelno;
     private String baUnitId;
+    private String datasetId;
     
     public CadastreObjectSearchResultBean() {
         super();
@@ -187,6 +188,14 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
 
     public void setWardNumber(String wardNumber) {
         this.wardNumber = wardNumber;
+    }
+
+    public String getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(String datasetId) {
+        this.datasetId = datasetId;
     }
     
     public String getCombinedMapSheets(){

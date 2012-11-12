@@ -93,6 +93,7 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     private String transactionId;
     private String fiscalYearCode;
     private AreaBean area;
+    private String datasetId;
     
     public CadastreObjectSummaryBean(){
         super();
@@ -517,6 +518,14 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
 
     public BigDecimal getOfficialArea() {
         return area.getAreaInSqMt();
+    }
+
+    public String getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(String datasetId) {
+        this.datasetId = datasetId;
     }
 
     public String getOfficialAreaFormatted() {

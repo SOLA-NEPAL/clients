@@ -36,11 +36,13 @@ import java.util.logging.Logger;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.AbstractIdBean;
+import org.sola.clients.beans.cadastre.DatasetBean;
 import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.RoleBean;
 import org.sola.clients.beans.system.LanguageBean;
+import org.sola.common.StringUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.AbstractWSClient;
@@ -276,7 +278,26 @@ public final class CacheManager {
      * Cache key of the {@link FatherTypeBean} collection.
      */
     public static final String FATHER_TYPE_KEY = FatherTypeBean.class.getName() + LIST_POSTFIX;
-    
+    /**
+     * Cache key of the current user's {@link DatasetBean} collection.
+     */
+    public static final String CURRENT_USER_DATASETS_KEY = "CURRENT_USER_" + DatasetBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key of the current office {@link DatasetBean} collection.
+     */
+    public static final String CURRENT_OFFICE_DATASETS_KEY = "CURRENT_OFFICE_" + DatasetBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache prefix key for the {@link DatasetBean} collection by VDC.
+     */
+    public static final String VDC_DATASETS_KEY = "VDC_" + DatasetBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache key for {@link DatasetBean} collection.
+     */
+    public static final String DATASETS_KEY = DatasetBean.class.getName() + LIST_POSTFIX;
+    /**
+     * Cache prefix key for CRS.
+     */
+    public static final String CRS_KEY = "CRS_";
     private static final String CACHED_VDCS_KEY = "cachedVdcs" + LIST_POSTFIX;
     private static final String CACHED_MAP_SHEETS_KEY = "cachedMapSheets" + LIST_POSTFIX;
     private static final String GET_APPLICATION_STATUS_TYPES = "getApplicationStatusTypes";
@@ -326,6 +347,103 @@ public final class CacheManager {
     private static final String GET_GRAND_FATHER_TYPES = "getGrandFatherTypes";
     private static final String GET_ID_OFFICE_TYPES = "getIdOfficeTypes";
     private static final String GET_FATHER_TYPES = "getFatherTypes";
+    private static final String GET_DATASETS_BY_CURRENT_OFFICE = "getDatasetsByCurrentOffice";
+    private static final String GET_DATASETS_BY_CURRENT_USER = "getDatasetsByCurrentUser";
+
+    private static HashMap<String, DatasetBean> getCachedDatasets() {
+        HashMap<String, DatasetBean> datasets;
+        if (cache.contains(DATASETS_KEY)) {
+            datasets = (HashMap<String, DatasetBean>) cache.get(DATASETS_KEY);
+        } else {
+            datasets = new HashMap<String, DatasetBean>();
+            cache.put(DATASETS_KEY, datasets);
+        }
+        return datasets;
+    }
+
+    public static DatasetBean getDataset(String id) {
+        DatasetBean dataset;
+        if (getCachedDatasets().containsKey(id)) {
+            dataset = getCachedDatasets().get(id);
+        } else {
+            dataset = TypeConverters.TransferObjectToBean(
+                    WSManager.getInstance().getCadastreService().getDataset(id), DatasetBean.class, null);
+        }
+        if (dataset != null) {
+            return dataset.copy();
+        } else {
+            return null;
+        }
+    }
+
+    public static List<DatasetBean> getDatasetsByVdc(String vdcCode) {
+        List<DatasetBean> result = new ArrayList<DatasetBean>();
+        String key = VDC_DATASETS_KEY + vdcCode;
+
+        if (cache.contains(key)) {
+            result = (List<DatasetBean>) cache.get(key);
+        } else {
+            TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getCadastreService().getDatasetsByVdc(vdcCode),
+                    DatasetBean.class, (List) result);
+            cache.put(key, result);
+            for (DatasetBean dataset : result) {
+                getCachedDatasets().put(dataset.getId(), dataset);
+            }
+        }
+        return result;
+    }
+
+    public static String getCrs(int srid) {
+        String result = null;
+        String key = CRS_KEY + Integer.toString(srid);
+
+        if (cache.contains(key)) {
+            result = (String) cache.get(key);
+        } else {
+            if (WSManager.getInstance().getSpatialService() != null) {
+                result = WSManager.getInstance().getSpatialService().getCrs(srid);
+                if (!StringUtility.isEmpty(result)) {
+                    cache.put(key, result);
+                }
+            }
+        }
+        return result;
+    }
+
+    public static List<DatasetBean> getDatasetsByCurrentOffice() {
+        List<DatasetBean> result = new ArrayList<DatasetBean>();
+
+        if (cache.contains(CURRENT_OFFICE_DATASETS_KEY)) {
+            result = (List<DatasetBean>) cache.get(CURRENT_OFFICE_DATASETS_KEY);
+        } else {
+            TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getCadastreService().getDatasetsByCurrentOffice(),
+                    DepartmentBean.class, (List) result);
+            cache.put(CURRENT_OFFICE_DATASETS_KEY, result);
+            for (DatasetBean dataset : result) {
+                getCachedDatasets().put(dataset.getId(), dataset);
+            }
+        }
+        return result;
+    }
+
+    public static List<DatasetBean> getDatasetsByCurrentUser() {
+        List<DatasetBean> result = new ArrayList<DatasetBean>();
+
+        if (cache.contains(CURRENT_USER_DATASETS_KEY)) {
+            result = (List<DatasetBean>) cache.get(CURRENT_USER_DATASETS_KEY);
+        } else {
+            TypeConverters.TransferObjectListToBeanList(
+                    WSManager.getInstance().getCadastreService().getDatasetsByCurrentUser(),
+                    DepartmentBean.class, (List) result);
+            cache.put(CURRENT_USER_DATASETS_KEY, result);
+            for (DatasetBean dataset : result) {
+                getCachedDatasets().put(dataset.getId(), dataset);
+            }
+        }
+        return result;
+    }
 
     public static List<DepartmentBean> getDepartments(String officeCode) {
         List<DepartmentBean> result = new ArrayList<DepartmentBean>();
@@ -905,11 +1023,10 @@ public final class CacheManager {
                 WSManager.getInstance().getReferenceDataService(),
                 GET_ID_OFFICE_TYPES, ID_OFFICE_TYPE_KEY);
     }
-    
+
     public static List<FatherTypeBean> getFatherTypes() {
         return getCachedBeanList(FatherTypeBean.class,
                 WSManager.getInstance().getReferenceDataService(),
                 GET_FATHER_TYPES, FATHER_TYPE_KEY);
     }
-    
 }

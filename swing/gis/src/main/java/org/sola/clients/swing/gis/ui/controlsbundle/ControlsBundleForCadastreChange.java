@@ -92,7 +92,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
             String baUnitId,
             byte[] applicationLocation,List<String> mapsheets) {
         
-        this.setMapsheets(mapsheets);
         //super();
         
         this.applicationNumber = applicationNumber;

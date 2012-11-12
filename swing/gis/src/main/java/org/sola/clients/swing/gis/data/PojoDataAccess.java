@@ -128,7 +128,7 @@ public class PojoDataAccess {
      * @return 
      */
     public ResultForNavigationInfo GetQueryData(String name,
-            double west, double south, double east, double north, int srid,
+            double west, double south, double east, double north, int srid, String datatsetId,
             double pixelTolerance) {
         ConfigMapLayerTO configMapLayer = this.getMapLayerInfoList().get(name);
         QueryForNavigation spatialQueryInfo = new QueryForNavigation();
@@ -138,6 +138,7 @@ public class PojoDataAccess {
         spatialQueryInfo.setEast(east);
         spatialQueryInfo.setNorth(north);
         spatialQueryInfo.setSrid(srid);
+        spatialQueryInfo.setDatasetId(datatsetId);
         spatialQueryInfo.setPixelResolution(pixelTolerance);
             return getSpatialService().getSpatialForNavigation(spatialQueryInfo, 
                     OfficeBean.getCurrentOffice().getCode());
