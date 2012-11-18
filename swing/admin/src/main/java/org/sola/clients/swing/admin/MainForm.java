@@ -170,7 +170,6 @@ public class MainForm extends javax.swing.JFrame {
         menuRestrictionRelease = new javax.swing.JMenu();
         menuRestrictionReason = new javax.swing.JMenuItem();
         menuRestrictionReleaseReason = new javax.swing.JMenuItem();
-        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -732,9 +731,6 @@ public class MainForm extends javax.swing.JFrame {
 
         menuRefData.add(menuRestrictionRelease);
 
-        jSeparator5.setName(bundle.getString("MainForm.jSeparator5.name")); // NOI18N
-        menuRefData.add(jSeparator5);
-
         mainMenu.add(menuRefData);
 
         jMenu2.setText(bundle.getString("MainForm.jMenu2.text")); // NOI18N
@@ -1249,7 +1245,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator4;
-    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel lblUserName;
     private org.sola.clients.swing.ui.MainContentPanel mainContentPanel;
     private javax.swing.JMenuBar mainMenu;
