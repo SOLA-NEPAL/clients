@@ -65,7 +65,6 @@ import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
-import org.sola.clients.swing.desktop.source.TransactionedDocumentsPanel;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.administrative.BaUnitSearchPanel;
@@ -2178,25 +2177,6 @@ public class ApplicationPanel extends ContentPanel {
     }//GEN-LAST:event_contactPanelMouseClicked
 
     /**
-     * Opens attached digital copy of the selected document
-     */
-    private void openAttachment() {
-        if (appBean.getSelectedSource() != null
-                && appBean.getSelectedSource().getArchiveDocument() != null) {
-            SolaTask t = new SolaTask<Void, Void>() {
-
-                @Override
-                public Void doTask() {
-                    setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_OPENING));
-                    DocumentBean.openDocument(appBean.getSelectedSource().getArchiveDocument().getId());
-                    return null;
-                }
-            };
-            TaskManager.getInstance().runTask(t);
-        }
-    }
-
-    /**
      * Opens {@link ReportViewerForm} to display report.
      */
     private void showReport(JasperPrint report) {
@@ -2465,27 +2445,6 @@ public class ApplicationPanel extends ContentPanel {
         appBean.removeSelectedProperty();
     }
 
-    /**
-     * Verifies selected property object to check existence. Calls {@link ApplicationBean#verifyProperty()}
-     */
-//    private void verifySelectedProperty() {
-//        if (appBean.getSelectedProperty() == null) {
-//            MessageUtility.displayMessage(ClientMessage.APPLICATION_SELECT_PROPERTY_TOVERIFY);
-//            return;
-//        }
-//
-//        if (appBean.verifyProperty()) {
-//            MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_VERIFIED);
-//        }
-//    }
-    private void removeSelectedSource() {
-        if (appBean.getSelectedSource() != null) {
-            //if (MessageUtility.displayMessage(ClientMessage.CONFIRM_DELETE_RECORD) == MessageUtility.BUTTON_ONE) {
-            appBean.removeSelectedSource();
-            //}
-        }
-    }
-
     private void approveApplication() {
         takeActionAgainstApplication(ApplicationActionTypeBean.APPROVE);
     }
@@ -2494,28 +2453,8 @@ public class ApplicationPanel extends ContentPanel {
         takeActionAgainstApplication(ApplicationActionTypeBean.CANCEL);
     }
 
-    private void withdrawApplication() {
-        takeActionAgainstApplication(ApplicationActionTypeBean.WITHDRAW);
-    }
-
-    private void requisitionApplication() {
-        takeActionAgainstApplication(ApplicationActionTypeBean.REQUISITION);
-    }
-
     private void archiveApplication() {
         takeActionAgainstApplication(ApplicationActionTypeBean.ARCHIVE);
-    }
-
-    private void dispatchApplication() {
-        takeActionAgainstApplication(ApplicationActionTypeBean.DESPATCH);
-    }
-
-    private void lapseApplication() {
-        takeActionAgainstApplication(ApplicationActionTypeBean.LAPSE);
-    }
-
-    private void resubmitApplication() {
-        takeActionAgainstApplication(ApplicationActionTypeBean.RESUBMIT);
     }
 
     private void saveAppState() {

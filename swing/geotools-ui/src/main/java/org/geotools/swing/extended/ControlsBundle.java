@@ -37,7 +37,6 @@ package org.geotools.swing.extended;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
@@ -48,6 +47,7 @@ import org.geotools.swing.control.extended.Toc;
 import org.geotools.swing.extended.exception.InitializeMapException;
 import org.geotools.swing.extended.util.Messaging;
 import org.geotools.swing.mapaction.extended.FullExtent;
+import org.geotools.swing.mapaction.extended.ZoomOutAction;
 import org.geotools.swing.tool.extended.ExtendedPan;
 import org.geotools.swing.tool.extended.ExtendedZoominTool;
 
@@ -142,19 +142,18 @@ public class ControlsBundle extends javax.swing.JPanel {
      * tools.
      */
     private void setupToolbar() {
-        this.getMap().addMapAction(new FullExtent(this.getMap()), this.mapToolbar, true);
-        this.getMap().addMapAction(
-                new org.geotools.swing.mapaction.extended.ZoomOutAction(this.getMap()),
-                this.mapToolbar, true);
-        this.getMap().addTool(new ExtendedZoominTool(), this.mapToolbar, true);
-        this.getMap().addTool(new ExtendedPan(), this.mapToolbar, true);
+        getMap().addMapAction(new FullExtent(getMap()), mapToolbar, true);
+        getMap().addMapAction(new ZoomOutAction(getMap()), mapToolbar, true);
+        getMap().addTool(new ExtendedZoominTool(), mapToolbar, true);
+        getMap().addTool(new ExtendedPan(), mapToolbar, true);
     }
 
     /** Disables/enables toolbar components. */
     public void enableToolbar(boolean isEnabled){
-        for(Component component : mapToolbar.getComponents()){
-            component.setEnabled(isEnabled);
-        }
+        getMap().getMapActionByName("fullextent").setEnabled(isEnabled);
+        getMap().getMapActionByName("zoomout").setEnabled(isEnabled);
+        getMap().getMapActionByName("zoomin").setEnabled(isEnabled);
+        getMap().getMapActionByName(ExtendedPan.NAME).setEnabled(isEnabled);
     }
     
     /**
@@ -162,8 +161,6 @@ public class ControlsBundle extends javax.swing.JPanel {
      */
     private void setupStatusBar() {
         this.pnlStatusbar.setLayout(new BorderLayout());
-        //JMapStatusBar statusBar = JMapStatusBar.createDefaultStatusBar(map);
-//        statusBar.removeAll();
         JMapStatusBar statusBar = new JMapStatusBar();
         statusBar.addItem(new JRendererStatusBarItem(map), false, true);
         statusBar.addItem(new JCoordsStatusBarItem(map));

@@ -31,13 +31,14 @@
  */
 package org.sola.clients.swing.gis.ui.controlsbundle;
 
-import java.util.List;
 import org.geotools.geometry.jts.Geometries;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
+import org.sola.common.StringUtility;
 import org.sola.common.messaging.GisMessage;
+import org.sola.common.messaging.MessageUtility;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -53,32 +54,46 @@ public final class ControlsBundleForBaUnit extends ControlsBundleForWorkingWithC
     private final String STYLE_RESOURCE = "parcel_highlighted.xml";
 
     public ControlsBundleForBaUnit(){
-        super();
-        this.Setup(PojoDataAccess.getInstance());
+        super.Setup2(PojoDataAccess.getInstance());
+        enableDatasetSelectionTool(false);
     }
 
-    @Override
-    public void Setup(PojoDataAccess pojoDataAccess) {
-        super.Setup(pojoDataAccess);
+    private void setupLayer() {
         try {
-            layerForCadastreObjects = 
-                    new ExtendedLayerGraphics(CADASTRE_OBJECTS_LAYERNAME, 
+            if(layerForCadastreObjects!=null){
+                return;
+            }
+            
+            layerForCadastreObjects = new ExtendedLayerGraphics(CADASTRE_OBJECTS_LAYERNAME, 
                             Geometries.POLYGON, STYLE_RESOURCE);
-            this.getMap().addLayer(layerForCadastreObjects);
+            getMap().addLayer(layerForCadastreObjects);
         } catch (InitializeLayerException ex) {
-            org.sola.common.logging.LogUtility.log(
-                    GisMessage.CADASTRE_OBJBAUNIT_SETUP_ERROR, ex);
+            org.sola.common.logging.LogUtility.log(GisMessage.CADASTRE_OBJBAUNIT_SETUP_ERROR, ex);
             Messaging.getInstance().show(GisMessage.CADASTRE_OBJBAUNIT_SETUP_ERROR);
         }
     }
 
     /**
-     * Sets the cadastre objects to be marked in the map
-     * @param baUnitId 
+     * Sets the cadastre object to be marked on the map
+     * @param id Cadastre object id
+     * @param showMessage Indicates whether to show error message or not in case of cadastre object not found.
      */
-    public void setCadastreObjects(String baUnitId) {
-        CadastreObjectTO cadastreObject = this.getPojoDataAccess()
-                .getCadastreService().getCadastreObjectByBaUnit(baUnitId);
-        this.addCadastreObjectsInLayer(layerForCadastreObjects, cadastreObject);
+    public void setCadastreObject(String id, boolean showMessage) {
+        CadastreObjectTO cadastreObject = this.getPojoDataAccess().getCadastreService().getCadastreObject(id);
+        if(cadastreObject == null || cadastreObject.getGeomPolygon()==null 
+                || cadastreObject.getGeomPolygon().length<1 
+                || StringUtility.isEmpty(cadastreObject.getDatasetId())){
+            if(showMessage){
+                if(StringUtility.isEmpty(cadastreObject.getDatasetId())){
+                    MessageUtility.displayMessage(GisMessage.PARCEL_DATASET_NOT_FOUND);
+                } else {
+                    MessageUtility.displayMessage(GisMessage.PARCEL_NOT_FOUND);
+                }
+            }
+            return;
+        }
+        setupLayer();
+        layerForCadastreObjects.removeFeatures();
+        addCadastreObjectsInLayer(layerForCadastreObjects, cadastreObject);
     }
 }

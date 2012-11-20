@@ -29,6 +29,7 @@
  */
 package org.sola.clients.swing.desktop.administrative;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -42,7 +43,6 @@ import org.sola.clients.beans.cadastre.CadastreObjectSearchResultBean;
 import org.sola.clients.beans.cadastre.CadastreObjectSummaryBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.security.SecurityBean;
-import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
@@ -51,7 +51,6 @@ import org.sola.clients.swing.desktop.cadastre.ParcelPanelForm;
 import org.sola.clients.swing.desktop.cadastre.ParcelSearchPanelForm;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForBaUnit;
 import org.sola.clients.swing.ui.ContentPanel;
-import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.cadastre.ParcelSearchPanel;
 import org.sola.clients.swing.ui.renderers.LockCellRenderer;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
@@ -156,7 +155,6 @@ public class PropertyPanel extends ContentPanel {
         beforeInit(applicationBean, applicationService, readOnly);
         initComponents();
         postInit();
-        hideUnnecessaryTabs();
     }
 
     private void beforeInit(ApplicationBean applicationBean,
@@ -165,25 +163,6 @@ public class PropertyPanel extends ContentPanel {
         this.applicationBean = applicationBean;
         this.applicationService = applicationService;
         resourceBundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle");
-    }
-
-    private void hideUnnecessaryTabs() {
-        for (Component jp : tabsMain.getComponents()) {
-            String panel_name = jp.getName();
-            if (is_UnnecessaryTab(panel_name)) {
-                //jp.setVisible(false);
-                tabsMain.remove(jp);
-            }
-        }
-    }
-
-    private boolean is_UnnecessaryTab(String panel_name) {
-        switch (panel_name) {
-            case "mapPanel":
-                return true;
-        }
-
-        return false;
     }
 
     /**
@@ -693,27 +672,21 @@ public class PropertyPanel extends ContentPanel {
 
         RightFormListener rightFormListener = new RightFormListener();
         ContentPanel panel;
-        String cardName;
         String rrrGroupCode = rrrBean.getRrrType().getRrrGroupTypeCode();
         String rrrTypeCode = rrrBean.getTypeCode();
 
         if (rrrGroupCode.equalsIgnoreCase(RrrBean.GROUP_TYPE_CODE_OWNERSHIP)) {
             panel = new OwnershipPanel(rrrBean, applicationBean, applicationService, action);
-            cardName = MainContentPanel.CARD_OWNERSHIP;
         }else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_SIMPLE_RESTRICTION)) {
             panel = new SimpleRestrictionsPanel(rrrBean, applicationBean, applicationService, action);
-            cardName = MainContentPanel.CARD_SIMPLE_RESTRICTIONS;
         } else if (rrrTypeCode.equalsIgnoreCase(RrrBean.CODE_TENANCY)) {
             panel = new TenancyPanelForm(rrrBean, applicationBean, applicationService, action);
-            cardName = MainContentPanel.CARD_TENANCY;
         }else {
-            cardName = MainContentPanel.CARD_SIMPLE_RIGHT;
             panel = new SimpleRightPanel(rrrBean, applicationBean, applicationService, action);
         }
 
         panel.addPropertyChangeListener(SimpleRightPanel.UPDATED_RRR, rightFormListener);
         getMainContentPanel().addPanel(panel, getThis().getId(), panel.getId(), true);
-        // getMainContentPanel().addPanel(panel, getThis().getId(), cardName, true);
     }
 
     private void saveBaUnit(final boolean showMessage, final boolean closeOnSave) {
@@ -804,6 +777,12 @@ public class PropertyPanel extends ContentPanel {
         MainForm.saveBeanState(baUnitBean);
     }
 
+    private void showCadastreObjectOnTheMap(boolean showMessage){
+        if (mapControl != null) {
+            mapControl.setCadastreObject(baUnitBean.getCadastreObjectId(), showMessage);
+        }
+    }
+    
     @Override
     protected boolean panelClosing() {
         if (btnSave.isEnabled() && MainForm.checkSaveBeforeClose(baUnitBean)) {
@@ -1304,6 +1283,11 @@ public class PropertyPanel extends ContentPanel {
         btnShowOnMap.setText(bundle.getString("PropertyPanel.btnShowOnMap.text")); // NOI18N
         btnShowOnMap.setFocusable(false);
         btnShowOnMap.setName(bundle.getString("PropertyPanel.btnShowOnMap.name")); // NOI18N
+        btnShowOnMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowOnMapActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnShowOnMap);
 
         pnlParcelView.setName(bundle.getString("PropertyPanel.pnlParcelView.name")); // NOI18N
@@ -2066,15 +2050,11 @@ private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     }//GEN-LAST:event_tableRightsMouseClicked
 
 private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-//    if (this.mapControl == null) {
-//        this.mapControl = new ControlsBundleForBaUnit();
-//        this.mapControl.setCadastreObjects(baUnitBean.getId());
-//        if (applicationBean != null) {
-//            this.mapControl.setApplicationId(this.applicationBean.getId());
-//        }
-//        this.mapPanel.setLayout(new BorderLayout());
-//        this.mapPanel.add(this.mapControl, BorderLayout.CENTER);
-//    }
+    if (mapControl == null) {
+        mapControl = new ControlsBundleForBaUnit();
+        mapPanel.setLayout(new BorderLayout());
+        mapPanel.add(this.mapControl, BorderLayout.CENTER);
+    }
 }//GEN-LAST:event_formComponentShown
 
     private void btnAddParentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddParentActionPerformed
@@ -2192,6 +2172,12 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
     private void btnEditParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditParcelActionPerformed
         editParcel();
     }//GEN-LAST:event_btnEditParcelActionPerformed
+
+    private void btnShowOnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOnMapActionPerformed
+        tabsMain.setSelectedIndex(tabsMain.indexOfComponent(mapPanel));
+        showCadastreObjectOnTheMap(true);
+    }//GEN-LAST:event_btnShowOnMapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.administrative.BaUnitBean baUnitBean;
     private org.sola.clients.beans.referencedata.RrrTypeListBean baUnitRrrTypes;

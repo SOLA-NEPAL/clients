@@ -40,7 +40,9 @@ import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.opengis.feature.simple.SimpleFeature;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.swing.gis.Messaging;
+import org.sola.common.StringUtility;
 import org.sola.common.messaging.GisMessage;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -58,13 +60,17 @@ public abstract class ControlsBundleForWorkingWithCO extends SolaControlsBundle 
      * @param inLayer
      * @param cadastreObjects
      */
-    protected void addCadastreObjectsInLayer(
-            ExtendedLayerGraphics inLayer, CadastreObjectTO cadastreObject) {
-        if (cadastreObject == null) {
+    protected void addCadastreObjectsInLayer(ExtendedLayerGraphics inLayer, CadastreObjectTO cadastreObject) {
+        
+        if (cadastreObject == null || StringUtility.isEmpty(cadastreObject.getDatasetId())) {
             return;
         }
 
         try {
+            if(getMap().getDataset()==null || !getMap().getDatasetId().equals(cadastreObject.getDatasetId())){
+                setDataset(CacheManager.getDataset(cadastreObject.getDatasetId()));
+            }
+            
             ReferencedEnvelope envelope = null;
             SimpleFeature featureAdded =
                     inLayer.addFeature(cadastreObject.getId(),

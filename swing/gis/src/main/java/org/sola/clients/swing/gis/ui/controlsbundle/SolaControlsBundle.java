@@ -115,6 +115,12 @@ public abstract class SolaControlsBundle extends ControlsBundle {
         setDataset(dataset);
     }
 
+    public void enableDatasetSelectionTool(boolean enable){
+        if (getMap() != null) {
+            getMap().getMapActionByName(DatasetSelectionButton.MAPACTION_NAME).setEnabled(enable);
+        }
+    }
+    
     public void showDatasetSelection() {
         if (getMap() != null) {
             getMap().getMapActionByName(DatasetSelectionButton.MAPACTION_NAME).onClick();
@@ -137,27 +143,30 @@ public abstract class SolaControlsBundle extends ControlsBundle {
             try {
                 if (mapInitialized && !layersInitialized) {
                     // Init map
-                    getMap().setDataset(dataset);
-                    this.addSearchPanel();
+                    getMap().setDataset(dataset, false);
+                    addSearchPanel();
                     InformationTool infoTool = new InformationTool(this.pojoDataAccess);
-                    this.getMap().addTool(infoTool, this.getToolbar(), true);
-                    this.solaPrint = new SolaPrint(this.getMap());
-                    this.getMap().addMapAction(this.solaPrint, this.getToolbar(), true);
+                    getMap().addTool(infoTool, getToolbar(), true);
+                    solaPrint = new SolaPrint(this.getMap());
+                    getMap().addMapAction(this.solaPrint, getToolbar(), true);
                     setupForScaleBox();
 
                     for (ConfigMapLayerTO configMapLayer : pojoDataAccess.getMapDefinition().getLayers()) {
-                        this.addLayerConfig(configMapLayer);
+                        addLayerConfig(configMapLayer);
                     }
                     layersInitialized = true;
                     enableToolbar(true);
-                    this.getMap().initializeSelectionLayer();
+                    getMap().initializeSelectionLayer();
                 } else {
-                    getMap().setDataset(dataset);
+                    getMap().setDataset(dataset, false);
                 }
 
                 PojoLayer parcelLayer = (PojoLayer) getMap().getSolaLayers().get(PARCEL_LAYER_ID);
                 if (parcelLayer != null) {
+
+                    parcelLayer.setForceRefresh(true);
                     ((PojoFeatureSource) parcelLayer.getFeatureSource()).readDataInZeroBox();
+                    
                     getMap().setFullExtent(
                             parcelLayer.getFeatureSource().getBounds().getMinX(),
                             parcelLayer.getFeatureSource().getBounds().getMaxX(),

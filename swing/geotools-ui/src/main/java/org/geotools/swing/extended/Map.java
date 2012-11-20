@@ -521,7 +521,12 @@ public class Map extends JMapPane {
         return getDataset().getId();
     }
 
-    public void setDataset(DatasetBean dataset) throws InitializeMapException {
+    /** 
+     * Updates dataset changes for the map, to be used for subsequent data fetch.
+     * @param dataset Dataset object to set
+     * @param refresh Indicates whether to refresh the map or not.
+     */
+    public void setDataset(DatasetBean dataset, boolean refresh) throws InitializeMapException {
         if (dataset != null) {
             this.dataset = dataset;
             this.srid = dataset.getSrid();
@@ -539,7 +544,7 @@ public class Map extends JMapPane {
                     throw new InitializeMapException(
                             Messaging.Ids.MAPCONTROL_MAPCONTEXT_WITHOUT_SRID_ERROR.toString(), null);
             }
-            if (getMapContent().layers().size() > 0) {
+            if (getMapContent().layers().size() > 0 && refresh) {
                 refresh();
             }
         }
@@ -887,7 +892,9 @@ public class Map extends JMapPane {
             }
             DecimalFormat df = new DecimalFormat("#0");
             String currentScale = df.format(this.getScale());
-            txtScale.setText(currentScale);
+            if(txtScale!=null){
+                txtScale.setText(currentScale);
+            }
         } catch (MapScaleException ex) {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
         }

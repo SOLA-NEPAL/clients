@@ -76,7 +76,7 @@ public class Development {
         WSManager.getInstance().initWebServices("test", "test".toCharArray(), this.getWSConfig());
 
         ControlsBundleForBaUnit ctrl = new ControlsBundleForBaUnit();
-        ctrl.setCadastreObjects("3068323");
+        ctrl.setCadastreObject("3068323", false);
         this.displayControlsBundleForm(ctrl);
     }
 
