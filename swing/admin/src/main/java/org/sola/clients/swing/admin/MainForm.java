@@ -143,6 +143,9 @@ public class MainForm extends javax.swing.JFrame {
         menuMortgageTypes = new javax.swing.JMenuItem();
         menuRrrGroupTypes = new javax.swing.JMenuItem();
         menuRrrTypes = new javax.swing.JMenuItem();
+        menuParcelTypes = new javax.swing.JMenuItem();
+        menuLandUses = new javax.swing.JMenuItem();
+        menuLandClass = new javax.swing.JMenuItem();
         menuSources = new javax.swing.JMenu();
         menuSourceTypes = new javax.swing.JMenuItem();
         menuParty = new javax.swing.JMenu();
@@ -151,34 +154,30 @@ public class MainForm extends javax.swing.JFrame {
         menuGenders = new javax.swing.JMenuItem();
         menuPartyRoleType = new javax.swing.JMenuItem();
         menuPartyType = new javax.swing.JMenuItem();
+        menuOwnerTypes = new javax.swing.JMenuItem();
+        menuTenantTypes = new javax.swing.JMenuItem();
+        menuOwnershipTypes = new javax.swing.JMenuItem();
         menuSystem = new javax.swing.JMenu();
         menuBRSeverityType = new javax.swing.JMenuItem();
         menuBRValidationTargetType = new javax.swing.JMenuItem();
         menuBRTechnicalType = new javax.swing.JMenuItem();
-        menuTransaction = new javax.swing.JMenu();
-        menuRegistrationStatusType = new javax.swing.JMenuItem();
-        jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenu1 = new javax.swing.JMenu();
-        menuVDCSetup = new javax.swing.JMenuItem();
         menuDistrict = new javax.swing.JMenuItem();
+        menuVDCSetup = new javax.swing.JMenuItem();
         menuOffices = new javax.swing.JMenuItem();
         menuDepartments = new javax.swing.JMenuItem();
-        menuMapsheet = new javax.swing.JMenuItem();
+        menuTransaction = new javax.swing.JMenu();
+        menuRegistrationStatusType = new javax.swing.JMenuItem();
         menuRestrictionRelease = new javax.swing.JMenu();
-        menuRestrictionType = new javax.swing.JMenuItem();
         menuRestrictionReason = new javax.swing.JMenuItem();
         menuRestrictionReleaseReason = new javax.swing.JMenuItem();
-        menuRestrictionOffice = new javax.swing.JMenuItem();
-        menuOwnerTypes = new javax.swing.JMenuItem();
-        menuOwnershipTypes = new javax.swing.JMenuItem();
-        menuTenantTypes = new javax.swing.JMenuItem();
-        menuParcelTypes = new javax.swing.JMenuItem();
-        menuLandClass = new javax.swing.JMenuItem();
-        menuLandUses = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         menuReports = new javax.swing.JMenu();
         menuLodgementReport = new javax.swing.JMenuItem();
         menuTimeReport = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -485,6 +484,36 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuAdministrative.add(menuRrrTypes);
 
+        menuParcelTypes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuParcelTypes.setText(bundle.getString("MainForm.menuParcelTypes.text")); // NOI18N
+        menuParcelTypes.setName(bundle.getString("MainForm.menuParcelTypes.name")); // NOI18N
+        menuParcelTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuParcelTypesActionPerformed(evt);
+            }
+        });
+        menuAdministrative.add(menuParcelTypes);
+
+        menuLandUses.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuLandUses.setText(bundle.getString("MainForm.menuLandUses.text")); // NOI18N
+        menuLandUses.setName(bundle.getString("MainForm.menuLandUses.name")); // NOI18N
+        menuLandUses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLandUsesActionPerformed(evt);
+            }
+        });
+        menuAdministrative.add(menuLandUses);
+
+        menuLandClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuLandClass.setText(bundle.getString("MainForm.menuLandClass.text")); // NOI18N
+        menuLandClass.setName(bundle.getString("MainForm.menuLandClass.name")); // NOI18N
+        menuLandClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLandClassActionPerformed(evt);
+            }
+        });
+        menuAdministrative.add(menuLandClass);
+
         menuRefData.add(menuAdministrative);
 
         menuSources.setText(bundle.getString("MainForm.menuSources.text")); // NOI18N
@@ -555,6 +584,36 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuParty.add(menuPartyType);
 
+        menuOwnerTypes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuOwnerTypes.setText(bundle.getString("MainForm.menuOwnerTypes.text")); // NOI18N
+        menuOwnerTypes.setName(bundle.getString("MainForm.menuOwnerTypes.name")); // NOI18N
+        menuOwnerTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOwnerTypesActionPerformed(evt);
+            }
+        });
+        menuParty.add(menuOwnerTypes);
+
+        menuTenantTypes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuTenantTypes.setText(bundle.getString("MainForm.menuTenantTypes.text")); // NOI18N
+        menuTenantTypes.setName(bundle.getString("MainForm.menuTenantTypes.name")); // NOI18N
+        menuTenantTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTenantTypesActionPerformed(evt);
+            }
+        });
+        menuParty.add(menuTenantTypes);
+
+        menuOwnershipTypes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuOwnershipTypes.setText(bundle.getString("MainForm.menuOwnershipTypes.text")); // NOI18N
+        menuOwnershipTypes.setName(bundle.getString("MainForm.menuShareTypes.name")); // NOI18N
+        menuOwnershipTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOwnershipTypesActionPerformed(evt);
+            }
+        });
+        menuParty.add(menuOwnershipTypes);
+
         menuRefData.add(menuParty);
 
         menuSystem.setText(bundle.getString("MainForm.menuSystem.text")); // NOI18N
@@ -590,6 +649,46 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuSystem.add(menuBRTechnicalType);
 
+        menuDistrict.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuDistrict.setText(bundle.getString("MainForm.menuDistrict.text")); // NOI18N
+        menuDistrict.setName(bundle.getString("MainForm.menuDistrict.name")); // NOI18N
+        menuDistrict.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDistrictActionPerformed(evt);
+            }
+        });
+        menuSystem.add(menuDistrict);
+
+        menuVDCSetup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuVDCSetup.setText(bundle.getString("MainForm.menuVDCSetup.text")); // NOI18N
+        menuVDCSetup.setName(bundle.getString("MainForm.menuVDCSetup.name")); // NOI18N
+        menuVDCSetup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVDCSetupActionPerformed(evt);
+            }
+        });
+        menuSystem.add(menuVDCSetup);
+
+        menuOffices.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuOffices.setText(bundle.getString("MainForm.menuOffices.text")); // NOI18N
+        menuOffices.setName(bundle.getString("MainForm.menuOffices.name")); // NOI18N
+        menuOffices.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOfficesActionPerformed(evt);
+            }
+        });
+        menuSystem.add(menuOffices);
+
+        menuDepartments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
+        menuDepartments.setText(bundle.getString("MainForm.menuDepartments.text")); // NOI18N
+        menuDepartments.setName(bundle.getString("MainForm.menuDepartments.name")); // NOI18N
+        menuDepartments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDepartmentsActionPerformed(evt);
+            }
+        });
+        menuSystem.add(menuDepartments);
+
         menuRefData.add(menuSystem);
 
         menuTransaction.setText(bundle.getString("MainForm.menuTransaction.text")); // NOI18N
@@ -607,69 +706,10 @@ public class MainForm extends javax.swing.JFrame {
 
         menuRefData.add(menuTransaction);
 
-        jSeparator5.setName(bundle.getString("MainForm.jSeparator5.name")); // NOI18N
-        menuRefData.add(jSeparator5);
-
-        jMenu1.setText(bundle.getString("MainForm.jMenu1.text")); // NOI18N
-        jMenu1.setName(bundle.getString("MainForm.jMenu1.name")); // NOI18N
-
-        menuVDCSetup.setText(bundle.getString("MainForm.menuVDCSetup.text")); // NOI18N
-        menuVDCSetup.setName(bundle.getString("MainForm.menuVDCSetup.name")); // NOI18N
-        menuVDCSetup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuVDCSetupActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuVDCSetup);
-
-        menuDistrict.setText(bundle.getString("MainForm.menuDistrict.text")); // NOI18N
-        menuDistrict.setName(bundle.getString("MainForm.menuDistrict.name")); // NOI18N
-        menuDistrict.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDistrictActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuDistrict);
-
-        menuOffices.setText(bundle.getString("MainForm.menuOffices.text")); // NOI18N
-        menuOffices.setName(bundle.getString("MainForm.menuOffices.name")); // NOI18N
-        menuOffices.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuOfficesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuOffices);
-
-        menuDepartments.setText(bundle.getString("MainForm.menuDepartments.text")); // NOI18N
-        menuDepartments.setName(bundle.getString("MainForm.menuDepartments.name")); // NOI18N
-        menuDepartments.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDepartmentsActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuDepartments);
-
-        menuMapsheet.setText(bundle.getString("MainForm.menuMapsheet.text")); // NOI18N
-        menuMapsheet.setName(bundle.getString("MainForm.menuMapsheet.name")); // NOI18N
-        menuMapsheet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuMapsheetActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuMapsheet);
-
         menuRestrictionRelease.setText(bundle.getString("MainForm.menuRestrictionRelease.text")); // NOI18N
         menuRestrictionRelease.setName(bundle.getString("MainForm.menuRestrictionRelease.name")); // NOI18N
 
-        menuRestrictionType.setText(bundle.getString("MainForm.menuRestrictionType.text")); // NOI18N
-        menuRestrictionType.setName(bundle.getString("MainForm.menuRestrictionType.name")); // NOI18N
-        menuRestrictionType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuRestrictionTypeActionPerformed(evt);
-            }
-        });
-        menuRestrictionRelease.add(menuRestrictionType);
-
+        menuRestrictionReason.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
         menuRestrictionReason.setText(bundle.getString("MainForm.menuRestrictionReason.text")); // NOI18N
         menuRestrictionReason.setName(bundle.getString("MainForm.menuRestrictionReason.name")); // NOI18N
         menuRestrictionReason.addActionListener(new java.awt.event.ActionListener() {
@@ -679,6 +719,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuRestrictionRelease.add(menuRestrictionReason);
 
+        menuRestrictionReleaseReason.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/book-open.png"))); // NOI18N
         menuRestrictionReleaseReason.setText(bundle.getString("MainForm.menuRestrictionReleaseReason.text")); // NOI18N
         menuRestrictionReleaseReason.setName(bundle.getString("MainForm.menuRestrictionReleaseReason.name")); // NOI18N
         menuRestrictionReleaseReason.addActionListener(new java.awt.event.ActionListener() {
@@ -688,74 +729,54 @@ public class MainForm extends javax.swing.JFrame {
         });
         menuRestrictionRelease.add(menuRestrictionReleaseReason);
 
-        menuRestrictionOffice.setText(bundle.getString("MainForm.menuRestrictionOffice.text")); // NOI18N
-        menuRestrictionOffice.setName(bundle.getString("MainForm.menuRestrictionOffice.name")); // NOI18N
-        menuRestrictionOffice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuRestrictionOfficeActionPerformed(evt);
-            }
-        });
-        menuRestrictionRelease.add(menuRestrictionOffice);
-
-        jMenu1.add(menuRestrictionRelease);
-
-        menuOwnerTypes.setText(bundle.getString("MainForm.menuOwnerTypes.text")); // NOI18N
-        menuOwnerTypes.setName(bundle.getString("MainForm.menuOwnerTypes.name")); // NOI18N
-        menuOwnerTypes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuOwnerTypesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuOwnerTypes);
-
-        menuOwnershipTypes.setText(bundle.getString("MainForm.menuOwnershipTypes.text")); // NOI18N
-        menuOwnershipTypes.setName(bundle.getString("MainForm.menuShareTypes.name")); // NOI18N
-        menuOwnershipTypes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuOwnershipTypesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuOwnershipTypes);
-
-        menuTenantTypes.setText(bundle.getString("MainForm.menuTenantTypes.text")); // NOI18N
-        menuTenantTypes.setName(bundle.getString("MainForm.menuTenantTypes.name")); // NOI18N
-        menuTenantTypes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuTenantTypesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuTenantTypes);
-
-        menuParcelTypes.setText(bundle.getString("MainForm.menuParcelTypes.text")); // NOI18N
-        menuParcelTypes.setName(bundle.getString("MainForm.menuParcelTypes.name")); // NOI18N
-        menuParcelTypes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuParcelTypesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuParcelTypes);
-
-        menuLandClass.setText(bundle.getString("MainForm.menuLandClass.text")); // NOI18N
-        menuLandClass.setName(bundle.getString("MainForm.menuLandClass.name")); // NOI18N
-        menuLandClass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuLandClassActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuLandClass);
-
-        menuLandUses.setText(bundle.getString("MainForm.menuLandUses.text")); // NOI18N
-        menuLandUses.setName(bundle.getString("MainForm.menuLandUses.name")); // NOI18N
-        menuLandUses.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuLandUsesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuLandUses);
-
-        menuRefData.add(jMenu1);
+        menuRefData.add(menuRestrictionRelease);
 
         mainMenu.add(menuRefData);
+
+        jMenu2.setText(bundle.getString("MainForm.jMenu2.text")); // NOI18N
+        jMenu2.setName("jMenu2"); // NOI18N
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
+        jMenuItem2.setText(bundle.getString("MainForm.jMenuItem2.text")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
+        jMenuItem3.setText(bundle.getString("MainForm.jMenuItem3.text")); // NOI18N
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
+        jMenuItem4.setText(bundle.getString("MainForm.jMenuItem4.text")); // NOI18N
+        jMenuItem4.setName("jMenuItem4"); // NOI18N
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/traffic-light.png"))); // NOI18N
+        jMenuItem5.setText(bundle.getString("MainForm.jMenuItem5.text")); // NOI18N
+        jMenuItem5.setName("jMenuItem5"); // NOI18N
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        mainMenu.add(jMenu2);
 
         menuReports.setText(bundle.getString("MainForm.menuReports.text_1")); // NOI18N
         menuReports.setName("menuReports"); // NOI18N
@@ -777,15 +798,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         menuReports.add(menuTimeReport);
-
-        jMenuItem1.setText(bundle.getString("MainForm.jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName(bundle.getString("MainForm.jMenuItem1.name")); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuReports.add(jMenuItem1);
 
         mainMenu.add(menuReports);
 
@@ -967,14 +979,6 @@ public class MainForm extends javax.swing.JFrame {
         showDepartmentsForm();
     }//GEN-LAST:event_menuDepartmentsActionPerformed
 
-    private void menuMapsheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMapsheetActionPerformed
-        manageMapSheet();
-    }//GEN-LAST:event_menuMapsheetActionPerformed
-
-    private void menuRestrictionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionTypeActionPerformed
-        manageRestrictionType();
-    }//GEN-LAST:event_menuRestrictionTypeActionPerformed
-
     private void menuRestrictionReleaseReasonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionReleaseReasonActionPerformed
         manageRestrictionReleaseType();
     }//GEN-LAST:event_menuRestrictionReleaseReasonActionPerformed
@@ -982,14 +986,6 @@ public class MainForm extends javax.swing.JFrame {
     private void menuRestrictionReasonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionReasonActionPerformed
         manageRestrictionReason();
     }//GEN-LAST:event_menuRestrictionReasonActionPerformed
-
-    private void menuRestrictionOfficeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRestrictionOfficeActionPerformed
-        manageRestrictionOffice();
-    }//GEN-LAST:event_menuRestrictionOfficeActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        //showReport(ReportManager.getMapSheetListReport());
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuOwnerTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOwnerTypesActionPerformed
         // TODO add your handling code here:
@@ -1028,8 +1024,29 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         manageMapSheet();
+        manageMapSheet();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        manageMapSheet();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        CalendarManagement nepCal = new CalendarManagement();
+        mainContentPanel.addPanel(nepCal, MainContentPanel.CARD_ADMIN_CALENDAR, true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        manageBr();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        showFiscalYearForm();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void showFiscalYearForm() {
         FiscalYearManagementPanel form = new FiscalYearManagementPanel();
@@ -1180,20 +1197,12 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private void manageRestrictionType() {
-        openReferenceDataPanel(RestrictionTypeBean.class, menuRestrictionType.getText());
-    }
-
     private void manageRestrictionReason() {
         openReferenceDataPanel(RestrictionReasonBean.class, menuRestrictionReason.getText());
     }
 
     private void manageRestrictionReleaseType() {
         openReferenceDataPanel(RestrictionReleaseReasonBean.class, menuRestrictionReleaseReason.getText());
-    }
-
-    private void manageRestrictionOffice() {
-        openReferenceDataPanel(RestrictionOfficeBean.class, menuRestrictionOffice.getText());
     }
 
     private void manageOwnershipTpes() {
@@ -1228,12 +1237,14 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnUsers;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator4;
-    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel lblUserName;
     private org.sola.clients.swing.ui.MainContentPanel mainContentPanel;
     private javax.swing.JMenuBar mainMenu;
@@ -1257,7 +1268,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuLandClass;
     private javax.swing.JMenuItem menuLandUses;
     private javax.swing.JMenuItem menuLodgementReport;
-    private javax.swing.JMenuItem menuMapsheet;
     private javax.swing.JMenuItem menuMortgageTypes;
     private javax.swing.JMenuItem menuOffices;
     private javax.swing.JMenuItem menuOwnerTypes;
@@ -1271,11 +1281,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuReports;
     private javax.swing.JMenuItem menuRequestCategory;
     private javax.swing.JMenuItem menuRequestTypes;
-    private javax.swing.JMenuItem menuRestrictionOffice;
     private javax.swing.JMenuItem menuRestrictionReason;
     private javax.swing.JMenu menuRestrictionRelease;
     private javax.swing.JMenuItem menuRestrictionReleaseReason;
-    private javax.swing.JMenuItem menuRestrictionType;
     private javax.swing.JMenuItem menuRoles;
     private javax.swing.JMenuItem menuRrrGroupTypes;
     private javax.swing.JMenuItem menuRrrTypes;

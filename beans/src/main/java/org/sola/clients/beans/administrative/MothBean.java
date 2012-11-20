@@ -21,6 +21,7 @@ import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.MothTO;
 
 public class MothBean extends MothBasicBean {
+
     public static final String LOC_LIST_PROPERTY = "locList";
     private SolaObservableList<LocBean> locList;
 

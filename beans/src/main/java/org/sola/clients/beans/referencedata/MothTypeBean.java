@@ -63,4 +63,36 @@ public class MothTypeBean extends AbstractBindingBean {
     public String toString(){
         return mothTypeName;
     }
+    
+    @Override
+    public boolean equals(Object aThat) {
+        if (aThat == null) {
+            return false;
+        }
+        if (this == aThat) {
+            return true;
+        }
+
+        if (!(MothTypeBean.class.isAssignableFrom(aThat.getClass()))) {
+            return false;
+        }
+
+        MothTypeBean that = (MothTypeBean) aThat;
+
+        if ((this.getMothTypeCode() != null && that.getMothTypeCode() != null
+                && this.getMothTypeCode().equals(that.getMothTypeCode())) || 
+                (this.getMothTypeCode() == null && that.getMothTypeCode() == null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 9;
+        hash = 22 * hash + (getMothTypeName() != null ? getMothTypeName().hashCode() : 0);
+        hash = 22 * hash + (this.getMothTypeCode() != null ? this.getMothTypeCode().hashCode() : 0);
+        return hash;
+    }
 }

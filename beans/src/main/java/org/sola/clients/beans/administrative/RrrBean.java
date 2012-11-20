@@ -45,6 +45,7 @@ import org.sola.clients.beans.administrative.validation.RestrictionValidationGro
 import org.sola.clients.beans.administrative.validation.TenancyValidationGroup;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.controls.SolaList;
+import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.source.SourceBean;
@@ -53,6 +54,7 @@ import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.NoDuplicates;
 import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
+import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.EntityAction;
 import org.sola.webservices.transferobjects.administrative.RrrTO;
 
@@ -573,7 +575,7 @@ public class RrrBean extends AbstractTransactionedBean {
     public String getRegistrationDate() {
         return registrationDate;
     }
-    
+
     public String getRegistrationDateFormatted() {
         return DateUtility.toFormattedNepaliDate(registrationDate);
     }
@@ -901,5 +903,19 @@ public class RrrBean extends AbstractTransactionedBean {
                 }
             }
         }
+    }
+
+    /**
+     * Returns rrrs by ID.
+     */
+    public static RrrBean getRrr(String rrrId) {
+        if (rrrId == null || rrrId.length() < 1) {
+            return null;
+        }
+
+        RrrTO rrrTO = WSManager.getInstance().getAdministrative().getRrr(rrrId);
+        RrrBean rrrBean = TypeConverters.TransferObjectToBean(rrrTO, RrrBean.class, null);
+
+        return rrrBean;
     }
 }

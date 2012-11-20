@@ -142,7 +142,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Restriction Details]]></text>
+				<text><![CDATA[रोक्का बिबरण]]></text>
 			</staticText>
 			<image>
 				<reportElement uuid="5de13ea1-a235-437d-a6d0-6ec7457353cc" x="3" y="0" width="100" height="96"/>
@@ -153,14 +153,14 @@
 				<textElement textAlignment="Center">
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[Ministry of Land Reform and Management]]></text>
+				<text><![CDATA[भुमिसुधार तथा व्यबस्था मन्त्रालय]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="1409e785-3599-4e56-b837-6431c7890f37" x="0" y="0" width="555" height="27"/>
 				<textElement textAlignment="Center">
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[Goverment of Nepal]]></text>
+				<text><![CDATA[नेपाल सरकार]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -171,12 +171,12 @@
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Parcel]]></text>
+				<text><![CDATA[कित्ता]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="239d37fb-e559-4f45-ba76-ddcb2c8a8da9" x="0" y="33" width="100" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[VDC: ]]></text>
+				<text><![CDATA[गाबिस:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="5f16b5eb-3cf3-4cfd-a594-65927cc5f1a6" x="100" y="33" width="100" height="20"/>
@@ -188,7 +188,7 @@
 			<staticText>
 				<reportElement uuid="d4b15107-2edd-4294-81b5-68a57fc7ea4b" x="0" y="66" width="100" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Map sheet number:]]></text>
+				<text><![CDATA[नक्सा सिट नं:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="2df63449-c3a0-4732-abd1-434b68c35278" x="100" y="66" width="100" height="20"/>
@@ -200,7 +200,7 @@
 			<staticText>
 				<reportElement uuid="f8865630-cddd-4087-ace1-fb4f66031bc9" x="215" y="33" width="86" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Ward:]]></text>
+				<text><![CDATA[वडा:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="0b8bac8e-a48f-4311-849c-ef1054df6751" x="301" y="33" width="68" height="20"/>
@@ -212,7 +212,7 @@
 			<staticText>
 				<reportElement uuid="5e38acb9-0d0f-49c8-a162-726d22b6f436" x="215" y="66" width="86" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Parcel number:]]></text>
+				<text><![CDATA[कित्ता नं:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="44703609-1218-4751-af2b-38163caf47d0" x="301" y="66" width="68" height="20"/>
@@ -224,7 +224,7 @@
 			<staticText>
 				<reportElement uuid="c411ee47-24c1-4c54-be33-605e91d6efdb" x="390" y="33" width="70" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Official area:]]></text>
+				<text><![CDATA[क्षेत्रफल:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="67aa1221-6494-4b42-8dc9-f5d25a0b05c8" x="460" y="33" width="95" height="20"/>
@@ -253,7 +253,7 @@
 					<textElement verticalAlignment="Middle">
 						<font size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[Owners]]></text>
+					<text><![CDATA[जग्गाधनीहरु]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="64a07c05-2e5b-4aad-9428-a826a35d62a5" mode="Opaque" x="435" y="24" width="120" height="20" backcolor="#CCCCCC"/>
@@ -267,7 +267,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Grandfather name]]></text>
+					<text><![CDATA[बाजेको नाम]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="ecffea16-6dcf-4ba8-b8d9-d22194428713" mode="Opaque" x="147" y="24" width="159" height="20" backcolor="#CCCCCC"/>
@@ -281,7 +281,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Address]]></text>
+					<text><![CDATA[ठेगाना]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="74378083-77d5-4532-8358-1a6ef2fd3d84" mode="Opaque" x="0" y="24" width="147" height="20" backcolor="#CCCCCC"/>
@@ -295,7 +295,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Full name]]></text>
+					<text><![CDATA[नाम र थर]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="624facd1-bad5-44c1-8b12-da426dbf8e5b" mode="Opaque" x="306" y="24" width="129" height="20" backcolor="#CCCCCC"/>
@@ -309,7 +309,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Father name]]></text>
+					<text><![CDATA[बाबुको नाम]]></text>
 				</staticText>
 				<componentElement>
 					<reportElement uuid="bfb5505b-7293-47c8-a16c-420eacf8ce24" x="0" y="44" width="555" height="20"/>
@@ -384,7 +384,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Restriction office address]]></text>
+					<text><![CDATA[रोक्का राख्ने कार्यलयको ठेगाना]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="1c6c42b3-3510-49ed-b4e8-d33cda8f24c1" positionType="Float" mode="Opaque" x="347" y="52" width="76" height="20" backcolor="#CCCCCC"/>
@@ -398,7 +398,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Ref. date]]></text>
+					<text><![CDATA[चलानी मिति]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="05684756-4c1d-462c-b045-926f578ec542" positionType="Float" mode="Opaque" x="112" y="32" width="77" height="20" backcolor="#CCCCCC"/>
@@ -412,7 +412,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Bundle number]]></text>
+					<text><![CDATA[रोक्का मोठ नं]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="05684756-4c1d-462c-b045-926f578ec542" positionType="Float" mode="Opaque" x="189" y="32" width="158" height="20" backcolor="#CCCCCC"/>
@@ -426,7 +426,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Restriction office]]></text>
+					<text><![CDATA[रोक्का राख्ने कार्यलयको नाम]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="05684756-4c1d-462c-b045-926f578ec542" positionType="Float" mode="Opaque" x="347" y="32" width="76" height="20" backcolor="#CCCCCC"/>
@@ -440,7 +440,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Ref. number]]></text>
+					<text><![CDATA[चलानी नं]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="9a138437-1dae-4579-8a1a-fb5d1fb1e497" positionType="Float" mode="Opaque" x="0" y="32" width="36" height="40" backcolor="#CCCCCC"/>
@@ -454,7 +454,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[S/N]]></text>
+					<text><![CDATA[रोक्का सि.नं]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="1c6c42b3-3510-49ed-b4e8-d33cda8f24c1" positionType="Float" mode="Opaque" x="112" y="52" width="77" height="20" backcolor="#CCCCCC"/>
@@ -468,14 +468,14 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Bundle page ]]></text>
+					<text><![CDATA[रोक्का मोठ पाना नं]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="8cafe5a3-b2da-48db-8bea-87d362ab05bf" positionType="Float" x="0" y="1" width="100" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[Restriction]]></text>
+					<text><![CDATA[रोक्का]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="9a138437-1dae-4579-8a1a-fb5d1fb1e497" positionType="Float" mode="Opaque" x="423" y="32" width="132" height="40" backcolor="#CCCCCC"/>
@@ -489,7 +489,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Remarks]]></text>
+					<text><![CDATA[कैफियत]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="05684756-4c1d-462c-b045-926f578ec542" positionType="Float" mode="Opaque" x="36" y="32" width="76" height="20" backcolor="#CCCCCC"/>
@@ -503,7 +503,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Reg. number]]></text>
+					<text><![CDATA[रोक्का दर्ता नं]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="1c6c42b3-3510-49ed-b4e8-d33cda8f24c1" positionType="Float" mode="Opaque" x="36" y="52" width="76" height="20" backcolor="#CCCCCC"/>
@@ -517,7 +517,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Reg. date]]></text>
+					<text><![CDATA[रोक्का मिति]]></text>
 				</staticText>
 				<componentElement>
 					<reportElement uuid="bbbb5076-294b-4444-9529-df073b9c656e" positionType="Float" x="0" y="72" width="555" height="41" isPrintWhenDetailOverflows="true"/>
@@ -675,7 +675,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[Static text]]></text>
+				<text><![CDATA[कम्युटर शाखा]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="a10d75cc-8d25-479b-ad21-86c5e4c9a3ef" x="16" y="20" width="111" height="1"/>
@@ -685,7 +685,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[Date]]></text>
+				<text><![CDATA[मिति]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="a10d75cc-8d25-479b-ad21-86c5e4c9a3ef" x="209" y="20" width="111" height="1"/>
@@ -695,7 +695,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[Officer signature]]></text>
+				<text><![CDATA[प्रमाणित गर्ने]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="a10d75cc-8d25-479b-ad21-86c5e4c9a3ef" x="409" y="20" width="111" height="1"/>
