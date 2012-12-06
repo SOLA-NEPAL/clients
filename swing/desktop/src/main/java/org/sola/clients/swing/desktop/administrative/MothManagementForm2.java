@@ -34,7 +34,7 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class MothManagementForm2 extends ContentPanel {
 
-    public static final String LOC_SAVED = "locSaved";
+    public static final String LOC_SAVED = "locSaved";    
 
     /**
      * Creates new form MothManagementForm2
@@ -549,6 +549,9 @@ public class MothManagementForm2 extends ContentPanel {
 
         jLabel8.setText(bundle.getString("MothManagementForm2.jLabel8.text")); // NOI18N
 
+        cmbMothLujNo.setEnabled(false);
+        cmbMothLujNo.setName(""); // NOI18N
+
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothListBean1, eLProperty, cmbMothLujNo);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -606,13 +609,15 @@ public class MothManagementForm2 extends ContentPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(groupPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane2)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -658,7 +663,7 @@ public class MothManagementForm2 extends ContentPanel {
         vdcListBean1.loadListByOffice(false);
         vdcListBean2.loadListByOffice(false);
         cmbVdc1.setSelectedIndex(-1);
-        cmbVdc2.setSelectedIndex(-1);
+        cmbVdc2.setSelectedIndex(-1);       
 
         vdcListBean2.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -853,7 +858,7 @@ public class MothManagementForm2 extends ContentPanel {
                 MothMultiplePageEditForm frm = new MothMultiplePageEditForm(frame, true, locSearchByMothParamsListBean1.getCheckedLocs());
                 cmbVdc2.setSelectedIndex(-1);
                 frm.setVisible(true);
-                return null;
+                return null;                
             }
         };
         TaskManager.getInstance().runTask(t);
