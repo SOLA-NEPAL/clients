@@ -302,77 +302,77 @@
 							<text><![CDATA[औठा छाप]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="fef85ba1-9390-4f5b-a201-f948f87427d2" x="329" y="8" width="137" height="20"/>
+							<reportElement uuid="fef85ba1-9390-4f5b-a201-f948f87427d2" x="329" y="8" width="97" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<text><![CDATA[जग्गाधनीको नाम थर :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="4c582a01-209d-4966-b212-a5d03af0d77f" x="329" y="28" width="137" height="20"/>
+							<reportElement uuid="4c582a01-209d-4966-b212-a5d03af0d77f" x="329" y="28" width="97" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<text><![CDATA[जग्गाधनीको ठेगाना:]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="5da54dc3-d7e4-477a-b0d3-79e0df508eed" x="329" y="48" width="137" height="20"/>
+							<reportElement uuid="5da54dc3-d7e4-477a-b0d3-79e0df508eed" x="329" y="48" width="97" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<text><![CDATA[बाबुको नाम :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="5ee3856f-3c36-4888-934d-39112e8bb9b7" x="329" y="68" width="137" height="20"/>
+							<reportElement uuid="5ee3856f-3c36-4888-934d-39112e8bb9b7" x="329" y="68" width="97" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<text><![CDATA[बाजेको नाम :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="54106585-8e75-49c4-9574-0d1c8a740f00" x="329" y="88" width="137" height="20"/>
+							<reportElement uuid="54106585-8e75-49c4-9574-0d1c8a740f00" x="329" y="88" width="97" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<text><![CDATA[नागरिकता नं :]]></text>
 						</staticText>
 						<staticText>
-							<reportElement uuid="59992a3c-9ae2-4475-aab2-6e61806df52a" x="329" y="108" width="137" height="20"/>
+							<reportElement uuid="59992a3c-9ae2-4475-aab2-6e61806df52a" x="329" y="108" width="97" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<text><![CDATA[कार्यलय : ]]></text>
 						</staticText>
 						<textField isBlankWhenNull="true">
-							<reportElement uuid="f196ddad-d1d4-403a-a910-6f40871dce33" x="466" y="8" width="326" height="20"/>
+							<reportElement uuid="f196ddad-d1d4-403a-a910-6f40871dce33" x="426" y="8" width="366" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement uuid="19460d9f-baf9-4531-8d11-205774212c35" x="466" y="28" width="326" height="20"/>
+							<reportElement uuid="19460d9f-baf9-4531-8d11-205774212c35" x="426" y="28" width="366" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement uuid="88c40b4d-50b6-4ac5-ab9f-98f51375ee5a" x="466" y="48" width="326" height="20"/>
+							<reportElement uuid="88c40b4d-50b6-4ac5-ab9f-98f51375ee5a" x="426" y="48" width="366" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{fatherName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement uuid="b59da8b5-8e73-418e-92a5-2733d4110854" x="466" y="68" width="326" height="20"/>
+							<reportElement uuid="b59da8b5-8e73-418e-92a5-2733d4110854" x="426" y="68" width="366" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{grandfatherName}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement uuid="16c069b2-03c1-4560-87a2-f3efb55d7c40" x="466" y="88" width="144" height="20"/>
+							<reportElement uuid="16c069b2-03c1-4560-87a2-f3efb55d7c40" x="426" y="88" width="184" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>
@@ -393,7 +393,7 @@
 							<textFieldExpression><![CDATA[$F{idIssueDateFormatted}]]></textFieldExpression>
 						</textField>
 						<textField isBlankWhenNull="true">
-							<reportElement uuid="32837dba-3fb6-4c57-88b5-82b73b0cf1f0" x="466" y="108" width="326" height="20"/>
+							<reportElement uuid="32837dba-3fb6-4c57-88b5-82b73b0cf1f0" x="426" y="108" width="366" height="20"/>
 							<textElement verticalAlignment="Middle">
 								<font size="11"/>
 							</textElement>

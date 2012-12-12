@@ -145,7 +145,8 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
         String fullName = getName();
         if (getLastName() != null && fullName != null && fullName.length() > 0) {
             if (fullName != null && fullName.length() > 0) {
-                fullName = getLastName() + " " + fullName;
+                //fullName = getLastName() + " " + fullName;
+                fullName = fullName+" "+getLastName();
             } else {
                 fullName = getLastName();
             }

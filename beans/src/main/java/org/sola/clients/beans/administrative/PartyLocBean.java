@@ -101,7 +101,8 @@ public class PartyLocBean extends AbstractBasicIdBean {
         String fullName = getName();
         if (getLastName() != null) {
             if (fullName != null && fullName.length() > 0) {
-                fullName = getLastName() + " " + fullName;
+                //fullName = getLastName() + " " + fullName;
+                fullName = fullName+" "+getLastName();
             } else {
                 fullName = getLastName();
             }
