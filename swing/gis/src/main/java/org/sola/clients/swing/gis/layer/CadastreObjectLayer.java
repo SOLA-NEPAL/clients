@@ -81,9 +81,9 @@ public class CadastreObjectLayer extends ExtendedLayerGraphics {
     public SimpleFeature addFeature(CadastreObjectTO parcel) {
         HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
         fieldsWithValues.put(
-                LAYER_FIELD_FIRST_PART, parcel.getNameFirstpart());
+                LAYER_FIELD_FIRST_PART, parcel.getNameFirstPart());
         fieldsWithValues.put(
-                LAYER_FIELD_LAST_PART, parcel.getNameLastpart());
+                LAYER_FIELD_LAST_PART, parcel.getNameLastPart());
         fieldsWithValues.put(
                 LAYER_FIELD_MAP_SHEET, parcel.getMapSheetId());
         fieldsWithValues.put(

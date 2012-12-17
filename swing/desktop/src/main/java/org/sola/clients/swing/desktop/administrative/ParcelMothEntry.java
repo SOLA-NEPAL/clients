@@ -484,8 +484,8 @@ public class ParcelMothEntry extends ContentPanel {
         BaUnitBean baUnit = new BaUnitBean();
         baUnit.setTypeCode("administrativeUnit");
         baUnit.setName("TestBaunit");
-        baUnit.setNameFirstpart("TestBaunit");
-        baUnit.setNameLastpart("TestBaunit");
+        baUnit.setNameFirstPart("TestBaunit");
+        baUnit.setNameLastPart("TestBaunit");
         baUnit.setStatusCode("current");
         baUnit.saveBaUnit(null);
         return baUnit;

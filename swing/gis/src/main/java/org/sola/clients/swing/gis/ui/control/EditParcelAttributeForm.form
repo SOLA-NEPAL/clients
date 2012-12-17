@@ -177,7 +177,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFirstPartName">
           <BindingProperties>
-            <BindingProperty name="text" source="Form" sourcePath="${parcel.nameFirstpart}" target="txtFirstPartName" targetPath="text" updateStrategy="0" immediately="false">
+            <BindingProperty name="text" source="Form" sourcePath="${parcel.nameFirstPart}" target="txtFirstPartName" targetPath="text" updateStrategy="0" immediately="false">
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
             </BindingProperty>
           </BindingProperties>
@@ -193,7 +193,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <BindingProperties>
-            <BindingProperty name="text" source="Form" sourcePath="${parcel.nameLastpart}" target="txtSecondPartName" targetPath="text" updateStrategy="0" immediately="false">
+            <BindingProperty name="text" source="Form" sourcePath="${parcel.nameLastPart}" target="txtSecondPartName" targetPath="text" updateStrategy="0" immediately="false">
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
             </BindingProperty>
           </BindingProperties>
