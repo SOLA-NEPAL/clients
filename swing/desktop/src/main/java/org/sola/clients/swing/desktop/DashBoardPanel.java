@@ -232,8 +232,8 @@ public class DashBoardPanel extends ContentPanel {
 
         appListBean = new org.sola.clients.beans.application.ApplicationSearchResultsListBean();
         popUpApplications = new javax.swing.JPopupMenu();
-        menuAssignApplication = new javax.swing.JMenuItem();
         menuOpenApplication = new javax.swing.JMenuItem();
+        menuAssignApplication = new javax.swing.JMenuItem();
         menuTransferApplication = new javax.swing.JMenuItem();
         menuRefreshApplication = new javax.swing.JMenuItem();
         headerPanel = new org.sola.clients.swing.ui.HeaderPanel();
@@ -250,18 +250,8 @@ public class DashBoardPanel extends ContentPanel {
 
         popUpApplications.setName("popUpApplications"); // NOI18N
 
-        menuAssignApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/assign.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/Bundle"); // NOI18N
-        menuAssignApplication.setText(bundle.getString("DashBoardPanel.menuAssignApplication.text")); // NOI18N
-        menuAssignApplication.setName("menuAssignApplication"); // NOI18N
-        menuAssignApplication.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuAssignApplicationActionPerformed(evt);
-            }
-        });
-        popUpApplications.add(menuAssignApplication);
-
         menuOpenApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/folder-open-document.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/Bundle"); // NOI18N
         menuOpenApplication.setText(bundle.getString("DashBoardPanel.menuOpenApplication.text")); // NOI18N
         menuOpenApplication.setToolTipText(bundle.getString("DashBoardPanel.menuOpenApplication.toolTipText")); // NOI18N
         menuOpenApplication.setName("menuOpenApplication"); // NOI18N
@@ -272,8 +262,24 @@ public class DashBoardPanel extends ContentPanel {
         });
         popUpApplications.add(menuOpenApplication);
 
+        menuAssignApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/assign.png"))); // NOI18N
+        menuAssignApplication.setText(bundle.getString("DashBoardPanel.menuAssignApplication.text")); // NOI18N
+        menuAssignApplication.setName("menuAssignApplication"); // NOI18N
+        menuAssignApplication.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAssignApplicationActionPerformed(evt);
+            }
+        });
+        popUpApplications.add(menuAssignApplication);
+
+        menuTransferApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/document-link.png"))); // NOI18N
         menuTransferApplication.setText(bundle.getString("DashBoardPanel.menuTransferApplication.text")); // NOI18N
         menuTransferApplication.setName(bundle.getString("DashBoardPanel.menuTransferApplication.name")); // NOI18N
+        menuTransferApplication.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTransferApplicationActionPerformed(evt);
+            }
+        });
         popUpApplications.add(menuTransferApplication);
 
         menuRefreshApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/refresh.png"))); // NOI18N
@@ -476,6 +482,7 @@ public class DashBoardPanel extends ContentPanel {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void menuAssignApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAssignApplicationActionPerformed
+        openAssignmentForm();
     }//GEN-LAST:event_menuAssignApplicationActionPerformed
 
     private void menuOpenApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpenApplicationActionPerformed
@@ -497,6 +504,10 @@ public class DashBoardPanel extends ContentPanel {
     private void btnTransferApplicationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferApplicationsActionPerformed
         openTransferForm();
     }//GEN-LAST:event_btnTransferApplicationsActionPerformed
+
+    private void menuTransferApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransferApplicationActionPerformed
+        openTransferForm();
+    }//GEN-LAST:event_menuTransferApplicationActionPerformed
 
     /**
      * Refreshes assigned and unassigned application lists.

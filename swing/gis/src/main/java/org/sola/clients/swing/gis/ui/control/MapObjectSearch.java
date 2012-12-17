@@ -36,16 +36,21 @@ package org.sola.clients.swing.gis.ui.control;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.swing.extended.Map;
+import org.geotools.swing.extended.exception.InitializeMapException;
 import org.geotools.swing.extended.util.Messaging;
+import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.swing.common.controls.FreeTextSearch;
 import org.sola.clients.swing.gis.beans.SearchByChoiceBean;
 import org.sola.clients.swing.gis.data.PojoFeatureSource;
 import org.sola.clients.swing.gis.to.CadastreObjectSearchResultExtraTO;
 import org.sola.common.messaging.GisMessage;
+import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.SearchClient;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
@@ -109,22 +114,51 @@ public class MapObjectSearch extends FreeTextSearch {
      */
     @Override
     public void onSelectionConfirmed() {
+        
+        this.map.clearSelectedFeatures();
+        
         if (this.getSelectedElement() == null) {
             return;
         }
         CadastreObjectSearchResultExtraTO selectedObj =
                 (CadastreObjectSearchResultExtraTO) this.getSelectedElement();
+        
+        if(selectedObj.getTheGeom()==null){
+            MessageUtility.displayMessage(GisMessage.PARCEL_HAS_NO_SPATIAL_DATA);
+            return;
+        }
+        
+        if(map==null || map.getDataset() == null){
+            return;
+        }
+        
+        if(selectedObj.getDatasetId()==null){
+            MessageUtility.displayMessage(GisMessage.PARCEL_DATASET_NOT_FOUND);
+            return;
+        }
+        
+        if(!map.getDatasetId().equals(selectedObj.getDatasetId())){
+            if(MessageUtility.displayMessage(GisMessage.PARCEL_DATASET_DIFFERENT_FROM_MAP) == MessageUtility.BUTTON_ONE){
+                try {
+                    map.setDataset(CacheManager.getDataset(selectedObj.getDatasetId()), true);
+                } catch (InitializeMapException ex) {
+                    Messaging.getInstance().show(GisMessage.LEFT_PANEL_FIND_ERROR);
+                    org.sola.common.logging.LogUtility.log(GisMessage.LEFT_PANEL_FIND_ERROR, ex);
+                }
+            } else {
+                return;
+            }
+        }
+        
         try {
-            Geometry geom =
-                    PojoFeatureSource.getWkbReader().read(selectedObj.getTheGeom());
-
-            // Select the object on the map
-            this.map.clearSelectedFeatures();
-            this.map.selectFeature(selectedObj.getId(), geom);
-
+            Geometry geom = PojoFeatureSource.getWkbReader().read(selectedObj.getTheGeom());
             ReferencedEnvelope boundsToZoom = JTS.toEnvelope(geom);
             boundsToZoom.expandBy(10);
             this.map.setDisplayArea(boundsToZoom);
+            
+            // Select the object on the map
+            this.map.selectFeature(selectedObj.getId(), geom);
+            
         } catch (ParseException ex) {
             Messaging.getInstance().show(GisMessage.LEFT_PANEL_FIND_ERROR);
             org.sola.common.logging.LogUtility.log(GisMessage.LEFT_PANEL_FIND_ERROR, ex);
