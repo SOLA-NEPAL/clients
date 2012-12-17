@@ -248,8 +248,8 @@ public class CreatePropertyCodeForm extends javax.swing.JDialog {
         VdcBean vdc = (VdcBean) cbxVdcs.getSelectedItem();
         String firstPart=dist.getCode() + "-" + vdc.getCode() + "-" + txtWardNo.getText();
         String lastPart=txtParcelNo.getText();
-        baUnitBean.setNameFirstpart(firstPart);
-        baUnitBean.setNameLastpart(lastPart);
+        baUnitBean.setNameFirstPart(firstPart);
+        baUnitBean.setNameLastPart(lastPart);
         this.setVisible(false);
     }    
    

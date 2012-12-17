@@ -2,12 +2,10 @@ package org.sola.clients.swing.ui.administrative;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.naming.directory.SearchResult;
 import org.sola.clients.beans.administrative.LocDetailsBean;
 import org.sola.clients.beans.administrative.LocSearchParamsBean;
 import org.sola.clients.beans.administrative.LocSearchResultListBean;
 import org.sola.clients.beans.security.SecurityBean;
-import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;

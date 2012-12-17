@@ -42,8 +42,8 @@ import java.util.List;
  */
 public class CadastreObjectBean implements Serializable {
     private String id = "";
-    private String nameFirstpart = "";
-    private String nameLastpart = "";
+    private String nameFirstPart = "";
+    private String nameLastPart = "";
     private String mapSheetCode;
     private String parcelType;
     private String typeCode = "parcel";
@@ -89,20 +89,20 @@ public class CadastreObjectBean implements Serializable {
         this.id = id;
     }
 
-    public String getNameFirstpart() {
-        return nameFirstpart;
+    public String getNameFirstPart() {
+        return nameFirstPart;
     }
 
-    public void setNameFirstpart(String nameFirstpart) {
-        this.nameFirstpart = nameFirstpart;
+    public void setNameFirstPart(String nameFirstPart) {
+        this.nameFirstPart = nameFirstPart;
     }
 
-    public String getNameLastpart() {
-        return nameLastpart;
+    public String getNameLastPart() {
+        return nameLastPart;
     }
 
-    public void setNameLastpart(String nameLastpart) {
-        this.nameLastpart = nameLastpart;
+    public void setNameLastPart(String nameLastPart) {
+        this.nameLastPart = nameLastPart;
     }
 
     public byte[] getGeomPolygon() {
@@ -147,6 +147,6 @@ public class CadastreObjectBean implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s / %s",this.nameFirstpart, this.nameLastpart);
+        return String.format("%s / %s",this.nameFirstPart, this.nameLastPart);
     }
 }

@@ -39,8 +39,8 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String APPROVAL_DATETIME_PROPERTY = "approvalDatetime";
     public static final String HISTORIC_DATETIME_PROPERTY = "historicDatetime";
-    public static final String NAME_FIRSTPART_PROPERTY = "nameFirstpart";
-    public static final String NAME_LASTPART_PROPERTY = "nameLastpart";
+    public static final String NAME_FIRSTPART_PROPERTY = "nameFirstPart";
+    public static final String NAME_LASTPART_PROPERTY = "nameLastPart";
     public static final String CADASTRE_OBJECT_TYPE_PROPERTY = "cadastreObjectType";
     public static final String SELECTED_PROPERTY = "selected";
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
@@ -75,8 +75,8 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     
     private Date approvalDatetime;
     private Date historicDatetime;
-    private String nameFirstpart;
-    private String nameLastpart;
+    private String nameFirstPart;
+    private String nameLastPart;
     private CadastreObjectTypeBean cadastreObjectType;
     private transient boolean selected;
     private String parcelno;
@@ -324,27 +324,27 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
                 oldValue, historicDatetime);
     }
 
-    public String getNameFirstpart() {
-        return nameFirstpart;
+    public String getNameFirstPart() {
+        return nameFirstPart;
     }
 
-    public void setNameFirstpart(String nameFirstpart) {
-        String oldValue = nameFirstpart;
-        this.nameFirstpart = nameFirstpart;
+    public void setNameFirstPart(String nameFirstPart) {
+        String oldValue = nameFirstPart;
+        this.nameFirstPart = nameFirstPart;
         propertySupport.firePropertyChange(NAME_FIRSTPART_PROPERTY,
-                oldValue, nameFirstpart);
+                oldValue, nameFirstPart);
         propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
 
-    public String getNameLastpart() {
-        return nameLastpart;
+    public String getNameLastPart() {
+        return nameLastPart;
     }
 
-    public void setNameLastpart(String nameLastpart) {
-        String oldValue = nameLastpart;
-        this.nameLastpart = nameLastpart;
+    public void setNameLastPart(String nameLastPart) {
+        String oldValue = nameLastPart;
+        this.nameLastPart = nameLastPart;
         propertySupport.firePropertyChange(NAME_LASTPART_PROPERTY,
-                oldValue, nameLastpart);
+                oldValue, nameLastPart);
         propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
     
@@ -365,7 +365,7 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     }
     
     public String getPropertyIdCode(){
-        return getPropertyIdCode(getNameFirstpart(), getNameLastpart());
+        return getPropertyIdCode(getNameFirstPart(), getNameLastPart());
     }
     
     public String getTypeCode() {

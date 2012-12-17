@@ -82,8 +82,8 @@ public class PropertyPanel extends ContentPanel {
                     return;
                 }
                 pnlParcelView.setCadastreObject((CadastreObjectSearchResultBean) evt.getNewValue());
-                baUnitBean.setNameFirstpart(searchResult.getFirstName());
-                baUnitBean.setNameLastpart(searchResult.getLastName());
+                baUnitBean.setNameFirstPart(searchResult.getFirstName());
+                baUnitBean.setNameLastPart(searchResult.getLastName());
                 getMainContentPanel().closePanel((ContentPanel) ((Component) evt.getSource()).getParent());
             }
         }
@@ -228,10 +228,10 @@ public class PropertyPanel extends ContentPanel {
     }
 
     private void customizeHeaderCaption() {
-        if (baUnitBean.getNameFirstpart() != null && baUnitBean.getNameLastpart() != null) {
+        if (baUnitBean.getNameFirstPart() != null && baUnitBean.getNameLastPart() != null) {
             headerPanel.setTitleText(String.format(
                     resourceBundle.getString("PropertyPanel.existingProperty.Text"),
-                    baUnitBean.getNameFirstpart(), baUnitBean.getNameLastpart()));
+                    baUnitBean.getNameFirstPart(), baUnitBean.getNameLastPart()));
         } else {
             headerPanel.setTitleText(resourceBundle.getString("PropertyPanel.newProperty.Text"));
         }
@@ -290,8 +290,8 @@ public class PropertyPanel extends ContentPanel {
     }
 
     public void showPriorTitileMessage() {
-        if ((baUnitBean.getNameFirstpart() == null || baUnitBean.getNameFirstpart().length() < 1)
-                && (baUnitBean.getNameLastpart() == null || baUnitBean.getNameLastpart().length() < 1)) {
+        if ((baUnitBean.getNameFirstPart() == null || baUnitBean.getNameFirstPart().length() < 1)
+                && (baUnitBean.getNameLastPart() == null || baUnitBean.getNameLastPart().length() < 1)) {
             showNewTitleWizard(true);
         }
     }
@@ -355,8 +355,8 @@ public class PropertyPanel extends ContentPanel {
         if (selectedBaUnit.getCadastreObject() != null) {
             baUnitBean.setCadastreObject(selectedBaUnit.getCadastreObject());
             // Change first/last name parts.
-            baUnitBean.setNameFirstpart(baUnitBean.getCadastreObject().getNameFirstpart());
-            baUnitBean.setNameLastpart(baUnitBean.getCadastreObject().getNameLastpart());
+            baUnitBean.setNameFirstPart(baUnitBean.getCadastreObject().getNameFirstPart());
+            baUnitBean.setNameLastPart(baUnitBean.getCadastreObject().getNameLastPart());
         }
 
         // Create relation

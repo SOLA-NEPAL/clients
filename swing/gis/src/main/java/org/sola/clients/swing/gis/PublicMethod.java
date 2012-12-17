@@ -854,8 +854,8 @@ public class PublicMethod {
         }
 
         //read attributes.
-        String firstpartname = target.getNameFirstpart();
-        String lastpartname = target.getNameLastpart();
+        String firstpartname = target.getNameFirstPart();
+        String lastpartname = target.getNameLastPart();
         String mapsheetid = target.getMapSheetId();
         String parceltype = target.getLandTypeCode();
         //new parcels.

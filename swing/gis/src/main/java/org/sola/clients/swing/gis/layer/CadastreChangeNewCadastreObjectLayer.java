@@ -180,9 +180,9 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                 for (CadastreObjectBean cadastreObjectBean : cadastreObjectList) {
                     HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
                     fieldsWithValues.put(
-                            LAYER_FIELD_FIRST_PART,cadastreObjectBean.getNameFirstpart());
+                            LAYER_FIELD_FIRST_PART,cadastreObjectBean.getNameFirstPart());
                     fieldsWithValues.put(
-                            LAYER_FIELD_LAST_PART, cadastreObjectBean.getNameLastpart());
+                            LAYER_FIELD_LAST_PART, cadastreObjectBean.getNameLastPart());
                     fieldsWithValues.put(
                             LAYER_FIELD_MAP_SHEET, cadastreObjectBean.getMapSheetCode());
                     fieldsWithValues.put(
@@ -369,9 +369,9 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
      */
     private void changeBean(CadastreObjectBean targetBean, SimpleFeature feature) {
         targetBean.setId(feature.getID());
-        targetBean.setNameFirstpart(feature.getAttribute(
+        targetBean.setNameFirstPart(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString());
-        targetBean.setNameLastpart(feature.getAttribute(
+        targetBean.setNameLastPart(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString());
         targetBean.setMapSheetCode(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString());

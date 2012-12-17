@@ -241,8 +241,8 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
                 String tlastpartname=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString();
                 if (tfirstpartname.equals(firstpartname) && tlastpartname.equals(lastpartname)){
                     //assign attribute to variable.
-                    parcel.setNameFirstpart(firstpartname);
-                    parcel.setNameLastpart(lastpartname);
+                    parcel.setNameFirstPart(firstpartname);
+                    parcel.setNameLastPart(lastpartname);
                     String mapsheetid=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString();
                     String parceltype=fea.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE).toString();
                     parcel.setMapSheetId(mapsheetid);
@@ -382,8 +382,8 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         int r=table.getSelectedRow();
         if (r<0) return;
         
-        table.setValueAt(parcel.getNameFirstpart(), r, 1);
-        table.setValueAt(parcel.getNameLastpart(), r, 2);
+        table.setValueAt(parcel.getNameFirstPart(), r, 1);
+        table.setValueAt(parcel.getNameLastPart(), r, 2);
         table.repaint();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
