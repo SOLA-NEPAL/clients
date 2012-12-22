@@ -238,7 +238,6 @@ public class NewPropertyWizardPanel extends ContentPanel {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${selected}"));
         columnBinding.setColumnName("Selected");
         columnBinding.setColumnClass(Boolean.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
         columnBinding.setColumnName("Property Id Code");
         columnBinding.setColumnClass(String.class);
