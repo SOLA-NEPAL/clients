@@ -27,13 +27,10 @@
  */
 package org.sola.clients.beans.administrative;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.referencedata.BaUnitTypeBean;
-import org.sola.clients.beans.validation.Localized;
-import org.sola.common.messaging.ClientMessage;
 /** 
  * Represents summary object of the {@link BaUnitBean}. 
  * Could be populated from the {@link BaUnitBasicTO} object.<br />
@@ -43,14 +40,14 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String BA_UNIT_TYPE_PROPERTY = "baUnitType";
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String NAME_PROPERTY = "name";
-    public static final String NAME_FIRSTPART_PROPERTY = "nameFirstpart";
-    public static final String NAME_LASTPART_PROPERTY = "nameLastpart";
+    public static final String NAME_FIRSTPART_PROPERTY = "nameFirstPart";
+    public static final String NAME_LASTPART_PROPERTY = "nameLastPart";
     public static final String PROPERTY_ID_CODE_PROPERTY = "propertyIdCode";
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     
     private String name;
-    private String nameFirstpart;
-    private String nameLastpart;
+    private String nameFirstPart;
+    private String nameLastPart;
     private BaUnitTypeBean baUnitType;
     private String fiscalYearCode;
     
@@ -76,25 +73,25 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
         propertySupport.firePropertyChange(NAME_PROPERTY, oldValue, name);
     }
 
-    public String getNameFirstpart() {
-        return nameFirstpart;
+    public String getNameFirstPart() {
+        return nameFirstPart;
     }
 
-    public void setNameFirstpart(String nameFirstpart) {
-        String oldValue = this.nameFirstpart;
-        this.nameFirstpart = nameFirstpart;
-        propertySupport.firePropertyChange(NAME_FIRSTPART_PROPERTY, oldValue, nameFirstpart);
+    public void setNameFirstPart(String nameFirstPart) {
+        String oldValue = this.nameFirstPart;
+        this.nameFirstPart = nameFirstPart;
+        propertySupport.firePropertyChange(NAME_FIRSTPART_PROPERTY, oldValue, nameFirstPart);
         propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
 
-    public String getNameLastpart() {
-        return nameLastpart;
+    public String getNameLastPart() {
+        return nameLastPart;
     }
 
-    public void setNameLastpart(String nameLastpart) {
-        String oldValue = this.nameLastpart;
-        this.nameLastpart = nameLastpart;
-        propertySupport.firePropertyChange(NAME_LASTPART_PROPERTY, oldValue, nameLastpart);
+    public void setNameLastPart(String nameLastPart) {
+        String oldValue = this.nameLastPart;
+        this.nameLastPart = nameLastPart;
+        propertySupport.firePropertyChange(NAME_LASTPART_PROPERTY, oldValue, nameLastPart);
         propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
     
@@ -130,6 +127,6 @@ public class BaUnitSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     }
         
     public String getPropertyIdCode(){
-        return CadastreObjectBean.getPropertyIdCode(getNameFirstpart(), getNameLastpart());
+        return CadastreObjectBean.getPropertyIdCode(getNameFirstPart(), getNameLastPart());
     }
 }

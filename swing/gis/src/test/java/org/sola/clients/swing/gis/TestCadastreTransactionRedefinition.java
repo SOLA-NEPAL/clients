@@ -31,12 +31,9 @@
  */
 package org.sola.clients.swing.gis;
 
-import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
-import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreChange;
 import org.geotools.swing.mapaction.extended.ExtendedAction;
 import org.sola.clients.swing.gis.beans.TransactionCadastreRedefinitionBean;
 import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreRedefinition;
-import org.sola.webservices.transferobjects.transaction.TransactionCadastreChangeTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreRedefinitionTO;
 
 /**

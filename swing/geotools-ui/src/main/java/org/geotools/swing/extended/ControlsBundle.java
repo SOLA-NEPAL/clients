@@ -85,10 +85,10 @@ public class ControlsBundle extends javax.swing.JPanel {
      */
     public void Setup(int srid, String wktOfReferenceSystem, boolean withToc)
             throws InitializeMapException {
-        this.initialize(srid, wktOfReferenceSystem);
+        initialize(srid, wktOfReferenceSystem);
         //Set default tool
-        this.getMap().getToolItemByName(ExtendedPan.NAME).setSelected(true);
-        this.setupLeftPanel();
+        getMap().getToolItemByName(ExtendedPan.NAME).setSelected(true);
+        setupLeftPanel();
     }
 
     /**
@@ -100,15 +100,15 @@ public class ControlsBundle extends javax.swing.JPanel {
      */
     private void initialize(int srid, String wktOfReferenceSystem) throws InitializeMapException {
         if (wktOfReferenceSystem == null) {
-            this.map = new Map(srid);
+            map = new Map(srid);
         } else {
-            this.map = new Map(srid, wktOfReferenceSystem);
+            map = new Map(srid, wktOfReferenceSystem);
         }
-        this.pnlMap.setLayout(new BorderLayout());
-        this.pnlMap.add(this.map, BorderLayout.CENTER);
+        pnlMapContent.setLayout(new BorderLayout());
+        pnlMapContent.add(map, BorderLayout.CENTER);
 
-        this.setupToolbar();
-        this.setupStatusBar();
+        setupToolbar();
+        setupStatusBar();
     }
 
     /**
@@ -117,14 +117,14 @@ public class ControlsBundle extends javax.swing.JPanel {
      * panel. It links also the TOC with the Map.
      */
     protected void setupLeftPanel() {
-        this.leftPanel = new JTabbedPane();
-        this.pnlMap.add(leftPanel, BorderLayout.WEST);
-        this.toc = new Toc();
-        this.toc.setMap(this.map);
-        this.map.setToc(this.toc);
-        this.addInLeftPanel(Messaging.getInstance().getMessageText(
-                Messaging.Ids.LEFT_PANEL_TAB_LAYERS_TITLE.toString()),
-                this.toc);
+        leftPanel = new JTabbedPane();
+        pnlToc.setLayout(new BorderLayout());
+        pnlToc.add(leftPanel, BorderLayout.CENTER);
+        toc = new Toc();
+        toc.setMap(map);
+        map.setToc(toc);
+        addInLeftPanel(Messaging.getInstance().getMessageText(
+                Messaging.Ids.LEFT_PANEL_TAB_LAYERS_TITLE.toString()), toc);
     }
 
     /**
@@ -134,7 +134,7 @@ public class ControlsBundle extends javax.swing.JPanel {
      * @param panel The panel to add
      */
     protected void addInLeftPanel(String title, JPanel panel) {
-        this.leftPanel.insertTab(title, null, panel, null, this.leftPanel.getTabCount());
+        leftPanel.insertTab(title, null, panel, null, leftPanel.getTabCount());
     }
 
     /**
@@ -160,12 +160,12 @@ public class ControlsBundle extends javax.swing.JPanel {
      * It starts up the Statusbar.
      */
     private void setupStatusBar() {
-        this.pnlStatusbar.setLayout(new BorderLayout());
+        pnlStatusbar.setLayout(new BorderLayout());
         JMapStatusBar statusBar = new JMapStatusBar();
         statusBar.addItem(new JRendererStatusBarItem(map), false, true);
         statusBar.addItem(new JCoordsStatusBarItem(map));
         pnlDatasetName.setMapPane(map);
-        this.pnlStatusbar.add(statusBar, BorderLayout.CENTER);
+        pnlStatusbar.add(statusBar, BorderLayout.CENTER);
     }
 
     /**
@@ -174,7 +174,7 @@ public class ControlsBundle extends javax.swing.JPanel {
      * @return
      */
     public Map getMap() {
-        return this.map;
+        return map;
     }
 
     /**
@@ -183,7 +183,7 @@ public class ControlsBundle extends javax.swing.JPanel {
      * @return
      */
     public JToolBar getToolbar() {
-        return this.mapToolbar;
+        return mapToolbar;
     }
 
     /**
@@ -200,6 +200,9 @@ public class ControlsBundle extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlMap = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        pnlToc = new javax.swing.JPanel();
+        pnlMapContent = new javax.swing.JPanel();
         mapToolbar = new javax.swing.JToolBar();
         pnlStatusBarContainer = new javax.swing.JPanel();
         pnlDatasetName = new org.geotools.swing.control.DatasetNameItem();
@@ -210,22 +213,57 @@ public class ControlsBundle extends javax.swing.JPanel {
 
         pnlMap.setName("pnlMap"); // NOI18N
 
+        jSplitPane1.setDividerLocation(250);
+        jSplitPane1.setDividerSize(3);
+        jSplitPane1.setLastDividerLocation(250);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/geotools/swing/extended/Bundle"); // NOI18N
+        jSplitPane1.setName(bundle.getString("ControlsBundle.jSplitPane1.name")); // NOI18N
+
+        pnlToc.setName(bundle.getString("ControlsBundle.pnlToc.name")); // NOI18N
+
+        javax.swing.GroupLayout pnlTocLayout = new javax.swing.GroupLayout(pnlToc);
+        pnlToc.setLayout(pnlTocLayout);
+        pnlTocLayout.setHorizontalGroup(
+            pnlTocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 249, Short.MAX_VALUE)
+        );
+        pnlTocLayout.setVerticalGroup(
+            pnlTocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setLeftComponent(pnlToc);
+
+        pnlMapContent.setName(bundle.getString("ControlsBundle.pnlMapContent.name")); // NOI18N
+
+        javax.swing.GroupLayout pnlMapContentLayout = new javax.swing.GroupLayout(pnlMapContent);
+        pnlMapContent.setLayout(pnlMapContentLayout);
+        pnlMapContentLayout.setHorizontalGroup(
+            pnlMapContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 365, Short.MAX_VALUE)
+        );
+        pnlMapContentLayout.setVerticalGroup(
+            pnlMapContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setRightComponent(pnlMapContent);
+
         javax.swing.GroupLayout pnlMapLayout = new javax.swing.GroupLayout(pnlMap);
         pnlMap.setLayout(pnlMapLayout);
         pnlMapLayout.setHorizontalGroup(
             pnlMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jSplitPane1)
         );
         pnlMapLayout.setVerticalGroup(
             pnlMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
+            .addComponent(jSplitPane1)
         );
 
         mapToolbar.setFloatable(false);
         mapToolbar.setRollover(true);
         mapToolbar.setName("mapToolbar"); // NOI18N
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/geotools/swing/extended/Bundle"); // NOI18N
         pnlStatusBarContainer.setName(bundle.getString("ControlsBundle.pnlStatusBarContainer.name")); // NOI18N
 
         pnlDatasetName.setName(bundle.getString("ControlsBundle.pnlDatasetName.name")); // NOI18N
@@ -236,7 +274,7 @@ public class ControlsBundle extends javax.swing.JPanel {
         pnlStatusbar.setLayout(pnlStatusbarLayout);
         pnlStatusbarLayout.setHorizontalGroup(
             pnlStatusbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 309, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlStatusbarLayout.setVerticalGroup(
             pnlStatusbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,10 +318,13 @@ public class ControlsBundle extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JToolBar mapToolbar;
     private org.geotools.swing.control.DatasetNameItem pnlDatasetName;
     private javax.swing.JPanel pnlMap;
+    private javax.swing.JPanel pnlMapContent;
     private javax.swing.JPanel pnlStatusBarContainer;
     private javax.swing.JPanel pnlStatusbar;
+    private javax.swing.JPanel pnlToc;
     // End of variables declaration//GEN-END:variables
 }

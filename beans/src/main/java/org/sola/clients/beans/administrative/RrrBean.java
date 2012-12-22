@@ -712,6 +712,7 @@ public class RrrBean extends AbstractTransactionedBean {
             if (rightHolderList.contains(rightholder)) {
                 rightholder.setEntityAction(null);
                 rightHolderList.set(rightHolderList.indexOf(rightholder), rightholder);
+                rightHolderList.filter();
             } else {
                 rightHolderList.addAsNew(rightholder);
             }
@@ -891,16 +892,7 @@ public class RrrBean extends AbstractTransactionedBean {
             }
             // Add new parties on rrr from rrrLoc
             for (PartySummaryBean party : rrrLoc.getRightHolderList()) {
-                boolean found = false;
-                for (PartySummaryBean party2 : getRightHolderList()) {
-                    if (party.getId().equals(party2.getId())) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    addOrUpdateRightholder(party);
-                }
+                addOrUpdateRightholder(party);
             }
         }
     }
