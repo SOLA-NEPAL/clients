@@ -45,10 +45,11 @@ public class AreaBean extends AbstractBindingBean {
     public void setAreaInLocalUnit(String areaInLocalUnit) {
         String newValue = "";
         String oldValue = this.areaInLocalUnit;
-        if (AreaConversion.checkArea(areaInLocalUnit, getUnitTypeCode())) {
-            newValue = areaInLocalUnit;
-        }
-        this.areaInLocalUnit = newValue;
+//        if (AreaConversion.checkArea(areaInLocalUnit, getUnitTypeCode())) {
+//            newValue = areaInLocalUnit;
+//        }
+//        this.areaInLocalUnit = newValue;
+        this.areaInLocalUnit= areaInLocalUnit;
         CalculateAreaSqMt();
         propertySupport.firePropertyChange(AREA_IN_LOCAL_UNIT, oldValue, this.areaInLocalUnit);
     }

@@ -216,7 +216,6 @@
                                 <BindingProperty name="elements" source="Form" sourcePath="${baUnitBean.filteredNewCadastreObjectList}" target="tableNewParcels" targetPath="elements" updateStrategy="0" immediately="true">
                                   <Subbinding sourcePath="${selected}">
                                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Boolean.class"/>
-                                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                                   </Subbinding>
                                   <Subbinding sourcePath="${propertyIdCode}">
                                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
