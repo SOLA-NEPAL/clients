@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectSummaryTO;
+import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  *
@@ -113,9 +113,6 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
         bindingGroup.addBinding(binding);
 
         jLabel3.setText("Last Part Name:");
-
-        txtSecondPartName.setEditable(false);
-        txtSecondPartName.setEnabled(false);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${parcel.nameLastPart}"), txtSecondPartName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -243,8 +240,10 @@ public class EditParcelAttributeForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         //call save method.
-        CadastreObjectSummaryTO cadTO=TypeConverters.BeanToTrasferObject(
-                parcel, CadastreObjectSummaryTO.class);
+//        CadastreObjectSummaryTO cadTO=TypeConverters.BeanToTrasferObject(
+//                parcel, CadastreObjectSummaryTO.class);
+        CadastreObjectTO cadTO=TypeConverters.BeanToTrasferObject(
+                parcel, CadastreObjectTO.class);
 
         cadTO= WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
         //converting back to bean again.

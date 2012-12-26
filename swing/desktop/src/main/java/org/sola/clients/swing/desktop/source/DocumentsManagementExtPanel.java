@@ -15,8 +15,6 @@
  */
 package org.sola.clients.swing.desktop.source;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.application.ApplicationBean;
@@ -26,7 +24,6 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.common.utils.Utils;
 import org.sola.clients.swing.desktop.DesktopApplication;
-import org.sola.clients.swing.desktop.SplashForm;
 import org.sola.clients.swing.ui.application.ApplicationDocumentsForm;
 import org.sola.clients.swing.ui.source.DocumentSearchPanel;
 import org.sola.clients.swing.ui.source.DocumentsManagementPanel;

@@ -184,7 +184,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                     fieldsWithValues.put(
                             LAYER_FIELD_LAST_PART, cadastreObjectBean.getNameLastPart());
                     fieldsWithValues.put(
-                            LAYER_FIELD_MAP_SHEET, cadastreObjectBean.getMapSheetCode());
+                            LAYER_FIELD_MAP_SHEET, cadastreObjectBean.getMapSheetId());
                     fieldsWithValues.put(
                             LAYER_FIELD_PARCEL_TYPE, cadastreObjectBean.getParcelType());
                     if (cadastreObjectBean.getSpatialValueAreaList().size() > 0) {
@@ -199,6 +199,8 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                             }
                         }
                     }
+//                    fieldsWithValues.put(
+//                            LAYER_FIELD_OFFICIAL_AREA, cadastreObjectBean.getOfficialArea());
                     this.addFeature(null, cadastreObjectBean.getGeomPolygon(), fieldsWithValues,false);
                 }
             } catch (ParseException ex) {
@@ -373,7 +375,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor{
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString());
         targetBean.setNameLastPart(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_LAST_PART).toString());
-        targetBean.setMapSheetCode(feature.getAttribute(
+        targetBean.setMapSheetId(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_MAP_SHEET).toString());
         targetBean.setParcelType(feature.getAttribute(
                 CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_PARCEL_TYPE).toString());

@@ -29,6 +29,7 @@ package org.sola.clients.beans.application;
 
 import java.util.Date;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
+import org.sola.common.DateUtility;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationSummaryTO;
 
 /**
@@ -59,6 +60,19 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
     public ApplicationSummaryBean() {
         super();
     }
+    
+//    public String getRegistrationDate() {
+//        return registrationDate;
+//    }
+//
+//    public String getRegistrationDateFormatted() {
+//        return DateUtility.toFormattedNepaliDate(registrationDate);
+//    }
+//
+//    public void setRegistrationDate(String registrationDate) {
+//        this.registrationDate = registrationDate;
+//    }
+
 
     public void setAgentId(String agentId) {
         String old = this.agentId;

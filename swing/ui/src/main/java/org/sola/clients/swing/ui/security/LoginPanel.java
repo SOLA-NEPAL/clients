@@ -79,8 +79,8 @@ public class LoginPanel extends javax.swing.JPanel {
         txtUsername.requestFocus();
 
         // TODO: REMOVE IN RELEASE!!!
-        txtUsername.setText("test");
-        txtUserPassword.setText("test");
+        //txtUsername.setText("test");
+        //txtUserPassword.setText("test");
     }
 
     /**

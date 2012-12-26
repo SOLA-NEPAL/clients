@@ -221,7 +221,7 @@ public class PropertiesList extends javax.swing.JDialog {
 
     private void btnDisplayMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayMapActionPerformed
         if(selectedProperty!=null){
-            firePropertyChange(SELECTED_PROPERTY, null, selectedProperty);
+            firePropertyChange(SELECTED_PROPERTY, null, selectedProperty);            
         }
     }//GEN-LAST:event_btnDisplayMapActionPerformed
     

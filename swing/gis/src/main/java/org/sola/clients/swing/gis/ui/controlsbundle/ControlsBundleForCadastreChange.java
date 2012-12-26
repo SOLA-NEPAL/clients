@@ -185,7 +185,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addLayer(this.targetSegmentLayer.getSegmentLayer());
     }
 
-    //<editor-fold defaultstate="collapsed" desc="By Kabindra">
+   
     @Override
     protected void addToolsAndCommands() {
         genericSOLA_Tools();

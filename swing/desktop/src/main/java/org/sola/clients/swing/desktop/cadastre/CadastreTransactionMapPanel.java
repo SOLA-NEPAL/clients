@@ -30,24 +30,23 @@ package org.sola.clients.swing.desktop.cadastre;
 import java.awt.BorderLayout;
 import java.util.List;
 import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
+import org.sola.clients.beans.application.ApplicationBean;
+import org.sola.clients.beans.application.ApplicationServiceBean;
+import org.sola.clients.beans.referencedata.RequestTypeBean;
 import org.sola.clients.beans.validation.ValidationResultBean;
+import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
 import org.sola.clients.swing.gis.beans.TransactionBean;
+import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
+import org.sola.clients.swing.gis.beans.TransactionCadastreRedefinitionBean;
+import org.sola.clients.swing.gis.data.PojoDataAccess;
+import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreChange;
+import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreRedefinition;
+import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForTransaction;
+import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.validation.ValidationResultForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.clients.beans.application.ApplicationBean;
-import org.sola.clients.beans.application.ApplicationServiceBean;
-import org.sola.clients.beans.referencedata.RequestTypeBean;
-import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
-import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
-import org.sola.clients.swing.gis.beans.TransactionCadastreRedefinitionBean;
-import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreChange;
-import org.sola.clients.swing.ui.source.DocumentsManagementPanel;
-import org.sola.clients.swing.gis.data.PojoDataAccess;
-import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForCadastreRedefinition;
-import org.sola.clients.swing.gis.ui.controlsbundle.ControlsBundleForTransaction;
-import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -66,7 +65,6 @@ public class CadastreTransactionMapPanel extends ContentPanel {
             ApplicationServiceBean applicationService,
             BaUnitSearchResultBean applicationProperty,
             List<String> mapsheets) {
-
         this.applicationBean = applicationBean;
         this.applicationService = applicationService;
         this.applicationProperty = applicationProperty;

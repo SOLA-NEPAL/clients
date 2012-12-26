@@ -112,7 +112,6 @@ public class DocumentSearchForm extends ContentPanel {
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         documentSearchPanel.setName(bundle.getString("DocumentSearchForm.documentSearchPanel.name")); // NOI18N
-        documentSearchPanel.setShowSelectButton(false);
         jScrollPane1.setViewportView(documentSearchPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

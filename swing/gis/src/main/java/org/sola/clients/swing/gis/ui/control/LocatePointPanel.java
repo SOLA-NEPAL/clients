@@ -440,7 +440,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             String objId = fea.getID();
             byte selected = 0;
             double shapelen = Double.parseDouble(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN).toString());
-            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            //int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            String parID = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
             String fid = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString();
             byte isnewline=Byte.parseByte(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_NEW_SEGMENT).toString());
       
@@ -499,7 +500,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             String objId = fea.getID();
             byte selected = 0;
             double shapelen = Double.parseDouble(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_SHAPE_LEN).toString());
-            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            //int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            String parID = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
             String fid = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_FID).toString();
             Geometry geom = (Geometry) fea.getAttribute(geomfld);//First attribute element for geometry value.
             for (int i = 0; i < indx.length; i++) {
@@ -555,7 +557,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             }
             String feacode = fea.getID();
             String sn = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString();
-            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            //int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            String parID = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
             PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn,parID);
 
             pts.add(tmpPoint);
@@ -599,7 +602,8 @@ public class LocatePointPanel extends javax.swing.JPanel {
             byte selected = 0;
             String feacode = fea.getID();
             String sn = fea.getAttribute(CadastreTargetSegmentLayer.POINT_LAYER_FIELD_LABEL).toString();
-            int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            //int parID = Integer.parseInt(fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString());
+            String parID = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
             PointDetails tmpPoint = new PointDetails(feacode, (Geometry) pt, selected, sn,parID);
 
             t_pts.add(tmpPoint);

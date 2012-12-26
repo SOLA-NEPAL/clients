@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package org.sola.clients.swing.gis;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -10,24 +11,33 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author ShresthaKabin
  */
 public class PointDetails {
-    private String feacode=null;
-    private String fid="";
-    private Geometry geom=null;
-    private byte selected=0;
-    private int parcel_id=0;
+
+    private String feacode = null;
+    private String fid = "";
+    private Geometry geom = null;
+    private byte selected = 0;
+    //private int parcel_id = 0;
+    private String parcel_id = "0";
 
     public String getFeacode() {
         return feacode;
     }
 
-    public int getParcel_id() {
+    public String getParcel_id() {
         return parcel_id;
     }
 
-    public void setParcel_id(int parcel_id) {
+    public void setParcel_id(String parcel_id) {
         this.parcel_id = parcel_id;
     }
 
+//    public int getParcel_id() {
+//        return parcel_id;
+//    }
+//
+//    public void setParcel_id(int parcel_id) {
+//        this.parcel_id = parcel_id;
+//    }
     public void setFeacode(String feacode) {
         this.feacode = feacode;
     }
@@ -56,11 +66,14 @@ public class PointDetails {
         this.selected = selected;
     }
 
-    public PointDetails(String feacode,Geometry geom,byte selected,String fid,int parcel_id) {
-        this.feacode=feacode;
-        this.geom=geom;
-        this.selected=selected;
-        this.fid=fid;
-        this.parcel_id=parcel_id;
+    //public PointDetails(String feacode,Geometry geom,byte selected,String fid,int parcel_id) {
+    public PointDetails(String feacode, Geometry geom, byte selected, String fid, String parcel_id) {
+        this.feacode = feacode;
+        this.geom = geom;
+        this.selected = selected;
+        this.fid = fid;
+        // this.parcel_id=parcel_id;
+        this.parcel_id = parcel_id;
+
     }
 }

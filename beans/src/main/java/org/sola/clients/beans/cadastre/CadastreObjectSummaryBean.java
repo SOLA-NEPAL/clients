@@ -25,7 +25,6 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.system.AreaBean;
 import org.sola.common.AreaConversion;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectSummaryTO;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -545,10 +544,16 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
         propertySupport.firePropertyChange(OFFICIAL_AREA_PROPERTY, oldValue, area.getAreaInSqMt());
     }
 
-    public void saveCadastreObject() {
-        CadastreObjectSummaryTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectSummaryTO.class);
+//    public void saveCadastreObject() {
+//        CadastreObjectSummaryTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectSummaryTO.class);
+//        cadTO = WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
+//        TypeConverters.TransferObjectToBean(cadTO, CadastreObjectSummaryBean.class, this);
+//    }
+    
+     public void saveCadastreObject() {
+        CadastreObjectTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectTO.class);
         cadTO = WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
-        TypeConverters.TransferObjectToBean(cadTO, CadastreObjectSummaryBean.class, this);
+        TypeConverters.TransferObjectToBean(cadTO, CadastreObjectBean.class, this);
     }
 
     /**

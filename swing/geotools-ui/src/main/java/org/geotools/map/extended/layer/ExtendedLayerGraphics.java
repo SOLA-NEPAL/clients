@@ -35,15 +35,15 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.io.ParseException;
 import org.geotools.data.collection.CollectionFeatureSource;
+import org.geotools.data.collection.extended.GraphicsFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.feature.CollectionEvent;
 import org.geotools.feature.SchemaException;
 import org.geotools.geometry.jts.Geometries;
 import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.opengis.feature.simple.SimpleFeature;
-import org.geotools.data.collection.extended.GraphicsFeatureCollection;
-import org.geotools.feature.CollectionEvent;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.geotools.swing.extended.util.Messaging;
+import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * This is a map layer that is used to visualize in the map control features added run-time. <br/>

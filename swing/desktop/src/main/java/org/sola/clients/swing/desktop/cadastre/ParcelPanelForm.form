@@ -25,7 +25,7 @@
           <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="parcelPanel" pref="495" max="32767" attributes="0"/>
+              <Component id="parcelPanel" pref="1059" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

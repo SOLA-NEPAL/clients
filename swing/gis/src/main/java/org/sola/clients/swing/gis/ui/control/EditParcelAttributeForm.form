@@ -177,9 +177,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFirstPartName">
           <BindingProperties>
-            <BindingProperty name="text" source="Form" sourcePath="${parcel.nameFirstPart}" target="txtFirstPartName" targetPath="text" updateStrategy="0" immediately="false">
-              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-            </BindingProperty>
+            <BindingProperty name="text" source="Form" sourcePath="${parcel.nameFirstPart}" target="txtFirstPartName" targetPath="text" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -188,10 +186,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSecondPartName">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
           <BindingProperties>
             <BindingProperty name="text" source="Form" sourcePath="${parcel.nameLastPart}" target="txtSecondPartName" targetPath="text" updateStrategy="0" immediately="false">
               <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
