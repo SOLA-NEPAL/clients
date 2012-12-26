@@ -70,7 +70,7 @@ public class FormattersFactory {
         }
         return decimalFormatterFactory;
     }
- 
+
     public DefaultFormatterFactory getIntegerFormatterFactory() {
         if (integerFormatterFactory == null) {
             DefaultFormatter fmt = new NumberFormatter(NumberFormat.getIntegerInstance());
@@ -109,7 +109,7 @@ public class FormattersFactory {
 
     public DefaultFormatterFactory getNepaliDateFormatterFactory() {
         MaskFormatter mf;
-        mf = new MaskFormatter(){
+        mf = new MaskFormatter() {
 
             @Override
             public Object stringToValue(String userInput) throws ParseException {
@@ -122,7 +122,7 @@ public class FormattersFactory {
                 }
                 return result;
             }
-            
+
             @Override
             public String valueToString(Object value) throws ParseException {
                 String valueString = value == null ? null : value.toString();
@@ -138,6 +138,38 @@ public class FormattersFactory {
             Logger.getLogger(FormattersFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         mf.setPlaceholderCharacter('_');
+        mf.setValueContainsLiteralCharacters(false);
+        mf.setCommitsOnValidEdit(true);
+        return new DefaultFormatterFactory(mf, mf, mf);
+    }
+
+    public DefaultFormatterFactory getIntegerStringFormatterFactory() {
+        MaskFormatter mf = new MaskFormatter() {
+
+            @Override
+            public Object stringToValue(String userInput) throws ParseException {
+                Object result = null;
+                if (userInput != null && !userInput.trim().isEmpty()) {
+                    result = super.stringToValue(NepaliIntegersConvertor.toStringInteger(userInput, false));
+                }
+                return result;
+            }
+
+            @Override
+            public String valueToString(Object value) throws ParseException {
+                String valueString = value == null ? null : value.toString();
+                return super.valueToString(NepaliIntegersConvertor.toStringInteger(valueString, false));
+            }
+        };
+
+        mf.setValidCharacters("1234567890१२३४५६७८९०");
+        
+        try {
+            mf.setMask("AAAAAAAAAA");
+        } catch (ParseException ex) {
+            Logger.getLogger(FormattersFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         mf.setValueContainsLiteralCharacters(false);
         mf.setCommitsOnValidEdit(true);
         return new DefaultFormatterFactory(mf, mf, mf);

@@ -118,7 +118,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="257" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jTextField1" max="32767" attributes="0"/>
+                  <Component id="jTextBoxIntegerNumber2" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -126,7 +126,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextBoxIntegerNumber2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -143,9 +143,9 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="org.sola.clients.swing.common.controls.JTextBoxIntegerNumber" name="jTextBoxIntegerNumber2">
               <BindingProperties>
-                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.address.wardNo}" target="jTextField1" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.address.wardNo}" target="jTextBoxIntegerNumber2" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -231,7 +231,7 @@
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="215" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jTextField2" max="32767" attributes="0"/>
+                  <Component id="jTextBoxIntegerNumber1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -239,7 +239,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextBoxIntegerNumber1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -256,9 +256,9 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="org.sola.clients.swing.common.controls.JTextBoxIntegerNumber" name="jTextBoxIntegerNumber1">
               <BindingProperties>
-                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.parcelno}" target="jTextField2" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="Form" sourcePath="${cadastreObject.parcelno}" target="jTextBoxIntegerNumber1" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
