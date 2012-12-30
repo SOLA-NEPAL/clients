@@ -501,7 +501,7 @@ public class PartyPanel extends javax.swing.JPanel {
         cbxVdcs = new javax.swing.JComboBox();
         jPanel22 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        txtWardNo = new javax.swing.JTextField();
+        txtWardNo = new org.sola.clients.swing.common.controls.JTextBoxIntegerNumber();
         jPanel9 = new javax.swing.JPanel();
         labAddress = new javax.swing.JLabel();
         txtStreet = new javax.swing.JTextField();
@@ -657,7 +657,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
+                .addComponent(roleTableScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
         );
 
         jPanel10.setName("jPanel10"); // NOI18N
@@ -685,7 +685,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cmbIdType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(labIdType)
-                .addGap(0, 84, Short.MAX_VALUE))
+                .addGap(0, 103, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -715,7 +715,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtIdref)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(labIdref)
-                .addGap(0, 70, Short.MAX_VALUE))
+                .addGap(0, 89, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -744,7 +744,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 57, Short.MAX_VALUE))
+                .addGap(0, 76, Short.MAX_VALUE))
             .addComponent(txtIdIssueDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel20Layout.setVerticalGroup(
@@ -777,7 +777,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGap(0, 63, Short.MAX_VALUE))
             .addComponent(cmbIdOffice, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
@@ -810,7 +810,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(0, 39, Short.MAX_VALUE))
+                .addGap(0, 58, Short.MAX_VALUE))
             .addComponent(cmbIdIssuingDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
@@ -851,7 +851,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cbxPartyType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel7)
-                .addGap(0, 170, Short.MAX_VALUE))
+                .addGap(0, 203, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -887,7 +887,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtFirstName)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(labName)
-                .addGap(0, 147, Short.MAX_VALUE))
+                .addGap(0, 180, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -921,7 +921,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtLastName)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(labLastName)
-                .addGap(0, 159, Short.MAX_VALUE))
+                .addGap(0, 192, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -951,7 +951,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtBirthday, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+            .addComponent(txtBirthday, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -987,7 +987,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cmbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(lblGender)
-                .addGap(0, 173, Short.MAX_VALUE))
+                .addGap(0, 206, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1020,7 +1020,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cmbFatherType, 0, 208, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labFatherFirstName)
-                .addGap(0, 130, Short.MAX_VALUE))
+                .addGap(0, 163, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1049,7 +1049,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(labFatherLastName)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
             .addComponent(txtFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
@@ -1083,7 +1083,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cmbGrandFatherType, 0, 208, Short.MAX_VALUE)
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addGap(0, 124, Short.MAX_VALUE))
+                .addGap(0, 157, Short.MAX_VALUE))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1113,7 +1113,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtGrandFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(0, 120, Short.MAX_VALUE))
+                .addGap(0, 153, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1159,7 +1159,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel27Layout.createSequentialGroup()
                 .addComponent(jLabel9)
-                .addGap(0, 76, Short.MAX_VALUE))
+                .addGap(0, 101, Short.MAX_VALUE))
             .addComponent(cmbDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel27Layout.setVerticalGroup(
@@ -1195,7 +1195,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(cbxVdcs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 59, Short.MAX_VALUE))
+                .addGap(0, 84, Short.MAX_VALUE))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1214,7 +1214,7 @@ public class PartyPanel extends javax.swing.JPanel {
         jLabel4.setText(bundle.getString("PartyPanel.jLabel4.text")); // NOI18N
         jLabel4.setName(bundle1.getString("PartyPanel.jLabel4.name")); // NOI18N
 
-        txtWardNo.setName(bundle1.getString("PartyPanel.txtWardNo.name")); // NOI18N
+        txtWardNo.setName(bundle.getString("PartyPanel.txtWardNo.name")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.address.wardNo}"), txtWardNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -1223,10 +1223,10 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtWardNo, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addGap(0, 73, Short.MAX_VALUE))
+                .addGap(0, 98, Short.MAX_VALUE))
+            .addComponent(txtWardNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1259,7 +1259,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtStreet)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(labAddress)
-                .addGap(0, 122, Short.MAX_VALUE))
+                .addGap(0, 147, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1334,7 +1334,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addGap(0, 89, Short.MAX_VALUE))
+                .addGap(0, 108, Short.MAX_VALUE))
             .addComponent(txtPhone)
         );
         jPanel31Layout.setVerticalGroup(
@@ -1364,7 +1364,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(labMobile)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
             .addComponent(txtMobile)
         );
         jPanel12Layout.setVerticalGroup(
@@ -1394,7 +1394,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 101, Short.MAX_VALUE))
+                .addGap(0, 120, Short.MAX_VALUE))
             .addComponent(txtFax)
         );
         jPanel15Layout.setVerticalGroup(
@@ -1427,7 +1427,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(labEmail)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
@@ -1460,7 +1460,7 @@ public class PartyPanel extends javax.swing.JPanel {
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel30Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
             .addComponent(cmbPreferredCommunication, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel30Layout.setVerticalGroup(
@@ -1747,7 +1747,7 @@ public class PartyPanel extends javax.swing.JPanel {
                         .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(groupPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
                 .addContainerGap())
         );
         fullPanelLayout.setVerticalGroup(
@@ -1765,7 +1765,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(groupPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         detailsPanel.addTab(bundle.getString("PartyPanel.fullPanel.TabConstraints.tabTitle"), fullPanel); // NOI18N
@@ -1981,7 +1981,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtRemarks;
     public javax.swing.JTextField txtStreet;
-    private javax.swing.JTextField txtWardNo;
+    private org.sola.clients.swing.common.controls.JTextBoxIntegerNumber txtWardNo;
     private org.sola.clients.beans.referencedata.VdcListBean vdcListBean;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
