@@ -39,5 +39,12 @@ public class DistrictBean extends AbstractCodeBean{
         propertySupport.firePropertyChange(ZONE_CODE_PROPERTY, oldValue, this.zoneCode);
     }
     
+    @Override
+    public String toString() {
+        if(getCode()==null){
+            return "";
+        }
+        return getCode()+" - "+getDisplayValue();
+    }
     
 }
