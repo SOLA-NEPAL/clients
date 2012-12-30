@@ -42,7 +42,6 @@ import org.sola.clients.beans.administrative.BaUnitBean;
 import org.sola.clients.beans.administrative.LocDetailsBean;
 import org.sola.clients.beans.administrative.RestrictionInfoBean;
 import org.sola.clients.beans.administrative.RestrictionSearchResultBean;
-import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.LodgementBean;
 import org.sola.clients.beans.party.PartyBean;

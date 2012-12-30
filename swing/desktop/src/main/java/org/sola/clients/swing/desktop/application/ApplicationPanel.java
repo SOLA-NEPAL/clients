@@ -1531,7 +1531,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         tabbedControlMain.addTab(bundle.getString("ApplicationPanel.contactPanel.TabConstraints.tabTitle"), contactPanel); // NOI18N
@@ -1715,7 +1715,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addContainerGap()
                 .addComponent(tbServices, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(scrollFeeDetails1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1748,7 +1748,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(groupPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
         );
 
         jPanel16.setName(bundle.getString("ApplicationPanel.jPanel16.name")); // NOI18N
@@ -1919,7 +1919,7 @@ public class ApplicationPanel extends ContentPanel {
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(documents, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+            .addComponent(documents, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
         );
 
         jPanel18.setName(bundle.getString("ApplicationPanel.jPanel18.name")); // NOI18N
@@ -2028,7 +2028,7 @@ public class ApplicationPanel extends ContentPanel {
             validationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(validationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(validationsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2052,7 +2052,7 @@ public class ApplicationPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+                .addComponent(tabbedControlMain, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

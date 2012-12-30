@@ -230,7 +230,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="pnlHeader" alignment="0" pref="660" max="32767" attributes="2"/>
           <Component id="jToolBar3" alignment="0" pref="660" max="32767" attributes="2"/>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="tabbedControlMain" pref="640" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -244,7 +244,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jToolBar3" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabbedControlMain" pref="397" max="32767" attributes="0"/>
+              <Component id="tabbedControlMain" pref="380" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -422,7 +422,7 @@
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="74" max="32767" attributes="0"/>
+                      <EmptySpace pref="57" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1289,7 +1289,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="tbServices" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="scrollFeeDetails1" pref="316" max="32767" attributes="0"/>
+                      <Component id="scrollFeeDetails1" pref="299" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1616,7 +1616,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="groupPanel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="baUnitSearchPanel" pref="195" max="32767" attributes="0"/>
+                          <Component id="baUnitSearchPanel" pref="178" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1972,7 +1972,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="documents" alignment="0" pref="207" max="32767" attributes="0"/>
+                      <Component id="documents" alignment="0" pref="190" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -2073,7 +2073,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="validationsPanel" pref="347" max="32767" attributes="0"/>
+                      <Component id="validationsPanel" pref="330" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

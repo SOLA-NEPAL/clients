@@ -466,7 +466,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
             .addComponent(txtLaNr)
         );
         jPanel7Layout.setVerticalGroup(
