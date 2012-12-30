@@ -33,6 +33,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import org.sola.clients.beans.cadastre.CadastreObjectSearchResultListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.common.messaging.ClientMessage;
@@ -66,6 +67,8 @@ public class ParcelSearchPanel extends JPanel {
     private void postInit() {
         vdcListBean.loadListByOffice(true);
         mapSheetListBean.loadList(true);
+        Configurator.enableAutoCompletion(cbxMapSheets);
+        
         if(mapSheetListBean.getMapSheets().size()>0){
             cbxMapSheets.setSelectedIndex(0);
         }

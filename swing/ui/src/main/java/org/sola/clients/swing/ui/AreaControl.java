@@ -97,7 +97,7 @@ public class AreaControl extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 39, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
             .addComponent(cmbLocalUnit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -128,7 +128,7 @@ public class AreaControl extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
             .addComponent(txtAreaInLocalUnit)
         );
         jPanel2Layout.setVerticalGroup(
@@ -142,7 +142,7 @@ public class AreaControl extends ContentPanel {
 
         add(jPanel2);
 
-        jLabel3.setText("Area in sq. meters");
+        jLabel3.setText("Area in sq. m.");
 
         txtAreaInSqMeter.setFormatterFactory(FormattersFactory.getInstance().getDecimalFormatterFactory());
 
@@ -155,7 +155,7 @@ public class AreaControl extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
             .addComponent(txtAreaInSqMeter)
         );
         jPanel3Layout.setVerticalGroup(
