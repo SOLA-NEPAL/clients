@@ -39,6 +39,7 @@ import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.swing.common.LafManager;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
@@ -99,7 +100,9 @@ public class OwnershipPanel extends ContentPanel {
         prepareRrrBean(rrrBean, rrrAction);
 
         initComponents();
-
+        Configurator.enableAutoCompletion(cbxOwnerType);
+        Configurator.enableAutoCompletion(cbxRrrTypes);
+        Configurator.enableAutoCompletion(cbxShareType);
         headerPanel.setTitleText(rrrBean.getRrrType().getDisplayValue());
         customizeForm();
         saveRrrState();

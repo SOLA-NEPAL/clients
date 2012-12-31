@@ -369,6 +369,11 @@ public class MainForm extends javax.swing.JFrame {
         menuUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/user.png"))); // NOI18N
         menuUsers.setText(bundle.getString("MainForm.menuUsers.text")); // NOI18N
         menuUsers.setName("menuUsers"); // NOI18N
+        menuUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuUsersActionPerformed(evt);
+            }
+        });
         menuSecurity.add(menuUsers);
 
         mainMenu.add(menuSecurity);
@@ -1047,6 +1052,11 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         showFiscalYearForm();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void menuUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUsersActionPerformed
+        // TODO add your handling code here:
+         manageUsers();
+    }//GEN-LAST:event_menuUsersActionPerformed
 
     private void showFiscalYearForm() {
         FiscalYearManagementPanel form = new FiscalYearManagementPanel();

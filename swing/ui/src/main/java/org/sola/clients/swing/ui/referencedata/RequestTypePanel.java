@@ -30,8 +30,9 @@ package org.sola.clients.swing.ui.referencedata;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.referencedata.RequestCategoryTypeListBean;
 import org.sola.clients.beans.referencedata.RequestTypeBean;
-import org.sola.clients.beans.referencedata.TypeActionListBean;
 import org.sola.clients.beans.referencedata.RrrTypeListBean;
+import org.sola.clients.beans.referencedata.TypeActionListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
 import org.sola.webservices.transferobjects.referencedata.RequestTypeTO;
@@ -46,6 +47,7 @@ public class RequestTypePanel extends javax.swing.JPanel {
     /** Creates new form RequestTypePanel */
     public RequestTypePanel() {
         initComponents();
+        Configurator.enableAutoCompletion(cbxCategory);
         setupRequestTypeBean(null);
     }
     

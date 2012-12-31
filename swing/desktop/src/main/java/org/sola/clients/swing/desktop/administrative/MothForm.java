@@ -18,6 +18,7 @@ package org.sola.clients.swing.desktop.administrative;
 import javax.swing.JDialog;
 import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
@@ -51,6 +52,8 @@ public class MothForm extends javax.swing.JDialog {
             this.mothBean = mothBean;
         }
         initComponents();
+        Configurator.enableAutoCompletion(cmbMothType);
+        Configurator.enableAutoCompletion(cmbVdc);
         customizeForm();
     }
 

@@ -44,6 +44,7 @@ import org.jdesktop.beansbinding.ELProperty;
 import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartyRoleBean;
 import org.sola.clients.beans.referencedata.*;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.utils.BindingTools;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 import org.sola.common.FileUtility;
@@ -96,7 +97,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 parentPanel, BeanProperty.create("partySummary"), "parentGroup");
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
-
+        comboBoxManageMent();
         districtListBean.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -130,9 +131,23 @@ public class PartyPanel extends javax.swing.JPanel {
                     cbxVdcs.setSelectedIndex(-1);
                 }
             }
-        });      
+        });
         customizeAddRoleButton(null);
         customizeRoleButtons(null);
+    }
+
+    private void comboBoxManageMent() {
+        Configurator.enableAutoCompletion(cmbDistrict);
+        Configurator.enableAutoCompletion(cmbFatherType);
+        Configurator.enableAutoCompletion(cmbGender);
+        Configurator.enableAutoCompletion(cmbGrandFatherType);
+        Configurator.enableAutoCompletion(cmbIdIssuingDistrict);
+        Configurator.enableAutoCompletion(cmbIdOffice);
+        Configurator.enableAutoCompletion(cmbIdType);
+        Configurator.enableAutoCompletion(cmbPreferredCommunication);
+        Configurator.enableAutoCompletion(cbxPartyRoleTypes);
+        Configurator.enableAutoCompletion(cbxVdcs);
+        Configurator.enableAutoCompletion(cbxPartyType);
     }
 
     private void searchVdc() {
@@ -243,9 +258,9 @@ public class PartyPanel extends javax.swing.JPanel {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(PartyBean.SELECTED_ROLE_PROPERTY)) {
                     customizeRoleButtons((PartyRoleBean) evt.getNewValue());
-                } else if(evt.getPropertyName().equals(PartyBean.TYPE_PROPERTY)){
-                    PartyTypeBean partyType = (PartyTypeBean)evt.getNewValue();
-                    if(partyType!=null){
+                } else if (evt.getPropertyName().equals(PartyBean.TYPE_PROPERTY)) {
+                    PartyTypeBean partyType = (PartyTypeBean) evt.getNewValue();
+                    if (partyType != null) {
                         switchPartyType(partyType.isIndividual());
                     } else {
                         switchPartyType(true);
@@ -367,13 +382,13 @@ public class PartyPanel extends javax.swing.JPanel {
         partyBean.setPhoto(null, 0, 0);
         partyBean.setLeftFingerPrint(null, 0, 0);
         partyBean.setRightFingerPrint(null, 0, 0);
-        partyBean.setSignature(null,0 ,0);
+        partyBean.setSignature(null, 0, 0);
         partyBean.setBirthDate(null);
         cmbFatherType.setSelectedIndex(0);
         cmbGrandFatherType.setSelectedIndex(0);
         cmbIdIssuingDistrict.setSelectedIndex(0);
         partyBean.setRemarks(null);
-        if(partyBean.getParent()!=null){
+        if (partyBean.getParent() != null) {
             partyBean.getParent().setEntityAction(EntityAction.DISASSOCIATE);
         }
     }

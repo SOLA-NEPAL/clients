@@ -51,7 +51,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     public static final String SELECT_BAUNIT = "selectBaUnit";
     public static final String BROWSE_RIGHTHOLDER = "browseRightHolder";
     private boolean readOnly = false;
-     
+
     /**
      * Default constructor.
      */
@@ -63,13 +63,14 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     private void postInit() {
         vdcList.loadListByOffice(true);
         mapSheetList.loadList(true);
-        Configurator.enableAutoCompletion(cbxMapSheets); 
+        Configurator.enableAutoCompletion(cbxMapSheets);
+        Configurator.enableAutoCompletion(cbxVdc);
         cbxMapSheets.setSelectedIndex(-1);
-        
-        if(vdcList.getVdcs().size()>0){
+
+        if (vdcList.getVdcs().size() > 0) {
             cbxVdc.setSelectedIndex(0);
         }
-        
+
         customieButtons();
         baUnitSearchResults.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -81,7 +82,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         browseRightholder.addBrowseControlEventListener(new BrowseControlListener() {
 
             @Override
@@ -103,14 +104,14 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             }
         });
     }
-    
-    private void clearRightHolder(){
+
+    private void clearRightHolder() {
         baUnitSearchParams.setRightHolderId(null);
         baUnitSearchParams.setRightHolderName(null);
     }
-    
+
     private void customieButtons() {
-        boolean enabled = baUnitSearchResults.getSelectedBaUnitSearchResult()!=null && !readOnly;
+        boolean enabled = baUnitSearchResults.getSelectedBaUnitSearchResult() != null && !readOnly;
         btnSearch.setEnabled(!readOnly);
         btnOpenBaUnit.setEnabled(enabled);
         menuOpenBaUnit.setEnabled(enabled);
@@ -174,16 +175,16 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         return baUnitSearchResults.getSelectedBaUnitSearchResult();
     }
 
-    private void fireSelectBaUnit(){
+    private void fireSelectBaUnit() {
         firePropertyChange(SELECT_BAUNIT, null, baUnitSearchResults.getSelectedBaUnitSearchResult());
     }
-    
-    private void clearFields(){
+
+    private void clearFields() {
         baUnitSearchParams.clear();
         cbxVdc.setSelectedIndex(-1);
         cbxMapSheets.setSelectedIndex(-1);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

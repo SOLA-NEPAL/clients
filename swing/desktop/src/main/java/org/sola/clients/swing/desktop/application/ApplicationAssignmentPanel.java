@@ -18,6 +18,7 @@ package org.sola.clients.swing.desktop.application;
 import java.util.List;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationSearchResultBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.ContentPanel;
@@ -47,6 +48,7 @@ public class ApplicationAssignmentPanel extends ContentPanel {
 
     private void postInit() {
         assigneeList.loadMyDepartmentUsers();
+        Configurator.enableAutoCompletion(cbxUsers);
         customizeAssignButton();
     }
 

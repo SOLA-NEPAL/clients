@@ -18,22 +18,22 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
- * Shows parcel details and allows to change them.
- */
+* Shows parcel details and allows to change them.
+*/
 public class ParcelPanel extends javax.swing.JPanel {
 
     private CadastreObjectSummaryBean cadastreObject;
 
     /**
-     * Default constructor.
-     */
+* Default constructor.
+*/
     public ParcelPanel() {
         this(null);
     }
     
     /**
-     * Form constructor with {@link CadastreObjectSummaryBean} parameter.
-     */
+* Form constructor with {@link CadastreObjectSummaryBean} parameter.
+*/
     public ParcelPanel(CadastreObjectSummaryBean cadastreObject) {
         setupCadastreObject(cadastreObject);
         initComponents();
@@ -42,16 +42,21 @@ public class ParcelPanel extends javax.swing.JPanel {
     }
     
     private void postInit(){
-        Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, this, 
-                ELProperty.create("${cadastreObject.area}"), areaControl, 
+        Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, this,
+                ELProperty.create("${cadastreObject.area}"), areaControl,
                 BeanProperty.create("area"));
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
         
-        Configurator.enableAutoCompletion(cbxMapSheets1); 
-        Configurator.enableAutoCompletion(cbxMapSheets2); 
-        Configurator.enableAutoCompletion(cbxMapSheets3); 
-        Configurator.enableAutoCompletion(cbxMapSheets4); 
+        Configurator.enableAutoCompletion(cbxMapSheets1);
+        Configurator.enableAutoCompletion(cbxMapSheets2);
+        Configurator.enableAutoCompletion(cbxMapSheets3);
+        Configurator.enableAutoCompletion(cbxMapSheets4);
+        Configurator.enableAutoCompletion(cbxVdcs);
+        Configurator.enableAutoCompletion(cbxLandClass);
+        Configurator.enableAutoCompletion(cbxLandType);
+        Configurator.enableAutoCompletion(cbxLandUse);
+        
     }
 
     private void setupCombos() {

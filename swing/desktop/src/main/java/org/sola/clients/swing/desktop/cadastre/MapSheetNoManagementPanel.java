@@ -26,6 +26,7 @@ import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.cadastre.MapSheetListBean;
 import org.sola.clients.beans.referencedata.OfficeBean;
 import org.sola.clients.beans.security.SecurityBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
@@ -106,6 +107,8 @@ public class MapSheetNoManagementPanel extends ContentPanel {
     }
 
     private void postInit() {
+        Configurator.enableAutoCompletion(cmbMapSheetType); 
+        Configurator.enableAutoCompletion(cmbSRID); 
         loadMapsheets();
         mapSheetListBean.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -390,6 +393,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         jLabel2.setText("Map Sheet Type");
 
         cmbMapSheetType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Control Sheet", "Free Sheet" }));
+        cmbMapSheetType.setSelectedIndex(-1);
         cmbMapSheetType.setName(""); // NOI18N
         cmbMapSheetType.setOpaque(false);
 

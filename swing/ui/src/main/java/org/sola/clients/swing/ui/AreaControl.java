@@ -7,6 +7,7 @@ package org.sola.clients.swing.ui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.system.AreaBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.common.AreaConversion;
 
@@ -34,6 +35,7 @@ public class AreaControl extends ContentPanel {
     public AreaControl() {
         area = new AreaBean();
         initComponents();
+        Configurator.enableAutoCompletion(cmbLocalUnit);
         cmbLocalUnit.setSelectedIndex(-1);
         area.addPropertyChangeListener(unitTypeListener);
         customizeTextFields();

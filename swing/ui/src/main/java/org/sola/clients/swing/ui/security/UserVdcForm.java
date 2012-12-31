@@ -5,14 +5,15 @@ import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.DistrictListBean;
 import org.sola.clients.beans.security.UserVdcBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 
 /**
  * Allows to add new {@link UserVdcBean}.
  */
 public class UserVdcForm extends javax.swing.JDialog {
-    
+
     public static final String VDC_PROPERTY = "vdc";
-    
+
     /**
      * Default constructor.
      */
@@ -21,10 +22,11 @@ public class UserVdcForm extends javax.swing.JDialog {
         initComponents();
         postInit();
     }
-    
-    private void postInit(){
+
+    private void postInit() {
+        Configurator.enableAutoCompletion(cbxDistricts);
+        Configurator.enableAutoCompletion(cbxVdcs);
         cbxDistricts.setSelectedIndex(-1);
-        
         districtList.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -38,18 +40,18 @@ public class UserVdcForm extends javax.swing.JDialog {
                     cbxVdcs.setSelectedIndex(-1);
                 }
             }
-        });   
+        });
     }
 
-    private void save(){
-        if(userVdc.validate(true).size()<1){
+    private void save() {
+        if (userVdc.validate(true).size() < 1) {
             firePropertyChange(VDC_PROPERTY, null, userVdc.copy());
             cbxDistricts.setSelectedIndex(-1);
             txtWardNumber.setText("");
             userVdc.setId(null);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -199,7 +201,6 @@ public class UserVdcForm extends javax.swing.JDialog {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         save();
     }//GEN-LAST:event_btnSaveActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cbxDistricts;

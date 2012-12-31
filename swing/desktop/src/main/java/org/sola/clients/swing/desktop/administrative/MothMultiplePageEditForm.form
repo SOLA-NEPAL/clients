@@ -198,9 +198,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbMothType">
-                  <Properties>
-                    <Property name="selectedIndex" type="int" value="-1"/>
-                  </Properties>
                   <BindingProperties>
                     <BindingProperty name="elements" source="mothTypeListBean1" sourcePath="${mothTypes}" target="cmbMothType" targetPath="elements" updateStrategy="0" immediately="false"/>
                     <BindingProperty name="selectedItem" source="mothTypeListBean1" sourcePath="${selectedMothType}" target="cmbMothType" targetPath="selectedItem" updateStrategy="0" immediately="false"/>

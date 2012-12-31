@@ -30,6 +30,7 @@ package org.sola.clients.swing.ui.referencedata;
 import org.sola.clients.beans.AbstractCodeBean;
 import org.sola.clients.beans.referencedata.RrrGroupTypeListBean;
 import org.sola.clients.beans.referencedata.RrrTypeBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.webservices.transferobjects.referencedata.RrrTypeTO;
 
 /**
@@ -42,6 +43,7 @@ public class RrrTypePanel extends javax.swing.JPanel {
     /** Creates new form RrrTypePanel */
     public RrrTypePanel() {
         initComponents();
+        Configurator.enableAutoCompletion(cbxRrrGroupTypes);
         setupRrrTypeBean(null);
     }
     

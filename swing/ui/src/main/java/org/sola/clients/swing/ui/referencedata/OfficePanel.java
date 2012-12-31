@@ -1,6 +1,7 @@
 package org.sola.clients.swing.ui.referencedata;
 
 import org.sola.clients.beans.referencedata.OfficeBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.webservices.transferobjects.referencedata.OfficeTO;
 
 /**
@@ -23,6 +24,7 @@ public class OfficePanel extends javax.swing.JPanel {
      */
     public OfficePanel(OfficeBean officeBean) {
         initComponents();
+        Configurator.enableAutoCompletion(cbxDistrict);
         setupOfficeBean(officeBean);
     }
     
@@ -112,7 +114,7 @@ public class OfficePanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 123, Short.MAX_VALUE))
+                .addGap(0, 140, Short.MAX_VALUE))
             .addComponent(txtCode)
         );
         jPanel1Layout.setVerticalGroup(
@@ -141,7 +143,7 @@ public class OfficePanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 115, Short.MAX_VALUE))
+                .addGap(0, 132, Short.MAX_VALUE))
             .addComponent(cbxDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -167,7 +169,7 @@ public class OfficePanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 117, Short.MAX_VALUE))
+                .addGap(0, 134, Short.MAX_VALUE))
             .addComponent(txtStatus)
         );
         jPanel3Layout.setVerticalGroup(
@@ -209,7 +211,7 @@ public class OfficePanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +249,7 @@ public class OfficePanel extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

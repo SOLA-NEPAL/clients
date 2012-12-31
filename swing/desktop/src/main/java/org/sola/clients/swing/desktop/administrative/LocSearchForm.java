@@ -21,10 +21,13 @@ import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.administrative.BaUnitSearchResultListBean;
 import org.sola.clients.beans.administrative.LocSearchParamsBean;
 import org.sola.clients.beans.administrative.LocWithMothBean;
+import org.sola.clients.beans.party.PartyBean;
 import org.sola.clients.beans.party.PartySearchResultBean;
 import org.sola.clients.beans.party.PartySearchResultListBean;
+import org.sola.clients.swing.desktop.party.PartyPanelForm;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.administrative.LocSearchCreatePanel;
+import org.sola.clients.swing.ui.party.PartySearchPanel;
 
 /**
  * Form to search LOC by different ways.
@@ -39,62 +42,73 @@ public class LocSearchForm extends ContentPanel {
         postInit();
     }
 
-    private void postInit(){
+    private void postInit() {
         baUnitSearchPanel.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(BaUnitSearchResultListBean.SELECTED_BAUNIT_SEARCH_RESULT_PROPERTY)){
+                if (evt.getPropertyName().equals(BaUnitSearchResultListBean.SELECTED_BAUNIT_SEARCH_RESULT_PROPERTY)) {
                     String baUnitId = null;
-                    if(evt.getNewValue()!=null){
-                        baUnitId = ((BaUnitSearchResultBean)evt.getNewValue()).getId();
+                    if (evt.getNewValue() != null) {
+                        baUnitId = ((BaUnitSearchResultBean) evt.getNewValue()).getId();
                     }
                     search(baUnitId, null, null);
                 }
             }
         });
-        
+
         partySearchPanel.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(PartySearchResultListBean.SELECTED_PARTY_SEARCH_RESULT)){
+                if (evt.getPropertyName().equals(PartySearchPanel.VIEW_PARTY_PROPERTY)) {
+                    viewParty(evt);
+                }
+                if (evt.getPropertyName().equals(PartySearchResultListBean.SELECTED_PARTY_SEARCH_RESULT)) {
                     String partyId = null;
-                    if(evt.getNewValue()!=null){
-                        partyId = ((PartySearchResultBean)evt.getNewValue()).getId();
+                    if (evt.getNewValue() != null) {
+                        partyId = ((PartySearchResultBean) evt.getNewValue()).getId();
                     }
                     search(null, partyId, null);
                 }
             }
         });
-        
+
         locSearchCreatePanel.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(LocSearchCreatePanel.LOC_FOUND)){
-                    search(null, null, ((LocWithMothBean)evt.getNewValue()).getId());
+                if (evt.getPropertyName().equals(LocSearchCreatePanel.LOC_FOUND)) {
+                    search(null, null, ((LocWithMothBean) evt.getNewValue()).getId());
                 }
             }
         });
     }
-    
-    private void search(String baUnitId, String partyId, String locId){
+
+    private void viewParty(PropertyChangeEvent evt) {       
+            openPersonPanel(new PartyPanelForm(true, PartyBean.getParty(((PartySearchResultBean) evt.getNewValue()).getId()), true, true));               
+    }
+
+    private void openPersonPanel(PartyPanelForm panel) {
+        getMainContentPanel().addPanel(panel, this.getId(), panel.getId(), true);
+    }
+
+    private void search(String baUnitId, String partyId, String locId) {
         LocSearchParamsBean searchParams = new LocSearchParamsBean();
         searchParams.setBaUnitId(baUnitId);
         searchParams.setPartyId(partyId);
         searchParams.setLocId(locId);
-        if(baUnitId!=null){
+        if (baUnitId != null) {
             locSearchResultsByProperty.searchLocs(searchParams);
         }
-        if(partyId!=null){
+        if (partyId != null) {
             locSearchResultsByParty.searchLocs(searchParams);
         }
-        if(locId!=null){
+        if (locId != null) {
             locSearchResultsByMoth.searchLocs(searchParams);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

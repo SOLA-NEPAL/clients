@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.swing.common.controls.BrowseControlListener;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 
 /**
  * Shows document details and allows to change it.
@@ -64,6 +65,7 @@ public class DocumentPanel extends javax.swing.JPanel {
      */
     private void postInit() {
         // Init browse attachment
+        Configurator.enableAutoCompletion(cbxTypes); 
         browseAttachment.addBrowseControlEventListener(new BrowseControlListener() {
             @Override
             public void deleteButtonClicked(MouseEvent e) {

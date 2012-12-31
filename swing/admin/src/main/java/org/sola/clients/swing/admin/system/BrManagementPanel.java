@@ -35,6 +35,7 @@ import org.sola.clients.beans.referencedata.BrValidationTargetTypeListBean;
 import org.sola.clients.beans.system.BrBean;
 import org.sola.clients.beans.system.BrSearchResultBean;
 import org.sola.clients.beans.system.BrSearchResultListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
@@ -49,6 +50,8 @@ public class BrManagementPanel extends ContentPanel {
     /** Default panel constructor. */
     public BrManagementPanel() {
         initComponents();
+        Configurator.enableAutoCompletion(cbxTechnicalTypes);
+        Configurator.enableAutoCompletion(cbxValidationTargets);
         brSearchResults.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override

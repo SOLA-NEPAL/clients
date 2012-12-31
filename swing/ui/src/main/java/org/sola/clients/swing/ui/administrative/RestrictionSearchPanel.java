@@ -35,6 +35,8 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         restrictionReasons.loadList(true);
         mapSheets.loadList(true);
         Configurator.enableAutoCompletion(cbxMapSheets); 
+        Configurator.enableAutoCompletion(cbxRestReasons); 
+        Configurator.enableAutoCompletion(cbxVdcs); 
         cbxMapSheets.setSelectedIndex(-1);
         
         clearCombos();

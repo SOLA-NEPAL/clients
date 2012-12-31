@@ -1,6 +1,7 @@
 package org.sola.clients.swing.ui.referencedata;
 
 import org.sola.clients.beans.referencedata.DepartmentBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 
@@ -10,20 +11,22 @@ import org.sola.webservices.transferobjects.referencedata.DepartmentTO;
 public class DepartmentPanel extends ContentPanel {
 
     private DepartmentBean departmentBean;
-    
+
     /**
      * Default constructor.
      */
     public DepartmentPanel() {
         initComponents();
     }
-    
+
     /**
      * Panel constructor with {@link DepartmentBean} parameter
+     *
      * @param department The instance of DepartmentBean to show on the panel
      */
     public DepartmentPanel(DepartmentBean department) {
         initComponents();
+        Configurator.enableAutoCompletion(cbxOffices);
         setupDepartmentBean(department);
     }
 
@@ -52,24 +55,28 @@ public class DepartmentPanel extends ContentPanel {
         displayValues.loadLocalizedValues(this.departmentBean.getDisplayValue());
         firePropertyChange("departmentBean", null, this.departmentBean);
     }
-    
-    /** Validates department object. */
-    public boolean validateDepartment(boolean showMessage){
-        return departmentBean.validate(showMessage).size()<1;
+
+    /**
+     * Validates department object.
+     */
+    public boolean validateDepartment(boolean showMessage) {
+        return departmentBean.validate(showMessage).size() < 1;
     }
-    
-    /** Calls saving procedure of reference data object. */
-    public boolean save(boolean showMessage){
+
+    /**
+     * Calls saving procedure of reference data object.
+     */
+    public boolean save(boolean showMessage) {
         departmentBean.setDisplayValue(displayValues.buildMultilingualString());
         departmentBean.setDescription(descriptionValues.buildMultilingualString());
-        if(validateDepartment(showMessage)){
+        if (validateDepartment(showMessage)) {
             DepartmentBean.saveRefData(departmentBean, DepartmentTO.class);
             return true;
-        }else {
+        } else {
             return false;
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

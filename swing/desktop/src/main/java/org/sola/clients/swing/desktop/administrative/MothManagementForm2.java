@@ -23,6 +23,7 @@ import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.ContentPanel;
@@ -549,7 +550,6 @@ public class MothManagementForm2 extends ContentPanel {
 
         jLabel8.setText(bundle.getString("MothManagementForm2.jLabel8.text")); // NOI18N
 
-        cmbMothLujNo.setEnabled(false);
         cmbMothLujNo.setName(""); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${moths}");
@@ -660,6 +660,12 @@ public class MothManagementForm2 extends ContentPanel {
     private void postInit() {
         vdcListBean1.loadListByOffice(false);
         vdcListBean2.loadListByOffice(false);
+        Configurator.enableAutoCompletion(cmbMothLujNo);
+        Configurator.enableAutoCompletion(cmbMothType);
+        Configurator.enableAutoCompletion(cmbMothType2);
+        Configurator.enableAutoCompletion(cmbVdc1);
+        Configurator.enableAutoCompletion(cmbVdc2);
+        
         cmbVdc1.setSelectedIndex(-1);
         cmbVdc2.setSelectedIndex(-1);       
 

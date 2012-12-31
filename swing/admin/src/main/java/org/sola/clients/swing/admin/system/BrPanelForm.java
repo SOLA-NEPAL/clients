@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.clients.swing.admin.system;
@@ -47,6 +49,7 @@ import org.sola.clients.beans.system.BrBean;
 import org.sola.clients.beans.system.BrDefinitionBean;
 import org.sola.clients.beans.system.BrValidationBean;
 import org.sola.clients.swing.common.controls.CalendarForm;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.common.utils.BindingTools;
 import org.sola.clients.swing.ui.ContentPanel;
@@ -71,19 +74,26 @@ public class BrPanelForm extends ContentPanel {
     private boolean saveOnAction;
     private BrBean br;
 
-    /** Default constructor */
+    /**
+     * Default constructor
+     */
     public BrPanelForm() {
         initComponents();
     }
 
-    /** 
-     * Form constructor. 
+    /**
+     * Form constructor.
+     *
      * @param roleBean The role bean instance to show on the panel.
-     * @param saveOnAction If <code>true</code>, role will be saved into database. 
-     * If <code>false</code>, role will be validated and validation result returned as a value of 
+     * @param saveOnAction If
+     * <code>true</code>, role will be saved into database. If
+     * <code>false</code>, role will be validated and validation result returned
+     * as a value of
      * {@link RolePanelForm.ROLE_SAVED_PROPERTY} property change event.
-     * @param closeOnSave Indicates whether to close the form upon save action takes place.
-     * @param readOnly Indicates whether to display provided {@link RoleBean} in read only mode or not.
+     * @param closeOnSave Indicates whether to close the form upon save action
+     * takes place.
+     * @param readOnly Indicates whether to display provided {@link RoleBean} in
+     * read only mode or not.
      */
     public BrPanelForm(BrBean br, boolean saveOnAction, boolean closeOnSave) {
         this.br = br;
@@ -92,7 +102,7 @@ public class BrPanelForm extends ContentPanel {
         resourceBundle = ResourceBundle.getBundle("org/sola/clients/swing/admin/system/Bundle");
 
         initComponents();
-        
+        comboBoxManagement();
         PropertyChangeListener headerPanelListener = new PropertyChangeListener() {
 
             @Override
@@ -124,8 +134,19 @@ public class BrPanelForm extends ContentPanel {
 
         customizeBrDefinitionFields();
         customizeBrValidationFields();
-        
+
         setupBrBean(this.br);
+    }
+
+    private void comboBoxManagement() {
+        Configurator.enableAutoCompletion(cbxApplicationActions);
+        Configurator.enableAutoCompletion(cbxRegistrationTypes);
+        Configurator.enableAutoCompletion(cbxRequestTypes);
+        Configurator.enableAutoCompletion(cbxRrrTypes);
+        Configurator.enableAutoCompletion(cbxServiceActions);
+        Configurator.enableAutoCompletion(cbxSeverity);
+        Configurator.enableAutoCompletion(cbxTargetTypes);
+        Configurator.enableAutoCompletion(cbxTechnicalType);
     }
 
     private BrTechnicalTypeListBean createBrTechnicalTypes() {
@@ -231,12 +252,16 @@ public class BrPanelForm extends ContentPanel {
         customizePanel();
     }
 
-    /** Shows given panel/card. */
+    /**
+     * Shows given panel/card.
+     */
     private void showPanel(String cardName) {
         ((CardLayout) pnlCards.getLayout()).show(pnlCards, cardName);
     }
 
-    /** Enables or disables BR definition fields. */
+    /**
+     * Enables or disables BR definition fields.
+     */
     private void customizeBrDefinitionFields() {
         boolean enabled = getBr().getSelectedBrDefinition() != null;
         btnRemoveDefinition.setEnabled(enabled);
@@ -245,7 +270,9 @@ public class BrPanelForm extends ContentPanel {
         menuRemoveDefinition.setEnabled(btnRemoveDefinition.isEnabled());
     }
 
-    /** Enables or disables BR validation fields. */
+    /**
+     * Enables or disables BR validation fields.
+     */
     private void customizeBrValidationFields() {
         boolean enabled = getBr().getSelectedBrValidation() != null;
         btnRemoveValidation.setEnabled(enabled);
@@ -270,7 +297,9 @@ public class BrPanelForm extends ContentPanel {
         }
     }
 
-    /** Setup BR bean object, used to bind data on the form. */
+    /**
+     * Setup BR bean object, used to bind data on the form.
+     */
     private void setupBrBean(BrBean br) {
         showPanel(CARD_BR);
         tabsPanel.setSelectedIndex(0);
@@ -290,12 +319,16 @@ public class BrPanelForm extends ContentPanel {
         BindingTools.refreshBinding(bindingGroup, "BrValidations");
     }
 
-    /** Calls saving procedure of BR data object. */
+    /**
+     * Calls saving procedure of BR data object.
+     */
     public boolean validate(boolean showMessage) {
         return getBr().validate(showMessage).size() < 1;
     }
 
-    /** Calls saving procedure of BR data object. */
+    /**
+     * Calls saving procedure of BR data object.
+     */
     public void save(boolean showMessage) {
         br.setFeedback(localizedFeedback.buildMultilingualString());
         boolean isSaved = false;
@@ -306,7 +339,7 @@ public class BrPanelForm extends ContentPanel {
             }
             isSaved = true;
         }
-        
+
         if (isSaved) {
             firePropertyChange(BR_SAVED_PROPERTY, false, true);
             if (closeOnSave) {
@@ -317,13 +350,17 @@ public class BrPanelForm extends ContentPanel {
         }
     }
 
-    /** Displays pop-up calendar. */
+    /**
+     * Displays pop-up calendar.
+     */
     private void showCalendar(JFormattedTextField dateField) {
         CalendarForm calendar = new CalendarForm(null, true, dateField);
         calendar.setVisible(true);
     }
 
-    /** Clears BR definition fields. */
+    /**
+     * Clears BR definition fields.
+     */
     private void clearDefinitionFields() {
         tableDefinitions.clearSelection();
         txtActiveFrom.setValue(null);
@@ -331,7 +368,9 @@ public class BrPanelForm extends ContentPanel {
         txtBody.setText(null);
     }
 
-    /** Clears BR validation fields. */
+    /**
+     * Clears BR validation fields.
+     */
     private void clearValidationFields() {
         tableValidations.clearSelection();
         txtOrder.setValue(0);
@@ -547,8 +586,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(200, Short.MAX_VALUE))
-            .addComponent(txtDisplayName, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addContainerGap(186, Short.MAX_VALUE))
+            .addComponent(txtDisplayName, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,8 +620,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addContainerGap(194, Short.MAX_VALUE))
-            .addComponent(cbxTechnicalType, 0, 281, Short.MAX_VALUE)
+                .addContainerGap(180, Short.MAX_VALUE))
+            .addComponent(cbxTechnicalType, 0, 267, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -603,7 +642,7 @@ public class BrPanelForm extends ContentPanel {
         jLabel3.setText(bundle.getString("BrPanelForm.jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
-        jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         txtDescription.setRows(2);
@@ -620,8 +659,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(520, Short.MAX_VALUE))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                .addContainerGap(493, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -638,7 +677,7 @@ public class BrPanelForm extends ContentPanel {
         jLabel4.setText(bundle.getString("BrPanelForm.jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jScrollPane3.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jScrollPane3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
         txtTechnicalDescription.setRows(2);
@@ -656,8 +695,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addContainerGap(474, Short.MAX_VALUE))
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                .addContainerGap(447, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -701,9 +740,9 @@ public class BrPanelForm extends ContentPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
@@ -797,8 +836,8 @@ public class BrPanelForm extends ContentPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -892,8 +931,8 @@ public class BrPanelForm extends ContentPanel {
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -943,11 +982,11 @@ public class BrPanelForm extends ContentPanel {
         pnlBr.setLayout(pnlBrLayout);
         pnlBrLayout.setHorizontalGroup(
             pnlBrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlBrLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                .addComponent(tabsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlBrLayout.setVerticalGroup(
@@ -957,7 +996,7 @@ public class BrPanelForm extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tabsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(tabsPanel)
                 .addContainerGap())
         );
 
@@ -970,12 +1009,12 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel12.setName("jPanel12"); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel11.setText(bundle.getString("BrPanelForm.jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
 
-        cbxTargetTypes.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxTargetTypes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxTargetTypes.setName("cbxTargetTypes"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${brValidationTargetTypes}");
@@ -990,8 +1029,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addContainerGap(106, Short.MAX_VALUE))
-            .addComponent(cbxTargetTypes, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(97, Short.MAX_VALUE))
+            .addComponent(cbxTargetTypes, 0, 181, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1006,12 +1045,12 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel13.setName("jPanel13"); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel12.setText(bundle.getString("BrPanelForm.jLabel12.text")); // NOI18N
         jLabel12.setName("jLabel12"); // NOI18N
 
-        cbxSeverity.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxSeverity.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxSeverity.setName("cbxSeverity"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${brSeverityTypes}");
@@ -1026,8 +1065,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addContainerGap(128, Short.MAX_VALUE))
-            .addComponent(cbxSeverity, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(119, Short.MAX_VALUE))
+            .addComponent(cbxSeverity, 0, 181, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1044,13 +1083,13 @@ public class BrPanelForm extends ContentPanel {
 
         txtOrder.setFormatterFactory(FormattersFactory.getInstance().getIntegerFormatterFactory());
         txtOrder.setText(bundle.getString("BrPanelForm.txtOrder.text")); // NOI18N
-        txtOrder.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtOrder.setName("txtOrder"); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brValidation.orderOfExecution}"), txtOrder, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel13.setText(bundle.getString("BrPanelForm.jLabel13.text")); // NOI18N
         jLabel13.setName("jLabel13"); // NOI18N
@@ -1061,8 +1100,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel13)
-                .addContainerGap(141, Short.MAX_VALUE))
-            .addComponent(txtOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addContainerGap(132, Short.MAX_VALUE))
+            .addComponent(txtOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1077,7 +1116,7 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel18.setName("jPanel18"); // NOI18N
 
-        cbxApplicationActions.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxApplicationActions.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxApplicationActions.setName("cbxApplicationActions"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${applicationActionTypes}");
@@ -1086,7 +1125,7 @@ public class BrPanelForm extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brValidation.applicationActionType}"), cbxApplicationActions, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText(bundle.getString("BrPanelForm.jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
 
@@ -1096,8 +1135,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addContainerGap(77, Short.MAX_VALUE))
-            .addComponent(cbxApplicationActions, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(68, Short.MAX_VALUE))
+            .addComponent(cbxApplicationActions, 0, 181, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1112,7 +1151,7 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel16.setName("jPanel16"); // NOI18N
 
-        cbxServiceActions.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxServiceActions.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxServiceActions.setName("cbxServiceActions"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${serviceActionTypes}");
@@ -1121,7 +1160,7 @@ public class BrPanelForm extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brValidation.serviceActionType}"), cbxServiceActions, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText(bundle.getString("BrPanelForm.jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
 
@@ -1131,8 +1170,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(jLabel9)
-                .addContainerGap(97, Short.MAX_VALUE))
-            .addComponent(cbxServiceActions, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE))
+            .addComponent(cbxServiceActions, 0, 181, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1147,7 +1186,7 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel19.setName("jPanel19"); // NOI18N
 
-        cbxRequestTypes.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxRequestTypes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxRequestTypes.setName("cbxRequestTypes"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${requestTypeList}");
@@ -1156,7 +1195,7 @@ public class BrPanelForm extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brValidation.requestType}"), cbxRequestTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText(bundle.getString("BrPanelForm.jLabel15.text")); // NOI18N
         jLabel15.setName("jLabel15"); // NOI18N
 
@@ -1166,8 +1205,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel15)
-                .addContainerGap(112, Short.MAX_VALUE))
-            .addComponent(cbxRequestTypes, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(103, Short.MAX_VALUE))
+            .addComponent(cbxRequestTypes, 0, 181, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1182,7 +1221,7 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel17.setName("jPanel17"); // NOI18N
 
-        cbxRrrTypes.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxRrrTypes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxRrrTypes.setName("cbxRrrTypes"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${rrrTypeBeanList}");
@@ -1191,7 +1230,7 @@ public class BrPanelForm extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brValidation.rrrType}"), cbxRrrTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel16.setText(bundle.getString("BrPanelForm.jLabel16.text")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
 
@@ -1201,8 +1240,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel16)
-                .addContainerGap(142, Short.MAX_VALUE))
-            .addComponent(cbxRrrTypes, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(133, Short.MAX_VALUE))
+            .addComponent(cbxRrrTypes, 0, 181, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1217,7 +1256,7 @@ public class BrPanelForm extends ContentPanel {
 
         jPanel15.setName("jPanel15"); // NOI18N
 
-        cbxRegistrationTypes.setFont(new java.awt.Font("Tahoma", 0, 12));
+        cbxRegistrationTypes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbxRegistrationTypes.setName("cbxRegistrationTypes"); // NOI18N
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${registrationStatusTypes}");
@@ -1226,7 +1265,7 @@ public class BrPanelForm extends ContentPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brValidation.registrationStatusType}"), cbxRegistrationTypes, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText(bundle.getString("BrPanelForm.jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
 
@@ -1236,8 +1275,8 @@ public class BrPanelForm extends ContentPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel14)
-                .addContainerGap(72, Short.MAX_VALUE))
-            .addComponent(cbxRegistrationTypes, 0, 190, Short.MAX_VALUE)
+                .addContainerGap(63, Short.MAX_VALUE))
+            .addComponent(cbxRegistrationTypes, 0, 181, Short.MAX_VALUE)
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1257,7 +1296,7 @@ public class BrPanelForm extends ContentPanel {
         jToolBar4.setRollover(true);
         jToolBar4.setName("jToolBar4"); // NOI18N
 
-        btnSaveBrValidation.setFont(new java.awt.Font("Tahoma", 0, 12));
+        btnSaveBrValidation.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSaveBrValidation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
         btnSaveBrValidation.setText(bundle.getString("BrPanelForm.btnSaveBrValidation.text")); // NOI18N
         btnSaveBrValidation.setName("btnSaveBrValidation"); // NOI18N
@@ -1272,11 +1311,11 @@ public class BrPanelForm extends ContentPanel {
         pnlBrValidation.setLayout(pnlBrValidationLayout);
         pnlBrValidationLayout.setHorizontalGroup(
             pnlBrValidationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanelBrValidation, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-            .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(headerPanelBrValidation, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
             .addGroup(pnlBrValidationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlBrValidationFields, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                .addComponent(pnlBrValidationFields, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlBrValidationLayout.setVerticalGroup(
@@ -1294,20 +1333,20 @@ public class BrPanelForm extends ContentPanel {
 
         pnlBrDefinition.setName("pnlBrDefinition"); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel6.setText(bundle.getString("BrPanelForm.jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
         txtActiveFrom.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         txtActiveFrom.setText(bundle.getString("BrPanelForm.txtActiveFrom.text")); // NOI18N
-        txtActiveFrom.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtActiveFrom.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtActiveFrom.setName("txtActiveFrom"); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brDefinition.activeFrom}"), txtActiveFrom, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel8.setText(bundle.getString("BrPanelForm.jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
@@ -1315,7 +1354,7 @@ public class BrPanelForm extends ContentPanel {
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
         txtBody.setColumns(20);
-        txtBody.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtBody.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtBody.setRows(5);
         txtBody.setName("txtBody"); // NOI18N
 
@@ -1337,13 +1376,13 @@ public class BrPanelForm extends ContentPanel {
 
         txtActiveUntil.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         txtActiveUntil.setText(bundle.getString("BrPanelForm.txtActiveUntil.text")); // NOI18N
-        txtActiveUntil.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtActiveUntil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtActiveUntil.setName("txtActiveUntil"); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${brDefinition.activeUntil}"), txtActiveUntil, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
         jLabel7.setText(bundle.getString("BrPanelForm.jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
@@ -1366,7 +1405,7 @@ public class BrPanelForm extends ContentPanel {
         jToolBar5.setRollover(true);
         jToolBar5.setName("jToolBar5"); // NOI18N
 
-        btnSaveBrDefinition.setFont(new java.awt.Font("Tahoma", 0, 12));
+        btnSaveBrDefinition.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSaveBrDefinition.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/save.png"))); // NOI18N
         btnSaveBrDefinition.setText(bundle.getString("BrPanelForm.btnSaveBrDefinition.text")); // NOI18N
         btnSaveBrDefinition.setName("btnSaveBrDefinition"); // NOI18N
@@ -1381,12 +1420,12 @@ public class BrPanelForm extends ContentPanel {
         pnlBrDefinition.setLayout(pnlBrDefinitionLayout);
         pnlBrDefinitionLayout.setHorizontalGroup(
             pnlBrDefinitionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanelBrDefinition, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
-            .addComponent(jToolBar5, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(headerPanelBrDefinition, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+            .addComponent(jToolBar5, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
             .addGroup(pnlBrDefinitionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlBrDefinitionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
                     .addGroup(pnlBrDefinitionLayout.createSequentialGroup()
                         .addGroup(pnlBrDefinitionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -1437,11 +1476,11 @@ public class BrPanelForm extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCards, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(pnlCards, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCards, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+            .addComponent(pnlCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         bindingGroup.bind();
@@ -1566,7 +1605,6 @@ public class BrPanelForm extends ContentPanel {
             showPanel(CARD_BR_VALIDATION);
         }
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.referencedata.ApplicationActionTypeListBean applicationActionTypes;
     private org.sola.clients.beans.referencedata.BrSeverityTypeListBean brSeverityTypes;

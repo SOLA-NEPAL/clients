@@ -29,6 +29,7 @@ package org.sola.clients.swing.ui.referencedata;
 
 import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.renderers.TableCellTextAreaRenderer;
 import org.sola.webservices.transferobjects.referencedata.VdcTO;
 
@@ -56,6 +57,7 @@ public class VDCPanel extends javax.swing.JPanel {
         this.vdcClass = refDataClass;
         this.vdcTOClass = refDataTOClass;
         initComponents();
+        Configurator.enableAutoCompletion(cmbDistrict);
         setupVdcBean(vdcBean);
     }
 

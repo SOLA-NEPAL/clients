@@ -7,6 +7,7 @@ import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothListBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -26,7 +27,10 @@ public class LocSearchCreatePanel extends javax.swing.JPanel {
 
     private void postInit() {
         resourceBundle = ResourceBundle.getBundle("org/sola/clients/swing/ui/administrative/Bundle"); 
-        vdcList.loadListByOffice(false);
+        Configurator.enableAutoCompletion(cbxVdcs);
+        Configurator.enableAutoCompletion(cbxMothType);
+        Configurator.enableAutoCompletion(cbxMothNumbers);
+        vdcList.loadListByOffice(false);        
         cbxVdcs.setSelectedIndex(-1);
         vdcList.addPropertyChangeListener(new PropertyChangeListener() {
 

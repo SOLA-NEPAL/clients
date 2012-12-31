@@ -43,6 +43,7 @@ import org.sola.clients.beans.source.SourceSearchResultBean;
 import org.sola.clients.beans.source.SourceSearchResultsListBean;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.controls.CalendarForm;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.renderers.AttachedDocumentCellRenderer;
@@ -69,6 +70,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
     public DocumentSearchPanel() {
         initComponents();
         customizeButtons();
+        Configurator.enableAutoCompletion(cbxSourceType); 
         cbxSourceType.setSelectedIndex(-1);
         searchResultsList.addPropertyChangeListener(new PropertyChangeListener() {
 

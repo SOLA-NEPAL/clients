@@ -38,6 +38,7 @@ import javax.swing.JTextField;
 import org.sola.clients.beans.digitalarchive.DocumentBean;
 import org.sola.clients.beans.source.SourceBean;
 import org.sola.clients.swing.common.controls.BrowseControlListener;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.renderers.SimpleComboBoxRenderer;
 
 /**
@@ -103,6 +104,7 @@ public class QuickDocumentPanel extends javax.swing.JPanel {
      * sets text of OK button.
      */
     private void postInit() {
+        Configurator.enableAutoCompletion(cbxDocType); 
         cbxDocType.setSelectedIndex(-1);
         // Init browse attachment
         browseAttachment.addBrowseControlEventListener(new BrowseControlListener() {

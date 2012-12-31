@@ -36,6 +36,7 @@ import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.swing.common.LafManager;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.party.PartyListExtPanel;
 import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
@@ -91,6 +92,7 @@ public class TenancyPanelForm extends ContentPanel {
         this.rrrAction = rrrAction;
         prepareRrrBean(rrrBean, rrrAction);
         initComponents();
+        Configurator.enableAutoCompletion(cmbTenantType); 
         headerPanel1.setTitleText(rrrBean.getRrrType().getDisplayValue());
         customizeForm();
         saveRrrState();

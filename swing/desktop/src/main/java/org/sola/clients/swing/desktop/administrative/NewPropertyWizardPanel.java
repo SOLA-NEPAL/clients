@@ -39,6 +39,7 @@ import org.sola.clients.beans.administrative.RrrBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.StatusConstants;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.ui.ContentPanel;
@@ -75,7 +76,7 @@ public class NewPropertyWizardPanel extends ContentPanel {
         resourceBundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle");
 
         initComponents();
-
+        Configurator.enableAutoCompletion(cbxRelationType);
         showCard(CARD_SEARCH);
         customizeAppPropertySelectButton();
         btnSelectFromSearch.setEnabled(false);

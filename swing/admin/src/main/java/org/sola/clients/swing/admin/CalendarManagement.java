@@ -16,6 +16,7 @@
 package org.sola.clients.swing.admin;
 
 import org.sola.clients.beans.system.NepaliMonthBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.ContentPanel;
 
 /**
@@ -46,8 +47,10 @@ public class CalendarManagement extends ContentPanel {
 
     public CalendarManagement() {
         initComponents();
+        Configurator.enableAutoCompletion(cmbYear);
         nepaliYearList.loadYearList();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,14 +226,14 @@ public class CalendarManagement extends ContentPanel {
 
     private void btnYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYearActionPerformed
         // TODO add your handling code here:
-        int lastYear=Integer.parseInt(cmbYear.getItemAt(cmbYear.getItemCount()-1).toString());
+        int lastYear = Integer.parseInt(cmbYear.getItemAt(cmbYear.getItemCount() - 1).toString());
         if (getNewYear().validate(true).size() < 1) {
-            nepaliMonthList.addNepaliMonth(getNewYear(),lastYear);        
-                //nepaliMonthList.addNepaliMonth(getNewYear());   
-               
-            
+            nepaliMonthList.addNepaliMonth(getNewYear(), lastYear);
+            //nepaliMonthList.addNepaliMonth(getNewYear());   
+
+
             setNewYear(null);
-              
+
         }
 
     }//GEN-LAST:event_btnYearActionPerformed

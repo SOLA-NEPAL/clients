@@ -22,6 +22,7 @@ import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothListBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.common.messaging.ClientMessage;
@@ -93,6 +94,9 @@ public class MothPageForm extends javax.swing.JDialog {
     }
 
     private void postInit() {
+        Configurator.enableAutoCompletion(cmbMothLujNo);
+        Configurator.enableAutoCompletion(cmbMothType);
+        Configurator.enableAutoCompletion(cmbVdc);
         if (locWithMothBean.isNew()) {
             editflag = false;
             cmbVdc.setSelectedIndex(-1);

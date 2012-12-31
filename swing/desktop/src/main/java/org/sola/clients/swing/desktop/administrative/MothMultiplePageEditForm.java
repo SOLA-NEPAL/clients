@@ -22,6 +22,7 @@ import org.sola.clients.beans.administrative.MothListBean;
 import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
@@ -52,6 +53,9 @@ public class MothMultiplePageEditForm extends javax.swing.JDialog {
 
     private void postInit() {
         vdcListBean1.loadListByOffice(false);
+        Configurator.enableAutoCompletion(cmbMothLujNo);
+        Configurator.enableAutoCompletion(cmbMothType);
+        Configurator.enableAutoCompletion(cmbVdc);
         cmbVdc.setSelectedIndex(-1);
 
         vdcListBean1.addPropertyChangeListener(new PropertyChangeListener() {

@@ -41,6 +41,7 @@ import org.sola.clients.beans.party.PartySummaryBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.controls.BrowseControlListener;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.utils.BindingTools;
 import org.sola.clients.swing.desktop.MainForm;
 import org.sola.clients.swing.desktop.party.QuickSearchPartyForm;
@@ -96,7 +97,7 @@ public class MortgagePanel extends ContentPanel {
         prepareRrrBean(rrrBean, rrrAction);
 
         initComponents();
-
+        Configurator.enableAutoCompletion(cbxType);
         headerPanel.setTitleText(rrrBean.getRrrType().getDisplayValue());
         customizeForm(rrrAction);
         saveRrrState();

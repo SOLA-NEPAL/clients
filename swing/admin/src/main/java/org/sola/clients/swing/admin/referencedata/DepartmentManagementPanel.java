@@ -21,6 +21,7 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.DepartmentBean;
 import org.sola.clients.beans.referencedata.DepartmentListBean;
 import org.sola.clients.beans.referencedata.OfficeListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -40,6 +41,7 @@ public class DepartmentManagementPanel extends ContentPanel {
     }
 
     private void postInit() {
+        Configurator.enableAutoCompletion(cbxOffices);
         cbxOffices.setSelectedIndex(-1);
         departments.getDepartments().clear();
         offices.addPropertyChangeListener(new PropertyChangeListener() {

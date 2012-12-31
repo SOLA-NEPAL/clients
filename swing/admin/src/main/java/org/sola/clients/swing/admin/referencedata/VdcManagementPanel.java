@@ -21,6 +21,7 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.DistrictListBean;
 import org.sola.clients.beans.referencedata.VdcBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.common.messaging.ClientMessage;
@@ -42,6 +43,7 @@ public class VdcManagementPanel extends ContentPanel {
     }
 
     private void postInint() {
+        Configurator.enableAutoCompletion(cmbDistrict);
         cmbDistrict.setSelectedIndex(-1);
         vdcList.getVdcs().clear();
         districtList.addPropertyChangeListener(new PropertyChangeListener() {

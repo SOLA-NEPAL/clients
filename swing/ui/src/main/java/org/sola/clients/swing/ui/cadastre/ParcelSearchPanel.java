@@ -68,6 +68,7 @@ public class ParcelSearchPanel extends JPanel {
         vdcListBean.loadListByOffice(true);
         mapSheetListBean.loadList(true);
         Configurator.enableAutoCompletion(cbxMapSheets);
+        Configurator.enableAutoCompletion(cbxVdc); 
         
         if(mapSheetListBean.getMapSheets().size()>0){
             cbxMapSheets.setSelectedIndex(0);
