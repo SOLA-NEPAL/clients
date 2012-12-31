@@ -1,11 +1,6 @@
 package org.sola.clients.swing.ui.cadastre;
 
-import javax.swing.GroupLayout;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.Binding;
-import org.jdesktop.beansbinding.Bindings;
-import org.jdesktop.beansbinding.ELProperty;
+import org.jdesktop.beansbinding.*;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.cadastre.CadastreObjectSearchResultBean;
 import org.sola.clients.beans.cadastre.CadastreObjectSummaryBean;
