@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 /*
@@ -30,9 +32,10 @@
  */
 package org.sola.clients.swing.common.controls;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -104,23 +107,25 @@ public class FreeTextSearch extends JTextField {
             }
             return;
         }
-        if (!this.listIsHosted) {
-            this.listIsHosted = true;
-            if (this.listScroll == null) {
-                this.listScroll = new JScrollPane(list);
-                this.listScroll.setSize(this.getSize().width, listHeight);
 
-                this.getParent().add(this.listScroll);
-                this.getParent().setComponentZOrder(this.listScroll, 0);
 
-                this.listScroll.setLocation(
-                        this.getLocation().x, this.getLocation().y + this.getSize().height + 3);
-            } else {
-                this.listScroll.setViewportView(this.list);
-            }
+        if (listScroll == null) {
+            listScroll = new JScrollPane(list);
+        } else {
+            listScroll.setViewportView(list);
         }
+
+        if (!listScroll.isVisible()) {
+            listScroll.setSize(getSize().width, listHeight);
+
+            getParent().add(listScroll);
+            getParent().setComponentZOrder(listScroll, 0);
+
+            listScroll.setLocation(getLocation().x, getLocation().y + getSize().height + 2);
+        }
+
         if (evt.getKeyCode() == 40) {
-            this.list.requestFocusInWindow();
+            list.requestFocusInWindow();
             return;
         }
 
@@ -130,6 +135,14 @@ public class FreeTextSearch extends JTextField {
             this.listScroll.setVisible(true);
         }
         this.searchString = tmpSearchString;
+    }
+
+    private Container getTopParent() {
+        Container cont = this.getParent();
+        while (cont.getParent() != null) {
+            cont = cont.getParent();
+        }
+        return cont;
     }
 
     private void listValueChanged(ListSelectionEvent e) {
@@ -158,11 +171,14 @@ public class FreeTextSearch extends JTextField {
     }
 
     private void confirmSelection() {
-        if (this.getSelectedElement() == null){
+        if (this.getSelectedElement() == null) {
             return;
         }
         if (this.hideListIfNotNeeded) {
-            this.listScroll.setVisible(false);
+            if (listScroll.isVisible()) {
+                listScroll.setVisible(false);
+                getParent().remove(listScroll);
+            }
         }
         this.onSelectionConfirmed();
     }

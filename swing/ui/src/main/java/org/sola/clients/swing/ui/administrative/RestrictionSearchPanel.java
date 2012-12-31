@@ -6,6 +6,7 @@ import org.sola.clients.beans.administrative.RestrictionInfoListBean;
 import org.sola.clients.beans.administrative.RestrictionSearchResultListBean;
 import org.sola.clients.beans.security.SecurityBean;
 import org.sola.clients.reports.ReportManager;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
@@ -33,6 +34,9 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         vdcs.loadListByOffice(true);
         restrictionReasons.loadList(true);
         mapSheets.loadList(true);
+        Configurator.enableAutoCompletion(cbxMapSheets); 
+        cbxMapSheets.setSelectedIndex(-1);
+        
         clearCombos();
         restrictionSearchResults.addPropertyChangeListener(new PropertyChangeListener() {
 
