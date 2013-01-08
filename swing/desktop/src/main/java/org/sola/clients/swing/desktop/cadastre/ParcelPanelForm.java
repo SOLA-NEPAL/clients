@@ -1,18 +1,18 @@
 /*
- * Copyright 2012 Food and Agriculture Organization of the United Nations (FAO).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2012 Food and Agriculture Organization of the United Nations (FAO).
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package org.sola.clients.swing.desktop.cadastre;
 
 import org.sola.clients.beans.cadastre.CadastreObjectSummaryBean;
@@ -22,8 +22,8 @@ import org.sola.common.messaging.ClientMessage;
 import org.sola.common.messaging.MessageUtility;
 
 /**
- * Holds instance of the {@link ParcelPanel} and allows to change parcel data.
- */
+* Holds instance of the {@link ParcelPanel} and allows to change parcel data.
+*/
 public class ParcelPanelForm extends ContentPanel {
     public static final String CADASTRE_OBJECT_SAVE = "cadastreObjectSaved";
     private boolean saveOnAction;
@@ -37,18 +37,18 @@ public class ParcelPanelForm extends ContentPanel {
         return parcelPanel;
     }
     /**
-     * Default constructor.
-     */
+* Default constructor.
+*/
     public ParcelPanelForm() {
         this(null, false, true);
     }
     
     /**
-     * Form constructor with initial parameters.
-     * @param cadastreObject {@link CadastreObjectSummaryBean} instance to show on the form.
-     * @param saveOnAction Boolean flag, indicating whether to save cadastre object into DB or not.
-     * @param closeOnAction Boolean flag, indicating whether to close form upon save button click.
-     */
+* Form constructor with initial parameters.
+* @param cadastreObject {@link CadastreObjectSummaryBean} instance to show on the form.
+* @param saveOnAction Boolean flag, indicating whether to save cadastre object into DB or not.
+* @param closeOnAction Boolean flag, indicating whether to close form upon save button click.
+*/
     public ParcelPanelForm(CadastreObjectSummaryBean cadastreObject, boolean saveOnAction, boolean closeOnAction){
         this.saveOnAction = saveOnAction;
         this.closeOnAction = closeOnAction;
@@ -122,7 +122,7 @@ public class ParcelPanelForm extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(parcelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addComponent(parcelPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

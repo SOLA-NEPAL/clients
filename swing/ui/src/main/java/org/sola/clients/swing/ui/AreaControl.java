@@ -35,7 +35,7 @@ public class AreaControl extends ContentPanel {
     public AreaControl() {
         area = new AreaBean();
         initComponents();
-        Configurator.enableAutoCompletion(cmbLocalUnit);
+        //Configurator.enableAutoCompletion(cmbLocalUnit);
         cmbLocalUnit.setSelectedIndex(-1);
         area.addPropertyChangeListener(unitTypeListener);
         customizeTextFields();

@@ -15,29 +15,14 @@
  */
 package org.sola.clients.beans.administrative;
 
-import org.sola.clients.beans.controls.SolaObservableList;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.administrative.MothTO;
 
 public class MothBean extends MothBasicBean {
 
-    public static final String LOC_LIST_PROPERTY = "locList";
-    private SolaObservableList<LocBean> locList;
-
     public MothBean() {
         super();
-        locList = new SolaObservableList<LocBean>();
-    }
-
-    public SolaObservableList<LocBean> getLocList() {
-        return locList;
-    }
-
-    public void setLocList(SolaObservableList<LocBean> locList) {
-        SolaObservableList<LocBean> oldValue = this.locList;
-        this.locList = locList;
-        propertySupport.firePropertyChange(LOC_LIST_PROPERTY, oldValue, this.locList);
     }
 
     public boolean saveMoth() {

@@ -111,6 +111,7 @@ public class FreeTextSearch extends JTextField {
 
         if (listScroll == null) {
             listScroll = new JScrollPane(list);
+            listScroll.setVisible(false);
         } else {
             listScroll.setViewportView(list);
         }

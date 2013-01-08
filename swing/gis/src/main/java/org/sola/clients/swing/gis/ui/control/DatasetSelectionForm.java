@@ -4,11 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.cadastre.DatasetListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
+import org.sola.clients.swing.common.controls.autocomplete.Configurator;
 
 public class DatasetSelectionForm extends javax.swing.JDialog {
 
     public static final String SELECTED_DATASET_PROPERTY = "selectedDataset";
-    
+
     /**
      * Default form constructor
      */
@@ -18,52 +19,53 @@ public class DatasetSelectionForm extends javax.swing.JDialog {
         postInit();
     }
 
-    private void postInit(){
+    private void postInit() {
         vdcs.loadListByOffice(false);
         cbxVdcs.setSelectedIndex(-1);
-        
+        Configurator.enableAutoCompletion(cbxVdcs);
+
         vdcs.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(VdcListBean.SELECTED_VDC_PROPERTY)){
+                if (evt.getPropertyName().equals(VdcListBean.SELECTED_VDC_PROPERTY)) {
                     loadDatasets();
                 }
             }
         });
-        
+
         datasets.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(DatasetListBean.SELECTED_DATASET_PROPERTY)){
+                if (evt.getPropertyName().equals(DatasetListBean.SELECTED_DATASET_PROPERTY)) {
                     customizeSelectionButton();
                 }
             }
         });
-        
+
         customizeSelectionButton();
     }
-    
-    private void loadDatasets(){
-        if(vdcs.getSelectedVdc()!=null){
+
+    private void loadDatasets() {
+        if (vdcs.getSelectedVdc() != null) {
             datasets.loadDatasetsByVdc(vdcs.getSelectedVdc().getCode());
         }
     }
-    
-    private void customizeSelectionButton(){
-        boolean enabled = datasets.getSelectedDataset()!=null;
+
+    private void customizeSelectionButton() {
+        boolean enabled = datasets.getSelectedDataset() != null;
         btnSelect.setEnabled(enabled);
         menuSelect.setEnabled(enabled);
     }
-    
-    private void select(){
-        if(datasets.getSelectedDataset()!=null){
+
+    private void select() {
+        if (datasets.getSelectedDataset() != null) {
             firePropertyChange(SELECTED_DATASET_PROPERTY, null, datasets.getSelectedDataset());
             this.setVisible(false);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -189,7 +191,6 @@ public class DatasetSelectionForm extends javax.swing.JDialog {
     private void menuSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSelectActionPerformed
         select();
     }//GEN-LAST:event_menuSelectActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox cbxVdcs;

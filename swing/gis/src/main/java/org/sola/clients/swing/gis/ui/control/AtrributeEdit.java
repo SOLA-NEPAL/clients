@@ -328,18 +328,20 @@ public class AtrributeEdit extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void postInit(){
+
+    private void postInit() {
         Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, this,
                 ELProperty.create("${cadBean.area}"), areaControl1,
                 BeanProperty.create("area"));
         bindingGroup.addBinding(binding);
         bindingGroup.bind();
     }
-    
+
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-         cadBean.saveCadastreObject();
+        cadBean.saveCadastreObject();
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**

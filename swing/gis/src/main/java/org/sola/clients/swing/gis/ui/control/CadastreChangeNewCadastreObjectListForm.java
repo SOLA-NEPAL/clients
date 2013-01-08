@@ -327,9 +327,10 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         // TODO add your handling code here: 
         List<CadastreObjectBean> parcels = getParcels();
         for (CadastreObjectBean parcel : parcels) {
-            AtrributeEdit edit=new AtrributeEdit();
-            edit.setCadBean(parcel);
-            edit.setVisible(true);          
+//            AtrributeEdit edit=new AtrributeEdit();
+//            edit.setCadBean(parcel);
+//            edit.setVisible(true);        
+            parcel.saveCadastreObject();
         }
 
         this.setVisible(false);

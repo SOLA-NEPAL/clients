@@ -319,12 +319,12 @@ public class LocatePointPanel extends javax.swing.JPanel {
                                     .addComponent(optFirst, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnShowInMap, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnReload)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(btnReload)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddPoint, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnShowInMap, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -478,6 +478,25 @@ public class LocatePointPanel extends javax.swing.JPanel {
         }
     }
 
+    public void setParcelIdInJoinPoints(){
+        SimpleFeatureCollection feacol = targetSegmentLayer.getFeatureCollection();  
+        String geomfld=PublicMethod.theGeomFieldName(feacol);
+        if (geomfld.isEmpty()) return;
+        
+        FeatureIterator<SimpleFeature> feaIterator = feacol.features();
+        //Record the features.
+        while (feaIterator.hasNext()) {
+            SimpleFeature fea = feaIterator.next();            
+            parcelID = fea.getAttribute(CadastreTargetSegmentLayer.LAYER_FIELD_PARCEL_ID).toString();
+            break;
+        }
+        feaIterator.close();
+        try {
+            refreshData2(false);
+        } catch (Exception e) {
+        }
+    }
+    
     private void btnShowInMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInMapActionPerformed
         int[] indx = table.getSelectedRows();
         if (indx == null || indx.length < 1) {
@@ -791,6 +810,10 @@ public class LocatePointPanel extends javax.swing.JPanel {
         clickEvnt.invoke(method_holder_class,new Object[]{lineSeg,pointFixed,parcelID,updateTable});
     }
     
+    private void refreshData2(boolean updateTable) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        //if (updateTable) table.setEnabled(false);
+        clickEvnt.invoke(method_holder_class,new Object[]{null,null,parcelID,updateTable});
+    }
     private boolean isValid_data(){
         if (lineSeg == null || lineSeg.getLength() <= 0) {
             JOptionPane.showMessageDialog(this, "No line selected. Please check it.");
@@ -813,8 +836,7 @@ public class LocatePointPanel extends javax.swing.JPanel {
     
     private void btnAddPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPointActionPerformed
         //Check necessary parameters.
-        if (!isValid_data()) return;
-        
+        if (!isValid_data()) return;        
         double dist = Double.parseDouble(txtDistance.getText());
         //Identify the point sequence.
         Point startPoint;
