@@ -56,7 +56,7 @@ public class LanguageCombobox extends JComboBox {
 
         {
             put("en", 0);
-            put("np", 1);
+            put("ne", 1);
         }
     });
     
