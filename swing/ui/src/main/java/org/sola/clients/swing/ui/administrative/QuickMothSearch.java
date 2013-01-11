@@ -30,7 +30,7 @@ package org.sola.clients.swing.ui.administrative;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import org.sola.clients.beans.administrative.MothListBean;
+import org.sola.clients.beans.administrative.MothBean;
 import org.sola.clients.beans.administrative.MothSearchParamsBean;
 import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.swing.common.controls.FreeTextSearch;
@@ -68,17 +68,15 @@ public class QuickMothSearch extends FreeTextSearch {
             this.administrativeClient = WSManager.getInstance().getAdministrative();
         }
         
-        List<MothListBean> searchResult = new LinkedList<MothListBean>();
+        listModel.clear();      
+        searchParams.setMothlujNumber(searchString);
+        List<MothBean> searchResult = new LinkedList<MothBean>();       
         MothSearchParamsTO params = TypeConverters.BeanToTrasferObject(
                 searchParams, MothSearchParamsTO.class);
-        params.setMothLuj("M");
-        params.setVdcCode("27014");
         TypeConverters.TransferObjectListToBeanList(administrativeClient.searchMoths(params), 
-                MothListBean.class, (List)searchResult);
-        
-        listModel.clear();
-        
-        for (MothListBean moth : searchResult) {
+                MothBean.class, (List)searchResult);        
+       
+        for (MothBean moth : searchResult) {
             listModel.addElement(moth);
         }
     }

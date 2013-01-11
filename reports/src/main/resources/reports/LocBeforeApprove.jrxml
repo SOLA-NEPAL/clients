@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="846d88ad-5ac8-450a-843f-7900276913d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="parties" uuid="8052284f-0a9f-4578-8ffe-df92565804a7">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="address" class="java.lang.String">
+			<fieldDescription><![CDATA[address]]></fieldDescription>
+		</field>
+		<field name="fatherName" class="java.lang.String">
+			<fieldDescription><![CDATA[fatherName]]></fieldDescription>
+		</field>
+		<field name="fullName" class="java.lang.String">
+			<fieldDescription><![CDATA[fullName]]></fieldDescription>
+		</field>
+		<field name="grandfatherName" class="java.lang.String">
+			<fieldDescription><![CDATA[grandfatherName]]></fieldDescription>
+		</field>
+		<field name="idIssueDate" class="java.lang.Integer">
+			<fieldDescription><![CDATA[idIssueDate]]></fieldDescription>
+		</field>
+		<field name="idIssueDateFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[idIssueDateFormatted]]></fieldDescription>
+		</field>
+		<field name="idNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[idNumber]]></fieldDescription>
+		</field>
+		<field name="lastName" class="java.lang.String">
+			<fieldDescription><![CDATA[lastName]]></fieldDescription>
+		</field>
+		<field name="leftFingerprintImage" class="java.io.InputStream">
+			<fieldDescription><![CDATA[leftFingerprintImage]]></fieldDescription>
+		</field>
+		<field name="officeName" class="java.lang.String">
+			<fieldDescription><![CDATA[officeName]]></fieldDescription>
+		</field>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[name]]></fieldDescription>
+		</field>
+		<field name="photoImage" class="java.io.InputStream">
+			<fieldDescription><![CDATA[photoImage]]></fieldDescription>
+		</field>
+		<field name="rightFingerprintImage" class="java.io.InputStream">
+			<fieldDescription><![CDATA[rightFingerprintImage]]></fieldDescription>
+		</field>
+		<field name="vdcName" class="java.lang.String">
+			<fieldDescription><![CDATA[vdcName]]></fieldDescription>
+		</field>
+		<field name="wardNo" class="java.lang.String">
+			<fieldDescription><![CDATA[wardNo]]></fieldDescription>
+		</field>
+		<field name="street" class="java.lang.String">
+			<fieldDescription><![CDATA[street]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="rrrs" uuid="644295bb-faff-45e6-8523-b92f420791e2">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="wardNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[wardNumber]]></fieldDescription>
+		</field>
+		<field name="vdcName" class="java.lang.String">
+			<fieldDescription><![CDATA[vdcName]]></fieldDescription>
+		</field>
+		<field name="tenants" class="java.lang.String">
+			<fieldDescription><![CDATA[tenants]]></fieldDescription>
+		</field>
+		<field name="requestName" class="java.lang.String">
+			<fieldDescription><![CDATA[requestName]]></fieldDescription>
+		</field>
+		<field name="regNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[regNumber]]></fieldDescription>
+		</field>
+		<field name="regDateFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[regDateFormatted]]></fieldDescription>
+		</field>
+		<field name="regDate" class="java.lang.Integer">
+			<fieldDescription><![CDATA[regDate]]></fieldDescription>
+		</field>
+		<field name="parcelNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[parcelNumber]]></fieldDescription>
+		</field>
+		<field name="panaNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[panaNumber]]></fieldDescription>
+		</field>
+		<field name="ownershipType" class="org.sola.clients.beans.referencedata.OwnershipTypeBean">
+			<fieldDescription><![CDATA[ownershipType]]></fieldDescription>
+		</field>
+		<field name="ownerType" class="org.sola.clients.beans.referencedata.OwnerTypeBean">
+			<fieldDescription><![CDATA[ownerType]]></fieldDescription>
+		</field>
+		<field name="oldParcels" class="java.lang.String">
+			<fieldDescription><![CDATA[oldParcels]]></fieldDescription>
+		</field>
+		<field name="officialAreaFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[officialAreaFormatted]]></fieldDescription>
+		</field>
+		<field name="officialArea" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[officialArea]]></fieldDescription>
+		</field>
+		<field name="officeName" class="java.lang.String">
+			<fieldDescription><![CDATA[officeName]]></fieldDescription>
+		</field>
+		<field name="notationText" class="java.lang.String">
+			<fieldDescription><![CDATA[notationText]]></fieldDescription>
+		</field>
+		<field name="nameLastPart" class="java.lang.String">
+			<fieldDescription><![CDATA[nameLastPart]]></fieldDescription>
+		</field>
+		<field name="nameFirstPart" class="java.lang.String">
+			<fieldDescription><![CDATA[nameFirstPart]]></fieldDescription>
+		</field>
+		<field name="mothNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[mothNumber]]></fieldDescription>
+		</field>
+		<field name="mapNumber" class="java.lang.String">
+			<fieldDescription><![CDATA[mapNumber]]></fieldDescription>
+		</field>
+		<field name="landUse" class="org.sola.clients.beans.referencedata.LandUseBean">
+			<fieldDescription><![CDATA[landUse]]></fieldDescription>
+		</field>
+		<field name="landType" class="org.sola.clients.beans.referencedata.LandTypeBean">
+			<fieldDescription><![CDATA[landType]]></fieldDescription>
+		</field>
+		<field name="landClass" class="org.sola.clients.beans.referencedata.LandClassBean">
+			<fieldDescription><![CDATA[landClass]]></fieldDescription>
+		</field>
+	</subDataset>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="70457374-7b1d-464f-9535-469e516ba62b" x="383" y="0" width="62" height="20"/>
+				<textElement/>
+				<text><![CDATA[लाल पुर्जा नं:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8c6c54ca-5bad-4c30-a75f-818346715ed6" x="0" y="45" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[प्रतिलिपी]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="315" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="be97c807-6451-4571-8867-3013e57fb556" x="0" y="128" width="555" height="112"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset1" uuid="f61065eb-dcb2-4ee7-87af-99486072d99a">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="112" width="555"/>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

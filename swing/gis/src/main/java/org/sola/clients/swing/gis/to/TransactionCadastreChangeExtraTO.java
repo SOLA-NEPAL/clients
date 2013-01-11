@@ -35,6 +35,7 @@ import java.util.List;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTargetRedefinitionTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTargetTO;
 import org.sola.webservices.transferobjects.cadastre.SurveyPointTO;
+import org.sola.webservices.transferobjects.transaction.TransactionCadastreChangeTO;
 import org.sola.webservices.transferobjects.transaction.TransactionSourceTO;
 
 /**
@@ -45,8 +46,7 @@ import org.sola.webservices.transferobjects.transaction.TransactionSourceTO;
  * 
  * @author Elton Manoku
  */
-public class TransactionCadastreChangeExtraTO 
-extends org.sola.webservices.transferobjects.transaction.TransactionCadastreChangeTO{
+public class TransactionCadastreChangeExtraTO extends TransactionCadastreChangeTO{
 
     public void setCadastreObjectList(List<CadastreObjectExtraTO> newCadastreObjectList) {
         for(CadastreObjectExtraTO coExtraTO: newCadastreObjectList){

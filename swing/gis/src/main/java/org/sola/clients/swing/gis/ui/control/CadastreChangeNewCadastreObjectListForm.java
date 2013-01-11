@@ -71,7 +71,7 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTargetTO;
 public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog {
 
     private CadastreChangeNewCadastreObjectLayer layer;
-    private String transaction_id = null;
+    private String transaction_id = null; 
 
     /**
      * Creates new form PointSurveyListForm
@@ -327,6 +327,9 @@ private void cmdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         // TODO add your handling code here: 
         List<CadastreObjectBean> parcels = getParcels();
         for (CadastreObjectBean parcel : parcels) {
+//            AtrributeEdit edit=new AtrributeEdit();
+//            edit.setCadBean(parcel);
+//            edit.setVisible(true);        
             parcel.saveCadastreObject();
         }
 

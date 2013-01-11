@@ -53,16 +53,6 @@ public class LocListBean extends AbstractBindingBean {
         return locs;
     }
 
-    public LocBean getLoc(MothBean mothBean, String panaNo) {
-        List<LocBean> locList = mothBean.getLocList();
-        for (LocBean locBean : locList) {
-            if (locBean.getPanaNo().equals(panaNo)) {
-                return locBean;
-            }
-        }
-        return null;
-    }
-
     public void loadLocList(String mothId) {
         TypeConverters.TransferObjectListToBeanList(WSManager.getInstance().getAdministrative().getLocList(mothId), LocBean.class, (SolaObservableList) locs);
     }

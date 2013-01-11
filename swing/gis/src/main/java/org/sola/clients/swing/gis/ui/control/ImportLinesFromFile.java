@@ -6,6 +6,7 @@ package org.sola.clients.swing.gis.ui.control;
 
 import com.vividsolutions.jts.geom.*;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
 
     private CadastreTargetSegmentLayer segmentLayer = null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
-    
+    private String parcel_ID="";
     private LocatePointPanel locatePointPanel;
     private JToolBar jTool;
     /**
@@ -378,6 +379,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
     }//GEN-LAST:event_btnImportLinesActionPerformed
 
     private void btnAddRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRowActionPerformed
+        locatePointPanel.setParcelIdInJoinPoints();
         DefaultTableModel tblmodel=(DefaultTableModel)tblPoints.getModel();
         int rowcount=tblmodel.getRowCount()+1;
         tblmodel.setRowCount(rowcount);
@@ -452,12 +454,22 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
         NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
         lineGenerator.generateNodedSegments();
         
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,"0");
+        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);//"0");
         targetParcelsLayer.getMapControl().refresh();
         btnCreatePolygon.setEnabled(false);
     }//GEN-LAST:event_btnCreatePolygonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+//         try {
+//            //Store data for undo action.
+//            locatePointPanel.reset_OldCollectionVariable(segmentLayer);
+//            //store data to old collection.
+//            prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
+//            PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+//        } catch (InitializeLayerException ex) {
+//            Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//         
          try {
             //Store data for undo action.
             locatePointPanel.reset_OldCollectionVariable(segmentLayer);
@@ -467,6 +479,19 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
         } catch (InitializeLayerException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //Event delegate passing to the child JPanel.
+        Class[] cls=new Class[]{Object.class,Object.class,String.class,boolean.class};
+        Class workingForm=this.getClass();
+        Method refresh_this=null;
+        try {
+            refresh_this = workingForm.getMethod("refreshTable", cls);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(MultiSegmentOffsetMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(MultiSegmentOffsetMethodForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        locatePointPanel.setClickEvnt(refresh_this,this);
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -479,6 +504,10 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
+    
+    public void refreshTable(Object lineSeg,Object pointFixed,String parID, boolean updateTable ){        
+        parcel_ID=parID;        
+    }
     
     private boolean read_ShapeFile(File iFile){
         try {
