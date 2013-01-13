@@ -554,6 +554,48 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return false;
     }
 
+    /**
+     * Returns true if there is ownership right on the list.
+     */
+    public boolean hasCurrentOwnership() {
+        for (RrrBean rrr : getRrrList()) {
+            if (rrr.getStatusCode() != null && rrr.getStatusCode().equals(StatusConstants.CURRENT)
+                    && rrr.getRrrType() != null && rrr.getRrrType().getRrrGroupTypeCode() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_OWNERSHIP)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if there is tenancy right on the list.
+     */
+    public boolean hasPendingTenancy() {
+        for (RrrBean rrr : getRrrList()) {
+            if (rrr.getStatusCode() != null && rrr.getStatusCode().equals(StatusConstants.PENDING)
+                    && rrr.getRrrType() != null && rrr.getRrrType().getRrrGroupTypeCode() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_RIGHTS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if there is tenancy right on the list.
+     */
+    public boolean hasCurrentTenancy() {
+        for (RrrBean rrr : getRrrList()) {
+            if (rrr.getStatusCode() != null && rrr.getStatusCode().equals(StatusConstants.CURRENT)
+                    && rrr.getRrrType() != null && rrr.getRrrType().getRrrGroupTypeCode() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_RIGHTS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean saveBaUnit(String serviceId) {
         // Check VDC access
         if(getCadastreObject()!=null && getCadastreObject().getAddress()!=null){

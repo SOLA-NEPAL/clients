@@ -34,7 +34,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.sola.clients.beans.administrative.LocDetailsBean;
-import org.sola.clients.beans.administrative.RestrictionInfoBean;
 import org.sola.clients.reports.ReportManager;
 import org.sola.clients.swing.common.utils.Utils;
 
@@ -85,6 +84,29 @@ public class ReportViewerForm extends javax.swing.JFrame {
                 if (evt.getPropertyName().equals(SerialNumberDialog.SELECTED_PROPERTY)) {
                     locDetails.setSerialNumber(form.getSerialNumber());
                     locDetails.setDuplicate(form.isDuplicate());
+                    locDetails.setCurrent(true);
+                }
+            }
+        });
+        form.setVisible(true);
+        showReport(ReportManager.getLocDetailsReport(locDetails));
+    }
+
+    public static void showLocDemoReport(final LocDetailsBean locDetails) {
+        if (locDetails == null) {
+            return;
+        }
+
+        final SerialNumberDialog form = new SerialNumberDialog(null, true);
+        Utils.positionFormCentrally(form);
+        form.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals(SerialNumberDialog.SELECTED_PROPERTY)) {
+                    locDetails.setSerialNumber(form.getSerialNumber());
+                    locDetails.setDuplicate(form.isDuplicate());
+                    locDetails.setCurrent(false);
                 }
             }
         });

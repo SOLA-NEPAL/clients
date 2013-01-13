@@ -21,7 +21,6 @@ import java.beans.PropertyChangeListener;
 import org.sola.clients.beans.administrative.LocSearchByMothParamsListBean;
 import org.sola.clients.beans.administrative.LocWithMothBean;
 import org.sola.clients.beans.administrative.MothBean;
-import org.sola.clients.beans.administrative.MothSearchParamsBean;
 import org.sola.clients.beans.referencedata.MothTypeListBean;
 import org.sola.clients.beans.referencedata.VdcListBean;
 import org.sola.clients.swing.common.controls.autocomplete.Configurator;
@@ -43,8 +42,7 @@ public class MothManagementForm2 extends ContentPanel {
      */
     public MothManagementForm2() {
         initComponents();
-        postInit();
-        quickMothSearch1.setSearchParams(mothSearchParamsBean2);
+        postInit();        
     }
 
     @SuppressWarnings("unchecked")
@@ -118,7 +116,6 @@ public class MothManagementForm2 extends ContentPanel {
         jLabel9 = new javax.swing.JLabel();
         txtPageNumber = new javax.swing.JTextField();
         groupPanel2 = new org.sola.clients.swing.ui.GroupPanel();
-        quickMothSearch1 = new org.sola.clients.swing.ui.administrative.QuickMothSearch();
 
         newMothMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/add.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/administrative/Bundle"); // NOI18N
@@ -500,7 +497,7 @@ public class MothManagementForm2 extends ContentPanel {
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${vdcs}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean2, eLProperty, cmbVdc2);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothSearchParamsBean2, org.jdesktop.beansbinding.ELProperty.create("${vdc}"), cmbVdc2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, vdcListBean2, org.jdesktop.beansbinding.ELProperty.create("${selectedVdc}"), cmbVdc2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -528,7 +525,7 @@ public class MothManagementForm2 extends ContentPanel {
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mothTypes}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothTypeListBean2, eLProperty, cmbMothType2);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothSearchParamsBean2, org.jdesktop.beansbinding.ELProperty.create("${mothTypeBean}"), cmbMothType2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mothTypeListBean2, org.jdesktop.beansbinding.ELProperty.create("${selectedMothType}"), cmbMothType2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -608,23 +605,17 @@ public class MothManagementForm2 extends ContentPanel {
 
         groupPanel2.setTitleText(bundle.getString("MothManagementForm2.groupPanel2.titleText")); // NOI18N
 
-        quickMothSearch1.setText(bundle.getString("MothManagementForm2.quickMothSearch1.text")); // NOI18N
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(groupPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane2)
             .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(quickMothSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -637,10 +628,7 @@ public class MothManagementForm2 extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(quickMothSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -765,7 +753,7 @@ public class MothManagementForm2 extends ContentPanel {
     }
 
     private void customizeMothType() {
-        //cmbMothType2.setEnabled(vdcListBean2.getSelectedVdc() != null);
+        cmbMothType2.setEnabled(vdcListBean2.getSelectedVdc() != null);
         cmbMothType2.setSelectedIndex(-1);
     }
 
@@ -1024,7 +1012,6 @@ public class MothManagementForm2 extends ContentPanel {
     private javax.swing.JMenuItem newPageMenu;
     private javax.swing.JPopupMenu popUpForMoth;
     private javax.swing.JPopupMenu popUpforLoc;
-    private org.sola.clients.swing.ui.administrative.QuickMothSearch quickMothSearch1;
     private javax.swing.JMenuItem removeMothMenu;
     private javax.swing.JMenuItem removePageMenu;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableMoths;
