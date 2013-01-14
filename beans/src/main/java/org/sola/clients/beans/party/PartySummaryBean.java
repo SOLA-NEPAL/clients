@@ -29,8 +29,6 @@
  */
 package org.sola.clients.beans.party;
 
-import javax.swing.JOptionPane;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
@@ -40,7 +38,6 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.party.validation.PartyIndividualValidationGroup;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
-import org.sola.clients.swing.common.CustomValidator;
 import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -78,8 +75,6 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     public static final String GENDER_CODE_PROPERTY = "genderCode";
     public static final String GENDER_TYPE_PROPERTY = "genderType";
     public static final String PARENT_ID_PROPERTY = "parentId";
-    public static final String BIRTH_DATE_PROPERTY = "birthDate";
-    public static final String BIRTH_DATE_FORMATTED_PROPERTY = "birthDateFormatted";
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_NAME, payload = Localized.class)
     private String name;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_LASTNAME, payload = Localized.class, groups = PartyIndividualValidationGroup.class)
@@ -98,7 +93,6 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     private String grandfatherName;
     private GenderTypeBean genderType;
     private String parentId;
-    private String birthDate;
 
     public PartySummaryBean() {
         super();
@@ -330,16 +324,9 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     public void setIdIssueDate(String idIssueDate) {
         String oldValue = this.idIssueDate;
         this.idIssueDate = idIssueDate;
-        if (getIdIssueDate() != null && getBirthDate() != null && !CustomValidator.checkDate(getBirthDate(), getIdIssueDate())) {
-            JOptionPane.showMessageDialog(null, "error from id");
-            this.idIssueDate = null;
-            setIdIssueDate(null);
-
-        } else {
-            String oldFormattedValue = getIdIssueFormattedDate();
-            propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
-            propertySupport.firePropertyChange(ID_ISSUE_FORMATTED_DATE_PROPERTY, oldFormattedValue, getIdIssueFormattedDate());
-        }
+        String oldFormattedValue = getIdIssueFormattedDate();
+        propertySupport.firePropertyChange(ID_ISSUE_DATE_PROPERTY, oldValue, this.idIssueDate);
+        propertySupport.firePropertyChange(ID_ISSUE_FORMATTED_DATE_PROPERTY, oldFormattedValue, getIdIssueFormattedDate());
     }
 
     public String getIdNumber() {
@@ -366,28 +353,5 @@ public class PartySummaryBean extends AbstractIdWithOfficeCodeBean {
     @Override
     public String toString() {
         return getFullName();
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public String getBirthDateFormatted() {
-        return DateUtility.toFormattedNepaliDate(birthDate);
-    }
-
-    public void setBirthDate(String birthDate) {
-        String oldValue = this.birthDate;
-        this.birthDate = birthDate;
-        if (getIdIssueDate() != null && getBirthDate() != null && !CustomValidator.checkDate(getBirthDate(), getIdIssueDate())) {
-            JOptionPane.showMessageDialog(null, "error from bd");
-            this.birthDate = null;
-            setBirthDate(null);
-            // propertySupport.firePropertyChange(BIRTH_DATE_PROPERTY, oldValue, this.birthDate);
-        } else {
-            String oldFormattedValue = getBirthDateFormatted();
-            propertySupport.firePropertyChange(BIRTH_DATE_PROPERTY, oldValue, this.birthDate);
-            propertySupport.firePropertyChange(BIRTH_DATE_FORMATTED_PROPERTY, oldFormattedValue, getBirthDateFormatted());
-        }
     }
 }

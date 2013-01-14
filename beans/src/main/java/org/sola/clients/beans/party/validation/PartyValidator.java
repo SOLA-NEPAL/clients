@@ -83,7 +83,18 @@ public class PartyValidator implements ConstraintValidator<PartyCheck, PartyBean
                 }
             }
         }
-
+        
+        // Check birth date and id issue date
+        if (partyBean.getIdIssueDate() != null && partyBean.getBirthDate()!=null){
+             int bDate=Integer.parseInt(partyBean.getBirthDate().toString());
+             int idDate=Integer.parseInt(partyBean.getIdIssueDate().toString());
+            if(bDate>idDate){               
+            result = false;
+            context.buildConstraintViolationWithTemplate(
+                    MessageUtility.getLocalizedMessageText(
+                    ClientMessage.CHECK_BIRTH_DATE_ID_ISSUE_DATE)).addConstraintViolation();
+            }
+        }
         return result;
     }
 }
