@@ -47,6 +47,8 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     public static final String FISCAL_YEAR_CODE_PROPERTY = "fiscalYearCode";
     public static final String VDC_CODE_PROPERTY = "vdcCode";
     public static final String VDC_PROPERTY = "vdc";
+    public static final String CADASTRE_OBJECT_ID_PROPERTY = "cadastreObjectId";
+    public static final String SELECTED_PROPERTY = "selected";
     
     private String id;
     private String name;
@@ -62,10 +64,12 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String mothNo;
     private String wardNo;
     private VdcBean vdc;
+    private String cadastreObjectId;
     private String parcelNo;
     private String mapNumber;
     private String mapSheetId;
     private String action;
+    private boolean selected;
     transient java.util.ResourceBundle bundle;
     
     public BaUnitSearchResultBean(){
@@ -210,6 +214,14 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         this.panaNo = panaNo;
     }
 
+    public String getCadastreObjectId() {
+        return cadastreObjectId;
+    }
+
+    public void setCadastreObjectId(String cadastreObjectId) {
+        this.cadastreObjectId = cadastreObjectId;
+    }
+
     public String getParcelNo() {
         return parcelNo;
     }
@@ -271,5 +283,15 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         } else {
             return getAction();
         }
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        boolean oldValue = this.selected;
+        this.selected = selected;
+        propertySupport.firePropertyChange(SELECTED_PROPERTY, oldValue, this.selected);
     }
 }

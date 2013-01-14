@@ -25,10 +25,6 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.sola.clients.swing.gis.layer;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -39,15 +35,15 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.feature.CollectionEvent;
 import org.geotools.feature.CollectionListener;
 import org.geotools.geometry.jts.Geometries;
+import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
-import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.beans.CadastreObjectTargetBean;
 import org.sola.clients.swing.gis.beans.CadastreObjectTargetRedefinitionBean;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.common.messaging.GisMessage;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.webservices.transferobjects.search.CadastreObjectSearchResultTO;
 
 /**
  *
@@ -73,8 +69,7 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
     private TargetNeighbourParcelLayer neigbhour_parcels=null;
     private CadastreChangeNewCadastreObjectLayer new_parcels=null;
 
-    public CadastreChangeNewCadastreObjectLayer getNew_parcels()
-                    throws InitializeLayerException {
+    public CadastreChangeNewCadastreObjectLayer getNew_parcels() throws InitializeLayerException {
         return new_parcels;
     }
 
@@ -101,12 +96,10 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
         List<CadastreObjectTargetRedefinitionBean> targetList =
                 new ArrayList<CadastreObjectTargetRedefinitionBean>();
         SimpleFeature feature = null;
-        SimpleFeatureIterator iterator =
-                (SimpleFeatureIterator) this.neigbhour_parcels.getFeatureCollection().features();
+        SimpleFeatureIterator iterator = (SimpleFeatureIterator) neigbhour_parcels.getFeatureCollection().features();
         while (iterator.hasNext()) {
             feature = iterator.next();
-            CadastreObjectTargetRedefinitionBean targetBean =
-                    new CadastreObjectTargetRedefinitionBean();
+            CadastreObjectTargetRedefinitionBean targetBean = new CadastreObjectTargetRedefinitionBean();
             targetBean.setCadastreObjectId(feature.getID());
             targetBean.setGeomPolygon(wkbWriter.write((Geometry) feature.getDefaultGeometry()));
             targetList.add(targetBean);
@@ -120,8 +113,7 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
      * 
      * @throws InitializeLayerException 
      */
-    public CadastreChangeTargetCadastreObjectLayer()
-                    throws InitializeLayerException {
+    public CadastreChangeTargetCadastreObjectLayer() throws InitializeLayerException {
         super(LAYER_NAME, Geometries.POLYGON, LAYER_STYLE_RESOURCE,LAYER_ATTRIBUTE_DEFINITION);
 
         this.getFeatureCollection().addListener(new CollectionListener() {
@@ -147,34 +139,23 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
      * 
      * @param objectList 
      */
-    public void setCadastreObjectTargetList(
-            List<CadastreObjectTargetBean> objectList) {
-
+    public void setCadastreObjectTargetList(List<CadastreObjectTargetBean> objectList) {
         if (objectList.size() > 0) {
             List<String> ids = new ArrayList<String>();
             for (CadastreObjectTargetBean bean : objectList) {
                 ids.add(bean.getCadastreObjectId());
             }
-            List<CadastreObjectTO> targetObjectList =
-                    this.getDataAccess().getCadastreService().getCadastreObjects(ids);
+            
+            List<CadastreObjectSearchResultTO> targetObjectList = this.getDataAccess().getSearchService().searchCadastreObecjtsByIds(ids);
+            
             try {
-                for (CadastreObjectTO targetCOTO : targetObjectList) {
-                    this.addFeature(targetCOTO.getId(), targetCOTO.getGeomPolygon(), null);
+                for (CadastreObjectSearchResultTO targetCOTO : targetObjectList) {
+                    addFeature(targetCOTO.getId(), targetCOTO.getTheGeom(), null);
                 }
             } catch (ParseException ex) {
                 Messaging.getInstance().show(GisMessage.CADASTRE_CHANGE_ERROR_ADDTARGET_IN_START);
                 org.sola.common.logging.LogUtility.log(
                         GisMessage.CADASTRE_CHANGE_ERROR_ADDTARGET_IN_START, ex);
-            }
-        }
-    }
-    
-    public void set_CadastreObjectTargetList(List<SimpleFeature> objectList) {
-        //first clear the collection.
-        this.getCadastreObjectTargetList().clear();
-        if (objectList.size() > 0) {
-            for (SimpleFeature feature : objectList) {
-                this.getCadastreObjectTargetList().add(this.newBean(feature));
             }
         }
     }
@@ -238,7 +219,7 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
         }
         return bean;
     }
-
+    
     /**
      * Gets a reference to the data access
      * @return 

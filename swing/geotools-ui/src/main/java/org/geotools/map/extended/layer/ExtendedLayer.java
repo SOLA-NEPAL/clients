@@ -33,6 +33,7 @@ package org.geotools.map.extended.layer;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.Layer;
 import org.geotools.swing.extended.Map;
 import org.geotools.swing.control.extended.TocSymbol;
@@ -57,7 +58,7 @@ public class ExtendedLayer {
    
     public ExtendedLayer(){    
     }
-
+    
     /**
      * Gets the srid. It uses the srid of the map control where the layer is added.
      * @return 

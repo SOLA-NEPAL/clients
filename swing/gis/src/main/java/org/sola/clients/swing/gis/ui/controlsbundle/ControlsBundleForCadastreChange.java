@@ -27,21 +27,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.sola.clients.swing.gis.ui.controlsbundle;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.WKBReader;
-import java.util.ArrayList;
-import java.util.List;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.swing.extended.exception.InitializeLayerException;
-import org.sola.clients.swing.gis.PublicMethod;
-import org.sola.clients.swing.gis.SelectedParcelInfo;
 import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
@@ -50,7 +38,6 @@ import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.clients.swing.gis.mapaction.*;
 import org.sola.clients.swing.gis.tool.*;
-import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
@@ -63,13 +50,12 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
 
     private TransactionCadastreChangeBean transactionBean;
     private String applicationNumber = "";
+    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer;
+    private CadastreTargetSegmentLayer targetSegmentLayer;
+    private CadastreChangeNewCadastreObjectLayer newCadastreObjectLayer;
+    private CadastreChangeNewSurveyPointLayer newPointsLayer;
+    private listSelectedCadastreObjects listParcel;
     
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
-    private CadastreTargetSegmentLayer targetSegmentLayer = null;
-    private CadastreChangeNewCadastreObjectLayer newCadastreObjectLayer = null;
-    private CadastreChangeNewSurveyPointLayer newPointsLayer = null;
-    private byte[] applicationLocation=null;
-
     /**
      * Constructor. It sets up the bundle by adding layers and tools that are
      * relevant. Finally, it zooms in the interested zone. The interested zone
@@ -86,74 +72,27 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
      * @param applicationLocation Location of application that starts the
      * cadastre change
      */
-    public ControlsBundleForCadastreChange(
-            String applicationNumber,
-            TransactionCadastreChangeBean transactionBean,
-            String baUnitId,
-            byte[] applicationLocation,List<String> mapsheets) {
-        
-        //super();
-        
+    public ControlsBundleForCadastreChange(String applicationNumber,  TransactionCadastreChangeBean transactionBean) {
         this.applicationNumber = applicationNumber;
         this.transactionBean = transactionBean;
         if (this.transactionBean == null) {
             this.transactionBean = new TransactionCadastreChangeBean();
         }
-        this.applicationLocation=applicationLocation;
-        //this.trSegmentBean= new TransactionSegmentBean();
-        this.Setup(PojoDataAccess.getInstance()); 
         
-        if (!this.transactionIsStarted()) {
-            this.setTargetParcelsByBaUnit(baUnitId);
-        }
-    }
-
-    /**
-     * Gets if the transaction is already started before.
-     *
-     * @return True if the transaction was already started and now is read back
-     * for modifications
-     */
-    protected boolean transactionIsStarted() {
-        return (this.newPointsLayer.getFeatureCollection().size() > 0
-                || this.targetParcelsLayer.getFeatureCollection().size() > 0);
-    }
-
-    /**
-     * It zooms to the interesting area which is the area where the cadastre
-     * changes is happening
-     *
-     * @param interestingArea
-     * @param applicationLocation
-     */
-    @Override
-    protected void zoomToInterestingArea(
-            ReferencedEnvelope interestingArea, byte[] applicationLocation) {
-        ReferencedEnvelope boundsToZoom = null;
-        if (this.newPointsLayer.getFeatureCollection().size() > 0) {
-            boundsToZoom = this.newPointsLayer.getFeatureCollection().getBounds();
-        } else if (this.targetParcelsLayer.getFeatureCollection().size() > 0) {
-            boundsToZoom = this.targetParcelsLayer.getFeatureCollection().getBounds();
-        }
-        super.zoomToInterestingArea(boundsToZoom, applicationLocation);
-    }
+        Setup(PojoDataAccess.getInstance(), transactionBean.getDatasetIdFromCadastreObjectTargetList()); 
+        enableDatasetSelectionTool(false);
+        targetParcelsLayer.zoomToLayer();
+        listParcel.selectTargetLayerFeatures();
+     }
 
     @Override
     public TransactionCadastreChangeBean getTransactionBean() {
-        transactionBean.setCadastreObjectList(
-                this.newCadastreObjectLayer.getCadastreObjectList());
-        
+        transactionBean.setCadastreObjectList(this.newCadastreObjectLayer.getCadastreObjectList());
         transactionBean.setSurveyPointList(this.newPointsLayer.getSurveyPointList());
-        
-        transactionBean.setCadastreObjectTargetList(
-                this.targetParcelsLayer.getCadastreObjectTargetList());
-        
-        //transactionBean.setCadastreObjectNeighboursList(
-                //this.targetParcelsLayer.getCadastreNeighboursList());
-        
+        transactionBean.setCadastreObjectTargetList(this.targetParcelsLayer.getCadastreObjectTargetList());
         return transactionBean;
     }
-
+    
     //partially by Kabindra.
     @Override
     protected void addLayers() throws InitializeLayerException {
@@ -162,7 +101,13 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add vertical bar.//By Kabindra
         this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
         
-        this.newCadastreObjectLayer = new CadastreChangeNewCadastreObjectLayer(this.applicationNumber);
+        //segment new layer.//By Kabindra
+        this.targetSegmentLayer = new CadastreTargetSegmentLayer();
+        this.getMap().addLayer(this.targetSegmentLayer);
+        this.getMap().addLayer(this.targetSegmentLayer.getSegmentLayer());
+        
+        this.targetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
+        this.newCadastreObjectLayer = new CadastreChangeNewCadastreObjectLayer(applicationNumber, targetParcelsLayer);
         this.newCadastreObjectLayer.setCadastreObjectList(this.transactionBean.getCadastreObjectList());
         this.getMap().addLayer(newCadastreObjectLayer);
         
@@ -170,7 +115,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addLayer(newPointsLayer);
         this.newPointsLayer.setSurveyPointList(this.transactionBean.getSurveyPointList());
         
-        this.targetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
         this.targetParcelsLayer.setNew_parcels(this.newCadastreObjectLayer);//get reference of the newparcel layer object.
         this.targetParcelsLayer.setCadastreObjectTargetList(transactionBean.getCadastreObjectTargetList());
         this.getMap().addLayer(targetParcelsLayer);
@@ -178,11 +122,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //selection affected parcels.//By Kabindra
         this.targetParcelsLayer.getNeighbour_parcels().setVisible(true);
         this.getMap().addLayer(this.targetParcelsLayer.getNeighbour_parcels());
-        
-        //segment new layer.//By Kabindra
-        this.targetSegmentLayer = new CadastreTargetSegmentLayer();
-        this.getMap().addLayer(this.targetSegmentLayer);
-        this.getMap().addLayer(this.targetSegmentLayer.getSegmentLayer());
     }
 
    
@@ -193,114 +132,55 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add vertical bar.
         this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
         this.getMap().addMapAction(new ZoomPreviousTool(this.getMap()), this.getToolbar(), true);
-//        for (int i=0;i<12;i++) //if needed blank tool of long distance.
-//            this.getMap().addMapAction(new BlankTool(),this.getToolbar(), true);
-        
         this.getMap().addMapAction(new SearchParcelFormShow(this.getPojoDataAccess(),
-                this.getMap(),targetSegmentLayer, targetParcelsLayer)
-                            , this.getToolbar(), true);
+                this.getMap(),targetSegmentLayer, targetParcelsLayer), this.getToolbar(), true);
         //new tool for parcel selection.
-        listSelectedCadastreObjects listParcel = new listSelectedCadastreObjects(this.getPojoDataAccess());
-        listParcel.getParcel_selected().setTargetLayers(targetSegmentLayer,targetParcelsLayer);
+        listParcel = new listSelectedCadastreObjects(this.getPojoDataAccess(), targetSegmentLayer,targetParcelsLayer);
         this.getMap().addTool(listParcel, this.getToolbar(), true,listSelectedCadastreObjects.NAME);
         //add deselect tool.
-        this.getMap().addMapAction(new DeselectALL(
-                this.getMap(),targetSegmentLayer,targetParcelsLayer)
-                        , this.getToolbar(), true);
+        this.getMap().addMapAction(new DeselectALL(this.getMap(),targetSegmentLayer,targetParcelsLayer), this.getToolbar(), true);
         //add toolbar for the one point and Area method show forms.
-        this.getMap().addMapAction(new CadastreOnePointAreaFormShow(
-                this.getMap(), targetSegmentLayer,targetParcelsLayer
+        this.getMap().addMapAction(new CadastreOnePointAreaFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer
                     ,this.getToolbar()), this.getToolbar(), true);
         //add toolbar for the multiple join show forms.
-        this.getMap().addMapAction(new CadastreTwoPointFormShow(
-                 this.getMap(),  targetSegmentLayer,targetParcelsLayer,
+        this.getMap().addMapAction(new CadastreTwoPointFormShow(this.getMap(),  targetSegmentLayer,targetParcelsLayer,
                  this.getToolbar()),this.getToolbar(), true);
         //add toolbar for offset method.
-        this.getMap().addMapAction(new MultiOffestFormShow(
-                 this.getMap(), targetSegmentLayer,targetParcelsLayer,
+        this.getMap().addMapAction(new MultiOffestFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer,
                  this.getToolbar()),this.getToolbar(), true);
         //add toolbar for parcel merging.
-        this.getMap().addMapAction(new MergeParcelFormShow(
-                 this.getMap(),targetSegmentLayer,targetParcelsLayer),
-                                        this.getToolbar(), true);  
+        this.getMap().addMapAction(new MergeParcelFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer), this.getToolbar(), true);  
         //add toolbar for equal area splitting method.
-        this.getMap().addMapAction(new EqualAreaMethodFormShow(
-                 this.getMap(),targetSegmentLayer,targetParcelsLayer,
+        this.getMap().addMapAction(new EqualAreaMethodFormShow(this.getMap(),targetSegmentLayer,targetParcelsLayer,
                  this.getToolbar()), this.getToolbar(), true);
         //add toolbar for one side, direction and area method splitting.
-        this.getMap().addMapAction(new OneSideDirectionAreaShow(
-                 this.getMap(),targetSegmentLayer,targetParcelsLayer,
+        this.getMap().addMapAction(new OneSideDirectionAreaShow(this.getMap(),targetSegmentLayer,targetParcelsLayer,
                  this.getToolbar()),this.getToolbar(), true);
         //add toolbar for import lines from line,shape and dxf file.
-        this.getMap().addMapAction(new ImportShapeFileShow(
-                 this.getMap(), targetSegmentLayer,targetParcelsLayer,
+        this.getMap().addMapAction(new ImportShapeFileShow(this.getMap(), targetSegmentLayer,targetParcelsLayer,
                  this.getToolbar()),this.getToolbar(), true);
     }
     
-    @Override
-    public void show_Selected_Parcel_onMap(CadastreObjectTO selected_parcel){
-        if (selected_parcel==null) {
-            this.zoomToInterestingArea(null, applicationLocation);
-            return;
-        }
-        
-        List<String> ids=new ArrayList<String>();
-        ids.add(selected_parcel.getId());
-        List<CadastreObjectTO> parcels=
-           WSManager.getInstance().getCadastreService().getCadastreObjects(ids);
-        //assuming it returns only one object.
-        if (parcels==null || parcels.size()<1){
-            this.zoomToInterestingArea(null, applicationLocation);
-            return;
-        }
-        CadastreObjectTO parcel=parcels.get(0);
-        Geometry the_Polygon=null;
-        //zoom to the selected parcel.
-        try {
-            WKBReader wkb_reader = new WKBReader();
-            the_Polygon = wkb_reader.read(parcel.getGeomPolygon()); 
-        } catch (Exception e) {
-        }
-        if (the_Polygon!=null){
-            //main class to store the selection information.
-            SelectedParcelInfo parcel_selected=new SelectedParcelInfo(this.getPojoDataAccess());
-            parcel_selected.setTargetLayers(targetSegmentLayer, targetParcelsLayer);
-            //Prepare for fresh selection.
-            PublicMethod.maplayerOnOff(this.targetParcelsLayer.getMapControl(), false);
-            parcel_selected.display_Selected_Parcel(parcel,false);
-            //zoom to the selected parcel.
-            ReferencedEnvelope ref_Envelope= JTS.toEnvelope(the_Polygon);
-            double expand_by=ref_Envelope.getHeight() * 0.5;//expand 50 % of height
-            ref_Envelope.expandBy(expand_by);
-            this.targetParcelsLayer.getMapControl().setDisplayArea(ref_Envelope);
-        }
-    }
-    //</editor-fold>
-
     private void genericSOLA_Tools() {
-        CadastreChangeSelectParcelTool selectParcelTool =
-                new CadastreChangeSelectParcelTool(this.getPojoDataAccess());
+        CadastreChangeSelectParcelTool selectParcelTool = new CadastreChangeSelectParcelTool(this.getPojoDataAccess());
         selectParcelTool.setTargetParcelsLayer(targetParcelsLayer);
         this.getMap().addTool(selectParcelTool, this.getToolbar(), true);
         
         this.getMap().addMapAction(
                 new CadastreChangePointSurveyListFormShow(
                 this.getMap(), this.newPointsLayer.getHostForm()),
-                this.getToolbar(),
-                true);
+                this.getToolbar(), true);
         
         CadastreChangeNodeTool nodelinkingTool = new CadastreChangeNodeTool(newPointsLayer);
         nodelinkingTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
         this.getMap().addTool(nodelinkingTool, this.getToolbar(), true);
 
-        CadastreChangeNewParcelTool newParcelTool =
-                new CadastreChangeNewParcelTool(this.newCadastreObjectLayer);
+        CadastreChangeNewParcelTool newParcelTool = new CadastreChangeNewParcelTool(this.newCadastreObjectLayer);
         newParcelTool.getTargetSnappingLayers().add(newPointsLayer);
         this.getMap().addTool(newParcelTool, this.getToolbar(), true);
 
         this.getMap().addMapAction(new CadastreChangeNewCadastreObjectListFormShow(
-                this.getMap(), this.newCadastreObjectLayer.getHostForm(this.getTransactionBean().getFromServiceId())),
-                this.getToolbar(), true);
+                this.getMap(), this.newCadastreObjectLayer), this.getToolbar(), true);
 
         CadastreBoundarySelectTool cadastreBoundarySelectTool =
                 new CadastreBoundarySelectTool(
@@ -311,17 +191,6 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         super.addToolsAndCommands();
         this.cadastreBoundaryEditTool.setTargetLayer(this.newCadastreObjectLayer);
         this.cadastreBoundaryEditTool.getTargetSnappingLayers().add(this.targetParcelsLayer);
-    }
-
-    /**
-     * Sets cadastre objects that are related with the baUnitId
-     *
-     * @param baUnitId
-     */
-    public void setTargetParcelsByBaUnit(String baUnitId) {
-        CadastreObjectTO cadastreObject =
-                this.getPojoDataAccess().getCadastreService().getCadastreObjectByBaUnit(baUnitId);
-        this.addCadastreObjectsInLayer(targetParcelsLayer, cadastreObject);
     }
 
     //uncomment all lines to restore default tools of generic sola.
@@ -337,14 +206,8 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
                 CadastreChangeNewCadastreObjectListFormShow.MAPACTION_NAME).setEnabled(!readOnly);
     }
 
-    //By Kabindra.
-//    @Override
-//    public void update_Parcel_Geometry() {
-//        try {
-//            targetParcelsLayer.updateStatus_TargetParcel();
-//            targetParcelsLayer.updateGeometry_TouchingParcels(this.getMap().getSrid());
-//        } catch (InitializeLayerException ex) {
-//            Logger.getLogger(ControlsBundleForCadastreChange.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    @Override
+    public void show_Selected_Parcel_onMap(CadastreObjectTO selected_parcel) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

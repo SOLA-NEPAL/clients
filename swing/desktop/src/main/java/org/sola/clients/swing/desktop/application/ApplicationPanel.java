@@ -32,6 +32,7 @@ package org.sola.clients.swing.desktop.application;
 import java.awt.ComponentOrientation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -64,6 +65,7 @@ import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.desktop.source.DocumentsManagementExtPanel;
+import org.sola.clients.swing.gis.beans.TransactionCadastreChangeBean;
 import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.MainContentPanel;
 import org.sola.clients.swing.ui.administrative.BaUnitSearchPanel;
@@ -75,6 +77,7 @@ import org.sola.clients.swing.ui.source.QuickDocumentPanel;
 import org.sola.clients.swing.ui.validation.ValidationResultForm;
 import org.sola.common.RolesConstants;
 import org.sola.common.messaging.ClientMessage;
+import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationTO;
@@ -120,12 +123,13 @@ public class ApplicationPanel extends ContentPanel {
         return applicationBean;
     }
 
-    private DocumentsManagementExtPanel createDocumentsPanel(){
-        if(documents == null){
+    private DocumentsManagementExtPanel createDocumentsPanel() {
+        if (documents == null) {
             documents = new DocumentsManagementExtPanel(appBean.getSourceList(), appBean, true);
         }
         return documents;
     }
+
     /**
      * Default constructor to create new application.
      */
@@ -290,7 +294,7 @@ public class ApplicationPanel extends ContentPanel {
         menuArchive.setEnabled(appBean.canArchive()
                 && SecurityBean.isInRole(RolesConstants.APPLICATION_ARCHIVE));
         btnPrintStatusReport.setEnabled(appBean.getRowVersion() > 0);
-        
+
         if (btnValidate.isEnabled()) {
             btnValidate.setEnabled(appBean.canValidate()
                     && SecurityBean.isInRole(RolesConstants.APPLICATION_VALIDATE));
@@ -323,24 +327,24 @@ public class ApplicationPanel extends ContentPanel {
         saveAppState();
     }
 
-    private boolean canRunService(ApplicationServiceBean appService){
-        if(appService == null || appService.getRequestType() == null || 
-                appService.getRequestType().getRequestCategoryCode() == null){
+    private boolean canRunService(ApplicationServiceBean appService) {
+        if (appService == null || appService.getRequestType() == null
+                || appService.getRequestType().getRequestCategoryCode() == null) {
             return false;
         }
         String requestCatCode = appService.getRequestType().getRequestCategoryCode();
-        
-        if(requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_CADASTRE_SERVICES)){
+
+        if (requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_CADASTRE_SERVICES)) {
             return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_CADASTRE_SERVICES);
-        } else if(requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_INFO_SERVICES)){
+        } else if (requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_INFO_SERVICES)) {
             return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_INFORMATION_SERVICES);
-        } else if(requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_REG_SERVICES)){
+        } else if (requestCatCode.equalsIgnoreCase(RequestCategoryTypeBean.CATEGORY_REG_SERVICES)) {
             return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_REG_SERVICES);
         } else {
             return SecurityBean.isInRole(RolesConstants.APPLICATION_RUN_REG_SERVICES);
         }
     }
-    
+
     /**
      * Disables or enables buttons, related to the services list management.
      */
@@ -542,48 +546,41 @@ public class ApplicationPanel extends ContentPanel {
                 };
                 TaskManager.getInstance().runTask(t);
             } // Cadastre change services
-            else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_CHANGE)
-                    || requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_REDEFINITION)) {
-                if (appBean.getPropertyList().getFilteredList().size() > 0) {
-                    final PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
-                    propertyListForm.setLocationRelativeTo(this);
+            else if (requestType.equalsIgnoreCase(RequestTypeBean.CODE_CADASTRE_CHANGE)) {
 
-                    propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
+                final TransactionCadastreChangeBean transaction = TransactionCadastreChangeBean.getTransaction(appBean.getSelectedService().getId());
 
-                        @Override
-                        public void propertyChange(PropertyChangeEvent evt) {
-                            if (evt.getPropertyName().equals(PropertiesList.SELECTED_PROPERTY)
-                                    && evt.getNewValue() != null) {
-                                final BaUnitSearchResultBean property =
-                                        (BaUnitSearchResultBean) evt.getNewValue();
-                                ((JDialog) evt.getSource()).dispose();
+                if (transaction.getCadastreObjectTargetList().size() < 1) {
+                    // Show propserty form selection
+                    if (appBean.getPropertyList().getFilteredList().size() > 1) {
+                        final PropertiesList propertyListForm = new PropertiesList(appBean.getPropertyList());
+                        propertyListForm.setLocationRelativeTo(this);
 
-                                SolaTask t = new SolaTask<Void, Void>() {
+                        propertyListForm.addPropertyChangeListener(new PropertyChangeListener() {
 
-                                    @Override
-                                    public Void doTask() {
-                                        List<String> mapsheets = propertyListForm.getMapSheets();
-                                        setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCREGISTRATION));
-
-                                        CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                                                appBean,
-                                                appBean.getSelectedService(), property, mapsheets);
-                                        getMainContentPanel().addPanel(
-                                                form, getThis().getId(), form.getId(), true);
-                                        return null;
-                                    }
-                                };
-                                TaskManager.getInstance().runTask(t);
+                            @Override
+                            public void propertyChange(PropertyChangeEvent evt) {
+                                if (evt.getPropertyName().equals(PropertiesList.PROPERTIES_SELECTED)
+                                        && evt.getNewValue() != null) {
+                                    final ArrayList<BaUnitSearchResultBean> properties =
+                                            (ArrayList<BaUnitSearchResultBean>) evt.getNewValue();
+                                    
+                                    ((PropertiesList) evt.getSource()).clearSelection();
+                                    ((PropertiesList) evt.getSource()).dispose();
+                                    
+                                    openCadastreChangeForm(properties, transaction);
+                                }
                             }
-                        }
-                    });
-                    propertyListForm.setVisible(true);
+                        });
+                        propertyListForm.setVisible(true);
 
+                    } else if (appBean.getPropertyList().getFilteredList().size() == 1) {
+                        openCadastreChangeForm(appBean.getPropertyList().getFilteredList(), transaction);
+                    } else {
+                        MessageUtility.displayMessage(ClientMessage.APPLICATION_PROPERTY_LIST_EMPTY);
+                    }
                 } else {
-                    CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
-                            appBean, appBean.getSelectedService(), null, null);
-                    getMainContentPanel().addPanel(
-                            form, getThis().getId(), form.getId(), true);
+                    openCadastreChangeForm(null, transaction);
                 }
 
             } else {
@@ -596,12 +593,50 @@ public class ApplicationPanel extends ContentPanel {
         }
     }
 
-    private void openPropertyTransactionForm(ApplicationServiceBean service, boolean readOnly){
+    private void openCadastreChangeForm(final List<BaUnitSearchResultBean> baUnits, 
+            final TransactionCadastreChangeBean transaction) {
+        if (transaction == null) {
+            return;
+        }
+
+        SolaTask t = new SolaTask<Boolean, Void>() {
+
+            @Override
+            public Boolean doTask() {
+                setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
+                
+                if (baUnits != null && transaction.getCadastreObjectTargetList().size() < 1) {
+                    // Populate target objects from BaUnit list
+                    transaction.setCadastreObjectTargetListByBaUnits(baUnits);
+                }
+                
+                // Check dataset on target parcels
+                if(!transaction.checkDatasetForCadastreObjectTargetList()){
+                    return false;
+                }
+
+                CadastreTransactionMapPanel form = new CadastreTransactionMapPanel(
+                        appBean, appBean.getSelectedService(), transaction);
+                getMainContentPanel().addPanel(form, getThis().getId(), form.getId(), true);
+                return true;
+            }
+
+            @Override
+            protected void taskDone() {
+                if (get() == Boolean.FALSE) {
+                    MessageUtility.displayMessage(GisMessage.PARCEL_LIST_HAVE_THE_SAME_DATASET);
+                }
+            }
+        };
+        TaskManager.getInstance().runTask(t);
+    }
+
+    private void openPropertyTransactionForm(ApplicationServiceBean service, boolean readOnly) {
         ApplicationBean appBeanCopy = appBean.copy();
         PropertyTransactionForm form = new PropertyTransactionForm(appBeanCopy, service, readOnly);
         getMainContentPanel().addPanel(form, this.getId(), form.getId(), true);
     }
-    
+
     private ApplicationPanel getThis() {
         return this;
     }

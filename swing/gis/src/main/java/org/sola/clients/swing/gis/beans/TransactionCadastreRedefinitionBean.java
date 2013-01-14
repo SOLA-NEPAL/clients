@@ -95,4 +95,9 @@ public class TransactionCadastreRedefinitionBean extends TransactionBean {
                 PojoDataAccess.getInstance().getCadastreService().saveTransactionCadastreRedefinition(
                 this.getTO()), ValidationResultBean.class, null);
     }
+
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

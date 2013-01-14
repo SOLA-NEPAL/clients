@@ -117,4 +117,9 @@ public abstract class TransactionBean{
      * @return 
      */
     public abstract List<ValidationResultBean> save();
+    
+    /**
+     * Used to run bean validation. Should return true if no violations are found.
+     */
+    public abstract boolean validate();
 }

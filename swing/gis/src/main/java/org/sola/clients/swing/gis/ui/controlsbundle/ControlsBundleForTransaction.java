@@ -31,7 +31,6 @@ package org.sola.clients.swing.gis.ui.controlsbundle;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
-import java.util.List;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.extended.layer.ExtendedImageLayer;
@@ -39,15 +38,14 @@ import org.geotools.map.extended.layer.ExtendedLayer;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.geotools.swing.mapaction.extended.RemoveDirectImage;
 import org.geotools.swing.tool.extended.AddDirectImageTool;
+import org.sola.clients.beans.cache.CacheManager;
+import org.sola.clients.beans.cadastre.DatasetBean;
 import org.sola.clients.swing.gis.Messaging;
-import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.beans.TransactionBean;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.data.PojoFeatureSource;
 import org.sola.clients.swing.gis.layer.CadastreBoundaryPointLayer;
-import org.sola.clients.swing.gis.layer.CadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.PojoLayer;
-import org.sola.clients.swing.gis.mapaction.DatasetSelectionButton;
 import org.sola.clients.swing.gis.tool.CadastreBoundaryEditTool;
 import org.sola.clients.swing.gis.tool.CadastreBoundarySelectTool;
 import org.sola.common.messaging.GisMessage;
@@ -69,6 +67,10 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
     protected CadastreBoundaryPointLayer cadastreBoundaryPointLayer = null;
     protected CadastreBoundaryEditTool cadastreBoundaryEditTool;
     
+    public void Setup(PojoDataAccess pojoDataAccess, String datasetId) {
+        Setup(pojoDataAccess, CacheManager.getDataset(datasetId));
+    }
+    
     /**
      * It sets up the bundle. It calls the adding layer method and adding tools method. It also
      * identifies the pending layer which will be refreshed if a transaction is being saved in the
@@ -77,8 +79,8 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
      * @param pojoDataAccess
      */
     @Override
-    public void Setup(PojoDataAccess pojoDataAccess) {
-        super.Setup(pojoDataAccess); 
+    public void Setup(PojoDataAccess pojoDataAccess, DatasetBean dataset) {
+        super.Setup(pojoDataAccess, dataset); 
         
         try {
             //Adding layers
@@ -152,8 +154,7 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
      *
      */
     protected void addToolsAndCommands() {
-        this.cadastreBoundaryEditTool =
-                new CadastreBoundaryEditTool(this.cadastreBoundaryPointLayer);
+        this.cadastreBoundaryEditTool = new CadastreBoundaryEditTool(this.cadastreBoundaryPointLayer);
         this.getMap().addTool(this.cadastreBoundaryEditTool, this.getToolbar(), false);
         
         this.getMap().addTool(new AddDirectImageTool(this.imageLayer), this.getToolbar(), true);
@@ -162,7 +163,9 @@ public abstract class ControlsBundleForTransaction extends ControlsBundleForWork
 
     @Override
     public void refresh(boolean force) {
-        this.pendingLayer.setForceRefresh(force);
+        if(pendingLayer!=null){
+            this.pendingLayer.setForceRefresh(force);
+        }
         super.refresh(force);
     }
 

@@ -54,7 +54,7 @@ public final class ControlsBundleForBaUnit extends ControlsBundleForWorkingWithC
     private final String STYLE_RESOURCE = "parcel_highlighted.xml";
 
     public ControlsBundleForBaUnit(){
-        super.Setup2(PojoDataAccess.getInstance());
+        super.Setup(PojoDataAccess.getInstance());
         enableDatasetSelectionTool(false);
     }
 

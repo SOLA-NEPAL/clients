@@ -41,6 +41,8 @@ import java.io.Serializable;
 public class CadastreObjectTargetBean implements Serializable{
 
     private String cadastreObjectId;
+    
+    private String datasetId;
 
     public String getCadastreObjectId() {
         return cadastreObjectId;
@@ -50,6 +52,14 @@ public class CadastreObjectTargetBean implements Serializable{
         this.cadastreObjectId = cadastreObjectId;
     }
 
+    public String getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(String datasetId) {
+        this.datasetId = datasetId;
+    }
+    
     @Override
     public boolean equals(Object target){
         if (target.getClass() != this.getClass()){

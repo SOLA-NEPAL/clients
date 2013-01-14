@@ -29,12 +29,17 @@
  */
 package org.sola.clients.swing.gis.tool;
 
+import com.vividsolutions.jts.geom.Geometry;
+import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.geometry.DirectPosition2D;
 
 import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.tool.extended.ExtendedTool;
+import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.SelectedParcelInfo;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
+import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
+import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
@@ -49,17 +54,16 @@ public class listSelectedCadastreObjects extends ExtendedTool {
             GisMessage.LIST_PARCELS).getMessage();
     
     //main class to store the selection information.
-    private SelectedParcelInfo parcel_selected=null;
-
-    public SelectedParcelInfo getParcel_selected() {
-        return parcel_selected;
-    }
+    private SelectedParcelInfo parcel_selected;
     
-    public listSelectedCadastreObjects(PojoDataAccess dataAccess) {
+    public listSelectedCadastreObjects(PojoDataAccess dataAccess, 
+            CadastreTargetSegmentLayer targetPointLayer,
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         this.setToolName(NAME);
         this.setIconImage("resources/chooseParcel.png");
         this.setToolTip(toolTip);
         parcel_selected= new SelectedParcelInfo(dataAccess);
+        parcel_selected.setTargetLayers(targetPointLayer, targetParcelsLayer);
     }
 
     /**
@@ -75,6 +79,11 @@ public class listSelectedCadastreObjects extends ExtendedTool {
                 getCadastreService().getCadastreObjectByPoint(
                 pos.x, pos.y, this.getMapControl().getSrid());
         
-        parcel_selected.display_Selected_Parcel(cadastreObject,ev.isControlDown());
+        parcel_selected.display_Selected_Parcel(cadastreObject.getId(), cadastreObject.getGeomPolygon() ,ev.isControlDown());
+    }
+    
+    /** Selects all feature on the target layer. */
+    public void selectTargetLayerFeatures(){
+        parcel_selected.selectTargetLayerFeatures();
     }
 }

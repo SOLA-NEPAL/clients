@@ -33,19 +33,12 @@
  */
 package org.sola.clients.swing.gis.ui.controlsbundle;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import org.geotools.feature.SchemaException;
 import org.geotools.map.extended.layer.ExtendedFeatureLayer;
 import org.geotools.swing.extended.ControlsBundle;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.beans.cadastre.DatasetBean;
-import org.sola.clients.swing.common.utils.Utils;
 import org.sola.clients.swing.gis.Messaging;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.data.PojoFeatureSource;
@@ -55,7 +48,6 @@ import org.sola.clients.swing.gis.mapaction.DatasetSelectionButton;
 import org.sola.clients.swing.gis.mapaction.SolaPrint;
 import org.sola.clients.swing.gis.mapaction.ZoomToScale;
 import org.sola.clients.swing.gis.tool.InformationTool;
-import org.sola.clients.swing.gis.ui.control.DatasetSelectionForm;
 import org.sola.clients.swing.gis.ui.control.SearchPanel;
 import org.sola.common.messaging.GisMessage;
 import org.sola.webservices.spatial.ConfigMapLayerTO;
@@ -93,7 +85,7 @@ public abstract class SolaControlsBundle extends ControlsBundle {
         this.getMap().addMapTextBoxAction(new ZoomToScale(this.getMap()), this.getToolbar(), true, "scale");
     }
 
-    public void Setup2(PojoDataAccess pojoDataAccess, DatasetBean dataset) {
+    public void Setup(PojoDataAccess pojoDataAccess, DatasetBean dataset) {
         if (!mapInitialized) {
             try {
                 this.pojoDataAccess = pojoDataAccess;
@@ -134,8 +126,8 @@ public abstract class SolaControlsBundle extends ControlsBundle {
      * the server from where the map definitions are retrieved.
      *
      */
-    public void Setup2(PojoDataAccess pojoDataAccess) {
-        Setup2(pojoDataAccess, null);
+    public void Setup(PojoDataAccess pojoDataAccess) {
+        Setup(pojoDataAccess, null);
     }
 
     public void setDataset(DatasetBean dataset) {
@@ -182,46 +174,6 @@ public abstract class SolaControlsBundle extends ControlsBundle {
 
         } else if (getMap() != null) {
             // Remove layers
-        }
-    }
-
-    /**
-     * Sets up the bundle.
-     *
-     * @param pojoDataAccess The data access library used to communicate with
-     * the server from where the map definitions are retrieved.
-     *
-     */
-    public void Setup(PojoDataAccess pojoDataAccess) {
-        try {
-            this.pojoDataAccess = pojoDataAccess;
-            MapDefinitionTO mapDefinition = pojoDataAccess.getMapDefinition();
-            super.Setup(mapDefinition.getSrid(), mapDefinition.getWktOfCrs(), true);
-            this.addSearchPanel();
-            InformationTool infoTool = new InformationTool(this.pojoDataAccess);
-            this.getMap().addTool(infoTool, this.getToolbar(), true);
-            this.solaPrint = new SolaPrint(this.getMap());
-            this.getMap().addMapAction(this.solaPrint, this.getToolbar(), true);
-            //test the lable and text box addition.
-            setupForScaleBox();
-            //addMemoryLayers();
-            this.getMap().setFullExtent(
-                    mapDefinition.getEast(),
-                    mapDefinition.getWest(),
-                    mapDefinition.getNorth(),
-                    mapDefinition.getSouth());
-            //Navigation Layers.
-            for (ConfigMapLayerTO configMapLayer : mapDefinition.getLayers()) {
-                this.addLayerConfig(configMapLayer);
-            }
-            //PublicMethod.getParcelData(parcelLayer, mapsheets);
-            //PublicMethod.getConstructionData(consLayer, mapsheets);
-            this.getMap().initializeSelectionLayer();
-            this.getMap().zoomToFullExtent();
-        } catch (Exception ex) {
-            Messaging.getInstance().show(GisMessage.GENERAL_CONTROLBUNDLE_ERROR);
-            org.sola.common.logging.LogUtility.log(
-                    GisMessage.GENERAL_CONTROLBUNDLE_ERROR, ex);
         }
     }
 
@@ -279,7 +231,9 @@ public abstract class SolaControlsBundle extends ControlsBundle {
      * @param applicationId
      */
     public void setApplicationId(String applicationId) {
-        this.solaPrint.setApplicationId(applicationId);
+        if(solaPrint!=null){
+            this.solaPrint.setApplicationId(applicationId);
+        }
     }
 
     /**
