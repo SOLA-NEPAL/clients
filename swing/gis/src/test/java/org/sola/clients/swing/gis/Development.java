@@ -127,7 +127,7 @@ public class Development {
         TransactionCadastreChangeBean cadastreChangeBean =
                 PojoDataAccess.getInstance().getTransactionCadastreChange("4001");
         ControlsBundleForCadastreChange ctrl =
-                new ControlsBundleForCadastreChange("333", cadastreChangeBean, "3068323", null,null);
+                new ControlsBundleForCadastreChange("333", cadastreChangeBean);
         ctrl.getMap().addMapAction(new TestCadastreTransactionChange(ctrl), ctrl.getToolbar(), true);
         
        // ctrl.setReadOnly(true);

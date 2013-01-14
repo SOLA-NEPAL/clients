@@ -71,7 +71,7 @@ public class ExtendedLayerGraphics extends ExtendedFeatureLayer {
             throws InitializeLayerException{
         this(name, geometryType, styleResource, null);
     }
-
+    
     /**
      * The same as the other constructor only extra fields can be specified for the features.
      * @param name

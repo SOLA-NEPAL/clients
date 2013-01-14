@@ -38,10 +38,10 @@ package org.sola.clients.swing.gis.beans;
  * @author Elton Manoku
  */
 public class CadastreObjectTargetRedefinitionBean extends CadastreObjectTargetBean {
-    
-    private byte[] geomPolygon;
-    private byte[] geomPolygonCurrent;
 
+    private byte[] geomPolygonCurrent;
+    private byte[] geomPolygon;
+    
     public byte[] getGeomPolygon() {
         return geomPolygon;
     }
@@ -49,7 +49,7 @@ public class CadastreObjectTargetRedefinitionBean extends CadastreObjectTargetBe
     public void setGeomPolygon(byte[] geomPolygon) {
         this.geomPolygon = geomPolygon.clone();
     }
-
+    
     public byte[] getGeomPolygonCurrent() {
         return geomPolygonCurrent;
     }

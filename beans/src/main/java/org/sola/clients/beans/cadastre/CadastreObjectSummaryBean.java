@@ -25,6 +25,7 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.system.AreaBean;
 import org.sola.common.AreaConversion;
+import org.sola.common.StringUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -33,8 +34,8 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * domain model. Could be populated from the {@link CadastreObjectTO} object.
  */
 @CadastreObjectCheck
-public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeCodeBean {
-    
+public class CadastreObjectSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
+
     public static final String TYPE_CODE_PROPERTY = "typeCode";
     public static final String APPROVAL_DATETIME_PROPERTY = "approvalDatetime";
     public static final String HISTORIC_DATETIME_PROPERTY = "historicDatetime";
@@ -71,7 +72,6 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     public static final String AREA_UNIT_TYPE_CODE_PROPERTY = "areaUnitTypeCode";
     public static final String OFFICIAL_AREA_PROPERTY = "officialArea";
     public static final String PROPERTY_ID_CODE_PROPERTY = "propertyIdCode";
-    
     private Date approvalDatetime;
     private Date historicDatetime;
     private String nameFirstPart;
@@ -93,14 +93,14 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     private String fiscalYearCode;
     private AreaBean area;
     private String datasetId;
-    
-    public CadastreObjectSummaryBean(){
+
+    public CadastreObjectSummaryBean() {
         super();
         area = new AreaBean();
     }
-    
+
     public AddressBean getAddress() {
-        if(address == null){
+        if (address == null) {
             address = new AddressBean();
         }
         return address;
@@ -346,27 +346,48 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
                 oldValue, nameLastPart);
         propertySupport.firePropertyChange(PROPERTY_ID_CODE_PROPERTY, null, getPropertyIdCode());
     }
-    
-    /** 
-     * Returns unified Property identification number. 
+
+    /**
+     * Returns unified Property identification number.
+     *
      * @param nameFirstPart First part of the property code.
      * @param nameLastPart Last part of the property code.
      */
-    public static String getPropertyIdCode(String nameFirstPart, String nameLastPart){
+    public static String getPropertyIdCode(String nameFirstPart, String nameLastPart) {
         String code = nameFirstPart;
-        if(nameLastPart!=null){
-            if(code == null){
+        if (nameLastPart != null) {
+            if (code == null) {
                 code = "";
             }
             code = code + "/" + nameLastPart;
         }
         return code;
     }
-    
-    public String getPropertyIdCode(){
+
+    public String getPropertyIdCode() {
         return getPropertyIdCode(getNameFirstPart(), getNameLastPart());
     }
-    
+
+    public void generateNameFirstLastPart() {
+        String nameFPart = "";
+        String nameLPart = "";
+
+        if (getAddress() != null && getAddress().getVdcCode() != null
+                && getAddress().getWardNo() != null
+                && getMapSheet() != null
+                && getMapSheet().getMapNumber() != null) {
+            nameFPart = getAddress().getVdcCode() + "-" + getAddress().getWardNo()
+                    + "-" + getMapSheet().getMapNumber();
+        }
+
+        if (getParcelno() != null) {
+            nameLPart = getParcelno();
+        }
+
+        setNameFirstPart(nameFPart);
+        setNameLastPart(nameLPart);
+    }
+
     public String getTypeCode() {
         if (cadastreObjectType != null) {
             return cadastreObjectType.getCode();
@@ -420,7 +441,7 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
         this.mapSheet = mapSheet;
         propertySupport.firePropertyChange(MAP_SHEET_PROPERTY, oldValue, this.mapSheet);
     }
-    
+
     public MapSheetBean getMapSheet2() {
         return mapSheet2;
     }
@@ -440,7 +461,7 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
         this.mapSheet3 = mapSheet3;
         propertySupport.firePropertyChange(MAP_SHEET3_PROPERTY, oldValue, this.mapSheet3);
     }
-    
+
     public MapSheetBean getMapSheet4() {
         return mapSheet4;
     }
@@ -450,7 +471,7 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
         this.mapSheet4 = mapSheet4;
         propertySupport.firePropertyChange(MAP_SHEET4_PROPERTY, oldValue, this.mapSheet4);
     }
-    
+
     public String getFiscalYearCode() {
         return fiscalYearCode;
     }
@@ -528,29 +549,36 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
     }
 
     public String getOfficialAreaFormatted() {
-        if(area.getAreaInSqMt()==null){
+        if (area.getAreaInSqMt() == null) {
             return null;
         }
         String stringArea = AreaConversion.getAreaInLocalUnit(getAreaUnitTypeCode(), area.getAreaInSqMt().doubleValue());
-        if(stringArea!=null && !stringArea.isEmpty()){
+        if (stringArea != null && !stringArea.isEmpty()) {
             stringArea = stringArea + " (" + area.getAreaInSqMt().toPlainString() + ")";
         }
         return stringArea;
     }
-    
+
     public void setOfficialArea(BigDecimal officialArea) {
         BigDecimal oldValue = area.getAreaInSqMt();
         area.setAreaInSqMt(officialArea);
+        setAreaUnitTypeCode(AreaConversion.CODE_AREA_TYPE_SQMT);
         propertySupport.firePropertyChange(OFFICIAL_AREA_PROPERTY, oldValue, area.getAreaInSqMt());
     }
 
-//    public void saveCadastreObject() {
-//        CadastreObjectSummaryTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectSummaryTO.class);
-//        cadTO = WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
-//        TypeConverters.TransferObjectToBean(cadTO, CadastreObjectSummaryBean.class, this);
-//    }
-    
-     public void saveCadastreObject() {
+    public void resetPropertiesForNewParcel() {
+        resetVersion();
+        generateId();
+        setParcelno(null);
+        setParcelNote(null);
+        setApprovalDatetime(null);
+        setHistoricDatetime(null);
+        setFiscalYearCode(null);
+        setLocked(false);
+        setTransactionId(null);
+    }
+
+    public void saveCadastreObject() {
         CadastreObjectTO cadTO = TypeConverters.BeanToTrasferObject(this, CadastreObjectTO.class);
         cadTO = WSManager.getInstance().getCadastreService().saveCadastreObject(cadTO);
         TypeConverters.TransferObjectToBean(cadTO, CadastreObjectBean.class, this);
@@ -567,5 +595,31 @@ public class CadastreObjectSummaryBean  extends AbstractTransactionedWithOfficeC
         CadastreObjectBean prclBean = TypeConverters.TransferObjectToBean(parcelTO, CadastreObjectBean.class, null);
 
         return prclBean;
+    }
+
+    /**
+     * Returns parcel by BaUnit ID.
+     */
+    public static CadastreObjectBean getParcelByBaUnit(String baUnitId) {
+        if (baUnitId == null || baUnitId.length() < 1) {
+            return null;
+        }
+        CadastreObjectTO parcelTO = WSManager.getInstance().getCadastreService().getCadastreObjectByBaUnit(baUnitId);
+        CadastreObjectBean prclBean = TypeConverters.TransferObjectToBean(parcelTO, CadastreObjectBean.class, null);
+
+        return prclBean;
+    }
+
+    /**
+     * Checks {@link CadastreObjectBean} to have dataset id and geometry. If any
+     * of them is missing, returns false.
+     *
+     * @param co {@link CadastreObjectBean} to check
+     */
+    public static boolean checkParcelHasDatasetAndGeom(CadastreObjectBean co) {
+        if (co == null || StringUtility.isEmpty(co.getDatasetId()) || co.getGeomPolygon() == null || co.getGeomPolygon().length < 1) {
+            return false;
+        }
+        return true;
     }
 }

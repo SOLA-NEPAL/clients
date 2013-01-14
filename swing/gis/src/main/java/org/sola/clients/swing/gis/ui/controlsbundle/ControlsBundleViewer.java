@@ -42,6 +42,6 @@ public final class ControlsBundleViewer extends SolaControlsBundle{
     
     public ControlsBundleViewer(){
         super();
-        this.Setup2(PojoDataAccess.getInstance());
+        this.Setup(PojoDataAccess.getInstance());
     }
 }

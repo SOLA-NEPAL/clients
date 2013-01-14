@@ -1,28 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO).
- * All rights reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *    1. Redistributions of source code must retain the above copyright notice,this list
- *       of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright notice,this list
- *       of conditions and the following disclaimer in the documentation and/or other
- *       materials provided with the distribution.
- *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
- *       promote products derived from this software without specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
- * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 /*
@@ -39,6 +41,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
@@ -63,13 +67,14 @@ import org.opengis.filter.FilterFactory2;
 
 /**
  * This layer is used as a base feature layer for other feature based layers.
+ *
  * @author Elton Manoku
  */
 public class ExtendedFeatureLayer extends ExtendedLayer {
 
     /**
-     * The String with the path to the resources for layers. If there is more than one path,
-     * concatenate using comma ,.
+     * The String with the path to the resources for layers. If there is more
+     * than one path, concatenate using comma ,.
      */
     private static String sldResources = "/org/geotools/map/extended/layer/resources/";
     private static StyleFactory styleFactory = new StyleFactoryImpl();
@@ -89,11 +94,13 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
 
     /**
      * It initializes the layer.
+     *
      * @param name Name of the layer. Has to be unique.
      * @param featureSource The source of features.
-     * @param styleResource The style resource name. With this name, it is searched in the paths 
-     * provided in sldResources in the order of appearance.
-     * @throws InitializeLayerException 
+     * @param styleResource The style resource name. With this name, it is
+     * searched in the paths provided in sldResources in the order of
+     * appearance.
+     * @throws InitializeLayerException
      */
     protected void initialize(String name, SimpleFeatureSource featureSource, String styleResource)
             throws InitializeLayerException {
@@ -103,10 +110,11 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
 
     /**
      * Initializer but the style is already resolved.
+     *
      * @param name
      * @param featureSource
      * @param style
-     * @throws InitializeLayerException 
+     * @throws InitializeLayerException
      */
     protected void initialize(String name, SimpleFeatureSource featureSource, Style style)
             throws InitializeLayerException {
@@ -120,15 +128,51 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
         this.getMapLayers().add(this.featureLayer);
     }
 
-    /**
-     * It adds extra sld resources to the existing one. The last one added gets priority.
-     */
-    public static void setExtraSldResources(String sldExtraResources){
-        sldResources = String.format("%s,%s",sldExtraResources, sldResources); 
+    /** Zooms to the current layer. */
+    public void zoomToLayer() {
+        zoomToLayer(0.5);
     }
+    
+    /** 
+     * Zooms to the current layer with a given expansion. 
+     * @param expandBy The value to expand an envelope. 0.5 means expand by 50% of the envelope height.
+     */
+    public void zoomToLayer(double expandBy) {
+        try {
+            if (getFeatureSource() == null || getFeatureSource().getFeatures() == null
+                    || getFeatureSource().getFeatures().size() < 1) {
+                return;
+            }
+            ReferencedEnvelope env = new ReferencedEnvelope(
+                    getFeatureSource().getBounds().getMinX(),
+                    getFeatureSource().getBounds().getMaxX(),
+                    getFeatureSource().getBounds().getMinY(),
+                    getFeatureSource().getBounds().getMaxY(),
+                    getMapControl().getMapContent().getCoordinateReferenceSystem());
+            if(expandBy != 0){
+                double expand_by = env.getHeight() * 0.5;//expand 50 % of height
+                env.expandBy(expand_by);
+            }
+            
+            getMapControl().setDisplayArea(env);
+            getMapControl().refresh(false);
+        } catch (IOException ex) {
+            Logger.getLogger(ExtendedFeatureLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * It adds extra sld resources to the existing one. The last one added gets
+     * priority.
+     */
+    public static void setExtraSldResources(String sldExtraResources) {
+        sldResources = String.format("%s,%s", sldExtraResources, sldResources);
+    }
+
     /**
      * Gets the feature source
-     * @return 
+     *
+     * @return
      */
     public SimpleFeatureSource getFeatureSource() {
         return featureSource;
@@ -136,7 +180,8 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
 
     /**
      * Sets the feature source
-     * @param featureSource 
+     *
+     * @param featureSource
      */
     public void setFeatureSource(SimpleFeatureSource featureSource) {
         this.featureSource = featureSource;
@@ -144,33 +189,39 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
 
     /**
      * Gets the style of the layer
-     * @return 
+     *
+     * @return
      */
     public Style getStyle() {
         return style;
     }
 
     /**
-     * Gets a string that represents a filter expressions if the feature layer will be used
-     * as a target for snapping during editing.
-     * @return 
+     * Gets a string that represents a filter expressions if the feature layer
+     * will be used as a target for snapping during editing.
+     *
+     * @return
      */
     public String getFilterExpressionForSnapping() {
         return filterExpressionForSnapping;
     }
 
     /**
-     * Sets the filter for the features in the layer that can be used as a target for snapping.
-     * @param filterExpressionForSnapping It is a attribute based filter as in sql.
+     * Sets the filter for the features in the layer that can be used as a
+     * target for snapping.
+     *
+     * @param filterExpressionForSnapping It is a attribute based filter as in
+     * sql.
      */
     public void setFilterExpressionForSnapping(String filterExpressionForSnapping) {
         this.filterExpressionForSnapping = filterExpressionForSnapping;
     }
 
     /**
-     * It retrieves the list of symbols that represent the symbology. For each rule in the style
-     * a symbol is created.
-     * @return 
+     * It retrieves the list of symbols that represent the symbology. For each
+     * rule in the style a symbol is created.
+     *
+     * @return
      */
     @Override
     public List<TocSymbol> getLegend() {
@@ -231,9 +282,10 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
 
     /**
      * It gets the first style found in the resource.
+     *
      * @param sldResource The resource name.
      * @return The first style if styles found or null
-     * @throws InitializeLayerException 
+     * @throws InitializeLayerException
      */
     private Style getStyleFromSLD(String sldResource) throws InitializeLayerException {
         Style[] styles = this.getStylesFromSLD(sldResource);
@@ -241,16 +293,18 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
         if (styles != null && styles.length > 0) {
             styleTmp = styles[0];
         }
-        
+
         return styleTmp;
     }
 
     /**
-     * Gets the list of styles found in the resource. The location of the resource is taken 
-     * from @see sldResources.
+     * Gets the list of styles found in the resource. The location of the
+     * resource is taken from
+     *
+     * @see sldResources.
      * @param sldResource
      * @return
-     * @throws InitializeLayerException 
+     * @throws InitializeLayerException
      */
     private Style[] getStylesFromSLD(String sldResource) throws InitializeLayerException {
         Style[] styles = null;
@@ -278,12 +332,13 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
     }
 
     /**
-     * It searches for features within the bbox. Additionally, the extra attribute based filter 
-     * can be used as well.
+     * It searches for features within the bbox. Additionally, the extra
+     * attribute based filter can be used as well.
+     *
      * @param bbox The bounding box to search in
      * @param whereAttributeFilter Extra attribute based filter. It can be null
-     * @return A FeatureCollection if something found or nothing found 
-     * or null if some error occurred
+     * @return A FeatureCollection if something found or nothing found or null
+     * if some error occurred
      */
     public FeatureCollection getFeaturesInRange(
             ReferencedEnvelope bbox, String whereAttributeFilter) {
@@ -309,13 +364,14 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
         }
         return null;
     }
-    
+
     /**
      * Gets first feature within bounding box.
+     *
      * @param bbox
      * @return first feature found or null.
      */
-    public SimpleFeature getFirstFeatureInRange(ReferencedEnvelope bbox){
+    public SimpleFeature getFirstFeatureInRange(ReferencedEnvelope bbox) {
         SimpleFeature feature = null;
         FeatureCollection featureCollection = this.getFeaturesInRange(bbox, null);
         if (featureCollection != null) {
@@ -328,6 +384,6 @@ public class ExtendedFeatureLayer extends ExtendedLayer {
             featureIterator.close();
         }
         return feature;
-        
+
     }
 }

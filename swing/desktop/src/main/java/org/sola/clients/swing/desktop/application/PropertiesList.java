@@ -29,20 +29,15 @@ package org.sola.clients.swing.desktop.application;
 
 import java.awt.ComponentOrientation;
 import java.awt.Frame;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.ListModel;
 import org.jdesktop.observablecollections.ObservableList;
 import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
-import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.controls.SolaList;
-import org.sola.clients.beans.converters.TypeConverters;
-import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  * Popup window to select property object from the list.
@@ -50,9 +45,11 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 public class PropertiesList extends javax.swing.JDialog {
 
     public static final String SELECTED_PROPERTY = "selectedProperty";
+    public static final String PROPERTIES_SELECTED = "propertiesSelected";
     
     private SolaList propertyList;
     private BaUnitSearchResultBean selectedProperty;
+    private PropertyChangeListener selectCheckboxListener;
     
     //CadastreObjectSummaryBean
     
@@ -64,49 +61,65 @@ public class PropertiesList extends javax.swing.JDialog {
     public PropertiesList(SolaList<BaUnitSearchResultBean> propertyList) {
         super((Frame)null, true);  
         this.propertyList = propertyList;
-        initComponents();       
-        this.setIconImage(new ImageIcon(PropertiesList.class.getResource("/images/sola/logo_icon.jpg")).getImage());
+        initComponents();    
+        postInit();
+    }
+    
+    private void postInit(){
+        setIconImage(new ImageIcon(PropertiesList.class.getResource("/images/sola/logo_icon.jpg")).getImage());
+        selectCheckboxListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(BaUnitSearchResultBean.SELECTED_PROPERTY)){
+                    setupSelectButton();
+                }
+            }
+        };
         
-        showSelectedParcelMapSheet();
+        for(BaUnitSearchResultBean baUnit : getPropertyList()){
+            baUnit.addPropertyChangeListener(selectCheckboxListener);
+        }
+        setupSelectButton();
+    }
+    
+    private void setupSelectButton(){
+        for(BaUnitSearchResultBean baUnit : getPropertyList()){
+            if(baUnit.isSelected()){
+                btnSelect.setEnabled(true);
+                return;
+            }
+        }
+        btnSelect.setEnabled(false);
+    }
+    
+    public void clearSelection(){
+        for(BaUnitSearchResultBean selectedProp : getPropertyList()){
+            selectedProp.setSelected(false);
+        }
     }
     
     public ObservableList<BaUnitSearchResultBean> getPropertyList() {
         return propertyList.getFilteredList();
     }
-     
-     
 
     public BaUnitSearchResultBean getSelectedProperty() {
         return selectedProperty;
     }
 
-    public void setSelectedProperty(BaUnitSearchResultBean selectedProperty) {
-        this.selectedProperty = selectedProperty;
-    }
-    
-    private void AppendItemInListBox(JList dest,MapSheetBean mapsheet) {
-        //append to destination list box.
-        DefaultListModel defDisplay=new DefaultListModel();
-        defDisplay.addElement(mapsheet.getMapNumber());
-        dest.setModel(defDisplay);
-    }
-    
-    private void showSelectedParcelMapSheet(){
-        tabPropertyDetails.addRowSelectionInterval(0, 0);
-        
-        BaUnitSearchResultBean property=this.getSelectedProperty();
-        String firstpart= property.getNameFirstPart();
-        String lastpart= property.getNameLastPart();
-        List<CadastreObjectTO> parcel=
-              WSManager.getInstance().getCadastreService().getCadastreObjectByExactParts(firstpart, lastpart); //searching by number.
-        //the valued returned will be only one.
-        if (parcel!=null && parcel.size()>0){
-            CadastreObjectTO selected_parcel= parcel.get(0);
-            MapSheetBean mapsht= TypeConverters.TransferObjectToBean(
-                    selected_parcel.getMapSheet(),MapSheetBean.class,null);
-            
-            AppendItemInListBox(lstMapDisplay,mapsht);
+    private List<BaUnitSearchResultBean> getSelectedProperties(){
+        ArrayList<BaUnitSearchResultBean> selectedList = new ArrayList<>();
+        for(BaUnitSearchResultBean selectedProp : getPropertyList()){
+            if(selectedProp.isSelected()){
+                selectedList.add(selectedProp);
+            }
         }
+        return selectedList;
+    }
+    
+    public void setSelectedProperty(BaUnitSearchResultBean selectedProperty) {
+        BaUnitSearchResultBean oldValue = this.selectedProperty;
+        this.selectedProperty = selectedProperty;
+        firePropertyChange(SELECTED_PROPERTY, oldValue, this.selectedProperty);
     }
 
     @SuppressWarnings("unchecked")
@@ -116,15 +129,18 @@ public class PropertiesList extends javax.swing.JDialog {
 
         scrollPropertyDetails = new javax.swing.JScrollPane();
         tabPropertyDetails = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstMapDisplay = new javax.swing.JList();
-        btnDisplayMap = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnSelect = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle"); // NOI18N
         setTitle(bundle.getString("PropertiesList.title")); // NOI18N
         setName("Form"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         scrollPropertyDetails.setFont(new java.awt.Font("Tahoma 12 12", 0, 12)); // NOI18N
         scrollPropertyDetails.setName("scrollPropertyDetails"); // NOI18N
@@ -135,7 +151,10 @@ public class PropertiesList extends javax.swing.JDialog {
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${propertyList}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tabPropertyDetails, "");
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameFirstPart}"));
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${selected}"));
+        columnBinding.setColumnName("Selected");
+        columnBinding.setColumnClass(Boolean.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameFirstPart}"));
         columnBinding.setColumnName("Name First Part");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
@@ -156,57 +175,50 @@ public class PropertiesList extends javax.swing.JDialog {
         bindingGroup.addBinding(binding);
 
         tabPropertyDetails.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        tabPropertyDetails.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablePropertiesMouseCliecked(evt);
-            }
-        });
         scrollPropertyDetails.setViewportView(tabPropertyDetails);
-        tabPropertyDetails.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title0")); // NOI18N
-        tabPropertyDetails.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title1")); // NOI18N
-        tabPropertyDetails.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title2")); // NOI18N
-        tabPropertyDetails.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title3")); // NOI18N
+        tabPropertyDetails.getColumnModel().getColumn(0).setMinWidth(30);
+        tabPropertyDetails.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tabPropertyDetails.getColumnModel().getColumn(0).setMaxWidth(30);
+        tabPropertyDetails.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title4")); // NOI18N
+        tabPropertyDetails.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title0")); // NOI18N
+        tabPropertyDetails.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title1")); // NOI18N
+        tabPropertyDetails.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title2")); // NOI18N
+        tabPropertyDetails.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("PropertiesList.tabPropertyDetails.columnModel.title3")); // NOI18N
 
-        jLabel2.setText(bundle.getString("PropertiesList.jLabel2.text")); // NOI18N
-        jLabel2.setName(bundle.getString("PropertiesList.jLabel2.name")); // NOI18N
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setName(bundle.getString("PropertiesList.jToolBar1.name")); // NOI18N
 
-        jScrollPane2.setName(bundle.getString("PropertiesList.jScrollPane2.name")); // NOI18N
-
-        lstMapDisplay.setName(bundle.getString("PropertiesList.lstMapDisplay.name")); // NOI18N
-        jScrollPane2.setViewportView(lstMapDisplay);
-
-        btnDisplayMap.setText(bundle.getString("PropertiesList.btnDisplayMap.text")); // NOI18N
-        btnDisplayMap.setName(bundle.getString("PropertiesList.btnDisplayMap.name")); // NOI18N
-        btnDisplayMap.addActionListener(new java.awt.event.ActionListener() {
+        btnSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/select.png"))); // NOI18N
+        btnSelect.setText(bundle.getString("PropertiesList.btnSelect.text")); // NOI18N
+        btnSelect.setFocusable(false);
+        btnSelect.setName(bundle.getString("PropertiesList.btnSelect.name")); // NOI18N
+        btnSelect.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDisplayMapActionPerformed(evt);
+                btnSelectActionPerformed(evt);
             }
         });
+        jToolBar1.add(btnSelect);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDisplayMap))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDisplayMap))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPropertyDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -215,32 +227,19 @@ public class PropertiesList extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tablePropertiesMouseCliecked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePropertiesMouseCliecked
-        showSelectedParcelMapSheet();
-    }//GEN-LAST:event_tablePropertiesMouseCliecked
+    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
+        if(getSelectedProperties().size() > 0){
+            firePropertyChange(PROPERTIES_SELECTED, null, getSelectedProperties());
+        }
+    }//GEN-LAST:event_btnSelectActionPerformed
 
-    private void btnDisplayMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayMapActionPerformed
-        if(selectedProperty!=null){
-            firePropertyChange(SELECTED_PROPERTY, null, selectedProperty);            
-        }
-    }//GEN-LAST:event_btnDisplayMapActionPerformed
-    
-    public List<String> getMapSheets(){
-        List<String> mapsheets=new ArrayList<>();
-        ListModel model=lstMapDisplay.getModel();
-        for (int i=0; i<model.getSize();i++){
-            String sheet=model.getElementAt(i).toString();
-            mapsheets.add(sheet);
-        }
-        
-        return mapsheets;
-    }
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        clearSelection();
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDisplayMap;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList lstMapDisplay;
+    private javax.swing.JButton btnSelect;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JScrollPane scrollPropertyDetails;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tabPropertyDetails;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

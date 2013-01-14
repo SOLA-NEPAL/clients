@@ -327,6 +327,16 @@ public class ApplicationBean extends ApplicationSummaryBean {
         return propertyList;
     }
 
+    public List<BaUnitSearchResultBean> getSelectedProperties(){
+        ArrayList<BaUnitSearchResultBean> selectedList = new ArrayList<BaUnitSearchResultBean>();
+        for(BaUnitSearchResultBean selectedProp : getFilteredPropertyList()){
+            if(selectedProp.isSelected()){
+                selectedList.add(selectedProp);
+            }
+        }
+        return selectedList;
+    }
+    
     @Valid
     public ObservableList<BaUnitSearchResultBean> getFilteredPropertyList() {
         return propertyList.getFilteredList();
