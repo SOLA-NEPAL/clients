@@ -176,7 +176,7 @@ public class LanguageCombobox extends JComboBox {
             if ("english".equalsIgnoreCase(languageStrings[language])) {
                 LocalizationManager.setLanguage(applicationMainClass, "en", "US");
             } else if ("नेपाली".equalsIgnoreCase(languageStrings[language])) {
-                LocalizationManager.setLanguage(applicationMainClass, "np", "NP");
+                LocalizationManager.setLanguage(applicationMainClass, "ne", "NP");
             }
 
             if (showMessage) {

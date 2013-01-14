@@ -76,7 +76,7 @@ public class LocSearchResultsPanel extends javax.swing.JPanel {
                 @Override
                 protected Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_GETTING_LOC));
-                    ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(locSearchResults.getSeletedResult().getId(), true, "np"));
+                    ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(locSearchResults.getSeletedResult().getId(), true, "ne"));
                     return null;
                 }
             };

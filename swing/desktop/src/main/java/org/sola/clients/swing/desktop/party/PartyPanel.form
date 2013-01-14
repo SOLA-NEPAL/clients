@@ -160,7 +160,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel1" alignment="1" max="32767" attributes="3"/>
                           <Component id="groupPanel5" max="32767" attributes="0"/>
-                          <Component id="jPanel32" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jPanel32" alignment="1" pref="0" max="32767" attributes="0"/>
                           <Component id="groupPanel6" alignment="0" max="32767" attributes="0"/>
                           <Component id="jPanel11" alignment="0" pref="0" max="32767" attributes="0"/>
                           <Component id="groupPanel7" alignment="0" max="32767" attributes="0"/>
@@ -695,10 +695,10 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtFirstName" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Component id="txtFirstName" pref="241" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Component id="labName" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="180" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -706,7 +706,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labName" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Component id="txtFirstName" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -714,18 +714,6 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="labName">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/images/common/red_asterisk.gif"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/ui/party/Bundle.properties" key="ApplicationForm.labName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                        <Property name="iconTextGap" type="int" value="1"/>
-                        <Property name="name" type="java.lang.String" value="labName" noResource="true"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JTextField" name="txtFirstName">
                       <Properties>
                         <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -742,6 +730,19 @@
                         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtFirstName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtFirstName.setHorizontalAlignment(JTextField.LEADING);"/>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="labName">
+                      <Properties>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/images/common/red_asterisk.gif"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/party/Bundle.properties" key="PartyPanel.labName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="org/sola/clients/swing/desktop/party/Bundle.properties" key="PartyPanel.labName.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1064,7 +1065,7 @@
                           <Component id="txtGrandFatherName" pref="208" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="153" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="84" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1755,9 +1756,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblPhoto">
                       <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/desktop/party/Bundle.properties" key="PartyPanel.lblPhoto.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder>
@@ -1844,9 +1842,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblRightFinger">
                       <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/desktop/party/Bundle.properties" key="PartyPanel.lblRightFinger.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder>
@@ -1933,9 +1928,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblSignature">
                       <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/desktop/party/Bundle.properties" key="PartyPanel.lblSignature.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder>
@@ -2022,9 +2014,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="lblLeftFinger">
                       <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/desktop/party/Bundle.properties" key="PartyPanel.lblLeftFinger.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder>

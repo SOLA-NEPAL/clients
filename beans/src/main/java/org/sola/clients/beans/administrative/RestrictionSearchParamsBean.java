@@ -76,7 +76,7 @@ public class RestrictionSearchParamsBean extends AbstractBindingBean {
 
     public RestrictionSearchParamsBean() {
         super();
-        languageCode = "np";
+        languageCode = "ne";
     }
 
     public String getBundleNo() {

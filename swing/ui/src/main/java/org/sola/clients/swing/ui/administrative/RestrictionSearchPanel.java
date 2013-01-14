@@ -109,7 +109,7 @@ public class RestrictionSearchPanel extends javax.swing.JPanel {
         }
         RestrictionInfoListBean restriction = new RestrictionInfoListBean();
         restriction.search(restrictionSearchResults.getSelectedResult().getReferenceNr(), 
-                restrictionSearchResults.getSelectedResult().getReferenceDate(), "np");
+                restrictionSearchResults.getSelectedResult().getReferenceDate(), "ne");
         ReportViewerForm.showReport(ReportManager.getRestrictionLetterReport(
                 restriction.getRestrictionInfoList()));
     }

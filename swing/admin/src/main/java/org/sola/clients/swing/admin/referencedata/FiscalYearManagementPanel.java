@@ -180,6 +180,8 @@ public class FiscalYearManagementPanel extends ContentPanel {
         tblFiscalYears.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title1")); // NOI18N
         tblFiscalYears.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title2")); // NOI18N
         tblFiscalYears.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title3")); // NOI18N
+        tblFiscalYears.getColumnModel().getColumn(4).setPreferredWidth(80);
+        tblFiscalYears.getColumnModel().getColumn(4).setMaxWidth(80);
         tblFiscalYears.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("FiscalYearManagementPanel.tblFiscalYears.columnModel.title4")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -190,7 +192,7 @@ public class FiscalYearManagementPanel extends ContentPanel {
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

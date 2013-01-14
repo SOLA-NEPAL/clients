@@ -29,8 +29,6 @@
  */
 package org.sola.clients.swing.desktop;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;

@@ -483,8 +483,8 @@ public class PartyPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         cbxPartyType = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
-        labName = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
+        labName = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         labLastName = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
@@ -881,11 +881,6 @@ public class PartyPanel extends javax.swing.JPanel {
 
         jPanel4.setName("jPanel4"); // NOI18N
 
-        labName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
-        labName.setText(bundle1.getString("ApplicationForm.labName.text")); // NOI18N
-        labName.setIconTextGap(1);
-        labName.setName("labName"); // NOI18N
-
         txtFirstName.setDisabledTextColor(new java.awt.Color(240, 240, 240));
         txtFirstName.setName("txtFirstName"); // NOI18N
 
@@ -895,20 +890,24 @@ public class PartyPanel extends javax.swing.JPanel {
         txtFirstName.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
         txtFirstName.setHorizontalAlignment(JTextField.LEADING);
 
+        labName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/red_asterisk.gif"))); // NOI18N
+        labName.setText(bundle.getString("PartyPanel.labName.text")); // NOI18N
+        labName.setName(bundle.getString("PartyPanel.labName.name")); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtFirstName)
+            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(labName)
-                .addGap(0, 180, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(labName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1128,7 +1127,7 @@ public class PartyPanel extends javax.swing.JPanel {
             .addComponent(txtGrandFatherName, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(0, 153, Short.MAX_VALUE))
+                .addGap(0, 84, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1299,7 +1298,7 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addGroup(basicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(groupPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel32, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel32, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(groupPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(groupPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1503,7 +1502,6 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel29.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PartyPanel.jPanel29.border.title"))); // NOI18N
         jPanel29.setName(bundle1.getString("PartyPanel.jPanel29.name")); // NOI18N
 
-        lblPhoto.setText(bundle.getString("PartyPanel.lblPhoto.text")); // NOI18N
         lblPhoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 51)));
         lblPhoto.setName(bundle1.getString("PartyPanel.lblPhoto.name")); // NOI18N
 
@@ -1553,7 +1551,6 @@ public class PartyPanel extends javax.swing.JPanel {
         rightFinger.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PartyPanel.rightFinger.border.title"))); // NOI18N
         rightFinger.setName(bundle1.getString("PartyPanel.rightFinger.name")); // NOI18N
 
-        lblRightFinger.setText(bundle.getString("PartyPanel.lblRightFinger.text")); // NOI18N
         lblRightFinger.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
         lblRightFinger.setName(bundle1.getString("PartyPanel.lblRightFinger.name")); // NOI18N
 
@@ -1603,7 +1600,6 @@ public class PartyPanel extends javax.swing.JPanel {
         signature.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PartyPanel.signature.border.title"))); // NOI18N
         signature.setName(bundle1.getString("PartyPanel.signature.name")); // NOI18N
 
-        lblSignature.setText(bundle.getString("PartyPanel.lblSignature.text")); // NOI18N
         lblSignature.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 0)));
         lblSignature.setName(bundle1.getString("PartyPanel.lblSignature.name")); // NOI18N
 
@@ -1653,7 +1649,6 @@ public class PartyPanel extends javax.swing.JPanel {
         leftFinger.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("PartyPanel.leftFinger.border.title"))); // NOI18N
         leftFinger.setName(bundle1.getString("PartyPanel.leftFinger.name")); // NOI18N
 
-        lblLeftFinger.setText(bundle.getString("PartyPanel.lblLeftFinger.text")); // NOI18N
         lblLeftFinger.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 0)));
         lblLeftFinger.setName(bundle1.getString("PartyPanel.lblLeftFinger.name")); // NOI18N
 

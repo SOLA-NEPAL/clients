@@ -33,12 +33,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Bindings;
@@ -683,7 +679,7 @@ public class PropertyPanel extends ContentPanel {
     private void print() {
         if (baUnitBean.getCurrentLoc() != null && baUnitBean.getCurrentLoc().getId() != null
                 && !baUnitBean.getCurrentLoc().getId().isEmpty()) {
-            ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(baUnitBean.getCurrentLoc().getId(), true, "np"));
+            ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(baUnitBean.getCurrentLoc().getId(), true, "ne"));
         } else {
             MessageUtility.displayMessage(ClientMessage.LOC_APPROVED_RRR_WITH_LOC_NOT_FOUND);
         }
@@ -695,7 +691,7 @@ public class PropertyPanel extends ContentPanel {
     private void printDemoLoc() {
         if (baUnitBean.getCurrentLoc() != null && baUnitBean.getCurrentLoc().getId() != null
                 && !baUnitBean.getCurrentLoc().getId().isEmpty()) {
-            ReportViewerForm.showLocDemoReport(LocDetailsBean.loadLocDetails(baUnitBean.getCurrentLoc().getId(), false, "np"));
+            ReportViewerForm.showLocDemoReport(LocDetailsBean.loadLocDetails(baUnitBean.getCurrentLoc().getId(), false, "ne"));
         } else {
             MessageUtility.displayMessage(ClientMessage.LOC_APPROVED_RRR_WITH_LOC_NOT_FOUND);
         }

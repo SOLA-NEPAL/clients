@@ -24,7 +24,7 @@ import org.sola.common.DateUtility;
 import org.sola.common.NepaliIntegersConvertor;
 
 public class RrrLocDetailsBean extends AbstractBasicIdBean {
-    
+
     private String nameFirstPart;
     private String nameLastPart;
     private String oldParcels;
@@ -48,8 +48,8 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     private String regNumber;
     private Integer regDate;
     private String requestName;
-    
-    public RrrLocDetailsBean(){
+
+    public RrrLocDetailsBean() {
         super();
     }
 
@@ -60,9 +60,9 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     public void setAreaUnitTypeCode(String areaUnitTypeCode) {
         this.areaUnitTypeCode = areaUnitTypeCode;
     }
-    
+
     public String getLandClassCode() {
-        if(getLandClass()==null){
+        if (getLandClass() == null) {
             return null;
         }
         return getLandClass().getCode();
@@ -73,7 +73,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getLandTypeCode() {
-        if(getLandType()==null){
+        if (getLandType() == null) {
             return null;
         }
         return getLandType().getCode();
@@ -84,7 +84,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getLandUseCode() {
-        if(getLandUse()==null){
+        if (getLandUse() == null) {
             return null;
         }
         return getLandUse().getCode();
@@ -95,7 +95,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getMapNumber() {
-        if(mapNumber!=null){
+        if (mapNumber != null) {
             return NepaliIntegersConvertor.toNepaliInteger(mapNumber, false);
         }
         return mapNumber;
@@ -106,7 +106,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getMothNumber() {
-        if(mothNumber!=null){
+        if (mothNumber != null) {
             return NepaliIntegersConvertor.toNepaliInteger(mothNumber, false);
         }
         return mothNumber;
@@ -145,13 +145,13 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getOfficialAreaFormatted() {
-        if(officialArea==null && (getAreaUnitTypeCode()==null || getAreaUnitTypeCode().isEmpty())){
+        if (officialArea == null && (getAreaUnitTypeCode() == null || getAreaUnitTypeCode().isEmpty())) {
             return null;
         }
-        if(officialArea!=null && (getAreaUnitTypeCode()==null || getAreaUnitTypeCode().isEmpty())){
+        if (officialArea != null && (getAreaUnitTypeCode() == null || getAreaUnitTypeCode().isEmpty())) {
             return officialArea.toPlainString();
         }
-        if(officialArea==null){
+        if (officialArea == null) {
             return AreaConversion.getAreaInLocalUnit(getAreaUnitTypeCode(), 0);
         }
         return AreaConversion.getAreaInLocalUnit(getAreaUnitTypeCode(), officialArea.doubleValue());
@@ -162,7 +162,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getOldParcels() {
-        if(oldParcels!=null){
+        if (oldParcels != null) {
             return NepaliIntegersConvertor.toNepaliInteger(oldParcels, false);
         }
         return oldParcels;
@@ -173,7 +173,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getOwnerTypeCode() {
-        if(getOwnerType()==null){
+        if (getOwnerType() == null) {
             return null;
         }
         return getOwnerType().getCode();
@@ -184,7 +184,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getOwnershipTypeCode() {
-        if(getOwnershipType()==null){
+        if (getOwnershipType() == null) {
             return null;
         }
         return getOwnershipType().getCode();
@@ -195,7 +195,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getPanaNumber() {
-        if(panaNumber!=null){
+        if (panaNumber != null) {
             return NepaliIntegersConvertor.toNepaliInteger(panaNumber, false);
         }
         return panaNumber;
@@ -206,7 +206,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getParcelNumber() {
-        if(parcelNumber!=null){
+        if (parcelNumber != null) {
             return NepaliIntegersConvertor.toNepaliInteger(parcelNumber, false);
         }
         return parcelNumber;
@@ -241,7 +241,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getWardNumber() {
-        if(wardNumber!=null){
+        if (wardNumber != null) {
             return NepaliIntegersConvertor.toNepaliInteger(wardNumber, false);
         }
         return wardNumber;
@@ -300,12 +300,12 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getRegDateFormatted() {
-        if(regDate==null){
+        if (regDate == null) {
             return "";
         }
         return DateUtility.toFormattedNepaliDate(regDate.toString());
     }
-    
+
     public Integer getRegDate() {
         return regDate;
     }
@@ -315,7 +315,7 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
     }
 
     public String getRegNumber() {
-        if(regNumber!=null){
+        if (regNumber != null) {
             return NepaliIntegersConvertor.toNepaliInteger(regNumber, false);
         }
         return regNumber;
@@ -331,5 +331,13 @@ public class RrrLocDetailsBean extends AbstractBasicIdBean {
 
     public void setRequestName(String requestName) {
         this.requestName = requestName;
+    }
+
+    public String getOfficialAreaNepaliFormatted() {
+        return NepaliIntegersConvertor.toNepaliInteger(getOfficialAreaFormatted(), false);
+    }
+
+    public String getOfficialAreaNepali() {
+        return NepaliIntegersConvertor.toNepaliInteger(getOfficialArea().toPlainString(), false);
     }
 }

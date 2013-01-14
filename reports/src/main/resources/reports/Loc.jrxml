@@ -200,6 +200,12 @@
 		<field name="requestName" class="java.lang.String">
 			<fieldDescription><![CDATA[requestName]]></fieldDescription>
 		</field>
+		<field name="officialAreaNepali" class="java.lang.String">
+			<fieldDescription><![CDATA[officialAreaNepali]]></fieldDescription>
+		</field>
+		<field name="officialAreaNepaliFormatted" class="java.lang.String">
+			<fieldDescription><![CDATA[officialAreaNepaliFormatted]]></fieldDescription>
+		</field>
 	</subDataset>
 	<subDataset name="dataset1" uuid="ba1f2d41-0427-4622-b1c0-30d16b87d84c"/>
 	<subDataset name="dataset2" uuid="f43e41d7-358e-4410-99f3-ec87983f8eb0"/>
@@ -245,7 +251,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="a6eb3517-015e-49df-abb9-bd783c182527" x="0" y="29" width="802" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="13" isBold="false"/>
+					<font fontName="SansSerif" size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{OFFICE_NAME}]]></textFieldExpression>
 			</textField>
@@ -449,7 +455,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[कारोबार व्यहोरा]]></text>
 			</staticText>
@@ -463,7 +469,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[गा.बि.स./ न.पा.]]></text>
 			</staticText>
@@ -477,7 +483,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[वडा नं. / नक्सा सिट]]></text>
 			</staticText>
@@ -491,7 +497,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[कित्ता नं.]]></text>
 			</staticText>
@@ -505,7 +511,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[बिबरण (घर, आवादी, ईत्यादी)]]></text>
 			</staticText>
@@ -519,7 +525,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[ज.ध. को हक हिस्सा]]></text>
 			</staticText>
@@ -533,7 +539,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[मोहिको नाम थर]]></text>
 			</staticText>
@@ -547,7 +553,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[किसिम वा बर्ग]]></text>
 			</staticText>
@@ -561,7 +567,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[क्षेत्रफल]]></text>
 			</staticText>
@@ -575,7 +581,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[मोठ / पाना नं.]]></text>
 			</staticText>
@@ -589,7 +595,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[कैफियत बिबरण]]></text>
 			</staticText>
@@ -610,7 +616,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{oldParcels}]]></textFieldExpression>
 						</textField>
@@ -624,7 +630,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{regNumber}]]></textFieldExpression>
 						</textField>
@@ -638,7 +644,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{requestName}]]></textFieldExpression>
 						</textField>
@@ -652,7 +658,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{regDateFormatted}]]></textFieldExpression>
 						</textField>
@@ -666,7 +672,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{vdcName}]]></textFieldExpression>
 						</textField>
@@ -680,7 +686,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{wardNumber}]]></textFieldExpression>
 						</textField>
@@ -694,7 +700,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{parcelNumber}]]></textFieldExpression>
 						</textField>
@@ -708,7 +714,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{mapNumber}]]></textFieldExpression>
 						</textField>
@@ -722,7 +728,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{landUse}.getDisplayValue()]]></textFieldExpression>
 						</textField>
@@ -736,7 +742,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{ownershipType}.getDisplayValue()]]></textFieldExpression>
 						</textField>
@@ -750,7 +756,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{ownerType}.getDisplayValue()]]></textFieldExpression>
 						</textField>
@@ -764,7 +770,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{tenants}]]></textFieldExpression>
 						</textField>
@@ -778,39 +784,11 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{landType}.getDisplayValue()]]></textFieldExpression>
 						</textField>
 						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-							<reportElement uuid="26b6acc9-78e5-4883-aea5-028d297d2b4c" x="578" y="0" width="68" height="42"/>
-							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-								<pen lineWidth="0.5"/>
-								<topPen lineWidth="0.5"/>
-								<leftPen lineWidth="0.5"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="0.5"/>
-							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$F{officialAreaFormatted}]]></textFieldExpression>
-						</textField>
-						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-							<reportElement uuid="590d4e47-8c7b-40ed-93ca-014c68e2c78f" stretchType="RelativeToBandHeight" x="578" y="42" width="68" height="35"/>
-							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-								<pen lineWidth="0.5"/>
-								<topPen lineWidth="0.5"/>
-								<leftPen lineWidth="0.5"/>
-								<bottomPen lineWidth="0.5"/>
-								<rightPen lineWidth="0.5"/>
-							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
-							</textElement>
-							<textFieldExpression><![CDATA[$F{officialArea}]]></textFieldExpression>
-						</textField>
-						<textField isBlankWhenNull="true">
 							<reportElement uuid="c9864dee-b0de-4d46-8eb1-ada1548a6105" x="646" y="0" width="45" height="42"/>
 							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 								<pen lineWidth="0.5"/>
@@ -820,7 +798,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{mothNumber}]]></textFieldExpression>
 						</textField>
@@ -834,7 +812,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{panaNumber}]]></textFieldExpression>
 						</textField>
@@ -848,7 +826,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{notationText}]]></textFieldExpression>
 						</textField>
@@ -862,10 +840,34 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement markup="none">
-								<font size="9"/>
+								<font fontName="SansSerif" size="9"/>
 							</textElement>
 							<text><![CDATA[ ]]></text>
 						</staticText>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="2a3c0596-26b4-469b-91b6-cb047db88921" x="578" y="0" width="68" height="42"/>
+							<box topPadding="1" leftPadding="1" rightPadding="1">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{officialAreaNepaliFormatted}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="ab18ce01-961d-48ec-929a-b038c0f56974" stretchType="RelativeToBandHeight" x="578" y="42" width="68" height="35"/>
+							<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+								<pen lineWidth="0.5" lineStyle="Solid"/>
+								<topPen lineWidth="0.5" lineStyle="Solid"/>
+								<leftPen lineWidth="0.5" lineStyle="Solid"/>
+								<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+								<rightPen lineWidth="0.5" lineStyle="Solid"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$F{officialAreaNepali}]]></textFieldExpression>
+						</textField>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
@@ -879,7 +881,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[प्रमाण संकेत]]></text>
 			</staticText>
@@ -893,7 +895,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[सा.कि.नं]]></text>
 			</staticText>
@@ -907,7 +909,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[प्रमाणित गर्नेको दस्तखत]]></text>
 			</staticText>

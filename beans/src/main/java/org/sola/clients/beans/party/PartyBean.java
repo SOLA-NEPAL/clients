@@ -45,7 +45,6 @@ import org.sola.clients.beans.digitalarchive.DocumentBinaryBean;
 import org.sola.clients.beans.party.validation.PartyCheck;
 import org.sola.clients.beans.referencedata.*;
 import org.sola.clients.beans.validation.Localized;
-import org.sola.common.DateUtility;
 import org.sola.common.FileUtility;
 import org.sola.common.messaging.ClientMessage;
 import org.sola.services.boundary.wsclients.WSManager;
@@ -72,8 +71,6 @@ public class PartyBean extends PartySummaryBean {
     public static final String FAX_PROPERTY = "fax";
     public static final String ALIAS_PROPERTY = "alias";
     public static final String GRAND_FATHER_NAME_PROPERTY = "grandFatherName";
-    public static final String BIRTH_DATE_PROPERTY = "birthDate";
-    public static final String BIRTH_DATE_FORMATTED_PROPERTY = "birthDateFormatted";
     public static final String REMARKS_PROPERTY = "remarks";
     public static final String PHOTO_PROPERTY = "photo";
     public static final String LEFT_FINGERPRINT_PROPERTY = "leftFingerPrint";
@@ -82,7 +79,6 @@ public class PartyBean extends PartySummaryBean {
     public static final String PARENT_PROPERTY = "parent";
     public static final String ID_ISSUING_DISTRICT_CODE_PROPERTY = "idOfficeDistrictCode";
     public static final String ID_ISSUING_DISTRICT_PROPERTY = "idIssuingDistrict";
-
     @Email(message = ClientMessage.CHECK_INVALID_EMAIL, payload = Localized.class)
     private String email;
     private String phone;
@@ -95,7 +91,6 @@ public class PartyBean extends PartySummaryBean {
     private CommunicationTypeBean preferredCommunication;
     private SolaList<PartyRoleBean> roleList;
     private transient PartyRoleBean selectedRole;
-    private String birthDate;
     private String remarks;
     private DocumentBinaryBean photoDoc;
     private DocumentBinaryBean leftFingerDoc;
@@ -112,7 +107,7 @@ public class PartyBean extends PartySummaryBean {
         super();
         roleList = new SolaList();
     }
-    
+
     public DistrictBean getIdIssuingDistrict() {
         if (this.idIssuingDistrict == null) {
             this.idIssuingDistrict = new DistrictBean();
@@ -219,22 +214,6 @@ public class PartyBean extends PartySummaryBean {
         this.signatureDoc = signatureDoc;
     }
 
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public String getBirthDateFormatted(){
-        return DateUtility.toFormattedNepaliDate(birthDate);
-    }
-    
-    public void setBirthDate(String birthDate) {
-        String oldFormattedValue = getBirthDateFormatted();
-        String oldValue = this.birthDate;
-        this.birthDate = birthDate;
-        propertySupport.firePropertyChange(BIRTH_DATE_PROPERTY, oldValue, this.birthDate);
-        propertySupport.firePropertyChange(BIRTH_DATE_FORMATTED_PROPERTY, oldFormattedValue, getBirthDateFormatted());
-    }
-
     public String getRemarks() {
         return remarks;
     }
@@ -325,7 +304,7 @@ public class PartyBean extends PartySummaryBean {
 
     public void setIdType(IdTypeBean idTypeBean) {
         IdTypeBean oldValue = this.idType;
-        this.idType=idTypeBean;
+        this.idType = idTypeBean;
         propertySupport.firePropertyChange(ID_TYPE_PROPERTY, oldValue, this.idType);
     }
 

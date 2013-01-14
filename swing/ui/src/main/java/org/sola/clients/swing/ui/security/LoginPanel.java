@@ -33,6 +33,7 @@ import java.awt.ComponentOrientation;
 import java.awt.event.KeyEvent;
 import java.util.Locale;
 import javax.swing.JRadioButton;
+import org.sola.clients.swing.common.LafManager;
 import org.sola.clients.swing.common.config.ConfigurationManager;
 import org.sola.clients.swing.common.controls.LanguageCombobox;
 import org.sola.clients.swing.common.tasks.SolaTask;
@@ -292,7 +293,7 @@ public class LoginPanel extends javax.swing.JPanel {
 
         jSeparator3.setName("jSeparator3"); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setFont(LafManager.getInstance().getLabFontBoldModified());
         jLabel2.setForeground(new java.awt.Color(0, 102, 51));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText(bundle.getString("LoginPanel.jLabel2.text")); // NOI18N
