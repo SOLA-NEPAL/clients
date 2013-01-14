@@ -544,8 +544,6 @@ public class MainForm extends javax.swing.JFrame {
         labStatus.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labStatus.setText(bundle.getString("MainForm.labStatus.text")); // NOI18N
 
-        txtUserName.setText(bundle.getString("MainForm.txtUserName.text")); // NOI18N
-
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
@@ -862,7 +860,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuLangENActionPerformed
 
     private void menuLangITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLangITActionPerformed
-        setLanguage("np", "NP");
+        setLanguage("ne", "NP");
     }//GEN-LAST:event_menuLangITActionPerformed
 
     private void btnOpenBaUnitSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenBaUnitSearchActionPerformed

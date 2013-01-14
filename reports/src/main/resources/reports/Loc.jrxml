@@ -222,6 +222,9 @@
 	<field name="duplicate" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[duplicate]]></fieldDescription>
 	</field>
+	<field name="current" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[current]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -254,6 +257,14 @@
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[प्रतिलिपी]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="77244bca-e7a3-424c-b5c6-7b7bf054b858" x="111" y="0" width="121" height="29">
+					<printWhenExpression><![CDATA[$F{current}==false]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[अफिस प्रयोगको लागी मात्र !!!
+ यो लालपुर्जा मान्य होईन]]></text>
 			</staticText>
 		</band>
 	</title>

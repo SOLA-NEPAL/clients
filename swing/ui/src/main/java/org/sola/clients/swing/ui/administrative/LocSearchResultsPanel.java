@@ -41,7 +41,7 @@ public class LocSearchResultsPanel extends javax.swing.JPanel {
     }
 
     private void customizePrintButton() {
-        boolean enabled = locSearchResults.getSeletedResult() != null 
+        boolean enabled = locSearchResults.getSeletedResult() != null
                 && SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_PRINT_CERT);
         btnPrint.setEnabled(enabled);
         menuPrint.setEnabled(enabled);
@@ -76,7 +76,7 @@ public class LocSearchResultsPanel extends javax.swing.JPanel {
                 @Override
                 protected Void doTask() {
                     setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_GETTING_LOC));
-                    ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(locSearchResults.getSeletedResult().getId(), "np"));
+                    ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(locSearchResults.getSeletedResult().getId(), true, "np"));
                     return null;
                 }
             };
@@ -187,7 +187,6 @@ public class LocSearchResultsPanel extends javax.swing.JPanel {
     private void menuPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPrintActionPerformed
         print();
     }//GEN-LAST:event_menuPrintActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPrint;
     private javax.swing.JScrollPane jScrollPane1;

@@ -667,11 +667,6 @@
         <Component class="org.sola.clients.swing.common.tasks.TaskPanel" name="taskPanel1">
         </Component>
         <Component class="javax.swing.JLabel" name="txtUserName">
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/sola/clients/swing/desktop/Bundle.properties" key="MainForm.txtUserName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

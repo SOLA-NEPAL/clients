@@ -21,16 +21,17 @@ import org.sola.clients.beans.converters.TypeConverters;
 import org.sola.services.boundary.wsclients.WSManager;
 
 public class LocDetailsBean extends AbstractBindingBean {
-    
+
     private SolaObservableList<PartyLocBean> parties;
     private SolaObservableList<RrrLocDetailsBean> rrrs;
     private String serialNumber;
-    private boolean duplicate=false;
-    
-    public LocDetailsBean(){
+    private boolean duplicate = false;
+    private boolean current = true;
+
+    public LocDetailsBean() {
         super();
         parties = new SolaObservableList<PartyLocBean>();
-        rrrs=new SolaObservableList<RrrLocDetailsBean>();
+        rrrs = new SolaObservableList<RrrLocDetailsBean>();
     }
 
     public SolaObservableList<PartyLocBean> getParties() {
@@ -40,16 +41,16 @@ public class LocDetailsBean extends AbstractBindingBean {
     public SolaObservableList<RrrLocDetailsBean> getRrrs() {
         return rrrs;
     }
-    
-    public static LocDetailsBean loadLocDetails(String locId, String lang){
+
+    public static LocDetailsBean loadLocDetails(String locId, boolean current, String lang) {
         return TypeConverters.TransferObjectToBean(
-                WSManager.getInstance().getSearchService().getLocDetails(locId, lang), 
+                WSManager.getInstance().getSearchService().getLocDetails(locId, current, lang),
                 LocDetailsBean.class, null);
     }
-    
-    public static LocDetailsBean loadLocDetails(String locId){
+
+    public static LocDetailsBean loadLocDetails(String locId, boolean current) {
         return TypeConverters.TransferObjectToBean(
-                WSManager.getInstance().getSearchService().getLocDetails(locId), 
+                WSManager.getInstance().getSearchService().getLocDetails(locId, current),
                 LocDetailsBean.class, null);
     }
 
@@ -67,5 +68,13 @@ public class LocDetailsBean extends AbstractBindingBean {
 
     public void setDuplicate(boolean duplicate) {
         this.duplicate = duplicate;
+    }
+
+    public boolean isCurrent() {
+        return current;
+    }
+
+    public void setCurrent(boolean current) {
+        this.current = current;
     }
 }
