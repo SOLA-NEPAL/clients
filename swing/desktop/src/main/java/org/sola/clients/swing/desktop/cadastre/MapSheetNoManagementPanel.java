@@ -311,7 +311,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mapSheets}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mapSheetListBean, eLProperty, tblMapsheets);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sheetTypeString}"));
-        columnBinding.setColumnName("Sheet Type");
+        columnBinding.setColumnName("Sheet Type String");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapNumber}"));
@@ -319,7 +319,7 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${office.displayValue}"));
-        columnBinding.setColumnName("Office");
+        columnBinding.setColumnName("Office.display Value");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${srid}"));
@@ -331,6 +331,10 @@ public class MapSheetNoManagementPanel extends ContentPanel {
         bindingGroup.addBinding(binding);
 
         jScrollPane1.setViewportView(tblMapsheets);
+        tblMapsheets.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("MapSheetNoManagementPanel.tblMapsheets.columnModel.title0")); // NOI18N
+        tblMapsheets.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("MapSheetNoManagementPanel.tblMapsheets.columnModel.title1")); // NOI18N
+        tblMapsheets.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("MapSheetNoManagementPanel.tblMapsheets.columnModel.title2")); // NOI18N
+        tblMapsheets.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("MapSheetNoManagementPanel.tblMapsheets.columnModel.title3")); // NOI18N
 
         txtOffice1.setEditable(false);
 

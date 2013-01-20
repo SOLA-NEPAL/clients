@@ -149,8 +149,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBar1" alignment="0" pref="604" max="32767" attributes="0"/>
-          <Component id="documentsPanel" alignment="0" pref="604" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" pref="584" max="32767" attributes="0"/>
+          <Component id="documentsPanel" alignment="0" pref="584" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -259,6 +259,11 @@
               <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentsManagementPanel.btnOpenAttachment.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentsManagementPanel.btnOpenAttachment.AccessibleContext.accessibleDescription" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
+          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpenAttachmentActionPerformed"/>
           </Events>

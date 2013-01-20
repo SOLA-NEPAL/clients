@@ -324,13 +324,13 @@ public class LoginPanel extends javax.swing.JPanel {
         jPanel4.setOpaque(false);
 
         labDescUp.setBackground(new java.awt.Color(153, 153, 153));
-        labDescUp.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        labDescUp.setFont(LafManager.getInstance().getLabFontBoldModified2());
         labDescUp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labDescUp.setText(bundle.getString("LoginPanel.labDescUp.text")); // NOI18N
         labDescUp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         labDescUp.setName("labDescUp"); // NOI18N
 
-        labDescDown.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        labDescDown.setFont(LafManager.getInstance().getLabFontBoldModified2());
         labDescDown.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labDescDown.setText(bundle.getString("LoginPanel.labDescDown.text")); // NOI18N
         labDescDown.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

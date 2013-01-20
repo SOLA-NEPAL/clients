@@ -97,7 +97,7 @@ public class DocumentsManagementExtPanel extends DocumentsManagementPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
-                DocumentSearchForm form = new DocumentSearchForm();
+                DocumentSearchForm form = new DocumentSearchForm(true, true);
                 form.addPropertyChangeListener(new PropertyChangeListener() {
 
                     @Override

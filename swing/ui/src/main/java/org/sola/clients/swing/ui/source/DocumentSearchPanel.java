@@ -221,7 +221,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_DOCUMENT_SEARCHING));
-                searchResultsList.searchSources(searchParams);
+                searchResultsList.searchSources(searchParams);                
                 return null;
             }
 

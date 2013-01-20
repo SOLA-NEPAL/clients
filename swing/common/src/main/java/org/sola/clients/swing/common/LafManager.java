@@ -130,7 +130,10 @@ public class LafManager {
     public Font getLabFontBoldModified() {
         return Font.decode("AppleGothic-BOLD-18");
     }
-
+    
+    public Font getLabFontBoldModified2() {
+        return Font.decode("AppleGothic-PLAIN-10");
+    }
     public void setLabFont(Object labFont) {
         this.labFont = labFont;
     }

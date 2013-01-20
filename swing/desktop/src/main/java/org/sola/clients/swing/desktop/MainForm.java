@@ -47,7 +47,7 @@ import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.administrative.BaUnitSearchForm;
 import org.sola.clients.swing.desktop.administrative.LocSearchForm;
-import org.sola.clients.swing.desktop.administrative.MothManagementForm2;
+import org.sola.clients.swing.desktop.administrative.MothManagementForm;
 import org.sola.clients.swing.desktop.administrative.RestrictionSearchForm;
 import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
@@ -200,7 +200,7 @@ public class MainForm extends javax.swing.JFrame {
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
                 if (!pnlContent.isPanelOpened(MainContentPanel.CARD_DOCUMENT_SEARCH)) {
-                    DocumentSearchForm documentSearchPanel = new DocumentSearchForm();
+                    DocumentSearchForm documentSearchPanel = new DocumentSearchForm(false,false);
                     pnlContent.addPanel(documentSearchPanel, MainContentPanel.CARD_DOCUMENT_SEARCH);
                 }
                 pnlContent.showPanel(MainContentPanel.CARD_DOCUMENT_SEARCH);
@@ -550,10 +550,10 @@ public class MainForm extends javax.swing.JFrame {
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(taskPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
@@ -912,7 +912,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void mothShrestaEntry() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY)) {
-            MothManagementForm2 srchLndOwner = new MothManagementForm2();
+            MothManagementForm srchLndOwner = new MothManagementForm();
             pnlContent.addPanel(srchLndOwner, MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);
         }
         pnlContent.showPanel(MainContentPanel.CARD_MOTH_SHRESTA_ENTRY);

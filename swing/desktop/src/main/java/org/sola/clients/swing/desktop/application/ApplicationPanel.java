@@ -1944,6 +1944,8 @@ public class ApplicationPanel extends ContentPanel {
 
         documents.setName(bundle.getString("ApplicationPanel.documents.name")); // NOI18N
         documents.setShowAddFromApplicationButton(false);
+        documents.setShowMenuAddFromApplication(false);
+        documents.setShowMenuNew(false);
         documents.setShowNewButton(false);
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
