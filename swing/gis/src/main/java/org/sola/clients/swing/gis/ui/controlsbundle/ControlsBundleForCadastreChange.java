@@ -82,7 +82,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         Setup(PojoDataAccess.getInstance(), transactionBean.getDatasetIdFromCadastreObjectTargetList()); 
         enableDatasetSelectionTool(false);
         targetParcelsLayer.zoomToLayer();
-        listParcel.selectTargetLayerFeatures();
+        listParcel.selectLayerFeatures(targetParcelsLayer);
      }
 
     @Override
@@ -120,8 +120,8 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addLayer(targetParcelsLayer);
         
         //selection affected parcels.//By Kabindra
-        this.targetParcelsLayer.getNeighbour_parcels().setVisible(true);
-        this.getMap().addLayer(this.targetParcelsLayer.getNeighbour_parcels());
+        this.targetParcelsLayer.getNeighbourParcels().setVisible(true);
+        this.getMap().addLayer(this.targetParcelsLayer.getNeighbourParcels());
     }
 
    

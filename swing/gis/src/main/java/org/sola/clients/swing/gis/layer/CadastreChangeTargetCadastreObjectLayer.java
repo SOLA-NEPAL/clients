@@ -77,7 +77,7 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
         this.new_parcels = new_parcels;
     }
 
-    public TargetNeighbourParcelLayer getNeighbour_parcels() throws InitializeLayerException {
+    public TargetNeighbourParcelLayer getNeighbourParcels() throws InitializeLayerException {
         if (neigbhour_parcels==null)
             neigbhour_parcels=new TargetNeighbourParcelLayer();
         return neigbhour_parcels;

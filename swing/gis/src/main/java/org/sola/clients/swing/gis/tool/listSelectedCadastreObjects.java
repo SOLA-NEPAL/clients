@@ -29,41 +29,59 @@
  */
 package org.sola.clients.swing.gis.tool;
 
-import com.vividsolutions.jts.geom.Geometry;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.geometry.DirectPosition2D;
-
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.event.MapMouseEvent;
+import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.geotools.swing.tool.extended.ExtendedTool;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory2;
 import org.sola.clients.swing.gis.SelectedParcelInfo;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+
 /**
  *
  * @author Shrestha_Kabin
  */
 public class listSelectedCadastreObjects extends ExtendedTool {
 
+    private FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
+    private String geometryAttributeName = "geom";
     public final static String NAME = "list parcels";
     private String toolTip = MessageUtility.getLocalizedMessage(
             GisMessage.LIST_PARCELS).getMessage();
-    
     //main class to store the selection information.
-    private SelectedParcelInfo parcel_selected;
-    
-    public listSelectedCadastreObjects(PojoDataAccess dataAccess, 
+    private SelectedParcelInfo parcelSelector;
+    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer;
+
+    public listSelectedCadastreObjects(PojoDataAccess dataAccess,
             CadastreTargetSegmentLayer targetPointLayer,
             CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         this.setToolName(NAME);
         this.setIconImage("resources/chooseParcel.png");
         this.setToolTip(toolTip);
-        parcel_selected= new SelectedParcelInfo(dataAccess);
-        parcel_selected.setTargetLayers(targetPointLayer, targetParcelsLayer);
+        this.targetParcelsLayer = targetParcelsLayer;
+        parcelSelector = new SelectedParcelInfo(dataAccess);
+        try {
+            parcelSelector.setTargetLayers(targetPointLayer, this.targetParcelsLayer.getNeighbourParcels());
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(listSelectedCadastreObjects.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -75,15 +93,76 @@ public class listSelectedCadastreObjects extends ExtendedTool {
     @Override
     public void onMouseClicked(MapMouseEvent ev) {
         DirectPosition2D pos = ev.getWorldPos();
-        CadastreObjectTO cadastreObject = this.parcel_selected.getDataAccess().
-                getCadastreService().getCadastreObjectByPoint(
-                pos.x, pos.y, this.getMapControl().getSrid());
-        
-        parcel_selected.display_Selected_Parcel(cadastreObject.getId(), cadastreObject.getGeomPolygon() ,ev.isControlDown());
+//        CadastreObjectTO cadastreObject = this.parcelSelector.getDataAccess().
+//                getCadastreService().getCadastreObjectByPoint(
+//                pos.x, pos.y, this.getMapControl().getSrid());
+
+        // Try to get parcels from targetLayer
+        boolean found = false;
+        if (targetParcelsLayer.isVisible()) {
+            found = selectFeatures(ev, targetParcelsLayer);
+        }
+
+        if (!found) {
+            try {
+                if (targetParcelsLayer.getNew_parcels().isVisible()) {
+                    // Try to get parcels from new parcels
+                    selectFeatures(ev, targetParcelsLayer.getNew_parcels());
+                }
+            } catch (InitializeLayerException ex) {
+                Logger.getLogger(listSelectedCadastreObjects.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-    
-    /** Selects all feature on the target layer. */
-    public void selectTargetLayerFeatures(){
-        parcel_selected.selectTargetLayerFeatures();
+
+    /**
+     * Selects all feature on the target layer.
+     */
+    public void selectLayerFeatures(ExtendedLayerGraphics layer) {
+        parcelSelector.selectLayerFeatures(layer);
+    }
+
+    public boolean selectFeatures(MapMouseEvent ev, ExtendedLayerGraphics layer) {
+        // Construct a 5x5 pixel rectangle centred on the mouse click position
+        Point screenPos = ev.getPoint();
+        Rectangle screenRect = new Rectangle(screenPos.x - 2, screenPos.y - 2, 5, 5);
+
+        /*
+         * Transform the screen rectangle into bounding box in the coordinate
+         * reference system of our map context. Note: we are using a naive
+         * method here but GeoTools also offers other, more accurate methods.
+         */
+        AffineTransform screenToWorld = layer.getMapControl().getScreenToWorldTransform();
+        Rectangle2D worldRect = screenToWorld.createTransformedShape(screenRect).getBounds2D();
+        ReferencedEnvelope bbox = new ReferencedEnvelope(
+                worldRect, layer.getMapControl().getMapContent().getCoordinateReferenceSystem());
+
+        /*
+         * Create a Filter to select features that intersect with the bounding
+         * box
+         */
+        Filter filter = ff.intersects(ff.property(geometryAttributeName), ff.literal(bbox));
+
+        /*
+         * Use the filter to identify the selected features
+         */
+        try {
+            SimpleFeatureCollection selectedFeatures = layer.getFeatureSource().getFeatures(filter);
+            SimpleFeatureIterator iter = selectedFeatures.features();
+            try {
+                while (iter.hasNext()) {
+                    SimpleFeature feature = iter.next();
+                    parcelSelector.selectParcel(feature.getID(), feature.getDefaultGeometry(), ev.isControlDown());
+                    return true;
+                }
+
+            } finally {
+                iter.close();
+            }
+            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

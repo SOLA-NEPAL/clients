@@ -11,7 +11,6 @@ import com.vividsolutions.jts.io.WKBReader;
 import com.vividsolutions.jts.io.WKBWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,6 +23,7 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.data.PojoDataAccess;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
+import org.sola.clients.swing.gis.layer.TargetNeighbourParcelLayer;
 import org.sola.common.messaging.GisMessage;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
@@ -32,8 +32,8 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  * @author ShresthaKabin
  */
 public class SelectedParcelInfo {
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
-    private CadastreTargetSegmentLayer targetPointLayer = null;
+    private CadastreTargetSegmentLayer targetPointLayer;
+    private TargetNeighbourParcelLayer neighboursLayer;
     private PojoDataAccess dataAccess;
     private Map mapCtrl=null; 
     protected final static WKBWriter wkbWriter = new WKBWriter();
@@ -53,41 +53,22 @@ public class SelectedParcelInfo {
     public ExtendedLayerGraphics getTargetSegmentLayer() {
         return targetPointLayer.getSegmentLayer();
     }
-    
-    public void setTargetLayers(CadastreTargetSegmentLayer targetPointLayer,
-            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer){
-        this.targetPointLayer = targetPointLayer;
-        this.targetParcelsLayer = targetParcelsLayer;
-        this.mapCtrl=this.targetParcelsLayer.getMapControl();
-    }
-    
-    public void append_PolygonSelected(String objectId, byte[] geom,boolean isCtrlDown) 
-                throws ParseException{
-        SimpleFeature fea=this.targetParcelsLayer.getFeatureCollection().getFeature(objectId);
-        //just remove the item or remove first and add again.
-        this.targetParcelsLayer.removeFeature(objectId);
-        
-        WKBReader wkb_reader = new WKBReader();
-        Geometry geom_poly =  wkb_reader.read(geom);
-        
-        DecimalFormat df=new DecimalFormat("0.00");
-        if (isCtrlDown || fea==null){
-            //properties.
-            HashMap<String,Object> fldvalues=new HashMap<String,Object>();
-            fldvalues.put(CadastreChangeTargetCadastreObjectLayer.LAYER_FIELD_FID, objectId);
-            String shape_area=df.format(geom_poly.getArea());
-            fldvalues.put(CadastreChangeTargetCadastreObjectLayer.LAYER_FIELD_AREA, shape_area);
-            
-            this.targetParcelsLayer.addFeature(objectId,geom_poly, fldvalues);
-        } 
-    }
-    
-    public void removeAllFeatures() throws InitializeLayerException{
-        //Access polygon features.
-        targetParcelsLayer.getFeatureCollection().clear();
-        targetParcelsLayer.getCadastreObjectTargetList().clear();
-        targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
 
+    public TargetNeighbourParcelLayer getNeighboursLayer() {
+        return neighboursLayer;
+    }
+
+    public void setNeighboursLayer(TargetNeighbourParcelLayer neighboursLayer) {
+        this.neighboursLayer = neighboursLayer;
+    }
+    
+    public void setTargetLayers(CadastreTargetSegmentLayer targetPointLayer, TargetNeighbourParcelLayer neighboursLayer){
+        this.targetPointLayer = targetPointLayer;
+        this.neighboursLayer = neighboursLayer;
+        this.mapCtrl=this.targetPointLayer.getMapControl();
+    }
+ 
+    public void removeAllFeatures() throws InitializeLayerException{
         //Access segment features.
         this.getTargetSegmentLayer().getFeatureCollection().clear();
         //Access point features.
@@ -291,28 +272,26 @@ public class SelectedParcelInfo {
         for (CadastreObjectTO parcel:the_parcels){
             if (parcel.getId().equals(objectId)) continue;
             //just remove the item or remove first.
-            targetParcelsLayer.getNeighbour_parcels().removeFeature(parcel.getId());
+            neighboursLayer.removeFeature(parcel.getId());
             //add latest.
-            targetParcelsLayer.getNeighbour_parcels().addFeature(parcel.getId(), parcel.getGeomPolygon(), null);
+            neighboursLayer.addFeature(parcel.getId(), parcel.getGeomPolygon(), null);
         }
     }
     
-    public void display_Selected_Parcel(String objectId, byte[] geom, boolean isCtrl_Down) { 
+    public void selectParcel(String objectId, byte[] geom, boolean isCtrl_Down) { 
        try {
             if (geom == null || objectId == null) return;
             //main class to store the selection information.
             //Prepare for fresh selection.
             if (!isCtrl_Down) removeAllFeatures();
-           
-            append_PolygonSelected(objectId, geom, isCtrl_Down);
-            
+
             boolean arearemove=removeAreaObject(objectId);
             processPolygonSelected(objectId, geom,isCtrl_Down,arearemove);
             getPointsFromPolygonSelected(objectId, geom,isCtrl_Down);
             //store the parcel touched by selected parcel.
             getParcels_Touched_by_SelectedParcel(objectId, geom);
             //refresh map.
-            this.targetParcelsLayer.getMapControl().refresh();
+            mapCtrl.refresh();
         } catch (IOException ex) {
             Logger.getLogger(SelectedParcelInfo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -323,23 +302,22 @@ public class SelectedParcelInfo {
         }
     }
     
+    public void selectParcel(String objectId, Object geom, boolean isCtrl_Down) { 
+        selectParcel(objectId, wkbWriter.write((Geometry) geom), isCtrl_Down);
+    }
+    
     /** Selects all feature on the target layer. */
-    public void selectTargetLayerFeatures(){
-        if(targetParcelsLayer.getFeatureCollection() == null && targetParcelsLayer.getFeatureCollection().size() < 1){
+    public void selectLayerFeatures(ExtendedLayerGraphics layer){
+        if(layer.getFeatureCollection() == null && layer.getFeatureCollection().size() < 1){
             return;
         }
         
-        SimpleFeatureIterator it = targetParcelsLayer.getFeatureCollection().features();
-        ArrayList<SimpleFeature> features = new ArrayList();
+        SimpleFeatureIterator it = layer.getFeatureCollection().features();
+        boolean ctrlPressed = false;
         
         while (it.hasNext()) {
             SimpleFeature simpleFeature = it.next();
-            features.add(simpleFeature);
-        }
-        
-        boolean ctrlPressed = false;
-        for (SimpleFeature simpleFeature : features) {
-            display_Selected_Parcel(simpleFeature.getID(), 
+            selectParcel(simpleFeature.getID(), 
                     wkbWriter.write((Geometry) simpleFeature.getDefaultGeometry()), ctrlPressed);
             ctrlPressed = true;
         }

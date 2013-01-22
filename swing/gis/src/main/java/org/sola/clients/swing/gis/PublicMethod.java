@@ -434,9 +434,9 @@ public class PublicMethod {
         polyIterator.close();
         //topology checking features.
         try {
-            dest_targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
+            dest_targetParcelsLayer.getNeighbourParcels().getFeatureCollection().clear();
             //get target affected feature collection.
-            polys = src_targetParcelsLayer.getNeighbour_parcels().getFeatureCollection();
+            polys = src_targetParcelsLayer.getNeighbourParcels().getFeatureCollection();
             geomfld = theGeomFieldName(polys);
             if (geomfld.isEmpty()) {
                 return;
@@ -447,7 +447,7 @@ public class PublicMethod {
                 SimpleFeature fea = polyIterator.next();
                 Geometry geom = (Geometry) fea.getAttribute(geomfld);//first item as geometry.
                 String objId = fea.getID().toString();
-                dest_targetParcelsLayer.getNeighbour_parcels().addFeature(objId, geom, null);
+                dest_targetParcelsLayer.getNeighbourParcels().addFeature(objId, geom, null);
             }
         } catch (InitializeLayerException ex) {
             Logger.getLogger(PublicMethod.class.getName()).log(Level.SEVERE, null, ex);
@@ -783,7 +783,7 @@ public class PublicMethod {
         pointsLayer.getFeatureCollection().clear();
         targetParcelsLayer.getFeatureCollection().clear();
         try {
-            targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNeighbourParcels().getFeatureCollection().clear();
             //remove_All_newParcel(targetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);

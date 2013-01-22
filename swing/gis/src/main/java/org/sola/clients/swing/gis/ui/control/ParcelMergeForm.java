@@ -47,7 +47,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         this.setTitle("Merge Selected Parcel Form.");
         this.setAlwaysOnTop(true);
         //Initialize other variables.
-        targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();//remove neighbouring parcel status.
+        targetParcelsLayer.getNeighbourParcels().getFeatureCollection().clear();//remove neighbouring parcel status.
         this.targetParcelsLayer = targetParcelsLayer;
         this.segmentLayer=segmentLayer;
         //using only for segment details.
