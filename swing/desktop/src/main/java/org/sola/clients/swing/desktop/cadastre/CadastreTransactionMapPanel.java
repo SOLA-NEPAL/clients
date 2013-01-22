@@ -31,7 +31,6 @@ package org.sola.clients.swing.desktop.cadastre;
 
 import java.awt.BorderLayout;
 import java.util.List;
-import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
 import org.sola.clients.beans.referencedata.RequestTypeBean;
@@ -49,8 +48,6 @@ import org.sola.clients.swing.ui.ContentPanel;
 import org.sola.clients.swing.ui.validation.ValidationResultForm;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
-import org.sola.services.boundary.wsclients.WSManager;
-import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
 
 /**
  * Used to produce cadastre changes.
@@ -210,8 +207,8 @@ public class CadastreTransactionMapPanel extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(documentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addComponent(documentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab(bundle.getString("CadastreTransactionMapPanel.jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
@@ -234,7 +231,7 @@ public class CadastreTransactionMapPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
