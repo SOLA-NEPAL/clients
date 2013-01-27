@@ -24,12 +24,10 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class CadastreOnePointAreaFormShow extends ComponentShow{
     public final static String MAPACTION_NAME = "One Point and Area Method Form Show";
-    public OnePointAreaMethodForm onePointAreaForm=null;
     
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
-    private JToolBar jTool;
 
     public CadastreOnePointAreaFormShow(Map mapObj,
                     CadastreTargetSegmentLayer segmentLayer,
@@ -43,7 +41,6 @@ public class CadastreOnePointAreaFormShow extends ComponentShow{
         this.mapObj=mapObj;
         this.segmentLayer= segmentLayer;
         this.targetParcelsLayer=targetParcelsLayer;
-        this.jTool=jTool;
     }
     
     @Override
@@ -53,22 +50,14 @@ public class CadastreOnePointAreaFormShow extends ComponentShow{
             JOptionPane.showMessageDialog(null, "Select the concerned parcel and proceed again.");
             return;
         }
-//        if (parcel_count>1){
-//            JOptionPane.showMessageDialog(null, "Only one parcel is allowed to select for split action.");
-//            return;
-//        }
+
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
         
         try {
             //Display segment list.
-            if (onePointAreaForm==null){
-                onePointAreaForm=new OnePointAreaMethodForm(
-                        segmentLayer, targetParcelsLayer,jTool);
-            }
+            OnePointAreaMethodForm onePointAreaForm=new OnePointAreaMethodForm(segmentLayer, targetParcelsLayer);
             onePointAreaForm.setVisible(true);
-            PublicMethod.enable_disable_Select_Tool(jTool, 
-                            listSelectedCadastreObjects.NAME, false);
             onePointAreaForm.getLocatePointPanel().reload_Data();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(CadastreOnePointAreaFormShow.class.getName()).log(Level.SEVERE, null, ex);

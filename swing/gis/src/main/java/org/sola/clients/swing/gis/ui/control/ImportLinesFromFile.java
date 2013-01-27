@@ -497,8 +497,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         Map mapObj=segmentLayer.getMapControl();
         PublicMethod.maplayerOnOff(mapObj, true);
-        PublicMethod.enable_disable_Select_Tool(jTool,
-                    listSelectedCadastreObjects.NAME, true);
+        PublicMethod.enableSelectTool(jTool, listSelectedCadastreObjects.NAME, true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
@@ -632,7 +631,7 @@ public class ImportLinesFromFile extends javax.swing.JDialog {
     }//GEN-LAST:event_btnShowInMapActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        PublicMethod.deselect_All(segmentLayer);
+        PublicMethod.deselectAll(segmentLayer);
         targetParcelsLayer.getMapControl().refresh();
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed

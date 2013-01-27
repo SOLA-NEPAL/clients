@@ -36,6 +36,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.geotools.feature.CollectionEvent;
 import org.geotools.feature.CollectionListener;
 import org.geotools.geometry.jts.Geometries;
@@ -43,6 +45,7 @@ import org.geotools.map.extended.layer.ExtendedLayerEditor;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
+import org.jdesktop.observablecollections.ObservableListListener;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.swing.gis.Messaging;
@@ -75,6 +78,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor {
     private static final String LAST_PART_FORMAT = "SP %s";
     private String lastPart = "";
     private boolean updateCadastreObjectsList = true;
+    private boolean updateFeaturesCollection = true;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer;
 
     /**
@@ -105,6 +109,57 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor {
                 featureCollectionChanged(ce);
             }
         });
+        cadastreObjectList.addObservableListListener(new ObservableListListener() {
+
+            @Override
+            public void listElementsAdded(ObservableList list, int index, int length) {
+                if (!updateFeaturesCollection) {
+                    return;
+                }
+                try {
+                    updateCadastreObjectsList = false;
+                    for (int i = index; i < index + length; i++) {
+                        addFeatureByCadastreObject((CadastreObjectBean) list.get(i));
+                    }
+                } finally {
+                    updateCadastreObjectsList = true;
+                }
+
+            }
+
+            @Override
+            public void listElementsRemoved(ObservableList list, int index, List oldElements) {
+                if (!updateFeaturesCollection) {
+                    return;
+                }
+                try {
+                    updateCadastreObjectsList = false;
+                    for (Object object : oldElements) {
+                        removeFeature(((CadastreObjectBean) object).getId());
+                    }
+                } finally {
+                    updateCadastreObjectsList = true;
+                }
+            }
+
+            @Override
+            public void listElementReplaced(ObservableList list, int index, Object oldElement) {
+//                if (!updateFeaturesCollection) {
+//                    return;
+//                }
+//                try {
+//                    updateCadastreObjectsList = false;
+//                    removeFeature(((CadastreObjectBean) oldElement).getId());
+//                    addFeatureByCadastreObject((CadastreObjectBean) list.get(index));
+//                } finally {
+//                    updateCadastreObjectsList = true;
+//                }
+            }
+
+            @Override
+            public void listElementPropertyChanged(ObservableList list, int index) {
+            }
+        });
     }
 
     /**
@@ -125,27 +180,26 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor {
     public void setCadastreObjectList(List<CadastreObjectBean> cadastreObjectList) {
         this.cadastreObjectList.clear();
         if (!cadastreObjectList.isEmpty()) {
-            try {
-                updateCadastreObjectsList = false;
-                for (CadastreObjectBean cadastreObjectBean : cadastreObjectList) {
-                    HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
-                    fieldsWithValues.put(LAYER_FIELD_FIRST_PART, cadastreObjectBean.getNameFirstPart());
-                    fieldsWithValues.put(LAYER_FIELD_LAST_PART, cadastreObjectBean.getNameLastPart());
-                    fieldsWithValues.put(LAYER_FIELD_MAP_SHEET, cadastreObjectBean.getMapSheetId());
-                    fieldsWithValues.put(LAYER_FIELD_OFFICIAL_AREA, cadastreObjectBean.getOfficialAreaFormatted());
-                    fieldsWithValues.put(LAYER_FIELD_SELECTED, "0");
-
-                    this.addFeature(cadastreObjectBean.getId(), cadastreObjectBean.getGeomPolygon(), fieldsWithValues, false);
-                    this.cadastreObjectList.add(cadastreObjectBean);
-                }
-
-                updateCadastreObjectsList = true;
-            } catch (ParseException ex) {
-                Messaging.getInstance().show(
-                        GisMessage.CADASTRE_CHANGE_ERROR_ADDINGNEWCADASTREOBJECT_IN_START);
-                org.sola.common.logging.LogUtility.log(
-                        GisMessage.CADASTRE_CHANGE_ERROR_ADDINGNEWCADASTREOBJECT_IN_START, ex);
+            for (CadastreObjectBean cadastreObjectBean : cadastreObjectList) {
+                this.cadastreObjectList.add(cadastreObjectBean);
             }
+        }
+    }
+
+    private void addFeatureByCadastreObject(CadastreObjectBean cadastreObjectBean) {
+        if (cadastreObjectBean == null) {
+            return;
+        }
+        HashMap<String, Object> fieldsWithValues = new HashMap<String, Object>();
+        fieldsWithValues.put(LAYER_FIELD_FIRST_PART, cadastreObjectBean.getNameFirstPart());
+        fieldsWithValues.put(LAYER_FIELD_LAST_PART, cadastreObjectBean.getNameLastPart());
+        fieldsWithValues.put(LAYER_FIELD_MAP_SHEET, cadastreObjectBean.getMapSheetId());
+        fieldsWithValues.put(LAYER_FIELD_OFFICIAL_AREA, cadastreObjectBean.getOfficialAreaFormatted());
+        fieldsWithValues.put(LAYER_FIELD_SELECTED, "0");
+        try {
+            addFeature(cadastreObjectBean.getId(), cadastreObjectBean.getGeomPolygon(), fieldsWithValues, false);
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastreChangeNewCadastreObjectLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -166,7 +220,7 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor {
 
     @Override
     public SimpleFeature addFeature(String fid, Geometry geom, HashMap<String, Object> fieldsWithValues, boolean refreshmap) {
-        
+
         if (fid == null) {
             fid = fidGenerator.toString();
         }
@@ -196,24 +250,29 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor {
         if (ev.getFeatures() == null || !updateCadastreObjectsList) {
             return;
         }
-        if (ev.getEventType() == CollectionEvent.FEATURES_ADDED) {
-            for (SimpleFeature feature : ev.getFeatures()) {
-                this.getCadastreObjectList().add(newBean(feature));
-            }
-        } else if (ev.getEventType() == CollectionEvent.FEATURES_REMOVED) {
-            for (SimpleFeature feature : ev.getFeatures()) {
-                CadastreObjectBean found = getBean(feature);
-                if (found != null) {
-                    this.getCadastreObjectList().remove(found);
+        try {
+            updateFeaturesCollection = false;
+            if (ev.getEventType() == CollectionEvent.FEATURES_ADDED) {
+                for (SimpleFeature feature : ev.getFeatures()) {
+                    this.getCadastreObjectList().add(newBean(feature));
+                }
+            } else if (ev.getEventType() == CollectionEvent.FEATURES_REMOVED) {
+                for (SimpleFeature feature : ev.getFeatures()) {
+                    CadastreObjectBean found = getBean(feature);
+                    if (found != null) {
+                        this.getCadastreObjectList().remove(found);
+                    }
+                }
+            } else if (ev.getEventType() == CollectionEvent.FEATURES_CHANGED) {
+                for (SimpleFeature feature : ev.getFeatures()) {
+                    CadastreObjectBean found = getBean(feature);
+                    if (found != null) {
+                        changeBean(found, feature, false);
+                    }
                 }
             }
-        } else if (ev.getEventType() == CollectionEvent.FEATURES_CHANGED) {
-            for (SimpleFeature feature : ev.getFeatures()) {
-                CadastreObjectBean found = getBean(feature);
-                if (found != null) {
-                    changeBean(found, feature, false);
-                }
-            }
+        } finally {
+            updateFeaturesCollection = true;
         }
     }
 
@@ -237,16 +296,16 @@ public class CadastreChangeNewCadastreObjectLayer extends ExtendedLayerEditor {
      */
     private void changeBean(CadastreObjectBean coBean, SimpleFeature feature, boolean isNew) {
         // Assign properties from the target parcel
-        if(isNew && targetParcelsLayer!=null && targetParcelsLayer.getCadastreObjectTargetList()!=null && 
-                targetParcelsLayer.getCadastreObjectTargetList().size() > 0){
+        if (isNew && targetParcelsLayer != null && targetParcelsLayer.getCadastreObjectTargetList() != null
+                && targetParcelsLayer.getCadastreObjectTargetList().size() > 0) {
             CadastreObjectTargetBean targetBean = targetParcelsLayer.getCadastreObjectTargetList().get(0);
             CadastreObjectBean coTargetBean = CadastreObjectBean.getParcel(targetBean.getCadastreObjectId());
-            if(coTargetBean!=null){
+            if (coTargetBean != null) {
                 coBean.copyFromObject(coTargetBean);
                 coBean.resetPropertiesForNewParcel();
             }
         }
-        
+
         coBean.setId(feature.getID());
         coBean.setDatasetId(getMapControl().getDatasetId());
         coBean.setNameFirstPart(feature.getAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_FIRST_PART).toString());

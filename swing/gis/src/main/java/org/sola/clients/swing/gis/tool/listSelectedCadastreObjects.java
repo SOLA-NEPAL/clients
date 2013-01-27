@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.geometry.DirectPosition2D;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.extended.layer.ExtendedLayerGraphics;
 import org.geotools.swing.event.MapMouseEvent;
@@ -92,26 +91,20 @@ public class listSelectedCadastreObjects extends ExtendedTool {
      */
     @Override
     public void onMouseClicked(MapMouseEvent ev) {
-        DirectPosition2D pos = ev.getWorldPos();
-//        CadastreObjectTO cadastreObject = this.parcelSelector.getDataAccess().
-//                getCadastreService().getCadastreObjectByPoint(
-//                pos.x, pos.y, this.getMapControl().getSrid());
-
-        // Try to get parcels from targetLayer
         boolean found = false;
-        if (targetParcelsLayer.isVisible()) {
-            found = selectFeatures(ev, targetParcelsLayer);
-        }
-
-        if (!found) {
-            try {
-                if (targetParcelsLayer.getNew_parcels().isVisible()) {
-                    // Try to get parcels from new parcels
-                    selectFeatures(ev, targetParcelsLayer.getNew_parcels());
-                }
-            } catch (InitializeLayerException ex) {
-                Logger.getLogger(listSelectedCadastreObjects.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            // Try to get parcels from new parcels
+            if (targetParcelsLayer.getNewParcelsLayer().isVisible()) {
+                found = selectFeatures(ev, targetParcelsLayer.getNewParcelsLayer());
             }
+            if (!found) {
+                // Try to get parcels from targetLayer
+                if (targetParcelsLayer.isVisible()) {
+                    selectFeatures(ev, targetParcelsLayer);
+                }
+            }
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(listSelectedCadastreObjects.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

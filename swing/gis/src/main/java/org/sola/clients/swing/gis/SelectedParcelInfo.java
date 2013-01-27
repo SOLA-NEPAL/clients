@@ -70,12 +70,12 @@ public class SelectedParcelInfo {
  
     public void removeAllFeatures() throws InitializeLayerException{
         //Access segment features.
-        this.getTargetSegmentLayer().getFeatureCollection().clear();
+        getTargetSegmentLayer().getFeatureCollection().clear();
         //Access point features.
         targetPointLayer.getFeatureCollection().clear();
 
         //Clear area polygon.
-        this.getPolyAreaList().clear();
+        getPolyAreaList().clear();
     }
     
     //private void appendSegmentInCollection(int feacount, LineString seg, DecimalFormat df, int objParcelID, String sn) {

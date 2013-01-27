@@ -58,19 +58,6 @@ public class CadastreTargetSegmentLayer  extends ExtendedLayerGraphics {
     public void setPolyArea(List<AreaObject> polyAreaList) {
         this.polyAreaList = polyAreaList;
     }
-
-    /**
-     * Gets the form that is responsible with handling other attributes of features
-     * @return 
-     */
-    public TwoPointMethodForm getHostForm(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
-            JToolBar jTool) throws NoSuchMethodException, InitializeLayerException {
-        if (this.hostForm == null){
-            this.hostForm = new TwoPointMethodForm(this,targetParcelsLayer,jTool);
-        }
-        
-        return (TwoPointMethodForm)this.hostForm;
-    }
     
     public ExtendedLayerGraphics getSegmentLayer() {
         return segmentLayer;

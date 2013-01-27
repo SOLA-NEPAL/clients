@@ -25,17 +25,16 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  *
  * @author ShresthaKabin
  */
-public class ParcelMergeForm extends javax.swing.JDialog {
+public class ParcelMergeForm extends ParcelSplitDialog {
     //Store for old data collection.
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
-    private CadastreTargetSegmentLayer segmentLayer=null;
     private LocatePointPanel locatePointPanel;
     /**
      * Creates new form ParcelMergeForm
      */
      public ParcelMergeForm(CadastreTargetSegmentLayer segmentLayer,CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
                     throws InitializeLayerException {
+         super();
         initComponents();
 
         //set table dimesion.
@@ -43,9 +42,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         cModel.getColumn(0).setWidth(30);
         tblParcels.setColumnModel(cModel);
         tblParcels.repaint();
-
-        this.setTitle("Merge Selected Parcel Form.");
-        this.setAlwaysOnTop(true);
         //Initialize other variables.
         targetParcelsLayer.getNeighbourParcels().getFeatureCollection().clear();//remove neighbouring parcel status.
         this.targetParcelsLayer = targetParcelsLayer;
@@ -53,9 +49,10 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         //using only for segment details.
         locatePointPanel=new LocatePointPanel(segmentLayer);
         locatePointPanel.reset_OldCollectionVariable(segmentLayer);
+        showParcelsInTable();
     }
 
-    public void showParcelsInTable(){
+    private void showParcelsInTable(){
         SimpleFeatureCollection feacol= targetParcelsLayer.getFeatureCollection();
         String geomfld=PublicMethod.theGeomFieldName(feacol);
         if (geomfld.isEmpty()) return;
@@ -97,10 +94,11 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnMergePolygon = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
-        btnOK = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        setTitle(bundle.getString("ParcelMergeForm.title")); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -120,7 +118,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblParcels);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         btnUndoSplit.setText(bundle.getString("ParcelMergeForm.btnUndoSplit.text")); // NOI18N
         btnUndoSplit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,13 +139,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
             }
         });
 
-        btnOK.setText("Close");
-        btnOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOKActionPerformed(evt);
-            }
-        });
-
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("Select the parcel from which attributes is to be assigned to new parcel");
 
@@ -160,41 +150,36 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnMergePolygon, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                            .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                            .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnMergePolygon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnUndoSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 87, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnRefreshMap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnUndoSplit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMergePolygon)
-                .addGap(7, 7, 7)
-                .addComponent(btnOK)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMergePolygon)
+                    .addComponent(btnUndoSplit)
+                    .addComponent(btnRefreshMap))
+                .addContainerGap())
         );
 
         pack();
@@ -219,10 +204,11 @@ public class ParcelMergeForm extends javax.swing.JDialog {
 
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
-        //copy data from old collection to current collection.
-        PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
-        PublicMethod.remove_All_newParcel(targetParcelsLayer);
-        //refresh map.
+        try {
+            targetParcelsLayer.getNewParcelsLayer().getCadastreObjectList().clear();
+        } catch (InitializeLayerException ex) {
+            Logger.getLogger(ParcelMergeForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         showParcelsInTable();//refresh information in table also.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
@@ -273,7 +259,6 @@ public class ParcelMergeForm extends javax.swing.JDialog {
         Geometry merged_geom=geoms.buffer(0);
         //refresh map and data in the collections.
         updateFeatureCollections(parcel_id, merged_geom,geomFactory);
-        //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }
 
@@ -291,7 +276,7 @@ public class ParcelMergeForm extends javax.swing.JDialog {
                             targetParcelsLayer,parcel_id,merged_geom,1,parcel);
             }
             else{
-                targetParcelsLayer.getNew_parcels().addFeature(parcel_id, merged_geom, null);
+                targetParcelsLayer.getNewParcelsLayer().addFeature(parcel_id, merged_geom, null);
             }
             //refresh point collection only.
             Coordinate[] cors=merged_geom.getCoordinates();
@@ -312,17 +297,9 @@ public class ParcelMergeForm extends javax.swing.JDialog {
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
-
-    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        PublicMethod.deselect_All(segmentLayer);
-        
-        targetParcelsLayer.getMapControl().refresh();
-        this.dispose();
-    }//GEN-LAST:event_btnOKActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMergePolygon;
-    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.JLabel jLabel1;

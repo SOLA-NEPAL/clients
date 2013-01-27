@@ -115,7 +115,7 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         this.getMap().addLayer(newPointsLayer);
         this.newPointsLayer.setSurveyPointList(this.transactionBean.getSurveyPointList());
         
-        this.targetParcelsLayer.setNew_parcels(this.newCadastreObjectLayer);//get reference of the newparcel layer object.
+        this.targetParcelsLayer.setNewParcelsLayer(this.newCadastreObjectLayer);//get reference of the newparcel layer object.
         this.targetParcelsLayer.setCadastreObjectTargetList(transactionBean.getCadastreObjectTargetList());
         this.getMap().addLayer(targetParcelsLayer);
         
@@ -132,13 +132,13 @@ public final class ControlsBundleForCadastreChange extends ControlsBundleForTran
         //add vertical bar.
         this.getMap().addMapAction(new BlankTool(true),this.getToolbar(), true);
         this.getMap().addMapAction(new ZoomPreviousTool(this.getMap()), this.getToolbar(), true);
-        this.getMap().addMapAction(new SearchParcelFormShow(this.getPojoDataAccess(),
-                this.getMap(),targetSegmentLayer, targetParcelsLayer), this.getToolbar(), true);
+//        this.getMap().addMapAction(new SearchParcelFormShow(this.getPojoDataAccess(),
+//                this.getMap(),targetSegmentLayer, targetParcelsLayer), this.getToolbar(), true);
         //new tool for parcel selection.
         listParcel = new listSelectedCadastreObjects(this.getPojoDataAccess(), targetSegmentLayer,targetParcelsLayer);
         this.getMap().addTool(listParcel, this.getToolbar(), true,listSelectedCadastreObjects.NAME);
         //add deselect tool.
-        this.getMap().addMapAction(new DeselectALL(this.getMap(),targetSegmentLayer,targetParcelsLayer), this.getToolbar(), true);
+        //this.getMap().addMapAction(new DeselectALL(this.getMap(),targetSegmentLayer,targetParcelsLayer), this.getToolbar(), true);
         //add toolbar for the one point and Area method show forms.
         this.getMap().addMapAction(new CadastreOnePointAreaFormShow(this.getMap(), targetSegmentLayer,targetParcelsLayer
                     ,this.getToolbar()), this.getToolbar(), true);
