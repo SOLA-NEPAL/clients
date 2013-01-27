@@ -217,16 +217,6 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         jPanel9 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtLoc = new javax.swing.JTextField();
-        jPanel13 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jButton2 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         browseRightholder = new org.sola.clients.swing.common.controls.BrowseControl();
@@ -291,7 +281,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
             .addComponent(cbxVdc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -321,7 +311,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
             .addComponent(txtWard)
         );
         jPanel3Layout.setVerticalGroup(
@@ -354,7 +344,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel5)
-                .addGap(0, 86, Short.MAX_VALUE))
+                .addGap(0, 123, Short.MAX_VALUE))
             .addComponent(cbxMapSheets, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
@@ -384,7 +374,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addGap(0, 68, Short.MAX_VALUE))
+                .addGap(0, 105, Short.MAX_VALUE))
             .addComponent(txtParcelNumber)
         );
         jPanel7Layout.setVerticalGroup(
@@ -415,7 +405,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jLabel7)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtMoth, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+            .addComponent(txtMoth, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,7 +434,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel8)
-                .addGap(0, 73, Short.MAX_VALUE))
+                .addGap(0, 110, Short.MAX_VALUE))
             .addComponent(txtLoc)
         );
         jPanel9Layout.setVerticalGroup(
@@ -457,108 +447,6 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         );
 
         jPanel4.add(jPanel9);
-
-        jPanel13.setName(bundle.getString("BaUnitSearchPanel.jPanel13.name")); // NOI18N
-
-        jPanel12.setName(bundle.getString("BaUnitSearchPanel.jPanel12.name")); // NOI18N
-
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        jFormattedTextField3.setText(bundle.getString("BaUnitSearchPanel.jFormattedTextField3.text")); // NOI18N
-        jFormattedTextField3.setName(bundle.getString("BaUnitSearchPanel.jFormattedTextField3.name")); // NOI18N
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        jButton2.setText(bundle.getString("BaUnitSearchPanel.jButton2.text")); // NOI18N
-        jButton2.setName(bundle.getString("BaUnitSearchPanel.jButton2.name")); // NOI18N
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFormattedTextField3)
-            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
-
-        jLabel9.setText(bundle.getString("BaUnitSearchPanel.jLabel9.text")); // NOI18N
-        jLabel9.setName(bundle.getString("BaUnitSearchPanel.jLabel9.name")); // NOI18N
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addComponent(jLabel9)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-        );
-
-        jPanel4.add(jPanel13);
-
-        jPanel14.setName(bundle.getString("BaUnitSearchPanel.jPanel14.name")); // NOI18N
-
-        jPanel11.setName(bundle.getString("BaUnitSearchPanel.jPanel11.name")); // NOI18N
-
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        jFormattedTextField2.setText(bundle.getString("BaUnitSearchPanel.jFormattedTextField2.text")); // NOI18N
-        jFormattedTextField2.setName(bundle.getString("BaUnitSearchPanel.jFormattedTextField2.name")); // NOI18N
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        jButton1.setText(bundle.getString("BaUnitSearchPanel.jButton1.text")); // NOI18N
-        jButton1.setName(bundle.getString("BaUnitSearchPanel.jButton1.name")); // NOI18N
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jLabel10.setText(bundle.getString("BaUnitSearchPanel.jLabel10.text")); // NOI18N
-        jLabel10.setName(bundle.getString("BaUnitSearchPanel.jLabel10.name")); // NOI18N
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-        );
-
-        jPanel4.add(jPanel14);
 
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -577,7 +465,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
             .addComponent(browseRightholder, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -620,7 +508,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 37, Short.MAX_VALUE)
                 .addComponent(btnClear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSearch))
@@ -823,13 +711,8 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox cbxMapSheets;
     private javax.swing.JComboBox cbxVdc;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -837,12 +720,7 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
