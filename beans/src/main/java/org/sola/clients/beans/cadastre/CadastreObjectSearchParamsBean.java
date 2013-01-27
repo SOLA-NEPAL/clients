@@ -15,6 +15,7 @@
  */
 package org.sola.clients.beans.cadastre;
 
+import java.util.Date;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.VdcBean;
@@ -30,20 +31,23 @@ public class CadastreObjectSearchParamsBean extends AbstractBindingBean {
     public static final String PARCEL_NO_PROPERTY = "parcelNo";
     public static final String MAP_SHEET_CODE_PROPERTY = "mapSheetCode";
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
-
+    public static final String FROM_DATE_PROPERTY = "fromDate";
+    public static final String TO_DATE_PROPERTY = "toDate";
     private VdcBean vdc;
     private String wardNo;
     private String parcelNo;
     private MapSheetBean mapSheet;
-    
+    private Date fromDate;
+    private Date toDate;
+
     public CadastreObjectSearchParamsBean() {
         super();
     }
 
     public String getVdcCode() {
-        if(getVdc() == null){
+        if (getVdc() == null) {
             return null;
-        } 
+        }
         return getVdc().getCode();
     }
 
@@ -88,18 +92,38 @@ public class CadastreObjectSearchParamsBean extends AbstractBindingBean {
     }
 
     public String getMapSheetCode() {
-        if(getMapSheet() == null){
+        if (getMapSheet() == null) {
             return null;
-        } 
+        }
         return getMapSheet().getId();
     }
 
     public void setMapSheetCode(String mapSheetCode) {
         String oldValue = null;
-        if(getMapSheet() !=null){
+        if (getMapSheet() != null) {
             oldValue = getMapSheet().getId();
         }
         setMapSheet(CacheManager.getMapSheet(mapSheetCode));
         propertySupport.firePropertyChange(MAP_SHEET_CODE_PROPERTY, oldValue, mapSheetCode);
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date value) {
+        Date oldValue = fromDate;
+        fromDate = value;
+        propertySupport.firePropertyChange(FROM_DATE_PROPERTY, oldValue, value);
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(Date value) {
+        Date oldValue = toDate;
+        toDate = value;
+        propertySupport.firePropertyChange(TO_DATE_PROPERTY, oldValue, value);
     }
 }

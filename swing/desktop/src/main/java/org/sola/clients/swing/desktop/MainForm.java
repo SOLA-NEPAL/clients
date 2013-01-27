@@ -211,16 +211,16 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     /**
-     * Opens {@link PartySearchPanelForm} to search parties.
+     * Opens {@link PersonSearchForm} to search parties.
      */
     public void openSearchParties(final boolean showSelectButton) {
         SolaTask t = new SolaTask<Void, Void>() {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
-                PersonSearchForm partySearchPanelForm = new PersonSearchForm();
-                partySearchPanelForm.getPartySearchPanel().setShowSelectButton(showSelectButton);
-                pnlContent.addPanel(partySearchPanelForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
+                PersonSearchForm personSearchForm = new PersonSearchForm();
+                personSearchForm.getPartySearchPanel().setShowSelectButton(showSelectButton);
+                pnlContent.addPanel(personSearchForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
             }
         };
