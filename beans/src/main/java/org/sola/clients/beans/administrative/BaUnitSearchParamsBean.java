@@ -97,5 +97,7 @@ public class BaUnitSearchParamsBean extends CadastreObjectSearchParamsBean {
         setMoth(null);
         setRightHolderId(null);
         setRightHolderName(null);
+        setFromDate(null);
+        setToDate(null);
     }
 }
