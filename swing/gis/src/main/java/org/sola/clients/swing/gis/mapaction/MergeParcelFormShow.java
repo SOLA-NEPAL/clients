@@ -22,8 +22,6 @@ import org.sola.common.messaging.MessageUtility;
  */
 public class MergeParcelFormShow extends ComponentShow{
     public final static String MAPACTION_NAME = "Merge Pacels";
-    public ParcelMergeForm mergePacelForm=null;
-    
     private Map mapObj=null;
     private CadastreTargetSegmentLayer segmentLayer=null;
     private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
@@ -52,11 +50,8 @@ public class MergeParcelFormShow extends ComponentShow{
         PublicMethod.maplayerOnOff(mapObj, false);
         try {
             //Display segment list.
-            if (mergePacelForm==null)
-                mergePacelForm=new ParcelMergeForm(segmentLayer,targetParcelsLayer);
+            ParcelMergeForm mergePacelForm=new ParcelMergeForm(segmentLayer,targetParcelsLayer);
             mergePacelForm.setVisible(true);
-            //refresh table.
-            mergePacelForm.showParcelsInTable();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(ParcelMergeForm.class.getName()).log(Level.SEVERE, null, ex);
         }

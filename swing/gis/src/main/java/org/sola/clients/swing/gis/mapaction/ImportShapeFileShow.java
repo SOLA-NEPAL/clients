@@ -62,7 +62,7 @@ public class ImportShapeFileShow  extends ComponentShow{
                 pointsForm=new ImportLinesFromFile(segmentLayer,
                         targetParcelsLayer,jTool);
             }
-            PublicMethod.enable_disable_Select_Tool(jTool,
+            PublicMethod.enableSelectTool(jTool,
                     listSelectedCadastreObjects.NAME, false);
             pointsForm.setVisible(true);
         } catch (InitializeLayerException ex) {

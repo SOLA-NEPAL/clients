@@ -27,12 +27,14 @@ import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
  */
 public class Polygonization {  
     
-    public static void formPolygon(CadastreTargetSegmentLayer targetPointlayer,
+    public static List<SimpleFeature> formPolygon(CadastreTargetSegmentLayer targetPointlayer,
                     CadastreChangeTargetCadastreObjectLayer targetParcelsLayer, String parcel_id){
         //Find Features.
         SimpleFeatureCollection segs = targetPointlayer.getSegmentLayer().getFeatureCollection();
         String geomfld=PublicMethod.theGeomFieldName(segs);
-        if (geomfld.isEmpty()) return;
+        List<SimpleFeature> newParcels = new ArrayList<SimpleFeature>();
+        
+        if (geomfld.isEmpty()) return newParcels;
 
         Collection segments= new ArrayList();
         //reset the iterator.
@@ -45,7 +47,7 @@ public class Polygonization {
         segIterator.close();
         
         try {
-            CadastreChangeNewCadastreObjectLayer new_parcels=targetParcelsLayer.getNew_parcels();
+            CadastreChangeNewCadastreObjectLayer newParcelsLayer=targetParcelsLayer.getNewParcelsLayer();
             //add fresh parcel data.
             Polygonizer polygons= new Polygonizer();
             polygons.add(segments);//Add segment collection to the polygonizer.
@@ -60,18 +62,27 @@ public class Polygonization {
                 Geometry geom=(Geometry)poly;
                 //append new parcels in target parcels.
                 if (parcel==null){
-                    new_parcels.addFeature(Integer.toString(geom.hashCode()), geom, null,false);
+                    newParcels.add(newParcelsLayer.addFeature(Integer.toString(geom.hashCode()), geom, null,false));
                 }
                 else {
-                    PublicMethod.assignAttributesFromTargetParcel(
-                            targetParcelsLayer,parcel_id,geom,sn++,parcel);
+                    PublicMethod.assignAttributesFromTargetParcel(targetParcelsLayer,parcel_id,geom,sn++,parcel);
                 }
             }
             //clean leaf segments.
             remove_Leaf_Segment(targetPointlayer,polygons);
             //rectify the topology other touching parcels. //ununcomment it for modifying topoloy.
             //PublicMethod.rectify_TouchingParcels(targetParcelsLayer.getNeighbour_parcels(), targetParcelsLayer);
-        } catch (InitializeLayerException e) { }
+            // Remove parcels from new parcel layer case if any selected, which means new parcel is being splitted.
+            if(targetPointlayer.getPolyAreaList()!=null){
+                for (AreaObject object : targetPointlayer.getPolyAreaList()) {
+                    targetParcelsLayer.getNewParcelsLayer().removeFeature(object.getId());
+                }
+            }
+            
+            return newParcels;
+        } catch (InitializeLayerException e) { 
+            return newParcels;
+        }
     }
     
     public static void remove_Leaf_Segment(CadastreTargetSegmentLayer targetPointlayer,Polygonizer polygons){

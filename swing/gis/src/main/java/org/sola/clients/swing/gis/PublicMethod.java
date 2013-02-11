@@ -434,9 +434,9 @@ public class PublicMethod {
         polyIterator.close();
         //topology checking features.
         try {
-            dest_targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
+            dest_targetParcelsLayer.getNeighbourParcels().getFeatureCollection().clear();
             //get target affected feature collection.
-            polys = src_targetParcelsLayer.getNeighbour_parcels().getFeatureCollection();
+            polys = src_targetParcelsLayer.getNeighbourParcels().getFeatureCollection();
             geomfld = theGeomFieldName(polys);
             if (geomfld.isEmpty()) {
                 return;
@@ -447,7 +447,7 @@ public class PublicMethod {
                 SimpleFeature fea = polyIterator.next();
                 Geometry geom = (Geometry) fea.getAttribute(geomfld);//first item as geometry.
                 String objId = fea.getID().toString();
-                dest_targetParcelsLayer.getNeighbour_parcels().addFeature(objId, geom, null);
+                dest_targetParcelsLayer.getNeighbourParcels().addFeature(objId, geom, null);
             }
         } catch (InitializeLayerException ex) {
             Logger.getLogger(PublicMethod.class.getName()).log(Level.SEVERE, null, ex);
@@ -696,7 +696,7 @@ public class PublicMethod {
             TargetNeighbourParcelLayer target_affected_layer,
             CadastreChangeTargetCadastreObjectLayer the_parcels)
             throws InitializeLayerException {
-        SimpleFeatureCollection fea_col = the_parcels.getNew_parcels().getFeatureCollection();
+        SimpleFeatureCollection fea_col = the_parcels.getNewParcelsLayer().getFeatureCollection();
         String geomfld = theGeomFieldName(fea_col);
         if (geomfld.isEmpty()) {
             return;
@@ -783,32 +783,32 @@ public class PublicMethod {
         pointsLayer.getFeatureCollection().clear();
         targetParcelsLayer.getFeatureCollection().clear();
         try {
-            targetParcelsLayer.getNeighbour_parcels().getFeatureCollection().clear();
+            targetParcelsLayer.getNeighbourParcels().getFeatureCollection().clear();
             //remove_All_newParcel(targetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(DeselectALL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void deselect_All(CadastreTargetSegmentLayer pointsLayer) {
+    public static void deselectAll(CadastreTargetSegmentLayer pointsLayer) {
         //clear all the selection.
         pointsLayer.getSegmentLayer().getFeatureCollection().clear();
         pointsLayer.getFeatureCollection().clear();
     }
 
-    public static void remove_All_newParcel(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
+    public static void removeAllNewParcels(CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) {
         //clear all the selection.
         try {
-            targetParcelsLayer.getNew_parcels().getFeatureCollection().clear();
-            targetParcelsLayer.getNew_parcels().getCadastreObjectList().clear();
-            targetParcelsLayer.getNew_parcels().getVerticesLayer().removeFeatures();
-            targetParcelsLayer.getNew_parcels().getVertexList().clear();
+            targetParcelsLayer.getNewParcelsLayer().getFeatureCollection().clear();
+            targetParcelsLayer.getNewParcelsLayer().getCadastreObjectList().clear();
+            targetParcelsLayer.getNewParcelsLayer().getVerticesLayer().removeFeatures();
+            targetParcelsLayer.getNewParcelsLayer().getVertexList().clear();
         } catch (Exception ex) {
         }
     }
     //</editor-fold>
 
-    public static void enable_disable_Select_Tool(
+    public static void enableSelectTool(
             JToolBar sola_ctontrols, String control_name, boolean enable) {
         for (Component selectTool : sola_ctontrols.getComponents()) {
             if (selectTool.getName() == null) {
@@ -860,7 +860,7 @@ public class PublicMethod {
         String parceltype = target.getLandTypeCode();
         //new parcels.
         try {
-            CadastreChangeNewCadastreObjectLayer new_parcels = targetParcelsLayer.getNew_parcels();
+            CadastreChangeNewCadastreObjectLayer new_parcels = targetParcelsLayer.getNewParcelsLayer();
             updateNewParcel(firstpartname, lastpartname, mapsheetid, parceltype,
                     geom, parcel_id, new_parcels, sn);
         } catch (Exception e) {

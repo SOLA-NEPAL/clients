@@ -14,48 +14,34 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
-import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.sola.clients.swing.gis.*;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 
 /**
  *
  * @author ShresthaKabin
  */
-public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
+public class MultiSegmentOffsetMethodForm extends ParcelSplitDialog {
     //Store for old data collection.
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
-    private CadastreTargetSegmentLayer segmentLayer = null;
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
-    //Store selected line and points.
-    //private LineString lineSeg=null;
     private List<LineString> selectedLines = null;
-    //private Point pointFixed = null;
     private String parcel_ID="";
-    //temporary variable just to use for iterative offset.
-    //0--> no proper offset, 1--> leftsided offset, 2--> right sided offset.
     private byte leftside_offset=0;
-    private JToolBar jTool;
     
     public MultiSegmentOffsetMethodForm( CadastreTargetSegmentLayer segmentLayer,
-            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer
-            ,JToolBar jTool)throws InitializeLayerException {
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
+            throws InitializeLayerException {
+        super();
         initComponents();
-        
-        this.jTool=jTool;
         otherInitializations(segmentLayer, targetParcelsLayer);
     }
 
     private void otherInitializations(CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) throws InitializeLayerException {
-        this.setTitle("Offset Method for Parcel Splitting Form.");
         this.setAlwaysOnTop(true);
-        //Initialize other variables.
         this.segmentLayer = segmentLayer;
         this.targetParcelsLayer = targetParcelsLayer;
 
@@ -94,18 +80,16 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         txtMaxArea = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
+        setTitle(bundle.getString("MultiSegmentOffsetMethodForm.title")); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
-            }
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
             }
         });
 
         offsetOptions.add(optOffsetByDistance);
         optOffsetByDistance.setSelected(true);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         optOffsetByDistance.setText(bundle.getString("MultiSegmentOffsetMethodForm.optOffsetByDistance.text")); // NOI18N
         optOffsetByDistance.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -269,15 +253,6 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        //Make all layers off except the target layers.
-        //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetParcelsLayer.getMapControl();
-        PublicMethod.maplayerOnOff(mapObj, true);
-        PublicMethod.enable_disable_Select_Tool(jTool, 
-                            listSelectedCadastreObjects.NAME, true);
-    }//GEN-LAST:event_formWindowClosing
-
     private void displayArea(String parcel_id){
         DecimalFormat df = new DecimalFormat("0.00");
         for (AreaObject aa : segmentLayer.getPolyAreaList()) {
@@ -315,17 +290,14 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
 
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
-        //copy data from old collection to current collection.
-        PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
-        PublicMethod.remove_All_newParcel(targetParcelsLayer);
+        undoSplitting();
         btnCheckOffsetLine.setEnabled(false);
         btnCreateParcel.setEnabled(false);
-        //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
     
     private void btnCreateParcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateParcelActionPerformed
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);
+        getNewParcels().addAll(Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID));
         targetParcelsLayer.getMapControl().refresh();
         btnCreateParcel.setEnabled(false);
         btnCheckSegments.setEnabled(false);
@@ -605,8 +577,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
             lineGenerator.generateNodedSegments();
             targetParcelsLayer.getMapControl().refresh();
         
-            TwoPointMethodForm pointListForm=new TwoPointMethodForm(segmentLayer,
-                    targetParcelsLayer,jTool);
+            TwoPointMethodForm pointListForm=new TwoPointMethodForm(segmentLayer, targetParcelsLayer);
             pointListForm.showPointListInTable();
             pointListForm.setVisible(!pointListForm.isVisible());
             //Display segment list.
@@ -632,7 +603,7 @@ public class MultiSegmentOffsetMethodForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCheckSegmentsActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        PublicMethod.deselect_All(segmentLayer);
+        PublicMethod.deselectAll(segmentLayer);
         targetParcelsLayer.getMapControl().refresh();
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed

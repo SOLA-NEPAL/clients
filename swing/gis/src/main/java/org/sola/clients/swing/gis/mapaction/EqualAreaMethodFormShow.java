@@ -22,32 +22,29 @@ import org.sola.common.messaging.MessageUtility;
  *
  * @author ShresthaKabin
  */
-public class EqualAreaMethodFormShow extends ComponentShow{
+public class EqualAreaMethodFormShow extends ComponentShow {
+
     public final static String MAPACTION_NAME = "Equal Area Method Form Show";
-    public EqualAreaMethod equalAreaForm=null;
-    
-    private Map mapObj=null;
-    private CadastreTargetSegmentLayer segmentLayer=null;
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer=null;
-    private JToolBar jTool;
+    private Map mapObj = null;
+    private CadastreTargetSegmentLayer segmentLayer = null;
+    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
 
     public EqualAreaMethodFormShow(Map mapObj, CadastreTargetSegmentLayer segmentLayer,
-                            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,JToolBar jTool) {
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer, JToolBar jTool) {
         super(mapObj, MAPACTION_NAME,
                 MessageUtility.getLocalizedMessage(
                 GisMessage.CADASTRE_CHANGE_EQUAL_AREA).getMessage(),
                 "resources/EqualArea.png");
-        
-        this.mapObj=mapObj;
-        this.segmentLayer= segmentLayer;
-        this.targetParcelsLayer=targetParcelsLayer;
-        this.jTool=jTool;
+
+        this.mapObj = mapObj;
+        this.segmentLayer = segmentLayer;
+        this.targetParcelsLayer = targetParcelsLayer;
     }
-    
+
     @Override
     public void onClick() {
-        int parcel_count=PublicMethod.count_Parcels_Selected(targetParcelsLayer);
-        if (parcel_count<1){
+        int parcel_count = PublicMethod.count_Parcels_Selected(targetParcelsLayer);
+        if (parcel_count < 1) {
             JOptionPane.showMessageDialog(null, "Select the concerned parcel and proceed again.");
             return;
         }
@@ -57,16 +54,10 @@ public class EqualAreaMethodFormShow extends ComponentShow{
 //        }
         //Make all layers off except the target layers.
         PublicMethod.maplayerOnOff(mapObj, false);
-        
+
         try {
-            //Display segment list.
-            if (equalAreaForm==null){
-                equalAreaForm=new EqualAreaMethod(segmentLayer,
-                        targetParcelsLayer,jTool);
-            }
+            EqualAreaMethod equalAreaForm = new EqualAreaMethod(segmentLayer, targetParcelsLayer);
             equalAreaForm.setVisible(true);
-            PublicMethod.enable_disable_Select_Tool(jTool, 
-                            listSelectedCadastreObjects.NAME, false);
             equalAreaForm.getLocatePointPanel().reload_Data();
         } catch (InitializeLayerException ex) {
             Logger.getLogger(EqualAreaMethodFormShow.class.getName()).log(Level.SEVERE, null, ex);

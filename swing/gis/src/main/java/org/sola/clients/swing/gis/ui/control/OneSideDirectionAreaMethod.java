@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.sola.clients.swing.gis.ui.control;
 
 import com.vividsolutions.jts.geom.*;
@@ -26,12 +22,10 @@ import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
  *
  * @author Shrestha_Kabin
  */
-public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
+public class OneSideDirectionAreaMethod extends ParcelSplitDialog {
     //Store for old data collection.
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
-    private CadastreTargetSegmentLayer segmentLayer = null;
-    private CadastreChangeTargetCadastreObjectLayer targetParcelsLayer = null;
     //Store selected line and points.
     private LineString lineSeg = null;
     private Point pointFixed = null;
@@ -47,21 +41,15 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     }
 
     public OneSideDirectionAreaMethod(
-            CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer,
-            JToolBar jTool)throws InitializeLayerException {
-        
+            CadastreTargetSegmentLayer segmentLayer, CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
+            throws InitializeLayerException {
+        super();
         initComponents();
-        this.setAlwaysOnTop(true);
-        this.setTitle("One Side, Direction and Area Method for Parcel Splitting.");
-        //this.setModalityType(ModalityType.APPLICATION_MODAL);
-        //this.table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.setSize(550, 500);
         this.setLocation(100, 100);
         
         this.segmentLayer = segmentLayer;
-        this.targetParcelsLayer = targetParcelsLayer;
-        this.jTool=jTool;
-        
+        this.targetParcelsLayer = targetParcelsLayer;     
         locatePointPanel.initializeFormVariable(segmentLayer);
     }
     
@@ -95,7 +83,6 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         btnUndoSplit = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        btnOK = new javax.swing.JButton();
         btnCheckSegments = new javax.swing.JButton();
         optClockwise = new javax.swing.JRadioButton();
         optCounterClockWise = new javax.swing.JRadioButton();
@@ -104,10 +91,8 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         jTextField1.setText(bundle.getString("OneSideDirectionAreaMethod.jTextField1.text")); // NOI18N
 
+        setTitle(bundle.getString("OneSideDirectionAreaMethod.title")); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -144,13 +129,6 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText(bundle.getString("OneSideDirectionAreaMethod.jLabel5.text")); // NOI18N
 
-        btnOK.setText("Close");
-        btnOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOKActionPerformed(evt);
-            }
-        });
-
         btnCheckSegments.setText(bundle.getString("OneSideDirectionAreaMethod.btnCheckSegments.text")); // NOI18N
         btnCheckSegments.setEnabled(false);
         btnCheckSegments.addActionListener(new java.awt.event.ActionListener() {
@@ -174,8 +152,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnOK)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(65, 65, 65)
                         .addComponent(btnRefreshMap, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUndoSplit)
@@ -223,7 +200,6 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                                 .addComponent(optCounterClockWise)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOK)
                     .addComponent(btnRefreshMap)
                     .addComponent(btnUndoSplit)
                     .addComponent(btnNewPacel)
@@ -248,16 +224,6 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    //reset the layer display.
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        //Make all layers off except the target layers.
-        //List<Layer> lays=mapObj.getMapContent().layers();
-        Map mapObj = targetParcelsLayer.getMapControl();
-        PublicMethod.maplayerOnOff(mapObj, true);
-        PublicMethod.enable_disable_Select_Tool(jTool, 
-                            listSelectedCadastreObjects.NAME, true);
-    }//GEN-LAST:event_formWindowClosing
 
     //generate perpendicular line to given line.
     private LineString perpendicularLine(Point startPt,Point endPt,Point keyPoint){
@@ -619,7 +585,7 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
     }
     
     private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
-        Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID);
+        getNewParcels().addAll(Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID));
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
         targetParcelsLayer.getMapControl().refresh();
@@ -665,11 +631,8 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
 
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
-        //copy data from old collection to current collection.
-        PublicMethod.exchangeParcelCollection(prevTargetParcelsLayer, targetParcelsLayer);
-        PublicMethod.remove_All_newParcel(targetParcelsLayer);
+        undoSplitting();
         btnNewPacel.setEnabled(false);
-        //refresh map.
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
 
@@ -705,16 +668,9 @@ public class OneSideDirectionAreaMethod extends javax.swing.JDialog {
         btnCheckSegments.setEnabled(false);
     }//GEN-LAST:event_btnCheckSegmentsActionPerformed
 
-    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        PublicMethod.deselect_All(segmentLayer);
-        targetParcelsLayer.getMapControl().refresh();
-        this.dispose();
-    }//GEN-LAST:event_btnOKActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JToggleButton btnNewPacel;
-    private javax.swing.JButton btnOK;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnUndoSplit;
     private javax.swing.ButtonGroup buttonGroup1;

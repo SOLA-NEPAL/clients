@@ -67,17 +67,17 @@ public class CadastreChangeTargetCadastreObjectLayer extends ExtendedLayerGraphi
     
     //for storing touching parcel by target parcel.
     private TargetNeighbourParcelLayer neigbhour_parcels=null;
-    private CadastreChangeNewCadastreObjectLayer new_parcels=null;
+    private CadastreChangeNewCadastreObjectLayer newParcelsLayer=null;
 
-    public CadastreChangeNewCadastreObjectLayer getNew_parcels() throws InitializeLayerException {
-        return new_parcels;
+    public CadastreChangeNewCadastreObjectLayer getNewParcelsLayer() throws InitializeLayerException {
+        return newParcelsLayer;
     }
 
-    public void setNew_parcels(CadastreChangeNewCadastreObjectLayer new_parcels) {
-        this.new_parcels = new_parcels;
+    public void setNewParcelsLayer(CadastreChangeNewCadastreObjectLayer newParcelsLayer) {
+        this.newParcelsLayer = newParcelsLayer;
     }
 
-    public TargetNeighbourParcelLayer getNeighbour_parcels() throws InitializeLayerException {
+    public TargetNeighbourParcelLayer getNeighbourParcels() throws InitializeLayerException {
         if (neigbhour_parcels==null)
             neigbhour_parcels=new TargetNeighbourParcelLayer();
         return neigbhour_parcels;

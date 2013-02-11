@@ -56,7 +56,7 @@ public class ExtendedLayerGraphics extends ExtendedFeatureLayer {
 
     private GeometryFactory geometryFactory = null;
     private GraphicsFeatureCollection featureCollection = null;
-
+    
     /**
      * It initializes the layer.
      * 
