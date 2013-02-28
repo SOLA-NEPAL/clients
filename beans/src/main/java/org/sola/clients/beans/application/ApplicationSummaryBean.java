@@ -151,4 +151,7 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
         this.fiscalYearCode = fiscalYearCode;
         propertySupport.firePropertyChange(FISCAL_YEAR_CODE_PROPERTY, old, this.fiscalYearCode);
     }
+    public String getLodgingDateFormatted() {
+        return DateUtility.toFormattedNepaliDate(lodgingDatetime.toString());
+    }
 }

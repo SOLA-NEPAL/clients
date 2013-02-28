@@ -82,6 +82,8 @@ public class MultiSegmentOffsetMethodForm extends ParcelSplitDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         setTitle(bundle.getString("MultiSegmentOffsetMethodForm.title")); // NOI18N
+        setMinimumSize(new java.awt.Dimension(700, 498));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

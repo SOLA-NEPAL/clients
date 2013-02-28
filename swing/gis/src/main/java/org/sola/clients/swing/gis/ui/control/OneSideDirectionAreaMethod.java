@@ -92,6 +92,8 @@ public class OneSideDirectionAreaMethod extends ParcelSplitDialog {
         jTextField1.setText(bundle.getString("OneSideDirectionAreaMethod.jTextField1.text")); // NOI18N
 
         setTitle(bundle.getString("OneSideDirectionAreaMethod.title")); // NOI18N
+        setMinimumSize(new java.awt.Dimension(700, 498));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

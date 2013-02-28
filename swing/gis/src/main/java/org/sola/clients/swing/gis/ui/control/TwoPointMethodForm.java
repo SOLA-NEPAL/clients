@@ -4,15 +4,16 @@
  */
 package org.sola.clients.swing.gis.ui.control;
 
-import com.vividsolutions.jts.geom.*;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JToolBar;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.swing.extended.Map;
 import org.geotools.swing.extended.exception.InitializeLayerException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.sola.clients.swing.gis.NodedLineStringGenerator;
@@ -20,7 +21,6 @@ import org.sola.clients.swing.gis.Polygonization;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeTargetCadastreObjectLayer;
 import org.sola.clients.swing.gis.layer.CadastreTargetSegmentLayer;
-import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
 
 /**
  *
@@ -28,9 +28,10 @@ import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
  */
 public class TwoPointMethodForm extends ParcelSplitDialog {
     //Store for old data collection.
+
     private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
-    private String parcel_ID="";
-    
+    private String parcel_ID = "";
+
     /**
      * Creates new form JoinPointMethodForm
      */
@@ -41,7 +42,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         initComponents();
         //this.setModalityType(ModalityType.APPLICATION_MODAL);
         this.segmentLayer = targetPointlayer;
-        this.targetParcelsLayer=targetParcelsLayer;
+        this.targetParcelsLayer = targetParcelsLayer;
         //initialize data.
         locatePointPanel.initializeFormVariable(targetPointlayer);
     }
@@ -55,7 +56,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         SimpleFeatureCollection pointFeatures = segmentLayer.getFeatureCollection();
         SimpleFeatureIterator feaIterator = pointFeatures.features();
         //get list model copy.
-        
+
         DefaultListModel listFrom = new DefaultListModel();
         listFrom.clear();
         DefaultListModel listTO = new DefaultListModel();
@@ -74,7 +75,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         lstTo.setModel(listTO);
         lstTo.repaint();
     }
-            
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -92,11 +93,11 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         btnPolygonize = new javax.swing.JButton();
         btnRefreshMap = new javax.swing.JButton();
         btnUndoSplit = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         setTitle(bundle.getString("TwoPointMethodForm.title")); // NOI18N
+        setMinimumSize(new java.awt.Dimension(700, 820));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -149,8 +150,6 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
             }
         });
 
-        jButton1.setText(bundle.getString("TwoPointMethodForm.jButton1.text")); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,8 +161,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
                     .addComponent(btnCheckSegments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRefreshMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUndoSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPolygonize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPolygonize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -172,9 +170,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addGap(9, 9, 9)
+                .addGap(43, 43, 43)
                 .addComponent(btnJoinPoint)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCheckSegments)
@@ -226,18 +222,18 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addSegment(Coordinate pt1,Coordinate pt2) {
+    private void addSegment(Coordinate pt1, Coordinate pt2) {
         if (pt1 == null || pt2 == null) {
             return;
         }
         Coordinate[] co = new Coordinate[]{pt1, pt2};
 
         //Form new line segment.
-        GeometryFactory geomFactory= new GeometryFactory();
+        GeometryFactory geomFactory = new GeometryFactory();
         LineString seg = geomFactory.createLineString(co);
 
-        byte is_newLine=1;
-        locatePointPanel.appendNewSegment(seg,is_newLine);
+        byte is_newLine = 1;
+        locatePointPanel.appendNewSegment(seg, is_newLine);
     }
 
     private void btnJoinPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinPointActionPerformed
@@ -250,9 +246,11 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
 
         //Find Features.
         SimpleFeatureCollection points = segmentLayer.getFeatureCollection();
-        String geomfld=PublicMethod.theGeomFieldName(points);
-        if (geomfld.isEmpty()) return;
-        
+        String geomfld = PublicMethod.theGeomFieldName(points);
+        if (geomfld.isEmpty()) {
+            return;
+        }
+
         SimpleFeatureIterator ptIterator = points.features();
         ///find first point.
         Coordinate pt1 = null;
@@ -278,7 +276,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
             }
         }
         ptIterator.close();
-        addSegment(pt1,pt2);
+        addSegment(pt1, pt2);
         //repaint the map.
         btnCheckSegments.setEnabled(true);
         locatePointPanel.showSegmentListInTable();
@@ -287,36 +285,36 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
 
     // create new polygon from the segment formed.
     private void btnPolygonizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPolygonizeActionPerformed
-        getNewParcels().addAll(Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID));
+        getNewParcels().addAll(Polygonization.formPolygon(segmentLayer, targetParcelsLayer, parcel_ID));
         targetParcelsLayer.getMapControl().refresh();
         btnPolygonize.setEnabled(false);
     }//GEN-LAST:event_btnPolygonizeActionPerformed
-    
+
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshTable(Object lineSeg,Object pointFixed, String parID, boolean updateTable ){
+    public void refreshTable(Object lineSeg, Object pointFixed, String parID, boolean updateTable) {
         //this.lineSeg=(LineString)lineSeg;
-        parcel_ID=parID;        
-        if (updateTable){
+        parcel_ID = parID;
+        if (updateTable) {
             //this.pointFixed=(Point)pointFixed;
-            showPointListInTable(); 
+            showPointListInTable();
             //btnPolygonize.setEnabled(true);
-        }       
+        }
     }
-    
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             //Store data for undo action.
             locatePointPanel.reset_OldCollectionVariable(segmentLayer);
             //store data to old collection.
-            prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
-            PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+            prevTargetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
+            PublicMethod.exchangeParcelCollection(targetParcelsLayer, prevTargetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{Object.class,Object.class,String.class,boolean.class};
-        Class joinPointForm=this.getClass();
-        Method refresh_this=null;
+        Class[] cls = new Class[]{Object.class, Object.class, String.class, boolean.class};
+        Class joinPointForm = this.getClass();
+        Method refresh_this = null;
         try {
             refresh_this = joinPointForm.getMethod("refreshTable", cls);
         } catch (NoSuchMethodException ex) {
@@ -324,7 +322,7 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         } catch (SecurityException ex) {
             Logger.getLogger(TwoPointMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        locatePointPanel.setClickEvnt(refresh_this,this);
+        locatePointPanel.setClickEvnt(refresh_this, this);
     }//GEN-LAST:event_formWindowOpened
 
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
@@ -334,9 +332,9 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
         btnPolygonize.setEnabled(false);
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnUndoSplitActionPerformed
-    
+
     private void btnCheckSegmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckSegmentsActionPerformed
-        NodedLineStringGenerator lineGenerator=new NodedLineStringGenerator(segmentLayer, locatePointPanel);
+        NodedLineStringGenerator lineGenerator = new NodedLineStringGenerator(segmentLayer, locatePointPanel);
         lineGenerator.generateNodedSegments();
         //refresh all including map
         btnPolygonize.setEnabled(true);
@@ -347,14 +345,12 @@ public class TwoPointMethodForm extends ParcelSplitDialog {
     private void btnRefreshMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshMapActionPerformed
         targetParcelsLayer.getMapControl().refresh();
     }//GEN-LAST:event_btnRefreshMapActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSegments;
     private javax.swing.JButton btnJoinPoint;
     private javax.swing.JButton btnPolygonize;
     private javax.swing.JButton btnRefreshMap;
     private javax.swing.JButton btnUndoSplit;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

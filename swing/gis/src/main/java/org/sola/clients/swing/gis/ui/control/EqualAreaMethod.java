@@ -34,16 +34,17 @@ import org.sola.clients.swing.gis.tool.listSelectedCadastreObjects;
  */
 public class EqualAreaMethod extends ParcelSplitDialog {
     //Store for old data collection.
-    private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
 
+    private CadastreChangeTargetCadastreObjectLayer prevTargetParcelsLayer = null;
     //Store selected line and points.
-    private String parcel_ID="";
-    private List<LineString> selectedLines=new ArrayList<LineString>();
+    private String parcel_ID = "";
+    private List<LineString> selectedLines = new ArrayList<LineString>();
+
     /**
      * Creates new form EqualAreaMethod
      */
     public EqualAreaMethod(CadastreTargetSegmentLayer segmentLayer,
-            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer) 
+            CadastreChangeTargetCadastreObjectLayer targetParcelsLayer)
             throws InitializeLayerException {
         super();
         initComponents();
@@ -54,34 +55,40 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         locatePointPanel.getTable().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         locatePointPanel.initializeFormVariable(segmentLayer);
     }
-    
-    private void getParcel_CuttingLine(double dist,int nPart,Point[] pts) 
-                throws IndexOutOfBoundsException, NoSuchElementException, NumberFormatException {
+
+    private void getParcel_CuttingLine(double dist, int nPart, Point[] pts)
+            throws IndexOutOfBoundsException, NoSuchElementException, NumberFormatException {
         //find the first point.
-        Point pointFixed=ClsGeneral.getIntermediatePoint(selectedLines, dist);
-        if (pointFixed==null) return;
+        Point pointFixed = ClsGeneral.getIntermediatePoint(selectedLines, dist);
+        if (pointFixed == null) {
+            return;
+        }
         //find the line with point fixed at given distance.
-        LineString lineSeg=PublicMethod.lineWithPoint(selectedLines, pointFixed);
-        if (lineSeg==null) return;
-        
+        LineString lineSeg = PublicMethod.lineWithPoint(selectedLines, pointFixed);
+        if (lineSeg == null) {
+            return;
+        }
+
         //find the point collection
         int i1 = -1;
         int i2 = -1;
         //Storing points and key indices for area iteration.
-        for (int i=0;i<pts.length;i++) {
+        for (int i = 0; i < pts.length; i++) {
             if (pts[i].equals(lineSeg.getStartPoint())) {
                 i1 = i;//initial index.
             }
             if (pts[i].equals(lineSeg.getEndPoint())) {
                 i2 = i;//end index.
             }
-            if (i1>=0 && i2>=0) break;//avoid unnecessary looping.
+            if (i1 >= 0 && i2 >= 0) {
+                break;//avoid unnecessary looping.
+            }
         }
-        if (i1==-1 || i2==-1){//if point not found in parcel.
+        if (i1 == -1 || i2 == -1) {//if point not found in parcel.
             return;
         }
 
-        createNewSegment(pts, pointFixed, i1, i2,nPart);
+        createNewSegment(pts, pointFixed, i1, i2, nPart);
     }
 
     /**
@@ -108,6 +115,8 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/gis/ui/control/Bundle"); // NOI18N
         setTitle(bundle.getString("EqualAreaMethod.title")); // NOI18N
+        setMinimumSize(new java.awt.Dimension(700, 498));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -221,27 +230,27 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean isValid_data(){
-        List<LineString> tmp_lines=locatePointPanel.getSelectedLines();
-        if (tmp_lines==null || tmp_lines.size()<1) {
+    private boolean isValid_data() {
+        List<LineString> tmp_lines = locatePointPanel.getSelectedLines();
+        if (tmp_lines == null || tmp_lines.size() < 1) {
             JOptionPane.showMessageDialog(this, "No line selected, please check it.");
             return false;
         }
-        
+
         //check the validity of selected legs.
-        selectedLines=PublicMethod.placeLinesInOrder(tmp_lines);
+        selectedLines = PublicMethod.placeLinesInOrder(tmp_lines);
         //if (!NodedLineStringGenerator.isConnected_Segments(selectedLines)) return;
-        if (selectedLines.size()<tmp_lines.size()){
+        if (selectedLines.size() < tmp_lines.size()) {
             JOptionPane.showMessageDialog(null, "Some independent links exist. please check the selected items in tables.");
             return false;
         }
-        
-        if (txtMaxArea.getText().isEmpty()){
+
+        if (txtMaxArea.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Parcel Selected is not OK, please check it.");
             return false;
         }
-        
-        if (txtAreaCount.getText().isEmpty()){
+
+        if (txtAreaCount.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Required Area count textbox cannot be empty, please check it.");
             return false;
         }
@@ -250,11 +259,11 @@ public class EqualAreaMethod extends ParcelSplitDialog {
             JOptionPane.showMessageDialog(this, "Area cannot be less than or equal to one. Check it.");
             return false;
         }
-        
+
         return true;
     }
-    
-    private void displayArea(String parcel_id){
+
+    private void displayArea(String parcel_id) {
         DecimalFormat df = new DecimalFormat("0.00");
         for (AreaObject aa : segmentLayer.getPolyAreaList()) {
             if (parcel_id.equals(aa.getId())) {
@@ -263,33 +272,33 @@ public class EqualAreaMethod extends ParcelSplitDialog {
             }
         }
     }
-    
+
     private void btnNewPacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPacelActionPerformed
-        getNewParcels().addAll(Polygonization.formPolygon(segmentLayer, targetParcelsLayer,parcel_ID));
+        getNewParcels().addAll(Polygonization.formPolygon(segmentLayer, targetParcelsLayer, parcel_ID));
         //refresh all including map.
         locatePointPanel.showSegmentListInTable();
         targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(false);
     }//GEN-LAST:event_btnNewPacelActionPerformed
 
-    private Coordinate locate_Point_counterClockwise(Point[] pts, Point keyPoint, int i1, int i2,int nPart) {
+    private Coordinate locate_Point_counterClockwise(Point[] pts, Point keyPoint, int i1, int i2, int nPart) {
         List<Coordinate> pList = new ArrayList<Coordinate>();
         int areaCount = Integer.parseInt(txtAreaCount.getText());
-        double parcelArea=Double.parseDouble(txtMaxArea.getText());
-        double areaReq= parcelArea*nPart/areaCount;
-        
-        boolean nextLoopAlso=true;
+        double parcelArea = Double.parseDouble(txtMaxArea.getText());
+        double areaReq = parcelArea * nPart / areaCount;
+
+        boolean nextLoopAlso = true;
         //collect points for checking area.
         pList.add(keyPoint.getCoordinate());
         for (int i = i1; i >= 0; i--) {
             pList.add(pts[i].getCoordinate());
             if (AreaObject.checkAreaFormed(pList, areaReq)) {
-                nextLoopAlso=false;
+                nextLoopAlso = false;
                 break;
             }
         }
-        
-        if (nextLoopAlso){
+
+        if (nextLoopAlso) {
             for (int i = pts.length - 1; i >= i2; i--) {
                 pList.add(pts[i].getCoordinate());
                 if (AreaObject.checkAreaFormed(pList, areaReq)) {
@@ -301,10 +310,10 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         return AreaObject.point_to_form_RequiredArea(pList, areaReq);
     }
 
-    private void createNewSegment(Point[] pts, Point keyPoint, int i1, int i2,int nPart) {
+    private void createNewSegment(Point[] pts, Point keyPoint, int i1, int i2, int nPart) {
         //Traverse parcel in anti-clockwise direction.
-        Coordinate newCo = locate_Point_counterClockwise(pts, keyPoint, i1, i2,nPart);
-       
+        Coordinate newCo = locate_Point_counterClockwise(pts, keyPoint, i1, i2, nPart);
+
         if (newCo == null) {
             return;
         }
@@ -314,24 +323,24 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         LineString newSegment = geomFactory.createLineString(co);
         Point newPoint = geomFactory.createPoint(newCo);
         //append new geometry formed in their respective collection.
-        byte is_newLine=1;
+        byte is_newLine = 1;
         locatePointPanel.addPointInPointCollection(keyPoint);
         locatePointPanel.addPointInPointCollection(newPoint);
-        locatePointPanel.appendNewSegment(newSegment,is_newLine);
-         
+        locatePointPanel.appendNewSegment(newSegment, is_newLine);
+
         //break segment containing the new points.
         locatePointPanel.breakSegment(keyPoint);
         locatePointPanel.breakSegment(newPoint);
     }
     //End of the section for finding the specified area>>>>>>>>>>>>>>>>>>>>
-    
+
     //Invokes this method by btnAddPointActionPerformed event of LocatePointPanel.
-    public void refreshTable(Object lineSeg,Object pointFixed,String parID, boolean updateTable ){
-        parcel_ID=parID;
+    public void refreshTable(Object lineSeg, Object pointFixed, String parID, boolean updateTable) {
+        parcel_ID = parID;
         displayArea(parID);
         btnCheckSplitLines.setEnabled(true);
     }
-    
+
     private void btnUndoSplitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoSplitActionPerformed
         locatePointPanel.getPreviousData();
         undoSplitting();
@@ -349,16 +358,16 @@ public class EqualAreaMethod extends ParcelSplitDialog {
             //Store data for undo action.
             locatePointPanel.reset_OldCollectionVariable(segmentLayer);
             //store data to old collection.
-            prevTargetParcelsLayer= new CadastreChangeTargetCadastreObjectLayer();
-            PublicMethod.exchangeParcelCollection(targetParcelsLayer,prevTargetParcelsLayer);
+            prevTargetParcelsLayer = new CadastreChangeTargetCadastreObjectLayer();
+            PublicMethod.exchangeParcelCollection(targetParcelsLayer, prevTargetParcelsLayer);
         } catch (InitializeLayerException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //Event delegate passing to the child JPanel.
-        Class[] cls=new Class[]{Object.class,Object.class,String.class,boolean.class};
-        Class workingForm=this.getClass();
-        Method refresh_this=null;
+        Class[] cls = new Class[]{Object.class, Object.class, String.class, boolean.class};
+        Class workingForm = this.getClass();
+        Method refresh_this = null;
         try {
             refresh_this = workingForm.getMethod("refreshTable", cls);
         } catch (NoSuchMethodException ex) {
@@ -366,7 +375,7 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         } catch (SecurityException ex) {
             Logger.getLogger(OnePointAreaMethodForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        locatePointPanel.setClickEvnt(refresh_this,this);
+        locatePointPanel.setClickEvnt(refresh_this, this);
     }//GEN-LAST:event_formWindowOpened
 
     public LocatePointPanel getLocatePointPanel() {
@@ -378,28 +387,29 @@ public class EqualAreaMethod extends ParcelSplitDialog {
         if (!isValid_data()) {
             return;
         }
-        double side_length=PublicMethod.getPolyLineLength(selectedLines);
-        int nPart=Integer.parseInt(txtAreaCount.getText());
-        double increment_dist=side_length/nPart;
-        
-        double dist=increment_dist;
-        double check_distance=side_length*0.999;//just to avoid the trunked matching.
-        int part_count=1;
-        
-        Point[] tmp_pts= PublicMethod.getPointInParcel(segmentLayer);
-        Point[] pts=PublicMethod.order_Checked_Points(selectedLines.get(0),tmp_pts);
-        if (pts==null) return;
-        
-        while (dist<check_distance){
-            getParcel_CuttingLine(dist,part_count,pts);
-            dist+=increment_dist;
+        double side_length = PublicMethod.getPolyLineLength(selectedLines);
+        int nPart = Integer.parseInt(txtAreaCount.getText());
+        double increment_dist = side_length / nPart;
+
+        double dist = increment_dist;
+        double check_distance = side_length * 0.999;//just to avoid the trunked matching.
+        int part_count = 1;
+
+        Point[] tmp_pts = PublicMethod.getPointInParcel(segmentLayer);
+        Point[] pts = PublicMethod.order_Checked_Points(selectedLines.get(0), tmp_pts);
+        if (pts == null) {
+            return;
+        }
+
+        while (dist < check_distance) {
+            getParcel_CuttingLine(dist, part_count, pts);
+            dist += increment_dist;
             part_count++;
         }
         //refresh map.
         targetParcelsLayer.getMapControl().refresh();
         btnNewPacel.setEnabled(true);
     }//GEN-LAST:event_btnCheckSplitLinesActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckSplitLines;
     private javax.swing.JToggleButton btnNewPacel;
