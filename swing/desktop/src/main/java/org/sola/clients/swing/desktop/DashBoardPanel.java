@@ -395,13 +395,13 @@ public class DashBoardPanel extends ContentPanel {
         columnBinding.setColumnName("Nr");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lodgingDateFormatted}"));
-        columnBinding.setColumnName("Lodging Date Formatted");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lodgingNepaliDateBean.nepaliDateFormated}"));
+        columnBinding.setColumnName("Lodging Nepali Date Bean.nepali Date Formated");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionDate}"));
-        columnBinding.setColumnName("Expected Completion Date");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionNepaliDate.nepaliDateFormated}"));
+        columnBinding.setColumnName("Expected Completion Nepali Date.nepali Date Formated");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${serviceList}"));
         columnBinding.setColumnName("Service List");

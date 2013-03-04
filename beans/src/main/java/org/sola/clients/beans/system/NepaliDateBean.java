@@ -17,6 +17,7 @@ package org.sola.clients.beans.system;
 
 import java.util.Date;
 import org.sola.clients.beans.AbstractBindingBean;
+import org.sola.common.DateUtility;
 import org.sola.services.boundary.wsclients.WSManager;
 
 /**
@@ -49,25 +50,13 @@ public class NepaliDateBean extends AbstractBindingBean {
         return nepaliDate;
     }
 
-    public void setNepaliDate(String nepaliDate) {  
+    public void setNepaliDate(String nepaliDate) {
         String oldValue = this.nepaliDate;
         this.nepaliDate = nepaliDate;
-        //setGregorean_date(Calendar.getInstance().getTime());
         convertToGregoreanDate();
         propertySupport.firePropertyChange(NEPALI_DATE, oldValue, this.nepaliDate);
     }
 
-//    private void CalculateAreaInLocalUnit() {
-//        String oldValue = this.areaInLocalUnit;
-//        this.areaInLocalUnit = AreaConversion.getAreaInLocalUnit(getUnitTypeCode(), this.areaInSqMt.doubleValue());
-//        propertySupport.firePropertyChange(AREA_IN_LOCAL_UNIT, oldValue, this.areaInLocalUnit);
-//    }
-//
-//    private void CalculateAreaSqMt() {
-//        BigDecimal oldValue = this.areaInSqMt;
-//        this.areaInSqMt = BigDecimal.valueOf(AreaConversion.getAreaInSqMt(getUnitTypeCode(), this.areaInLocalUnit));
-//        propertySupport.firePropertyChange(AREA_IN_SQMT, oldValue, this.areaInSqMt);
-//    }
     private void convertToNepaliDate() {
         String oldValue = this.nepaliDate;
         if (this.gregorean_date == null) {
@@ -76,22 +65,24 @@ public class NepaliDateBean extends AbstractBindingBean {
             this.nepaliDate = WSManager.getInstance().getAdminService().getNepaliDate(this.gregorean_date).replaceAll("-", "");
         }
         propertySupport.firePropertyChange(NEPALI_DATE, oldValue, this.nepaliDate);
-        //setNepaliDate( WSManager.getInstance().getAdminService().getNepaliDate(this.gregorean_date));
+
     }
 
     private void convertToGregoreanDate() {
         Date oldValue = this.gregorean_date;
-        if (this.nepaliDate==null) {
+        if (this.nepaliDate == null) {
             this.gregorean_date = null;
         } else {
-            if(WSManager.getInstance().getAdminService()!=null){
-                 String nepdate = nepaliDate.substring(0,4) + "-" + nepaliDate.substring(4,6) + "-" + nepaliDate.substring(6);
-            this.gregorean_date = WSManager.getInstance().getAdminService().getGregorianDate(nepdate);
-        
-            }
-           }
-        propertySupport.firePropertyChange(GREGOREAN_DATE, oldValue, this.gregorean_date);
-        //setGregorean_date(WSManager.getInstance().getAdminService().getGregorianDate(nepaliDate));
+            if (WSManager.getInstance().getAdminService() != null) {
+                String nepdate = nepaliDate.substring(0, 4) + "-" + nepaliDate.substring(4, 6) + "-" + nepaliDate.substring(6);
+                this.gregorean_date = WSManager.getInstance().getAdminService().getGregorianDate(nepdate);
 
+            }
+        }
+        propertySupport.firePropertyChange(GREGOREAN_DATE, oldValue, this.gregorean_date);
+    }
+
+    public String getNepaliDateFormated() {
+        return DateUtility.toFormattedNepaliDate(getNepaliDate());
     }
 }
