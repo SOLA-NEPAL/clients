@@ -79,6 +79,7 @@ public class MainForm extends javax.swing.JFrame {
         HelpUtility.getInstance().registerHelpMenu(jmiContextHelp, "overview");
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
+
             @Override
             public void windowOpened(WindowEvent e) {
                 postInit();
@@ -103,7 +104,7 @@ public class MainForm extends javax.swing.JFrame {
         btnDocumentSearch.setEnabled(SecurityBean.isInRole(RolesConstants.SOURCE_SEARCH));
         btnSearchLoc.setEnabled(SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_BA_UNIT_SEARCH));
         btnManageMapSheets.setEnabled(SecurityBean.isInRole(RolesConstants.CADASTRE_MAP_SHEET_SAVE));
-        
+
         menuNewApplication.setEnabled(btnNewApplication.isEnabled());
         menuShowMap.setEnabled(btnOpenMap.isEnabled());
         menuSearchApplication.setEnabled(btnSearchApplications.isEnabled());
@@ -114,7 +115,7 @@ public class MainForm extends javax.swing.JFrame {
         menuSearchLoc.setEnabled(btnSearchLoc.isEnabled());
         menuRestrictionsSearch.setEnabled(SecurityBean.isInRole(RolesConstants.ADMINISTRATIVE_RESTRICTIONS_SEARCH));
         menuManageMapSheets.setEnabled(btnManageMapSheets.isEnabled());
-        
+
         // Load dashboard
         openDashBoard();
 
@@ -135,6 +136,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void openNewApplicationForm() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APPNEW));
@@ -144,10 +146,12 @@ public class MainForm extends javax.swing.JFrame {
             }
         };
         TaskManager.getInstance().runTask(t);
+
     }
 
     private void openMap() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_MAP));
@@ -164,6 +168,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void searchApplications() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_APPSEARCH));
@@ -180,6 +185,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void searchBaUnit() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PROPERTYSEARCH));
@@ -196,11 +202,12 @@ public class MainForm extends javax.swing.JFrame {
 
     private void searchDocuments() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_DOCUMENTSEARCH));
                 if (!pnlContent.isPanelOpened(MainContentPanel.CARD_DOCUMENT_SEARCH)) {
-                    DocumentSearchForm documentSearchPanel = new DocumentSearchForm(false,false);
+                    DocumentSearchForm documentSearchPanel = new DocumentSearchForm(false, false);
                     pnlContent.addPanel(documentSearchPanel, MainContentPanel.CARD_DOCUMENT_SEARCH);
                 }
                 pnlContent.showPanel(MainContentPanel.CARD_DOCUMENT_SEARCH);
@@ -215,6 +222,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public void openSearchParties(final boolean showSelectButton) {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
@@ -237,6 +245,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void openLocSearch() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_LOC_SEARCH));
@@ -250,9 +259,10 @@ public class MainForm extends javax.swing.JFrame {
         };
         TaskManager.getInstance().runTask(t);
     }
-    
-    private void openRestrictionsSearch(){
+
+    private void openRestrictionsSearch() {
         SolaTask t = new SolaTask<Void, Void>() {
+
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_RESTRICTIONS_SEARCH));
@@ -325,11 +335,11 @@ public class MainForm extends javax.swing.JFrame {
         return hasChanges;
     }
 
-    private void showPasswordChangeForm(){
+    private void showPasswordChangeForm() {
         PasswordChangeForm form = new PasswordChangeForm();
         pnlContent.addPanel(form, MainContentPanel.CARD_PASSWORD_CHANGE, true);
     }
-    
+
     public MainContentPanel getMainContentPanel() {
         return pnlContent;
     }
