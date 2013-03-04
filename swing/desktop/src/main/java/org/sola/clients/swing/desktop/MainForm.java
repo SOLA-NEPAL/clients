@@ -53,7 +53,7 @@ import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
-import org.sola.clients.swing.desktop.party.PersonSearchForm;
+import org.sola.clients.swing.desktop.party.*;//PersonSearchForm;
 import org.sola.clients.swing.desktop.security.PasswordChangeForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
 import org.sola.clients.swing.ui.MainContentPanel;
@@ -218,7 +218,7 @@ public class MainForm extends javax.swing.JFrame {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
-                PersonSearchForm personSearchForm = new PersonSearchForm();
+                PersonSearchForm personSearchForm = new PersonSearchForm();                
                 personSearchForm.getPartySearchPanel().setShowSelectButton(showSelectButton);
                 pnlContent.addPanel(personSearchForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
@@ -392,6 +392,9 @@ public class MainForm extends javax.swing.JFrame {
         menuManageMapSheets = new javax.swing.JMenuItem();
         menuSettings = new javax.swing.JMenu();
         menuChangePassword = new javax.swing.JMenuItem();
+        menuLandOwner = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jmiContextHelp = new javax.swing.JMenuItem();
@@ -752,6 +755,21 @@ public class MainForm extends javax.swing.JFrame {
 
         menuBar.add(menuSettings);
 
+        menuLandOwner.setText(bundle.getString("MainForm.menuLandOwner.text")); // NOI18N
+
+        jMenuItem1.setText(bundle.getString("MainForm.jMenuItem1.text")); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuLandOwner.add(jMenuItem1);
+
+        jMenuItem2.setText(bundle.getString("MainForm.jMenuItem2.text")); // NOI18N
+        menuLandOwner.add(jMenuItem2);
+
+        menuBar.add(menuLandOwner);
+
         helpMenu.setText(bundle.getString("MainForm.helpMenu.text")); // NOI18N
 
         aboutMenuItem.setText(bundle.getString("MainForm.aboutMenuItem.text")); // NOI18N
@@ -774,8 +792,8 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 913, Short.MAX_VALUE)
-            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 913, Short.MAX_VALUE)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
+            .addComponent(applicationsMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
             .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -783,7 +801,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(applicationsMain, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -902,6 +920,18 @@ public class MainForm extends javax.swing.JFrame {
     private void menuChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuChangePasswordActionPerformed
         showPasswordChangeForm();
     }//GEN-LAST:event_menuChangePasswordActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        showLandOwners();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void showLandOwners() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
+             LandOwnerQuery land = new LandOwnerQuery();
+            pnlContent.addPanel(land, MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
+    }
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -935,6 +965,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
@@ -950,6 +982,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuChangePassword;
     private javax.swing.JMenuItem menuDefaultLogLevel;
     private javax.swing.JMenuItem menuDocumentSearch;
+    private javax.swing.JMenu menuLandOwner;
     private javax.swing.JMenuItem menuLangEN;
     private javax.swing.JMenuItem menuLangIT;
     private javax.swing.JMenu menuLanguage;

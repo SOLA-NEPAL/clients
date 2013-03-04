@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
-import javax.swing.JPanel;
 
 /**
  * Displays different panels on the Main form.
