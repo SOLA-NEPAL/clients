@@ -108,14 +108,10 @@ public class ApplicationSearchPanel extends ContentPanel {
         jPanel8 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         labFrom = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        btnShowCalendarFrom = new javax.swing.JButton();
-        txtFromDate = new javax.swing.JFormattedTextField();
+        txtFromDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        btnShowCalendarTo = new javax.swing.JButton();
-        txtToDate = new javax.swing.JFormattedTextField();
         labTo = new javax.swing.JLabel();
+        txtToDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel9 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -167,13 +163,13 @@ public class ApplicationSearchPanel extends ContentPanel {
         columnBinding.setColumnName("Nr");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lodgingDatetime}"));
-        columnBinding.setColumnName("Lodging Datetime");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lodgingNepaliDateBean.nepaliDateFormated}"));
+        columnBinding.setColumnName("Lodging Nepali Date Bean.nepali Date Formated");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionDate}"));
-        columnBinding.setColumnName("Expected Completion Date");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionNepaliDate.nepaliDateFormated}"));
+        columnBinding.setColumnName("Expected Completion Nepali Date.nepali Date Formated");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${serviceList}"));
         columnBinding.setColumnName("Service List");
@@ -255,123 +251,57 @@ public class ApplicationSearchPanel extends ContentPanel {
         labFrom.setText(bundle.getString("ApplicationSearchPanel.labFrom.text")); // NOI18N
         labFrom.setName("labFrom"); // NOI18N
 
-        jPanel5.setName("jPanel5"); // NOI18N
+        txtFromDate.setName(bundle.getString("ApplicationSearchPanel.txtFromDate.name")); // NOI18N
 
-        btnShowCalendarFrom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        btnShowCalendarFrom.setText(bundle.getString("ApplicationSearchPanel.btnShowCalendarFrom.text")); // NOI18N
-        btnShowCalendarFrom.setBorder(null);
-        btnShowCalendarFrom.setName("btnShowCalendarFrom"); // NOI18N
-        btnShowCalendarFrom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowCalendarFromActionPerformed(evt);
-            }
-        });
-
-        txtFromDate.setFont(new java.awt.Font("Tahoma", 0, 12));
-        txtFromDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtFromDate.setName("txtFromDate"); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${fromDate}"), txtFromDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${fromNepaliDate.nepaliDate}"), txtFromDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-
-        txtFromDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtFromDate.setHorizontalAlignment(JTextField.LEADING);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnShowCalendarFrom)
-                .addGap(2, 2, 2))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnShowCalendarFrom))
-        );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labFrom)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(labFrom)
+                .addContainerGap())
+            .addComponent(txtFromDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(labFrom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel8.add(jPanel6);
 
         jPanel3.setName("jPanel3"); // NOI18N
 
-        jPanel4.setName("jPanel4"); // NOI18N
-
-        btnShowCalendarTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        btnShowCalendarTo.setText(bundle.getString("ApplicationSearchPanel.btnShowCalendarTo.text")); // NOI18N
-        btnShowCalendarTo.setBorder(null);
-        btnShowCalendarTo.setName("btnShowCalendarTo"); // NOI18N
-        btnShowCalendarTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowCalendarToActionPerformed(evt);
-            }
-        });
-
-        txtToDate.setFont(new java.awt.Font("Tahoma", 0, 12));
-        txtToDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtToDate.setName("txtToDate"); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${toDate}"), txtToDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
-
-        txtToDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));
-        txtToDate.setHorizontalAlignment(JTextField.LEADING);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnShowCalendarTo))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(btnShowCalendarTo)
-                .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
         labTo.setText(bundle.getString("ApplicationSearchPanel.labTo.text")); // NOI18N
         labTo.setName("labTo"); // NOI18N
+
+        txtToDate.setName(bundle.getString("ApplicationSearchPanel.txtToDate.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${toNepaliDateBean.nepaliDate}"), txtToDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labTo)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labTo)
+                .addContainerGap())
+            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(labTo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel8.add(jPanel3);
@@ -401,8 +331,8 @@ public class ApplicationSearchPanel extends ContentPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(labAgentName)
-                .addContainerGap(234, Short.MAX_VALUE))
-            .addComponent(txtAgentName, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                .addContainerGap(257, Short.MAX_VALUE))
+            .addComponent(txtAgentName, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,7 +411,7 @@ public class ApplicationSearchPanel extends ContentPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtContactPerson, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+            .addComponent(txtContactPerson, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(labContactPerson)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -492,7 +422,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 .addComponent(labContactPerson)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContactPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel9.add(jPanel1);
@@ -529,7 +459,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClear)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel11.add(jPanel13);
@@ -563,7 +493,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel11.add(jPanel14);
@@ -585,9 +515,9 @@ public class ApplicationSearchPanel extends ContentPanel {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -614,7 +544,7 @@ public class ApplicationSearchPanel extends ContentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(appListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                .addComponent(appListPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -626,14 +556,6 @@ public class ApplicationSearchPanel extends ContentPanel {
             openApplication();
         }
     }//GEN-LAST:event_tbAppListMouseClicked
-
-    private void btnShowCalendarFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowCalendarFromActionPerformed
-        showCalendar(txtFromDate);
-    }//GEN-LAST:event_btnShowCalendarFromActionPerformed
-
-    private void btnShowCalendarToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowCalendarToActionPerformed
-        showCalendar(txtToDate);
-    }//GEN-LAST:event_btnShowCalendarToActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
         SolaTask t = new SolaTask<Void, Void>() {
@@ -717,8 +639,6 @@ public class ApplicationSearchPanel extends ContentPanel {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnOpenApplication;
-    private javax.swing.JButton btnShowCalendarFrom;
-    private javax.swing.JButton btnShowCalendarTo;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -730,8 +650,6 @@ public class ApplicationSearchPanel extends ContentPanel {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -752,8 +670,8 @@ public class ApplicationSearchPanel extends ContentPanel {
     private javax.swing.JTextField txtAgentName;
     private javax.swing.JTextField txtAppNumber;
     private javax.swing.JTextField txtContactPerson;
-    private javax.swing.JFormattedTextField txtFromDate;
-    private javax.swing.JFormattedTextField txtToDate;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtFromDate;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtToDate;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -36,6 +36,7 @@ import org.sola.clients.beans.referencedata.DistrictBean;
 import org.sola.clients.beans.referencedata.PartyRoleTypeBean;
 import org.sola.clients.beans.referencedata.PartyTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.beans.system.NepaliDateBean;
 import org.sola.webservices.transferobjects.search.PartySearchParamsTO;
 
 /**
@@ -185,6 +186,9 @@ public class PartySearchParamsBean extends AbstractBindingBean {
     }
 
     public Integer getIdIssueDate() {
+        if(idIssueDate!=null){
+            NepaliDateBean.putDashOnString(idIssueDate.toString());
+        }
         return idIssueDate;
     }
 

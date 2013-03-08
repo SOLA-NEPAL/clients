@@ -48,6 +48,7 @@ import org.sola.clients.beans.referencedata.ApplicationStatusTypeBean;
 import org.sola.clients.beans.referencedata.RequestTypeBean;
 import org.sola.clients.beans.referencedata.StatusConstants;
 import org.sola.clients.beans.source.SourceBean;
+import org.sola.clients.beans.system.NepaliDateBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.clients.beans.validation.ValidationResultBean;
 import org.sola.common.messaging.ClientMessage;
@@ -84,6 +85,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
     public static final String RECEIPT_DATE_PROPERTY = "receiptDate";
     public static final String PAYMENT_REMARKS_PROPERTY = "paymentRemarks";
     public static final String STATUS_CHANGE_DATE_PROPERTY = "statusChangeDate";
+    public static final String STATUS_CHANGE_NEPALI_DATE_PROPERTY = "statusChangeNepaliDate";
     private ApplicationActionTypeBean actionBean;
     private String actionNotes;
     private SolaList<BaUnitSearchResultBean> propertyList;
@@ -105,7 +107,8 @@ public class ApplicationBean extends ApplicationSummaryBean {
     private PartySummaryBean agent;
     private String assigneeId;
     private ApplicationStatusTypeBean statusBean;
-    private Date statusChangeDate;
+    //private Date statusChangeDate;
+    private NepaliDateBean statusChangeNepaliDate;
 
     /**
      * Default constructor to create application bean. Initializes the following
@@ -116,6 +119,7 @@ public class ApplicationBean extends ApplicationSummaryBean {
      */
     public ApplicationBean() {
         super();
+        statusChangeNepaliDate = new NepaliDateBean();
         actionBean = new ApplicationActionTypeBean();
         statusBean = new ApplicationStatusTypeBean();
         propertyList = new SolaList();
@@ -327,16 +331,16 @@ public class ApplicationBean extends ApplicationSummaryBean {
         return propertyList;
     }
 
-    public List<BaUnitSearchResultBean> getSelectedProperties(){
+    public List<BaUnitSearchResultBean> getSelectedProperties() {
         ArrayList<BaUnitSearchResultBean> selectedList = new ArrayList<BaUnitSearchResultBean>();
-        for(BaUnitSearchResultBean selectedProp : getFilteredPropertyList()){
-            if(selectedProp.isSelected()){
+        for (BaUnitSearchResultBean selectedProp : getFilteredPropertyList()) {
+            if (selectedProp.isSelected()) {
                 selectedList.add(selectedProp);
             }
         }
         return selectedList;
     }
-    
+
     @Valid
     public ObservableList<BaUnitSearchResultBean> getFilteredPropertyList() {
         return propertyList.getFilteredList();
@@ -423,13 +427,29 @@ public class ApplicationBean extends ApplicationSummaryBean {
     }
 
     public Date getStatusChangeDate() {
-        return statusChangeDate;
+        if (statusChangeNepaliDate != null) {
+            return statusChangeNepaliDate.getGregorean_date();
+        }
+        return null;
     }
 
     public void setStatusChangeDate(Date statusChangeDate) {
-        Date oldValue = this.statusChangeDate;
-        this.statusChangeDate = statusChangeDate;
-        propertySupport.firePropertyChange(STATUS_CHANGE_DATE_PROPERTY, oldValue, this.statusChangeDate);
+        Date oldValue = null;
+        if (statusChangeNepaliDate != null) {
+            oldValue = statusChangeNepaliDate.getGregorean_date();
+        }
+        statusChangeNepaliDate.setGregorean_date(statusChangeDate);
+        propertySupport.firePropertyChange(STATUS_CHANGE_DATE_PROPERTY, oldValue, statusChangeDate);
+    }
+
+    public NepaliDateBean getStatusChangeNepaliDate() {
+        return statusChangeNepaliDate;
+    }
+
+    public void setStatusChangeNepaliDate(NepaliDateBean statusChangeNepaliDate) {
+        NepaliDateBean oldValue = this.statusChangeNepaliDate;
+        this.statusChangeNepaliDate = statusChangeNepaliDate;
+        propertySupport.firePropertyChange(STATUS_CHANGE_NEPALI_DATE_PROPERTY, oldValue, this.statusChangeNepaliDate);
     }
 
     public SolaList<SourceBean> getSourceList() {

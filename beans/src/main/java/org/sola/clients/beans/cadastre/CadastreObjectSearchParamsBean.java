@@ -19,6 +19,7 @@ import java.util.Date;
 import org.sola.clients.beans.AbstractBindingBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.beans.system.NepaliDateBean;
 
 /**
  * Contains parameters for searching cadastre objects.
@@ -33,15 +34,21 @@ public class CadastreObjectSearchParamsBean extends AbstractBindingBean {
     public static final String MAP_SHEET_PROPERTY = "mapSheet";
     public static final String FROM_DATE_PROPERTY = "fromDate";
     public static final String TO_DATE_PROPERTY = "toDate";
+    public static final String FROM_NEPALI_DATE_PROPERTY = "fromNepaliDate";
+    public static final String TO_NEPALI_DATE_PROPERTY = "toNepaliDate";
     private VdcBean vdc;
     private String wardNo;
     private String parcelNo;
     private MapSheetBean mapSheet;
-    private Date fromDate;
-    private Date toDate;
+    //private Date fromDate;
+    //private Date toDate;
+    private NepaliDateBean fromNepaliDate;
+    private NepaliDateBean toNepaliDate;
 
     public CadastreObjectSearchParamsBean() {
         super();
+        fromNepaliDate = new NepaliDateBean();
+        toNepaliDate = new NepaliDateBean();
     }
 
     public String getVdcCode() {
@@ -108,22 +115,56 @@ public class CadastreObjectSearchParamsBean extends AbstractBindingBean {
     }
 
     public Date getFromDate() {
-        return fromDate;
+        if (fromNepaliDate != null) {
+            return fromNepaliDate.getGregorean_date();
+        }
+        return null;
     }
 
     public void setFromDate(Date value) {
-        Date oldValue = fromDate;
-        fromDate = value;
+        Date oldValue = null;
+        if (fromNepaliDate != null) {
+            oldValue = fromNepaliDate.getGregorean_date();
+        }
+        //fromNepaliDate = new NepaliDateBean();
+        fromNepaliDate.setGregorean_date(value);
         propertySupport.firePropertyChange(FROM_DATE_PROPERTY, oldValue, value);
     }
 
+    public NepaliDateBean getFromNepaliDate() {
+        return fromNepaliDate;
+    }
+
+    public void setFromNepaliDate(NepaliDateBean fromNepaliDate) {
+        NepaliDateBean oldValue = this.fromNepaliDate;
+        this.fromNepaliDate = fromNepaliDate;
+        propertySupport.firePropertyChange(FROM_NEPALI_DATE_PROPERTY, oldValue, this.fromNepaliDate);
+    }
+
     public Date getToDate() {
-        return toDate;
+        if (toNepaliDate != null) {
+            return toNepaliDate.getGregorean_date();
+        }
+        return null;
     }
 
     public void setToDate(Date value) {
-        Date oldValue = toDate;
-        toDate = value;
+        Date oldValue = null;
+        if (toNepaliDate != null) {
+            oldValue = toNepaliDate.getGregorean_date();
+        }
+       // toNepaliDate = new NepaliDateBean();
+        toNepaliDate.setGregorean_date(value);
         propertySupport.firePropertyChange(TO_DATE_PROPERTY, oldValue, value);
+    }
+
+    public NepaliDateBean getToNepaliDate() {
+        return toNepaliDate;
+    }
+
+    public void setToNepaliDate(NepaliDateBean toNepaliDate) {
+        NepaliDateBean oldValue = this.toNepaliDate;
+        this.toNepaliDate = toNepaliDate;
+        propertySupport.firePropertyChange(TO_NEPALI_DATE_PROPERTY, oldValue, this.toNepaliDate);
     }
 }

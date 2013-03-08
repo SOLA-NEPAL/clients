@@ -36,6 +36,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.sola.clients.beans.AbstractTransactionedWithOfficeCodeBean;
 import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.referencedata.SourceTypeBean;
+import org.sola.clients.beans.system.NepaliDateBean;
 import org.sola.clients.beans.validation.Localized;
 import org.sola.common.DateUtility;
 import org.sola.common.messaging.ClientMessage;
@@ -58,6 +59,7 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     public static final String SUBMISSION_PROPERTY = "submission";
     public static final String SOURCE_TYPE_CODE_PROPERTY = "typeCode";
     public static final String SOURCE_TYPE_PROPERTY = "sourceType";
+    public static final String SUBMISSION_NEPALI_DATE_PROPERTY = "submissionNepaliDate";
     private Date acceptance;
     private String archiveId;
     private String archiveDocumentId;
@@ -66,12 +68,14 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     private String recordation;
     @NotEmpty(message = ClientMessage.CHECK_NOTNULL_REFERENCENR, payload = Localized.class)
     private String referenceNr;
-    private Date submission;
+    //private Date submission;
+    private NepaliDateBean submissionNepaliDate;
     @NotNull(message = ClientMessage.CHECK_NOTNULL_SOURCETYPE, payload = Localized.class)
     private SourceTypeBean sourceType;
 
-    public SourceSummaryBean() {
+    public SourceSummaryBean() {       
         super();
+         submissionNepaliDate=new NepaliDateBean();
     }
 
     public void clean() {
@@ -88,7 +92,7 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     }
 
     public String getTypeCode() {
-        if(getSourceType() == null){
+        if (getSourceType() == null) {
             return null;
         }
         return sourceType.getCode();
@@ -102,7 +106,7 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
      */
     public void setTypeCode(String typeCode) {
         String old = null;
-        if(getSourceType() != null){
+        if (getSourceType() != null) {
             old = sourceType.getCode();
         }
         setSourceType(CacheManager.getBeanByCode(CacheManager.getSourceTypes(), typeCode));
@@ -160,13 +164,16 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     }
 
     public String getRecordation() {
+        if (recordation != null) {
+            NepaliDateBean.putDashOnString(recordation);
+        }
         return recordation;
     }
 
-    public String getRecordationFormatted(){
+    public String getRecordationFormatted() {
         return DateUtility.toFormattedNepaliDate(recordation);
     }
-    
+
     public void setRecordation(String value) {
         String oldFormatted = getRecordationFormatted();
         String old = recordation;
@@ -186,12 +193,28 @@ public class SourceSummaryBean extends AbstractTransactionedWithOfficeCodeBean {
     }
 
     public Date getSubmission() {
-        return submission;
+        if (submissionNepaliDate != null) {
+            return submissionNepaliDate.getGregorean_date();
+        }
+        return null;
     }
 
     public void setSubmission(Date value) {
-        Date old = submission;
-        submission = value;
-        propertySupport.firePropertyChange(SUBMISSION_PROPERTY, old, value);
+        Date oldValue = null;
+        if (submissionNepaliDate != null) {
+            oldValue = submissionNepaliDate.getGregorean_date();
+        }
+        submissionNepaliDate.setGregorean_date(value);
+        propertySupport.firePropertyChange(SUBMISSION_PROPERTY, oldValue, value);
+    }
+
+    public NepaliDateBean getSubmissionNepaliDate() {
+        return submissionNepaliDate;
+    }
+
+    public void setSubmissionNepaliDate(NepaliDateBean submissionNepaliDate) {
+        NepaliDateBean oldValue = this.submissionNepaliDate;
+        this.submissionNepaliDate = submissionNepaliDate;
+        propertySupport.firePropertyChange(SUBMISSION_NEPALI_DATE_PROPERTY, oldValue, this.submissionNepaliDate);
     }
 }

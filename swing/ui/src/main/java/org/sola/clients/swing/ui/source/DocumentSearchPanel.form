@@ -126,7 +126,7 @@
               <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
           </Group>
           <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-          <Component id="jScrollPane1" alignment="1" pref="569" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="1" pref="593" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -280,7 +280,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtRefNumber" alignment="0" pref="106" max="32767" attributes="2"/>
+                  <Component id="txtRefNumber" alignment="0" pref="112" max="32767" attributes="2"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -329,7 +329,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="11" max="32767" attributes="0"/>
+                      <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtLaNr" alignment="0" max="32767" attributes="1"/>
               </Group>
@@ -425,7 +425,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="12" max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtDateTo" max="32767" attributes="0"/>
               </Group>
@@ -472,7 +472,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="82" max="32767" attributes="0"/>
+                      <EmptySpace pref="88" max="32767" attributes="0"/>
                   </Group>
                   <Component id="cbxSourceType" alignment="0" max="32767" attributes="1"/>
               </Group>
@@ -520,7 +520,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
                   </Group>
                   <Component id="txtAppNumber" max="32767" attributes="0"/>
               </Group>
@@ -570,62 +570,24 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="txtSubmissionDateFrom" pref="83" max="32767" attributes="2"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="btnSubmissionDateFrom" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="27" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="txtSubmissionDateFrom" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="btnSubmissionDateFrom" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtSubmissionDateFrom" alignment="2" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtSubmissionDateFrom" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="12" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JFormattedTextField" name="txtSubmissionDateFrom">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="1" type="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentSearchPanel.txtSubmissionDateFrom.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="txtSubmissionDateFrom" noResource="true"/>
-              </Properties>
-              <BindingProperties>
-                <BindingProperty name="value" source="searchParams" sourcePath="${fromSubmissionDate}" target="txtSubmissionDateFrom" targetPath="value" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnSubmissionDateFrom">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/common/calendar.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentSearchPanel.btnSubmissionDateFrom.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="btnSubmissionDateFrom" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmissionDateFromActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -633,6 +595,16 @@
                 </Property>
                 <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
               </Properties>
+            </Component>
+            <Component class="org.sola.clients.swing.common.controls.NepaliDateField" name="txtSubmissionDateFrom">
+              <Properties>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentSearchPanel.txtSubmissionDateFrom.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="value" source="searchParams" sourcePath="${fromSubmissionNepaliDate.nepaliDate}" target="txtSubmissionDateFrom" targetPath="value" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
@@ -644,12 +616,11 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="txtSubmissionDateTo" pref="83" max="32767" attributes="1"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnSubmissionDateTo" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="39" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="txtSubmissionDateTo" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -657,10 +628,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="btnSubmissionDateTo" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtSubmissionDateTo" alignment="2" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="txtSubmissionDateTo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="12" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -675,36 +643,15 @@
                 <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtSubmissionDateTo">
+            <Component class="org.sola.clients.swing.common.controls.NepaliDateField" name="txtSubmissionDateTo">
               <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="1" type="1"/>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentSearchPanel.txtSubmissionDateTo.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentSearchPanel.txtSubmissionDateTo.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="txtSubmissionDateTo" noResource="true"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="value" source="searchParams" sourcePath="${toSubmissionDate}" target="txtSubmissionDateTo" targetPath="value" updateStrategy="0" immediately="false"/>
+                <BindingProperty name="value" source="searchParams" sourcePath="${toSubmissionNepaliDate.nepaliDate}" target="txtSubmissionDateTo" targetPath="value" updateStrategy="0" immediately="false"/>
               </BindingProperties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnSubmissionDateTo">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/common/calendar.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="org/sola/clients/swing/ui/source/Bundle.properties" key="DocumentSearchPanel.btnSubmissionDateTo.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="btnSubmissionDateTo" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmissionDateToActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -925,8 +872,8 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${submission}">
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+              <Subbinding sourcePath="${submissionNepaliDate.nepaliDateFormated}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${statusCode}">

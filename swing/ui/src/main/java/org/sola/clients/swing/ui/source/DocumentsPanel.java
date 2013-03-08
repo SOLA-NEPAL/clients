@@ -243,9 +243,9 @@ public class DocumentsPanel extends javax.swing.JPanel {
         columnBinding.setColumnName("La Nr");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${submission}"));
-        columnBinding.setColumnName("Submission");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${submissionNepaliDate.nepaliDateFormated}"));
+        columnBinding.setColumnName("Submission Nepali Date.nepali Date Formated");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${archiveDocumentId}"));
         columnBinding.setColumnName("Archive Document Id");
@@ -265,7 +265,6 @@ public class DocumentsPanel extends javax.swing.JPanel {
         tableDocuments.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title0_1")); // NOI18N
         tableDocuments.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title3_1")); // NOI18N
         tableDocuments.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title4")); // NOI18N
-        tableDocuments.getColumnModel().getColumn(2).setCellRenderer(null);
         tableDocuments.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title1_1")); // NOI18N
         tableDocuments.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("DocumentsPanel.tableDocuments.columnModel.title5")); // NOI18N
         tableDocuments.getColumnModel().getColumn(5).setPreferredWidth(30);

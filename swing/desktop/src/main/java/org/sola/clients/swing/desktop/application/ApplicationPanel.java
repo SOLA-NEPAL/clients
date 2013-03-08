@@ -777,16 +777,16 @@ public class ApplicationPanel extends ContentPanel {
         txtAppNumber = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         labDate = new javax.swing.JLabel();
-        txtDate = new javax.swing.JFormattedTextField();
+        txtDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel26 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtCompleteBy = new javax.swing.JFormattedTextField();
+        txtCompleteBy = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel15 = new javax.swing.JPanel();
         labStatus = new javax.swing.JLabel();
         txtStatus = new javax.swing.JTextField();
         jPanel19 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        txtStatusChangeDate = new javax.swing.JFormattedTextField();
+        txtStatusChangeDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel10 = new javax.swing.JPanel();
         groupPanel3 = new org.sola.clients.swing.ui.GroupPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -1108,12 +1108,9 @@ public class ApplicationPanel extends ContentPanel {
         labDate.setText(bundle.getString("ApplicationPanel.labDate.text")); // NOI18N
         labDate.setName("labDate"); // NOI18N
 
-        txtDate.setEditable(false);
-        txtDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MMM d, yyyy HH:mm"))));
-        txtDate.setText(bundle.getString("ApplicationPanel.txtDate.text")); // NOI18N
         txtDate.setName(bundle.getString("ApplicationPanel.txtDate.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${lodgingDatetime}"), txtDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${lodgingNepaliDateBean.nepaliDate}"), txtDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
@@ -1123,15 +1120,15 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(labDate)
                 .addContainerGap(33, Short.MAX_VALUE))
-            .addComponent(txtDate)
+            .addComponent(txtDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(labDate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel25.add(jPanel13);
@@ -1141,12 +1138,9 @@ public class ApplicationPanel extends ContentPanel {
         jLabel2.setText(bundle.getString("ApplicationPanel.jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        txtCompleteBy.setEditable(false);
-        txtCompleteBy.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        txtCompleteBy.setText(bundle.getString("ApplicationPanel.txtCompleteBy.text")); // NOI18N
         txtCompleteBy.setName(bundle.getString("ApplicationPanel.txtCompleteBy.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionDate}"), txtCompleteBy, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${expectedCompletionNepaliDate.nepaliDate}"), txtCompleteBy, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
@@ -1156,7 +1150,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel26Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addContainerGap(51, Short.MAX_VALUE))
-            .addComponent(txtCompleteBy)
+            .addComponent(txtCompleteBy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1209,12 +1203,9 @@ public class ApplicationPanel extends ContentPanel {
         jLabel4.setText(bundle.getString("ApplicationPanel.jLabel4.text")); // NOI18N
         jLabel4.setName(bundle.getString("ApplicationPanel.jLabel4.name")); // NOI18N
 
-        txtStatusChangeDate.setEditable(false);
-        txtStatusChangeDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MMM d, yyyy HH:mm"))));
-        txtStatusChangeDate.setText(bundle.getString("ApplicationPanel.txtStatusChangeDate.text")); // NOI18N
         txtStatusChangeDate.setName(bundle.getString("ApplicationPanel.txtStatusChangeDate.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${statusChangeDate}"), txtStatusChangeDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, appBean, org.jdesktop.beansbinding.ELProperty.create("${statusChangeNepaliDate.nepaliDate}"), txtStatusChangeDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
@@ -1224,7 +1215,7 @@ public class ApplicationPanel extends ContentPanel {
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addContainerGap(19, Short.MAX_VALUE))
-            .addComponent(txtStatusChangeDate)
+            .addComponent(txtStatusChangeDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1775,14 +1766,14 @@ public class ApplicationPanel extends ContentPanel {
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(groupPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(groupPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
+                .addComponent(baUnitSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, Short.MAX_VALUE))
         );
 
         jPanel16.setName(bundle.getString("ApplicationPanel.jPanel16.name")); // NOI18N
@@ -2631,14 +2622,14 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JToolBar tbServices;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblDocTypesHelper;
     private javax.swing.JTextField txtAppNumber;
-    private javax.swing.JFormattedTextField txtCompleteBy;
-    private javax.swing.JFormattedTextField txtDate;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtCompleteBy;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtDate;
     private javax.swing.JTextField txtPaymentRemarks;
     private javax.swing.JFormattedTextField txtReceiptDate;
     private javax.swing.JTextField txtReceiptNumber;
     private javax.swing.JFormattedTextField txtServicesFee;
     private javax.swing.JTextField txtStatus;
-    private javax.swing.JFormattedTextField txtStatusChangeDate;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtStatusChangeDate;
     private javax.swing.JFormattedTextField txtTaxFee;
     private javax.swing.JFormattedTextField txtValuationAmount;
     public javax.swing.JPanel validationPanel;

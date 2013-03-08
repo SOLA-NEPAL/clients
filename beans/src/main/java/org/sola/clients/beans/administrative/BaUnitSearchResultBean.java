@@ -35,6 +35,7 @@ import org.sola.clients.beans.cache.CacheManager;
 import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.beans.referencedata.RegistrationStatusTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.beans.system.NepaliDateBean;
 
 /**
  * Represents BA unit search result.
@@ -53,6 +54,8 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     public static final String VDC_PROPERTY = "vdc";
     public static final String CADASTRE_OBJECT_ID_PROPERTY = "cadastreObjectId";
     public static final String SELECTED_PROPERTY = "selected";
+    public static final String APPROVAL_DATE_PROPERTY = "approvalDateTime";
+    public static final String APPROVAL_NEPALI_DATE_PROPERTY = "approvalNepaliDateTime";
     private String id;
     private String name;
     private String nameFirstPart;
@@ -74,11 +77,13 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String action;
     private boolean selected;
     private Date approvalDateTime;
+    private NepaliDateBean approvalNepaliDateTime;
     transient java.util.ResourceBundle bundle;
 
     public BaUnitSearchResultBean() {
         super();
         bundle = java.util.ResourceBundle.getBundle("org/sola/clients/beans/administrative/Bundle");
+         approvalNepaliDateTime = new NepaliDateBean();
     }
 
     public String getId() {
@@ -300,10 +305,29 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     }
 
     public Date getApprovalDateTime() {
-        return approvalDateTime;
+        if (approvalNepaliDateTime != null) {
+            return approvalNepaliDateTime.getGregorean_date();
+        }
+        return null;
     }
 
     public void setApprovalDateTime(Date approvalDateTime) {
-        this.approvalDateTime = approvalDateTime;
+        Date oldValue = null;
+        if (approvalNepaliDateTime != null) {
+            oldValue = approvalNepaliDateTime.getGregorean_date();
+        }
+       
+        approvalNepaliDateTime.setGregorean_date(approvalDateTime);
+        propertySupport.firePropertyChange(APPROVAL_DATE_PROPERTY, oldValue, approvalDateTime);
+    }
+
+    public NepaliDateBean getApprovalNepaliDateTime() {
+        return approvalNepaliDateTime;
+    }
+
+    public void setApprovalNepaliDateTime(NepaliDateBean approvalNepaliDateTime) {
+        NepaliDateBean oldValue = this.approvalNepaliDateTime;
+        this.approvalNepaliDateTime = approvalNepaliDateTime;
+        propertySupport.firePropertyChange(APPROVAL_NEPALI_DATE_PROPERTY, oldValue, this.approvalNepaliDateTime);
     }
 }

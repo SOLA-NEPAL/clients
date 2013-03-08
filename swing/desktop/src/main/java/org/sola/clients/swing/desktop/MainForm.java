@@ -29,6 +29,7 @@
  */
 package org.sola.clients.swing.desktop;
 
+import org.sola.clients.swing.desktop.inquiry.LandOwnerQuery;
 import java.awt.ComponentOrientation;
 import java.awt.Frame;
 import java.awt.event.WindowEvent;

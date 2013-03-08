@@ -31,10 +31,7 @@ package org.sola.clients.beans.application;
 
 import java.util.Date;
 import org.sola.clients.beans.AbstractIdWithOfficeCodeBean;
-import org.sola.clients.beans.cache.CacheManager;
-import org.sola.clients.beans.referencedata.RestrictionReasonBean;
 import org.sola.clients.beans.system.NepaliDateBean;
-import org.sola.common.DateUtility;
 import org.sola.common.NepaliIntegersConvertor;
 import org.sola.webservices.transferobjects.casemanagement.ApplicationSummaryTO;
 
@@ -66,6 +63,12 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
     private NepaliDateBean lodgingNepaliDateBean;
     private NepaliDateBean expectedCompletionNepaliDate;
 
+    public ApplicationSummaryBean() {
+        super();
+        expectedCompletionNepaliDate = new NepaliDateBean();
+        lodgingNepaliDateBean = new NepaliDateBean();
+    }
+
     public NepaliDateBean getExpectedCompletionNepaliDate() {
         return expectedCompletionNepaliDate;
     }
@@ -88,7 +91,6 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
         if (expectedCompletionNepaliDate != null) {
             oldValue = expectedCompletionNepaliDate.getGregorean_date();
         }
-        expectedCompletionNepaliDate = new NepaliDateBean();
         expectedCompletionNepaliDate.setGregorean_date(expectedCompletionDate);
         propertySupport.firePropertyChange(EXPECTED_COMPLETION_DATE_PROPERTY, oldValue, expectedCompletionDate);
     }
@@ -116,13 +118,8 @@ public class ApplicationSummaryBean extends AbstractIdWithOfficeCodeBean {
         if (lodgingNepaliDateBean != null) {
             oldValue = lodgingNepaliDateBean.getGregorean_date();
         }
-        lodgingNepaliDateBean = new NepaliDateBean();
         lodgingNepaliDateBean.setGregorean_date(lodgingDatetime);
         propertySupport.firePropertyChange(LODGING_DATE_TIME_PROPERTY, oldValue, lodgingDatetime);
-    }
-
-    public ApplicationSummaryBean() {
-        super();
     }
 
     public void setAgentId(String agentId) {

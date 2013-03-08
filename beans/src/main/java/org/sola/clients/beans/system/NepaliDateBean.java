@@ -85,4 +85,9 @@ public class NepaliDateBean extends AbstractBindingBean {
     public String getNepaliDateFormated() {
         return DateUtility.toFormattedNepaliDate(getNepaliDate());
     }
+
+    public static void putDashOnString(String value) {
+        String dashedString = value.substring(0, 4) + "-" + value.substring(4, 6) + "-" + value.substring(6);
+        WSManager.getInstance().getAdminService().getGregorianDate(dashedString);
+    }
 }

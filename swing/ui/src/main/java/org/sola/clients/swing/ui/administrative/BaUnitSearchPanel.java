@@ -221,13 +221,11 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         txtLoc = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        fromDateField = new javax.swing.JFormattedTextField();
-        btnShowCalendarFrom = new javax.swing.JButton();
+        txtFromDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jLabel9 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        toDateField = new javax.swing.JFormattedTextField();
-        btnShowCalenderTo = new javax.swing.JButton();
+        txtToDate = new org.sola.clients.swing.common.controls.NepaliDateField();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -464,36 +462,20 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
 
         jPanel12.setName(bundle.getString("BaUnitSearchPanel.jPanel12.name")); // NOI18N
 
-        fromDateField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        fromDateField.setText(bundle.getString("BaUnitSearchPanel.fromDateField.text")); // NOI18N
-        fromDateField.setName(bundle.getString("BaUnitSearchPanel.fromDateField.name")); // NOI18N
+        txtFromDate.setName(bundle.getString("BaUnitSearchPanel.txtFromDate.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${fromDate}"), fromDateField, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${fromNepaliDate.nepaliDate}"), txtFromDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-
-        btnShowCalendarFrom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        btnShowCalendarFrom.setText(bundle.getString("BaUnitSearchPanel.btnShowCalendarFrom.text")); // NOI18N
-        btnShowCalendarFrom.setName(bundle.getString("BaUnitSearchPanel.btnShowCalendarFrom.name")); // NOI18N
-        btnShowCalendarFrom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowCalendarFromActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(fromDateField)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnShowCalendarFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2))
+            .addComponent(txtFromDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnShowCalendarFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(fromDateField)
+            .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jLabel9.setText(bundle.getString("BaUnitSearchPanel.jLabel9.text")); // NOI18N
@@ -523,39 +505,20 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
 
         jPanel11.setName(bundle.getString("BaUnitSearchPanel.jPanel11.name")); // NOI18N
 
-        toDateField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        toDateField.setText(bundle.getString("BaUnitSearchPanel.toDateField.text")); // NOI18N
-        toDateField.setName(bundle.getString("BaUnitSearchPanel.toDateField.name")); // NOI18N
+        txtToDate.setName(bundle.getString("BaUnitSearchPanel.txtToDate.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${toDate}"), toDateField, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchParams, org.jdesktop.beansbinding.ELProperty.create("${toNepaliDate.nepaliDate}"), txtToDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-
-        btnShowCalenderTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        btnShowCalenderTo.setText(bundle.getString("BaUnitSearchPanel.btnShowCalenderTo.text")); // NOI18N
-        btnShowCalenderTo.setName(bundle.getString("BaUnitSearchPanel.btnShowCalenderTo.name")); // NOI18N
-        btnShowCalenderTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowCalenderToActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(toDateField)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnShowCalenderTo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2))
+            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnShowCalenderTo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jLabel10.setText(bundle.getString("BaUnitSearchPanel.jLabel10.text")); // NOI18N
@@ -695,9 +658,9 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
         columnBinding.setColumnName("Pana No");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${approvalDateTime}"));
-        columnBinding.setColumnName("Approval Date Time");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${approvalNepaliDateTime.nepaliDateFormated}"));
+        columnBinding.setColumnName("Approval Nepali Date Time.nepali Date Formated");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${registrationStatus.displayValue}"));
         columnBinding.setColumnName("Registration Status.display Value");
@@ -831,16 +794,6 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clearFields();
     }//GEN-LAST:event_btnClearActionPerformed
-
-    private void btnShowCalendarFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowCalendarFromActionPerformed
-        // TODO add your handling code here:
-        showCalendar(fromDateField);
-    }//GEN-LAST:event_btnShowCalendarFromActionPerformed
-
-    private void btnShowCalenderToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowCalenderToActionPerformed
-        // TODO add your handling code here:
-        showCalendar(toDateField);
-    }//GEN-LAST:event_btnShowCalenderToActionPerformed
     private void showCalendar(JFormattedTextField dateField) {
         CalendarForm calendar = new CalendarForm(null, true, dateField);
         calendar.setVisible(true);
@@ -859,11 +812,8 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnOpenBaUnit;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSelect;
-    private javax.swing.JButton btnShowCalendarFrom;
-    private javax.swing.JButton btnShowCalenderTo;
     private javax.swing.JComboBox cbxMapSheets;
     private javax.swing.JComboBox cbxVdc;
-    private javax.swing.JFormattedTextField fromDateField;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -898,10 +848,11 @@ public class BaUnitSearchPanel extends javax.swing.JPanel {
     private javax.swing.JPopupMenu popUpSearchResults;
     private javax.swing.JToolBar.Separator separator1;
     private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tableSearchResults;
-    private javax.swing.JFormattedTextField toDateField;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtFromDate;
     private javax.swing.JTextField txtLoc;
     private javax.swing.JTextField txtMoth;
     private javax.swing.JTextField txtParcelNumber;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtToDate;
     private javax.swing.JTextField txtWard;
     private org.sola.clients.beans.referencedata.VdcListBean vdcList;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

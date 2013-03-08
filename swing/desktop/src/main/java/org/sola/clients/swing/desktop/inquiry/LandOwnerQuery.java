@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sola.clients.swing.desktop.party;
+package org.sola.clients.swing.desktop.inquiry;
 
 import org.sola.clients.swing.ui.ContentPanel;
 
@@ -80,7 +80,7 @@ public class LandOwnerQuery extends ContentPanel {
 
         setHeaderPanel(headerPanel1);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/party/Bundle"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/inquiry/Bundle"); // NOI18N
         headerPanel1.setTitleText(bundle.getString("LandOwnerQuery.headerPanel1.titleText")); // NOI18N
 
         buttonGroup1.add(rdbFromTo);
@@ -165,7 +165,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 81, Short.MAX_VALUE))
-            .addComponent(txtFromDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtFromDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +190,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +215,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtUpToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+            .addComponent(txtUpToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +242,7 @@ public class LandOwnerQuery extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addGap(0, 46, Short.MAX_VALUE))
             .addComponent(txtFiscalYear)
         );
         jPanel3Layout.setVerticalGroup(
@@ -268,7 +268,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtUpToYear, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+            .addComponent(txtUpToYear, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

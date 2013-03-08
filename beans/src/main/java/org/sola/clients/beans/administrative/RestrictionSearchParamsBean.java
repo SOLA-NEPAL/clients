@@ -22,6 +22,7 @@ import org.sola.clients.beans.cadastre.MapSheetBean;
 import org.sola.clients.beans.referencedata.RestrictionReasonBean;
 import org.sola.clients.beans.referencedata.SourceTypeBean;
 import org.sola.clients.beans.referencedata.VdcBean;
+import org.sola.clients.beans.system.NepaliDateBean;
 
 /**
  * Represents restriction search parameters.
@@ -184,6 +185,9 @@ public class RestrictionSearchParamsBean extends AbstractBindingBean {
     }
 
     public String getRefDateFrom() {
+        if (refDateFrom != null) {
+            NepaliDateBean.putDashOnString(refDateFrom);
+        }
         return refDateFrom;
     }
 
@@ -194,6 +198,9 @@ public class RestrictionSearchParamsBean extends AbstractBindingBean {
     }
 
     public String getRefDateTo() {
+        if (refDateTo != null) {
+            NepaliDateBean.putDashOnString(refDateTo);
+        }
         return refDateTo;
     }
 
@@ -214,6 +221,9 @@ public class RestrictionSearchParamsBean extends AbstractBindingBean {
     }
 
     public String getRegDateFrom() {
+        if (regDateFrom != null) {
+            NepaliDateBean.putDashOnString(regDateFrom);
+        }
         return regDateFrom;
     }
 
@@ -224,6 +234,9 @@ public class RestrictionSearchParamsBean extends AbstractBindingBean {
     }
 
     public String getRegDateTo() {
+        if (regDateTo != null) {
+            NepaliDateBean.putDashOnString(regDateTo);
+        }
         return regDateTo;
     }
 

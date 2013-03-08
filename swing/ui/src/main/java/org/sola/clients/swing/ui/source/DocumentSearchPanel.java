@@ -277,13 +277,11 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         txtAppNumber = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        txtSubmissionDateFrom = new javax.swing.JFormattedTextField();
-        btnSubmissionDateFrom = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        txtSubmissionDateFrom = new org.sola.clients.swing.common.controls.NepaliDateField();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        txtSubmissionDateTo = new javax.swing.JFormattedTextField();
-        btnSubmissionDateTo = new javax.swing.JButton();
+        txtSubmissionDateTo = new org.sola.clients.swing.common.controls.NepaliDateField();
         jToolBar1 = new javax.swing.JToolBar();
         btnView = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
@@ -436,7 +434,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtRefNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+            .addComponent(txtRefNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addContainerGap())
@@ -468,7 +466,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addComponent(txtLaNr)
         );
         jPanel7Layout.setVerticalGroup(
@@ -529,7 +527,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addComponent(txtDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -562,7 +560,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
             .addComponent(cbxSourceType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
@@ -592,7 +590,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addComponent(jLabel11)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
             .addComponent(txtAppNumber)
         );
         jPanel15Layout.setVerticalGroup(
@@ -608,47 +606,30 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
 
         jPanel4.setName("jPanel4"); // NOI18N
 
-        txtSubmissionDateFrom.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtSubmissionDateFrom.setText(bundle.getString("DocumentSearchPanel.txtSubmissionDateFrom.text")); // NOI18N
-        txtSubmissionDateFrom.setName("txtSubmissionDateFrom"); // NOI18N
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${fromSubmissionDate}"), txtSubmissionDateFrom, org.jdesktop.beansbinding.BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
-
-        btnSubmissionDateFrom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        btnSubmissionDateFrom.setText(bundle.getString("DocumentSearchPanel.btnSubmissionDateFrom.text")); // NOI18N
-        btnSubmissionDateFrom.setBorder(null);
-        btnSubmissionDateFrom.setName("btnSubmissionDateFrom"); // NOI18N
-        btnSubmissionDateFrom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmissionDateFromActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText(bundle.getString("DocumentSearchPanel.jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
+
+        txtSubmissionDateFrom.setName(bundle.getString("DocumentSearchPanel.txtSubmissionDateFrom.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${fromSubmissionNepaliDate.nepaliDate}"), txtSubmissionDateFrom, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(txtSubmissionDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSubmissionDateFrom))
-            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addContainerGap())
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addComponent(txtSubmissionDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnSubmissionDateFrom)
-                    .addComponent(txtSubmissionDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSubmissionDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4);
@@ -658,41 +639,26 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
         jLabel5.setText(bundle.getString("DocumentSearchPanel.jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        txtSubmissionDateTo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtSubmissionDateTo.setText(bundle.getString("DocumentSearchPanel.txtSubmissionDateTo.text")); // NOI18N
-        txtSubmissionDateTo.setName("txtSubmissionDateTo"); // NOI18N
+        txtSubmissionDateTo.setName(bundle.getString("DocumentSearchPanel.txtSubmissionDateTo.name")); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${toSubmissionDate}"), txtSubmissionDateTo, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, searchParams, org.jdesktop.beansbinding.ELProperty.create("${toSubmissionNepaliDate.nepaliDate}"), txtSubmissionDateTo, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-
-        btnSubmissionDateTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/calendar.png"))); // NOI18N
-        btnSubmissionDateTo.setText(bundle.getString("DocumentSearchPanel.btnSubmissionDateTo.text")); // NOI18N
-        btnSubmissionDateTo.setBorder(null);
-        btnSubmissionDateTo.setName("btnSubmissionDateTo"); // NOI18N
-        btnSubmissionDateTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmissionDateToActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(txtSubmissionDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSubmissionDateTo))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addContainerGap(39, Short.MAX_VALUE))
+            .addComponent(txtSubmissionDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnSubmissionDateTo)
-                    .addComponent(txtSubmissionDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtSubmissionDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -798,9 +764,9 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
         columnBinding.setColumnName("La Nr");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${submission}"));
-        columnBinding.setColumnName("Submission");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${submissionNepaliDate.nepaliDateFormated}"));
+        columnBinding.setColumnName("Submission Nepali Date.nepali Date Formated");
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statusCode}"));
         columnBinding.setColumnName("Status Code");
@@ -842,7 +808,7 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -862,14 +828,6 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         searchDocuments();
     }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void btnSubmissionDateFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmissionDateFromActionPerformed
-        showCalendar(txtSubmissionDateFrom);
-    }//GEN-LAST:event_btnSubmissionDateFromActionPerformed
-
-    private void btnSubmissionDateToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmissionDateToActionPerformed
-        showCalendar(txtSubmissionDateTo);
-    }//GEN-LAST:event_btnSubmissionDateToActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clearForm();
@@ -928,8 +886,6 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSelect;
-    private javax.swing.JButton btnSubmissionDateFrom;
-    private javax.swing.JButton btnSubmissionDateTo;
     private javax.swing.JButton btnView;
     private javax.swing.JComboBox cbxSourceType;
     private javax.swing.JLabel jLabel1;
@@ -974,8 +930,8 @@ public class DocumentSearchPanel extends javax.swing.JPanel {
     private org.sola.clients.swing.common.controls.NepaliDateField txtDateTo;
     private javax.swing.JTextField txtLaNr;
     private javax.swing.JTextField txtRefNumber;
-    private javax.swing.JFormattedTextField txtSubmissionDateFrom;
-    private javax.swing.JFormattedTextField txtSubmissionDateTo;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtSubmissionDateFrom;
+    private org.sola.clients.swing.common.controls.NepaliDateField txtSubmissionDateTo;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

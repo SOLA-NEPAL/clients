@@ -82,7 +82,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="appListPanel" pref="237" max="32767" attributes="0"/>
+              <Component id="appListPanel" pref="226" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -179,12 +179,12 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${lodgingDatetime}">
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+              <Subbinding sourcePath="${lodgingNepaliDateBean.nepaliDateFormated}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${expectedCompletionDate}">
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+              <Subbinding sourcePath="${expectedCompletionNepaliDate.nepaliDateFormated}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${serviceList}">
@@ -300,9 +300,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel11" alignment="0" pref="113" max="32767" attributes="1"/>
-                      <Component id="jPanel9" alignment="0" pref="113" max="32767" attributes="1"/>
-                      <Component id="jPanel8" alignment="0" pref="113" max="32767" attributes="1"/>
+                      <Component id="jPanel11" alignment="0" max="32767" attributes="1"/>
+                      <Component id="jPanel9" alignment="0" pref="0" max="32767" attributes="1"/>
+                      <Component id="jPanel8" alignment="0" max="32767" attributes="1"/>
                   </Group>
               </Group>
           </Group>
@@ -327,8 +327,11 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="labFrom" min="-2" max="-2" attributes="0"/>
-                      <Component id="jPanel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="labFrom" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="123" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="txtFromDate" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -336,8 +339,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labFrom" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="16" max="32767" attributes="0"/>
+                          <Component id="txtFromDate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -351,66 +354,16 @@
                     <Property name="name" type="java.lang.String" value="labFrom" noResource="true"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel5">
+                <Component class="org.sola.clients.swing.common.controls.NepaliDateField" name="txtFromDate">
                   <Properties>
-                    <Property name="name" type="java.lang.String" value="jPanel5" noResource="true"/>
+                    <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationSearchPanel.txtFromDate.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
                   </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtFromDate" min="-2" pref="153" max="-2" attributes="2"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnShowCalendarFrom" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="txtFromDate" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnShowCalendarFrom" alignment="2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnShowCalendarFrom">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/images/common/calendar.png"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationSearchPanel.btnShowCalendarFrom.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="btnShowCalendarFrom" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowCalendarFromActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="txtFromDate">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="1"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="txtFromDate" noResource="true"/>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="value" source="searchParams" sourcePath="${fromDate}" target="txtFromDate" targetPath="value" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtFromDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtFromDate.setHorizontalAlignment(JTextField.LEADING);"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtFromDate.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 12));"/>
-                      </AuxValues>
-                    </Component>
-                  </SubComponents>
-                </Container>
+                  <BindingProperties>
+                    <BindingProperty name="value" source="searchParams" sourcePath="${fromNepaliDate.nepaliDate}" target="txtFromDate" targetPath="value" updateStrategy="0" immediately="false"/>
+                  </BindingProperties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel3">
@@ -422,12 +375,10 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labTo" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="labTo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
+                      <Component id="txtToDate" pref="179" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -435,72 +386,13 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labTo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="16" max="32767" attributes="0"/>
+                          <Component id="txtToDate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="jPanel4">
-                  <Properties>
-                    <Property name="name" type="java.lang.String" value="jPanel4" noResource="true"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="txtToDate" min="-2" pref="153" max="-2" attributes="2"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnShowCalendarTo" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="btnShowCalendarTo" alignment="2" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtToDate" alignment="2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnShowCalendarTo">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/images/common/calendar.png"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationSearchPanel.btnShowCalendarTo.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="btnShowCalendarTo" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowCalendarToActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="txtToDate">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="1"/>
-                        </Property>
-                        <Property name="name" type="java.lang.String" value="txtToDate" noResource="true"/>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="value" source="searchParams" sourcePath="${toDate}" target="txtToDate" targetPath="value" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtToDate.setComponentOrientation(ComponentOrientation.getOrientation(Locale.getDefault()));&#xa;txtToDate.setHorizontalAlignment(JTextField.LEADING);"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtToDate.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 12));"/>
-                      </AuxValues>
-                    </Component>
-                  </SubComponents>
-                </Container>
                 <Component class="javax.swing.JLabel" name="labTo">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -508,6 +400,16 @@
                     </Property>
                     <Property name="name" type="java.lang.String" value="labTo" noResource="true"/>
                   </Properties>
+                </Component>
+                <Component class="org.sola.clients.swing.common.controls.NepaliDateField" name="txtToDate">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="org/sola/clients/swing/desktop/application/Bundle.properties" key="ApplicationSearchPanel.txtToDate.name" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                  </Properties>
+                  <BindingProperties>
+                    <BindingProperty name="value" source="searchParams" sourcePath="${toNepaliDateBean.nepaliDate}" target="txtToDate" targetPath="value" updateStrategy="0" immediately="false"/>
+                  </BindingProperties>
                 </Component>
               </SubComponents>
             </Container>
@@ -561,9 +463,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labAgentName" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="234" max="32767" attributes="0"/>
+                              <EmptySpace pref="257" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtAgentName" alignment="0" pref="263" max="32767" attributes="0"/>
+                          <Component id="txtAgentName" alignment="0" pref="286" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -662,7 +564,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtContactPerson" alignment="0" pref="425" max="32767" attributes="1"/>
+                      <Component id="txtContactPerson" alignment="0" pref="448" max="32767" attributes="1"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labContactPerson" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -675,7 +577,7 @@
                           <Component id="labContactPerson" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtContactPerson" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="16" max="32767" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -737,7 +639,7 @@
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnClear" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="13" max="32767" attributes="0"/>
+                          <EmptySpace pref="19" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -786,7 +688,7 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnFind" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="13" max="32767" attributes="0"/>
+                          <EmptySpace pref="19" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
