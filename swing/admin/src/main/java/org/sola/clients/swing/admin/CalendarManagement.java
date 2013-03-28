@@ -230,10 +230,7 @@ public class CalendarManagement extends ContentPanel {
         if (getNewYear().validate(true).size() < 1) {
             nepaliMonthList.addNepaliMonth(getNewYear(), lastYear);
             //nepaliMonthList.addNepaliMonth(getNewYear());   
-
-
             setNewYear(null);
-
         }
 
     }//GEN-LAST:event_btnYearActionPerformed

@@ -21,12 +21,12 @@ import org.sola.clients.swing.ui.ContentPanel;
  *
  * @author Kumar
  */
-public class LandOwnerQuery extends ContentPanel {
+public class RegistrationQuery extends ContentPanel {
 
     /**
-     * Creates new form LandOwnerQuery
+     * Creates new form RegistrationQuery
      */
-    public LandOwnerQuery() {
+    public RegistrationQuery() {
         initComponents();
         customizeFields();
     }
@@ -41,21 +41,34 @@ public class LandOwnerQuery extends ContentPanel {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        partySearchResultListBean1 = new org.sola.clients.beans.party.PartySearchResultListBean();
+        baUnitSearchResultListBean1 = new org.sola.clients.beans.administrative.BaUnitSearchResultListBean();
         nepaliDateBean1 = new org.sola.clients.beans.system.NepaliDateBean();
         nepaliDateBean2 = new org.sola.clients.beans.system.NepaliDateBean();
         nepaliDateBean3 = new org.sola.clients.beans.system.NepaliDateBean();
         nepaliDateBean4 = new org.sola.clients.beans.system.NepaliDateBean();
         nepaliDateBean5 = new org.sola.clients.beans.system.NepaliDateBean();
         nepaliDateBean6 = new org.sola.clients.beans.system.NepaliDateBean();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel6 = new javax.swing.JPanel();
-        rdbFromTo = new javax.swing.JRadioButton();
-        rdbUptoDate = new javax.swing.JRadioButton();
-        rdbFiscalYear = new javax.swing.JRadioButton();
-        rdbFrom = new javax.swing.JRadioButton();
         btnSearch = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        chkAll = new javax.swing.JCheckBox();
+        chkHandi = new javax.swing.JCheckBox();
+        chkDeprived = new javax.swing.JCheckBox();
+        chkMartyrs = new javax.swing.JCheckBox();
+        jToolBar1 = new javax.swing.JToolBar();
+        rdbFromTo = new javax.swing.JRadioButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        rdbUptoDate = new javax.swing.JRadioButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        rdbFiscalYear = new javax.swing.JRadioButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        rdbFrom = new javax.swing.JRadioButton();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbGender = new javax.swing.JComboBox();
         jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -73,47 +86,15 @@ public class LandOwnerQuery extends ContentPanel {
         jLabel4 = new javax.swing.JLabel();
         txtUpToYear = new org.sola.clients.swing.common.controls.NepaliDateField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableWithDefaultStyles1 = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
-        jToolBar1 = new javax.swing.JToolBar();
+        tblResult = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        jToolBar2 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         lblResult = new javax.swing.JLabel();
 
         setHeaderPanel(headerPanel1);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/inquiry/Bundle"); // NOI18N
-        headerPanel1.setTitleText(bundle.getString("LandOwnerQuery.headerPanel1.titleText")); // NOI18N
-
-        buttonGroup1.add(rdbFromTo);
-        rdbFromTo.setText(bundle.getString("LandOwnerQuery.rdbFromTo.text")); // NOI18N
-        rdbFromTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbFromToActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbUptoDate);
-        rdbUptoDate.setText(bundle.getString("LandOwnerQuery.rdbUptoDate.text")); // NOI18N
-        rdbUptoDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbUptoDateActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbFiscalYear);
-        rdbFiscalYear.setText(bundle.getString("LandOwnerQuery.rdbFiscalYear.text")); // NOI18N
-        rdbFiscalYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbFiscalYearActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rdbFrom);
-        rdbFrom.setText(bundle.getString("LandOwnerQuery.rdbFrom.text")); // NOI18N
-        rdbFrom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdbFromActionPerformed(evt);
-            }
-        });
+        headerPanel1.setTitleText(bundle.getString("RegistrationQuery.headerPanel1.titleText")); // NOI18N
 
         btnSearch.setText(bundle.getString("LandOwnerQuery.btnSearch.text")); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -122,33 +103,148 @@ public class LandOwnerQuery extends ContentPanel {
             }
         });
 
+        jLabel6.setText(bundle.getString("RegistrationQuery.jLabel6.text")); // NOI18N
+
+        chkAll.setText(bundle.getString("RegistrationQuery.chkAll.text")); // NOI18N
+        chkAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkAllActionPerformed(evt);
+            }
+        });
+
+        chkHandi.setText(bundle.getString("RegistrationQuery.chkHandi.text")); // NOI18N
+
+        chkDeprived.setText(bundle.getString("RegistrationQuery.chkDeprived.text")); // NOI18N
+
+        chkMartyrs.setText(bundle.getString("RegistrationQuery.chkMartyrs.text")); // NOI18N
+        chkMartyrs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkMartyrsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel6)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(chkAll)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chkHandi)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkDeprived)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkMartyrs))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chkAll)
+                    .addComponent(chkHandi)
+                    .addComponent(chkDeprived)
+                    .addComponent(chkMartyrs))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+
+        buttonGroup1.add(rdbFromTo);
+        rdbFromTo.setText(bundle.getString("LandOwnerQuery.rdbFromTo.text")); // NOI18N
+        rdbFromTo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbFromToActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(rdbFromTo);
+        jToolBar1.add(jSeparator1);
+
+        buttonGroup1.add(rdbUptoDate);
+        rdbUptoDate.setText(bundle.getString("LandOwnerQuery.rdbUptoDate.text")); // NOI18N
+        rdbUptoDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbUptoDateActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(rdbUptoDate);
+        jToolBar1.add(jSeparator2);
+
+        buttonGroup1.add(rdbFiscalYear);
+        rdbFiscalYear.setText(bundle.getString("LandOwnerQuery.rdbFiscalYear.text")); // NOI18N
+        rdbFiscalYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbFiscalYearActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(rdbFiscalYear);
+        jToolBar1.add(jSeparator3);
+
+        buttonGroup1.add(rdbFrom);
+        rdbFrom.setText(bundle.getString("LandOwnerQuery.rdbFrom.text")); // NOI18N
+        rdbFrom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbFromActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(rdbFrom);
+
+        jLabel7.setText(bundle.getString("RegistrationQuery.jLabel7.text")); // NOI18N
+
+        cmbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Male", "Female", "All" }));
+        cmbGender.setSelectedIndex(-1);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addGap(0, 87, Short.MAX_VALUE))
+            .addComponent(cmbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rdbFromTo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rdbUptoDate, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rdbFiscalYear, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rdbFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbFromTo)
-                    .addComponent(rdbUptoDate)
-                    .addComponent(rdbFiscalYear)
-                    .addComponent(rdbFrom)
-                    .addComponent(btnSearch))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btnSearch))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel7.setLayout(new java.awt.GridLayout(1, 5, 15, 0));
@@ -165,7 +261,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 81, Short.MAX_VALUE))
-            .addComponent(txtFromDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(txtFromDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +286,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +311,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtUpToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(txtUpToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +338,7 @@ public class LandOwnerQuery extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(0, 62, Short.MAX_VALUE))
             .addComponent(txtFiscalYear)
         );
         jPanel3Layout.setVerticalGroup(
@@ -268,7 +364,7 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtUpToYear, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+            .addComponent(txtUpToYear, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,56 +377,56 @@ public class LandOwnerQuery extends ContentPanel {
 
         jPanel7.add(jPanel4);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${partySearchResults}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, partySearchResultListBean1, eLProperty, jTableWithDefaultStyles1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fullName}"));
-        columnBinding.setColumnName("Full Name");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${baUnitSearchResults}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchResultListBean1, eLProperty, tblResult);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
+        columnBinding.setColumnName("Property Id Code");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address}"));
-        columnBinding.setColumnName("Address");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapNumber}"));
+        columnBinding.setColumnName("Map Number");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idOfficeType.displayValue}"));
-        columnBinding.setColumnName("Id Office Type.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"));
+        columnBinding.setColumnName("Parcel No");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idNumber}"));
-        columnBinding.setColumnName("Id Number");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mothNo}"));
+        columnBinding.setColumnName("Moth No");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fatherName}"));
-        columnBinding.setColumnName("Father Name");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${panaNo}"));
+        columnBinding.setColumnName("Pana No");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${grandfatherName}"));
-        columnBinding.setColumnName("Grandfather Name");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${approvalNepaliDateTime.nepaliDateFormated}"));
+        columnBinding.setColumnName("Approval Nepali Date Time.nepali Date Formated");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${genderType.displayValue}"));
-        columnBinding.setColumnName("Gender Type.display Value");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${categories}"));
+        columnBinding.setColumnName("Categories");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(jTableWithDefaultStyles1);
-        jTableWithDefaultStyles1.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title0_2")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title1_2")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title2_1")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title3_1")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title4")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title5")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("LandOwnerQuery.jTableWithDefaultStyles1.columnModel.title6")); // NOI18N
+        jScrollPane1.setViewportView(tblResult);
+        tblResult.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title0")); // NOI18N
+        tblResult.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title1")); // NOI18N
+        tblResult.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title2")); // NOI18N
+        tblResult.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title3")); // NOI18N
+        tblResult.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title4")); // NOI18N
+        tblResult.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title5")); // NOI18N
+        tblResult.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("RegistrationQuery.tblResult.columnModel.title6")); // NOI18N
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
 
-        jButton1.setText(bundle.getString("LandOwnerQuery.jButton1.text")); // NOI18N
+        jButton1.setText(bundle.getString("RegistrationQuery.jButton1.text")); // NOI18N
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-        jToolBar1.add(lblResult);
+        jToolBar2.add(jButton1);
+        jToolBar2.add(lblResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -340,29 +436,47 @@ public class LandOwnerQuery extends ContentPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rdbFromToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFromToActionPerformed
+        // TODO add your handling code here:
+        txtFromDate.setEnabled(true);
+        txtToDate.setEnabled(true);
+        txtFiscalYear.setEnabled(false);
+        txtUpToDate.setEnabled(false);
+        txtUpToYear.setEnabled(false);
+    }//GEN-LAST:event_rdbFromToActionPerformed
+
+    private void rdbUptoDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbUptoDateActionPerformed
+        // TODO add your handling code here:
+        txtFromDate.setEnabled(false);
+        txtToDate.setEnabled(false);
+        txtFiscalYear.setEnabled(false);
+        txtUpToDate.setEnabled(true);
+        txtUpToYear.setEnabled(false);
+    }//GEN-LAST:event_rdbUptoDateActionPerformed
 
     private void rdbFiscalYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFiscalYearActionPerformed
         // TODO add your handling code here:
@@ -372,6 +486,15 @@ public class LandOwnerQuery extends ContentPanel {
         txtUpToDate.setEnabled(false);
         txtUpToYear.setEnabled(false);
     }//GEN-LAST:event_rdbFiscalYearActionPerformed
+
+    private void rdbFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFromActionPerformed
+        // TODO add your handling code here:
+        txtFromDate.setEnabled(false);
+        txtToDate.setEnabled(false);
+        txtFiscalYear.setEnabled(false);
+        txtUpToDate.setEnabled(false);
+        txtUpToYear.setEnabled(true);
+    }//GEN-LAST:event_rdbFromActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
@@ -385,62 +508,133 @@ public class LandOwnerQuery extends ContentPanel {
             searchFrom();
         }
     }//GEN-LAST:event_btnSearchActionPerformed
-    private void searchFrom() {
-        partySearchResultListBean1.searchFrom(nepaliDateBean6.getGregorean_date(), "ne");
-        countResult(partySearchResultListBean1.getPartySearchResults().size());
+
+    private void chkMartyrsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMartyrsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkMartyrsActionPerformed
+
+    private void chkAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkAllActionPerformed
+        // TODO add your handling code here:
+        if (chkAll.isSelected()) {
+            chkHandi.setEnabled(false);
+            chkDeprived.setEnabled(false);
+            chkMartyrs.setEnabled(false);
+        } else {
+            chkHandi.setEnabled(true);
+            chkDeprived.setEnabled(true);
+            chkMartyrs.setEnabled(true);
+        }
+    }//GEN-LAST:event_chkAllActionPerformed
+    private void countResult(int size) {
+        lblResult.setText(Integer.toString(size));
+    }
+
+    private String getGender() {
+        String gender = cmbGender.getSelectedItem().toString().toLowerCase();
+        if ("all".equals(gender)) {
+            gender = null;
+        }
+        return gender;
     }
 
     private void searchByFiscalYear() {
+        String gender = getGender();
+        String handicapped = null;
+        String deprived = null;
+        String martyrs = null;
+        if (chkHandi.isSelected()) {
+            handicapped = "handicapped";
+        }
+        if (chkDeprived.isSelected()) {
+            deprived = "deprived";
+        }
+        if (chkMartyrs.isSelected()) {
+            martyrs = "martyrs";
+        }
+        if (chkAll.isSelected()) {
+            handicapped = null;
+            deprived = null;
+            martyrs = null;
+        }
+
         String firstPart = txtFiscalYear.getText().substring(0, 2);
         String secondPart = txtFiscalYear.getText().substring(3);
         String fromFiscalYear = "20" + firstPart + "0401";
         String toFiscalYear = "20" + secondPart + "0401";
         nepaliDateBean4.setNepaliDate(fromFiscalYear);
         nepaliDateBean5.setNepaliDate(toFiscalYear);
-        partySearchResultListBean1.searchByFiscalYear(nepaliDateBean4.getGregorean_date(), nepaliDateBean5.getGregorean_date(), "ne");
-        countResult(partySearchResultListBean1.getPartySearchResults().size());
+        baUnitSearchResultListBean1.searchRegistrationGenderWiseInFiscalYear(nepaliDateBean4.getGregorean_date(), nepaliDateBean5.getGregorean_date(), gender, handicapped, deprived, martyrs);
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
+    }
+
+    private void searchFrom() {
+        String gender = getGender();
+        String handicapped = null;
+        String deprived = null;
+        String martyrs = null;
+        if (chkHandi.isSelected()) {
+            handicapped = "handicapped";
+        }
+        if (chkDeprived.isSelected()) {
+            deprived = "deprived";
+        }
+        if (chkMartyrs.isSelected()) {
+            martyrs = "martyrs";
+        }
+        if (chkAll.isSelected()) {
+            handicapped = null;
+            deprived = null;
+            martyrs = null;
+        }
+        baUnitSearchResultListBean1.searchRegistrationGenderWiseFrom(nepaliDateBean6.getGregorean_date(), gender, handicapped, deprived, martyrs);
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
     }
 
     private void searchUptoDate() {
-        partySearchResultListBean1.searchUpTo(nepaliDateBean3.getGregorean_date(), "ne");
-        countResult(partySearchResultListBean1.getPartySearchResults().size());
-
-    }
-
-    private void countResult(int size) {
-        lblResult.setText(Integer.toString(size));
+        String gender = getGender();
+        String handicapped = null;
+        String deprived = null;
+        String martyrs = null;
+        if (chkHandi.isSelected()) {
+            handicapped = "handicapped";
+        }
+        if (chkDeprived.isSelected()) {
+            deprived = "deprived";
+        }
+        if (chkMartyrs.isSelected()) {
+            martyrs = "martyrs";
+        }
+        if (chkAll.isSelected()) {
+            handicapped = null;
+            deprived = null;
+            martyrs = null;
+        }
+        baUnitSearchResultListBean1.searchRegistrationGenderWiseUpTo(nepaliDateBean3.getGregorean_date(), gender, handicapped, deprived, martyrs);
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
     }
 
     private void searchFromTo() {
-        partySearchResultListBean1.searchFromTo(nepaliDateBean1.getGregorean_date(), nepaliDateBean2.getGregorean_date(), "ne");
-        countResult(partySearchResultListBean1.getPartySearchResults().size());
+        String gender = getGender();
+        String handicapped = null;
+        String deprived = null;
+        String martyrs = null;
+        if (chkHandi.isSelected()) {
+            handicapped = "handicapped";
+        }
+        if (chkDeprived.isSelected()) {
+            deprived = "deprived";
+        }
+        if (chkMartyrs.isSelected()) {
+            martyrs = "martyrs";
+        }
+        if (chkAll.isSelected()) {
+            handicapped = null;
+            deprived = null;
+            martyrs = null;
+        }
+        baUnitSearchResultListBean1.searchRegistrationGenderWiseFromTo(nepaliDateBean1.getGregorean_date(), nepaliDateBean2.getGregorean_date(), gender, handicapped, deprived, martyrs);
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
     }
-    private void rdbUptoDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbUptoDateActionPerformed
-        // TODO add your handling code here:
-        txtFromDate.setEnabled(false);
-        txtToDate.setEnabled(false);
-        txtFiscalYear.setEnabled(false);
-        txtUpToDate.setEnabled(true);
-        txtUpToYear.setEnabled(false);
-    }//GEN-LAST:event_rdbUptoDateActionPerformed
-
-    private void rdbFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFromActionPerformed
-        // TODO add your handling code here:
-        txtFromDate.setEnabled(false);
-        txtToDate.setEnabled(false);
-        txtFiscalYear.setEnabled(false);
-        txtUpToDate.setEnabled(false);
-        txtUpToYear.setEnabled(true);
-    }//GEN-LAST:event_rdbFromActionPerformed
-
-    private void rdbFromToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFromToActionPerformed
-        // TODO add your handling code here:
-        txtFromDate.setEnabled(true);
-        txtToDate.setEnabled(true);
-        txtFiscalYear.setEnabled(false);
-        txtUpToDate.setEnabled(false);
-        txtUpToYear.setEnabled(false);
-    }//GEN-LAST:event_rdbFromToActionPerformed
 
     private void customizeFields() {
         txtFromDate.setEnabled(false);
@@ -450,8 +644,14 @@ public class LandOwnerQuery extends ContentPanel {
         txtUpToYear.setEnabled(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.sola.clients.beans.administrative.BaUnitSearchResultListBean baUnitSearchResultListBean1;
     private javax.swing.JButton btnSearch;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox chkAll;
+    private javax.swing.JCheckBox chkDeprived;
+    private javax.swing.JCheckBox chkHandi;
+    private javax.swing.JCheckBox chkMartyrs;
+    private javax.swing.JComboBox cmbGender;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -459,6 +659,8 @@ public class LandOwnerQuery extends ContentPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -466,9 +668,14 @@ public class LandOwnerQuery extends ContentPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles jTableWithDefaultStyles1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel lblResult;
     private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean1;
     private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean2;
@@ -476,11 +683,11 @@ public class LandOwnerQuery extends ContentPanel {
     private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean4;
     private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean5;
     private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean6;
-    private org.sola.clients.beans.party.PartySearchResultListBean partySearchResultListBean1;
     private javax.swing.JRadioButton rdbFiscalYear;
     private javax.swing.JRadioButton rdbFrom;
     private javax.swing.JRadioButton rdbFromTo;
     private javax.swing.JRadioButton rdbUptoDate;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblResult;
     private javax.swing.JFormattedTextField txtFiscalYear;
     private org.sola.clients.swing.common.controls.NepaliDateField txtFromDate;
     private org.sola.clients.swing.common.controls.NepaliDateField txtToDate;

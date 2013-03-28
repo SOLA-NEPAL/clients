@@ -56,6 +56,8 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     public static final String SELECTED_PROPERTY = "selected";
     public static final String APPROVAL_DATE_PROPERTY = "approvalDateTime";
     public static final String APPROVAL_NEPALI_DATE_PROPERTY = "approvalNepaliDateTime";
+    public static final String CATEGORIES_PROPERTY = "categories";
+    public static final String NEW_PARCELS_PROPERTY = "newParcelNo";
     private String id;
     private String name;
     private String nameFirstPart;
@@ -76,14 +78,16 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
     private String mapSheetId;
     private String action;
     private boolean selected;
-    private Date approvalDateTime;
+    //private Date approvalDateTime;
     private NepaliDateBean approvalNepaliDateTime;
     transient java.util.ResourceBundle bundle;
+    private String categories;
+    private String newParcelNo;
 
     public BaUnitSearchResultBean() {
         super();
         bundle = java.util.ResourceBundle.getBundle("org/sola/clients/beans/administrative/Bundle");
-         approvalNepaliDateTime = new NepaliDateBean();
+        approvalNepaliDateTime = new NepaliDateBean();
     }
 
     public String getId() {
@@ -316,7 +320,7 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         if (approvalNepaliDateTime != null) {
             oldValue = approvalNepaliDateTime.getGregorean_date();
         }
-       
+
         approvalNepaliDateTime.setGregorean_date(approvalDateTime);
         propertySupport.firePropertyChange(APPROVAL_DATE_PROPERTY, oldValue, approvalDateTime);
     }
@@ -329,5 +333,25 @@ public class BaUnitSearchResultBean extends AbstractBindingBean {
         NepaliDateBean oldValue = this.approvalNepaliDateTime;
         this.approvalNepaliDateTime = approvalNepaliDateTime;
         propertySupport.firePropertyChange(APPROVAL_NEPALI_DATE_PROPERTY, oldValue, this.approvalNepaliDateTime);
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        String oldValue = this.categories;
+        this.categories = categories;
+        propertySupport.firePropertyChange(CATEGORIES_PROPERTY, oldValue, this.categories);
+    }
+
+    public String getNewParcelNo() {
+        return newParcelNo;
+    }
+
+    public void setNewParcelNo(String newParcelNo) {
+        String oldValue = this.newParcelNo;
+        this.newParcelNo = newParcelNo;
+        propertySupport.firePropertyChange(NEW_PARCELS_PROPERTY, oldValue, this.newParcelNo);
     }
 }

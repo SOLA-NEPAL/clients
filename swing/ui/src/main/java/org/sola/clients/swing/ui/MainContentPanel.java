@@ -50,11 +50,15 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_TEST = "testForm";
     public final static String CARD_DASHBOARD = "dashboard";
     public final static String CARD_SEARCH_BY_LAND_OWNER = "searchByPerson";
+    public final static String CARD_SEARCH_FOR_TRANSACTION = "searchForTransaction";
+    public final static String CARD_SEARCH_FOR_SPLITED_PARCELS = "searchForSplitedParcels";
+    public final static String CARD_SEARCH_FOR_PARCELS = "searchForParcels";
+    public final static String CARD_SEARCH_FOR_REGISTRATION = "searchForRegistration";
     public final static String CARD_SEARCH_BY_MOTH_PANA = "searchByMothPana";
     public final static String CARD_SEARCH_BY_MOTH_PANA_PARCEL = "searchByMothPanaParcel";
     public final static String CARD_SEARCH_BY_PARCEL_NO = "searchByParcelNo";
     public final static String CARD_MOTH_SHRESTA_ENTRY = "mothShrestaEntry";
-    public final static String CARD_MAPSHEET_MANAGEMENT="mapsheetManagement";
+    public final static String CARD_MAPSHEET_MANAGEMENT = "mapsheetManagement";
     public final static String CARD_OWNER_ENTRY = "landOwnerEntry";
     public final static String CARD_PARCEL_SEARCH = "parcelSearch";
     public final static String CARD_PARCEL_ENTRY = "parcelsEntry";
@@ -77,7 +81,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_MORTGAGE = "mortgagePanel";
     public final static String CARD_SIMPLE_RIGHT = "simpleRightPanel";
     public final static String CARD_SIMPLE_RESTRICTIONS = "simpleRestrictionsPanel";
-    public final static String CARD_TENANCY="tenancy";
+    public final static String CARD_TENANCY = "tenancy";
     public final static String CARD_OWNERSHIP = "ownershipPanel";
     public final static String CARD_OWNERSHIP_SHARE = "ownershipSharePanel";
     public final static String CARD_TRANSACTIONED_DOCUMENT = "transactionedDocumentPanel";
@@ -107,7 +111,6 @@ public class MainContentPanel extends javax.swing.JPanel {
     public final static String CARD_LOC_SEARCH = "locSearch";
     public final static String CARD_RESTRICTIONS_SEARCH = "restrictionsSearch";
     public final static String CARD_PASSWORD_CHANGE = "passwordChange";
-    
     private HashMap<String, ContentPanel> cards;
     private ArrayList<String> cardsIndex;
     private PropertyChangeListener panelListener;
@@ -203,7 +206,7 @@ public class MainContentPanel extends javax.swing.JPanel {
     public void addPanel(ContentPanel panel, String cardName) {
         addPanel(panel, cardName, false);
     }
-    
+
     /**
      * Adds panel into cards panels collection.
      *

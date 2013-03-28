@@ -21,13 +21,12 @@ import org.sola.clients.beans.AbstractBindingBean;
  * Represents cadastre object search result.
  */
 public class CadastreObjectSearchResultBean extends AbstractBindingBean {
-    
+
     public static final String ID_PROPERTY = "id";
     public static final String MAPSHEET_ID_PROPERTY = "mapsheetId";
     public static final String FIRST_NAME_PROPERTY = "firstName";
     public static final String LAST_NAME_PROPERTY = "lastName";
     public static final String PARCEL_NO_PROPERTY = "parcelno";
-    
     private String id;
     private String mapsheetId;
     private String mapsheetId2;
@@ -45,11 +44,12 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
     private String parcelno;
     private String baUnitId;
     private String datasetId;
-    
+    private String rule;
+
     public CadastreObjectSearchResultBean() {
         super();
     }
-    
+
     public String getMapsheetId() {
         return mapsheetId;
     }
@@ -89,8 +89,8 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
         this.parcelno = parcelno;
         propertySupport.firePropertyChange(PARCEL_NO_PROPERTY, oldValue, parcelno);
     }
-    
-    public String getPropertyIdCode(){
+
+    public String getPropertyIdCode() {
         return CadastreObjectBean.getPropertyIdCode(getFirstName(), getLastName());
     }
 
@@ -197,28 +197,36 @@ public class CadastreObjectSearchResultBean extends AbstractBindingBean {
     public void setDatasetId(String datasetId) {
         this.datasetId = datasetId;
     }
-    
-    public String getCombinedMapSheets(){
-        String result="";
-        if(getMapsheetNumber()!=null){
+
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
+    }
+
+    public String getCombinedMapSheets() {
+        String result = "";
+        if (getMapsheetNumber() != null) {
             result = getMapsheetNumber();
         }
-        if(getMapsheetNumber2()!=null){
-            if(!result.isEmpty()){
+        if (getMapsheetNumber2() != null) {
+            if (!result.isEmpty()) {
                 result = result + "/" + getMapsheetNumber2();
             } else {
                 result = getMapsheetNumber2();
             }
         }
-        if(getMapsheetNumber3()!=null){
-            if(!result.isEmpty()){
+        if (getMapsheetNumber3() != null) {
+            if (!result.isEmpty()) {
                 result = result + "/" + getMapsheetNumber3();
             } else {
                 result = getMapsheetNumber3();
             }
         }
-        if(getMapsheetNumber4()!=null){
-            if(!result.isEmpty()){
+        if (getMapsheetNumber4() != null) {
+            if (!result.isEmpty()) {
                 result = result + "/" + getMapsheetNumber4();
             } else {
                 result = getMapsheetNumber4();

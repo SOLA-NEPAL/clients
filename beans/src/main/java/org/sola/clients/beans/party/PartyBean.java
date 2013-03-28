@@ -82,6 +82,7 @@ public class PartyBean extends PartySummaryBean {
     public static final String PARENT_PROPERTY = "parent";
     public static final String ID_ISSUING_DISTRICT_CODE_PROPERTY = "idOfficeDistrictCode";
     public static final String ID_ISSUING_DISTRICT_PROPERTY = "idIssuingDistrict";
+    public static final String PARTY_CATEGORY_PROPERTY = "categoryList";
     @Email(message = ClientMessage.CHECK_INVALID_EMAIL, payload = Localized.class)
     private String email;
     private String phone;
@@ -102,6 +103,10 @@ public class PartyBean extends PartySummaryBean {
     private DocumentBinaryBean signatureDoc;
     private PartySummaryBean parent;
     private DistrictBean idIssuingDistrict;
+    private boolean handicapped;
+    private boolean deprived;
+    private boolean martyr;
+    private SolaList<PartyCategoryBean> categoryList;
 
     /**
      * Default constructor to create party bean. Initializes
@@ -110,6 +115,63 @@ public class PartyBean extends PartySummaryBean {
     public PartyBean() {
         super();
         roleList = new SolaList();
+        categoryList = new SolaList<PartyCategoryBean>();
+    }
+
+    public boolean isDeprived() {
+        return deprived;
+    }
+
+    public void setDeprived(boolean deprived) {
+        boolean oldValue = this.deprived;
+        if (deprived == true) {
+            PartyCategoryBean martyrs = new PartyCategoryBean();
+            martyrs.setCode("martyrs");
+            getCategoryList().add(martyrs);
+        }
+        this.deprived = deprived;
+        propertySupport.firePropertyChange("deprived", oldValue, this.deprived);
+    }
+
+    public boolean isHandicapped() {
+        return handicapped;
+    }
+
+    public void setHandicapped(boolean handicapped) {
+        boolean oldValue = this.handicapped;
+        if (handicapped == true) {
+            PartyCategoryBean handi = new PartyCategoryBean();
+            handi.setCode("handicapped");
+            getCategoryList().add(handi);
+        }
+        this.handicapped = handicapped;
+        propertySupport.firePropertyChange("handicapped", oldValue, this.handicapped);
+    }
+
+    public boolean isMartyr() {
+        return martyr;
+    }
+
+    public void setMartyr(boolean martyr) {
+        boolean oldValue = this.martyr;
+        if (martyr == true) {
+            PartyCategoryBean dep = new PartyCategoryBean();
+            dep.setCode("deprived");
+            getCategoryList().add(dep);
+        }
+        this.martyr = martyr;
+        propertySupport.firePropertyChange("martyr", oldValue, this.martyr);
+
+    }
+
+    public SolaList<PartyCategoryBean> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(SolaList<PartyCategoryBean> categoryList) {
+        SolaList<PartyCategoryBean> oldValue = this.categoryList;
+        this.categoryList = categoryList;
+        propertySupport.firePropertyChange(PARTY_CATEGORY_PROPERTY, oldValue, this.categoryList);
     }
 
     public DistrictBean getIdIssuingDistrict() {
@@ -279,6 +341,9 @@ public class PartyBean extends PartySummaryBean {
         setIdType(null);
         setRemarks(null);
         setParent(null);
+        setHandicapped(false);
+        setDeprived(false);
+        setMartyr(false);
     }
 
     public AddressBean getAddress() {

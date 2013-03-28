@@ -54,6 +54,7 @@ import org.sola.clients.swing.desktop.application.ApplicationPanel;
 import org.sola.clients.swing.desktop.application.ApplicationSearchPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.cadastre.MapSheetNoManagementPanel;
+import org.sola.clients.swing.desktop.inquiry.*;
 import org.sola.clients.swing.desktop.party.*;//PersonSearchForm;
 import org.sola.clients.swing.desktop.security.PasswordChangeForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchForm;
@@ -227,7 +228,7 @@ public class MainForm extends javax.swing.JFrame {
             @Override
             public Void doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_PERSONSEARCH));
-                PersonSearchForm personSearchForm = new PersonSearchForm();                
+                PersonSearchForm personSearchForm = new PersonSearchForm();
                 personSearchForm.getPartySearchPanel().setShowSelectButton(showSelectButton);
                 pnlContent.addPanel(personSearchForm, MainContentPanel.CARD_SEARCH_PERSONS, true);
                 return null;
@@ -406,6 +407,9 @@ public class MainForm extends javax.swing.JFrame {
         menuLandOwner = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jmiContextHelp = new javax.swing.JMenuItem();
@@ -777,7 +781,36 @@ public class MainForm extends javax.swing.JFrame {
         menuLandOwner.add(jMenuItem1);
 
         jMenuItem2.setText(bundle.getString("MainForm.jMenuItem2.text")); // NOI18N
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         menuLandOwner.add(jMenuItem2);
+
+        jMenuItem3.setText(bundle.getString("MainForm.jMenuItem3.text")); // NOI18N
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuLandOwner.add(jMenuItem3);
+
+        jMenuItem4.setText(bundle.getString("MainForm.jMenuItem4.text")); // NOI18N
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuLandOwner.add(jMenuItem4);
+
+        jMenuItem5.setText(bundle.getString("MainForm.jMenuItem5.text")); // NOI18N
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        menuLandOwner.add(jMenuItem5);
 
         menuBar.add(menuLandOwner);
 
@@ -936,13 +969,66 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         showLandOwners();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        showTransactions();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        showParcels();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        showRegistrations();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        showSplitedParcels();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void showSplitedParcels() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_FOR_SPLITED_PARCELS)) {
+            SplitedParcelsQuery trans = new SplitedParcelsQuery();
+            pnlContent.addPanel(trans, MainContentPanel.CARD_SEARCH_FOR_SPLITED_PARCELS);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_FOR_SPLITED_PARCELS);
+    }
+
+    private void showParcels() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_FOR_PARCELS)) {
+            ParcelQuery trans = new ParcelQuery();
+            pnlContent.addPanel(trans, MainContentPanel.CARD_SEARCH_FOR_PARCELS);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_FOR_PARCELS);
+    }
+
+    private void showRegistrations() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_FOR_REGISTRATION)) {
+            RegistrationQuery trans = new RegistrationQuery();
+            pnlContent.addPanel(trans, MainContentPanel.CARD_SEARCH_FOR_REGISTRATION);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_FOR_REGISTRATION);
+    }
+
+    private void showTransactions() {
+        if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_FOR_TRANSACTION)) {
+            TransactionQuery trans = new TransactionQuery();
+            pnlContent.addPanel(trans, MainContentPanel.CARD_SEARCH_FOR_TRANSACTION);
+        }
+        pnlContent.showPanel(MainContentPanel.CARD_SEARCH_FOR_TRANSACTION);
+    }
+
     private void showLandOwners() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER)) {
-             LandOwnerQuery land = new LandOwnerQuery();
+            LandOwnerQuery land = new LandOwnerQuery();
             pnlContent.addPanel(land, MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
         }
         pnlContent.showPanel(MainContentPanel.CARD_SEARCH_BY_LAND_OWNER);
     }
+
     private void showMapsheetManagementPanel() {
         if (!pnlContent.isPanelOpened(MainContentPanel.CARD_MAPSHEET_MANAGEMENT)) {
             MapSheetNoManagementPanel srchParcel = new MapSheetNoManagementPanel();
@@ -978,6 +1064,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;

@@ -33,6 +33,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.JFrame;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -42,7 +43,6 @@ import org.sola.clients.beans.cadastre.CadastreObjectBean;
 import org.sola.clients.swing.common.utils.Utils;
 import org.sola.clients.swing.gis.PublicMethod;
 import org.sola.clients.swing.gis.layer.CadastreChangeNewCadastreObjectLayer;
-import org.sola.common.FrameUtility;
 import org.sola.common.StringUtility;
 import org.sola.common.messaging.GisMessage;
 import org.sola.common.messaging.MessageUtility;
@@ -51,15 +51,18 @@ import org.sola.common.messaging.MessageUtility;
  * This form is used to display information about the new cadastre objects
  * during the cadastre change process.
  */
-public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog {
+public class CadastreChangeNewCadastreObjectListForm extends JFrame {
 
     public static final String SELECTED_CADASTRE_OBJECT = "selectedCadastreObject";
     private CadastreChangeNewCadastreObjectLayer layer;
     private CadastreObjectBean selectedCadastreObject;
 
-    /** Dialog constructor */
+    /**
+     * Dialog constructor
+     */
     public CadastreChangeNewCadastreObjectListForm(CadastreChangeNewCadastreObjectLayer cadastreObjectLayer) {
-        super(FrameUtility.getTopFrame(), true);
+        //super(FrameUtility.getTopFrame(), true);
+        super();
         this.layer = cadastreObjectLayer;
         initComponents();
         postInit();
@@ -79,6 +82,7 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
 
     private void setupListButtons() {
         boolean enabled = selectedCadastreObject != null;
+        btnPlot.setEnabled(enabled);
         btnShowOnMap.setEnabled(enabled);
         btnEdit.setEnabled(enabled);
         btnRemove.setEnabled(enabled);
@@ -131,7 +135,7 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
             SimpleFeature feature = feaIter.next();
             feature.setAttribute(CadastreChangeNewCadastreObjectLayer.LAYER_FIELD_SELECTED, "0");
         }
-        if(refresh){
+        if (refresh) {
             this.layer.getMapControl().refresh(false);
         }
     }
@@ -244,6 +248,7 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
         btnRemove = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnClearSelectionOnMap = new javax.swing.JButton();
+        btnPlot = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableCadastreObjectsList = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
         jPanel1 = new javax.swing.JPanel();
@@ -339,6 +344,17 @@ public class CadastreChangeNewCadastreObjectListForm extends javax.swing.JDialog
             }
         });
         jToolBar1.add(btnClearSelectionOnMap);
+
+        btnPlot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/map-pencil.png"))); // NOI18N
+        btnPlot.setText(bundle.getString("CadastreChangeNewCadastreObjectListForm.btnPlot.text")); // NOI18N
+        btnPlot.setFocusable(false);
+        btnPlot.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlotActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnPlot);
 
         tableCadastreObjectsList.setComponentPopupMenu(popupCadastreObjectsList);
 
@@ -501,10 +517,17 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         clearMapSelection(true);
     }//GEN-LAST:event_menuClearMapSelectionActionPerformed
 
+    private void btnPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlotActionPerformed
+        // TODO add your handling code here:
+        PlotRegister plot = new PlotRegister(selectedCadastreObject);
+        plot.setVisible(true);
+
+    }//GEN-LAST:event_btnPlotActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnClearSelectionOnMap;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnPlot;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnShowOnMap;

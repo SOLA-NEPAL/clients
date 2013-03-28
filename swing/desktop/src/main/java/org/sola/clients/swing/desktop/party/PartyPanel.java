@@ -450,6 +450,7 @@ public class PartyPanel extends javax.swing.JPanel {
         fatherTypes = createFatherTypes();
         idOfficeDistricts = createIdOfficeDistricts();
         partyTypeListBean = new org.sola.clients.beans.referencedata.PartyTypeListBean();
+        partyCategoryBean1 = new org.sola.clients.beans.referencedata.PartyCategoryBean();
         detailsPanel = new javax.swing.JTabbedPane();
         basicPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -563,6 +564,10 @@ public class PartyPanel extends javax.swing.JPanel {
         jPanel25 = new javax.swing.JPanel();
         txtRemarks = new javax.swing.JTextField();
         groupPanel8 = new org.sola.clients.swing.ui.GroupPanel();
+        jPanel16 = new javax.swing.JPanel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
 
         popupRoles.setName("popupRoles"); // NOI18N
 
@@ -1743,6 +1748,50 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel16.setName(bundle.getString("PartyPanel.jPanel16.name")); // NOI18N
+
+        jCheckBox1.setText(bundle.getString("PartyPanel.jCheckBox1.text")); // NOI18N
+        jCheckBox1.setName(bundle.getString("PartyPanel.jCheckBox1.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.handicapped}"), jCheckBox1, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
+
+        jCheckBox2.setText(bundle.getString("PartyPanel.jCheckBox2.text")); // NOI18N
+        jCheckBox2.setName(bundle.getString("PartyPanel.jCheckBox2.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.deprived}"), jCheckBox2, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
+
+        jCheckBox3.setText(bundle.getString("PartyPanel.jCheckBox3.text")); // NOI18N
+        jCheckBox3.setName(bundle.getString("PartyPanel.jCheckBox3.name")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${partyBean.martyr}"), jCheckBox3, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox2)
+                    .addComponent(jCheckBox3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox3)
+                .addContainerGap(127, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout fullPanelLayout = new javax.swing.GroupLayout(fullPanel);
         fullPanel.setLayout(fullPanelLayout);
         fullPanelLayout.setHorizontalGroup(
@@ -1755,7 +1804,8 @@ public class PartyPanel extends javax.swing.JPanel {
                     .addComponent(parentCustomizePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(fullPanelLayout.createSequentialGroup()
                         .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(groupPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1773,8 +1823,13 @@ public class PartyPanel extends javax.swing.JPanel {
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(groupPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(fullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(fullPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fullPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
 
@@ -1906,6 +1961,9 @@ public class PartyPanel extends javax.swing.JPanel {
     private org.sola.clients.beans.referencedata.DistrictListBean idOfficeDistricts;
     private org.sola.clients.beans.referencedata.IdOfficeTypeListBean idOfficeTypes;
     private org.sola.clients.beans.referencedata.IdTypeListBean idTypes;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1926,6 +1984,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
@@ -1971,6 +2030,7 @@ public class PartyPanel extends javax.swing.JPanel {
     private javax.swing.JMenuItem menuRemoveRole;
     private javax.swing.JPanel parentCustomizePanel;
     private org.sola.clients.swing.desktop.party.PartySelectExtPanel parentPanel;
+    private org.sola.clients.beans.referencedata.PartyCategoryBean partyCategoryBean1;
     private org.sola.clients.beans.referencedata.PartyRoleTypeListBean partyRoleTypes;
     private org.sola.clients.beans.referencedata.PartyTypeListBean partyTypeListBean;
     private javax.swing.JPopupMenu popupRoles;

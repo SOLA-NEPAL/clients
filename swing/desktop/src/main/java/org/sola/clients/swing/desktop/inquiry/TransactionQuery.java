@@ -28,6 +28,7 @@ public class TransactionQuery extends ContentPanel {
      */
     public TransactionQuery() {
         initComponents();
+        customizeFields();
     }
 
     /**
@@ -41,6 +42,13 @@ public class TransactionQuery extends ContentPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         baUnitSearchResultListBean1 = new org.sola.clients.beans.administrative.BaUnitSearchResultListBean();
+        nepaliDateBean1 = new org.sola.clients.beans.system.NepaliDateBean();
+        nepaliDateBean2 = new org.sola.clients.beans.system.NepaliDateBean();
+        nepaliDateBean3 = new org.sola.clients.beans.system.NepaliDateBean();
+        nepaliDateBean4 = new org.sola.clients.beans.system.NepaliDateBean();
+        nepaliDateBean5 = new org.sola.clients.beans.system.NepaliDateBean();
+        nepaliDateBean6 = new org.sola.clients.beans.system.NepaliDateBean();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         headerPanel1 = new org.sola.clients.swing.ui.HeaderPanel();
         jPanel6 = new javax.swing.JPanel();
         rdbFromTo = new javax.swing.JRadioButton();
@@ -65,13 +73,17 @@ public class TransactionQuery extends ContentPanel {
         jLabel4 = new javax.swing.JLabel();
         txtUpToYear = new org.sola.clients.swing.common.controls.NepaliDateField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableWithDefaultStyles1 = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        tblResult = new org.sola.clients.swing.common.controls.JTableWithDefaultStyles();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        lblResult = new javax.swing.JLabel();
 
         setHeaderPanel(headerPanel1);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/inquiry/Bundle"); // NOI18N
         headerPanel1.setTitleText(bundle.getString("TransactionQuery.headerPanel1.titleText")); // NOI18N
 
+        buttonGroup1.add(rdbFromTo);
         rdbFromTo.setText(bundle.getString("TransactionQuery.rdbFromTo.text")); // NOI18N
         rdbFromTo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +91,7 @@ public class TransactionQuery extends ContentPanel {
             }
         });
 
+        buttonGroup1.add(rdbUptoDate);
         rdbUptoDate.setText(bundle.getString("TransactionQuery.rdbUptoDate.text")); // NOI18N
         rdbUptoDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,6 +99,7 @@ public class TransactionQuery extends ContentPanel {
             }
         });
 
+        buttonGroup1.add(rdbFiscalYear);
         rdbFiscalYear.setText(bundle.getString("TransactionQuery.rdbFiscalYear.text")); // NOI18N
         rdbFiscalYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +107,7 @@ public class TransactionQuery extends ContentPanel {
             }
         });
 
+        buttonGroup1.add(rdbFrom);
         rdbFrom.setText(bundle.getString("TransactionQuery.rdbFrom.text")); // NOI18N
         rdbFrom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,14 +155,17 @@ public class TransactionQuery extends ContentPanel {
 
         jLabel1.setText(bundle.getString("TransactionQuery.jLabel1.text")); // NOI18N
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nepaliDateBean1, org.jdesktop.beansbinding.ELProperty.create("${nepaliDate}"), txtFromDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 85, Short.MAX_VALUE))
-            .addComponent(txtFromDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addGap(0, 76, Short.MAX_VALUE))
+            .addComponent(txtFromDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,12 +173,15 @@ public class TransactionQuery extends ContentPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel1);
 
         jLabel2.setText(bundle.getString("TransactionQuery.jLabel2.text")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nepaliDateBean2, org.jdesktop.beansbinding.ELProperty.create("${nepaliDate}"), txtToDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -169,7 +190,7 @@ public class TransactionQuery extends ContentPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+            .addComponent(txtToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,12 +198,15 @@ public class TransactionQuery extends ContentPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel2);
 
         jLabel5.setText(bundle.getString("TransactionQuery.jLabel5.text")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nepaliDateBean3, org.jdesktop.beansbinding.ELProperty.create("${nepaliDate}"), txtUpToDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -191,7 +215,7 @@ public class TransactionQuery extends ContentPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtUpToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+            .addComponent(txtUpToDate, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +223,7 @@ public class TransactionQuery extends ContentPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUpToDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel5);
@@ -218,7 +242,7 @@ public class TransactionQuery extends ContentPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
-                .addGap(0, 66, Short.MAX_VALUE))
+                .addGap(0, 57, Short.MAX_VALUE))
             .addComponent(txtFiscalYear)
         );
         jPanel3Layout.setVerticalGroup(
@@ -227,12 +251,15 @@ public class TransactionQuery extends ContentPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFiscalYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel3);
 
         jLabel4.setText(bundle.getString("TransactionQuery.jLabel4.text")); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, nepaliDateBean6, org.jdesktop.beansbinding.ELProperty.create("${nepaliDate}"), txtUpToYear, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -241,7 +268,7 @@ public class TransactionQuery extends ContentPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(txtUpToYear, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+            .addComponent(txtUpToYear, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,26 +276,61 @@ public class TransactionQuery extends ContentPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUpToYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel4);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${baUnitSearchResults}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchResultListBean1, eLProperty, jTableWithDefaultStyles1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameFirstPart}"));
-        columnBinding.setColumnName("Name First Part");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, baUnitSearchResultListBean1, eLProperty, tblResult);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${propertyIdCode}"));
+        columnBinding.setColumnName("Property Id Code");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nameLastPart}"));
-        columnBinding.setColumnName("Name Last Part");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mapNumber}"));
+        columnBinding.setColumnName("Map Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${parcelNo}"));
+        columnBinding.setColumnName("Parcel No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mothNo}"));
+        columnBinding.setColumnName("Moth No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${panaNo}"));
+        columnBinding.setColumnName("Pana No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${wardNo}"));
+        columnBinding.setColumnName("Ward No");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${approvalNepaliDateTime.nepaliDateFormated}"));
+        columnBinding.setColumnName("Approval Nepali Date Time.nepali Date Formated");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(jTableWithDefaultStyles1);
-        jTableWithDefaultStyles1.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("TransactionQuery.jTableWithDefaultStyles1.columnModel.title1_1")); // NOI18N
-        jTableWithDefaultStyles1.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("TransactionQuery.jTableWithDefaultStyles1.columnModel.title0_2")); // NOI18N
+        jScrollPane1.setViewportView(tblResult);
+        tblResult.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title0_3")); // NOI18N
+        tblResult.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title1_2")); // NOI18N
+        tblResult.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title2_1")); // NOI18N
+        tblResult.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title3_1")); // NOI18N
+        tblResult.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title4")); // NOI18N
+        tblResult.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title5")); // NOI18N
+        tblResult.getColumnModel().getColumn(6).setHeaderValue(bundle.getString("TransactionQuery.tblResult.columnModel.title6")); // NOI18N
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+
+        jButton1.setText(bundle.getString("TransactionQuery.jButton1.text")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+        jToolBar1.add(lblResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -279,7 +341,8 @@ public class TransactionQuery extends ContentPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -289,10 +352,12 @@ public class TransactionQuery extends ContentPanel {
                 .addComponent(headerPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -338,20 +403,57 @@ public class TransactionQuery extends ContentPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         if (rdbFromTo.isSelected()) {
-            //searchFromTo();
+            searchFromTo();
         } else if (rdbUptoDate.isSelected()) {
-            //searchUptoDate();
+            searchUptoDate();
         } else if (rdbFiscalYear.isSelected()) {
-            //searchByFiscalYear();
+            searchByFiscalYear();
         } else if (rdbFrom.isSelected()) {
-            //searchFrom();
+            searchFrom();
         }
     }//GEN-LAST:event_btnSearchActionPerformed
+    private void searchFromTo() {
+        baUnitSearchResultListBean1.searchTransactionFromTo(nepaliDateBean1.getGregorean_date(), nepaliDateBean2.getGregorean_date());
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
+    }
 
+    private void searchUptoDate() {
+        baUnitSearchResultListBean1.searchTransactionUpTo(nepaliDateBean3.getGregorean_date());
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
+    }
+
+    private void searchByFiscalYear() {
+        String firstPart = txtFiscalYear.getText().substring(0, 2);
+        String secondPart = txtFiscalYear.getText().substring(3);
+        String fromFiscalYear = "20" + firstPart + "0401";
+        String toFiscalYear = "20" + secondPart + "0401";
+        nepaliDateBean4.setNepaliDate(fromFiscalYear);
+        nepaliDateBean5.setNepaliDate(toFiscalYear);
+        baUnitSearchResultListBean1.searchTransactionInFiscalYear(nepaliDateBean4.getGregorean_date(), nepaliDateBean5.getGregorean_date());
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
+    }
+
+    private void searchFrom() {
+        baUnitSearchResultListBean1.searchTransactionFrom(nepaliDateBean6.getGregorean_date());
+        countResult(baUnitSearchResultListBean1.getBaUnitSearchResults().size());
+    }
+
+    private void countResult(int size) {
+        lblResult.setText(Integer.toString(size));
+    }
+    private void customizeFields() {
+        txtFromDate.setEnabled(false);
+        txtToDate.setEnabled(false);
+        txtFiscalYear.setEnabled(false);
+        txtUpToDate.setEnabled(false);
+        txtUpToYear.setEnabled(false);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.sola.clients.beans.administrative.BaUnitSearchResultListBean baUnitSearchResultListBean1;
     private javax.swing.JButton btnSearch;
+    private javax.swing.ButtonGroup buttonGroup1;
     private org.sola.clients.swing.ui.HeaderPanel headerPanel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -365,11 +467,19 @@ public class TransactionQuery extends ContentPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles jTableWithDefaultStyles1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblResult;
+    private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean1;
+    private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean2;
+    private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean3;
+    private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean4;
+    private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean5;
+    private org.sola.clients.beans.system.NepaliDateBean nepaliDateBean6;
     private javax.swing.JRadioButton rdbFiscalYear;
     private javax.swing.JRadioButton rdbFrom;
     private javax.swing.JRadioButton rdbFromTo;
     private javax.swing.JRadioButton rdbUptoDate;
+    private org.sola.clients.swing.common.controls.JTableWithDefaultStyles tblResult;
     private javax.swing.JFormattedTextField txtFiscalYear;
     private org.sola.clients.swing.common.controls.NepaliDateField txtFromDate;
     private org.sola.clients.swing.common.controls.NepaliDateField txtToDate;

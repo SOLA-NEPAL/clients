@@ -60,10 +60,36 @@ public class CadastreObjectSearchResultListBean extends AbstractBindingListBean 
             return;
         }
         getCadastreObjectSearchResults().clear();
-        CadastreObjectSearchParamsTO searchParamsTO = TypeConverters
-                .BeanToTrasferObject(searchParams, CadastreObjectSearchParamsTO.class);
+        CadastreObjectSearchParamsTO searchParamsTO = TypeConverters.BeanToTrasferObject(searchParams, CadastreObjectSearchParamsTO.class);
         TypeConverters.TransferObjectListToBeanList(
                 WSManager.getInstance().getSearchService().searchCadastreObjects(searchParamsTO),
                 CadastreObjectSearchResultBean.class, (List) getCadastreObjectSearchResults());
+    }
+
+    public void searchPlotsByWard(String wardNo) {
+        if (wardNo == null) {
+            return;
+        }
+        getCadastreObjectSearchResults().clear();
+        TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getSearchService().searchPlotsByWard(wardNo),
+                CadastreObjectSearchResultBean.class, (List) getCadastreObjectSearchResults());
+    }
+
+    public void searchPlotsBySheetNo(String mapSheetNo) {
+        if (mapSheetNo == null) {
+            return;
+        }
+        getCadastreObjectSearchResults().clear();
+        TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getSearchService().searchPlotsBySheetNo(mapSheetNo),
+                CadastreObjectSearchResultBean.class, (List) getCadastreObjectSearchResults());
+    }
+
+    public String getRuleByDatasetId(String datasetId) {
+        if (datasetId == null) {
+            return null;
+        }
+        return (WSManager.getInstance().getSearchService().getRuleByDatasetId(datasetId));
     }
 }
