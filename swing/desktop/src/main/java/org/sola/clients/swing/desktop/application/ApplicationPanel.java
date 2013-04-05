@@ -43,6 +43,8 @@ import org.jdesktop.beansbinding.*;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
 import org.sola.clients.beans.administrative.BaUnitSearchResultBean;
+import org.sola.clients.beans.administrative.BaUnitSearchResultListBean;
+import org.sola.clients.beans.administrative.LocDetailsBean;
 import org.sola.clients.beans.application.ApplicationBean;
 import org.sola.clients.beans.application.ApplicationDocumentsHelperBean;
 import org.sola.clients.beans.application.ApplicationServiceBean;
@@ -59,6 +61,7 @@ import org.sola.clients.swing.common.converters.FormattersFactory;
 import org.sola.clients.swing.common.tasks.SolaTask;
 import org.sola.clients.swing.common.tasks.TaskManager;
 import org.sola.clients.swing.desktop.MainForm;
+import org.sola.clients.swing.desktop.administrative.PropertyPrintList;
 import org.sola.clients.swing.desktop.cadastre.CadastreTransactionMapPanel;
 import org.sola.clients.swing.desktop.cadastre.MapPanelForm;
 import org.sola.clients.swing.desktop.source.DocumentSearchDialog;
@@ -93,6 +96,7 @@ public class ApplicationPanel extends ContentPanel {
     public static final String APPLICATION_SAVED_PROPERTY = "applicationSaved";
     private String applicationID;
     private BaUnitSearchResultBean applicationProperty;
+    private boolean printflag = false;
 
     /**
      * This method is used by the form designer to create {@link ApplicationBean}.
@@ -247,6 +251,7 @@ public class ApplicationPanel extends ContentPanel {
             }
         });
 
+
         customizeServicesButtons();
         customizeApplicationForm();
         customizePropertyButtons();
@@ -273,6 +278,7 @@ public class ApplicationPanel extends ContentPanel {
      * Applies customization of form, based on Application status.
      */
     private void customizeApplicationForm() {
+        btnPrintLoc.setEnabled(appBean.getStatusCode().equals("approved"));
         if (appBean != null && !appBean.isNew()) {
             java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/sola/clients/swing/desktop/application/Bundle");
             pnlHeader.setTitleText(bundle.getString("ApplicationPanel.pnlHeader.titleText") + " #" + appBean.getNr());
@@ -563,10 +569,10 @@ public class ApplicationPanel extends ContentPanel {
                                         && evt.getNewValue() != null) {
                                     final ArrayList<BaUnitSearchResultBean> properties =
                                             (ArrayList<BaUnitSearchResultBean>) evt.getNewValue();
-                                    
+
                                     ((PropertiesList) evt.getSource()).clearSelection();
                                     ((PropertiesList) evt.getSource()).dispose();
-                                    
+
                                     openCadastreChangeForm(properties, transaction);
                                 }
                             }
@@ -592,7 +598,7 @@ public class ApplicationPanel extends ContentPanel {
         }
     }
 
-    private void openCadastreChangeForm(final List<BaUnitSearchResultBean> baUnits, 
+    private void openCadastreChangeForm(final List<BaUnitSearchResultBean> baUnits,
             final TransactionCadastreChangeBean transaction) {
         if (transaction == null) {
             return;
@@ -603,14 +609,14 @@ public class ApplicationPanel extends ContentPanel {
             @Override
             public Boolean doTask() {
                 setMessage(MessageUtility.getLocalizedMessageText(ClientMessage.PROGRESS_MSG_OPEN_CADASTRE_CHANGE));
-                
+
                 if (baUnits != null && transaction.getCadastreObjectTargetList().size() < 1) {
                     // Populate target objects from BaUnit list
                     transaction.setCadastreObjectTargetListByBaUnits(baUnits);
                 }
-                
+
                 // Check dataset on target parcels
-                if(!transaction.checkDatasetForCadastreObjectTargetList()){
+                if (!transaction.checkDatasetForCadastreObjectTargetList()) {
                     return false;
                 }
 
@@ -674,13 +680,6 @@ public class ApplicationPanel extends ContentPanel {
                 }
             }
         }
-        //Commented by Kabindra for nepal_custom.
-// String[] params = {"" + nrPropRequired};
-// if (appBean.getPropertyList().size() < nrPropRequired) {
-// if (MessageUtility.displayMessage(ClientMessage.APPLICATION_ATLEAST_PROPERTY_REQUIRED, params) == MessageUtility.BUTTON_TWO) {
-// return false;
-// }
-// }
         return true;
     }
 
@@ -768,6 +767,8 @@ public class ApplicationPanel extends ContentPanel {
         btnPrintFee = new javax.swing.JButton();
         btnPrintStatusReport = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
+        btnPrintLoc = new javax.swing.JButton();
+        jSeparator7 = new javax.swing.JToolBar.Separator();
         dropDownButton1 = new org.sola.clients.swing.common.controls.DropDownButton();
         tabbedControlMain = new javax.swing.JTabbedPane();
         contactPanel = new javax.swing.JPanel();
@@ -1046,6 +1047,21 @@ public class ApplicationPanel extends ContentPanel {
 
         jSeparator5.setName("jSeparator5"); // NOI18N
         jToolBar3.add(jSeparator5);
+
+        btnPrintLoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/common/print.png"))); // NOI18N
+        btnPrintLoc.setText(bundle.getString("ApplicationPanel.btnPrintLoc.text")); // NOI18N
+        btnPrintLoc.setFocusable(false);
+        btnPrintLoc.setName(bundle.getString("ApplicationPanel.btnPrintLoc.name")); // NOI18N
+        btnPrintLoc.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPrintLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintLocActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btnPrintLoc);
+
+        jSeparator7.setName(bundle.getString("ApplicationPanel.jSeparator7.name")); // NOI18N
+        jToolBar3.add(jSeparator7);
 
         dropDownButton1.setText(bundle.getString("ApplicationPanel.dropDownButton1.text")); // NOI18N
         dropDownButton1.setComponentPopupMenu(popupApplicationActions);
@@ -2202,6 +2218,32 @@ public class ApplicationPanel extends ContentPanel {
     private void contactPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactPanelMouseClicked
     }//GEN-LAST:event_contactPanelMouseClicked
 
+    private void btnPrintLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintLocActionPerformed
+        // TODO add your handling code here:            
+        List<ApplicationServiceBean> se = appBean.getServiceList();
+        if (!appBean.getStatusCode().equals("approved")) {
+            return;
+        }
+        for (ApplicationServiceBean ap : se) {
+            if (ap.getRequestType().getRequestCategoryCode().equals(RequestCategoryTypeBean.CATEGORY_CADASTRE_SERVICES) && appBean.getStatusCode().equals("approved") && ap.getActionCode().equals("complete")) {
+                printflag = true;
+                break;
+            }
+        }
+        if (printflag == true) {
+            PropertyPrintList p = new PropertyPrintList(appBean.getFilteredPropertyList().get(0).getId());
+            p.setVisible(true);
+        } else {
+            String locId = appBean.getFilteredPropertyList().get(0).getLocId();
+            if (locId != null) {
+                ReportViewerForm.showLocReport(LocDetailsBean.loadLocDetails(locId, true, "ne"));
+            } else {
+                MessageUtility.displayMessage(ClientMessage.LOC_APPROVED_RRR_WITH_LOC_NOT_FOUND);
+            }
+        }
+
+    }//GEN-LAST:event_btnPrintLocActionPerformed
+
     /**
      * Opens {@link ReportViewerForm} to display report.
      */
@@ -2533,6 +2575,7 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JButton btnCompleteService;
     private javax.swing.JButton btnDownService;
     private javax.swing.JButton btnPrintFee;
+    private javax.swing.JButton btnPrintLoc;
     private javax.swing.JButton btnPrintStatusReport;
     private javax.swing.JButton btnRemoveProperty;
     private javax.swing.JButton btnRemoveService;
@@ -2590,6 +2633,7 @@ public class ApplicationPanel extends ContentPanel {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JLabel labDate;
     private javax.swing.JLabel labStatus;

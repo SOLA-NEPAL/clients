@@ -200,4 +200,11 @@ public class BaUnitSearchResultListBean extends AbstractBindingListBean {
                 WSManager.getInstance().getSearchService().searchParcelsSplitInFiscalYear(fromFiscalYear, toFiscalYear),
                 BaUnitSearchResultBean.class, (List) getBaUnitSearchResults());
     }
+
+    public void searchBaunitsByHistoricBaunitId(String baUnitsHistoricId) {
+        getBaUnitSearchResults().clear();
+        TypeConverters.TransferObjectListToBeanList(
+                WSManager.getInstance().getSearchService().searchBaunitsByHistoricBaunitId(baUnitsHistoricId),
+                BaUnitSearchResultBean.class, (List) getBaUnitSearchResults());
+    }
 }

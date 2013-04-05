@@ -534,7 +534,7 @@ public class PropertyPanel extends ContentPanel {
                 btnCreateRight.setEnabled(false);
             } else if (rrrTypeBean.getRrrGroupTypeCode() != null
                     && rrrTypeBean.getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_RIGHTS)
-                    && (baUnitBean.hasPendingTenancy() || baUnitBean.hasCurrentTenancy())) {
+                    && (baUnitBean.hasPendingTenancy() || baUnitBean.hasCurrentTenancy() || baUnitBean.hasCurrentRestriction())) {
                 btnCreateRight.setEnabled(false);
             } else {
                 btnCreateRight.setEnabled(true);
@@ -567,16 +567,28 @@ public class PropertyPanel extends ContentPanel {
             // Control the record state, duplication of pending records,
             // allowed action and allowed type of RRR.
             if (rrrBean.getStatusCode().equals(StatusConstants.CURRENT)
-                    && !baUnitBean.isPendingRrrExists(rrrBean)
+                    && !baUnitBean.isPendingRrrExists(rrrBean) && !baUnitBean.hasCurrentRestriction() && !baUnitBean.hasCurrentTenancy()
                     && isRightTypeAllowed(rrrBean.getTypeCode())) {
                 if (isActionAllowed(RrrTypeActionConstants.VARY)) {
                     btnChangeRight.setEnabled(true);
                 }
-                if (isActionAllowed(RrrTypeActionConstants.CANCEL)) {
+//                if (isActionAllowed(RrrTypeActionConstants.CANCEL)) {
+//                    btnExtinguish.setEnabled(true);
+//                }
+            }
+            if (rrrBean.getStatusCode().equals(StatusConstants.CURRENT)
+                    && !baUnitBean.isPendingRrrExists(rrrBean)
+                    && isRightTypeAllowed(rrrBean.getTypeCode())) {
+                if (isActionAllowed(RrrTypeActionConstants.CANCEL) && !(baUnitBean.getSelectedRight().getTypeCode().equals(RrrGroupTypeBean.CODE_OWNERSHIP))) {
+                    btnExtinguish.setEnabled(true);
+                }
+                if ((baUnitBean.getSelectedRight().getTypeCode().equals(RrrGroupTypeBean.CODE_OWNERSHIP)) && !(baUnitBean.hasCurrentRestriction()) && !(baUnitBean.hasCurrentTenancy()) && isActionAllowed(RrrTypeActionConstants.CANCEL)) {
                     btnExtinguish.setEnabled(true);
                 }
             }
         }
+
+
 
         menuEditRight.setEnabled(btnEditRight.isEnabled());
         menuRemoveRight.setEnabled(btnRemoveRight.isEnabled());
@@ -1170,7 +1182,7 @@ public class PropertyPanel extends ContentPanel {
             jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel10Layout.createSequentialGroup()
                 .add(jLabel1)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
             .add(txtPropertyCode)
         );
         jPanel10Layout.setVerticalGroup(
@@ -1206,7 +1218,7 @@ public class PropertyPanel extends ContentPanel {
                 .add(jLabel9)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 69, Short.MAX_VALUE))
+                .add(0, 64, Short.MAX_VALUE))
             .add(txtMoth)
         );
         jPanel16Layout.setVerticalGroup(
@@ -1239,7 +1251,7 @@ public class PropertyPanel extends ContentPanel {
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel9Layout.createSequentialGroup()
                 .add(jLabel2)
-                .add(0, 91, Short.MAX_VALUE))
+                .add(0, 86, Short.MAX_VALUE))
             .add(txtPageNumber)
         );
         jPanel9Layout.setVerticalGroup(
@@ -1270,7 +1282,7 @@ public class PropertyPanel extends ContentPanel {
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel6Layout.createSequentialGroup()
                 .add(jLabel7)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
             .add(txtBaUnitStatus)
         );
         jPanel6Layout.setVerticalGroup(
@@ -1367,7 +1379,7 @@ public class PropertyPanel extends ContentPanel {
                     .add(groupPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(pnlParcelView, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel13, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -1383,7 +1395,7 @@ public class PropertyPanel extends ContentPanel {
                 .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(pnlParcelView, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabsMain.addTab(bundle.getString("PropertyPanel.jPanel7.TabConstraints.tabTitle"), jPanel7); // NOI18N
@@ -1546,14 +1558,14 @@ public class PropertyPanel extends ContentPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jToolBar2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jToolBar2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel1);
@@ -1620,14 +1632,14 @@ public class PropertyPanel extends ContentPanel {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jToolBar4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel11Layout.createSequentialGroup()
                 .add(jToolBar4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel11);
@@ -1645,7 +1657,7 @@ public class PropertyPanel extends ContentPanel {
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1696,14 +1708,14 @@ public class PropertyPanel extends ContentPanel {
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1792,11 +1804,11 @@ public class PropertyPanel extends ContentPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, tabNotationLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(tabNotationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
                     .add(tabNotationLayout.createSequentialGroup()
                         .add(jLabel15)
                         .add(9, 9, 9)
-                        .add(txtNotationText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                        .add(txtNotationText, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jToolBar3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1811,7 +1823,7 @@ public class PropertyPanel extends ContentPanel {
                         .add(txtNotationText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(jLabel15)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1933,15 +1945,15 @@ public class PropertyPanel extends ContentPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
-            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel8Layout.createSequentialGroup()
                 .add(jToolBar6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
         );
 
         jPanel14.add(jPanel8);
@@ -2025,15 +2037,15 @@ public class PropertyPanel extends ContentPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
-            .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jToolBar7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+            .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel5Layout.createSequentialGroup()
                 .add(jToolBar7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                .add(jScrollPane7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
         );
 
         jPanel14.add(jPanel5);
@@ -2051,7 +2063,7 @@ public class PropertyPanel extends ContentPanel {
             pnlPriorPropertiesLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(pnlPriorPropertiesLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2063,11 +2075,11 @@ public class PropertyPanel extends ContentPanel {
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 682, Short.MAX_VALUE)
+            .add(0, 662, Short.MAX_VALUE)
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 386, Short.MAX_VALUE)
+            .add(0, 379, Short.MAX_VALUE)
         );
 
         tabsMain.addTab(bundle.getString("PropertyPanel.mapPanel.TabConstraints.tabTitle"), mapPanel); // NOI18N
@@ -2081,11 +2093,11 @@ public class PropertyPanel extends ContentPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(headerPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
-            .add(jToolBar5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+            .add(headerPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+            .add(jToolBar5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -2095,7 +2107,7 @@ public class PropertyPanel extends ContentPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jToolBar5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .add(jScrollPane6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2250,7 +2262,7 @@ private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:
 
     private void btnPrintDemoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintDemoActionPerformed
         //if (this.checkSaveBeforePrint(baUnitBean)) {
-             printDemoLoc();
+        printDemoLoc();
         //} 
     }//GEN-LAST:event_btnPrintDemoActionPerformed
 

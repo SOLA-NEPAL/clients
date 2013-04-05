@@ -583,7 +583,7 @@ public class BaUnitBean extends BaUnitSummaryBean {
     }
 
     /**
-     * Returns true if there is tenancy right on the list.
+     * Returns true if there is restriction right on the list.
      */
     public boolean hasCurrentTenancy() {
         for (RrrBean rrr : getRrrList()) {
@@ -596,6 +596,19 @@ public class BaUnitBean extends BaUnitSummaryBean {
         return false;
     }
     
+     /**
+     * Returns true if there is tenancy right on the list.
+     */
+    public boolean hasCurrentRestriction() {
+        for (RrrBean rrr : getRrrList()) {
+            if (rrr.getStatusCode() != null && rrr.getStatusCode().equals(StatusConstants.CURRENT)
+                    && rrr.getRrrType() != null && rrr.getRrrType().getRrrGroupTypeCode() != null
+                    && rrr.getRrrType().getRrrGroupTypeCode().equalsIgnoreCase(RrrGroupTypeBean.CODE_RESTRICTIONS)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public boolean saveBaUnit(String serviceId) {
         // Check VDC access
         if(getCadastreObject()!=null && getCadastreObject().getAddress()!=null){
